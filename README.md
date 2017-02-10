@@ -15,13 +15,13 @@ It consists of two jars:
 * reactive-reports-core - the main core report framework that is render agnostic
 * reactive-reports-itext-render - itext render for reactive reports
 
-In this first version, ReactiveReports can be used in Scala. A Java version will follow soon.
+In this first version, ReactiveReports can be used in Scala 2.12. A Java version will follow soon.
 
 ### Sbt installation:
 
-  libraryDependencies += "com.sysalto" %% "reactivereports-core" % "1.0.0-alpha.1",
+  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % "1.0.0-alpha.1",
   
-  libraryDependencies += "com.sysalto" %% "reactivereports-itext-render" % "1.0.0-alpha.1".
+  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % "1.0.0-alpha.1".
   
   
 ### Getting started
