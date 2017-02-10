@@ -81,15 +81,5 @@ object SqlUtil {
     createSql + "\n" + insertList.mkString("\n")
   }
 
-  def test(): Unit = {
-    val clntData = List(ListMap("value3m" -> "2.22", "value1y" -> "N/A", "value3y" -> "N/A", "value5y" -> "N/A", "value10y" -> "N/A")
-    )
-    val s = generateTable("account_perf", clntData)
-    println(s)
-  }
-
-  def main(args: Array[String]): Unit = {
-    test()
-  }
 
 }

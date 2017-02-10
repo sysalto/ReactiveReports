@@ -101,37 +101,4 @@ object KryoUtil {
   }
 
 
-  def main(args: Array[String]) {
-
-//    val obuf1 = new Output(new ByteArrayOutputStream())
-//
-//    sealed abstract class ReportItem() {
-//    }
-//
-//
-//    case class A1(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value, startY: Option[Float]) extends ReportItem() {
-//    }
-//    case class A2(text: List[RText]) extends ReportItem()
-//    case class A3(text: List[String]) extends ReportItem()
-//    case class A4(text: RText) extends ReportItem()
-//
-//    class RText1(str: String) extends com.itextpdf.text.Phrase(str)
-//
-//    //    val obj1 = A1(List(RText("eee")), 0, 0, 0, 0, LIMIT_TO_BOX, None)
-//    val obj2 = A2(List(new RText("eee")))
-//    val obj3 = A3(List("eee"))
-//    val obj4 = new RText1("eee")
-//    val obj5 = new com.itextpdf.text.Phrase("eee")
-//
-//    kryo.register(obj4.getClass)
-//    // Serialize
-//    kryo.writeClassAndObject(obuf1, obj4)
-//    // Deserialize
-//    val bytes = obuf1.toBytes
-//    println("lg:" + bytes.length)
-//    val ibuf1 = new Input(bytes)
-//    val rez1 = kryo.readClassAndObject(ibuf1)
-//    println(rez1)
-  }
-
 }

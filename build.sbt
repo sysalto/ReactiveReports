@@ -1,28 +1,66 @@
+import sbt.Keys.publishMavenStyle
+
 val SCALA_VERSION = "2.12.1"
 
-val AKKA_VERSION="2.4.16"
+val AKKA_VERSION = "2.4.16"
 
-val TYPESAFE_CONFIG="1.3.1"
+val TYPESAFE_CONFIG = "1.3.1"
 
-val LOGBACK_VERSION="1.1.3"
+val LOGBACK_VERSION = "1.1.3"
 
-val ROCKSDB_VERSION="5.0.1"
+val ROCKSDB_VERSION = "5.0.1"
 
-val KRYO_VERSION="0.5.2"
+val KRYO_VERSION = "0.5.2"
 
-val ITEXT_VERSION="5.5.10"
+val ITEXT_VERSION = "5.5.10"
 
-val JFREECHART_VERSION="1.0.19"
+val JFREECHART_VERSION = "1.0.19"
+
+val projectVersion="1.0.0-alpha.1"
 
 lazy val commonInclude = Seq(
-  organization := "com.sysalto",
-  version := "1.0.0-alpha.1",
+  organization := "com.github.sysalto",
+  isSnapshot := false,
+  version := projectVersion,
   cancelable in Global := true,
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   incOptions := incOptions.value.withNameHashing(true),
   Keys.fork in run := true,
   resolvers += Resolver.sonatypeRepo("snapshots"),
-  resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
+  resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
+
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value) {
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    }
+    else {
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
+    }
+  },
+  publishMavenStyle := true,
+  pomIncludeRepository := { _ => false },
+
+  pomExtra := (
+    <url>https://github.com/sysalto/ReactiveReports</url>
+      <licenses>
+        <license>
+          <name>GNU Affero General Public License version 3</name>
+          <url>https://www.gnu.org/licenses/agpl-3.0.en.html.</url>
+          <distribution>repo</distribution>
+        </license>
+      </licenses>
+      <scm>
+        <url>https://github.com/sysalto/ReactiveReports.git</url>
+        <connection>scm:git:git@github.com:sysalto/ReactiveReports.git</connection>
+      </scm>
+      <developers>
+        <developer>
+          <id>marian.nedelescu</id>
+          <name>Marian Nedelescu</name>
+        </developer>
+      </developers>)
+
 )
 
 
@@ -46,7 +84,7 @@ lazy val renderItextSettings = Seq(
 
 
 lazy val reactiveReports = (project in file(".")).settings(commonInclude: _*).
-  settings(commonSettings: _*).enablePlugins(JavaAppPackaging) dependsOn(coreReport, renderItext,examples)
+  settings(commonSettings: _*).enablePlugins(JavaAppPackaging) dependsOn(coreReport, renderItext, examples)
 
 lazy val coreReport = (project in file("core/report")).settings(commonInclude: _*).
   settings(name := "ReactiveReports Core").
@@ -56,8 +94,29 @@ lazy val renderItext = (project in file("core/renders/itext")).settings(commonIn
   settings(name := "ReactiveReports Itext Render").
   settings(renderItextSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
 
+
+lazy val exampleSettings = Seq(
+  name:= "Reports Examples",
+  organization := "com.github.sysalto",
+  version := projectVersion,
+  cancelable in Global := true,
+  scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
+  scalaVersion := "2.12.1",
+  incOptions := incOptions.value.withNameHashing(true),
+  Keys.fork in run := true,
+  resolvers += Resolver.sonatypeRepo("public"),
+  resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
+  resolvers += Resolver.mavenLocal,
+  libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
+  libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release"),
+  libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release",
+  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % projectVersion,
+  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % projectVersion
+
+)
+
 lazy val examples = (project in file("examples")).
-  settings(commonSettings: _*).
+  settings(exampleSettings: _*).
   settings(
     name := "ReactiveReports Examples",
     libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release",

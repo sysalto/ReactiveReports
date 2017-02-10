@@ -37,25 +37,4 @@ object SerializerUtil {
   def read[T <: AnyRef](bytes: Array[Byte]): T = serializer.fromBinary(bytes).asInstanceOf[T]
 
 
-  def test2(): Unit = {
-    class Base() {}
-
-    case class C1(i: Int) extends Base
-    case class C2(s: String) extends Base
-
-    class C(val list: List[Base], val opt: Option[Base] = None)
-
-
-    val s = new C(List(C1(1), C2("test"), C1(3)) ++ List.fill(1000)(C2("test")), Some(C2("oo")))
-    val b = write(s)
-    println(b.length)
-    val r = read[C](b)
-    println(r)
-  }
-
-  def main(args: Array[String]): Unit = {
-    test2()
-
-  }
-
 }
