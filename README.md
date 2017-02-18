@@ -35,6 +35,7 @@ imports Implicits.
 
 The input to the reports can be a list of any Java/Scala objects, of type java.sql.resultset or webservice results. 
 Please see com.sysalto.report.examples.mutualFunds.MutualFundsReport and com.sysalto.report.examples.rss.RssReport.
+The output of  MutualFundsReport is MutualFunds.pdf.
  
 It has a simple DSL for printing text of variable sizes and colors and enables column wrapping.
  
