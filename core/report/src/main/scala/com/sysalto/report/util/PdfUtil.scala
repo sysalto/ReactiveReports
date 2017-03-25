@@ -21,9 +21,10 @@
 package com.sysalto.report.util
 
 import com.sysalto.report.ReportTypes._
+import com.sysalto.report.reportTypes.{LineDashType, RColor, RText}
+import com.sysalto.report.{WrapAllign, WrapOptions}
 
 import scala.collection.mutable.ListBuffer
-
 
 
 abstract class PdfUtil() {

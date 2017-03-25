@@ -27,7 +27,7 @@ import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
 
 object MutualFundsReport extends ReportApp {
-
+  val sd = new SimpleDateFormat("MMM dd yyyy")
   private val date1 = new GregorianCalendar(2013, 0, 1).getTime
   private val date2 = new GregorianCalendar(2013, 11, 31).getTime
   val headerColor = RColor(156, 76, 6)
@@ -50,7 +50,6 @@ object MutualFundsReport extends ReportApp {
     report print (RCell("Investment statement" size 15 bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
     report.nextLine()
 
-    val sd = new SimpleDateFormat("MMMM dd,yyyy")
     val str = sd.format(date1) + " to " + sd.format(date2)
     report print (RCell(str size 15 bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
     report.nextLine(2)
@@ -76,7 +75,6 @@ object MutualFundsReport extends ReportApp {
 
   private def summaryOfInvestment(report: Report): Unit = {
 
-    val sd = new SimpleDateFormat("MMM dd,yyyy")
     report.nextLine(2)
     //    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
     val row = Row(10, report.pgSize.width - 10, List(Column("fund_name", 150), Column("value1", Flex(1)),
@@ -105,7 +103,7 @@ object MutualFundsReport extends ReportApp {
     var total2 = 0f
     var total3 = 0f
     var firstY = 0f
-    val charData: scala.collection.mutable.Map[String, Double] = scala.collection.mutable.Map()
+    val chartData: scala.collection.mutable.Map[String, Double] = scala.collection.mutable.Map()
     val result1 = source.group.
       runWith(Sink.foreach(
         rec => try {
@@ -123,7 +121,7 @@ object MutualFundsReport extends ReportApp {
           total1 += val1.toFloat
           total2 += val2.toFloat
           total3 += v_change
-          charData += (firstChar.asInstanceOf[Char].toString -> total2.toDouble)
+          chartData += (firstChar.asInstanceOf[Char].toString -> total2.toDouble)
           val c_change = RCell(v_change.toString) rightAllign() between change
           val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change))
           val y2 = rrow.calculate(report)
@@ -148,14 +146,12 @@ object MutualFundsReport extends ReportApp {
       RCell(total2.toString bold()) rightAllign() between value2, RCell(total3.toString bold()) rightAllign() between change))
     trow.print(report)
     val chartHeight = report.getY - firstY
-    report.drawPieChart("", charData.toMap, graphic.left + 5, firstY + chartHeight, graphic.right - graphic.left - 10, chartHeight)
+    report.drawPieChart("", chartData.toMap, graphic.left + 5, firstY + chartHeight, graphic.right - graphic.left - 10, chartHeight)
 
   }
 
   private def changeAccount(report: Report): Unit = {
-    val sd = new SimpleDateFormat("MMM dd yyyy")
     report.nextLine(2)
-    //    report line() from(10, report.getY) to (report.pgSize.width - 10) width 1.5f draw()
     val row = Row(10, report.pgSize.width - 10, List(Column("account", 250), Column("value1", Flex(1)),
       Column("value2", Flex(1)), Column("value3", Flex(1))))
     val account = row.getColumnBound("account")
@@ -221,7 +217,6 @@ object MutualFundsReport extends ReportApp {
 
 
   private def accountPerformance(report: Report): Unit = {
-    val sd = new SimpleDateFormat("MMM dd yyyy")
     val rs = MutualFundsInitData.query("select * from account_perf")
     rs.next()
     val record = rs.toMap
@@ -238,12 +233,12 @@ object MutualFundsReport extends ReportApp {
     val annualized = row.getColumnBound("annualized")
 
     val h_accountPerf = RCell("Account performance" bold() color headerFontColor) leftAllign() between accountPerf
-    val h_value3m = RCell("3 Month (%)" bold() color headerFontColor) rightAllign() between value3m
+    val h_value3m = RCell("3 Months (%)" bold() color headerFontColor) rightAllign() between value3m
     val h_value1y = RCell("1 Year (%)" bold() color headerFontColor) rightAllign() between value1y
-    val h_value3y = RCell("3 Year (%)" bold() color headerFontColor) rightAllign() between value3y
-    val h_value5y = RCell("5 Year (%)" bold() color headerFontColor) rightAllign() between value5y
-    val h_value10y = RCell("10 Year (%)" bold() color headerFontColor) rightAllign() between value10y
-    val h_annualized = RCell(s"Annualized since  ${sd.format(date1)} (%)" bold() color headerFontColor) rightAllign() between annualized
+    val h_value3y = RCell("3 Years (%)" bold() color headerFontColor) rightAllign() between value3y
+    val h_value5y = RCell("5 Years (%)" bold() color headerFontColor) rightAllign() between value5y
+    val h_value10y = RCell("10 Years (%)" bold() color headerFontColor) rightAllign() between value10y
+    val h_annualized = RCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAllign() between annualized
     val hrow = RRow(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
     val y1 = hrow.calculate(report)
     report rectangle() from(9, report.getY) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
@@ -306,7 +301,7 @@ object MutualFundsReport extends ReportApp {
     }
 
     report.headerFct = {
-      case (rpt, _) =>
+      case (rpt, _,_) =>
         rpt.setYPosition(10)
         val row = Row(10, rpt.pgSize.width - 10, List(Column("column1", Flex(1)), Column("column2", Flex(1)),
           Column("column3", Flex(1))))
@@ -321,7 +316,7 @@ object MutualFundsReport extends ReportApp {
         hrow.print(rpt)
 
         rpt.nextLine()
-        val sd = new SimpleDateFormat("MMMM dd,yyyy")
+
         val str = sd.format(date1) + " to " + sd.format(date2)
         val r_column1 = RCell("Group Registered Retirement Saving Plan") leftAllign() between column1
         val r_column2 = RCell("123456789") leftAllign() between column2

@@ -20,7 +20,7 @@
 
 package com.sysalto.report
 
-import com.sysalto.report.ReportTypes.{RFont, RText}
+import com.sysalto.report.reportTypes.{RFont, RText}
 
 import scala.language.implicitConversions
 
@@ -38,8 +38,8 @@ trait  ScalaReportUtil {
 
 
   private def getFormatter(localeCode: String) = {
-    val locale = new java.util.Locale(localeCode)
-    java.text.NumberFormat.getNumberInstance(locale)
+    val locale = new _root_.java.util.Locale(localeCode)
+    _root_.java.text.NumberFormat.getNumberInstance(locale)
   }
 
   def formatNumber(number: Float, localeCode: String): String = {

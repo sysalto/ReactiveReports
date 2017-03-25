@@ -21,7 +21,7 @@
 package com.sysalto.report.examples
 
 import com.sysalto.report.Implicits._
-import com.sysalto.report.RCell
+import com.sysalto.report.reportTypes.RCell
 import com.sysalto.report.template.ReportApp
 
 
@@ -41,8 +41,8 @@ object HelloWorldReport extends ReportApp {
       case (rpt, pgNbr, pgMax) =>
         rpt.setYPosition(rpt.pgSize.height - rpt.lineHeight * 2)
         rpt line() from(10, rpt.getY) to (rpt.pgSize.width - 10) draw()
-        report.setYPosition(report.getY + report.lineHeight * 0.5f)
-        rpt print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
+        rpt.setYPosition(rpt.getY + rpt.lineHeight * 0.5f)
+        rpt print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAllign() between RMargin(0, rpt.pgSize.width - 10))
     }
 
     // generate 200 records for printing
@@ -94,8 +94,8 @@ object HelloWorldReport extends ReportApp {
             hrow.print(report)
             report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
             report.nextLine()
-            report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
-            report.nextLine()
+//            report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+//            report.nextLine()
           }
 
           val name = RCell(currentRecord.name) leftAllign() between nameC

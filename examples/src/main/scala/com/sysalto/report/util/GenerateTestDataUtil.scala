@@ -19,21 +19,22 @@
  */
 
 package com.sysalto.report.util
-
+import com.sysalto.report.Implicits._
+import com.sysalto.report.template.ReportApp
+//
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.{Sink, Source}
 import akka.util.Timeout
-import com.sysalto.report.util.GroupUtil.{Group, GroupUtil}
+//import com.sysalto.report.util.GroupUtil
 import com.typesafe.config.ConfigFactory
-
-import scala.concurrent.Await
+//
+//import scala.concurrent.Await
 import scala.concurrent.duration.{Duration, _}
 import scala.language.postfixOps
 import scala.util.Random
 
 
-object GenerateTestDataUtil {
+object GenerateTestDataUtil extends  ReportApp{
 
   sealed trait DataType
 
@@ -128,11 +129,12 @@ object GenerateTestDataUtil {
     val listHdr2 = List(Group("GRP3", (r: Map[String, String]) => r("GRP3")), Group("GRP4", (r: Map[String, String]) => r("GRP4")))
     val groupUtil1 = new GroupUtil(listHdr1)
     val groupUtil2 = new GroupUtil(listHdr2)
-    import GroupUtil._
+
+
     val result1 = source1.group.
       runWith(Sink.foreach(
         rec1 => {
-          val crtRec = GroupUtil.getRec(rec1)
+          val crtRec = getRec(rec1)
           if (groupUtil1.isHeader("grp1", rec1)) {
             println("Header grp1:" + crtRec("grp1"))
           }
@@ -146,7 +148,7 @@ object GenerateTestDataUtil {
           val result2 = source2.group.
             runWith(Sink.foreach(
               rec2 => {
-                val crtRec2 = GroupUtil.getRec(rec2)
+                val crtRec2 = getRec(rec2)
                 if (groupUtil2.isHeader("GRP3", rec2)) {
                   println("\t\t\tHeader GRP3:" + crtRec2("GRP3"))
                 }

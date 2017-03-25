@@ -20,6 +20,8 @@
 
 package com.sysalto.report
 
+import com.sysalto.report.reportTypes._
+
 import scala.collection.mutable.ListBuffer
 
 
@@ -39,95 +41,15 @@ object ReportTypes {
   case class Rectangle(width: Float, height: Float)
 
 
-  /*
-  Font attributes enum
-   */
-  object RFontAttribute extends Enumeration {
-    val NORMAL, BOLD, ITALIC, BOLD_ITALIC = Value
-  }
 
-/*
-
- */
-  case class RFont(var size: Int, var fontName: Option[String] = None, var attribute: RFontAttribute.Value = RFontAttribute.NORMAL, var color: RColor = RColor(0, 0, 0))
-
-  case class RText(txt: String, var font: RFont = RFont(10)) {
-    def size(fontSize: Int): RText = {
-      font.size = fontSize
-      this
-    }
-
-    def color(r: Int, g: Int, b: Int, opacity: Float = 1): RText = {
-      font.color = RColor(r, g, b, opacity)
-      this
-    }
-
-    def color(rColor: RColor): RText = {
-      font.color = rColor
-      this
-    }
-
-    def bold(): RText = {
-      font.attribute = if (font.attribute == RFontAttribute.ITALIC) RFontAttribute.BOLD_ITALIC else RFontAttribute.BOLD
-      this
-    }
-
-    def italic(): RText = {
-      font.attribute = if (font.attribute == RFontAttribute.BOLD) RFontAttribute.BOLD_ITALIC else RFontAttribute.ITALIC
-      this
-    }
-
-    def +(other: RText) = RTextList(ListBuffer(this, other))
-  }
-
-  case class RTextList(list: ListBuffer[RText]) {
-    def +(other: RText): RTextList = {
-      list += other
-      this
-    }
-  }
-
-
-  case class LineDashType(unit: Int, phase: Int)
 
   class RColorBase()
 
-  case class RColor(r: Int, g: Int, b: Int, opacity: Float = 1) extends RColorBase
 
   case class RGradientColor(x0: Float, y0: Float, x1: Float, y1: Float, startColor: RColor, endColor: RColor) extends RColorBase
 
   case class DRectangle(x1: Float, y1: Float, x2: Float, y2: Float,
                         radius: Float = 0)
-
-  object WrapOptions extends Enumeration {
-    val LIMIT_TO_BOX, WRAP_TO_BOX, UNLIMITED = Value
-  }
-
-  object WrapAllign extends Enumeration {
-    val NO_WRAP, WRAP_LEFT, WRAP_RIGHT, WRAP_CENTER, WRAP_JUSTIFIED = Value
-  }
-
-
-  case class RRow(cells: List[RCell]) {
-    def calculate(report: Report): Float = {
-      val y = report.getY
-      val wrapList = cells.map(cell => {
-        val result = report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, WrapOptions.LIMIT_TO_BOX, cell.allign, true)
-        result.get.currentY
-      })
-      report.setYPosition(y)
-      wrapList.reduceLeft((f1, f2) => if (f1 > f2) f1 else f2)
-    }
-
-    def print(report: Report): Unit = {
-      val y = report.getY
-      cells.foreach(cell => {
-        report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, WrapOptions.LIMIT_TO_BOX, cell.allign)
-      })
-      report.setYPosition(y)
-    }
-  }
-
 
   /*
   holds current position (page number and vertical coordinate y)
@@ -241,4 +163,21 @@ object ReportTypes {
 
   case class ReportCut(yCrt: Float, list: Seq[ReportItem])
 
+}
+
+
+object WrapOptions extends Enumeration {
+  val LIMIT_TO_BOX, WRAP_TO_BOX, UNLIMITED = Value
+}
+
+object WrapAllign extends Enumeration {
+  val NO_WRAP, WRAP_LEFT, WRAP_RIGHT, WRAP_CENTER, WRAP_JUSTIFIED = Value
+}
+
+
+/*
+Font attributes enum
+ */
+object RFontAttribute extends Enumeration {
+  val NORMAL, BOLD, ITALIC, BOLD_ITALIC = Value
 }

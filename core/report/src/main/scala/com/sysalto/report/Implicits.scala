@@ -23,25 +23,26 @@ package com.sysalto.report
 import com.sysalto.report.util.{GroupUtilTrait, ReportColumnUtil, ResultSetStreamUtil}
 
 object Implicits extends ScalaReportUtil with GroupUtilTrait with ResultSetStreamUtil {
-  val RText = com.sysalto.report.ReportTypes.RText
-  val LineDashType = com.sysalto.report.ReportTypes.LineDashType
-  val RMargin = ReportColumnUtil.RMargin
-  val Row = ReportColumnUtil.Row
-  val Column = ReportColumnUtil.Column
+  val RText = com.sysalto.report.reportTypes.RText
+  val LineDashType = com.sysalto.report.reportTypes.LineDashType
+  val RMargin = com.sysalto.report.reportTypes.RMargin
+  val Row = com.sysalto.report.reportTypes.Row
+  val Column = com.sysalto.report.reportTypes.Column
   val Flex = ReportColumnUtil.Flex
-  val RCell = com.sysalto.report.RCell
+  val RCell = com.sysalto.report.reportTypes.RCell
   val Report = com.sysalto.report.Report
   type Report = com.sysalto.report.Report
-  val RRow = com.sysalto.report.ReportTypes.RRow
+  val RRow = com.sysalto.report.reportTypes.RRow
   val ReportCheckpoint = com.sysalto.report.ReportTypes.ReportCheckpoint
   type ReportCheckpoint = com.sysalto.report.ReportTypes.ReportCheckpoint
   val ReportCut = com.sysalto.report.ReportTypes.ReportCut
   type ReportItem = com.sysalto.report.ReportTypes.ReportItem
-  val RColor = com.sysalto.report.ReportTypes.RColor
+  val RColor = com.sysalto.report.reportTypes.RColor
 
   val Source = akka.stream.scaladsl.Source
   val Sink = akka.stream.scaladsl.Sink
   val Await = scala.concurrent.Await
   val Duration = scala.concurrent.duration.Duration
-
+  val Group = com.sysalto.report.reportTypes.Group
+  type GroupUtil[T] = com.sysalto.report.reportTypes.GroupUtil[T]
 }

@@ -27,8 +27,10 @@ import akka.stream.ActorMaterializer
 import com.sysalto.report.util.{KryoUtil, PdfFactory, RockDbUtil}
 
 import scala.collection.mutable.ListBuffer
-
 import ReportTypes._
+import com.sysalto.report.reportTypes.{LineDashType, RCell, RColor, RText}
+import _root_.java.util.function.{BiConsumer, Function}
+import scala.collection.JavaConverters._
 
 /**
   * Main report class
@@ -46,8 +48,10 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
   private var crtYPosition = pdfUtil.pgSize.height
 
 
-  var headerFct: (Report, Long) => Unit = {
-    case (_, _) =>
+
+
+  var headerFct: (Report, Long,Long) => Unit = {
+    case (_, _,_) =>
   }
   var footerFct: (Report, Long, Long) => Unit = {
     case (_, _, _) =>
@@ -165,9 +169,11 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
   /*
   go to the next lineNbr line
    */
-  def nextLine(lineNbr: Int = 1): Unit = {
+  def nextLine(lineNbr: Int): Unit = {
     crtYPosition = crtYPosition - lineNbr * lineHeight
   }
+
+
 
   /*
   Draws rectangle from (x1,y1) to (x2,y2) with optional radius and color
@@ -225,6 +231,10 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
     crtPage.items += ReportPieChart(title, data, x0, y0, width, height)
   }
 
+  def drawPieChart1(title: String, data: _root_.java.util.Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = {
+    crtPage.items += ReportPieChart(title, data.asScala.toMap, x0, y0, width, height)
+  }
+
   /*
   Draw a bar chart with title,xLabel,yLabel and  data from (x0,y0) with width and height dimensions.
   See jfreechart for details.
@@ -237,7 +247,7 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
   Draw image from file at (x,y) with width and height having opacity.
   opacity is betwwen 0 (full transparent) and 1 (full opaque)
  */
-  def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float = 1): Unit = {
+  def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
     crtPage.items += ReportImage(file, x, y, width, height, opacity)
   }
 
@@ -298,7 +308,7 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
         crtPage.items.clear()
         crtPage.items.appendAll(page.items)
         if (getHeaderSize(i) > 0) {
-          headerFct(this, i)
+          headerFct(this, i,pageNbrs)
         }
         if (getFooterSize(i) > 0) {
           footerFct(this, i, pageNbrs)
@@ -394,6 +404,53 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
     }
   }
 
+  // java compatibility
+
+  def getHeaderSize(fct: Function[Long, Float]) {
+    getHeaderSize = { pgNbr =>
+      fct.apply(pgNbr.asInstanceOf[Long])
+    }
+  }
+
+  def getFooterSize(fct: Function[Long, Float]) {
+    getFooterSize = { pgNbr =>
+      fct.apply(pgNbr.asInstanceOf[Long])
+    }
+  }
+
+  def headerFct(fct: BiConsumer[Long, Long]) {
+    headerFct = {
+      case (rpt, pgNbr, pgMax) =>
+        fct.accept(pgNbr, pgMax)
+    }
+  }
+
+  def footerFct(fct: BiConsumer[Long, Long]) {
+    footerFct = {
+      case (rpt, pgNbr, pgMax) =>
+        fct.accept(pgNbr, pgMax)
+    }
+  }
+
+  def nextLine(): Unit = {
+    nextLine(1)
+  }
+
+  def text(txt: String, x: Float, y: Float): Unit = {
+   text(RText(txt),x,y)
+  }
+
+  def text(txt: String, x: Float): Unit = {
+    text(RText(txt),x)
+  }
+
+
+
+
+
+  def drawImage(file: String, x: Float, y: Float, width: Float, height: Float): Unit = {
+    drawImage(file,x,y,width,height,1f)
+  }
 
   // class initialize
 
@@ -403,3 +460,8 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
 
 }
 
+object Report {
+  def create(name: String,system: ActorSystem, materializer: ActorMaterializer, pdfFactory: PdfFactory):Report= {
+    new Report(name)(system,materializer,pdfFactory)
+  }
+}

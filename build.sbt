@@ -2,21 +2,21 @@ import sbt.Keys.publishMavenStyle
 
 val SCALA_VERSION = "2.12.1"
 
-val AKKA_VERSION = "2.4.16"
+val AKKA_VERSION = "2.5.0-RC1"
 
 val TYPESAFE_CONFIG = "1.3.1"
 
-val LOGBACK_VERSION = "1.1.3"
+val LOGBACK_VERSION = "1.2.2"
 
-val ROCKSDB_VERSION = "5.0.1"
+val ROCKSDB_VERSION = "5.1.2"
 
 val KRYO_VERSION = "0.5.2"
 
-val ITEXT_VERSION = "5.5.10"
+val ITEXT_VERSION = "5.5.11"
 
 val JFREECHART_VERSION = "1.0.19"
 
-val projectVersion="1.0.0-alpha.1"
+val projectVersion="1.0.0-alpha.2"
 
 lazy val commonInclude = Seq(
   organization := "com.github.sysalto",
@@ -109,9 +109,9 @@ lazy val exampleSettings = Seq(
   resolvers += Resolver.mavenLocal,
   libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
   libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release"),
-  libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release",
-  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % projectVersion,
-  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % projectVersion
+  libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release"
+//  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % projectVersion,
+//  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % projectVersion
 
 )
 

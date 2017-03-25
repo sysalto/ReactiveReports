@@ -27,7 +27,9 @@ import com.itextpdf.awt.{DefaultFontMapper, PdfGraphics2D, PdfPrinterGraphics2D}
 import com.itextpdf.text.Font.FontFamily
 import com.itextpdf.text.pdf._
 import com.itextpdf.text.{BaseColor, Chunk, Document, Element, Font, Image, PageSize}
+import com.sysalto.report.{RFontAttribute, WrapAllign, WrapOptions}
 import com.sysalto.report.ReportTypes._
+import com.sysalto.report.reportTypes.{LineDashType, RColor, RText}
 import com.sysalto.report.util.PdfUtil
 import org.jfree.chart.ChartFactory
 import org.jfree.data.category.DefaultCategoryDataset
