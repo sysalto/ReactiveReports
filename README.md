@@ -15,13 +15,13 @@ It consists of two jars:
 * reactive-reports-core - the main core report framework that is render agnostic
 * reactive-reports-itext-render - itext render for reactive reports
 
-In this first version, ReactiveReports can be used in Scala 2.12. A Java version will follow soon.
+In this second  release, ReactiveReports can be used in Scala 2.12 and in Java 8.
 
 ### Sbt installation:
 
-  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % "1.0.0-alpha.1",
+  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % "1.0.0-alpha.2",
   
-  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % "1.0.0-alpha.1".
+  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % "1.0.0-alpha.2".
   
   
 ### Getting started
@@ -45,4 +45,10 @@ cut and report.paste.
 It can create multiple reports based on common data, selecting the database records only once and creating different 
 reports simultaneously.
 Please see com.sysalto.report.examples.rss.RssReport.
+
+### Java port
+There are two examples in the folder: examples/src/main/java/com/sysalto/report/examples:
+* HelloWorldJavaReport.java
+* MutualFundsJavaReport.java
+
   
