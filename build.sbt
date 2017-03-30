@@ -2,21 +2,21 @@ import sbt.Keys.publishMavenStyle
 
 val SCALA_VERSION = "2.12.1"
 
-val AKKA_VERSION = "2.5.0-RC1"
+val AKKA_VERSION = "latest.release"
 
-val TYPESAFE_CONFIG = "1.3.1"
+val TYPESAFE_CONFIG = "latest.release"
 
-val LOGBACK_VERSION = "1.2.2"
+val LOGBACK_VERSION = "latest.release"
 
-val ROCKSDB_VERSION = "5.1.2"
+val ROCKSDB_VERSION = "latest.release"
 
-val KRYO_VERSION = "0.5.2"
+val KRYO_VERSION = "latest.release"
 
-val ITEXT_VERSION = "5.5.11"
+val ITEXT_VERSION = "latest.release"
 
-val JFREECHART_VERSION = "1.0.19"
+val JFREECHART_VERSION = "latest.release"
 
-val projectVersion="1.0.0-alpha.2"
+val projectVersion = "1.0.0-alpha.3"
 
 lazy val commonInclude = Seq(
   organization := "com.github.sysalto",
@@ -66,15 +66,18 @@ lazy val commonInclude = Seq(
 
 lazy val commonSettings = Seq(
   scalaVersion := SCALA_VERSION,
-  libraryDependencies += "com.typesafe.akka" %% "akka-actor" % AKKA_VERSION,
-  libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % AKKA_VERSION,
-  libraryDependencies += "com.typesafe.akka" %% "akka-stream" % AKKA_VERSION,
   libraryDependencies += "com.typesafe" % "config" % TYPESAFE_CONFIG,
   libraryDependencies += "ch.qos.logback" % "logback-classic" % LOGBACK_VERSION,
   libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
   libraryDependencies += "com.github.romix.akka" %% "akka-kryo-serialization" % KRYO_VERSION
 )
 
+lazy val akkaSettings = Seq(
+  scalaVersion := SCALA_VERSION,
+  libraryDependencies += "com.typesafe.akka" %% "akka-actor" % AKKA_VERSION,
+  libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % AKKA_VERSION,
+  libraryDependencies += "com.typesafe.akka" %% "akka-stream" % AKKA_VERSION
+)
 
 lazy val renderItextSettings = Seq(
   scalaVersion := SCALA_VERSION,
@@ -84,19 +87,29 @@ lazy val renderItextSettings = Seq(
 
 
 lazy val reactiveReports = (project in file(".")).settings(commonInclude: _*).
-  settings(commonSettings: _*).enablePlugins(JavaAppPackaging) dependsOn(coreReport, renderItext, examples)
+  settings(commonSettings: _*).enablePlugins(JavaAppPackaging) dependsOn(
+    coreReport, coreReportAkka, renderItext, renderPdf, examples)
 
 lazy val coreReport = (project in file("core/report")).settings(commonInclude: _*).
   settings(name := "ReactiveReports Core").
   settings(commonSettings: _*).enablePlugins(JavaAppPackaging)
 
+
+lazy val coreReportAkka = (project in file("core/reportAkka")).settings(commonInclude: _*).
+  settings(name := "ReactiveReports Core Akka").
+  settings(commonSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
+
 lazy val renderItext = (project in file("core/renders/itext")).settings(commonInclude: _*).
   settings(name := "ReactiveReports Itext Render").
   settings(renderItextSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
 
+lazy val renderPdf = (project in file("core/renders/pdf")).settings(commonInclude: _*).
+  settings(name := "ReactiveReports Pdf Render").
+  settings(renderItextSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
+
 
 lazy val exampleSettings = Seq(
-  name:= "Reports Examples",
+  name := "Reports Examples",
   organization := "com.github.sysalto",
   version := projectVersion,
   cancelable in Global := true,
@@ -110,8 +123,8 @@ lazy val exampleSettings = Seq(
   libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
   libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release"),
   libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release"
-//  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % projectVersion,
-//  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % projectVersion
+  //  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % projectVersion,
+  //  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % projectVersion
 
 )
 
@@ -122,5 +135,5 @@ lazy val examples = (project in file("examples")).
     libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release",
     libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
     libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release")
-  ).enablePlugins(JavaAppPackaging) dependsOn(coreReport, renderItext)
+  ).enablePlugins(JavaAppPackaging) dependsOn(coreReport,coreReportAkka, renderItext)
 

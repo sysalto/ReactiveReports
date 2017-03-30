@@ -25,8 +25,11 @@ import java.util.GregorianCalendar
 
 import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
+import com.sysalto.report.ImplicitsAkka._
+import com.sysalto.report.akka.util.AkkaGroupUtil
+import com.sysalto.report.reportTypes.GroupUtil
 
-object MutualFundsReport extends ReportApp {
+object MutualFundsReport extends ReportApp with AkkaGroupUtil{
   val sd = new SimpleDateFormat("MMM dd yyyy")
   private val date1 = new GregorianCalendar(2013, 0, 1).getTime
   private val date2 = new GregorianCalendar(2013, 11, 31).getTime
@@ -107,10 +110,10 @@ object MutualFundsReport extends ReportApp {
     val result1 = source.group.
       runWith(Sink.foreach(
         rec => try {
-          if (isFirstRecord(rec)) {
+          if (GroupUtil.isFirstRecord(rec)) {
             firstY = report.getY
           }
-          val crtRec = getRec(rec)
+          val crtRec = GroupUtil.getRec(rec)
           val c_fundName = RCell(RText(firstChar.asInstanceOf[Char].toString + " ").bold() + (crtRec value "fund_name").toString) leftAllign() between fundName
 
           val c_value1 = RCell((crtRec value "value1").toString) rightAllign() between value1
@@ -127,7 +130,7 @@ object MutualFundsReport extends ReportApp {
           val y2 = rrow.calculate(report)
           rrow.print(report)
           report.setYPosition(y2 + 5)
-          if (isLastRecord(rec)) {
+          if (GroupUtil.isLastRecord(rec)) {
             report line() from(10, report.getY) to change.right width 0.5f draw()
           } else {
             report line() from(10, report.getY) to change.right color(200, 200, 200) lineType LineDashType(2, 1) draw()
@@ -175,7 +178,7 @@ object MutualFundsReport extends ReportApp {
     val result1 = source.group.
       runWith(Sink.foreach(
         rec => try {
-          val crtRec = getRec(rec)
+          val crtRec = GroupUtil.getRec(rec)
           val name = (crtRec value "name").toString
           val r_value1 = (crtRec value "value1").toString
           val r_value2 = (crtRec value "value2").toString

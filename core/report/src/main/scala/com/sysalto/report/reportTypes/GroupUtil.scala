@@ -60,25 +60,6 @@ class GroupUtil[T](groupList: List[Group[T]]) {
     }
   }
 
-  def getRec[T](rec: (Option[T], Option[T], Option[T])): T = {
-    rec match {
-      case (_: Option[T], crt: Option[T], _: Option[T]) =>
-        crt.get
-    }
-  }
-
-  def getRec(rec: Any): T = {
-    assert(rec.isInstanceOf[(Option[T], Option[T], Option[T])])
-    getRec(rec.asInstanceOf[(Option[T], Option[T], Option[T])])
-  }
-
-  def isFirstRecord[T](rec: (Option[T], Option[T], Option[T])): Boolean = {
-    rec._1.isEmpty
-  }
-
-  def isLastRecord[T](rec: (Option[T], Option[T], Option[T])): Boolean = {
-    rec._3.isEmpty
-  }
 
   def isHeader(name: String, rec: Any): Boolean = {
     assert(rec.isInstanceOf[(Option[T], Option[T], Option[T])])
@@ -97,10 +78,29 @@ class GroupUtil[T](groupList: List[Group[T]]) {
 }
 
 object GroupUtil {
-  def instance=this
-  @varargs def apply[T]( list: Group[T]*): GroupUtil[T] = {
+  def instance = this
+
+  @varargs def apply[T](list: Group[T]*): GroupUtil[T] = {
     new GroupUtil(list.toList)
   }
 
+  def getRec[T](rec: (Option[T], Option[T], Option[T])): T = {
+    rec match {
+      case (_: Option[T], crt: Option[T], _: Option[T]) =>
+        crt.get
+    }
+  }
 
+  def getRec[T](rec: Any): T = {
+    assert(rec.isInstanceOf[(Option[T], Option[T], Option[T])])
+    getRec(rec.asInstanceOf[(Option[T], Option[T], Option[T])])
+  }
+
+  def isFirstRecord[T](rec: (Option[T], Option[T], Option[T])): Boolean = {
+    rec._1.isEmpty
+  }
+
+  def isLastRecord[T](rec: (Option[T], Option[T], Option[T])): Boolean = {
+    rec._3.isEmpty
+  }
 }

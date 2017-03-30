@@ -18,7 +18,7 @@
  * along with this program; if not, see https://www.gnu.org/licenses/agpl-3.0.en.html.
  */
 
-package com.sysalto.report.util
+package com.sysalto.report.akka.util
 
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
 import akka.stream.scaladsl.{Flow, Source}
@@ -26,7 +26,7 @@ import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
 import akka.NotUsed
 import com.sysalto.report.reportTypes.Group
 
-trait GroupUtilTrait {
+trait AkkaGroupUtil {
 
   implicit class SourceGroup[T](s: Source[T, NotUsed]) {
     def group: Source[(Option[T], Option[T], Option[T]), NotUsed] = s.via(new GroupTransform)
@@ -34,24 +34,6 @@ trait GroupUtilTrait {
 
   implicit class FlowGroup[T](f: Flow[T, T, NotUsed]) {
     def group: Flow[T, (Option[T], Option[T], Option[T]), NotUsed] = f.via(new GroupTransform)
-  }
-
-
-
-
-  def getRec[T](rec: (Option[T], Option[T], Option[T])): T = {
-    rec match {
-      case (_: Option[T], crt: Option[T], _: Option[T]) =>
-        crt.get
-    }
-  }
-
-  def isFirstRecord[T](rec: (Option[T], Option[T], Option[T])): Boolean = {
-    rec._1.isEmpty
-  }
-
-  def isLastRecord[T](rec: (Option[T], Option[T], Option[T])): Boolean = {
-    rec._3.isEmpty
   }
 }
 

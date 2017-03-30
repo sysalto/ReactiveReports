@@ -5,9 +5,10 @@ import akka.actor.ActorSystem;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Sink;
 import com.sysalto.render.PdfITextFactory;
+import com.sysalto.report.JavaUtil;
 import com.sysalto.report.Report;
+import com.sysalto.report.akka.util.GroupTransform;
 import com.sysalto.report.reportTypes.*;
-import com.sysalto.report.util.GroupTransform;
 import com.sysalto.report.util.ReportColumnUtil;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -31,7 +32,7 @@ public class HelloWorldJavaReport {
                         "akka.log-dead-letters-during-shutdown=off");
         ActorSystem system = ActorSystem.create("Sys", config);
         ActorMaterializer materializer = ActorMaterializer.create(system);
-        Report report = Report.create("HellowWorldJava.pdf", system, materializer, pdfITextFactory);
+        Report report = Report.create("HellowWorldJava.pdf", pdfITextFactory);
 
 
         report.getFooterSize(pg -> 30f);
@@ -65,7 +66,7 @@ public class HelloWorldJavaReport {
 
         CompletionStage result = (CompletionStage) reportSource.via(new GroupTransform()).runWith(Sink.foreach(
                 rec1 -> {
-                    TestRecord currentRecord = reportGroupUtil.getRec(rec1);
+                    TestRecord currentRecord = JavaUtil.getRec(rec1);
                     boolean isHeader = reportGroupUtil.isHeader("city", rec1);
                     boolean newPageForCity = false;
                     if (!reportGroupUtil.isFirstRecord(rec1) && reportGroupUtil.isHeader("city", rec1)) {

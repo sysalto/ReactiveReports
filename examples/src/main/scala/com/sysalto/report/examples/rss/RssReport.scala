@@ -23,18 +23,19 @@ package com.sysalto.report.examples.rss
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.stream.{FlowShape, SourceShape}
-import akka.stream.scaladsl.{Source, Sink, _}
+import akka.stream.scaladsl.{Sink, Source, _}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Await, Future}
 import GraphDSL.Implicits._
-
 import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
+import com.sysalto.report.akka.util.AkkaGroupUtil
+import com.sysalto.report.reportTypes.GroupUtil
 
 
 
-object RssReport extends ReportApp {
+object RssReport extends ReportApp with AkkaGroupUtil{
 
 
   type RssType = (String, String, String, String)
@@ -106,7 +107,7 @@ object RssReport extends ReportApp {
 
     def reportFct(report: Report, rec: RssReportType): Unit = {
       try {
-        val crtRec = getRec(rec)
+        val crtRec = GroupUtil.getRec(rec)
         report.nextLine(2)
         report rectangle() from(9, report.getY) to(report.pgSize.width - 9, report.getY + report.lineHeight) fillColor headerColor draw()
         report print crtRec._2 at 10
@@ -124,7 +125,7 @@ object RssReport extends ReportApp {
         if (report.lineLeft < 10) {
           report.newPage()
         }
-        if (isLastRecord(rec)) {
+        if (GroupUtil.isLastRecord(rec)) {
           report.render()
           report.close()
         }

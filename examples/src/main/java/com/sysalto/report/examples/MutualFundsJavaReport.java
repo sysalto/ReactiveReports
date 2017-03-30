@@ -8,9 +8,9 @@ import akka.stream.scaladsl.Source;
 import com.sysalto.render.PdfITextFactory;
 import com.sysalto.report.JavaUtil;
 import com.sysalto.report.Report;
+import com.sysalto.report.akka.util.GroupTransform;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
-import com.sysalto.report.util.GroupTransform;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import scala.collection.immutable.Map;
@@ -49,7 +49,7 @@ public class MutualFundsJavaReport {
 
     private void run() throws Exception {
 
-        Report report = Report.create("MutualFundsJava.pdf", system, materializer, pdfITextFactory);
+        Report report = Report.create("MutualFundsJava.pdf", pdfITextFactory);
         report.getHeaderSize(pg -> {
             Long pgNbr = new Long(pg.toString());
             if (pgNbr == 1) return 0f;
@@ -171,7 +171,7 @@ public class MutualFundsJavaReport {
         total1.set(0.);
         total2.set(0.);
         total3.set(0.);
-        firstChar.set((int)'A');
+        firstChar.set((int) 'A');
 
         CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.foreach(
                 rec1 -> {
@@ -203,7 +203,7 @@ public class MutualFundsJavaReport {
                     } else {
                         report.line().from(10, report.getY()).to(m_change.right(), -1).color(200, 200, 200).lineType(new LineDashType(2, 1)).width(0.5f).draw();
                     }
-                    firstChar.set(firstChar.get()+1);
+                    firstChar.set(firstChar.get() + 1);
                 }), materializer);
         result.toCompletableFuture().get();
         RRow trow = RRow.apply(new RCell(new RText("Total").bold()).between(m_fundName),

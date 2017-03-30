@@ -20,9 +20,9 @@
 
 package com.sysalto.report
 
-import com.sysalto.report.util.{GroupUtilTrait, ReportColumnUtil, ResultSetStreamUtil}
+import com.sysalto.report.util.{ReportColumnUtil, ResultSetStreamUtil}
 
-object Implicits extends ScalaReportUtil with GroupUtilTrait with ResultSetStreamUtil {
+object Implicits extends ScalaReportUtil with ResultSetStreamUtil {
   val RText = com.sysalto.report.reportTypes.RText
   val LineDashType = com.sysalto.report.reportTypes.LineDashType
   val RMargin = com.sysalto.report.reportTypes.RMargin
@@ -39,8 +39,7 @@ object Implicits extends ScalaReportUtil with GroupUtilTrait with ResultSetStrea
   type ReportItem = com.sysalto.report.ReportTypes.ReportItem
   val RColor = com.sysalto.report.reportTypes.RColor
 
-  val Source = akka.stream.scaladsl.Source
-  val Sink = akka.stream.scaladsl.Sink
+
   val Await = scala.concurrent.Await
   val Duration = scala.concurrent.duration.Duration
   val Group = com.sysalto.report.reportTypes.Group

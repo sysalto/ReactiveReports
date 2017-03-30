@@ -21,7 +21,6 @@
 package com.sysalto.report
 
 
-
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import com.sysalto.report.util.{KryoUtil, PdfFactory, RockDbUtil}
@@ -36,7 +35,7 @@ import scala.collection.JavaConverters._
   * Main report class
   * name - pdf file name
   */
-case class Report(name: String)(implicit system: ActorSystem, materializer: ActorMaterializer, pdfFactory: PdfFactory) {
+case class Report(name: String)(implicit pdfFactory: PdfFactory) {
   private var pageNbrs = 1L
   private var crtPageNbr = 1L
   private val crtPage = ReportPage(new ListBuffer[ReportItem]())
@@ -48,10 +47,8 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
   private var crtYPosition = pdfUtil.pgSize.height
 
 
-
-
-  var headerFct: (Report, Long,Long) => Unit = {
-    case (_, _,_) =>
+  var headerFct: (Report, Long, Long) => Unit = {
+    case (_, _, _) =>
   }
   var footerFct: (Report, Long, Long) => Unit = {
     case (_, _, _) =>
@@ -172,7 +169,6 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
   def nextLine(lineNbr: Int): Unit = {
     crtYPosition = crtYPosition - lineNbr * lineHeight
   }
-
 
 
   /*
@@ -308,7 +304,7 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
         crtPage.items.clear()
         crtPage.items.appendAll(page.items)
         if (getHeaderSize(i) > 0) {
-          headerFct(this, i,pageNbrs)
+          headerFct(this, i, pageNbrs)
         }
         if (getFooterSize(i) > 0) {
           footerFct(this, i, pageNbrs)
@@ -437,31 +433,28 @@ case class Report(name: String)(implicit system: ActorSystem, materializer: Acto
   }
 
   def text(txt: String, x: Float, y: Float): Unit = {
-   text(RText(txt),x,y)
+    text(RText(txt), x, y)
   }
 
   def text(txt: String, x: Float): Unit = {
-    text(RText(txt),x)
+    text(RText(txt), x)
   }
 
 
-
-
-
   def drawImage(file: String, x: Float, y: Float, width: Float, height: Float): Unit = {
-    drawImage(file,x,y,width,height,1f)
+    drawImage(file, x, y, width, height, 1f)
   }
 
   // class initialize
 
   pdfUtil.open(name)
   setFontSize(fontSize)
-  KryoUtil.register(List(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass))
+  KryoUtil.register(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass)
 
 }
 
 object Report {
-  def create(name: String,system: ActorSystem, materializer: ActorMaterializer, pdfFactory: PdfFactory):Report= {
-    new Report(name)(system,materializer,pdfFactory)
+  def create(name: String, pdfFactory: PdfFactory): Report = {
+    new Report(name)(pdfFactory)
   }
 }

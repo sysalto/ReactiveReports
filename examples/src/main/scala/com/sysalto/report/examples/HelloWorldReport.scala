@@ -21,11 +21,13 @@
 package com.sysalto.report.examples
 
 import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.RCell
+import com.sysalto.report.ImplicitsAkka._
+import com.sysalto.report.akka.util.AkkaGroupUtil
+import com.sysalto.report.reportTypes.{GroupUtil, RCell}
 import com.sysalto.report.template.ReportApp
 
 
-object HelloWorldReport extends ReportApp {
+object HelloWorldReport extends ReportApp with AkkaGroupUtil {
   private def run(): Unit = {
 
     // setup a new report with the name
@@ -78,14 +80,14 @@ object HelloWorldReport extends ReportApp {
     val result1 = reportSource.group.
       runWith(Sink.foreach(
         rec1 => try {
-          val currentRecord = getRec(rec1)
+          val currentRecord = GroupUtil.getRec(rec1)
           val isHeader = reportGroupUtil.isHeader("city", rec1)
           var newPageForCity = false
-          if (!isFirstRecord(rec1) && reportGroupUtil.isHeader("city", rec1)) {
+          if (!GroupUtil.isFirstRecord(rec1) && reportGroupUtil.isHeader("city", rec1)) {
             report.newPage()
             newPageForCity = true
           }
-          if (isFirstRecord(rec1)) {
+          if (GroupUtil.isFirstRecord(rec1)) {
             newPageForCity = true
           }
           if (reportGroupUtil.isHeader("city", rec1)) {

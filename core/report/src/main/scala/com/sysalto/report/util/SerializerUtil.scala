@@ -20,21 +20,20 @@
 
 package com.sysalto.report.util
 
-import com.typesafe.config.ConfigFactory
-import akka.actor._
-import akka.serialization._
 
 object SerializerUtil {
+  def write(data: AnyRef): Array[Byte] = KryoUtil.serialize(data)
 
-
-  private val system = ActorSystem("serializer", ConfigFactory.load("application"))
-  private val serialization = SerializationExtension(system)
-  private val serializer = serialization.findSerializerFor("")
-  system.terminate()
-
-  def write(data: AnyRef): Array[Byte] = serializer.toBinary(data)
-
-  def read[T <: AnyRef](bytes: Array[Byte]): T = serializer.fromBinary(bytes).asInstanceOf[T]
+  def read[T <: AnyRef](bytes: Array[Byte]) = KryoUtil.deserialize[T](bytes)
+//
+//  private val system = ActorSystem("serializer", ConfigFactory.load("application"))
+//  private val serialization = SerializationExtension(system)
+//  private val serializer = serialization.findSerializerFor("")
+//  system.terminate()
+//
+//  def write(data: AnyRef): Array[Byte] = serializer.toBinary(data)
+//
+//  def read[T <: AnyRef](bytes: Array[Byte]): T = serializer.fromBinary(bytes).asInstanceOf[T]
 
 
 }

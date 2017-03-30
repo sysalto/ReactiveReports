@@ -23,82 +23,95 @@ package com.sysalto.report.util
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import java.util.zip.{DeflaterOutputStream, InflaterInputStream}
 
-import com.esotericsoftware.kryo.{Kryo, Serializer}
-import com.esotericsoftware.kryo.Kryo.DefaultInstantiatorStrategy
-import com.esotericsoftware.kryo.io.{Input, Output}
-import com.esotericsoftware.kryo.serializers.JavaSerializer
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.Serializer
+import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.io.Output
 import com.romix.scala.serialization.kryo._
 import org.objenesis.strategy.StdInstantiatorStrategy
 
-
+/**
+  * Created by marian on 16/02/16.
+  */
 object KryoUtil {
   val compress = true
-  val kryo = new Kryo()
 
-  kryo.addDefaultSerializer(classOf[scala.Enumeration#Value], classOf[EnumerationSerializer])
-  kryo.register(Class.forName("scala.Enumeration$Val"))
-  kryo.register(classOf[scala.Enumeration#Value])
+  def getKryo() = {
+    val kryo = new Kryo()
 
-  //		// Serialization of Scala maps like Trees, etc
-  kryo.addDefaultSerializer(classOf[scala.collection.Map[_, _]], classOf[ScalaImmutableMapSerializer])
-  kryo.addDefaultSerializer(classOf[scala.collection.generic.MapFactory[scala.collection.Map]], classOf[ScalaImmutableMapSerializer])
-  //
-  //		// Serialization of Scala sets
-  kryo.addDefaultSerializer(classOf[scala.collection.Set[_]], classOf[ScalaImmutableSetSerializer])
-  kryo.addDefaultSerializer(classOf[scala.collection.generic.SetFactory[scala.collection.Set]], classOf[ScalaImmutableSetSerializer])
+    kryo.addDefaultSerializer(classOf[scala.Enumeration#Value], classOf[EnumerationSerializer])
+    kryo.register(Class.forName("scala.Enumeration$Val"))
+    kryo.register(classOf[scala.Enumeration#Value])
 
-  // Serialization of all Traversable Scala collections like Lists, Vectors, etc
-  kryo.addDefaultSerializer(classOf[scala.collection.Traversable[_]], classOf[ScalaCollectionSerializer])
+    //		// Serialization of Scala maps like Trees, etc
+    kryo.addDefaultSerializer(classOf[scala.collection.Map[_, _]], classOf[ScalaImmutableMapSerializer])
+    kryo.addDefaultSerializer(classOf[scala.collection.generic.MapFactory[scala.collection.Map]], classOf[ScalaImmutableMapSerializer])
+    //
+    //		// Serialization of Scala sets
+    kryo.addDefaultSerializer(classOf[scala.collection.Set[_]], classOf[ScalaImmutableSetSerializer])
+    kryo.addDefaultSerializer(classOf[scala.collection.generic.SetFactory[scala.collection.Set]], classOf[ScalaImmutableSetSerializer])
 
+    // Serialization of all Traversable Scala collections like Lists, Vectors, etc
+    kryo.addDefaultSerializer(classOf[scala.collection.Traversable[_]], classOf[ScalaCollectionSerializer])
 
-  kryo.setInstantiatorStrategy(new DefaultInstantiatorStrategy(new StdInstantiatorStrategy()))
-
-
-  kryo.register(Class.forName("scala.None$"), new NoneSerializer())
-//  kryo.register(classOf[Some[_]], new SomeSerializer(kryo))
-
-  class NoneSerializer extends Serializer[None.type] {
-    override def write(kryo: Kryo, output: Output, `object`: None.type): Unit = ()
-
-    override def read(kryo: Kryo, input: Input, `type`: Class[None.type]): None.type = None
+    // Support deserialization of classes without no-arg constructors
+    kryo.setInstantiatorStrategy(new StdInstantiatorStrategy())
+    kryo
   }
 
-//  class SomeSerializer(kryo: Kryo) extends Serializer[Some[_]] {
-//    override def write(kryo: Kryo, output: Output, `object`: Some[_]): Unit = kryo.writeClassAndObject(output, `object`)
-//
-//    override def read(kryo: Kryo, input: Input, `type`: Class[Some[_]]): Some[_] = Some(kryo.readClassAndObject(input))
-//  }
+  val kryoD = getKryo
 
-  def register(classList: List[Class[_ <:Any]]): Unit = {
-    classList.foreach(clazz => kryo.register(clazz))
+  def register(classList: Class[_]*) = {
+    classList.foreach(clazz => kryoD.register(clazz))
   }
 
-
-  def serialize(item: Any): Array[Byte] = {
-    if (compress) {
-      val byteArrayOutputStream = new ByteArrayOutputStream()
+  def serialize(item: Any, kryo: Kryo = kryoD) = {
+    val byteArrayOutputStream = new ByteArrayOutputStream()
+    val output = if (compress) {
       val deflaterOutputStream = new DeflaterOutputStream(byteArrayOutputStream)
-      val output = new Output(deflaterOutputStream)
-      kryo.writeClassAndObject(output, item)
-      output.close()
-      byteArrayOutputStream.toByteArray
-    } else {
-      val output = new Output(new ByteArrayOutputStream())
-      kryo.writeClassAndObject(output, item)
-      output.flush()
-      output.getBuffer
+      new Output(deflaterOutputStream)
     }
+    else new Output(byteArrayOutputStream)
+    kryo.writeClassAndObject(output, item)
+    output.close()
+    byteArrayOutputStream.toByteArray()
   }
 
-  def deserialize(buf: Array[Byte]): AnyRef = {
+
+  def deserialize[T <: AnyRef](buf: Array[Byte], kryo: Kryo = kryoD): T = {
     val input = if (compress) {
       new Input(new InflaterInputStream(new ByteArrayInputStream(buf)))
     }
-    else {
-      new Input(buf)
-    }
-    kryo.readClassAndObject(input)
+    else new Input(buf)
+    kryo.readClassAndObject(input).asInstanceOf[T]
   }
 
+  object WeekDay extends Enumeration {
+    type WeekDay = Value
+    val Mon, Tue, Wed, Thu, Fri, Sat, Sun = Value
+  }
+
+  object Time extends Enumeration {
+    type Time = Value
+    val Second, Minute, Hour, Day, Month, Year = Value
+  }
+
+  def main(args: Array[String]) {
+    import WeekDay._
+    import Time._
+
+    val obuf1 = new Output(new ByteArrayOutputStream())
+    // Serialize
+    kryoD.writeClassAndObject(obuf1, Tue)
+    kryoD.writeClassAndObject(obuf1, Second)
+    // Deserialize
+    val bytes = obuf1.toBytes
+    println("lg:" + bytes.length)
+    val ibuf1 = new Input(bytes)
+    val enumObjWeekday1 = kryoD.readClassAndObject(ibuf1)
+    val enumObjTime1 = kryoD.readClassAndObject(ibuf1)
+    println(enumObjWeekday1)
+    println(enumObjTime1)
+  }
 
 }

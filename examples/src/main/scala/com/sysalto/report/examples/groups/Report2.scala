@@ -20,12 +20,16 @@
 
 package com.sysalto.report.examples.groups
 
+import akka.stream.scaladsl.Source
 import com.sysalto.report.Implicits._
+import com.sysalto.report.ImplicitsAkka._
+import com.sysalto.report.akka.util.AkkaGroupUtil
+import com.sysalto.report.reportTypes.GroupUtil
 import com.sysalto.report.util.ImplicitsExample._
 import com.sysalto.report.template.ReportApp
 
 
-object Report2 extends ReportApp {
+object Report2 extends ReportApp with AkkaGroupUtil {
   private def run(): Unit = {
     val report = Report("report2.pdf")
 
@@ -71,14 +75,14 @@ object Report2 extends ReportApp {
     val result1 = accountSource.group.
       runWith(Sink.foreach(
         rec1 => {
-          val accountRec = getRec(rec1)
+          val accountRec = GroupUtil.getRec(rec1)
           val isHeader = accountGroupUtil.isHeader("agent", rec1)
           var newPageForAgent = false
-          if (!isFirstRecord(rec1) && accountGroupUtil.isHeader("branch", rec1)) {
+          if (!GroupUtil.isFirstRecord(rec1) && accountGroupUtil.isHeader("branch", rec1)) {
             report.newPage()
             newPageForAgent = true
           }
-          if (isFirstRecord(rec1)) {
+          if (GroupUtil.isFirstRecord(rec1)) {
             newPageForAgent = true
           }
           if (accountGroupUtil.isHeader("region", rec1)) {
