@@ -18,20 +18,20 @@ object TestReport extends {
 
   def run2(): Unit = {
     implicit val pdfITextFactory = new PdfNativeFactory()
-    val report = Report("Test2.pdf",ReportPageOrientation.LANDCAPE)
+    val report = Report("Test2.pdf",ReportPageOrientation.PORTRAIT)
     runReport(report)
   }
 
   def runReport(report: Report): Unit = {
     report.nextLine()
     report print "test" at 10
-    report.nextLine()
-    report print "test1" at 40
-    report.nextLine()
-    report print "test2" at 10
-    report.newPage()
-    report.nextLine()
-    report print "Page 2 test1" at 10
+//    report.nextLine()
+//    report print "test1" at 40
+//    report.nextLine()
+//    report print "test2" at 10
+//    report.newPage()
+//    report.nextLine()
+//    report print "Page 2 test1" at 10
 
     report.render()
     report.close()

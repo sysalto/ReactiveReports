@@ -4,7 +4,7 @@
 1 0 obj
   <<  /Type /Catalog
       /Outlines 2 0 R
-      /Pages 3 0 R
+      /Pages 7 0 R
   >>
 endobj
 2 0 obj
@@ -13,16 +13,9 @@ endobj
   >>
 endobj
 3 0 obj
-  <<  /Type /Pages
-      
-      /Kids [ 6 0 R ]
-      /Count 1
-  >>
-endobj
-4 0 obj
   [/PDF /Text ]
 endobj
-5 0 obj
+4 0 obj
   <<  /Type /Font
       /Subtype /Type1
       /Name /F1
@@ -30,48 +23,67 @@ endobj
       /Encoding /MacRomanEncoding
   >>
 endobj
+5 0 obj
+  <<  /Type /Pages 
+      /Kids [  ]
+      /Count 0
+  >>
+endobj
 6 0 obj
   <<  /Type /Page
-      /Parent 3 0 R
-      /MediaBox [ 0 0 612 792 ] /Rotate 90
-      /Contents 7 0 R
-      /Resources  <<    /ProcSet 4 0 R
-                        /Font << /F1 5 0 R >>
+      /Parent 5 0 R
+      /MediaBox [ 0 0 612 792 ] 
+      
+      /Resources  <<   /ProcSet 3 0 R
+                        /Font << /F1 4 0 R 
                   >>
   >>
 endobj
 7 0 obj
-  <<  /Length 290 >>
+  <<  /Type /Pages
+      
+      /Kids [ 8 0 R ]
+      /Count 1
+  >>
+endobj
+8 0 obj
+  <<  /Type /Page
+      /Parent 7 0 R
+      /MediaBox [ 0 0 612 792 ] 
+      /Contents 9 0 R
+      /Resources  <<    /ProcSet 3 0 R
+                        /Font << /F1 4 0 R >>
+                  >>
+  >>
+endobj
+9 0 obj
+  <<  /Length 127 >>
       stream
-0 -1 1 0 0 0 cm
+1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm
 BT
         /F1 10 Tf
-        -1 0 0 -1 -10 -165 Tm
+        -1 0 0 -1 -10 15 Tm
         ( test ) Tj
-               -1 0 0 -1 -40 -150 Tm
-        ( test1 ) Tj
-               -1 0 0 -1 -10 -135 Tm
-        ( test2 ) Tj
-               -1 0 0 -1 -10 15 Tm
-        ( Page 2 test1 ) Tj
        
       ET
        endstream
 endobj
 xref
-0 8
+0 10
 0000000000 65535 f
 0000000014 00000 n 
 0000000096 00000 n 
 0000000153 00000 n 
-0000000236 00000 n 
-0000000267 00000 n 
-0000000404 00000 n 
-0000000633 00000 n 
+0000000184 00000 n 
+0000000321 00000 n 
+0000000393 00000 n 
+0000000594 00000 n 
+0000000677 00000 n 
+0000000896 00000 n 
 trailer
-  <<  /Size 8
+  <<  /Size 10
    /Root 1 0 R
  >>
 startxref
-982
+1082
 %%EOF

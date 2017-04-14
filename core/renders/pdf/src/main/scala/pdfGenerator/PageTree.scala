@@ -112,11 +112,9 @@ object PageTree {
     val list = make(listObj)
     val pageMap = pageList.map(page => (page.id -> page)).toMap
 
-    println("Levels size:" + list)
     display(listObj.size, List(), list)(getNextNumberFct) {
       (parent: Option[Long], nodeId: Long, children: List[Long], leafNbr: Long, isleaf: Boolean) => {
         if (!isleaf) {
-          println("PP:" + nodeId)
           val pageList = new PdfPageList(nodeId, parent, children)
           if (parent.isEmpty) {
             root = pageList
