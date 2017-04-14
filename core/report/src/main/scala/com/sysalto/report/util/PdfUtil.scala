@@ -21,7 +21,7 @@
 package com.sysalto.report.util
 
 import com.sysalto.report.ReportTypes._
-import com.sysalto.report.reportTypes.{LineDashType, RColor, RText}
+import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
 import com.sysalto.report.{WrapAllign, WrapOptions}
 
 import scala.collection.mutable.ListBuffer
@@ -30,7 +30,10 @@ import scala.collection.mutable.ListBuffer
 abstract class PdfUtil() {
   var name = ""
 
-  def open(name: String)
+  def open(name: String,orientation: ReportPageOrientation.Value)
+
+
+  def setPagesNumber(pgNbr:Long)
 
   def newPage()
 

@@ -2,14 +2,19 @@ package pdfGenerator
 
 import com.sysalto.report.{ReportTypes, WrapAllign, WrapOptions}
 import com.sysalto.report.ReportTypes._
-import com.sysalto.report.reportTypes.{LineDashType, RColor, RText}
+import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
 import com.sysalto.report.util.PdfUtil
 
 /**
   * Created by marian on 11/30/16.
   */
 class PdfGenerator extends PdfUtil() {
-  override def open(name: String): Unit = {
+  override def open(name: String, orientation: ReportPageOrientation.Value): Unit = {
+
+  }
+
+
+  override def setPagesNumber(pgNbr: Long): Unit = {
 
   }
 

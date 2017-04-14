@@ -29,14 +29,14 @@ import com.itextpdf.text.pdf._
 import com.itextpdf.text.{BaseColor, Chunk, Document, Element, Font, Image, PageSize}
 import com.sysalto.report.{RFontAttribute, WrapAllign, WrapOptions}
 import com.sysalto.report.ReportTypes._
-import com.sysalto.report.reportTypes.{LineDashType, RColor, RText}
+import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
 import com.sysalto.report.util.PdfUtil
 import org.jfree.chart.ChartFactory
 import org.jfree.data.category.DefaultCategoryDataset
 import org.jfree.data.general.DefaultPieDataset
 
 class PdfItextRender() extends PdfUtil() {
-  private val document = new Document(PageSize.LETTER.rotate)
+  var document:Document = new Document()
   private lazy val writer = PdfWriter.getInstance(document, new FileOutputStream(name))
   private val font = new Font(BaseFont.createFont)
   private lazy val pdfContent = writer.getDirectContent
@@ -44,14 +44,24 @@ class PdfItextRender() extends PdfUtil() {
   override def pgSize = Rectangle(document.getPageSize.getWidth, document.getPageSize.getHeight)
 
 
+  override def setPagesNumber(pgNbr: Long): Unit = {
+
+  }
+
   implicit class RColorToBaseColor(color: RColor) {
     def toBaseColor = new BaseColor(color.r, color.g, color.b)
   }
 
-  override def open(name: String): Unit = {
+  override def open(name: String, orientation: ReportPageOrientation.Value): Unit = {
     this.name = name
+    document = if (orientation == ReportPageOrientation.PORTRAIT)
+      new Document()
+    else
+      new Document(PageSize.LETTER.rotate)
     writer
-    document.open()
+    Document.compress = false
+    document
+      .open()
   }
 
   override def setFontSize(size: Int): Unit = {

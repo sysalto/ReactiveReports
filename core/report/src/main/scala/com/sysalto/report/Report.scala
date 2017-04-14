@@ -21,21 +21,20 @@
 package com.sysalto.report
 
 
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
 import com.sysalto.report.util.{KryoUtil, PdfFactory, RockDbUtil}
 
 import scala.collection.mutable.ListBuffer
 import ReportTypes._
-import com.sysalto.report.reportTypes.{LineDashType, RCell, RColor, RText}
+import com.sysalto.report.reportTypes._
 import _root_.java.util.function.{BiConsumer, Function}
+
 import scala.collection.JavaConverters._
 
 /**
   * Main report class
   * name - pdf file name
   */
-case class Report(name: String)(implicit pdfFactory: PdfFactory) {
+case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT)(implicit pdfFactory: PdfFactory) {
   private var pageNbrs = 1L
   private var crtPageNbr = 1L
   private val crtPage = ReportPage(new ListBuffer[ReportItem]())
@@ -298,6 +297,7 @@ case class Report(name: String)(implicit pdfFactory: PdfFactory) {
   def render(): Unit = {
     db.write(s"page$crtPageNbr", crtPage)
     // call header and footer handler
+    // pageNbrs=1
     for (i <- 1L to pageNbrs) {
       if (getHeaderSize(i) > 0 || getFooterSize(i) > 0) {
         val page = db.read[ReportPage](s"page$i").get
@@ -312,6 +312,7 @@ case class Report(name: String)(implicit pdfFactory: PdfFactory) {
         db.write(s"page$i", crtPage)
       }
     }
+    pdfUtil.setPagesNumber(pageNbrs)
     for (i <- 1L to pageNbrs) {
       val page = db.read[ReportPage](s"page$i")
       if (page.isDefined) {
@@ -447,7 +448,7 @@ case class Report(name: String)(implicit pdfFactory: PdfFactory) {
 
   // class initialize
 
-  pdfUtil.open(name)
+  pdfUtil.open(name, orientation)
   setFontSize(fontSize)
   KryoUtil.register(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass)
 
