@@ -38,8 +38,8 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     val procSet = new PdfProcSet(nextId())
     val font = new PdfFont(nextId())
 
-    val pageList = new PdfPageList(nextId())
-    val page = new PdfPage(nextId(), pageList.id, orientation, Some(procSet), Some(font))
+//    val pageList = new PdfPageList(nextId())
+//    val page = new PdfPage(nextId(), pageList.id, orientation, Some(procSet), Some(font))
 
     val pageListOld = new PdfPageListOld(nextId())
     val pageOld = new PdfPageOld(nextId(), orientation, pageListOld, Some(procSet), Some(font))
