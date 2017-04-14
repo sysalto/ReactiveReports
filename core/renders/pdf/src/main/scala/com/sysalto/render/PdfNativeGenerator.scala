@@ -3,6 +3,7 @@ package com.sysalto.render
 import java.io.{File, PrintWriter}
 
 import com.sysalto.report.reportTypes.ReportPageOrientation
+import pdfGenerator.PageTree
 
 import scala.collection.mutable.ListBuffer
 
@@ -38,110 +39,18 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     val procSet = new PdfProcSet(nextId())
     val font = new PdfFont(nextId())
 
-//    val pageList = new PdfPageList(nextId())
-//    val page = new PdfPage(nextId(), pageList.id, orientation, Some(procSet), Some(font))
+    val page = new PdfPage(nextId(), 0, orientation, Some(procSet), Some(font))
 
-    val pageListOld = new PdfPageListOld(nextId())
-    val pageOld = new PdfPageOld(nextId(), orientation, pageListOld, Some(procSet), Some(font))
 
-    val text = new PdfText(pageOld, nextId(), txtList.toList)
+    val text = new PdfText(page, nextId(), txtList.toList)
 
     catalog.outline = Some(outline)
-    catalog.pdfPageList = Some(pageListOld)
 
-    pageListOld.pageList = List(pageOld)
+    val pageList = PageTree.generatePdfCode(List(page)) {
+      () => nextId
+    }(allItems)
 
-    pageOld.contentPage = Some(text)
-    allItems.foreach(item => item.write(pdfWriter))
-
-    val xrefOffset = pdfWriter.position
-    pdfWriter <<< "xref"
-    pdfWriter <<< s"0 ${allItems.length + 1}"
-    pdfWriter <<< "0000000000 65535 f"
-
-    allItems.foreach(item => {
-      val offset = item.offset.toString
-      val offsetFrmt = "0" * (10 - offset.length) + offset
-      pdfWriter <<< s"${offsetFrmt} 00000 n "
-    })
-    pdfWriter <<< "trailer"
-    pdfWriter <<< s"  <<  /Size ${allItems.length + 1}"
-    pdfWriter <<< "   /Root 1 0 R"
-    pdfWriter <<< " >>"
-    pdfWriter <<< "startxref"
-    pdfWriter <<< xrefOffset.toString
-    pdfWriter << "%%EOF"
-
-  }
-
-  def doneOld(): Unit = {
-    pdfHeader()
-    val catalog = new PdfCatalog(nextId())
-    val outline = new PdfOutline(nextId())
-    val procSet = new PdfProcSet(nextId())
-    val font = new PdfFont(nextId())
-
-    val pageList = new PdfPageList(nextId())
-    val page = new PdfPage(nextId(), pageList.id, orientation, Some(procSet), Some(font))
-
-    val pageListOld = new PdfPageListOld(nextId())
-    val pageOld = new PdfPageOld(nextId(), orientation, pageListOld, Some(procSet), Some(font))
-
-    val text = new PdfText(pageOld, nextId(), txtList.toList)
-
-    catalog.outline = Some(outline)
-    catalog.pdfPageList = Some(pageListOld)
-
-    pageListOld.pageList = List(pageOld)
-
-    pageOld.contentPage = Some(text)
-    allItems.foreach(item => item.write(pdfWriter))
-
-    val xrefOffset = pdfWriter.position
-    pdfWriter <<< "xref"
-    pdfWriter <<< s"0 ${allItems.length + 1}"
-    pdfWriter <<< "0000000000 65535 f"
-
-    allItems.foreach(item => {
-      val offset = item.offset.toString
-      val offsetFrmt = "0" * (10 - offset.length) + offset
-      pdfWriter <<< s"${offsetFrmt} 00000 n "
-    })
-    pdfWriter <<< "trailer"
-    pdfWriter <<< s"  <<  /Size ${allItems.length + 1}"
-    pdfWriter <<< "   /Root 1 0 R"
-    pdfWriter <<< " >>"
-    pdfWriter <<< "startxref"
-    pdfWriter <<< xrefOffset.toString
-    pdfWriter << "%%EOF"
-
-  }
-
-  def test(): Unit = {
-    for (i <- 1 to 30) text(10, 10 + 20 * i, s"Test${i}")
-    done()
-    close()
-  }
-
-  def test1(): Unit = {
-    pdfHeader()
-    val catalog = new PdfCatalog(nextId())
-    val outline = new PdfOutline(nextId())
-    val pageList = new PdfPageListOld(nextId())
-    val procSet = new PdfProcSet(nextId())
-    val font = new PdfFont(nextId())
-
-    val ll = for (i <- 1 to 30) yield PdfTxtChuck(10, 10 + 20 * i, s"Test${i}")
-
-
-    val page = new PdfPageOld(nextId(), orientation, pageList, Some(procSet), Some(font))
-
-    val text = new PdfText(page, nextId(), ll.toList)
-
-    catalog.outline = Some(outline)
     catalog.pdfPageList = Some(pageList)
-
-    pageList.pageList = List(page)
 
     page.contentPage = Some(text)
     allItems.foreach(item => item.write(pdfWriter))
@@ -165,6 +74,14 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     pdfWriter << "%%EOF"
 
   }
+
+
+  def test(): Unit = {
+    for (i <- 1 to 30) text(10, 10 + 20 * i, s"Test${i}")
+    done()
+    close()
+  }
+
 
   def nextId(): Long = {
     id += 1
@@ -190,7 +107,7 @@ abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseIt
   }
 }
 
-class PdfCatalog(id: Long, var outline: Option[PdfOutline] = None, var pdfPageList: Option[PdfPageListOld] = None)
+class PdfCatalog(id: Long, var outline: Option[PdfOutline] = None, var pdfPageList: Option[PdfPageList] = None)
                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: String = {
     s"""${id} 0 obj
@@ -236,7 +153,7 @@ class PdfPage(id: Long, var pdfPageListId: Long = 0, val orientation: ReportPage
   override def content: String = {
     val contentStr = if (contentPage.isDefined) s"/Contents ${contentPage.get.id} 0 R" else ""
     val procSetStr = if (procSet.isDefined) s"/ProcSet ${procSet.get.id} 0 R" else ""
-    val fontStr = if (font.isDefined) s"/Font << /F1 ${font.get.id} 0 R " else ""
+    val fontStr = if (font.isDefined) s"/Font << /F1 ${font.get.id} 0 R >>" else ""
     s"""${id} 0 obj
        |  <<  /Type /Page
        |      /Parent ${pdfPageListId} 0 R
@@ -314,7 +231,7 @@ abstract class PdfContent(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) 
 
 case class PdfTxtChuck(x: Float, y: Float, txt: String)
 
-class PdfText(pdfPage: PdfPageOld, id: Long, txtList: List[PdfTxtChuck])
+class PdfText(pdfPage: PdfPage, id: Long, txtList: List[PdfTxtChuck])
              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfContent(id) {
   override def content: String = { // landscape
     val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
