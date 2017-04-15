@@ -16,6 +16,11 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   val txtList = ListBuffer[PdfTxtChuck]()
   var id: Long = 0
 
+  var catalog: PdfCatalog = null
+  var font: PdfFont = null
+  var currentPage: PdfPage = null
+  val pageList=ListBuffer[PdfPage]()
+
   private def pdfHeader(): Unit = {
     pdfWriter <<< "%PDF-1.7"
     pdfWriter <<< "%\u00a0"
@@ -32,27 +37,37 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     txtList += PdfTxtChuck(x, y, txt)
   }
 
-  def done(): Unit = {
+  def startPdf(): Unit = {
     pdfHeader()
-    val catalog = new PdfCatalog(nextId())
+    catalog = new PdfCatalog(nextId())
     val outline = new PdfOutline(nextId())
-    val procSet = new PdfProcSet(nextId())
-    val font = new PdfFont(nextId())
-
-    val page = new PdfPage(nextId(), 0, orientation, Some(procSet), Some(font))
-
-
-    val text = new PdfText(page, nextId(), txtList.toList)
-
     catalog.outline = Some(outline)
+    font = new PdfFont(nextId())
+    currentPage = new PdfPage(nextId(), 0, orientation, None, Some(font))
+  }
 
-    val pageList = PageTree.generatePdfCode(List(page)) {
+  def newPage(): Unit = {
+    saveCurrentPage
+    currentPage = new PdfPage(nextId(), 0, orientation, None, Some(font))
+  }
+
+  def saveCurrentPage(): Unit = {
+    val text = new PdfText(currentPage, nextId(), txtList.toList)
+    currentPage.contentPage = Some(text)
+    pageList += currentPage
+    txtList.clear()
+  }
+
+  def done(): Unit = {
+    saveCurrentPage
+
+    val pageTreeList = PageTree.generatePdfCode(pageList.toList) {
       () => nextId
     }(allItems)
 
-    catalog.pdfPageList = Some(pageList)
+    catalog.pdfPageList = Some(pageTreeList)
 
-    page.contentPage = Some(text)
+
     allItems.foreach(item => item.write(pdfWriter))
 
     val xrefOffset = pdfWriter.position
@@ -73,13 +88,6 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     pdfWriter <<< xrefOffset.toString
     pdfWriter << "%%EOF"
 
-  }
-
-
-  def test(): Unit = {
-    for (i <- 1 to 30) text(10, 10 + 20 * i, s"Test${i}")
-    done()
-    close()
   }
 
 

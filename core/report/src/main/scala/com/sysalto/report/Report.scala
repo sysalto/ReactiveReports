@@ -156,6 +156,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
     pageNbrs += 1
     try {
       switchPages(pageNbrs)
+      nextLine()
     } catch {
       case e: Throwable =>
         e.printStackTrace()

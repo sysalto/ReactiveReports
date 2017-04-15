@@ -24,14 +24,14 @@ object TestReport extends {
 
   def runReport(report: Report): Unit = {
     report.nextLine()
-    report print "test" at 10
-//    report.nextLine()
-//    report print "test1" at 40
-//    report.nextLine()
-//    report print "test2" at 10
-//    report.newPage()
-//    report.nextLine()
-//    report print "Page 2 test1" at 10
+    report print "test1" at 10
+    report.nextLine()
+    report print "test1" at 40
+    report.nextLine()
+    report print "test2" at 10
+    report.newPage()
+    report.nextLine(2)
+    report print "Page 2 test1" at 10
 
     report.render()
     report.close()

@@ -20,6 +20,7 @@
 
 package com.sysalto.report.examples
 
+import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.util.AkkaGroupUtil
@@ -28,6 +29,7 @@ import com.sysalto.report.template.ReportApp
 
 
 object HelloWorldReport extends ReportApp with AkkaGroupUtil {
+  implicit val pdfNativeFactory = new PdfNativeFactory()
   private def run(): Unit = {
 
     // setup a new report with the name

@@ -11,27 +11,30 @@ import com.sysalto.report.util.PdfUtil
   * Created by marian on 4/1/17.
   */
 class PdfNativeRender extends PdfUtil {
-  var writer: PdfNativeGenerator = null
-  var orientation= ReportPageOrientation.PORTRAIT
+  var pdfNativeGenerator: PdfNativeGenerator = null
+  var orientation = ReportPageOrientation.PORTRAIT
 
   override def open(name: String, orientation: ReportPageOrientation.Value): Unit = {
     new File(name).delete()
-    writer = new PdfNativeGenerator(name, orientation)
-    this.orientation=orientation
+    pdfNativeGenerator = new PdfNativeGenerator(name, orientation)
+    pdfNativeGenerator.startPdf()
+    this.orientation = orientation
   }
 
   override def setPagesNumber(pgNbr: Long): Unit = {
 
   }
 
-  override def newPage(): Unit = {}
+  override def newPage(): Unit = {
+  pdfNativeGenerator.newPage()
+  }
 
   override def setFontSize(size: Int): Unit = {
 
   }
 
   override def text(txt: RText, x1: Float, y1: Float, x2: Float, y2: Float): Unit = {
-    writer.text(x1, y1, txt.txt)
+    pdfNativeGenerator.text(x1, y1, txt.txt)
   }
 
   override def textAlignedAtPosition(txt: RText, x: Float, y: Float, index: Int): Unit = ???
@@ -46,15 +49,15 @@ class PdfNativeRender extends PdfUtil {
 
   override def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = ???
 
-  override def pgSize: ReportTypes.Rectangle = if (orientation == ReportPageOrientation.PORTRAIT) Rectangle(612,792) else Rectangle(792, 612)
+  override def pgSize: ReportTypes.Rectangle = if (orientation == ReportPageOrientation.PORTRAIT) Rectangle(612, 792) else Rectangle(792, 612)
 
   override def close(): Unit = {
-    writer.done()
-    writer.close()
+    pdfNativeGenerator.done()
+    pdfNativeGenerator.close()
   }
 
   override def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value, wrapAllign: WrapAllign.Value, simulate: Boolean, startY: Option[Float]): Option[ReportTypes.WrapBox] = {
-    text(txtList(0),x0,y0,x1,y1)
+    text(txtList(0), x0, y0, x1, y1)
     None
   }
 
