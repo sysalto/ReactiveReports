@@ -34,7 +34,7 @@ class PdfNativeRender extends PdfUtil {
   }
 
   override def text(txt: RText, x1: Float, y1: Float, x2: Float, y2: Float): Unit = {
-    pdfNativeGenerator.text(x1, y1, txt.txt)
+    pdfNativeGenerator.text(x1, y1, txt)
   }
 
   override def textAlignedAtPosition(txt: RText, x: Float, y: Float, index: Int): Unit = ???
