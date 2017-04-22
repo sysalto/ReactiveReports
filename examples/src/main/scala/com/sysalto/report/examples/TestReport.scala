@@ -25,6 +25,8 @@ object TestReport extends {
   def runReport(report: Report): Unit = {
     report.nextLine()
     report print "test1".bold() at 10
+    report.nextLine(3)
+    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
     report.nextLine()
     report print "test1".size(15) at 40
     report.nextLine()
@@ -32,6 +34,12 @@ object TestReport extends {
     report.newPage()
     report.nextLine(2)
     report print "Page 2 test1" at 10
+    report.nextLine()
+    report print "Page 2 test2".bold() at 10
+    report.nextLine()
+    report print "Page 2 test3".italic() at 10
+    report.nextLine()
+    report print "Page 2 test4".bold().italic() at 10
 
     report.render()
     report.close()
@@ -39,7 +47,7 @@ object TestReport extends {
 
 
   def main(args: Array[String]): Unit = {
-//    run1()
+    run1()
     run2()
   }
 

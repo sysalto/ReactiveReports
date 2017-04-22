@@ -26,7 +26,7 @@ class PdfNativeRender extends PdfUtil {
   }
 
   override def newPage(): Unit = {
-  pdfNativeGenerator.newPage()
+    pdfNativeGenerator.newPage()
   }
 
   override def setFontSize(size: Int): Unit = {
@@ -39,7 +39,9 @@ class PdfNativeRender extends PdfUtil {
 
   override def textAlignedAtPosition(txt: RText, x: Float, y: Float, index: Int): Unit = ???
 
-  override def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {}
+  override def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
+    pdfNativeGenerator.line(x1, y1, x2, y2, lineWidth, color, lineDashType)
+  }
 
   override def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float, color: Option[RColor], fillColor: Option[RColor]): Unit = ???
 

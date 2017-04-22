@@ -3,7 +3,7 @@ package com.sysalto.render
 import java.io.{File, PrintWriter}
 
 import com.sysalto.report.RFontAttribute
-import com.sysalto.report.reportTypes.{RText, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
 import pdfGenerator.PageTree
 
 import scala.collection.mutable.ListBuffer
@@ -34,6 +34,10 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     pdfWriter.close()
   }
 
+
+  def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
+
+  }
 
   def text(x: Float, y: Float, txt: RText): Unit = {
     val font = if (!fontMap.contains(txt.font.fontKeyName)) {
@@ -211,6 +215,8 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String)(implicit itemL
 }
 
 abstract class PdfContent(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
+abstract class PdfGraphicContent(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
+
 
 case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String)
 
