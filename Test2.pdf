@@ -37,7 +37,7 @@ endobj
   >>
 endobj
 6 0 obj
-  <<  /Length 240 >>
+  <<  /Length 209 >>
       stream
 1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm
 BT
@@ -45,11 +45,11 @@ BT
   -1 0 0 -1 -10 15 Tm
         ( test1 ) Tj
          /F2 15 Tf
-  -1 0 0 -1 -40 75 Tm
-        ( test1 ) Tj
+  30 -60 Td
+  ( test1 ) Tj
          /F2 10 Tf
-  -1 0 0 -1 -10 90 Tm
-        ( test2 ) Tj
+  -30 -15 Td
+  ( test2 ) Tj
        
       ET
        endstream
@@ -79,7 +79,7 @@ endobj
   >>
 endobj
 10 0 obj
-  <<  /Length 330 >>
+  <<  /Length 279 >>
       stream
 1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm
 BT
@@ -87,14 +87,14 @@ BT
   -1 0 0 -1 -10 45 Tm
         ( Page 2 test1 ) Tj
          /F1 10 Tf
-  -1 0 0 -1 -10 60 Tm
-        ( Page 2 test2 ) Tj
+  0 -15 Td
+  ( Page 2 test2 ) Tj
          /F3 10 Tf
-  -1 0 0 -1 -10 75 Tm
-        ( Page 2 test3 ) Tj
+  0 -15 Td
+  ( Page 2 test3 ) Tj
          /F4 10 Tf
-  -1 0 0 -1 -10 90 Tm
-        ( Page 2 test4 ) Tj
+  0 -15 Td
+  ( Page 2 test4 ) Tj
        
       ET
        endstream
@@ -115,15 +115,15 @@ xref
 0000000365 00000 n 
 0000000490 00000 n 
 0000000610 00000 n 
-0000000909 00000 n 
-0000001139 00000 n 
-0000001267 00000 n 
-0000001399 00000 n 
-0000001789 00000 n 
+0000000878 00000 n 
+0000001108 00000 n 
+0000001236 00000 n 
+0000001368 00000 n 
+0000001707 00000 n 
 trailer
   <<  /Size 12
    /Root 1 0 R
  >>
 startxref
-1873
+1791
 %%EOF

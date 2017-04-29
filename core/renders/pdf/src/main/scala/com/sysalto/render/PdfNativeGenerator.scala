@@ -215,6 +215,7 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String)(implicit itemL
 }
 
 abstract class PdfContent(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
+
 abstract class PdfGraphicContent(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
 
 
@@ -222,19 +223,31 @@ case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String)
 
 class PdfText(pdfPage: PdfPage, id: Long, txtList: List[PdfTxtChuck])
              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfContent(id) {
-  override def content: String = { // landscape
+  override def content: String = {
+    if (txtList.isEmpty) {
+      return ""
+    }
     val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
     val landscapeMatrix = "0 -1 1 0 0 0 cm"
     val s1 =
       s"""${if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix}
          |BT""".stripMargin
-
-    val s2 = txtList.map(item => {
+    val item = txtList.head
+    val firstItemTxt =
       s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
          |  -1 0 0 -1 -${item.x.toLong} ${item.y.toLong} Tm
          |        ( ${item.rtext.txt} ) Tj
        """.stripMargin
-    }).foldLeft("")((s1, s2) => s1 + s2)
+
+    val s2 = firstItemTxt+txtList.tail.zipWithIndex.map { case (item, i) => {
+      val xRel = txtList(i + 1).x.toLong - txtList(i).x.toLong
+      val yRel = txtList(i + 1).y.toLong - txtList(i).y.toLong
+      s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
+         |  ${xRel} -${yRel} Td
+         |  ( ${item.rtext.txt} ) Tj
+       """.stripMargin
+    }
+    }.foldLeft("")((s1, s2) => s1 + s2)
 
     val s3 =
       s"""${s1}
@@ -253,19 +266,18 @@ class PdfText(pdfPage: PdfPage, id: Long, txtList: List[PdfTxtChuck])
 }
 
 
-
 class PdfTextOld(pdfPage: PdfPage, id: Long, txtList: List[PdfTxtChuck])
-             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfContent(id) {
+                (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfContent(id) {
   override def content: String = { // landscape
     val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
     val landscapeMatrix = "0 -1 1 0 0 0 cm"
     val s1 =
       s"""${if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix}
-         |BT
-         |        /F1 10 Tf""".stripMargin
+         |BT""".stripMargin
 
     val s2 = txtList.map(item => {
-      s"""        -1 0 0 -1 -${item.x.toLong} ${item.y.toLong} Tm
+      s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
+         |  -1 0 0 -1 -${item.x.toLong} ${item.y.toLong} Tm
          |        ( ${item.rtext.txt} ) Tj
        """.stripMargin
     }).foldLeft("")((s1, s2) => s1 + s2)
