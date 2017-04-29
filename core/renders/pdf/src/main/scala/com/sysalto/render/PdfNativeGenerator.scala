@@ -15,6 +15,7 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   implicit val pdfWriter = new PdfWriter(name)
   implicit val allItems = ListBuffer[PdfBaseItem]()
   val txtList = ListBuffer[PdfTxtChuck]()
+  val graphicList = ListBuffer[PdfGraphicChuck]()
   var id: Long = 0
   var fontId: Long = 0
 
@@ -36,7 +37,9 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
 
 
   def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
-
+//    graphicList += PdfGraphicChuck(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
+    graphicList += PdfGraphicChuck(-100, 782, 585, -100, lineWidth.toLong, color, lineDashType)
+    graphicList += PdfGraphicChuck(-100, -100, 585, 782, lineWidth.toLong, color, lineDashType)
   }
 
   def text(x: Float, y: Float, txt: RText): Unit = {
@@ -44,7 +47,7 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
       val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
       fontMap += (txt.font.fontKeyName -> font1)
       font1
-    } else fontMap.get(txt.font.fontKeyName).get
+    } else fontMap(txt.font.fontKeyName)
     txtList += PdfTxtChuck(x, y, txt, font.refName)
   }
 
@@ -57,20 +60,22 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   }
 
   def newPage(): Unit = {
-    saveCurrentPage
+    saveCurrentPage()
     currentPage = new PdfPage(nextId(), 0, orientation, fontMap.values.toList)
   }
 
   def saveCurrentPage(): Unit = {
-    val text = new PdfText(currentPage, nextId(), txtList.toList)
-    currentPage.contentPage = Some(new PdfPageContent(nextId(), List(text)))
+    val text = new PdfText( txtList.toList)
+    val graphic = new PdfGraphic(graphicList.toList)
+    currentPage.contentPage = Some(new PdfPageContent(nextId(),currentPage, List( graphic,text)))
     currentPage.fontList = fontMap.values.toList.sortBy(font => font.refName)
     pageList += currentPage
     txtList.clear()
+    graphicList.clear()
   }
 
   def done(): Unit = {
-    saveCurrentPage
+    saveCurrentPage()
 
     val pageTreeList = PageTree.generatePdfCode(pageList.toList) {
       () => nextId
@@ -113,7 +118,7 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   }
 }
 
-abstract class PdfBaseItem(val id: Long, addToItemList: Boolean = true)(implicit itemList: ListBuffer[PdfBaseItem]) {
+abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) {
   var offset: Long = 0
 
   def content: String
@@ -123,9 +128,7 @@ abstract class PdfBaseItem(val id: Long, addToItemList: Boolean = true)(implicit
     pdfWriter <<< content.trim
   }
 
-  if (addToItemList) {
-    itemList += this
-  }
+  itemList += this
 
   override def toString: String = {
     s"[${this.getClass.getTypeName}]\n" + content
@@ -204,10 +207,15 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String)(implicit itemL
   }
 }
 
-class PdfPageContent(id: Long, pageItemList: List[PdfBaseItem])
+class PdfPageContent(id: Long, pdfPage: PdfPage,pageItemList: List[PdfPageItem])
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: String = {
-    val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2)
+    val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
+    val landscapeMatrix = "0 -1 1 0 0 0 cm"
+    val matrix=if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix
+    val itemsStr = matrix+"\n"+ pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
+
+
     s"""${id} 0 obj
        |  <<  /Length ${itemsStr.length} >>
        |      stream
@@ -217,21 +225,27 @@ class PdfPageContent(id: Long, pageItemList: List[PdfBaseItem])
   }
 }
 
-abstract class PdfPageItem(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id, false)
+abstract class PdfPageItem {
+  def content: String
+}
 
 case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String)
 
-class PdfText(pdfPage: PdfPage, id: Long, txtList: List[PdfTxtChuck])
-             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfPageItem(id) {
+case class PdfGraphicChuck(x1: Long, y1: Long, x2: Long, y2: Long,
+                           lineWidth: Long, color: RColor, lineDashType: Option[LineDashType])
+
+class PdfText(txtList: List[PdfTxtChuck])
+  extends PdfPageItem {
   override def content: String = {
     if (txtList.isEmpty) {
       return ""
     }
     val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
     val landscapeMatrix = "0 -1 1 0 0 0 cm"
-    val s1 =
-      s"""${if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix}
-         |BT""".stripMargin
+//    val s1 =
+//      s"""BT
+//         |${if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix}
+//         """.stripMargin.trim
     val item = txtList.head
     val firstItemTxt =
       s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
@@ -249,17 +263,35 @@ class PdfText(pdfPage: PdfPage, id: Long, txtList: List[PdfTxtChuck])
     }
     }.foldLeft("")((s1, s2) => s1 + s2)
 
-    s"""${s1}
-       |${s2}
+    s"""${s2}
        |      ET
-       """.stripMargin
+       """.stripMargin.trim
+  }
+
+}
+
+class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
+  override def content: String = {
+    val str = items.map(item => {
+      s"""${item.x1} ${item.y1} m
+         |${item.x2} ${item.y2} l
+         |S
+       """.stripMargin.trim
+    }).foldLeft("")((s1, s2) => s1 + "\n"+s2)
+
+    s"""q
+       |0 0 0 RG
+       |1 w
+       |${str}
+       |Q
+ """.stripMargin
   }
 
 }
 
 
 class PdfTextOld(pdfPage: PdfPage, id: Long, txtList: List[PdfTxtChuck])
-                (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfPageItem(id) {
+                (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfPageItem() {
   override def content: String = {
     if (txtList.isEmpty) {
       return ""
