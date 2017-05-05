@@ -37,9 +37,9 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
 
 
   def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
-//    graphicList += PdfGraphicChuck(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
-    graphicList += PdfGraphicChuck(-100, 782, 585, -100, lineWidth.toLong, color, lineDashType)
-    graphicList += PdfGraphicChuck(-100, -100, 585, 782, lineWidth.toLong, color, lineDashType)
+    graphicList += PdfGraphicChuck(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
+//    graphicList += PdfGraphicChuck(-100, 782, 585, -100, lineWidth.toLong, color, lineDashType)
+//    graphicList += PdfGraphicChuck(-100, -100, 585, 782, lineWidth.toLong, color, lineDashType)
   }
 
   def text(x: Float, y: Float, txt: RText): Unit = {
@@ -273,8 +273,8 @@ class PdfText(txtList: List[PdfTxtChuck])
 class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
   override def content: String = {
     val str = items.map(item => {
-      s"""${item.x1} ${item.y1} m
-         |${item.x2} ${item.y2} l
+      s"""-${item.x1} ${item.y1} m
+         |-${item.x2} ${item.y2} l
          |S
        """.stripMargin.trim
     }).foldLeft("")((s1, s2) => s1 + "\n"+s2)
