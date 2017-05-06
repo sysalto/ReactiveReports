@@ -65,7 +65,7 @@ object WordWrap1 {
   }
 
   def main(args: Array[String]) {
-    var l = Array(4,2, 2, 2, 5)
+    var l = Array(3,2,2,5)
     val n = l.size
     val maxLineLength = 6
     solveWordWrap(l, n,maxLineLength)
