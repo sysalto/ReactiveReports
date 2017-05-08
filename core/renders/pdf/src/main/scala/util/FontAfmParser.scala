@@ -8,9 +8,9 @@ object FontAfmParser {
   // private def getFileContent(file: String) = scala.io.Source.fromFile(file)("latin1").getLines().toList
 
 
-  case class FontAfmMetric(maxHeight: Int, list: Map[String, Int])
+  case class FontAfmMetric(maxHeight: Int, fontMap: Map[Int, Int])
 
-  case class GlyphDef(list: Map[Int, String])
+  case class GlyphDef(glypMap: Map[String, Int])
 
   def readFile(fileName: String): List[String] = {
     val stream = getClass.getClassLoader.getResourceAsStream(fileName)
@@ -40,11 +40,11 @@ object FontAfmParser {
     val result = list2.filter { case (name, list) => {
       list.length == 1
     }
-    }.map { case (name, list) => list.head -> name }
+    }.map { case (name, list) => name -> list.head }
     GlyphDef(result)
   }
 
-  def parseFont(fontName: String): FontAfmMetric = {
+  def parseFont(fontName: String)(implicit glyphDef: GlyphDef): FontAfmMetric = {
     val textList = readFile(s"fonts/${fontName}.afm")
     val upperHeight = getValue(textList, "CapHeight")._2
     val lowerHeight = getValue(textList, "XHeight")._2
@@ -56,18 +56,20 @@ object FontAfmParser {
       val regExpr1 ="""C\s+-?\d+\s+;\s+WX\s+(\d+)\s+;\s+N\s+(\S+).*""".r
       val regExpr1(width, name) = line.trim
       name -> width.toInt
-    }).toMap
-    FontAfmMetric(upperHeight, charList)
+    })
+    val charList1 = charList.map { case (glyph, code) => glyphDef.glypMap(glyph) -> code }.toMap
+    FontAfmMetric(upperHeight, charList1)
   }
 
-  def getStringWidth(str: String, fontMetric: FontAfmMetric) (implicit glyphDef:GlyphDef): Int = {
-0
+  def getStringWidth(str: String, fontMetric: FontAfmMetric)(implicit glyphDef: GlyphDef): Int = {
+    str.toCharArray.map(char=>fontMetric.fontMap(char.toInt)).sum
   }
 
   def main(args: Array[String]): Unit = {
     implicit val glypList = parseGlyph()
     val fontMetric = parseFont("Helvetica")
-    getStringWidth("aaa     bb cc d efg",fontMetric)
+    val w=getStringWidth("IAW", fontMetric)
+    println(w)
   }
 
 }

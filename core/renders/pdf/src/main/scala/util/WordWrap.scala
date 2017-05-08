@@ -5,6 +5,9 @@ package util
   */
 object WordWrap {
 
+
+  def getLength(char:Char)=1
+
   def wrap(input: String, lineWidth: Int): List[String] = {
     val len = input.length
     val MAXL = len + 2
@@ -12,15 +15,24 @@ object WordWrap {
     input.copyToArray(str)
     var memo = Array.ofDim[Int](MAXL)
     var cut = Array.ofDim[Int](MAXL)
-    Array.fill(len + 2)(0x7fffffff).copyToArray(memo)
+    Array.fill(len + 2)(Int.MaxValue).copyToArray(memo)
     memo(len + 1) = 0
     for (i <- len - 1 to 0 by -1) {
       val upto = Math.min(i + lineWidth, len)
+
+//      println("-"*20)
+//      println("i:"+i+" upTo:"+upto)
+//      println(memo.mkString(" "))
+//      println("-"*20)
+
+
       for (j <- i + 1 to upto) {
         if (str(j) == ' ' || str(j) == '\u0000') {
           val d = lineWidth - (j - i)
+//          println("J:"+j+" d:"+d+ " if("+memo(i)+" >"+memo(j+1)+") :"+(memo(i) > d * d * d + memo(j + 1)))
           if (memo(i) > d * d * d + memo(j + 1)) {
             memo(i) = d * d * d + memo(j + 1)
+//            println("update I:"+i+" val:"+memo(i))
             cut(i) = j
           }
         }
@@ -38,7 +50,7 @@ object WordWrap {
 
 
   def main(args: Array[String]): Unit = {
-   val l=wrap("aaa bb cc d efg", 6)
+   val l=wrap("II ii WW ww", 6)
     println(l.mkString("\n"))
   }
 }
