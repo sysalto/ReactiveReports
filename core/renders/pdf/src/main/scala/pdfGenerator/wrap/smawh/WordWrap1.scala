@@ -1,5 +1,5 @@
 package pdfGenerator.wrap.smawh
-
+// http://www.geeksforgeeks.org/dynamic-programming-set-18-word-wrap/
 /**
   * Created by marian on 2/19/16.
   */
@@ -48,6 +48,7 @@ object WordWrap1 {
         }
       }
     }
+    println("n:"+n+" P:"+p.mkString(" "))
     printSolution(p, n)
   }
 
@@ -65,7 +66,7 @@ object WordWrap1 {
   }
 
   def main(args: Array[String]) {
-    var l = Array(3,2,2,5)
+    var l = Array(3,2,2,2,4)
     val n = l.size
     val maxLineLength = 6
     solveWordWrap(l, n,maxLineLength)

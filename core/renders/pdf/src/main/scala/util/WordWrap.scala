@@ -20,19 +20,11 @@ object WordWrap {
     for (i <- len - 1 to 0 by -1) {
       val upto = Math.min(i + lineWidth, len)
 
-//      println("-"*20)
-//      println("i:"+i+" upTo:"+upto)
-//      println(memo.mkString(" "))
-//      println("-"*20)
-
-
       for (j <- i + 1 to upto) {
         if (str(j) == ' ' || str(j) == '\u0000') {
           val d = lineWidth - (j - i)
-//          println("J:"+j+" d:"+d+ " if("+memo(i)+" >"+memo(j+1)+") :"+(memo(i) > d * d * d + memo(j + 1)))
           if (memo(i) > d * d * d + memo(j + 1)) {
             memo(i) = d * d * d + memo(j + 1)
-//            println("update I:"+i+" val:"+memo(i))
             cut(i) = j
           }
         }
