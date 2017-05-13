@@ -8,7 +8,7 @@ object FontAfmParser {
   // private def getFileContent(file: String) = scala.io.Source.fromFile(file)("latin1").getLines().toList
 
 
-  case class FontAfmMetric(maxHeight: Int, fontMap: Map[Int, Int])
+  case class FontAfmMetric(maxHeight: Int, fontMap: Map[Int, Float])
 
   case class GlyphDef(glypMap: Map[String, Int])
 
@@ -55,13 +55,13 @@ object FontAfmParser {
     val charList = list1.map(line => {
       val regExpr1 ="""C\s+-?\d+\s+;\s+WX\s+(\d+)\s+;\s+N\s+(\S+).*""".r
       val regExpr1(width, name) = line.trim
-      name -> width.toInt
+      name -> (width.toFloat*0.001).toFloat
     })
     val charList1 = charList.map { case (glyph, code) => glyphDef.glypMap(glyph) -> code }.toMap
     FontAfmMetric(upperHeight, charList1)
   }
 
-  def getStringWidth(str: String, fontMetric: FontAfmMetric)(implicit glyphDef: GlyphDef): Int = {
+  def getStringWidth(str: String, fontMetric: FontAfmMetric)(implicit glyphDef: GlyphDef): Float = {
     str.toCharArray.map(char=>fontMetric.fontMap(char.toInt)).sum
   }
 

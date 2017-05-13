@@ -1,12 +1,15 @@
 package util.wrapper
 
+import util.FontAfmParser
+import util.FontAfmParser.{FontAfmMetric, parseFont, parseGlyph}
+
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 
 /**
   * Created by marian on 11/05/17.
   */
-object Dijkstra {
+object WordWrap {
 
   type Path[Key] = (Double, List[Key])
 
@@ -39,70 +42,30 @@ object Dijkstra {
     println(res)
   }
 
-  def test1(list0: List[Int], max: Int): Unit = {
-    val list = list0.flatMap(item => {
-      val result = ListBuffer[Int]()
-      splitWordsOld(item, max, result)
-      result.toList
-    })
 
-    def size(l: List[Int]): Int = {
-      l.sum + l.size - 1
-    }
+  implicit val glypList = parseGlyph()
 
-    def calc(i1: Int, i2: Int): Option[Int] = {
-      val l1 = list.slice(i1, i2 + 1)
-      val result = size(l1)
-      if (result <= max) {
-        val dif = max - result
-        Some(dif * dif)
-      } else {
-        None
+
+  def getWordSize(word: String)(implicit fontMetric: FontAfmMetric): Float = FontAfmParser.getStringWidth(word, fontMetric)
+
+  def getSpaceSize()(implicit fontMetric: FontAfmMetric): Float = getWordSize(" ")
+
+  def splitAtMax(item: String, max: Float)(implicit fontMetric: FontAfmMetric): (String, String) = {
+    @tailrec
+    def getMaxStr(str: String): String = {
+      if (getWordSize(str) <= max) {
+        str
+      }
+      else {
+        getMaxStr(str.substring(str.length - 1))
       }
     }
-
-    val l1 = list.indices
-    val l2 = l1.combinations(2).map(item => (item.head, item.tail.head)) ++ l1.map(item => (item, item))
-    val mapCost = l2.map(item => item -> calc(item._1, item._2)).filter { case (key, value) => value.isDefined }.
-      map { case (key, value) => key -> value.get }.toMap
-
-    val rr = for {i <- list.length - 1 to 0 by -1
-                  j <- list.length to i by -1
-                  key = (i, j - 1) if mapCost.contains(key)
-                  cost = mapCost(key)
-    }
-      yield (i, j, cost)
-
-    val rr1 = rr.map { case (a, b, c) => a }.toSet.toList
-    val rr2 = rr1.map(item => {
-      item -> rr.filter { case (a, b, c) => a == item }.map { case (a, b, c) => (c.toDouble, b) }.toList
-    }).toMap
-    val res = calculate[Int](rr2, List((0, List(0))), list.length, Set())
-    println(res)
+    val maxStr=getMaxStr(item)
+    (maxStr, item.substring(maxStr.size))
   }
 
   @tailrec
-  def splitWordsOld(length: Int, max: Int, accum: ListBuffer[Int]): Unit = {
-    if (length <= max) {
-      accum += length
-    } else {
-      accum += max
-      splitWordsOld(length - max, max, accum)
-    }
-  }
-
-
-  def getWordSize(word: String): Float = word.length
-
-  def getSpaceSize():Float=1
-
-  def splitAtMax(item: String, max: Float): (String, String) = {
-    val i = max.toInt
-    (item.substring(0, i), item.substring(i))
-  }
-
-  @tailrec
-  def splitWord(word: String, max: Float, accum: ListBuffer[String]): Unit = {
+  def splitWord(word: String, max: Float, accum: ListBuffer[String])(implicit fontMetric: FontAfmMetric): Unit = {
     if (getWordSize(word) <= max) {
       accum += word
     } else {
@@ -113,8 +76,9 @@ object Dijkstra {
   }
 
 
-  def wordWrap(input: String, max: Float): List[List[String]] = {
-    val input1 = input.replaceAll("\\s+", " ").split(" ").toList
+  def wordWrap(input: String, max: Float)(implicit wordSeparators: List[Char], fontMetric: FontAfmMetric): List[List[String]] = {
+    val input0 = input.foldLeft("")((sum, b) => sum + (if (wordSeparators.contains(b)) b + " " else b)).trim
+    val input1 = input0.replaceAll("\\s+", " ").split(" ").toList
     val wordList = input1.flatMap(item => {
       val result = ListBuffer[String]()
       splitWord(item, max, result)
@@ -123,7 +87,7 @@ object Dijkstra {
     val list = wordList.map(item => getWordSize(item))
 
     def size(l: List[Float]): Float = {
-      l.sum + getSpaceSize*(l.size - 1)
+      l.sum + getSpaceSize * (l.size - 1)
     }
 
     def calc(i1: Int, i2: Int): Option[Float] = {
@@ -154,24 +118,19 @@ object Dijkstra {
       item -> rr.filter { case (a, b, c) => a == item }.map { case (a, b, c) => (c.toDouble, b) }.toList
     }).toMap
     val res = calculate[Int](rr2, List((0, List(0))), list.length, Set())
-    val indiceList=res._2
+    val indiceList = res._2
 
-    val lines=for (i<-0 to indiceList.size-2) yield {
-      wordList.slice(indiceList(i),indiceList(i+1))
+    val lines = for (i <- 0 to indiceList.size - 2) yield {
+      wordList.slice(indiceList(i), indiceList(i + 1))
     }
     lines.toList
   }
 
   def main(x: Array[String]): Unit = {
-    val lines=wordWrap("aaa b ccc ddd ee ff", 6)
-    println(lines.map(item=>item.mkString(" ")).mkString("\n"))
-    return
-    val t1 = System.currentTimeMillis()
-    val input = List(3, 2, 2, 5, 5)
-    val input1 = List(3, 1, 1, 20, 1)
-    val max = 6
-    test1(input1, max)
-    val t2 = System.currentTimeMillis()
-    println("time:" + (t2 - t1) * 0.001)
+    implicit val fontMetric = parseFont("Helvetica")
+    implicit val wordSeparators = List(',', '.')
+    val s = "Catelus cu parul cret fura rata din cotet.El se jura ca nu fura,dar l-am prins cu rata-n gura."
+    val lines = wordWrap(s, 10)
+    println(lines.map(item => item.mkString(" ")).mkString("\n"))
   }
 }
