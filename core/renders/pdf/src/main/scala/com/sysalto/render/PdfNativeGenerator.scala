@@ -54,8 +54,8 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   def startPdf(): Unit = {
     pdfHeader()
     catalog = new PdfCatalog(nextId())
-    val outline = new PdfOutline(nextId())
-    catalog.outline = Some(outline)
+//    val outline = new PdfOutline(nextId())
+//    catalog.outline = Some(outline)
     currentPage = new PdfPage(nextId(), 0, orientation)
   }
 
@@ -135,12 +135,11 @@ abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseIt
   }
 }
 
-class PdfCatalog(id: Long, var outline: Option[PdfOutline] = None, var pdfPageList: Option[PdfPageList] = None)
+class PdfCatalog(id: Long,/* var outline: Option[PdfOutline] = None,*/ var pdfPageList: Option[PdfPageList] = None)
                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: String = {
     s"""${id} 0 obj
        |  <<  /Type /Catalog
-       |      /Outlines ${outline.get.id} 0 R
        |      /Pages ${pdfPageList.get.id} 0 R
        |  >>
        |endobj
@@ -148,16 +147,16 @@ class PdfCatalog(id: Long, var outline: Option[PdfOutline] = None, var pdfPageLi
   }
 }
 
-class PdfOutline(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  override def content: String = {
-    s"""${id} 0 obj
-       |  <<  /Type /Outlines
-       |      /Count 0
-       |  >>
-       |endobj
-     """.stripMargin
-  }
-}
+//class PdfOutline(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+//  override def content: String = {
+//    s"""${id} 0 obj
+//       |  <<  /Type /Outlines
+//       |      /Count 0
+//       |  >>
+//       |endobj
+//     """.stripMargin
+//  }
+//}
 
 class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Long] = List())
                  (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
@@ -248,7 +247,7 @@ class PdfText(txtList: List[PdfTxtChuck])
 //         """.stripMargin.trim
     val item = txtList.head
     val firstItemTxt =
-      s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
+      s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
          |  -1 0 0 -1 -${item.x.toLong} ${item.y.toLong} Tm
          |        ( ${item.rtext.txt} ) Tj
        """.stripMargin
