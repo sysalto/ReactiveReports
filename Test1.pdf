@@ -1,7 +1,7 @@
 %PDF-1.4
 %‚„œ”
-3 0 obj
-<</Length 239>>stream
+2 0 obj
+<</Length 224>>stream
 q
 BT
 36 806 Td
@@ -9,119 +9,58 @@ ET
 Q
 /F1 10 Tf
 BT
-1 0 0 1 10 817 Tm
-/F2 10 Tf
-0 0 0 rg
-(test1)Tj
-0 g
-ET
-q
-0 0 0 RG
-1 w
-10 782 m
-585 782 l
-S
-Q
-BT
-1 0 0 1 40 752 Tm
-/F1 15 Tf
-0 0 0 rg
-(test1)Tj
-0 g
-ET
-BT
-1 0 0 1 10 742 Tm
+1 0 0 1 0 817 Tm
 /F1 10 Tf
 0 0 0 rg
-(test2)Tj
+5.55 Tw
+2.22 Tc
+(AAA III)Tj
+0 g
+0 Tw
+0 Tc
+1 0 0 1 0 807 Tm
+0 0 0 rg
+2.62 Tw
+1.05 Tc
+(WWW rrr)Tj
+0 g
+0 Tw
+0 Tc
+1 0 0 1 0 797 Tm
+0 0 0 rg
+(iii uuu)Tj
 0 g
 ET
 
 endstream
 endobj
-5 0 obj
-<</Type/Page/MediaBox[0 0 595 842]/Resources<</Font<</F1 1 0 R/F2 2 0 R>>>>/Contents 3 0 R/Parent 4 0 R>>
-endobj
-8 0 obj
-<</Length 286>>stream
-q
-BT
-36 806 Td
-ET
-Q
-/F1 10 Tf
-BT
-1 0 0 1 10 787 Tm
-/F1 10 Tf
-0 0 0 rg
-(Page 2 test1)Tj
-0 g
-ET
-BT
-1 0 0 1 10 772 Tm
-/F2 10 Tf
-0 0 0 rg
-(Page 2 test2)Tj
-0 g
-ET
-BT
-1 0 0 1 10 757 Tm
-/F3 10 Tf
-0 0 0 rg
-(Page 2 test3)Tj
-0 g
-ET
-BT
-1 0 0 1 10 742 Tm
-/F4 10 Tf
-0 0 0 rg
-(Page 2 test4)Tj
-0 g
-ET
-
-endstream
-endobj
-9 0 obj
-<</Type/Page/MediaBox[0 0 595 842]/Resources<</Font<</F1 1 0 R/F2 2 0 R/F3 6 0 R/F4 7 0 R>>>>/Contents 8 0 R/Parent 4 0 R>>
+4 0 obj
+<</Type/Page/MediaBox[0 0 595 842]/Resources<</Font<</F1 1 0 R>>>>/Contents 2 0 R/Parent 3 0 R>>
 endobj
 1 0 obj
 <</Type/Font/Subtype/Type1/BaseFont/Helvetica/Encoding/WinAnsiEncoding>>
 endobj
-2 0 obj
-<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Bold/Encoding/WinAnsiEncoding>>
+3 0 obj
+<</Type/Pages/Count 1/Kids[4 0 R]>>
+endobj
+5 0 obj
+<</Type/Catalog/Pages 3 0 R>>
 endobj
 6 0 obj
-<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Oblique/Encoding/WinAnsiEncoding>>
-endobj
-7 0 obj
-<</Type/Font/Subtype/Type1/BaseFont/Helvetica-BoldOblique/Encoding/WinAnsiEncoding>>
-endobj
-4 0 obj
-<</Type/Pages/Count 2/Kids[5 0 R 9 0 R]>>
-endobj
-10 0 obj
-<</Type/Catalog/Pages 4 0 R>>
-endobj
-11 0 obj
-<</Producer(iTextÆ 5.5.11 ©2000-2017 iText Group NV \(AGPL-version\))/CreationDate(D:20170518194026-04'00')/ModDate(D:20170518194026-04'00')>>
+<</Producer(iTextÆ 5.5.11 ©2000-2017 iText Group NV \(AGPL-version\))/CreationDate(D:20170520095251-04'00')/ModDate(D:20170520095251-04'00')>>
 endobj
 xref
-0 12
+0 7
 0000000000 65535 f 
-0000000896 00000 n 
-0000000984 00000 n 
+0000000399 00000 n 
 0000000015 00000 n 
-0000001273 00000 n 
-0000000302 00000 n 
-0000001077 00000 n 
-0000001173 00000 n 
-0000000423 00000 n 
-0000000757 00000 n 
-0000001330 00000 n 
-0000001376 00000 n 
+0000000487 00000 n 
+0000000287 00000 n 
+0000000538 00000 n 
+0000000583 00000 n 
 trailer
-<</Size 12/Root 10 0 R/Info 11 0 R/ID [<a0a9e0f91c1adfa3fb58a368b6b832bc><a0a9e0f91c1adfa3fb58a368b6b832bc>]>>
+<</Size 7/Root 5 0 R/Info 6 0 R/ID [<f44ddb77dbffd818f0340be9f20f6c59><f44ddb77dbffd818f0340be9f20f6c59>]>>
 %iText-5.5.11
 startxref
-1535
+741
 %%EOF

@@ -3,34 +3,27 @@
 %
 1 0 obj
   <<  /Type /Catalog
-      /Pages 10 0 R
+      /Pages 5 0 R
   >>
 endobj
 2 0 obj
   <<  /Type /Page
-      /Parent 10 0 R
+      /Parent 5 0 R
       /MediaBox [ 0 0 612 792 ] 
-      /Contents 5 0 R
-      /Resources  << /Font<</F1 3 0 R/F2 4 0 R>>
+      /Contents 4 0 R
+      /Resources  << /Font<</F1 3 0 R>>
                   >>
   >>
 endobj
 3 0 obj
   <<  /Type /Font
       /Subtype /Type1
-      /BaseFont /Helvetica-Bold
-      /Encoding /WinAnsiEncoding
-  >>
-endobj
-4 0 obj
-  <<  /Type /Font
-      /Subtype /Type1
       /BaseFont /Helvetica
       /Encoding /WinAnsiEncoding
   >>
 endobj
-5 0 obj
-  <<  /Length 241 >>
+4 0 obj
+  <<  /Length 225 >>
       stream
 1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm
 
@@ -38,96 +31,38 @@ q
 0 0 0 RG
 1 w
 
--10 60 m
--602 60 l
-S
 Q
  
 BT /F1 10 Tf
-  -1 0 0 -1 -10 15 Tm
-        ( test1 ) Tj
-         /F2 15 Tf
-  30 -60 Td
-  ( test1 ) Tj
-         /F2 10 Tf
-  -30 -15 Td
-  ( test2 ) Tj
-       
-      ETendstream
-endobj
-6 0 obj
-  <<  /Type /Page
-      /Parent 10 0 R
-      /MediaBox [ 0 0 612 792 ] 
-      /Contents 9 0 R
-      /Resources  << /Font<</F1 3 0 R/F2 4 0 R/F3 7 0 R/F4 8 0 R>>
-                  >>
-  >>
-endobj
-7 0 obj
-  <<  /Type /Font
-      /Subtype /Type1
-      /BaseFont /Helvetica-Oblique
-      /Encoding /WinAnsiEncoding
-  >>
-endobj
-8 0 obj
-  <<  /Type /Font
-      /Subtype /Type1
-      /BaseFont /Helvetica-BoldOblique
-      /Encoding /WinAnsiEncoding
-  >>
-endobj
-9 0 obj
-  <<  /Length 290 >>
-      stream
-1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm
-
-q
-0 0 0 RG
-1 w
-
-Q
- 
-BT /F2 10 Tf
-  -1 0 0 -1 -10 45 Tm
-        ( Page 2 test1 ) Tj
+  -1 0 0 -1 -0 15 Tm
+        (  AAA III ) Tj
          /F1 10 Tf
   0 -15 Td
-  ( Page 2 test2 ) Tj
-         /F3 10 Tf
+  (  WWW ) Tj
+         /F1 10 Tf
   0 -15 Td
-  ( Page 2 test3 ) Tj
-         /F4 10 Tf
-  0 -15 Td
-  ( Page 2 test4 ) Tj
+  (  rrr iii uuu ) Tj
        
       ETendstream
 endobj
-10 0 obj
+5 0 obj
   <<  /Type /Pages 
-      /Kids [ 2 0 R
-6 0 R ]
-      /Count 2
+      /Kids [ 2 0 R ]
+      /Count 1
   >>
 endobj
 xref
-0 11
+0 6
 0000000000 65535 f
 0000000014 00000 n 
-0000000075 00000 n 
-0000000259 00000 n 
-0000000384 00000 n 
-0000000504 00000 n 
-0000000804 00000 n 
-0000001006 00000 n 
-0000001134 00000 n 
-0000001266 00000 n 
-0000001615 00000 n 
+0000000074 00000 n 
+0000000248 00000 n 
+0000000368 00000 n 
+0000000652 00000 n 
 trailer
-  <<  /Size 11
+  <<  /Size 6
    /Root 1 0 R
  >>
 startxref
-1699
+729
 %%EOF

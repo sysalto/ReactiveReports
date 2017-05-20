@@ -2,9 +2,11 @@ package com.sysalto.render
 
 import java.io.{File, PrintWriter}
 
-import com.sysalto.report.RFontAttribute
+import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAllign, WrapOptions}
 import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
 import pdfGenerator.PageTree
+import util.FontAfmParser.{parseFont, parseGlyph}
+import util.wrapper.WordWrap
 
 import scala.collection.mutable.ListBuffer
 
@@ -14,6 +16,7 @@ import scala.collection.mutable.ListBuffer
 class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Value) {
   implicit val pdfWriter = new PdfWriter(name)
   implicit val allItems = ListBuffer[PdfBaseItem]()
+  implicit val glypList = parseGlyph()
   val txtList = ListBuffer[PdfTxtChuck]()
   val graphicList = ListBuffer[PdfGraphicChuck]()
   var id: Long = 0
@@ -38,8 +41,23 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
 
   def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
     graphicList += PdfGraphicChuck(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
-//    graphicList += PdfGraphicChuck(-100, 782, 585, -100, lineWidth.toLong, color, lineDashType)
-//    graphicList += PdfGraphicChuck(-100, -100, 585, 782, lineWidth.toLong, color, lineDashType)
+  }
+
+  def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
+           wrapAllign: WrapAllign.Value, simulate: Boolean, startY: Option[Float],lineHeight:Float): Option[ReportTypes.WrapBox] = {
+    implicit val fontMetric = parseFont("Helvetica")
+    implicit val wordSeparators = List(',', '.')
+    val lines=WordWrap.wordWrap(txtList,x1-x0)
+    var crtY=y0
+    if (!simulate) {
+      lines.foreach(line=>{
+        val str=line.foldLeft("")((a,b)=>a+" "+b.txt)
+        text(x0,crtY,RText(str,line(0).font))
+        crtY +=lineHeight
+      })
+      //text(xo,yo,RText(str)
+    }
+    null
   }
 
   def text(x: Float, y: Float, txt: RText): Unit = {
@@ -54,8 +72,8 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   def startPdf(): Unit = {
     pdfHeader()
     catalog = new PdfCatalog(nextId())
-//    val outline = new PdfOutline(nextId())
-//    catalog.outline = Some(outline)
+    //    val outline = new PdfOutline(nextId())
+    //    catalog.outline = Some(outline)
     currentPage = new PdfPage(nextId(), 0, orientation)
   }
 
@@ -65,9 +83,9 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   }
 
   def saveCurrentPage(): Unit = {
-    val text = new PdfText( txtList.toList)
+    val text = new PdfText(txtList.toList)
     val graphic = new PdfGraphic(graphicList.toList)
-    currentPage.contentPage = Some(new PdfPageContent(nextId(),currentPage, List( graphic,text)))
+    currentPage.contentPage = Some(new PdfPageContent(nextId(), currentPage, List(graphic, text)))
     currentPage.fontList = fontMap.values.toList.sortBy(font => font.refName)
     pageList += currentPage
     txtList.clear()
@@ -135,7 +153,7 @@ abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseIt
   }
 }
 
-class PdfCatalog(id: Long,/* var outline: Option[PdfOutline] = None,*/ var pdfPageList: Option[PdfPageList] = None)
+class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ var pdfPageList: Option[PdfPageList] = None)
                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: String = {
     s"""${id} 0 obj
@@ -206,14 +224,13 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String)(implicit itemL
   }
 }
 
-class PdfPageContent(id: Long, pdfPage: PdfPage,pageItemList: List[PdfPageItem])
+class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem])
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: String = {
     val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
     val landscapeMatrix = "0 -1 1 0 0 0 cm"
-    val matrix=if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix
-    val itemsStr = matrix+"\n"+ pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
-
+    val matrix = if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix
+    val itemsStr = matrix + "\n" + pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
 
     s"""${id} 0 obj
        |  <<  /Length ${itemsStr.length} >>
@@ -241,10 +258,10 @@ class PdfText(txtList: List[PdfTxtChuck])
     }
     val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
     val landscapeMatrix = "0 -1 1 0 0 0 cm"
-//    val s1 =
-//      s"""BT
-//         |${if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix}
-//         """.stripMargin.trim
+    //    val s1 =
+    //      s"""BT
+    //         |${if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix}
+    //         """.stripMargin.trim
     val item = txtList.head
     val firstItemTxt =
       s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
@@ -276,7 +293,7 @@ class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
          |-${item.x2} ${item.y2} l
          |S
        """.stripMargin.trim
-    }).foldLeft("")((s1, s2) => s1 + "\n"+s2)
+    }).foldLeft("")((s1, s2) => s1 + "\n" + s2)
 
     s"""q
        |0 0 0 RG
@@ -284,51 +301,6 @@ class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
        |${str}
        |Q
  """.stripMargin
-  }
-
-}
-
-
-class PdfTextOld(pdfPage: PdfPage, id: Long, txtList: List[PdfTxtChuck])
-                (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfPageItem() {
-  override def content: String = {
-    if (txtList.isEmpty) {
-      return ""
-    }
-    val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
-    val landscapeMatrix = "0 -1 1 0 0 0 cm"
-    val s1 =
-      s"""${if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix}
-         |BT""".stripMargin
-    val item = txtList.head
-    val firstItemTxt =
-      s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
-         |  -1 0 0 -1 -${item.x.toLong} ${item.y.toLong} Tm
-         |        ( ${item.rtext.txt} ) Tj
-       """.stripMargin
-
-    val s2 = firstItemTxt + txtList.tail.zipWithIndex.map { case (item, i) => {
-      val xRel = txtList(i + 1).x.toLong - txtList(i).x.toLong
-      val yRel = txtList(i + 1).y.toLong - txtList(i).y.toLong
-      s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
-         |  ${xRel} -${yRel} Td
-         |  ( ${item.rtext.txt} ) Tj
-       """.stripMargin
-    }
-    }.foldLeft("")((s1, s2) => s1 + s2)
-
-    val s3 =
-      s"""${s1}
-         |${s2}
-         |      ET
-       """.stripMargin
-
-    s"""${id} 0 obj
-       |  <<  /Length ${s3.length} >>
-       |      stream
-       |${s3}endstream
-       |endobj
-     """.stripMargin
   }
 
 }

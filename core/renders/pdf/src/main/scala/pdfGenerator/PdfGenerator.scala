@@ -45,7 +45,8 @@ class PdfGenerator extends PdfUtil() {
 
   }
 
-  override def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value, wrapAllign: WrapAllign.Value, simulate: Boolean, startY: Option[Float]): Option[WrapBox] = ???
+  override def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
+                    wrapAllign: WrapAllign.Value, simulate: Boolean, startY: Option[Float],lineHeight:Float=0): Option[WrapBox] = ???
 
   override def verticalShade(rectangle: DRectangle, from: RColor, to: RColor): Unit = ???
 }

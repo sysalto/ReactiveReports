@@ -88,7 +88,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
   private[report] def reportWrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
                                  wrapOption: WrapOptions.Value, wrapAllign: WrapAllign.Value, simulate: Boolean = false,
                                  startY: Option[Float] = None): Option[WrapBox] = {
-    pdfUtil.wrap(text, x0, y0, x1, y1, wrapOption, wrapAllign, simulate, startY)
+    pdfUtil.wrap(text, x0, y0, x1, y1, wrapOption, wrapAllign, simulate, startY,lineHeight)
   }
 
   /*

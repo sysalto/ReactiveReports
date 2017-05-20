@@ -58,9 +58,10 @@ class PdfNativeRender extends PdfUtil {
     pdfNativeGenerator.close()
   }
 
-  override def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value, wrapAllign: WrapAllign.Value, simulate: Boolean, startY: Option[Float]): Option[ReportTypes.WrapBox] = {
-    text(txtList(0), x0, y0, x1, y1)
-    None
+  override def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
+                    wrapOption: WrapOptions.Value, wrapAllign: WrapAllign.Value, simulate: Boolean,
+                    startY: Option[Float],lineHeight:Float=0): Option[ReportTypes.WrapBox] = {
+    pdfNativeGenerator.wrap(txtList, x0, y0, x1, y1, wrapOption, wrapAllign, simulate, startY,lineHeight)
   }
 
   override def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = ???

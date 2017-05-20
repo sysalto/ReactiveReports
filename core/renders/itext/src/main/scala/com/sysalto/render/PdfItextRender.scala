@@ -153,7 +153,7 @@ class PdfItextRender() extends PdfUtil() {
 
   override def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
                     wrapAllign: WrapAllign.Value, simulate: Boolean = false,
-                    startY: Option[Float] = None): Option[WrapBox] = {
+                    startY: Option[Float] = None,lineHeight:Float=0): Option[WrapBox] = {
     val ct = new ColumnText(pdfContent)
     ct.setSimpleColumn(x0, pgSize.height - y0, x1, pgSize.height - y1)
     ct.setAlignment(wrapAllign match {
