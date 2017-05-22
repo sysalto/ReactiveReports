@@ -1,5 +1,8 @@
 package util
 
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
+
 /**
   * Created by marian on 5/6/17.
   */
@@ -7,7 +10,7 @@ object FontAfmParser {
 
   // private def getFileContent(file: String) = scala.io.Source.fromFile(file)("latin1").getLines().toList
 
-
+  val fontsMetrict=mutable.Map[String,FontAfmMetric]()
   case class FontAfmMetric(maxHeight: Int, fontMap: Map[Int, Float])
 
   case class GlyphDef(glypMap: Map[String, Int])
@@ -45,6 +48,12 @@ object FontAfmParser {
   }
 
   def parseFont(fontName: String)(implicit glyphDef: GlyphDef): FontAfmMetric = {
+    if (!fontsMetrict.contains(fontName)) {
+      fontsMetrict += fontName->parseFontInternal(fontName)
+    }
+    fontsMetrict(fontName)
+  }
+  private def parseFontInternal(fontName: String)(implicit glyphDef: GlyphDef): FontAfmMetric = {
     val textList = readFile(s"fonts/${fontName}.afm")
     val upperHeight = getValue(textList, "CapHeight")._2
     val lowerHeight = getValue(textList, "XHeight")._2

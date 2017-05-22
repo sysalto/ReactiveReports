@@ -47,92 +47,15 @@ object WordWrap {
   implicit val glypList = parseGlyph()
 
 
-  def getWordSizeOld(word: String)(implicit fontMetric: FontAfmMetric): Float = FontAfmParser.getStringWidth(word, fontMetric)
 
-  def getSpaceSize()(implicit fontMetric: FontAfmMetric): Float = getWordSizeOld(" ")
+  def getSpaceSize(rtext:RText): Float = getWordSize(RText(" ",rtext.font))
 
-  def splitAtMaxOld(item: String, max: Float)(implicit fontMetric: FontAfmMetric): (String, String) = {
-    @tailrec
-    def getMaxStr(str: String): String = {
-      if (getWordSizeOld(str) <= max) {
-        str
-      }
-      else {
-        getMaxStr(str.substring(str.length - 1))
-      }
-    }
-
-    val maxStr = getMaxStr(item)
-    (maxStr, item.substring(maxStr.size))
-  }
-
-  @tailrec
-  def splitWordOld(word: String, max: Float, accum: ListBuffer[String])(implicit fontMetric: FontAfmMetric): Unit = {
-    if (getWordSizeOld(word) <= max) {
-      accum += word
-    } else {
-      val (part1, part2) = splitAtMaxOld(word, max)
-      accum += part1
-      splitWordOld(part2, max, accum)
-    }
-  }
-
-
-  def wordWrap(input: String, max: Float)(implicit wordSeparators: List[Char], fontMetric: FontAfmMetric): List[List[String]] = {
-    val input0 = input.foldLeft("")((sum, b) => sum + (if (wordSeparators.contains(b)) b + " " else b)).trim
-    val input1 = input0.replaceAll("\\s+", " ").split(" ").toList
-    val wordList = input1.flatMap(item => {
-      val result = ListBuffer[String]()
-      splitWordOld(item, max, result)
-      result.toList
-    })
-    val list = wordList.map(item => getWordSizeOld(item))
-
-    def size(l: List[Float]): Float = {
-      l.sum + getSpaceSize * (l.size - 1)
-    }
-
-    def calc(i1: Int, i2: Int): Option[Float] = {
-      val l1 = list.slice(i1, i2 + 1)
-      val result = size(l1)
-      if (result <= max) {
-        val dif = max - result
-        Some(dif * dif)
-      } else {
-        None
-      }
-    }
-
-    val l1 = list.indices
-    val l2 = l1.combinations(2).map(item => (item.head, item.tail.head)) ++ l1.map(item => (item, item))
-    val mapCost = l2.map(item => item -> calc(item._1, item._2)).filter { case (key, value) => value.isDefined }.
-      map { case (key, value) => key -> value.get }.toMap
-
-    val rr = for {i <- list.length - 1 to 0 by -1
-                  j <- list.length to i by -1
-                  key = (i, j - 1) if mapCost.contains(key)
-                  cost = mapCost(key)
-    }
-      yield (i, j, cost)
-
-    val rr1 = rr.map { case (a, b, c) => a }.toSet.toList
-    val rr2 = rr1.map(item => {
-      item -> rr.filter { case (a, b, c) => a == item }.map { case (a, b, c) => (c.toDouble, b) }.toList
-    }).toMap
-    val res = calculate[Int](rr2, List((0, List(0))), list.length, Set())
-    val indiceList = res._2
-
-    val lines = for (i <- 0 to indiceList.size - 2) yield {
-      wordList.slice(indiceList(i), indiceList(i + 1))
-    }
-    lines.toList
-  }
-
-
-  def getWordSize(word: RText)(implicit fontMetric: FontAfmMetric): Float =
+  def getWordSize(word: RText): Float = {
+    val fontMetric=parseFont(word.font.fontKeyName)
     FontAfmParser.getStringWidth(word.txt, fontMetric) * word.font.size
+  }
 
-  def splitAtMax(item: RText, max: Float)(implicit fontMetric: FontAfmMetric): (RText, RText) = {
+  def splitAtMax(item: RText, max: Float): (RText, RText) = {
     @tailrec
     def getMaxStr(rtext: RText): RText = {
       if (getWordSize(rtext) <= max) {
@@ -148,7 +71,7 @@ object WordWrap {
   }
 
   @tailrec
-  def splitWord(word: RText, max: Float, accum: ListBuffer[RText])(implicit fontMetric: FontAfmMetric): Unit = {
+  def splitWord(word: RText, max: Float, accum: ListBuffer[RText]): Unit = {
     if (getWordSize(word) <= max) {
       accum += word
     } else {
@@ -158,7 +81,7 @@ object WordWrap {
     }
   }
 
-  def wordWrap(input: List[RText], max: Float)(implicit wordSeparators: List[Char], fontMetric: FontAfmMetric): List[List[RText]] = {
+  def wordWrap(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RText]] = {
     val i1 = input.map(item => RText(item.txt.foldLeft("")((sum, b) => sum + (if (wordSeparators.contains(b)) b + " " else b)).trim, item.font))
     val i2 = i1.flatMap(item => {
       item.txt.replaceAll("\\s+", " ").split(" ").toList.map(str => RText(str, item.font))
@@ -171,14 +94,14 @@ object WordWrap {
     val list = wordList.map(item => getWordSize(item))
 
     // function that calculate the size of a string including spaces
-    def size(l: List[Float]): Float = {
-      l.sum + getSpaceSize * (l.size - 1)
+    def size(l: List[Float],rtext:RText): Float = {
+      l.sum + getSpaceSize(rtext) * (l.size - 1)
     }
 
 
-    def calc(i1: Int, i2: Int): Option[Float] = {
+    def calc(i1: Int, i2: Int,rtext:RText): Option[Float] = {
       val l1 = list.slice(i1, i2 + 1)
-      val result = size(l1)
+      val result = size(l1,rtext)
       if (result <= max) {
         val dif = max - result
         Some(dif * dif)
@@ -189,7 +112,7 @@ object WordWrap {
 
     val l1 = list.indices
     val l2 = l1.combinations(2).map(item => (item.head, item.tail.head)) ++ l1.map(item => (item, item))
-    val mapCost = l2.map(item => item -> calc(item._1, item._2)).filter { case (key, value) => value.isDefined }.
+    val mapCost = l2.map(item => item -> calc(item._1, item._2,input(0))).filter { case (key, value) => value.isDefined }.
       map { case (key, value) => key -> value.get }.toMap
 
     val rr = for {i <- list.length - 1 to 0 by -1
@@ -217,10 +140,10 @@ object WordWrap {
 
 
   def main(x: Array[String]): Unit = {
-    implicit val fontMetric = parseFont("Helvetica")
-    implicit val wordSeparators = List(',', '.')
-    val s = "Catelus cu parul cret fura rata din cotet.El se jura ca nu fura,dar l-am prins cu rata-n gura."
-    val lines = wordWrap(s, 10)
-    println(lines.map(item => item.mkString(" ")).mkString("\n"))
+//    implicit val fontMetric = parseFont("Helvetica")
+//    implicit val wordSeparators = List(',', '.')
+//    val s = "Catelus cu parul cret fura rata din cotet.El se jura ca nu fura,dar l-am prins cu rata-n gura."
+//    val lines = wordWrap(s, 10)
+//    println(lines.map(item => item.mkString(" ")).mkString("\n"))
   }
 }
