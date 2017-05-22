@@ -168,17 +168,6 @@ class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ var pdfP
   }
 }
 
-//class PdfOutline(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-//  override def content: String = {
-//    s"""${id} 0 obj
-//       |  <<  /Type /Outlines
-//       |      /Count 0
-//       |  >>
-//       |endobj
-//     """.stripMargin
-//  }
-//}
-
 class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Long] = List())
                  (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: String = {
@@ -283,10 +272,6 @@ class PdfText(txtList: List[PdfTxtChuck])
     }
     val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
     val landscapeMatrix = "0 -1 1 0 0 0 cm"
-    //    val s1 =
-    //      s"""BT
-    //         |${if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix}
-    //         """.stripMargin.trim
     val item = txtList.head
     val firstItemTxt =
       s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
@@ -298,7 +283,7 @@ class PdfText(txtList: List[PdfTxtChuck])
       val xRel = txtList(i + 1).x.toLong - txtList(i).x.toLong
       val yRel = txtList(i + 1).y.toLong - txtList(i).y.toLong
       s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
-         |  ${xRel} -${yRel} Td
+         |  ${xRel} ${-yRel} Td
          |  ( ${item.rtext.txt} ) Tj
        """.stripMargin
     }

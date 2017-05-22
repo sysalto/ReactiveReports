@@ -30,7 +30,7 @@ endobj
   >>
 endobj
 5 0 obj
-  <<  /Length 433 >>
+  <<  /Length 429 >>
       stream
 1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm
 
@@ -58,13 +58,13 @@ BT /F1 8 Tf
   0 -15 Td
   ( rrr ) Tj
          /F1 10 Tf
-  11 -0 Td
+  11 0 Td
   (  iii ) Tj
          /F2 10 Tf
-  10 -0 Td
+  10 0 Td
   ( uuu ) Tj
          /F2 10 Tf
-  -11 --30 Td
+  -11 30 Td
   ( test1 ) Tj
        
       ETendstream
@@ -83,11 +83,11 @@ xref
 0000000257 00000 n 
 0000000377 00000 n 
 0000000502 00000 n 
-0000000994 00000 n 
+0000000990 00000 n 
 trailer
   <<  /Size 7
    /Root 1 0 R
  >>
 startxref
-1071
+1067
 %%EOF

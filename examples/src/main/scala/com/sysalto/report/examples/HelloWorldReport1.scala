@@ -20,7 +20,7 @@
 
 package com.sysalto.report.examples
 
-import com.sysalto.render.PdfNativeFactory
+import com.sysalto.render.{PdfITextFactory, PdfNativeFactory}
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.util.AkkaGroupUtil
@@ -29,11 +29,10 @@ import com.sysalto.report.template.ReportApp
 
 
 object HelloWorldReport1 extends ReportApp with AkkaGroupUtil {
-  private def run(): Unit = {
+  private def run(reportName:String): Unit = {
 
     // setup a new report with the name
-    implicit val pdfITextFactory = new PdfNativeFactory()
-    val report = Report("HelloWorld1.pdf")
+    val report = Report(reportName)
 
     // function for getting the report footer size - in this case it's fixed:30
     report.getFooterSize = { _ =>
@@ -136,13 +135,24 @@ object HelloWorldReport1 extends ReportApp with AkkaGroupUtil {
     // render and close the report
     report.render()
     report.close()
-    system.terminate()
+
 
   }
 
+  def runItext(): Unit = {
+    implicit val pdfITextFactory = new PdfITextFactory()
+    run("HelloWord1.pdf")
+  }
+
+  def runNative(): Unit = {
+    implicit val pdfITextFactory = new PdfNativeFactory()
+    run("HelloWord2.pdf")
+  }
 
   def main(args: Array[String]): Unit = {
-    run()
+    runItext
+    runNative
+    system.terminate()
   }
 
 }

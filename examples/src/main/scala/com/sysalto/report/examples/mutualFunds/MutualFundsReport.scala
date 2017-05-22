@@ -23,6 +23,7 @@ package com.sysalto.report.examples.mutualFunds
 import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
+import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
@@ -293,8 +294,8 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
   }
 
 
-  private def report(): Unit = {
-    val report = Report("MutualFunds.pdf")
+  private def report(reportName:String): Unit = {
+    val report = Report(reportName)
     report.getHeaderSize = { pgNbr =>
       if (pgNbr == 1) 0 else 50
     }
@@ -345,13 +346,23 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
     disclaimer(report)
     report.render()
     report.close()
-    system.terminate()
+
   }
 
 
+  def runItext(): Unit = {
+    report("MutualFunds1.pdf")
+  }
+
+  def runNative(): Unit = {
+    implicit val pdfFactory = new PdfNativeFactory()
+    report("MutualFunds2.pdf")
+  }
+
   def main(args: Array[String]): Unit = {
     MutualFundsInitData.initDb()
-    report()
-
+    runItext
+    runNative
+    system.terminate()
   }
 }
