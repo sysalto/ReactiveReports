@@ -1,0 +1,6 @@
+sbt "project coreReport" publish-local-signed
+sbt "project renderItext" publish-local-signed
+
+#sbt "project coreReport" publish-local
+#sbt "project renderItext" publish-local
+

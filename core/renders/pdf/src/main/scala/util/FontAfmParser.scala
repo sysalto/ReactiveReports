@@ -74,6 +74,10 @@ object FontAfmParser {
     str.toCharArray.map(char=>fontMetric.fontMap(char.toInt)).sum
   }
 
+  def getCharWidth(char:Char, fontMetric: FontAfmMetric)(implicit glyphDef: GlyphDef): Float = {
+    fontMetric.fontMap(char.toInt)
+  }
+
   def main(args: Array[String]): Unit = {
     implicit val glypList = parseGlyph()
     val fontMetric = parseFont("Helvetica")
