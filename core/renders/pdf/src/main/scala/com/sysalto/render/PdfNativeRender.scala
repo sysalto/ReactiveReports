@@ -43,7 +43,10 @@ class PdfNativeRender extends PdfUtil {
     pdfNativeGenerator.line(x1, y1, x2, y2, lineWidth, color, lineDashType)
   }
 
-  override def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float, color: Option[RColor], fillColor: Option[RColor]): Unit = ???
+  override def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
+                         radius: Float, color: Option[RColor], fillColor: Option[RColor]): Unit = {
+    pdfNativeGenerator.rectangle(x1, y1, x2, y2, radius, color, fillColor)
+  }
 
   override def drawPieChart(title: String, data: Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = ???
 
@@ -60,8 +63,8 @@ class PdfNativeRender extends PdfUtil {
 
   override def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
                     wrapOption: WrapOptions.Value, wrapAllign: WrapAllign.Value, simulate: Boolean,
-                    startY: Option[Float],lineHeight:Float=0): Option[ReportTypes.WrapBox] = {
-    pdfNativeGenerator.wrap(txtList, x0, y0, x1, y1, wrapOption, wrapAllign, simulate, startY,lineHeight)
+                    startY: Option[Float], lineHeight: Float = 0): Option[ReportTypes.WrapBox] = {
+    pdfNativeGenerator.wrap(txtList, x0, y0, x1, y1, wrapOption, wrapAllign, simulate, startY, lineHeight)
   }
 
   override def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = ???

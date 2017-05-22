@@ -24,12 +24,13 @@ object TestReport extends {
 
   def runReport(report: Report): Unit = {
     report.nextLine()
-    report print (RCell(("AAA III" size 8)+(" WW rrr" size 12) +" iii"+( "uuu" bold()))  between RMargin(0, 50))
+    report print (RCell(("AAA III" size 8)+(" WWABCDEF rrr" size 12) +" iii"+( "uuu" bold()))  between RMargin(0, 50))
+    report.nextLine()
+    report rectangle() from(2, 2) to(50, report.getY + 100) draw()
 
-
-//    report print "test1".bold() at 10
-//    report.nextLine(3)
-//    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+    report print "test1".bold() at 10
+    report.nextLine(3)
+    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
 //    report.nextLine()
 //    report print "test1".size(15) at 40
 //    report.nextLine()

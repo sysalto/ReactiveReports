@@ -40,7 +40,12 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
 
 
   def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
-    graphicList += PdfGraphicChuck(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
+    graphicList += PdfLine(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
+  }
+
+  def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
+                         radius: Float, color: Option[RColor], fillColor: Option[RColor]): Unit = {
+    graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong)
   }
 
   def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
@@ -245,8 +250,30 @@ abstract class PdfPageItem {
 
 case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String)
 
-case class PdfGraphicChuck(x1: Long, y1: Long, x2: Long, y2: Long,
-                           lineWidth: Long, color: RColor, lineDashType: Option[LineDashType])
+abstract class PdfGraphicChuck {
+  def content: String
+}
+
+case class PdfLine(x1: Long, y1: Long, x2: Long, y2: Long,
+                           lineWidth: Long, color: RColor, lineDashType: Option[LineDashType]) extends  PdfGraphicChuck {
+  override def content: String = {
+    s"""-${x1} ${y1} m
+         |-${x2} ${y2} l
+         |S
+       """.stripMargin.trim
+  }
+
+}
+
+case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long) extends  PdfGraphicChuck {
+  override def content: String = {
+    s"""-${x1} ${y1} ${x1-x2} ${y2-y1} re
+       |S
+       """.stripMargin.trim
+  }
+
+}
+
 
 class PdfText(txtList: List[PdfTxtChuck])
   extends PdfPageItem {
@@ -287,10 +314,7 @@ class PdfText(txtList: List[PdfTxtChuck])
 class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
   override def content: String = {
     val str = items.map(item => {
-      s"""-${item.x1} ${item.y1} m
-         |-${item.x2} ${item.y2} l
-         |S
-       """.stripMargin.trim
+      item.content
     }).foldLeft("")((s1, s2) => s1 + "\n" + s2)
 
     s"""q
