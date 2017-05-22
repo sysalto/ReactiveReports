@@ -24,7 +24,7 @@ object TestReport extends {
 
   def runReport(report: Report): Unit = {
     report.nextLine()
-    report print (RCell(("AAA III" size 8)+(" WWW rrr" size 12) +" iii "+( "uuu" bold()))  between RMargin(0, 50))
+    report print (RCell(("AAA III" size 8)+(" WW rrr" size 12) +" iii"+( "uuu" bold()))  between RMargin(0, 50))
 
 
 //    report print "test1".bold() at 10

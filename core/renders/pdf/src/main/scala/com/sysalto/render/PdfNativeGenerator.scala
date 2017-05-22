@@ -51,11 +51,9 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     var crtY=y0
     if (!simulate) {
       lines.foreach(line=>{
-        val str=line.foldLeft("")((a,b)=>a+" "+b.txt)
-        text(x0,crtY,RText(str,line(0).font))
+        line.foreach(textPos=>text(textPos.x,crtY,textPos.rtext))
         crtY +=lineHeight
       })
-      //text(xo,yo,RText(str)
     }
     null
   }

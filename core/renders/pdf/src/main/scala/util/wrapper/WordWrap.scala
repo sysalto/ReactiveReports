@@ -1,5 +1,6 @@
 package util.wrapper
 
+import com.sysalto.report.RFontAttribute
 import com.sysalto.report.reportTypes.{RFont, RText}
 import util.FontAfmParser
 import util.FontAfmParser.{FontAfmMetric, parseFont, parseGlyph}
@@ -30,55 +31,9 @@ object WordWrap {
 
   }
 
-  def test0(): Unit = {
-    val lookup = Map(
-      "a" -> List((7.0, "b"), (9.0, "c"), (14.0, "f")),
-      "b" -> List((10.0, "c"), (15.0, "d")),
-      "c" -> List((11.0, "d"), (2.0, "f")),
-      "d" -> List((6.0, "e")),
-      "e" -> List((9.0, "f")),
-      "f" -> Nil
-    )
-    val res = calculate[String](lookup, List((0, List("a"))), "e", Set())
-    println(res)
-  }
-
 
   implicit val glypList = parseGlyph()
 
-
-  def getSpaceSize(rtext: RText): Float = getWordSizeOld(RText(" ", rtext.font))
-
-  def getWordSizeOld(word: RText): Float = {
-    val fontMetric = parseFont(word.font.fontKeyName)
-    FontAfmParser.getStringWidth(word.txt, fontMetric) * word.font.size
-  }
-
-  def splitAtMaxOld(item: RText, max: Float): (RText, RText) = {
-    @tailrec
-    def getMaxStr(rtext: RText): RText = {
-      if (getWordSizeOld(rtext) <= max) {
-        rtext
-      }
-      else {
-        getMaxStr(RText(rtext.txt.substring(rtext.txt.length - 1), rtext.font))
-      }
-    }
-
-    val maxStr = getMaxStr(item)
-    (maxStr, RText(item.txt.substring(maxStr.txt.size)))
-  }
-
-  @tailrec
-  def splitWordOld(word: RText, max: Float, accum: ListBuffer[RText]): Unit = {
-    if (getWordSizeOld(word) <= max) {
-      accum += word
-    } else {
-      val (part1, part2) = splitAtMaxOld(word, max)
-      accum += part1
-      splitWordOld(part2, max, accum)
-    }
-  }
 
   case class CharF(char: Char, font: RFont)
 
@@ -89,17 +44,22 @@ object WordWrap {
     if (!ll.exists(item => item.char == ' ')) {
       accum += Word(ll)
     } else {
-      val ll1 = ll.splitAt(ll.indexWhere(item => item.char == ' '))
+      val ll1 = ll.splitAt(ll.indexWhere(item => item.char == ' ') + 1)
       accum += Word(ll1._1)
-      stringToWord(ll1._2.tail, accum)
+      stringToWord(ll1._2, accum)
     }
   }
 
   def getWordSize(word: Word): Float = {
-    word.charList.foldLeft(0.toFloat)((total,char)=>{
+    word.charList.foldLeft(0.toFloat)((total, char) => {
       val fontMetric = parseFont(char.font.fontKeyName)
-      total+FontAfmParser.getCharWidth(char.char,fontMetric)*char.font.size
+      total + FontAfmParser.getCharWidth(char.char, fontMetric) * char.font.size
     })
+  }
+
+  def getCharSize(char: CharF): Float = {
+    val fontMetric = parseFont(char.font.fontKeyName)
+    FontAfmParser.getCharWidth(char.char, fontMetric) * char.font.size
   }
 
   def splitAtMax(item: Word, max: Float): (Word, Word) = {
@@ -109,12 +69,12 @@ object WordWrap {
         word
       }
       else {
-        getMaxStr(Word(word.charList.tail))
+        getMaxStr(Word(word.charList.dropRight(1)))
       }
     }
 
     val maxStr = getMaxStr(item)
-    (maxStr,Word(item.charList.drop(maxStr.charList.size)))
+    (maxStr, Word(item.charList.drop(maxStr.charList.size)))
   }
 
   @tailrec
@@ -128,11 +88,84 @@ object WordWrap {
     }
   }
 
-  def wordWrap(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RText]] = {
+  case class RTextPos(x: Float, rtext: RText)
+
+  @tailrec
+  def wordToRTextPos(offset: Float, word: Word, accum: ListBuffer[RTextPos]): Unit = {
+   // val word1 = if (word.charList.last.char == ' ') Word(word.charList.dropRight(1)) else word
+    if (word.charList.groupBy(char => char.font).size == 1) {
+      // one font ->keep it together
+      val str = word.charList.map(char => char.char)
+      val rtext = RText(str.mkString, word.charList(0).font)
+      accum += RTextPos(offset, rtext)
+    } else {
+      val firstFont = word.charList(0).font
+      val i1 = word.charList.indexWhere(char => char.font != firstFont)
+      accum += RTextPos(offset, RText(word.charList.take(i1).map(char => char.char).mkString, firstFont))
+      val word1 = Word(word.charList.take(i1))
+      val word2 = Word(word.charList.drop(i1))
+      wordToRTextPos(offset + getWordSize(word1), word2, accum)
+    }
+  }
+
+  def combineRTextPos(input:List[RTextPos]):RTextPos={
+    val str = input.map(item => item.rtext.txt).foldLeft("")((a,b)=>a+b)
+    RTextPos(input(0).x, RText(str, input(0).rtext.font))
+  }
+
+  @tailrec
+  def mergeRTextPos(input: List[RTextPos], accum: ListBuffer[RTextPos]): Unit = {
+    val firstFont = input(0).rtext.font
+    val i1 = input.indexWhere(item => item.rtext.font != firstFont)
+    if (i1 == -1) {
+      accum +=combineRTextPos(input)
+    } else {
+      val elem1=input.take(i1)
+      val elem2=input.drop(i1)
+      accum +=combineRTextPos(elem1)
+      mergeRTextPos(elem2,accum)
+    }
+  }
+
+  def lineToRTextPos(line: List[Word]): List[RTextPos] = {
+    val result1 = ListBuffer[RTextPos]()
+    var offset = 0f
+    line.foreach(word => {
+      wordToRTextPos(offset, word, result1)
+      offset += getWordSize(word)
+    })
+    val result= ListBuffer[RTextPos]()
+    mergeRTextPos(result1.toList,result)
+    if (result.last.rtext.txt==" ") {
+      result.dropRight(1).toList
+    } else {
+      result.toList
+    }
+  }
+
+  def wordWrap(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
+
+    //def getSpaceSize(font: RFont): Float = getCharSize(CharF(' ',font))
+
+
+    // function that calculate the size of a string including spaces
+    def size(l: List[Float], font: RFont): Float = {
+      l.sum
+    }
+
+
+    def calc(list: List[Float], i1: Int, i2: Int, font: RFont): Option[Float] = {
+      val l1 = list.slice(i1, i2 + 1).toList
+      val result = size(l1, font)
+      if (result <= max) {
+        val dif = max - result
+        Some(dif * dif)
+      } else {
+        None
+      }
+    }
 
     val a1 = input.flatMap(item => item.txt.map(cc => CharF(cc, item.font)))
-
-
 
 
     val result = ListBuffer[Word]()
@@ -143,42 +176,14 @@ object WordWrap {
       val result = ListBuffer[Word]()
       splitWord(item, max, result)
       result.toList
-    })
+    }).toList
 
-    println(wordList.mkString("\n"))
+    val list = wordList.map(item => getWordSize(item))
 
-    //----
-    val i1 = input.map(item => RText(item.txt.foldLeft("")((sum, b) => sum + (if (wordSeparators.contains(b)) b + " " else b)), item.font))
-    val i2 = i1.flatMap(item => {
-      item.txt.replaceAll("\\s+", " ").split(" ").toList.map(str => RText(str, item.font))
-    })
-    val wordListOld = i2.flatMap(item => {
-      val result = ListBuffer[RText]()
-      splitWordOld(item, max, result)
-      result.toList
-    })
-    val list = wordListOld.map(item => getWordSizeOld(item))
-
-    // function that calculate the size of a string including spaces
-    def size(l: List[Float], rtext: RText): Float = {
-      l.sum + getSpaceSize(rtext) * (l.size - 1)
-    }
-
-
-    def calc(i1: Int, i2: Int, rtext: RText): Option[Float] = {
-      val l1 = list.slice(i1, i2 + 1)
-      val result = size(l1, rtext)
-      if (result <= max) {
-        val dif = max - result
-        Some(dif * dif)
-      } else {
-        None
-      }
-    }
 
     val l1 = list.indices
     val l2 = l1.combinations(2).map(item => (item.head, item.tail.head)) ++ l1.map(item => (item, item))
-    val mapCost = l2.map(item => item -> calc(item._1, item._2, input(0))).filter { case (key, value) => value.isDefined }.
+    val mapCost = l2.map(item => item -> calc(list, item._1, item._2, input(0).font)).filter { case (key, value) => value.isDefined }.
       map { case (key, value) => key -> value.get }.toMap
 
     val rr = for {i <- list.length - 1 to 0 by -1
@@ -199,14 +204,15 @@ object WordWrap {
     val indiceList = res._2
 
     val lines = for (i <- 0 to indiceList.size - 2) yield {
-      wordListOld.slice(indiceList(i), indiceList(i + 1))
+      wordList.slice(indiceList(i), indiceList(i + 1))
     }
-    lines.toList
+    lines.map(line => lineToRTextPos(line)).toList
   }
 
 
   def main(x: Array[String]): Unit = {
-    val list = List(RText("AAA III", RFont(8)), RText(" WWWABCD rrr", RFont(12)), RText("iii ", RFont(10)), RText("uuu", RFont(10)))
+    val list = List(RText("AAA III", RFont(8)), RText(" WWWABWCD rrr", RFont(12)), RText("iii ", RFont(10)),
+      RText("uuu", RFont(10,attribute = RFontAttribute.BOLD)))
     implicit val wordSeparators = List(',', '.')
     val lines = wordWrap(list, 50)
     println(lines.mkString("\n"))
