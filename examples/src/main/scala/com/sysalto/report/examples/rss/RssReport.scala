@@ -28,6 +28,7 @@ import akka.stream.scaladsl.{Sink, Source, _}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Await, Future}
 import GraphDSL.Implicits._
+import com.sysalto.render.PdfITextFactory
 import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
 import com.sysalto.report.akka.util.AkkaGroupUtil
@@ -83,7 +84,7 @@ object RssReport extends ReportApp with AkkaGroupUtil{
         SourceShape(merge.out)
     })
 
-
+    implicit val pdfITextFactory = new PdfITextFactory()
     val reportAmerica = Report("AmericaRss.pdf")
     val reportEuro = Report("EuropeRss.pdf")
 

@@ -48,11 +48,15 @@ class PdfNativeRender extends PdfUtil {
     pdfNativeGenerator.rectangle(x1, y1, x2, y2, radius, color, fillColor)
   }
 
-  override def drawPieChart(title: String, data: Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = ???
+  override def drawPieChart(title: String, data: Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = {
+    pdfNativeGenerator.drawPieChart(title, data, x0, y0, width, height)
+  }
 
   override def drawBarChart(title: String, xLabel: String, yLabel: String, data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float): Unit = ???
 
-  override def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = ???
+  override def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
+    pdfNativeGenerator.drawImage(file, x, y, width, height, opacity)
+  }
 
   override def pgSize: ReportTypes.Rectangle = if (orientation == ReportPageOrientation.PORTRAIT) Rectangle(612, 792) else Rectangle(792, 612)
 
@@ -67,5 +71,7 @@ class PdfNativeRender extends PdfUtil {
     pdfNativeGenerator.wrap(txtList, x0, y0, x1, y1, wrapOption, wrapAllign, simulate, startY, lineHeight)
   }
 
-  override def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = ???
+  override def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
+    pdfNativeGenerator.verticalShade(rectangle, from, to)
+  }
 }

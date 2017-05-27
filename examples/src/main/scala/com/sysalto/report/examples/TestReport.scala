@@ -8,7 +8,7 @@ import com.sysalto.report.reportTypes.{RCell, ReportPageOrientation}
 /**
   * Created by marian on 4/1/17.
   */
-object TestReport extends {
+object TestReport  {
 
   def run1(): Unit = {
     implicit val pdfITextFactory = new PdfITextFactory()
@@ -26,11 +26,14 @@ object TestReport extends {
     report.nextLine()
     report print (RCell(("AAA III" size 8)+(" WWABCDEF rrr" size 12) +" iii"+( "uuu" bold()))  between RMargin(0, 50))
     report.nextLine()
-    report rectangle() from(2, 2) to(50, report.getY + 100) draw()
+//    report rectangle() from(2, 2) to(50, report.getY + 100) draw()
 
-    report print "test1".bold() at 10
-    report.nextLine(3)
-    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+//    report print "test1".bold() at 10
+//    report.nextLine(3)
+//    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+//    report rectangle() from(0, 0) to(100,100) verticalShade(RColor(255, 255, 255), RColor(100, 255, 100)) draw()
+  //  report rectangle() from(100, 100) to(200,200) verticalShade(RColor(255, 255, 255), RColor(50, 50, 255)) draw()
+
 //    report.nextLine()
 //    report print "test1".size(15) at 40
 //    report.nextLine()

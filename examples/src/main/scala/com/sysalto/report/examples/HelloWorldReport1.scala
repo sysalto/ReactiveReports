@@ -29,10 +29,10 @@ import com.sysalto.report.template.ReportApp
 
 
 object HelloWorldReport1 extends ReportApp with AkkaGroupUtil {
-  private def run(reportName:String): Unit = {
+  private def run(report: Report): Unit = {
 
     // setup a new report with the name
-    val report = Report(reportName)
+
 
     // function for getting the report footer size - in this case it's fixed:30
     report.getFooterSize = { _ =>
@@ -106,7 +106,7 @@ object HelloWorldReport1 extends ReportApp with AkkaGroupUtil {
           val row = RRow(List(name, address))
 
           if (report.lineLeft < 5) {
-            done=true
+            done = true
           }
 
           if (report.lineLeft < 5) {
@@ -141,12 +141,14 @@ object HelloWorldReport1 extends ReportApp with AkkaGroupUtil {
 
   def runItext(): Unit = {
     implicit val pdfITextFactory = new PdfITextFactory()
-    run("HelloWord1.pdf")
+    val report = Report("HelloWord1.pdf")
+    run(report)
   }
 
   def runNative(): Unit = {
     implicit val pdfITextFactory = new PdfNativeFactory()
-    run("HelloWord2.pdf")
+    val report = Report("HelloWord2.pdf")
+    run(report)
   }
 
   def main(args: Array[String]): Unit = {

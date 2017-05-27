@@ -92,7 +92,9 @@ object WordWrap {
 
   @tailrec
   def wordToRTextPos(offset: Float, word: Word, accum: ListBuffer[RTextPos]): Unit = {
-   // val word1 = if (word.charList.last.char == ' ') Word(word.charList.dropRight(1)) else word
+    if (word.charList.isEmpty) {
+      return
+    }
     if (word.charList.groupBy(char => char.font).size == 1) {
       // one font ->keep it together
       val str = word.charList.map(char => char.char)
@@ -115,6 +117,9 @@ object WordWrap {
 
   @tailrec
   def mergeRTextPos(input: List[RTextPos], accum: ListBuffer[RTextPos]): Unit = {
+    if (input.isEmpty) {
+      return
+    }
     val firstFont = input(0).rtext.font
     val i1 = input.indexWhere(item => item.rtext.font != firstFont)
     if (i1 == -1) {
@@ -136,17 +141,14 @@ object WordWrap {
     })
     val result= ListBuffer[RTextPos]()
     mergeRTextPos(result1.toList,result)
-    if (result.last.rtext.txt==" ") {
+    if (!result.isEmpty && result.last.rtext.txt==" ") {
       result.dropRight(1).toList
     } else {
       result.toList
     }
   }
 
-  def wordWrap(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
-
-    //def getSpaceSize(font: RFont): Float = getCharSize(CharF(' ',font))
-
+  private def wordWrapInternal(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
 
     // function that calculate the size of a string including spaces
     def size(l: List[Float], font: RFont): Float = {
@@ -209,12 +211,37 @@ object WordWrap {
     lines.map(line => lineToRTextPos(line)).toList
   }
 
+  @tailrec
+  private def wordWrapT(input: List[RText], max: Float,accum:ListBuffer[List[RTextPos]])(implicit wordSeparators: List[Char]):Unit  = {
+    val i1 = input.indexWhere(item=>item.txt.contains("\n"))
+    if (i1== -1) {
+      accum ++= wordWrapInternal(input,max)
+    } else {
+      val l1 = input.take(i1)
+      val elem = input(i1)
+      val i2 = elem.txt.indexOf('\n')
+      val list1 = input.take(i1) ++ List(RText(elem.txt.substring(0, i2)))
+      val list2 = List(RText(elem.txt.substring(i2 + 1))) ++ input.drop(i1+1)
+      accum ++=wordWrapInternal(list1,max)
+      wordWrapT(list2, max,accum)
+    }
+  }
+
+
+  def wordWrap(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
+    val result=ListBuffer[List[RTextPos]]()
+    wordWrapT(input,max,result)
+    result.toList
+  }
+
 
   def main(x: Array[String]): Unit = {
-    val list = List(RText("AAA III", RFont(8)), RText(" WWWABWCD rrr", RFont(12)), RText("iii ", RFont(10)),
+    val list = List(RText("ii ii ii", RFont(8)),RText("11 11 \n11 abc II jj kkkk ", RFont(8)), RText(" WWWABWCD rrr", RFont(12)), RText("iii ", RFont(10)),
       RText("uuu", RFont(10,attribute = RFontAttribute.BOLD)))
     implicit val wordSeparators = List(',', '.')
-    val lines = wordWrap(list, 50)
-    println(lines.mkString("\n"))
+//    val lines = wordWrapInternal(list, 50)
+//    println(lines.mkString("\n"))
+    val result=wordWrap(list, 50)
+    println(result.mkString("\n"))
   }
 }

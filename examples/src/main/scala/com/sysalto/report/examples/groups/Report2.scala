@@ -21,6 +21,7 @@
 package com.sysalto.report.examples.groups
 
 import akka.stream.scaladsl.Source
+import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.util.AkkaGroupUtil
@@ -31,6 +32,7 @@ import com.sysalto.report.template.ReportApp
 
 object Report2 extends ReportApp with AkkaGroupUtil {
   private def run(): Unit = {
+    implicit val pdfFactory = new PdfNativeFactory()
     val report = Report("report2.pdf")
 
     report.getFooterSize = { _ =>

@@ -2,6 +2,7 @@ package com.sysalto.render
 
 import java.io.{File, PrintWriter}
 
+import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAllign, WrapOptions}
 import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
 import pdfGenerator.PageTree
@@ -44,23 +45,37 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   }
 
   def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
-                         radius: Float, color: Option[RColor], fillColor: Option[RColor]): Unit = {
+                radius: Float, color: Option[RColor], fillColor: Option[RColor]): Unit = {
     graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong)
   }
 
   def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
-           wrapAllign: WrapAllign.Value, simulate: Boolean, startY: Option[Float],lineHeight:Float): Option[ReportTypes.WrapBox] = {
+           wrapAllign: WrapAllign.Value, simulate: Boolean, startY: Option[Float], lineHeight: Float): Option[ReportTypes.WrapBox] = {
     implicit val fontMetric = parseFont("Helvetica")
     implicit val wordSeparators = List(',', '.')
-    val lines=WordWrap.wordWrap(txtList,x1-x0)
-    var crtY=y0
+    val lines = WordWrap.wordWrap(txtList, x1 - x0)
+    var crtY = y0
     if (!simulate) {
-      lines.foreach(line=>{
-        line.foreach(textPos=>text(textPos.x,crtY,textPos.rtext))
-        crtY +=lineHeight
+      lines.foreach(line => {
+        line.foreach(textPos => text(x0+textPos.x, crtY, textPos.rtext))
+        crtY += lineHeight
       })
+    }  else {
+      crtY+= lineHeight*(lines.size-1)
     }
-    null
+    Some(WrapBox(y0, crtY, lines.size))
+  }
+
+  def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
+    println("Vertical Shade not yet implemented.")
+  }
+
+  def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
+    println("drawImage not yet implemented.")
+  }
+
+  def drawPieChart(title: String, data: Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = {
+    println("drawPieChart not yet implemented.")
   }
 
   def text(x: Float, y: Float, txt: RText): Unit = {
@@ -192,7 +207,7 @@ class PdfPage(id: Long, var pdfPageListId: Long = 0, val orientation: ReportPage
     s"""${id} 0 obj
        |  <<  /Type /Page
        |      /Parent ${pdfPageListId} 0 R
-       |      /MediaBox [ 0 0 612 792 ] ${if (orientation == ReportPageOrientation.LANDCAPE) "/Rotate 90" else ""}
+       |      /MediaBox [ 0 0 612 792 ] ${if (orientation == ReportPageOrientation.LANDSCAPE) "/Rotate 90" else ""}
        |      ${contentStr}
        |      /Resources  << ${fontStr}
        |                  >>
@@ -244,19 +259,19 @@ abstract class PdfGraphicChuck {
 }
 
 case class PdfLine(x1: Long, y1: Long, x2: Long, y2: Long,
-                           lineWidth: Long, color: RColor, lineDashType: Option[LineDashType]) extends  PdfGraphicChuck {
+                   lineWidth: Long, color: RColor, lineDashType: Option[LineDashType]) extends PdfGraphicChuck {
   override def content: String = {
     s"""-${x1} ${y1} m
-         |-${x2} ${y2} l
-         |S
+       |-${x2} ${y2} l
+       |S
        """.stripMargin.trim
   }
 
 }
 
-case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long) extends  PdfGraphicChuck {
+case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long) extends PdfGraphicChuck {
   override def content: String = {
-    s"""-${x1} ${y1} ${x1-x2} ${y2-y1} re
+    s"""-${x1} ${y1} ${x1 - x2} ${y2 - y1} re
        |S
        """.stripMargin.trim
   }

@@ -35,5 +35,5 @@ trait ReportApp {
       akka.log-dead-letters-during-shutdown=off """)
   implicit val system = ActorSystem("Sys", config)
   implicit val materializer = ActorMaterializer()
-  implicit val pdfITextFactory = new PdfITextFactory()
+ // implicit val pdfITextFactory = new PdfITextFactory()
 }

@@ -75,7 +75,11 @@ object FontAfmParser {
   }
 
   def getCharWidth(char:Char, fontMetric: FontAfmMetric)(implicit glyphDef: GlyphDef): Float = {
-    fontMetric.fontMap(char.toInt)
+    if (!fontMetric.fontMap.contains(char.toInt)) {
+     0f
+    } else {
+      fontMetric.fontMap(char.toInt)
+    }
   }
 
   def main(args: Array[String]): Unit = {

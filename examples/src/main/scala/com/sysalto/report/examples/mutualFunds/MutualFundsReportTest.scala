@@ -24,13 +24,13 @@ import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
 import com.sysalto.render.{PdfITextFactory, PdfNativeFactory}
-import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.util.AkkaGroupUtil
-import com.sysalto.report.reportTypes.GroupUtil
+import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
+import com.sysalto.report.template.ReportApp
 
-object MutualFundsReport extends ReportApp with AkkaGroupUtil{
+object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
   val sd = new SimpleDateFormat("MMM dd yyyy")
   private val date1 = new GregorianCalendar(2013, 0, 1).getTime
   private val date2 = new GregorianCalendar(2013, 11, 31).getTime
@@ -95,10 +95,13 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
     val c_graphic = RCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAllign() between graphic
     val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change, c_graphic))
     val y2 = rrow.calculate(report)
-    report rectangle() from(9, report.getY) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
+    report rectangle() from(9, report.getY-report.lineHeight) to(report.pgSize.width - 9, y2+2) fillColor headerColor draw()
     rrow.print(report)
     report.setYPosition(y2)
     report.nextLine()
+
+
+
     //    report line() from(10, report.getY - report.lineHeight * 0.5f) to (report.pgSize.width - 10) color(200, 200, 200) draw()
     val rs = MutualFundsInitData.query("select * from sum_investment")
     val source = rs.toSource
@@ -125,18 +128,17 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
           total1 += val1.toFloat
           total2 += val2.toFloat
           total3 += v_change
-          chartData += (firstChar.asInstanceOf[Char].toString -> total2.toDouble)
           val c_change = RCell(v_change.toString) rightAllign() between change
           val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change))
           val y2 = rrow.calculate(report)
           rrow.print(report)
-          report.setYPosition(y2 + 5)
           if (GroupUtil.isLastRecord(rec)) {
-            report line() from(10, report.getY) to change.right width 0.5f draw()
+            report line() from(10, report.getY+2) to change.right width 0.5f draw()
           } else {
-            report line() from(10, report.getY) to change.right color(200, 200, 200) lineType LineDashType(2, 1) draw()
+            report line() from(10, report.getY+2) to change.right color(200, 200, 200)  draw() //lineType LineDashType(2, 1) draw()
           }
           firstChar += 1
+          report.nextLine()
         } catch {
           case e: Throwable =>
             e.printStackTrace()
@@ -168,7 +170,7 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
     val value3Hdr = RCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAllign() between value3
     val rrow = RRow(List(accountHdr, value1Hdr, value2Hdr, value3Hdr))
     val y2 = rrow.calculate(report)
-    report rectangle() from(9, report.getY) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
+    report rectangle() from(9, report.getY-report.lineHeight) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
     rrow.print(report)
     report.setYPosition(y2)
     report.nextLine()
@@ -195,8 +197,8 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
           val rrow = RRow(List(c_account, c_value1, c_value2, c_value3))
           val y2 = rrow.calculate(report)
           rrow.print(report)
-          report.setYPosition(y2 + 5)
-          report line() from(10, report.getY) to value3.right color(200, 200, 200) lineType LineDashType(2, 1) draw()
+          report line() from(10, report.getY+2) to value3.right color(200, 200, 200) lineType LineDashType(2, 1) draw()
+          report.nextLine()
         } catch {
           case e: Throwable =>
             e.printStackTrace()
@@ -235,6 +237,7 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
     val value5y = row.getColumnBound("value5y")
     val value10y = row.getColumnBound("value10y")
     val annualized = row.getColumnBound("annualized")
+    report.nextLine(3)
 
     val h_accountPerf = RCell("Account performance" bold() color headerFontColor) leftAllign() between accountPerf
     val h_value3m = RCell("3 Months (%)" bold() color headerFontColor) rightAllign() between value3m
@@ -245,7 +248,7 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
     val h_annualized = RCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAllign() between annualized
     val hrow = RRow(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
     val y1 = hrow.calculate(report)
-    report rectangle() from(9, report.getY) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
+    report rectangle() from(9, report.getY-report.lineHeight) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
     hrow.print(report)
     report.setYPosition(y1)
     report.nextLine()
@@ -357,13 +360,13 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
 
   def runNative(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()
-    val report1=Report("MutualFunds2.pdf")
+    val report1=Report("MutualFunds2.pdf")//,ReportPageOrientation.LANDSCAPE)
     report(report1)
   }
 
   def main(args: Array[String]): Unit = {
     MutualFundsInitData.initDb()
-    runItext
+//    runItext
     runNative
     system.terminate()
   }
