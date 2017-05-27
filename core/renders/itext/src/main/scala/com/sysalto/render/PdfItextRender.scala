@@ -36,7 +36,7 @@ import org.jfree.data.category.DefaultCategoryDataset
 import org.jfree.data.general.DefaultPieDataset
 
 class PdfItextRender() extends PdfUtil() {
-  var document:Document = new Document()
+  var document: Document = new Document()
   private lazy val writer = PdfWriter.getInstance(document, new FileOutputStream(name))
   private val font = new Font(BaseFont.createFont)
   private lazy val pdfContent = writer.getDirectContent
@@ -153,7 +153,7 @@ class PdfItextRender() extends PdfUtil() {
 
   override def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
                     wrapAllign: WrapAllign.Value, simulate: Boolean = false,
-                    startY: Option[Float] = None,lineHeight:Float=0): Option[WrapBox] = {
+                    startY: Option[Float] = None, lineHeight: Float = 0): Option[WrapBox] = {
     val ct = new ColumnText(pdfContent)
     ct.setSimpleColumn(x0, pgSize.height - y0, x1, pgSize.height - y1)
     ct.setAlignment(wrapAllign match {
@@ -231,9 +231,20 @@ class PdfItextRender() extends PdfUtil() {
 
   override def verticalShade(rectangle: DRectangle, from: RColor, to: RColor): Unit = {
     pdfContent.saveState()
-    val shading = PdfShading.simpleAxial(writer, rectangle.x1, pgSize.height - rectangle.y1, 0,
-      pgSize.height - rectangle.y2, from.toBaseColor, to.toBaseColor)
-    pdfContent.paintShading(shading)
+    val shading = PdfShading.simpleAxial(writer, rectangle.x1, pgSize.height - rectangle.y1, rectangle.x2,
+      pgSize.height - rectangle.y2, from.toBaseColor, to.toBaseColor, false, false)
+
+
+    //--
+    val axialPattern=new PdfShadingPattern(shading)
+    pdfContent.setShadingFill(axialPattern)
+    pdfContent.rectangle(rectangle.x1, pgSize.height - rectangle.y1, rectangle.x2 - rectangle.x1,
+      rectangle.y1 - rectangle.y2)
+pdfContent.fillStroke()
+//--
+
+
+    //pdfContent.paintShading(shading)
     pdfContent.restoreState()
   }
 }

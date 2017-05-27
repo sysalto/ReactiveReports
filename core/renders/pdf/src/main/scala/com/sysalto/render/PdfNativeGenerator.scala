@@ -258,6 +258,16 @@ abstract class PdfGraphicChuck {
   def content: String
 }
 
+//case class PdfShading(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor) extends PdfGraphicChuck {
+//  override def content: String = {
+//    s"""-${x1} ${y1} m
+//       |-${x2} ${y2} l
+//       |S
+//       """.stripMargin.trim
+//  }
+//
+//}
+
 case class PdfLine(x1: Long, y1: Long, x2: Long, y2: Long,
                    lineWidth: Long, color: RColor, lineDashType: Option[LineDashType]) extends PdfGraphicChuck {
   override def content: String = {

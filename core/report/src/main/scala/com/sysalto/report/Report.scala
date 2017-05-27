@@ -34,7 +34,7 @@ import scala.collection.JavaConverters._
   * Main report class
   * name - pdf file name
   */
-case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT)(implicit pdfFactory: PdfFactory) {
+case class Report(name: String,val orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT)(implicit pdfFactory: PdfFactory) {
   private var pageNbrs = 1L
   private var crtPageNbr = 1L
   private val crtPage = ReportPage(new ListBuffer[ReportItem]())
@@ -43,7 +43,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
   private[report] val pdfUtil = pdfFactory.getPdf
 
 
-  private var crtYPosition = pdfUtil.pgSize.height
+  private  var crtYPosition = 0f
 
 
   var headerFct: (Report, Long, Long) => Unit = {
@@ -104,7 +104,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
   /*
   keep page size
    */
-  val pgSize: Rectangle = pdfUtil.pgSize
+  lazy val pgSize: Rectangle = pdfUtil.pgSize
 
   /*
   Returns report's current position (page number and vertical position on page)
@@ -450,6 +450,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
   // class initialize
 
   pdfUtil.open(name, orientation)
+  crtYPosition = pdfUtil.pgSize.height
   setFontSize(fontSize)
   KryoUtil.register(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass)
 

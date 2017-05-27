@@ -360,7 +360,7 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
 
   def runNative(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()
-    val report1=Report("MutualFunds2.pdf")//,ReportPageOrientation.LANDSCAPE)
+    val report1=Report("MutualFunds2.pdf",ReportPageOrientation.LANDSCAPE)
     report(report1)
   }
 

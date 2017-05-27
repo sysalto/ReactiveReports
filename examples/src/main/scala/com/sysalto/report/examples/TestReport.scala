@@ -23,9 +23,12 @@ object TestReport  {
   }
 
   def runReport(report: Report): Unit = {
-    report.nextLine()
-    report print (RCell(("AAA III" size 8)+(" WWABCDEF rrr" size 12) +" iii"+( "uuu" bold()))  between RMargin(0, 50))
-    report.nextLine()
+    report rectangle() from(50, 50) to(150,200) verticalShade(RColor(0, 255, 100), RColor(255, 255, 180)) draw()
+//    report rectangle() from(50, 50) to(150,200)  draw()
+//    report rectangle() from(50, 50) to(50,200) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
+//    report.nextLine()
+//    report print (RCell(("AAA III" size 8)+(" WWABCDEF rrr" size 12) +" iii"+( "uuu" bold()))  between RMargin(0, 50))
+//    report.nextLine()
 //    report rectangle() from(2, 2) to(50, report.getY + 100) draw()
 
 //    report print "test1".bold() at 10

@@ -3,34 +3,20 @@
 %
 1 0 obj
   <<  /Type /Catalog
-      /Pages 6 0 R
+      /Pages 4 0 R
   >>
 endobj
 2 0 obj
   <<  /Type /Page
-      /Parent 6 0 R
+      /Parent 4 0 R
       /MediaBox [ 0 0 612 792 ] 
-      /Contents 5 0 R
-      /Resources  << /Font<</F1 3 0 R/F2 4 0 R>>
+      /Contents 3 0 R
+      /Resources  << /Font<<>>
                   >>
   >>
 endobj
 3 0 obj
-  <<  /Type /Font
-      /Subtype /Type1
-      /BaseFont /Helvetica
-      /Encoding /WinAnsiEncoding
-  >>
-endobj
-4 0 obj
-  <<  /Type /Font
-      /Subtype /Type1
-      /BaseFont /Helvetica-Bold
-      /Encoding /WinAnsiEncoding
-  >>
-endobj
-5 0 obj
-  <<  /Length 344 >>
+  <<  /Length 55 >>
       stream
 1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm
 
@@ -40,46 +26,25 @@ q
 
 Q
  
-BT /F1 8 Tf
-  -1 0 0 -1 -0 15 Tm
-        ( AAA III ) Tj
-         /F1 12 Tf
-  0 -15 Td
-  ( WWABC ) Tj
-         /F1 12 Tf
-  0 -15 Td
-  ( DEF  ) Tj
-         /F1 12 Tf
-  0 -15 Td
-  ( rrr ) Tj
-         /F1 10 Tf
-  11 0 Td
-  (  iii ) Tj
-         /F2 10 Tf
-  10 0 Td
-  ( uuu ) Tj
-       
-      ETendstream
+endstream
 endobj
-6 0 obj
+4 0 obj
   <<  /Type /Pages 
       /Kids [ 2 0 R ]
       /Count 1
   >>
 endobj
 xref
-0 7
+0 5
 0000000000 65535 f
 0000000014 00000 n 
 0000000074 00000 n 
-0000000257 00000 n 
-0000000377 00000 n 
-0000000502 00000 n 
-0000000905 00000 n 
+0000000239 00000 n 
+0000000352 00000 n 
 trailer
-  <<  /Size 7
+  <<  /Size 5
    /Root 1 0 R
  >>
 startxref
-982
+429
 %%EOF

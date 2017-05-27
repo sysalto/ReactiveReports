@@ -1,84 +1,60 @@
 %PDF-1.4
 %‚„œ”
-3 0 obj
-<</Length 337>>stream
+2 0 obj
+<</FunctionType 2/Domain[0 1]/C0[0 1 0.39216]/C1[1 1 0.70588]/N 1>>
+endobj
+4 0 obj
+<</Length 75>>stream
 q
 BT
 36 806 Td
 ET
 Q
 /F1 10 Tf
-BT
-1 0 0 1 0 819 Tm
-/F1 8 Tf
-0 0 0 rg
-7.38 Tw
-2.95 Tc
-(AAA III)Tj
-0 g
-0 Tw
-0 Tc
-1 0 0 1 0 807 Tm
-/F1 12 Tf
-0 0 0 rg
-1.67 Tw
-0.668 Tc
-(WWABC)Tj
-0 g
-0 Tw
-0 Tc
-1 0 0 1 0 795 Tm
-0 0 0 rg
-3.14 Tw
-1.26 Tc
-(DEF rrr)Tj
-0 g
-0 Tw
-0 Tc
-1 0 0 1 0 785 Tm
-/F1 10 Tf
-0 0 0 rg
-(iii)Tj
-0 g
-/F2 10 Tf
-0 0 0 rg
-(uuu)Tj
-0 g
-ET
+q
+/Pattern cs /P1 scn
+50 792 100 -150 re
+B
+Q
 
 endstream
 endobj
-5 0 obj
-<</Type/Page/MediaBox[0 0 595 842]/Resources<</Font<</F1 1 0 R/F2 2 0 R>>>>/Contents 3 0 R/Parent 4 0 R>>
+6 0 obj
+<</Type/Page/MediaBox[0 0 595 842]/Resources<</Font<</F1 1 0 R>>/Pattern<</P1 3 0 R>>>>/Contents 4 0 R/Parent 5 0 R>>
 endobj
 1 0 obj
 <</Type/Font/Subtype/Type1/BaseFont/Helvetica/Encoding/WinAnsiEncoding>>
 endobj
-2 0 obj
-<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Bold/Encoding/WinAnsiEncoding>>
-endobj
-4 0 obj
-<</Type/Pages/Count 1/Kids[5 0 R]>>
-endobj
-6 0 obj
-<</Type/Catalog/Pages 4 0 R>>
+3 0 obj
+<</PatternType 2/Shading 7 0 R/Matrix[1 0 0 1 0 0]>>
 endobj
 7 0 obj
-<</Producer(iTextÆ 5.5.11 ©2000-2017 iText Group NV \(AGPL-version\))/CreationDate(D:20170527104947-04'00')/ModDate(D:20170527104947-04'00')>>
+<</ShadingType 2/ColorSpace/DeviceRGB/Coords[50 792 150 642]/Function 2 0 R>>
+endobj
+5 0 obj
+<</Type/Pages/Count 1/Kids[6 0 R]>>
+endobj
+8 0 obj
+<</Type/Catalog/Pages 5 0 R>>
+endobj
+9 0 obj
+<</Producer(iTextÆ 5.5.11 ©2000-2017 iText Group NV \(AGPL-version\))/CreationDate(D:20170527154634-04'00')/ModDate(D:20170527154634-04'00')>>
 endobj
 xref
-0 8
+0 10
 0000000000 65535 f 
-0000000521 00000 n 
-0000000609 00000 n 
+0000000353 00000 n 
 0000000015 00000 n 
-0000000702 00000 n 
-0000000400 00000 n 
-0000000753 00000 n 
-0000000798 00000 n 
+0000000441 00000 n 
+0000000098 00000 n 
+0000000602 00000 n 
+0000000220 00000 n 
+0000000509 00000 n 
+0000000653 00000 n 
+0000000698 00000 n 
 trailer
-<</Size 8/Root 6 0 R/Info 7 0 R/ID [<fc6ac2bd23cfefa0c3c0a8be066608ff><fc6ac2bd23cfefa0c3c0a8be066608ff>]>>
+<</Size 10/Root 8 0 R/Info 9 0 R/ID [<6d4d4f6e28b6c17c2aabdfaadbc7075a><6d4d4f6e28b6c17c2aabdfaadbc7075a>]>>
 %iText-5.5.11
 startxref
-956
+856
 %%EOF

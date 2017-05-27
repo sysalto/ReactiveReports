@@ -58,7 +58,9 @@ class PdfNativeRender extends PdfUtil {
     pdfNativeGenerator.drawImage(file, x, y, width, height, opacity)
   }
 
-  override def pgSize: ReportTypes.Rectangle = if (orientation == ReportPageOrientation.PORTRAIT) Rectangle(612, 792) else Rectangle(792, 612)
+  override def pgSize: ReportTypes.Rectangle = {
+    if (orientation == ReportPageOrientation.PORTRAIT) Rectangle(612, 792) else Rectangle(792, 612)
+  }
 
   override def close(): Unit = {
     pdfNativeGenerator.done()
