@@ -232,7 +232,7 @@ class PdfItextRender() extends PdfUtil() {
   override def verticalShade(rectangle: DRectangle, from: RColor, to: RColor): Unit = {
     pdfContent.saveState()
     val shading = PdfShading.simpleAxial(writer, rectangle.x1, pgSize.height - rectangle.y1, rectangle.x2,
-      pgSize.height - rectangle.y2, from.toBaseColor, to.toBaseColor, false, false)
+      pgSize.height - rectangle.y2, from.toBaseColor, to.toBaseColor, true, true)
 
 
     //--

@@ -3,69 +3,63 @@
 %
 1 0 obj
   <<  /Type /Catalog
-      /Outlines 2 0 R
-      /Pages 5 0 R
+      /Pages 7 0 R
   >>
 endobj
 2 0 obj
-  <<  /Type /Outlines
-      /Count 0
-  >>
-endobj
-3 0 obj
-  [/PDF /Text ]
-endobj
-4 0 obj
-  <<  /Type /Font
-      /Subtype /Type1
-      /Name /F1
-      /BaseFont /Helvetica
-      /Encoding /MacRomanEncoding
-  >>
-endobj
-5 0 obj
-  <<  /Type /Pages
-      
-      /Kids [ 6 0 R ]
-      /Count 1
-  >>
-endobj
-6 0 obj
   <<  /Type /Page
-      /Parent 5 0 R
+      /Parent 7 0 R
       /MediaBox [ 0 0 612 792 ] 
-      /Contents 7 0 R
-      /Resources  <<    /ProcSet 3 0 R
-                        /Font << /F1 4 0 R >>
+      /Contents 6 0 R
+      /Resources  << /Font<<>>
+      
                   >>
   >>
 endobj
-7 0 obj
-  <<  /Length 127 >>
+3 0 obj
+  <</FunctionType 2/Domain[0 1]/C0[0.0 1.0 0.39215687]/C1[1.0 0.7058824 0.7058824]/N 1>>
+  endobj
+4 0 obj
+  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[50.0 50.0  150.0 200.0]/Function 3 0 R>>
+  endobj
+5 0 obj
+  <</PatternType 2/Shading 4 0 R/Matrix[1 0 0 1 0 0]>>
+  endobj
+6 0 obj
+  <<  /Length 76 >>
       stream
 1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm
-BT
-        /F1 10 Tf
-        -1 0 0 -1 -10 15 Tm
-        ( test ) Tj
-       
-      ET
-       endstream
+
+q
+0 0 0 RG
+1 w
+
+-50 50 -100 150 re
+S
+Q
+ 
+endstream
+endobj
+7 0 obj
+  <<  /Type /Pages 
+      /Kids [ 2 0 R ]
+      /Count 1
+  >>
 endobj
 xref
 0 8
 0000000000 65535 f
 0000000014 00000 n 
-0000000096 00000 n 
-0000000153 00000 n 
-0000000184 00000 n 
-0000000321 00000 n 
-0000000404 00000 n 
-0000000623 00000 n 
+0000000074 00000 n 
+0000000246 00000 n 
+0000000352 00000 n 
+0000000457 00000 n 
+0000000529 00000 n 
+0000000663 00000 n 
 trailer
   <<  /Size 8
    /Root 1 0 R
  >>
 startxref
-809
+740
 %%EOF
