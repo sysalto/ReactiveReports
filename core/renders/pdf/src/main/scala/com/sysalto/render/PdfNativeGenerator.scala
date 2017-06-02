@@ -231,7 +231,7 @@ class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdf
                       (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: String = {
     s"""${id} 0 obj
-       |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R/Extend[true true]>>
+       |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R>>
        |  endobj
      """.stripMargin
   }
