@@ -298,7 +298,7 @@ class PdfImage(id: Long, val name: String, fileName: String)(implicit itemList: 
        |  stream
        |""".stripMargin.getBytes ++
       image.imageInByte ++
-       "endstream endobj\n".getBytes
+       "endstream\n endobj\n".getBytes
   }
 }
 
@@ -319,7 +319,7 @@ case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1
 
   def content: String =
     s"""$opacityStr
-       |Q q 53.33 0 0 40 5 797 cm
+       |Q q 160.0 0 0 120.0 100 100 cm
        |/${pdfImage.name} Do
     """.stripMargin
 
@@ -367,7 +367,7 @@ class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem]
   override def content: Array[Byte] = {
     val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
     val landscapeMatrix = "0 -1 1 0 0 0 cm"
-    val matrix = if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix
+    val matrix = ""//if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix
     val itemsStr = matrix + "\n" + pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
 
     s"""${id} 0 obj

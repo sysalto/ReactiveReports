@@ -4,8 +4,7 @@ import java.io.{ByteArrayOutputStream, File}
 import java.util.zip.{Deflater, Inflater}
 import javax.imageio.ImageIO
 
-import core.fonts.afm.FontUtil
-import core.wrap.WordWrap
+import pdfGenerator.{PageTree, WriteUtil}
 
 import scala.collection.mutable.ListBuffer
 
@@ -537,14 +536,7 @@ object CorePdfN {
         val pageList = for {i <- 1 to 3
                             fontSize = 8
                             txt = Text(10, 750, fontSize, s"Page$i")
-                            txtList = {
-                              val str = "Catelus cu parul cret fura rata din cotet el se jura ca nu fura dar l-am prins cu rata in gura."
-                              val pdfFont = FontUtil.getFont("Helvetica", fontSize)
-                              val result = WordWrap.wrap1(pdfFont, str, 10)
-                              var height = (pdfFont.charSet(0).height * 0.001 * fontSize).toInt + 1
-                              println(height)
-                              (for (i <- result.indices) yield Text(10, 700 - i * height, fontSize, result(i)).content).toList
-                            }
+                            txtList = List()
                             content = new Content(pdf, pdf.nextId, txtList, false)
                             page = new Page(pdf, pdf.nextId, pageList2Id, resource.objId, content.objId)
         } yield page.objId
@@ -591,21 +583,20 @@ object CorePdfN {
       () => {
         val pageList1Id = pdf.nextId
         val font = new Font(pdf, pdf.nextId)
-        val image = new ImageMeta("im1", "swiss.jpg")
-        val opacity = Opacity("op1", 0.2)
+        val image = new ImageMeta("im1", "examples/src/main/resources/images/bank_banner.jpg")
+       // val opacity = Opacity("op1", 0.2)
         val resourceImage = ResourceImage(pdf, pdf.nextId, image)
-        val resource = new ResourceOld(pdf, pdf.nextId, font.objId, List(resourceImage), List(opacity))
-        val txt1 = Text(10, 750, 24, "Page1 compress")
-        val rectangle1 = Rectangle(Point(10, 700), 100, 70)
-        val rectangle2 = Rectangle(Point(10, 500), 100, 70)
-        val box = Box(rectangle1, 1)
-        val fillBox1 = BoxFill(rectangle1, Color(0.2, 0.5, 1), Some(opacity))
-        val fillBox2 = BoxFill(rectangle2, Color(0.2, 0.5, 1), Some(opacity))
-        //        val fillBox2 = BoxGradientFill(rectangle2,Color(0.2,0.5,1),"aaa",Some(opacity))
-        val line = Line(1, Point(30, 50), Point(300, 400))
+        val resource = new ResourceOld(pdf, pdf.nextId, font.objId, List(resourceImage))
+//        val txt1 = Text(10, 750, 24, "Page1 compress")
+//        val rectangle1 = Rectangle(Point(10, 700), 100, 70)
+//        val rectangle2 = Rectangle(Point(10, 500), 100, 70)
+//        val box = Box(rectangle1, 1)
+//        val fillBox1 = BoxFill(rectangle1, Color(0.2, 0.5, 1), Some(opacity))
+//        val fillBox2 = BoxFill(rectangle2, Color(0.2, 0.5, 1), Some(opacity))
+//        val line = Line(1, Point(30, 50), Point(300, 400))
 
-        val drawImage = DrawImage(Point(100, 100), 0.5, image, Some(opacity))
-        val content = new Content(pdf, pdf.nextId, List(txt1.content, box.content, fillBox1.content, fillBox2.content, line.content, drawImage.content), false)
+        val drawImage = DrawImage(Point(100, 100), 0.5, image)
+        val content = new Content(pdf, pdf.nextId, List(drawImage.content), false)
         val pageId = pdf.nextId
         val pageList2Id = pdf.nextId
         val page = new Page(pdf, pageId, pageList2Id, resource.objId, content.objId)
