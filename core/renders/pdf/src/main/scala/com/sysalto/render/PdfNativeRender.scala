@@ -74,6 +74,6 @@ class PdfNativeRender extends PdfUtil {
   }
 
   override def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
-    pdfNativeGenerator.verticalShade(rectangle, from, to)
+    pdfNativeGenerator.axialShade(rectangle.x1,rectangle.y1,rectangle.x1,rectangle.y2,rectangle, from, to)
   }
 }

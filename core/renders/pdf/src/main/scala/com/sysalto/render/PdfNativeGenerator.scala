@@ -15,8 +15,8 @@ import scala.collection.mutable.ListBuffer
   * Created by marian on 4/1/17.
   */
 class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Value) {
-  val PAGE_WIDTH=612
-  val PAGE_HEIGHT=792
+  val PAGE_WIDTH = 612
+  val PAGE_HEIGHT = 792
 
   implicit val pdfWriter = new PdfWriter(name)
   implicit val allItems = ListBuffer[PdfBaseItem]()
@@ -48,8 +48,8 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   }
 
   def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
-                radius: Float, color: Option[RColor], fillColor: Option[RColor],paternColor:Option[PdfPattern]=None): Unit = {
-    graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong,paternColor)
+                radius: Float, color: Option[RColor], fillColor: Option[RColor], paternColor: Option[PdfPattern] = None): Unit = {
+    graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, paternColor)
   }
 
   def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
@@ -69,16 +69,29 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     Some(WrapBox(y0, crtY, lines.size))
   }
 
-  def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
-    // println("Vertical Shade not yet implemented.")
-    val pageHeight=if (orientation==ReportPageOrientation.PORTRAIT) PAGE_HEIGHT else PAGE_WIDTH
+  private def coordinate(x:Float,y:Float):(Float,Float)={
+    val pageHeight = if (orientation == ReportPageOrientation.PORTRAIT) PAGE_HEIGHT else PAGE_WIDTH
+    if (orientation == ReportPageOrientation.PORTRAIT) {
+      (x,pageHeight-y)
+    } else {
+      (y,x)
+    }
+  }
+
+  def axialShade(x1:Float,y1:Float,x2:Float,y2:Float,rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
+    val pageHeight = if (orientation == ReportPageOrientation.PORTRAIT) PAGE_HEIGHT else PAGE_WIDTH
+
+    val (x2,y2)=coordinate(0,0)
+    val (x3,y3)=coordinate(0,612)
 
     val colorFct = new PdfShaddingFctColor(nextId(), from, to)
-    val pdfShadding = new PdfColorShadding(nextId(), rectangle.x1 ,pageHeight-rectangle.y1, rectangle.x2, pageHeight-rectangle.y2, colorFct)
+//    val pdfShadding = new PdfColorShadding(nextId(), x1, pageHeight - y1, x2, pageHeight - y2, colorFct)
+    val pdfShadding = new PdfColorShadding(nextId(), x2, y2, x3, y3, colorFct)
+//    val pdfShadding = new PdfColorShadding(nextId(), 612, 0,0, 0, colorFct)
+
     val pattern = new PdfPattern(nextId(), "P1", pdfShadding)
-    currentPage.pdfPatternList=List(pattern)
-    this.rectangle(rectangle.x1,rectangle.y1,rectangle.x2,rectangle.y2, 0, None, None,Some(pattern))
-//    this.rectangle(rectangle.x1,rectangle.y1,rectangle.x2,rectangle.y2, 0, None,None)
+    currentPage.pdfPatternList = List(pattern)
+    this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
   }
 
   def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
@@ -330,10 +343,10 @@ case class PdfLine(x1: Long, y1: Long, x2: Long, y2: Long,
 
 }
 
-case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long,fillColor:Option[PdfPattern]=None) extends PdfGraphicChuck {
+case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, fillColor: Option[PdfPattern] = None) extends PdfGraphicChuck {
   override def content: String = {
-    val paternStr=if (fillColor.isDefined) s"/Pattern cs /${fillColor.get.name} scn" else ""
-    val paintStr=if(paternStr.isEmpty) "S" else "B"
+    val paternStr = if (fillColor.isDefined) s"/Pattern cs /${fillColor.get.name} scn" else ""
+    val paintStr = if (paternStr.isEmpty) "S" else "B"
     s"""${paternStr}
        |-${x1} ${y1} ${x1 - x2} ${y2 - y1} re
        |${paintStr}
