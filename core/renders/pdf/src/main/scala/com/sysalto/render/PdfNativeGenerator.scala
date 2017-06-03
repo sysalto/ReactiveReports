@@ -1,6 +1,9 @@
 package com.sysalto.render
 
-import java.io.{File, PrintWriter}
+import java.awt.image.BufferedImage
+import java.io.{ByteArrayOutputStream, File, FileOutputStream, PrintWriter}
+import java.nio.charset.Charset
+import javax.imageio.ImageIO
 
 import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAllign, WrapOptions}
@@ -69,25 +72,25 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     Some(WrapBox(y0, crtY, lines.size))
   }
 
-  private def coordinate(x:Float,y:Float):(Float,Float)={
+  private def coordinate(x: Float, y: Float): (Float, Float) = {
     val pageHeight = if (orientation == ReportPageOrientation.PORTRAIT) PAGE_HEIGHT else PAGE_WIDTH
     if (orientation == ReportPageOrientation.PORTRAIT) {
-      (x,pageHeight-y)
+      (x, pageHeight - y)
     } else {
-      (y,x)
+      (y, x)
     }
   }
 
-  def axialShade(x1:Float,y1:Float,x2:Float,y2:Float,rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
+  def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
     val pageHeight = if (orientation == ReportPageOrientation.PORTRAIT) PAGE_HEIGHT else PAGE_WIDTH
 
-    val (x2,y2)=coordinate(0,0)
-    val (x3,y3)=coordinate(0,612)
+    val (x2, y2) = coordinate(0, 0)
+    val (x3, y3) = coordinate(0, 612)
 
     val colorFct = new PdfShaddingFctColor(nextId(), from, to)
-//    val pdfShadding = new PdfColorShadding(nextId(), x1, pageHeight - y1, x2, pageHeight - y2, colorFct)
+    //    val pdfShadding = new PdfColorShadding(nextId(), x1, pageHeight - y1, x2, pageHeight - y2, colorFct)
     val pdfShadding = new PdfColorShadding(nextId(), x2, y2, x3, y3, colorFct)
-//    val pdfShadding = new PdfColorShadding(nextId(), 612, 0,0, 0, colorFct)
+    //    val pdfShadding = new PdfColorShadding(nextId(), 612, 0,0, 0, colorFct)
 
     val pattern = new PdfPattern(nextId(), "P1", pdfShadding)
     currentPage.pdfPatternList = List(pattern)
@@ -95,7 +98,10 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   }
 
   def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
-    println("drawImage not yet implemented.")
+    //    println("drawImage not yet implemented.")
+    val pdfImage = new PdfImage(nextId(), "img0", file)
+    graphicList += PdfDrawImage(pdfImage, x, y, 1)
+    currentPage.imageList = List(pdfImage)
   }
 
   def drawPieChart(title: String, data: Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = {
@@ -181,11 +187,11 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
 abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) {
   var offset: Long = 0
 
-  def content: String
+  def content: Array[Byte]
 
   def write(pdfWriter: PdfWriter): Unit = {
     offset = pdfWriter.position
-    pdfWriter <<< content.trim
+    pdfWriter << content
   }
 
   itemList += this
@@ -197,19 +203,19 @@ abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseIt
 
 class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ var pdfPageList: Option[PdfPageList] = None)
                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  override def content: String = {
+  override def content: Array[Byte] = {
     s"""${id} 0 obj
        |  <<  /Type /Catalog
        |      /Pages ${pdfPageList.get.id} 0 R
        |  >>
        |endobj
-     """.stripMargin
+     """.stripMargin.getBytes
   }
 }
 
 class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Long] = List())
                  (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  override def content: String = {
+  override def content: Array[Byte] = {
     val parentIdStr = if (parentId.isDefined) s"/Parent ${parentId.get} 0 R" else ""
     val pageListStr = pageList.map(id => id + " 0 R").mkString("\n")
     s"""${id} 0 obj
@@ -218,13 +224,13 @@ class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Lo
        |      /Count ${pageList.length}
        |  >>
        |endobj
-     """.stripMargin
+     """.stripMargin.getBytes
   }
 }
 
 class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
                          (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  override def content: String = {
+  override def content: Array[Byte] = {
     val r1 = color1.r / 255f
     val g1 = color1.g / 255f
     val b1 = color1.b / 255f
@@ -236,37 +242,97 @@ class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
     s"""${id} 0 obj
        |  <</FunctionType 2/Domain[0 1]/C0[$r1 $g1 $b1]/C1[$r2 $g2 $b2]/N 1>>
        |  endobj
-     """.stripMargin
+     """.stripMargin.getBytes
   }
 }
 
 class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdfShaddingFctColor: PdfShaddingFctColor)
                       (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  override def content: String = {
+  override def content: Array[Byte] = {
     s"""${id} 0 obj
        |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R>>
        |  endobj
-     """.stripMargin
+     """.stripMargin.getBytes
   }
 }
 
 class PdfPattern(id: Long, val name: String, pdfShadding: PdfColorShadding)
                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  override def content: String = {
+  override def content: Array[Byte] = {
     s"""${id} 0 obj
        |  <</PatternType 2/Shading ${pdfShadding.id} 0 R/Matrix[1 0 0 1 0 0]>>
        |  endobj
-     """.stripMargin
+     """.stripMargin.getBytes
   }
 }
 
+class ImageMeta(fileName: String) {
+  val file = new File(fileName)
+  val bimg: BufferedImage = ImageIO.read(file)
+  val width: Int = bimg.getWidth()
+  val height: Int = bimg.getHeight()
+  val size: Long = file.length
+  val baos = new ByteArrayOutputStream()
+  ImageIO.write(bimg, "jpg", baos)
+  baos.flush()
+  val imageInByte: Array[Byte] = baos.toByteArray
+  baos.close()
+  val pixelSize: Int = bimg.getColorModel.getComponentSize(0)
+}
+
+class PdfImage(id: Long, val name: String, fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+  val image = new ImageMeta(fileName)
+
+  override def content: Array[Byte] = {
+    s"""${id} 0 obj
+       |  <<
+       | /Type /XObject
+       | /Subtype /Image
+       | /Width ${image.width}
+       | /Height ${image.height}
+       |  /ColorSpace /DeviceRGB
+       |  /BitsPerComponent ${image.pixelSize}
+       |  /Length ${image.imageInByte.length}
+       |  /Filter /DCTDecode
+       |  >>
+       |  stream
+       |""".stripMargin.getBytes ++
+      image.imageInByte ++
+       "endstream endobj\n".getBytes
+  }
+}
+
+
+case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
+                       (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfGraphicChuck {
+  val image = pdfImage.image
+  val width = image.width * scale
+  val height = image.height * scale
+  //  val opacityStr = if (opacity == None) "" else s"/${opacity.get.name} gs"
+  val opacityStr = ""
+
+//  def content: String =
+//    s"""$opacityStr
+//       |$width 0 0 $height ${x} ${y} cm
+//       |/${pdfImage.name} Do
+//    """.stripMargin
+
+  def content: String =
+    s"""$opacityStr
+       |Q q 53.33 0 0 40 5 797 cm
+       |/${pdfImage.name} Do
+    """.stripMargin
+
+}
+
 class PdfPage(id: Long, var pdfPageListId: Long = 0, val orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT,
-              var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfPattern] = List(), var contentPage: Option[PdfPageContent] = None)
+              var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfPattern] = List(),var imageList:List[PdfImage]=List(), var contentPage: Option[PdfPageContent] = None)
              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  override def content: String = {
+  override def content: Array[Byte] = {
     val contentStr = if (contentPage.isDefined) s"/Contents ${contentPage.get.id} 0 R" else ""
     val fontStr = "/Font<<" + fontList.map(font => s"/${font.refName} ${font.id} 0 R").mkString("") + ">>"
     val patternStr = if (pdfPatternList.isEmpty) "" else "/Pattern <<" + pdfPatternList.map(item => s"/${item.name} ${item.id} 0 R").mkString(" ") + ">>"
+    val imageStr = if (imageList.isEmpty) "" else "/XObject <<" + imageList.map(item => s"/${item.name} ${item.id} 0 R").mkString(" ") + ">>"
     s"""${id} 0 obj
        |  <<  /Type /Page
        |      /Parent ${pdfPageListId} 0 R
@@ -274,16 +340,17 @@ class PdfPage(id: Long, var pdfPageListId: Long = 0, val orientation: ReportPage
        |      ${contentStr}
        |      /Resources  << ${fontStr}
        |      ${patternStr}
+       |      ${imageStr}
        |                  >>
        |  >>
        |endobj
-     """.stripMargin
+     """.stripMargin.getBytes
   }
 }
 
 
 class PdfFont(id: Long, val refName: String, fontKeyName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  override def content: String = {
+  override def content: Array[Byte] = {
     s"""${id} 0 obj
        |  <<  /Type /Font
        |      /Subtype /Type1
@@ -291,13 +358,13 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String)(implicit itemL
        |      /Encoding /WinAnsiEncoding
        |  >>
        |endobj
-     """.stripMargin
+     """.stripMargin.getBytes
   }
 }
 
 class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem])
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  override def content: String = {
+  override def content: Array[Byte] = {
     val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
     val landscapeMatrix = "0 -1 1 0 0 0 cm"
     val matrix = if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix
@@ -308,7 +375,7 @@ class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem]
        |      stream
        |${itemsStr}endstream
        |endobj
-     """.stripMargin
+     """.stripMargin.getBytes
   }
 }
 
@@ -407,21 +474,25 @@ class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
 
 class PdfWriter(name: String) {
   new File(name).delete()
-  val writer = new PrintWriter(name)
+  val writer = new  FileOutputStream(name)
   var position: Long = 0
 
-  def <<(str: String) = {
-    writer.print(str)
+  def <<(str: String):Unit = {
+    <<(str.getBytes)
+  }
+
+  def <<<(str: String):Unit = {
+    val str1 = str + "\n"
+    <<(str1.getBytes)
+  }
+
+  def <<(str: Array[Byte]):Unit = {
+    writer.write(str)
     position += str.length
   }
 
-  def <<<(str: String) = {
-    val str1 = str + "\n"
-    writer.print(str1)
-    position += str1.length
-  }
-
   def close(): Unit = {
+    writer.flush()
     writer.close()
   }
 }

@@ -419,4 +419,12 @@ object PdfGen {
          				    |""".stripMargin
   }
 
+  def main(args: Array[String]): Unit = {
+    val pdfGen=new PdfGen(("a.txt"))
+    val meta=new ImageMeta("img","examples/src/main/resources/images/bank_banner.jpg")
+    val img=new ResourceImage(pdfGen,11,meta)
+    img.write()
+
+  }
+
 }
