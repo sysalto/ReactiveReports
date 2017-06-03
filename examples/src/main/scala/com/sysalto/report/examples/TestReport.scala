@@ -18,7 +18,7 @@ object TestReport  {
 
   def run2(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()
-    val report = Report("Test2.pdf") //,ReportPageOrientation.LANDSCAPE)
+    val report = Report("Test2.pdf" ,ReportPageOrientation.LANDSCAPE)
     runReport(report)
   }
 

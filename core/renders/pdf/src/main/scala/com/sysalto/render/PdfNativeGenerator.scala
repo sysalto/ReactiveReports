@@ -311,17 +311,17 @@ case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1
   //  val opacityStr = if (opacity == None) "" else s"/${opacity.get.name} gs"
   val opacityStr = ""
 
+  def content: String =
+    s"""$opacityStr
+       |$width 0 0 $height ${x} ${y} cm
+       |/${pdfImage.name} Do
+    """.stripMargin
+
 //  def content: String =
 //    s"""$opacityStr
 //       |$width 0 0 $height ${x} ${y} cm
 //       |/${pdfImage.name} Do
 //    """.stripMargin
-
-  def content: String =
-    s"""$opacityStr
-       |Q q 160.0 0 0 120.0 100 100 cm
-       |/${pdfImage.name} Do
-    """.stripMargin
 
 }
 
@@ -337,6 +337,19 @@ class PdfPage(id: Long, var pdfPageListId: Long = 0, val orientation: ReportPage
        |  <<  /Type /Page
        |      /Parent ${pdfPageListId} 0 R
        |      /MediaBox [ 0 0 612 792 ] ${if (orientation == ReportPageOrientation.LANDSCAPE) "/Rotate 90" else ""}
+       |      ${contentStr}
+       |      /Resources  << ${fontStr}
+       |      ${patternStr}
+       |      ${imageStr}
+       |                  >>
+       |  >>
+       |endobj
+     """.stripMargin.getBytes
+
+    s"""${id} 0 obj
+       |  <<  /Type /Page
+       |      /Parent ${pdfPageListId} 0 R
+       |      /MediaBox ${if (orientation == ReportPageOrientation.LANDSCAPE) "[ 0 0 792 612]" else "[ 0 0 612 792 ]"}
        |      ${contentStr}
        |      /Resources  << ${fontStr}
        |      ${patternStr}
