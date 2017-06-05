@@ -13,10 +13,12 @@ import com.sysalto.report.util.PdfUtil
 class PdfNativeRender extends PdfUtil {
   var pdfNativeGenerator: PdfNativeGenerator = null
   var orientation = ReportPageOrientation.PORTRAIT
+  lazy val PAGE_WIDTH = if (orientation == ReportPageOrientation.PORTRAIT) 612 else 792
+  lazy val PAGE_HEIGHT = if (orientation == ReportPageOrientation.PORTRAIT) 792 else 612
 
   override def open(name: String, orientation: ReportPageOrientation.Value): Unit = {
     new File(name).delete()
-    pdfNativeGenerator = new PdfNativeGenerator(name, orientation)
+    pdfNativeGenerator = new PdfNativeGenerator(name,PAGE_WIDTH,PAGE_HEIGHT)
     pdfNativeGenerator.startPdf()
     this.orientation = orientation
   }
@@ -33,29 +35,31 @@ class PdfNativeRender extends PdfUtil {
 
   }
 
+  def convertY(y:Float)=PAGE_HEIGHT-y
+
   override def text(txt: RText, x1: Float, y1: Float, x2: Float, y2: Float): Unit = {
-    pdfNativeGenerator.text(x1, y1, txt)
+    pdfNativeGenerator.text(x1, convertY(y1), txt)
   }
 
   override def textAlignedAtPosition(txt: RText, x: Float, y: Float, index: Int): Unit = ???
 
   override def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
-    pdfNativeGenerator.line(x1, y1, x2, y2, lineWidth, color, lineDashType)
+    pdfNativeGenerator.line(x1, convertY(y1), x2, convertY(y2), lineWidth, color, lineDashType)
   }
 
   override def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
                          radius: Float, color: Option[RColor], fillColor: Option[RColor]): Unit = {
-    pdfNativeGenerator.rectangle(x1, y1, x2, y2, radius, color, fillColor)
+    pdfNativeGenerator.rectangle(x1, convertY(y1), x2, convertY(y2), radius, color, fillColor)
   }
 
   override def drawPieChart(title: String, data: Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-    pdfNativeGenerator.drawPieChart(title, data, x0, y0, width, height)
+    pdfNativeGenerator.drawPieChart(title, data, x0, convertY(y0), width, height)
   }
 
   override def drawBarChart(title: String, xLabel: String, yLabel: String, data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float): Unit = ???
 
   override def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
-    pdfNativeGenerator.drawImage(file, x, y, width, height, opacity)
+    pdfNativeGenerator.drawImage(file, x, convertY(y), width, height, opacity)
   }
 
   override def pgSize: ReportTypes.Rectangle = {
@@ -70,10 +74,10 @@ class PdfNativeRender extends PdfUtil {
   override def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
                     wrapOption: WrapOptions.Value, wrapAllign: WrapAllign.Value, simulate: Boolean,
                     startY: Option[Float], lineHeight: Float = 0): Option[ReportTypes.WrapBox] = {
-    pdfNativeGenerator.wrap(txtList, x0, y0, x1, y1, wrapOption, wrapAllign, simulate, startY, lineHeight)
+    pdfNativeGenerator.wrap(txtList, x0, convertY(y0), x1, convertY(y1), wrapOption, wrapAllign, simulate, startY, lineHeight)
   }
 
   override def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
-    pdfNativeGenerator.axialShade(rectangle.x1,rectangle.y1,rectangle.x1,rectangle.y2,rectangle, from, to)
+    pdfNativeGenerator.axialShade(rectangle.x1,convertY(rectangle.y1),rectangle.x1,convertY(rectangle.y2),rectangle, from, to)
   }
 }

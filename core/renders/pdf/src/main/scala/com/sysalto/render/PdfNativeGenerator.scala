@@ -17,9 +17,8 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by marian on 4/1/17.
   */
-class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Value) {
-  val PAGE_WIDTH = 612
-  val PAGE_HEIGHT = 792
+class PdfNativeGenerator(name: String,PAGE_WIDTH:Float,PAGE_HEIGHT:Float) {
+
 
   implicit val pdfWriter = new PdfWriter(name)
   implicit val allItems = ListBuffer[PdfBaseItem]()
@@ -72,24 +71,10 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     Some(WrapBox(y0, crtY, lines.size))
   }
 
-  private def coordinate(x: Float, y: Float): (Float, Float) = {
-    val pageHeight = if (orientation == ReportPageOrientation.PORTRAIT) PAGE_HEIGHT else PAGE_WIDTH
-    if (orientation == ReportPageOrientation.PORTRAIT) {
-      (x, pageHeight - y)
-    } else {
-      (y, x)
-    }
-  }
-
   def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
-    val pageHeight = if (orientation == ReportPageOrientation.PORTRAIT) PAGE_HEIGHT else PAGE_WIDTH
-
-    val (x2, y2) = coordinate(0, 0)
-    val (x3, y3) = coordinate(0, 612)
 
     val colorFct = new PdfShaddingFctColor(nextId(), from, to)
-    //    val pdfShadding = new PdfColorShadding(nextId(), x1, pageHeight - y1, x2, pageHeight - y2, colorFct)
-    val pdfShadding = new PdfColorShadding(nextId(), x2, y2, x3, y3, colorFct)
+    val pdfShadding = new PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct)
     //    val pdfShadding = new PdfColorShadding(nextId(), 612, 0,0, 0, colorFct)
 
     val pattern = new PdfPattern(nextId(), "P1", pdfShadding)
@@ -100,7 +85,8 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
   def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
     //    println("drawImage not yet implemented.")
     val pdfImage = new PdfImage(nextId(), "img0", file)
-    graphicList += PdfDrawImage(pdfImage, x, y, 1)
+    val scale=Math.min(width/pdfImage.imageMeta.width,height/pdfImage.imageMeta.height)
+    graphicList += PdfDrawImage(pdfImage, x, y, scale)
     currentPage.imageList = List(pdfImage)
   }
 
@@ -122,12 +108,12 @@ class PdfNativeGenerator(name: String, val orientation: ReportPageOrientation.Va
     catalog = new PdfCatalog(nextId())
     //    val outline = new PdfOutline(nextId())
     //    catalog.outline = Some(outline)
-    currentPage = new PdfPage(nextId(), 0, orientation)
+    currentPage = new PdfPage(nextId(), 0, PAGE_WIDTH, PAGE_HEIGHT)
   }
 
   def newPage(): Unit = {
     saveCurrentPage()
-    currentPage = new PdfPage(nextId(), 0, orientation, fontMap.values.toList)
+    currentPage = new PdfPage(nextId(), 0, PAGE_WIDTH, PAGE_HEIGHT, fontMap.values.toList)
   }
 
   def saveCurrentPage(): Unit = {
@@ -281,31 +267,31 @@ class ImageMeta(fileName: String) {
 }
 
 class PdfImage(id: Long, val name: String, fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  val image = new ImageMeta(fileName)
+  val imageMeta = new ImageMeta(fileName)
 
   override def content: Array[Byte] = {
     s"""${id} 0 obj
        |  <<
        | /Type /XObject
        | /Subtype /Image
-       | /Width ${image.width}
-       | /Height ${image.height}
+       | /Width ${imageMeta.width}
+       | /Height ${imageMeta.height}
        |  /ColorSpace /DeviceRGB
-       |  /BitsPerComponent ${image.pixelSize}
-       |  /Length ${image.imageInByte.length}
+       |  /BitsPerComponent ${imageMeta.pixelSize}
+       |  /Length ${imageMeta.imageInByte.length}
        |  /Filter /DCTDecode
        |  >>
        |  stream
        |""".stripMargin.getBytes ++
-      image.imageInByte ++
-       "endstream\n endobj\n".getBytes
+      imageMeta.imageInByte ++
+      "endstream\n endobj\n".getBytes
   }
 }
 
 
 case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
                        (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfGraphicChuck {
-  val image = pdfImage.image
+  val image = pdfImage.imageMeta
   val width = image.width * scale
   val height = image.height * scale
   //  val opacityStr = if (opacity == None) "" else s"/${opacity.get.name} gs"
@@ -317,16 +303,9 @@ case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1
        |/${pdfImage.name} Do
     """.stripMargin
 
-//  def content: String =
-//    s"""$opacityStr
-//       |$width 0 0 $height ${x} ${y} cm
-//       |/${pdfImage.name} Do
-//    """.stripMargin
-
 }
 
-class PdfPage(id: Long, var pdfPageListId: Long = 0, val orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT,
-              var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfPattern] = List(),var imageList:List[PdfImage]=List(), var contentPage: Option[PdfPageContent] = None)
+class PdfPage(id: Long, var pdfPageListId: Long = 0, var pageWidth: Float, var pageHeight: Float, var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfPattern] = List(), var imageList: List[PdfImage] = List(), var contentPage: Option[PdfPageContent] = None)
              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: Array[Byte] = {
     val contentStr = if (contentPage.isDefined) s"/Contents ${contentPage.get.id} 0 R" else ""
@@ -336,20 +315,7 @@ class PdfPage(id: Long, var pdfPageListId: Long = 0, val orientation: ReportPage
     s"""${id} 0 obj
        |  <<  /Type /Page
        |      /Parent ${pdfPageListId} 0 R
-       |      /MediaBox [ 0 0 612 792 ] ${if (orientation == ReportPageOrientation.LANDSCAPE) "/Rotate 90" else ""}
-       |      ${contentStr}
-       |      /Resources  << ${fontStr}
-       |      ${patternStr}
-       |      ${imageStr}
-       |                  >>
-       |  >>
-       |endobj
-     """.stripMargin.getBytes
-
-    s"""${id} 0 obj
-       |  <<  /Type /Page
-       |      /Parent ${pdfPageListId} 0 R
-       |      /MediaBox ${if (orientation == ReportPageOrientation.LANDSCAPE) "[ 0 0 792 612]" else "[ 0 0 612 792 ]"}
+       |      /MediaBox [ 0 0 ${pageWidth} ${pageHeight} ]
        |      ${contentStr}
        |      /Resources  << ${fontStr}
        |      ${patternStr}
@@ -378,11 +344,7 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String)(implicit itemL
 class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem])
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: Array[Byte] = {
-    val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
-    val landscapeMatrix = "0 -1 1 0 0 0 cm"
-    val matrix = ""//if (pdfPage.orientation == ReportPageOrientation.PORTRAIT) portraitMatrix else landscapeMatrix
-    val itemsStr = matrix + "\n" + pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
-
+    val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
     s"""${id} 0 obj
        |  <<  /Length ${itemsStr.length} >>
        |      stream
@@ -428,7 +390,7 @@ case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, fillColor: Optio
     val paternStr = if (fillColor.isDefined) s"/Pattern cs /${fillColor.get.name} scn" else ""
     val paintStr = if (paternStr.isEmpty) "S" else "B"
     s"""${paternStr}
-       |-${x1} ${y1} ${x1 - x2} ${y2 - y1} re
+       |${x1} ${y1} ${x2 - x1} ${y2 - y1} re
        |${paintStr}
        """.stripMargin.trim
   }
@@ -442,12 +404,10 @@ class PdfText(txtList: List[PdfTxtChuck])
     if (txtList.isEmpty) {
       return ""
     }
-    val portraitMatrix = "1 0 0 1 0 792 cm -1 0 0 -1 0 0 cm"
-    val landscapeMatrix = "0 -1 1 0 0 0 cm"
     val item = txtList.head
     val firstItemTxt =
       s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
-         |  -1 0 0 -1 -${item.x.toLong} ${item.y.toLong} Tm
+         |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
          |        ( ${item.rtext.txt} ) Tj
        """.stripMargin
 
@@ -487,19 +447,19 @@ class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
 
 class PdfWriter(name: String) {
   new File(name).delete()
-  val writer = new  FileOutputStream(name)
+  val writer = new FileOutputStream(name)
   var position: Long = 0
 
-  def <<(str: String):Unit = {
+  def <<(str: String): Unit = {
     <<(str.getBytes)
   }
 
-  def <<<(str: String):Unit = {
+  def <<<(str: String): Unit = {
     val str1 = str + "\n"
     <<(str1.getBytes)
   }
 
-  def <<(str: Array[Byte]):Unit = {
+  def <<(str: Array[Byte]): Unit = {
     writer.write(str)
     position += str.length
   }

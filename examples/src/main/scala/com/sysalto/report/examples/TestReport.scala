@@ -23,8 +23,9 @@ object TestReport  {
   }
 
   def runReport(report: Report): Unit = {
-    //report rectangle() from(5,45) to(100,200) draw()
-    report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 45, 100, 200)
+//    report rectangle() from(405,45) to(600,100) draw()
+    report rectangle() from(100, 400) to(200,500) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
+   // report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 100, 100, 100)
 
     report.render()
     report.close()

@@ -133,22 +133,22 @@ object PageTree {
 
 
   def main(args: Array[String]) {
-    var currentObjNbr = 0L
-
-    def getNextNumber = {
-      currentObjNbr += 1
-      currentObjNbr
-    }
-
-    implicit val result = new ListBuffer[PdfBaseItem]()
-    currentObjNbr = 1000L
-    val pageList = for (i <- 1 to 2) yield new PdfPage(getNextNumber)
-    val root = generatePdfCode(pageList.toList) {
-      () => getNextNumber
-    }(result)
-
-    println(result.mkString("\n"))
-    println("ROOT:" + root)
+//    var currentObjNbr = 0L
+//
+//    def getNextNumber = {
+//      currentObjNbr += 1
+//      currentObjNbr
+//    }
+//
+//    implicit val result = new ListBuffer[PdfBaseItem]()
+//    currentObjNbr = 1000L
+//    val pageList = for (i <- 1 to 2) yield new PdfPage(getNextNumber)
+//    val root = generatePdfCode(pageList.toList) {
+//      () => getNextNumber
+//    }(result)
+//
+//    println(result.mkString("\n"))
+//    println("ROOT:" + root)
   }
 
 }
