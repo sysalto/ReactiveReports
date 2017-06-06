@@ -2,7 +2,7 @@ package com.sysalto.render
 
 import java.io.{File, PrintWriter}
 
-import com.sysalto.report.ReportTypes.Rectangle
+import com.sysalto.report.ReportTypes.{DRectangle, Rectangle}
 import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
 import com.sysalto.report.{ReportTypes, WrapAllign, WrapOptions}
 import com.sysalto.report.util.PdfUtil
@@ -18,9 +18,10 @@ class PdfNativeRender extends PdfUtil {
 
   override def open(name: String, orientation: ReportPageOrientation.Value): Unit = {
     new File(name).delete()
+    this.orientation = orientation
     pdfNativeGenerator = new PdfNativeGenerator(name,PAGE_WIDTH,PAGE_HEIGHT)
     pdfNativeGenerator.startPdf()
-    this.orientation = orientation
+
   }
 
   override def setPagesNumber(pgNbr: Long): Unit = {
@@ -78,6 +79,7 @@ class PdfNativeRender extends PdfUtil {
   }
 
   override def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
-    pdfNativeGenerator.axialShade(rectangle.x1,convertY(rectangle.y1),rectangle.x1,convertY(rectangle.y2),rectangle, from, to)
+    val rectangle1=DRectangle(rectangle.x1,convertY(rectangle.y1),rectangle.x2,convertY(rectangle.y2))
+    pdfNativeGenerator.axialShade(rectangle.x1,convertY(rectangle.y1),rectangle.x1,convertY(rectangle.y2),rectangle1, from, to)
   }
 }

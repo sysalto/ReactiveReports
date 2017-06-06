@@ -63,12 +63,12 @@ class PdfNativeGenerator(name: String,PAGE_WIDTH:Float,PAGE_HEIGHT:Float) {
     if (!simulate) {
       lines.foreach(line => {
         line.foreach(textPos => text(x0 + textPos.x, crtY, textPos.rtext))
-        crtY += lineHeight
+        crtY -= lineHeight
       })
     } else {
-      crtY += lineHeight * (lines.size - 1)
+      crtY -= lineHeight * (lines.size - 1)
     }
-    Some(WrapBox(y0, crtY, lines.size))
+    Some(WrapBox(PAGE_HEIGHT-y0, PAGE_HEIGHT-crtY, lines.size))
   }
 
   def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
@@ -415,7 +415,7 @@ class PdfText(txtList: List[PdfTxtChuck])
       val xRel = txtList(i + 1).x.toLong - txtList(i).x.toLong
       val yRel = txtList(i + 1).y.toLong - txtList(i).y.toLong
       s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
-         |  ${xRel} ${-yRel} Td
+         |  ${xRel} ${yRel} Td
          |  ( ${item.rtext.txt} ) Tj
        """.stripMargin
     }

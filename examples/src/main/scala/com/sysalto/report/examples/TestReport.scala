@@ -23,9 +23,32 @@ object TestReport  {
   }
 
   def runReport(report: Report): Unit = {
-//    report rectangle() from(405,45) to(600,100) draw()
-    report rectangle() from(100, 400) to(200,500) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
+    report.nextLine(20)
+    report print (RCell(("line1 \nline2" size 8)+(" WW line 3" size 12) +" iii"+( "uuu line4" bold()))  between RMargin(0, 50))
+    report.nextLine()
+
+    report print "line1".bold() at 100
+    report.nextLine(3)
+    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+    report.nextLine()
+    report print "line2".size(15) at 200
+    report.nextLine()
+    report print "test2" at 10
+    report.newPage()
+    report.nextLine(2)
+    report print "Page 2 test1" at 10
+    report.nextLine()
+    report print "Page 2 test2".bold() at 10
+    report.nextLine()
+    report print "Page 2 test3".italic() at 10
+    report.nextLine()
+    report print "Page 2 test4".bold().italic() at 10
+
+
+    report rectangle() from(9,165) to(783,197) draw()
+//    report rectangle() from(0, 0) to(100,100) verticalShade(RColor(0, 255, 255), RColor(255, 255, 180)) draw()
    // report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 100, 100, 100)
+//    report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
 
     report.render()
     report.close()
@@ -33,7 +56,7 @@ object TestReport  {
 
 
   def main(args: Array[String]): Unit = {
-    run1()
+//    run1()
     run2()
   }
 
