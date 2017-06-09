@@ -17,7 +17,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by marian on 4/1/17.
   */
-class PdfNativeGenerator(name: String,PAGE_WIDTH:Float,PAGE_HEIGHT:Float) {
+class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 
   implicit val pdfWriter = new PdfWriter(name)
@@ -62,13 +62,18 @@ class PdfNativeGenerator(name: String,PAGE_WIDTH:Float,PAGE_HEIGHT:Float) {
     var crtY = y0
     if (!simulate) {
       lines.foreach(line => {
-        line.foreach(textPos => text(x0 + textPos.x, crtY, textPos.rtext))
+        val l1:List[Float]=line.map(item=>item.textLength)
+        val length=l1.sum
+        val newX=if(wrapAllign == WrapAllign.WRAP_RIGHT) x1-length  else x0
+        line.foreach(textPos =>
+          text(newX + textPos.x, crtY, textPos.rtext)
+        )
         crtY -= lineHeight
       })
     } else {
       crtY -= lineHeight * (lines.size - 1)
     }
-    Some(WrapBox(PAGE_HEIGHT-y0, PAGE_HEIGHT-crtY, lines.size))
+    Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size))
   }
 
   def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
@@ -85,7 +90,7 @@ class PdfNativeGenerator(name: String,PAGE_WIDTH:Float,PAGE_HEIGHT:Float) {
   def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
     //    println("drawImage not yet implemented.")
     val pdfImage = new PdfImage(nextId(), "img0", file)
-    val scale=Math.min(width/pdfImage.imageMeta.width,height/pdfImage.imageMeta.height)
+    val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
     graphicList += PdfDrawImage(pdfImage, x, y, scale)
     currentPage.imageList = List(pdfImage)
   }
@@ -298,9 +303,11 @@ case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1
   val opacityStr = ""
 
   def content: String =
-    s"""$opacityStr
+    s"""q
+       |$opacityStr
        |$width 0 0 $height ${x} ${y} cm
        |/${pdfImage.name} Do
+       | Q
     """.stripMargin
 
 }

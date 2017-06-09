@@ -88,7 +88,7 @@ object WordWrap {
     }
   }
 
-  case class RTextPos(x: Float, rtext: RText)
+  case class RTextPos(x: Float,textLength:Float, rtext: RText)
 
   @tailrec
   def wordToRTextPos(offset: Float, word: Word, accum: ListBuffer[RTextPos]): Unit = {
@@ -99,38 +99,39 @@ object WordWrap {
       // one font ->keep it together
       val str = word.charList.map(char => char.char)
       val rtext = RText(str.mkString, word.charList(0).font)
-      accum += RTextPos(offset, rtext)
+      accum += RTextPos(offset,getWordSize(word), rtext)
     } else {
       val firstFont = word.charList(0).font
       val i1 = word.charList.indexWhere(char => char.font != firstFont)
-      accum += RTextPos(offset, RText(word.charList.take(i1).map(char => char.char).mkString, firstFont))
       val word1 = Word(word.charList.take(i1))
+      accum += RTextPos(offset,getWordSize(word1), RText(word.charList.take(i1).map(char => char.char).mkString, firstFont))
+
       val word2 = Word(word.charList.drop(i1))
       wordToRTextPos(offset + getWordSize(word1), word2, accum)
     }
   }
 
-  def combineRTextPos(input:List[RTextPos]):RTextPos={
-    val str = input.map(item => item.rtext.txt).foldLeft("")((a,b)=>a+b)
-    RTextPos(input(0).x, RText(str, input(0).rtext.font))
-  }
-
-  @tailrec
-  def mergeRTextPos(input: List[RTextPos], accum: ListBuffer[RTextPos]): Unit = {
-    if (input.isEmpty) {
-      return
-    }
-    val firstFont = input(0).rtext.font
-    val i1 = input.indexWhere(item => item.rtext.font != firstFont)
-    if (i1 == -1) {
-      accum +=combineRTextPos(input)
-    } else {
-      val elem1=input.take(i1)
-      val elem2=input.drop(i1)
-      accum +=combineRTextPos(elem1)
-      mergeRTextPos(elem2,accum)
-    }
-  }
+//  def combineRTextPos(input:List[RTextPos]):RTextPos={
+//    val str = input.map(item => item.rtext.txt).foldLeft("")((a,b)=>a+b)
+//    RTextPos(input(0).x, RText(str, input(0).rtext.font))
+//  }
+//
+//  @tailrec
+//  def mergeRTextPos(input: List[RTextPos], accum: ListBuffer[RTextPos]): Unit = {
+//    if (input.isEmpty) {
+//      return
+//    }
+//    val firstFont = input(0).rtext.font
+//    val i1 = input.indexWhere(item => item.rtext.font != firstFont)
+//    if (i1 == -1) {
+//      accum +=combineRTextPos(input)
+//    } else {
+//      val elem1=input.take(i1)
+//      val elem2=input.drop(i1)
+//      accum +=combineRTextPos(elem1)
+//      mergeRTextPos(elem2,accum)
+//    }
+//  }
 
   def lineToRTextPos(line: List[Word]): List[RTextPos] = {
     val result1 = ListBuffer[RTextPos]()
@@ -139,8 +140,9 @@ object WordWrap {
       wordToRTextPos(offset, word, result1)
       offset += getWordSize(word)
     })
-    val result= ListBuffer[RTextPos]()
-    mergeRTextPos(result1.toList,result)
+//    val result= ListBuffer[RTextPos]()
+//    mergeRTextPos(result1.toList,result)
+    val result=result1
     if (!result.isEmpty && result.last.rtext.txt==" ") {
       result.dropRight(1).toList
     } else {
