@@ -51,7 +51,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
   def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
                 radius: Float, color: Option[RColor], fillColor: Option[RColor], paternColor: Option[PdfPattern] = None): Unit = {
-    graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, paternColor)
+    graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, paternColor)
   }
 
   def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
@@ -62,9 +62,9 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
     var crtY = y0
     if (!simulate) {
       lines.foreach(line => {
-        val l1:List[Float]=line.map(item=>item.textLength)
-        val length=l1.sum
-        val newX=if(wrapAllign == WrapAllign.WRAP_RIGHT) x1-length  else x0
+        val l1: List[Float] = line.map(item => item.textLength)
+        val length = l1.sum
+        val newX = if (wrapAllign == WrapAllign.WRAP_RIGHT) x1 - length else x0
         line.foreach(textPos =>
           text(newX + textPos.x, crtY, textPos.rtext)
         )
@@ -175,6 +175,16 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
   }
 }
 
+
+object PdfNativeGenerator {
+  def convertColor(color: RColor): (Float, Float, Float) = {
+    val r = color.r / 255f
+    val g = color.g / 255f
+    val b = color.b / 255f
+    (r, g, b)
+  }
+}
+
 abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) {
   var offset: Long = 0
 
@@ -222,16 +232,11 @@ class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Lo
 class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
                          (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   override def content: Array[Byte] = {
-    val r1 = color1.r / 255f
-    val g1 = color1.g / 255f
-    val b1 = color1.b / 255f
-
-    val r2 = color2.r / 255f
-    val g2 = color2.g / 255f
-    val b2 = color2.b / 255f
+    val colorNbr1 = PdfNativeGenerator.convertColor(color1)
+    val colorNbr2 = PdfNativeGenerator.convertColor(color2)
 
     s"""${id} 0 obj
-       |  <</FunctionType 2/Domain[0 1]/C0[$r1 $g1 $b1]/C1[$r2 $g2 $b2]/N 1>>
+       |  <</FunctionType 2/Domain[0 1]/C0[${colorNbr1._1} ${colorNbr1._2} ${colorNbr1._3}]/C1[${colorNbr2._1} ${colorNbr2._2} ${colorNbr2._3}]/N 1>>
        |  endobj
      """.stripMargin.getBytes
   }
@@ -392,13 +397,25 @@ case class PdfLine(x1: Long, y1: Long, x2: Long, y2: Long,
 
 }
 
-case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, fillColor: Option[PdfPattern] = None) extends PdfGraphicChuck {
+case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[RColor],
+                        fillColor: Option[RColor], patternColor: Option[PdfPattern] = None) extends PdfGraphicChuck {
   override def content: String = {
-    val paternStr = if (fillColor.isDefined) s"/Pattern cs /${fillColor.get.name} scn" else ""
-    val paintStr = if (paternStr.isEmpty) "S" else "B"
-    s"""${paternStr}
+    val paternStr = if (patternColor.isDefined) s"/Pattern cs /${patternColor.get.name} scn" else ""
+    val borderStr = if (borderColor.isDefined) {
+      val color = PdfNativeGenerator.convertColor(borderColor.get)
+      s"${color._1} ${color._2} ${color._3} RG"
+    } else ""
+    val fillStr = if (fillColor.isDefined) {
+      val color = PdfNativeGenerator.convertColor(fillColor.get)
+      s"${color._1} ${color._2} ${color._3} rg"
+    } else ""
+    s"""q
+       |${paternStr}
+       |${borderStr}
+       |${fillStr}
        |${x1} ${y1} ${x2 - x1} ${y2 - y1} re
-       |${paintStr}
+       |B
+       |Q
        """.stripMargin.trim
   }
 
@@ -412,20 +429,25 @@ class PdfText(txtList: List[PdfTxtChuck])
       return ""
     }
     val item = txtList.head
+    val color = PdfNativeGenerator.convertColor(item.rtext.font.color)
     val firstItemTxt =
       s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
          |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
+         |  ${color._1} ${color._2} ${color._3} rg
          |        ( ${item.rtext.txt} ) Tj
        """.stripMargin
 
-    val s2 = firstItemTxt + txtList.tail.zipWithIndex.map { case (item, i) => {
-      val xRel = txtList(i + 1).x.toLong - txtList(i).x.toLong
-      val yRel = txtList(i + 1).y.toLong - txtList(i).y.toLong
-      s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
-         |  ${xRel} ${yRel} Td
-         |  ( ${item.rtext.txt} ) Tj
+    val s2 = firstItemTxt + txtList.tail.zipWithIndex.map {
+      case (item, i) => {
+        val color = PdfNativeGenerator.convertColor(item.rtext.font.color)
+        val xRel = txtList(i + 1).x.toLong - txtList(i).x.toLong
+        val yRel = txtList(i + 1).y.toLong - txtList(i).y.toLong
+        s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
+           |  ${xRel} ${yRel} Td
+           |  ${color._1} ${color._2} ${color._3} rg
+           |  ( ${item.rtext.txt} ) Tj
        """.stripMargin
-    }
+      }
     }.foldLeft("")((s1, s2) => s1 + s2)
 
     s"""${s2}
@@ -477,10 +499,3 @@ class PdfWriter(name: String) {
   }
 }
 
-object PdfNativeGenerator {
-  def main(args: Array[String]): Unit = {
-    //    val gen = new PdfNativeGenerator("test2.pdf")
-    //    gen.test()
-    //    gen.close()
-  }
-}
