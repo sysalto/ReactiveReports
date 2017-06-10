@@ -409,12 +409,13 @@ case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, b
       val color = PdfNativeGenerator.convertColor(fillColor.get)
       s"${color._1} ${color._2} ${color._3} rg"
     } else ""
+    val operator=if(borderStr.isEmpty) "f" else "B"
     s"""q
        |${paternStr}
        |${borderStr}
        |${fillStr}
        |${x1} ${y1} ${x2 - x1} ${y2 - y1} re
-       |B
+       | ${operator}
        |Q
        """.stripMargin.trim
   }

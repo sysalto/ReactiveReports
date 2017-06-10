@@ -222,8 +222,8 @@ object WordWrap {
       val l1 = input.take(i1)
       val elem = input(i1)
       val i2 = elem.txt.indexOf('\n')
-      val list1 = input.take(i1) ++ List(RText(elem.txt.substring(0, i2)))
-      val list2 = List(RText(elem.txt.substring(i2 + 1))) ++ input.drop(i1+1)
+      val list1 = input.take(i1) ++ List(RText(elem.txt.substring(0, i2),elem.font))
+      val list2 = List(RText(elem.txt.substring(i2 + 1),elem.font)) ++ input.drop(i1+1)
       accum ++=wordWrapInternal(list1,max)
       wordWrapT(list2, max,accum)
     }
