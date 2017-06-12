@@ -82,4 +82,8 @@ class PdfNativeRender extends PdfUtil {
     val rectangle1=DRectangle(rectangle.x1,convertY(rectangle.y1),rectangle.x2,convertY(rectangle.y2))
     pdfNativeGenerator.axialShade(rectangle.x1,convertY(rectangle.y1),rectangle.x1,convertY(rectangle.y2),rectangle1, from, to)
   }
+
+  def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, x: Float, y: Float, txt: RText, from: RColor, to: RColor): Unit= {
+    pdfNativeGenerator.axialShade(x1,y1,x2,y2,x,y,txt,from,to)
+  }
 }

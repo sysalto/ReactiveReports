@@ -44,15 +44,16 @@ object TestReport  {
 //    report.nextLine()
 //    report print "Page 2 test4".bold().italic() at 10
 
-    val headerColor = RColor(156, 76, 6)
-    val headerFontColor = RColor(255, 255, 255)
-    report rectangle() from(9, report.getY-3*report.lineHeight) to(report.pgSize.width - 9, report.getY+100) fillColor headerColor draw()
-    report print ("Page 2 test2".bold() color headerFontColor) at 10
+//    val headerColor = RColor(156, 76, 6)
+//    val headerFontColor = RColor(255, 255, 255)
+//    report rectangle() from(9, report.getY-3*report.lineHeight) to(report.pgSize.width - 9, report.getY+100) fillColor headerColor draw()
+//    report print ("Page 2 test2".bold() color headerFontColor) at 10
 
 
 
 //    report rectangle() from(9,165) to(783,197) draw()
-//    report rectangle() from(0, 0) to(100,100) verticalShade(RColor(0, 255, 255), RColor(255, 255, 180)) draw()
+    report rectangle() from(0, 0) to(100,100) verticalShade(RColor(0, 255, 255), RColor(255, 255, 180)) draw()
+    report rectangle() from(100, 100) to(200,200) verticalShade(RColor(100, 255, 5), RColor(255, 2, 180)) draw()
    // report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 100, 100, 100)
 //    report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
 

@@ -82,10 +82,27 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
     val pdfShadding = new PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct)
     //    val pdfShadding = new PdfColorShadding(nextId(), 612, 0,0, 0, colorFct)
 
-    val pattern = new PdfPattern(nextId(), "P1", pdfShadding)
-    currentPage.pdfPatternList = List(pattern)
+    val pattern = new PdfPattern(nextId(), pdfShadding)
+    currentPage.pdfPatternList ++= List(pattern)
     this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
   }
+
+
+  def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, x: Float, y: Float, txt: RText, from: RColor, to: RColor): Unit = {
+
+    val colorFct = new PdfShaddingFctColor(nextId(), from, to)
+    val pdfShadding = new PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct)
+    val pattern = new PdfPattern(nextId(), pdfShadding)
+    currentPage.pdfPatternList ++= List(pattern)
+    val patterDraw = PatternDraw(x1, y1, x2, y2, pattern)
+    val font = if (!fontMap.contains(txt.font.fontKeyName)) {
+      val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
+      fontMap += (txt.font.fontKeyName -> font1)
+      font1
+    } else fontMap(txt.font.fontKeyName)
+    txtList += PdfTxtChuck(x, y, txt, font.refName, Some(patterDraw))
+  }
+
 
   def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
     //    println("drawImage not yet implemented.")
@@ -252,8 +269,10 @@ class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdf
   }
 }
 
-class PdfPattern(id: Long, val name: String, pdfShadding: PdfColorShadding)
+class PdfPattern(id: Long, pdfShadding: PdfColorShadding)
                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+  val name = "P" + id
+
   override def content: Array[Byte] = {
     s"""${id} 0 obj
        |  <</PatternType 2/Shading ${pdfShadding.id} 0 R/Matrix[1 0 0 1 0 0]>>
@@ -370,7 +389,9 @@ abstract class PdfPageItem {
   def content: String
 }
 
-case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String)
+case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfPattern)
+
+case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String, pattern: Option[PatternDraw] = None)
 
 abstract class PdfGraphicChuck {
   def content: String
@@ -409,7 +430,7 @@ case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, b
       val color = PdfNativeGenerator.convertColor(fillColor.get)
       s"${color._1} ${color._2} ${color._3} rg"
     } else ""
-    val operator=if(borderStr.isEmpty) "f" else "B"
+    val operator = if (borderStr.isEmpty) "f" else "B"
     s"""q
        |${paternStr}
        |${borderStr}
@@ -429,7 +450,11 @@ class PdfText(txtList: List[PdfTxtChuck])
     if (txtList.isEmpty) {
       return ""
     }
-    val item = txtList.head
+    val txtListSimple=txtList.filter(txt=>txt.pattern.isEmpty)
+    val txtListPattern=txtList.filter(txt=>txt.pattern.isDefined)
+
+// simple text
+    val item = txtListSimple.head
     val color = PdfNativeGenerator.convertColor(item.rtext.font.color)
     val firstItemTxt =
       s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
@@ -438,11 +463,11 @@ class PdfText(txtList: List[PdfTxtChuck])
          |        ( ${item.rtext.txt} ) Tj
        """.stripMargin
 
-    val s2 = firstItemTxt + txtList.tail.zipWithIndex.map {
+    val s2 = firstItemTxt + txtListSimple.tail.zipWithIndex.map {
       case (item, i) => {
         val color = PdfNativeGenerator.convertColor(item.rtext.font.color)
-        val xRel = txtList(i + 1).x.toLong - txtList(i).x.toLong
-        val yRel = txtList(i + 1).y.toLong - txtList(i).y.toLong
+        val xRel = txtListSimple(i + 1).x.toLong - txtListSimple(i).x.toLong
+        val yRel = txtListSimple(i + 1).y.toLong - txtListSimple(i).y.toLong
         s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
            |  ${xRel} ${yRel} Td
            |  ${color._1} ${color._2} ${color._3} rg
@@ -451,7 +476,20 @@ class PdfText(txtList: List[PdfTxtChuck])
       }
     }.foldLeft("")((s1, s2) => s1 + s2)
 
+    // pattern text
+    val s3=txtListPattern.map(txt=>{
+      s""" q
+         |/Pattern cs /${item.pattern.get.pattern.name} scn
+         |/${item.fontRefName} ${item.rtext.font.size} Tf
+         |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
+         |  ${color._1} ${color._2} ${color._3} rg
+         |        ( ${item.rtext.txt} ) Tj
+         |Q
+       """.stripMargin
+    })
+
     s"""${s2}
+       |${s3}
        |      ET
        """.stripMargin.trim
   }
