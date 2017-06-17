@@ -27,7 +27,7 @@ object TestReport  {
 //    report print (RCell(("line1 \nline2" size 8)+(" WW line 3" size 12) +" iii"+( "uuu line4" bold()))  between RMargin(0, 50))
 //    report.nextLine()
 //
-//    report print "line1".bold() at 100
+    report print "line1".bold() at 100
 //    report.nextLine(3)
 //    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
 //    report.nextLine()
@@ -53,7 +53,7 @@ object TestReport  {
 
 //    report rectangle() from(9,165) to(783,197) draw()
     report rectangle() from(0, 0) to(100,100) verticalShade(RColor(0, 255, 255), RColor(255, 255, 180)) draw()
-    report rectangle() from(100, 100) to(200,200) verticalShade(RColor(100, 255, 5), RColor(255, 2, 180)) draw()
+    report rectangle() from(100, 100) to(200,200) verticalShade(RColor(0, 0, 255), RColor(255, 255, 255)) draw()
    // report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 100, 100, 100)
 //    report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
 
