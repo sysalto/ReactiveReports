@@ -6,6 +6,7 @@ import java.nio.charset.Charset
 import javax.imageio.ImageIO
 
 import com.itextpdf.text.pdf.PdfArray
+import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAllign, WrapOptions}
 import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
@@ -55,12 +56,16 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, paternColor)
 	}
 
-	def arc(center: Point, radius: Float, startAngle: Float, endAngle: Float): Unit = {
-		graphicList += PdfArc(center, radius, startAngle, endAngle)
+	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {
+		graphicList += DrawArc(center, radius, startAngle, endAngle)
+	}
+
+	def circle(center: DrawPoint, radius: Float): Unit = {
+		graphicList += DrawCircle(center, radius)
 	}
 
 	def stroke() ={
-		graphicList +=GraphStroke()
+		graphicList +=DrawStroke()
 	}
 
 	def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
@@ -94,10 +99,12 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		val pattern = new PdfPattern(nextId(), pdfShadding)
 		currentPage.pdfPatternList ++= List(pattern)
 		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
-		this.arc(Point(200, 200), 100, 0, (Math.PI / 2.0).toFloat)
-		this.arc(Point(200, 200), 100,  (Math.PI / 2.0).toFloat, Math.PI.toFloat)
-		this.arc(Point(200, 200), 100, Math.PI.toFloat, (3.0*Math.PI / 2.0).toFloat)
-		this.arc(Point(200, 200), 100, (3.0*Math.PI / 2.0).toFloat,2*Math.PI.toFloat)
+		this.arc(DrawPoint(200, 200), 100, 0, (Math.PI / 2.0).toFloat)
+		this.arc(DrawPoint(200, 200), 100,  (Math.PI / 2.0).toFloat, Math.PI.toFloat)
+		this.arc(DrawPoint(200, 200), 100, Math.PI.toFloat, (3.0*Math.PI / 2.0).toFloat)
+		this.arc(DrawPoint(200, 200), 100, (3.0*Math.PI / 2.0).toFloat,2*Math.PI.toFloat)
+		this.stroke()
+		this.circle(DrawPoint(300,300),50)
 		this.stroke()
 	}
 
@@ -407,9 +414,7 @@ case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfP
 
 case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String, pattern: Option[PatternDraw] = None)
 
-abstract class PdfGraphicChuck {
-	def content: String
-}
+
 
 //case class PdfShading(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor) extends PdfGraphicChuck {
 //  override def content: String = {
@@ -432,27 +437,7 @@ case class PdfLine(x1: Long, y1: Long, x2: Long, y2: Long,
 
 }
 
-case class Point(x: Double, y: Double)
 
-case class PdfArc(center: Point, radius: Float, startAngle: Float, endAngle: Float) extends PdfGraphicChuck {
-	override def content: String = {
-		val p0 = Point(center.x + radius * Math.cos(startAngle), center.y + radius * Math.sin(startAngle))
-		val lg = radius * 4 / 3.0 * Math.tan((endAngle - startAngle) * 0.25)
-		val p1 = Point(p0.x - lg * Math.sin(startAngle), p0.y + lg * Math.cos(startAngle))
-		val p3 = Point(center.x + radius * Math.cos(endAngle), center.y + radius * Math.sin(endAngle))
-		val p2 = Point(p3.x + lg * Math.sin(endAngle), p3.y - lg * Math.cos(endAngle))
-		//https://stackoverflow.com/questions/1734745/how-to-create-circle-with-b%C3%A9zier-curves
-		s"""${p0.x} ${p0.y} m
-			 | ${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y} c
-     """.stripMargin
-	}
-}
-
-case class GraphStroke() extends PdfGraphicChuck {
-	override def content: String = {
-		"S"
-	}
-}
 
 
 case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[RColor],
