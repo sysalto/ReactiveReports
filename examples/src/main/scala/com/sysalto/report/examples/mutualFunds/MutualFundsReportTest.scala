@@ -50,7 +50,6 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
     report.nextLine()
     report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 45, 100, 40)
 
-    //    report rectangle() from(500, report.getY) to(report.pgSize.width - 5, report.getY + 40) fillColor RColor(220, 255, 220) color RColor(200, 200, 250) radius 10 draw()
     report print (RCell("Investment statement" size 15 bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
     report.nextLine()
 
@@ -70,9 +69,9 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
     report.nextLine()
     report print (record value "addr3").toString at 10
     report.setYPosition(y)
-    report print ("Beneficiary information" bold()) at 500
+    report print (RCell("Beneficiary information" bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
     report.nextLine()
-    report print (record value "benef_name").toString at 500
+    report print (RCell((record value "benef_name").toString)  rightAllign() between RMargin(0, report.pgSize.width - 10))
     report.nextLine(2)
   }
 
@@ -82,7 +81,7 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
     report.nextLine(2)
     //    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
     val row = Row(10, report.pgSize.width - 10, List(Column("fund_name", 150), Column("value1", Flex(1)),
-      Column("value2", Flex(1)), Column("change", Flex(1)), Column("graphic", Flex(2))))
+      Column("value2", Flex(1)), Column("change", Flex(1)), Column("graphic", Flex(2)),Column("",5)))
     val fundName = row.getColumnBound("fund_name")
     val value1 = row.getColumnBound("value1")
     val value2 = row.getColumnBound("value2")
@@ -95,7 +94,7 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
     val c_graphic = RCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAllign() between graphic
     val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change, c_graphic))
     val y2 = rrow.calculate(report)
-    report rectangle() from(9, report.getY-report.lineHeight) to(report.pgSize.width - 9, y2+2) fillColor headerColor draw()
+    report rectangle() from(9, report.getY-report.lineHeight) radius (3) to(report.pgSize.width - 9, y2+2) fillColor headerColor draw()
     rrow.print(report)
     report.setYPosition(y2)
     report.nextLine()
@@ -160,7 +159,7 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
   private def changeAccount(report: Report): Unit = {
     report.nextLine(2)
     val row = Row(10, report.pgSize.width - 10, List(Column("account", 250), Column("value1", Flex(1)),
-      Column("value2", Flex(1)), Column("value3", Flex(1))))
+      Column("value2", Flex(1)), Column("value3", Flex(1)),Column("",5)))
     val account = row.getColumnBound("account")
     val value1 = row.getColumnBound("value1")
     val value2 = row.getColumnBound("value2")
@@ -171,7 +170,7 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
     val value3Hdr = RCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAllign() between value3
     val rrow = RRow(List(accountHdr, value1Hdr, value2Hdr, value3Hdr))
     val y2 = rrow.calculate(report)
-    report rectangle() from(9, report.getY-report.lineHeight) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
+    report rectangle() from(9, report.getY-report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
     rrow.print(report)
     report.setYPosition(y2)
     report.nextLine()
@@ -230,7 +229,7 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
     rs.close()
     val row = Row(10, report.pgSize.width - 10, List(Column("account_perf", 150), Column("value3m", Flex(1)),
       Column("value1y", Flex(1)), Column("value3y", Flex(1)), Column("value5y", Flex(1)),
-      Column("value10y", Flex(1)), Column("annualized", Flex(1))))
+      Column("value10y", Flex(1)), Column("annualized", Flex(1)),Column("",5)))
     val accountPerf = row.getColumnBound("account_perf")
     val value3m = row.getColumnBound("value3m")
     val value1y = row.getColumnBound("value1y")
@@ -249,7 +248,7 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
     val h_annualized = RCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAllign() between annualized
     val hrow = RRow(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
     val y1 = hrow.calculate(report)
-    report rectangle() from(9, report.getY-report.lineHeight) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
+    report rectangle() from(9, report.getY-report.lineHeight) radius (3) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
     hrow.print(report)
     report.setYPosition(y1)
     report.nextLine()

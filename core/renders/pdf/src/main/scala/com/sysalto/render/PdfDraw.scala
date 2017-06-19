@@ -120,8 +120,10 @@ object PdfDraw {
 
 	}
 
-	case class DrawPieChart(title: String, data: Map[String, Double], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicChuck {
-		override def content: String = pieChart(title, data.toList, x, y, width, height)
+	case class DrawPieChart(pdfgenerator: PdfNativeGenerator, title: String, data: Map[String, Double], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicChuck {
+		val s = pieChart(pdfgenerator, title, data.toList, x, y, width, height)
+
+		override def content: String = s
 	}
 
 }

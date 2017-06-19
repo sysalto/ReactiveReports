@@ -121,7 +121,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	}
 
 	def drawPieChart(title: String, data: Map[String, Double], x: Float, y: Float, width: Float, height: Float): Unit = {
-		graphicList += DrawPieChart(title,data,x,y,width,height)
+		graphicList += DrawPieChart(this,title,data,x,y,width,height)
 	}
 
 	def text(x: Float, y: Float, txt: RText): Unit = {
