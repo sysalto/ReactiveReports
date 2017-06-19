@@ -128,6 +128,7 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
           total1 += val1.toFloat
           total2 += val2.toFloat
           total3 += v_change
+          chartData += (firstChar.asInstanceOf[Char].toString -> total2.toDouble)
           val c_change = RCell(v_change.toString) rightAllign() between change
           val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change))
           val y2 = rrow.calculate(report)
@@ -152,7 +153,7 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
       RCell(total2.toString bold()) rightAllign() between value2, RCell(total3.toString bold()) rightAllign() between change))
     trow.print(report)
     val chartHeight = report.getY - firstY
-    report.drawPieChart("", chartData.toMap, graphic.left + 5, firstY + chartHeight, graphic.right - graphic.left - 10, chartHeight)
+    report.drawPieChart("", chartData.toMap, graphic.left + 5, firstY , graphic.right - graphic.left - 10, chartHeight)
 
   }
 

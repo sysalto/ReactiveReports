@@ -48,17 +48,13 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 
 	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
-		graphicList += PdfLine(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
+		graphicList += DrawLine(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
 	}
 
 	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
 	              radius: Float, color: Option[RColor] = None,
 	              fillColor: Option[RColor] = None, paternColor: Option[PdfGPattern] = None): Unit = {
-		if (radius == 0) {
-			graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, paternColor)
-		} else {
-			graphicList += DrawRoundRectangle(x1, y1, x2, y2, radius)
-		}
+		graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, paternColor)
 	}
 
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {
@@ -103,31 +99,16 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 		val pattern = new PdfGPattern(nextId(), pdfShadding)
 		currentPage.pdfPatternList ++= List(pattern)
-		//		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
-		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 5f)
+		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
+//				this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 5f)
+
 		//		this.arc(DrawPoint(200, 200), 100, 0, (Math.PI / 2.0).toFloat)
 		//		this.arc(DrawPoint(200, 200), 100,  (Math.PI / 2.0).toFloat, Math.PI.toFloat)
 		//		this.arc(DrawPoint(200, 200), 100, Math.PI.toFloat, (3.0*Math.PI / 2.0).toFloat)
 		//		this.arc(DrawPoint(200, 200), 100, (3.0*Math.PI / 2.0).toFloat,2*Math.PI.toFloat)
 		//		this.stroke()
-//		this.circle(DrawPoint(300, 300), 50)
+//				this.circle(DrawPoint(300, 300), 50)
 		this.stroke()
-	}
-
-
-	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, x: Float, y: Float, txt: RText, from: RColor, to: RColor): Unit = {
-
-		val colorFct = new PdfShaddingFctColor(nextId(), from, to)
-		val pdfShadding = new PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct)
-		val pattern = new PdfGPattern(nextId(), pdfShadding)
-		currentPage.pdfPatternList ++= List(pattern)
-		val patterDraw = PatternDraw(x1, y1, x2, y2, pattern)
-		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
-			val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
-			fontMap += (txt.font.fontKeyName -> font1)
-			font1
-		} else fontMap(txt.font.fontKeyName)
-		txtList += PdfTxtChuck(x, y, txt, font.refName, Some(patterDraw))
 	}
 
 
@@ -139,8 +120,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		currentPage.imageList = List(pdfImage)
 	}
 
-	def drawPieChart(title: String, data: Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		println("drawPieChart not yet implemented.")
+	def drawPieChart(title: String, data: Map[String, Double], x: Float, y: Float, width: Float, height: Float): Unit = {
+		graphicList += DrawPieChart(title,data,x,y,width,height)
 	}
 
 	def text(x: Float, y: Float, txt: RText): Unit = {
@@ -421,52 +402,7 @@ case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfG
 case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String, pattern: Option[PatternDraw] = None)
 
 
-//case class PdfShading(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor) extends PdfGraphicChuck {
-//  override def content: String = {
-//    s"""-${x1} ${y1} m
-//       |-${x2} ${y2} l
-//       |S
-//       """.stripMargin.trim
-//  }
-//
-//}
 
-case class PdfLine(x1: Long, y1: Long, x2: Long, y2: Long,
-                   lineWidth: Long, color: RColor, lineDashType: Option[LineDashType]) extends PdfGraphicChuck {
-	override def content: String = {
-		s"""-${x1} ${y1} m
-			 |-${x2} ${y2} l
-			 |S
-       """.stripMargin.trim
-	}
-
-}
-
-
-case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[RColor],
-                        fillColor: Option[RColor], patternColor: Option[PdfGPattern] = None) extends PdfGraphicChuck {
-	override def content: String = {
-		val paternStr = if (patternColor.isDefined) s"/Pattern cs /${patternColor.get.name} scn" else ""
-		val borderStr = if (borderColor.isDefined) {
-			val color = PdfNativeGenerator.convertColor(borderColor.get)
-			s"${color._1} ${color._2} ${color._3} RG"
-		} else ""
-		val fillStr = if (fillColor.isDefined) {
-			val color = PdfNativeGenerator.convertColor(fillColor.get)
-			s"${color._1} ${color._2} ${color._3} rg"
-		} else ""
-		val operator = if (borderStr.isEmpty) "f" else "B"
-		s"""q
-			 |${paternStr}
-			 |${borderStr}
-			 |${fillStr}
-			 |${x1} ${y1} ${x2 - x1} ${y2 - y1} re
-			 | ${operator}
-			 |Q
-       """.stripMargin.trim
-	}
-
-}
 
 
 class PdfText(txtList: List[PdfTxtChuck])

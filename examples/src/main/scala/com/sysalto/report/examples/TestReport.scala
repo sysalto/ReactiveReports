@@ -52,10 +52,12 @@ object TestReport  {
 
 
 //    report rectangle() from(9,165) to(783,197) draw()
-    report rectangle() from(100, 100) to(200,200) verticalShade(RColor(0, 255, 255), RColor(255, 255, 180)) draw()
+//    report rectangle() from(100, 100) to(200,200) radius(5) verticalShade(RColor(0, 255, 255), RColor(255, 255, 180)) draw()
 //    report rectangle() from(100, 100) to(200,200) verticalShade(RColor(0, 0, 255), RColor(255, 255, 255)) draw()
    // report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 100, 100, 100)
 //    report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
+    val chartData=Map("A"->20.0,"B"->30.0,"C"->50.0,"D"->30.0,"E"->10.0,"F"->15.0)
+    report.drawPieChart("", chartData.toMap, 100,100,100,300)
 
     report.render()
     report.close()
@@ -63,7 +65,7 @@ object TestReport  {
 
 
   def main(args: Array[String]): Unit = {
-    run1()
+//    run1()
     run2()
   }
 
