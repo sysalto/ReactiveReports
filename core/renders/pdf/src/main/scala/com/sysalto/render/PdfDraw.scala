@@ -70,7 +70,7 @@ object PdfDraw {
 
 	case class DrawLine(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]) extends PdfGraphicChuck {
 		override def content: String = {
-			movePoint(x1, y1) + lineTo(x2, y2)
+			movePoint(x1, y1) + lineTo(x2, y2) +border(color)+fillStroke(false,true)
 		}
 	}
 
