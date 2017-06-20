@@ -99,14 +99,14 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		val pattern = new PdfGPattern(nextId(), pdfShadding)
 		currentPage.pdfPatternList ++= List(pattern)
 		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
-//				this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 5f)
+		//				this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 5f)
 
 		//		this.arc(DrawPoint(200, 200), 100, 0, (Math.PI / 2.0).toFloat)
 		//		this.arc(DrawPoint(200, 200), 100,  (Math.PI / 2.0).toFloat, Math.PI.toFloat)
 		//		this.arc(DrawPoint(200, 200), 100, Math.PI.toFloat, (3.0*Math.PI / 2.0).toFloat)
 		//		this.arc(DrawPoint(200, 200), 100, (3.0*Math.PI / 2.0).toFloat,2*Math.PI.toFloat)
 		//		this.stroke()
-//				this.circle(DrawPoint(300, 300), 50)
+		//				this.circle(DrawPoint(300, 300), 50)
 		this.stroke()
 	}
 
@@ -120,7 +120,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	}
 
 	def drawPieChart(title: String, data: Map[String, Double], x: Float, y: Float, width: Float, height: Float): Unit = {
-		graphicList += DrawPieChart(this,title,data,x,y,width,height)
+		graphicList += DrawPieChart(this, title, data, x, y, width, height)
 	}
 
 	def text(x: Float, y: Float, txt: RText): Unit = {
@@ -401,9 +401,6 @@ case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfG
 case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String, pattern: Option[PatternDraw] = None)
 
 
-
-
-
 class PdfText(txtList: List[PdfTxtChuck])
 	extends PdfPageItem {
 	override def content: String = {
@@ -434,10 +431,11 @@ class PdfText(txtList: List[PdfTxtChuck])
 					 |  ( ${item.rtext.txt} ) Tj
        """.stripMargin
 			}
-		}.foldLeft("")((s1, s2) => s1 + s2)
+		}.mkString("")
 
 		// pattern text
-		val s3 = txtListPattern.map(txt => {
+		val s3 = if (txtListPattern.isEmpty) ""
+		else txtListPattern.map(txt => {
 			s""" q
 				 |/Pattern cs /${item.pattern.get.pattern.name} scn
 				 |/${item.fontRefName} ${item.rtext.font.size} Tf
@@ -445,13 +443,13 @@ class PdfText(txtList: List[PdfTxtChuck])
 				 |  ${color._1} ${color._2} ${color._3} rg
 				 |        ( ${item.rtext.txt} ) Tj
 				 |Q
-       """.stripMargin
+       """.mkString("")
 		})
 
 		s"""${s2}
 			 |${s3}
 			 |      ET
-       """.stripMargin.trim
+       """.stripMargin
 	}
 
 }
