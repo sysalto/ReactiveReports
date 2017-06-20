@@ -5,11 +5,13 @@ import akka.actor.ActorSystem;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Sink;
 import akka.stream.scaladsl.Source;
-import com.sysalto.report.JavaUtil;
+import com.sysalto.render.PdfNativeFactory;
+import com.sysalto.report.akka.util.JavaUtil;
 import com.sysalto.report.Report;
 import com.sysalto.report.akka.util.GroupTransform;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
+import com.sysalto.report.util.PdfFactory;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import scala.collection.immutable.Map;
@@ -25,7 +27,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Created by marian on 3/4/17.
  */
-public class MutualFundsJavaReport {
+public class MutualFundsAkkaJavaReport {
     static private Date date1 = (new GregorianCalendar(2013, 0, 1)).getTime();
     static private Date date2 = (new GregorianCalendar(2013, 11, 31)).getTime();
     static RColor headerColor = new RColor(156, 76, 6, 1f);
@@ -38,7 +40,7 @@ public class MutualFundsJavaReport {
 //    static private java.util.Map<String, Object> chartData = new java.util.HashMap<>();
     static private final SimpleDateFormat sd = new SimpleDateFormat("MMM dd yyyy");
 
-    PdfITextFactory pdfITextFactory = new PdfITextFactory();
+    PdfFactory pdfITextFactory = new PdfNativeFactory();
     Config config = ConfigFactory.parseString(
             "akka.log-dead-letters=off\n" +
                     "akka.jvm-exit-on-fatal-error = true\n" +
@@ -165,8 +167,8 @@ public class MutualFundsJavaReport {
         AtomicReference<Double> total2 = new AtomicReference<>();
         AtomicReference<Double> total3 = new AtomicReference<>();
         final AtomicReference<Integer> firstChar = new AtomicReference<>();
-        AtomicReference<java.util.Map<String, Object>> chartData = new AtomicReference<>();
-        chartData.set(new java.util.HashMap<>());
+        AtomicReference<java.util.List<scala.Tuple2<String,Object>>> chartData = new AtomicReference<>();
+        chartData.set(new java.util.ArrayList<scala.Tuple2<String,Object>>());
         total1.set(0.);
         total2.set(0.);
         total3.set(0.);
@@ -191,7 +193,7 @@ public class MutualFundsJavaReport {
                     total2.set(total2.get() + value2.floatValue());
                     total3.set(total3.get() + v_change.floatValue());
 
-                    chartData.get().put("" + cc, total2.get());
+                    chartData.get().add(new scala.Tuple2("" + cc, total2.get()));
                     RCell cr_change = new RCell(new RText(v_change.toString())).rightAllign().between(m_change);
                     RRow rrow1 = RRow.apply(cr_fundName, cr_value1, cr_value2, cr_change);
                     Float y3 = rrow1.calculate(report);
@@ -368,6 +370,6 @@ public class MutualFundsJavaReport {
 
     public static void main(String[] args) throws Exception {
         MutualFundsInitData.initDb();
-        new MutualFundsJavaReport().run();
+        new MutualFundsAkkaJavaReport().run();
     }
 }
