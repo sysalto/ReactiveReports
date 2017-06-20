@@ -72,7 +72,7 @@ object PdfChart {
 		val str2 = angleList.map {
 			case (label, (startAngle, endAngle, color)) => {
 				val s=rectangle(x+2.0f*(radius+offset),y-ycrt,10,10)+fill(color)+fillStroke(true,false)
-				pdfgenerator.text(x+2.0f*(radius+offset)+20,y-ycrt,RText(label).size(10))
+				pdfgenerator.text(x+2.0f*(radius+offset)+20,y-ycrt+1,RText(label).size(10))
 				ycrt += 12
 				s
 			}
