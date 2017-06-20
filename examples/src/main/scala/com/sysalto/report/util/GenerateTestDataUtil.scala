@@ -21,9 +21,9 @@
 package com.sysalto.report.util
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
+import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
 import com.sysalto.report.reportTypes.GroupUtil
-import com.sysalto.report.template.ReportApp
 //
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
@@ -35,7 +35,7 @@ import scala.language.postfixOps
 import scala.util.Random
 
 
-object GenerateTestDataUtil extends  ReportApp with AkkaGroupUtil{
+object GenerateTestDataUtil extends  ReportAppAkka with AkkaGroupUtil{
 
   sealed trait DataType
 

@@ -24,13 +24,13 @@ import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
 import com.sysalto.render.PdfNativeFactory
-import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
+import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
 import com.sysalto.report.reportTypes.GroupUtil
 
-object MutualFundsReport extends ReportApp with AkkaGroupUtil{
+object MutualFundsReport extends ReportAppAkka with AkkaGroupUtil{
   val sd = new SimpleDateFormat("MMM dd yyyy")
   private val date1 = new GregorianCalendar(2013, 0, 1).getTime
   private val date2 = new GregorianCalendar(2013, 11, 31).getTime
@@ -150,7 +150,7 @@ object MutualFundsReport extends ReportApp with AkkaGroupUtil{
       RCell(total2.toString bold()) rightAllign() between value2, RCell(total3.toString bold()) rightAllign() between change))
     trow.print(report)
     val chartHeight = report.getY - firstY
-    report.drawPieChart("", chartData.toMap, graphic.left + 5, firstY + chartHeight, graphic.right - graphic.left - 10, chartHeight)
+    report.drawPieChart("", chartData.toList, graphic.left + 5, firstY + chartHeight, graphic.right - graphic.left - 10, chartHeight)
 
   }
 

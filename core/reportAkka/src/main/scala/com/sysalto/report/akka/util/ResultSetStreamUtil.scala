@@ -18,18 +18,17 @@
  * along with this program; if not, see https://www.gnu.org/licenses/agpl-3.0.en.html.
  */
 
-package com.sysalto.report.util
+package com.sysalto.report.akka.util
 
-import java.sql.{Connection, ResultSet, Statement}
-import java.util.logging.Logger
+import java.sql.ResultSet
 
 import akka.NotUsed
 import akka.stream.scaladsl.{Sink, Source}
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.language.postfixOps
 import scala.util.control.NonFatal
-import scala.concurrent.ExecutionContext.Implicits.global
 
 // http://stackoverflow.com/questions/9636545/treating-an-sql-resultset-like-a-scala-stream
 
@@ -37,7 +36,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 trait ResultSetStreamUtil {
 
 
-  implicit class ResultsetToSource(rs: ResultSet) {
+  implicit class ResultsetStreamToSource(rs: ResultSet) {
 
     def toSource:Source[Map[String,AnyRef],NotUsed] = {
       val stream = Source.unfoldAsync(()) { _ =>

@@ -23,12 +23,12 @@ package com.sysalto.report.examples
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
+import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
 import com.sysalto.report.reportTypes.{GroupUtil, RCell}
-import com.sysalto.report.template.ReportApp
 
 
-object HelloWorldReport1 extends ReportApp with AkkaGroupUtil {
+object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
   private def run(report: Report): Unit = {
 
     // setup a new report with the name

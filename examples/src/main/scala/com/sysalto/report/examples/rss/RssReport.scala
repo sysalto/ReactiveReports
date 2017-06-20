@@ -29,14 +29,14 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Await, Future}
 import GraphDSL.Implicits._
 import com.sysalto.render.PdfNativeFactory
-import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
+import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
 import com.sysalto.report.reportTypes.GroupUtil
 
 
 
-object RssReport extends ReportApp with AkkaGroupUtil{
+object RssReport extends ReportAppAkka with AkkaGroupUtil{
 
 
   type RssType = (String, String, String, String)

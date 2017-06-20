@@ -18,15 +18,14 @@
  * along with this program; if not, see https://www.gnu.org/licenses/agpl-3.0.en.html.
  */
 
-package com.sysalto.report.template
+package com.sysalto.report.akka.template
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import com.sysalto.report.ScalaReportUtil
 import com.typesafe.config.{Config, ConfigFactory}
 
 
-trait ReportApp {
+trait ReportAppAkka {
 
   val config: Config = ConfigFactory.parseString(
     """akka.log-dead-letters=off

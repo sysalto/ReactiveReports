@@ -1,8 +1,8 @@
 package com.sysalto.report.examples
 
 import com.sysalto.render.PdfNativeFactory
-import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
+import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.reportTypes.{RCell, ReportPageOrientation}
 
 /**
@@ -57,7 +57,7 @@ object TestReport  {
    // report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 100, 100, 100)
 //    report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
     val chartData=Map("A"->20.0,"B"->30.0,"C"->50.0,"D"->30.0,"E"->10.0,"F"->15.0)
-    report.drawPieChart("", chartData.toMap, 100,100,100,300)
+    report.drawPieChart("", chartData.toList, 100,100,100,300)
 
     report.render()
     report.close()

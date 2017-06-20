@@ -33,7 +33,7 @@ class PdfGenerator extends PdfUtil() {
 
   //  override def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float, color: Option[RColor]): Unit = ???
 
-  override def drawPieChart(title: String, data: Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = ???
+  override def drawPieChart(title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = ???
 
   override def drawBarChart(title: String, xLabel: String, yLabel: String, data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float): Unit = ???
 

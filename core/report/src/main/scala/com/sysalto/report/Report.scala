@@ -223,12 +223,12 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 	Draw a pie chart with title, data from (x0,y0) with width and height dimensions.
 	See jfreechart for details.
 	 */
-	def drawPieChart(title: String, data: Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = {
+	def drawPieChart(title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
 		crtPage.items += ReportPieChart(title, data, x0, y0, width, height)
 	}
 
-	def drawPieChart1(title: String, data: _root_.java.util.Map[String, Double], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += ReportPieChart(title, data.asScala.toMap, x0, y0, width, height)
+	def drawPieChart1(title: String, data: _root_.java.util.List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
+		crtPage.items += ReportPieChart(title, data.asScala.toList, x0, y0, width, height)
 	}
 
 	/*

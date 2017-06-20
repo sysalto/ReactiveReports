@@ -1,7 +1,8 @@
-package com.sysalto.report
+package com.sysalto.report.akka.util
 
 import akka.NotUsed
 import akka.stream.scaladsl.Source
+import com.sysalto.report.ImplicitsAkka._
 
 /**
   * Created by marian on 3/13/17.
@@ -9,17 +10,14 @@ import akka.stream.scaladsl.Source
 object JavaUtil {
 
   def getRecordValue[T](rec: Map[String, AnyRef], field: String): T = {
-    import com.sysalto.report.util.ResultSetStreamUtil._
     (rec value (field)).asInstanceOf[T]
   }
 
   def recordToMap(rs: _root_.java.sql.ResultSet): Map[String, AnyRef] = {
-    import com.sysalto.report.util.ResultSetStreamUtil._
     rs.toMap
   }
 
   def resultSetToSource(rs: _root_.java.sql.ResultSet): Source[Map[String, AnyRef], NotUsed] = {
-    import com.sysalto.report.util.ResultSetStreamUtil._
     rs.toSource
   }
 

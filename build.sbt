@@ -41,7 +41,7 @@ lazy val commonInclude = Seq(
   publishMavenStyle := true,
   pomIncludeRepository := { _ => false },
 
-  pomExtra := (
+  pomExtra :=
     <url>https://github.com/sysalto/ReactiveReports</url>
       <licenses>
         <license>
@@ -59,7 +59,7 @@ lazy val commonInclude = Seq(
           <id>marian.mihai</id>
           <name>Marian Mihai</name>
         </developer>
-      </developers>)
+      </developers>
 
 )
 
@@ -97,7 +97,7 @@ lazy val coreReport = (project in file("core/report")).settings(commonInclude: _
 
 lazy val coreReportAkka = (project in file("core/reportAkka")).settings(commonInclude: _*).
   settings(name := "ReactiveReports Core Akka").
-  settings(commonSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
+  settings(akkaSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
 
 //lazy val renderItext = (project in file("core/renders/itext")).settings(commonInclude: _*).
 //  settings(name := "ReactiveReports Itext Render").
