@@ -62,6 +62,7 @@ object PdfChart {
 				lineTo(p1) +
 				arc(center, radius, startAngle, endAngle) +
 				lineTo(p2) +
+				closePath+
 				fill(color) +
 				fillStroke(true, false)
 		}

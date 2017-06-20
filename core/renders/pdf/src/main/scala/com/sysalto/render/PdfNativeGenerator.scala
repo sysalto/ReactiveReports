@@ -5,7 +5,6 @@ import java.io.{ByteArrayOutputStream, File, FileOutputStream, PrintWriter}
 import java.nio.charset.Charset
 import javax.imageio.ImageIO
 
-import com.itextpdf.text.pdf.PdfArray
 import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAllign, WrapOptions}

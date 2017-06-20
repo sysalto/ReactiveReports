@@ -65,5 +65,6 @@ object PdfBasic {
 
 	val saveStatus: String = "q\n"
 	val restoreStatus: String = "Q\n"
+	val closePath:String="h\n"
 
 }

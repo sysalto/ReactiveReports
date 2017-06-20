@@ -22,7 +22,6 @@ package com.sysalto.report.template
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import com.sysalto.render.PdfITextFactory
 import com.sysalto.report.ScalaReportUtil
 import com.typesafe.config.{Config, ConfigFactory}
 

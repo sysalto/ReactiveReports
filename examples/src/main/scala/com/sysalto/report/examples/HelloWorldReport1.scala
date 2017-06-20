@@ -20,7 +20,7 @@
 
 package com.sysalto.report.examples
 
-import com.sysalto.render.{PdfITextFactory, PdfNativeFactory}
+import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.util.AkkaGroupUtil
@@ -139,11 +139,11 @@ object HelloWorldReport1 extends ReportApp with AkkaGroupUtil {
 
   }
 
-  def runItext(): Unit = {
-    implicit val pdfITextFactory = new PdfITextFactory()
-    val report = Report("HelloWord1.pdf")
-    run(report)
-  }
+//  def runItext(): Unit = {
+//    implicit val pdfITextFactory = new PdfITextFactory()
+//    val report = Report("HelloWord1.pdf")
+//    run(report)
+//  }
 
   def runNative(): Unit = {
     implicit val pdfITextFactory = new PdfNativeFactory()
@@ -152,7 +152,7 @@ object HelloWorldReport1 extends ReportApp with AkkaGroupUtil {
   }
 
   def main(args: Array[String]): Unit = {
-    runItext
+//    runItext
     runNative
     system.terminate()
   }

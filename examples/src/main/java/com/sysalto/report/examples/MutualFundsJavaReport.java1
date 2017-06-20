@@ -5,7 +5,6 @@ import akka.actor.ActorSystem;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Sink;
 import akka.stream.scaladsl.Source;
-import com.sysalto.render.PdfITextFactory;
 import com.sysalto.report.JavaUtil;
 import com.sysalto.report.Report;
 import com.sysalto.report.akka.util.GroupTransform;

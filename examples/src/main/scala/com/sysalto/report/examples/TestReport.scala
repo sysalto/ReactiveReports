@@ -1,6 +1,6 @@
 package com.sysalto.report.examples
 
-import com.sysalto.render.{PdfITextFactory, PdfNativeFactory}
+import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.template.ReportApp
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{RCell, ReportPageOrientation}
@@ -10,11 +10,11 @@ import com.sysalto.report.reportTypes.{RCell, ReportPageOrientation}
   */
 object TestReport  {
 
-  def run1(): Unit = {
-    implicit val pdfITextFactory = new PdfITextFactory()
-    val report = Report("Test1.pdf")
-    runReport(report)
-  }
+//  def run1(): Unit = {
+//    implicit val pdfITextFactory = new PdfITextFactory()
+//    val report = Report("Test1.pdf")
+//    runReport(report)
+//  }
 
   def run2(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()

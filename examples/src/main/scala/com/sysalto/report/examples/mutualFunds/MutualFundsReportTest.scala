@@ -23,7 +23,7 @@ package com.sysalto.report.examples.mutualFunds
 import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
-import com.sysalto.render.{PdfITextFactory, PdfNativeFactory}
+import com.sysalto.render. PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.util.AkkaGroupUtil
@@ -352,11 +352,11 @@ object MutualFundsReportTest extends ReportApp with AkkaGroupUtil{
   }
 
 
-  def runItext(): Unit = {
-    implicit val pdfITextFactory = new PdfITextFactory()
-    val report1=Report("MutualFunds1.pdf")
-    report(report1)
-  }
+//  def runItext(): Unit = {
+//    implicit val pdfITextFactory = new PdfITextFactory()
+//    val report1=Report("MutualFunds1.pdf")
+//    report(report1)
+//  }
 
   def runNative(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()

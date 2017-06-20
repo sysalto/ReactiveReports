@@ -22,7 +22,8 @@ object PdfDraw {
 			lineTo(DrawPoint(x1 + radius, y2)) +
 			arc(DrawPoint(x1 + radius, y2 + radius), radius, (3.0 * Math.PI * 0.5).toFloat, Math.PI.toFloat) +
 			lineTo(DrawPoint(x1, y1 - radius)) +
-			arc(DrawPoint(x1 + radius, y1 - radius), radius, Math.PI.toFloat, (Math.PI * 0.5).toFloat)
+			arc(DrawPoint(x1 + radius, y1 - radius), radius, Math.PI.toFloat, (Math.PI * 0.5).toFloat) +
+			closePath
 	}
 
 
