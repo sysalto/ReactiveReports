@@ -251,7 +251,7 @@ public class MutualFundsNoAkkaJavaReport {
 
         ResultSetGroup rsGroup = ResultSetUtil.toGroup(rs);
         rsGroup.foreach(rec -> {
-            Map<String, Object> crtRec = GroupUtil.getRec(rec);
+            Map<String, Object> crtRec = GroupUtil.<scala.collection.immutable.Map<java.lang.String,java.lang.Object>>getRec(rec);
             String name = ResultSetUtil.getRecordValue(crtRec, "name");
             BigDecimal r_value1 = ResultSetUtil.getRecordValue(crtRec, "value1");
             BigDecimal r_value2 = ResultSetUtil.getRecordValue(crtRec, "value2");

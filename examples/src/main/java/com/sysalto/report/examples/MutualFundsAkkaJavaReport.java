@@ -180,7 +180,7 @@ public class MutualFundsAkkaJavaReport {
         total3.set(0.);
         firstChar.set((int) 'A');
 
-        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.<scala.Tuple3<scala.Option<Map>,scala.Option<Map>,scala.Option<Map>>>foreach(
+        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.<scala.Tuple3<scala.Option<Map>, scala.Option<Map>, scala.Option<Map>>>foreach(
                 rec1 -> {
                     if (GroupUtil.isFirstRecord(rec1)) {
                         firstY.set(report.getY());
@@ -261,9 +261,9 @@ public class MutualFundsAkkaJavaReport {
         total2.set(0.);
         total3.set(0.);
 
-        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.<scala.Tuple3<scala.Option<Map>,scala.Option<Map>,scala.Option<Map>>>foreach(
+        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.<scala.Tuple3<scala.Option<Map>, scala.Option<Map>, scala.Option<Map>>>foreach(
                 rec1 -> {
-                    Map<String, Object> crtRec = GroupUtil.getRec(rec1);
+                    Map<String, Object> crtRec = GroupUtil.<scala.collection.immutable.Map>getRec(rec1);
                     String name = ResultSetUtil.getRecordValue(crtRec, "name");
                     BigDecimal r_value1 = ResultSetUtil.getRecordValue(crtRec, "value1");
                     BigDecimal r_value2 = ResultSetUtil.getRecordValue(crtRec, "value2");
