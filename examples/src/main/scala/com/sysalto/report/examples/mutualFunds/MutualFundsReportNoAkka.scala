@@ -26,11 +26,11 @@ import java.util.GregorianCalendar
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
-import com.sysalto.report.util.ResultSetUtil
+import com.sysalto.report.util.ResultSetUtilTrail
 
 import scala.collection.mutable.ListBuffer
 
-object MutualFundsReportNoAkka extends ResultSetUtil {
+object MutualFundsReportNoAkka extends ResultSetUtilTrail {
 	val sd = new SimpleDateFormat("MMM dd yyyy")
 	private val date1 = new GregorianCalendar(2013, 0, 1).getTime
 	private val date2 = new GregorianCalendar(2013, 11, 31).getTime
@@ -348,12 +348,6 @@ object MutualFundsReportNoAkka extends ResultSetUtil {
 
 	}
 
-
-	//  def runItext(): Unit = {
-	//    implicit val pdfITextFactory = new PdfITextFactory()
-	//    val report1=Report("MutualFunds1.pdf")
-	//    report(report1)
-	//  }
 
 	def runNative(): Unit = {
 		implicit val pdfFactory = new PdfNativeFactory()

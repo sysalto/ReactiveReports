@@ -1,24 +1,18 @@
 package com.sysalto.report.examples;
 
-import akka.NotUsed;
-import akka.actor.ActorSystem;
-import akka.stream.ActorMaterializer;
-import akka.stream.javadsl.Sink;
-import akka.stream.scaladsl.Source;
 import com.sysalto.render.PdfNativeFactory;
-import com.sysalto.report.ReportTypes;
-import com.sysalto.report.akka.util.JavaUtil;
 import com.sysalto.report.Report;
-import com.sysalto.report.akka.util.GroupTransform;
-import com.sysalto.report.akka.util.ResultSetStream;
-import com.sysalto.report.akka.util.ResultSetStreamUtil;
+import com.sysalto.report.ReportTypes;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
 import com.sysalto.report.util.PdfFactory;
+import com.sysalto.report.util.ResultSetGroup;
 import com.sysalto.report.util.ResultSetUtil;
+import com.sysalto.report.util.ResultSetUtilTrail;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import scala.collection.immutable.Map;
+import scala.runtime.BoxedUnit;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -33,7 +27,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Created by marian on 3/4/17.
  */
-public class MutualFundsAkkaJavaReport {
+public class MutualFundsNoAkkaJavaReport {
     static private Date date1 = (new GregorianCalendar(2013, 0, 1)).getTime();
     static private Date date2 = (new GregorianCalendar(2013, 11, 31)).getTime();
     static RColor headerColor = new RColor(156, 76, 6, 1f);
@@ -47,12 +41,6 @@ public class MutualFundsAkkaJavaReport {
     static private final SimpleDateFormat sd = new SimpleDateFormat("MMM dd yyyy");
 
     PdfFactory pdfITextFactory = new PdfNativeFactory();
-    Config config = ConfigFactory.parseString(
-            "akka.log-dead-letters=off\n" +
-                    "akka.jvm-exit-on-fatal-error = true\n" +
-                    "akka.log-dead-letters-during-shutdown=off");
-    ActorSystem system = ActorSystem.create("Sys", config);
-    ActorMaterializer materializer = ActorMaterializer.create(system);
 
     private void run() throws Exception {
 
@@ -102,7 +90,6 @@ public class MutualFundsAkkaJavaReport {
 
         report.render();
         report.close();
-        system.terminate();
     }
 
 
@@ -110,6 +97,7 @@ public class MutualFundsAkkaJavaReport {
         drawbackgroundImage(report);
         ResultSet rs = MutualFundsInitData.query("select * from clnt");
         rs.next();
+
         Map<String, Object> record = ResultSetUtil.toMap(rs);
         rs.close();
         report.nextLine();
@@ -168,54 +156,53 @@ public class MutualFundsAkkaJavaReport {
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from sum_investment");
-        Source<Map<String, Object>, NotUsed> source = ResultSetStream.toSource(rs);
-
+        ResultSetGroup rsGroup = ResultSetUtil.toGroup(rs);
         AtomicReference<Float> firstY = new AtomicReference<>();
         AtomicReference<Double> total1 = new AtomicReference<>();
         AtomicReference<Double> total2 = new AtomicReference<>();
         AtomicReference<Double> total3 = new AtomicReference<>();
         final AtomicReference<Integer> firstChar = new AtomicReference<>();
-        AtomicReference<java.util.List<scala.Tuple2<String, Object>>> chartData = new AtomicReference<>();
+        AtomicReference<List<scala.Tuple2<String, Object>>> chartData = new AtomicReference<>();
         chartData.set(new java.util.ArrayList<scala.Tuple2<String, Object>>());
         total1.set(0.);
         total2.set(0.);
         total3.set(0.);
         firstChar.set((int) 'A');
+        rsGroup.foreach(rec -> {
+            if (GroupUtil.isFirstRecord(rec)) {
+                firstY.set(report.getY());
+            }
+            char cc = (char) (firstChar.get().intValue());
+            Map<String, Object> crtRec = GroupUtil.getRec(rec);
+            String fund_name = ResultSetUtil.getRecordValue(crtRec, "fund_name");
+            BigDecimal value1 = ResultSetUtil.getRecordValue(crtRec, "value1");
+            BigDecimal value2 = ResultSetUtil.getRecordValue(crtRec, "value2");
+            RTextList fundTxt = new RText(cc + " ").bold().plus(new RText(fund_name));
+            RCell cr_fundName = RCell.apply(fundTxt).leftAllign().between(m_fundName);
+            RCell cr_value1 = new RCell(new RText(value1.toString())).rightAllign().between(m_value1);
+            RCell cr_value2 = new RCell(new RText(value2.toString())).rightAllign().between(m_value2);
+            Float v_change = value2.floatValue() - value1.floatValue();
+            total1.set(total1.get() + value1.floatValue());
+            total2.set(total2.get() + value2.floatValue());
+            total3.set(total3.get() + v_change.floatValue());
 
-        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.foreach(
-                rec1 -> {
-                    if (GroupUtil.isFirstRecord(rec1)) {
-                        firstY.set(report.getY());
-                    }
-                    char cc = (char) (firstChar.get().intValue());
-                    Map<String, Object> rec = GroupUtil.getRec(rec1);
-                    String fund_name = ResultSetUtil.getRecordValue(rec, "fund_name");
-                    BigDecimal value1 = ResultSetUtil.getRecordValue(rec, "value1");
-                    BigDecimal value2 = ResultSetUtil.getRecordValue(rec, "value2");
-                    RTextList fundTxt = new RText(cc + " ").bold().plus(new RText(fund_name));
-                    RCell cr_fundName = RCell.apply(fundTxt).leftAllign().between(m_fundName);
-                    RCell cr_value1 = new RCell(new RText(value1.toString())).rightAllign().between(m_value1);
-                    RCell cr_value2 = new RCell(new RText(value2.toString())).rightAllign().between(m_value2);
-                    Float v_change = value2.floatValue() - value1.floatValue();
-                    total1.set(total1.get() + value1.floatValue());
-                    total2.set(total2.get() + value2.floatValue());
-                    total3.set(total3.get() + v_change.floatValue());
+            chartData.get().add(new scala.Tuple2("" + cc, total2.get()));
+            RCell cr_change = new RCell(new RText(v_change.toString())).rightAllign().between(m_change);
+            RRow rrow1 = RRow.apply(cr_fundName, cr_value1, cr_value2, cr_change);
+            Float y3 = rrow1.calculate(report);
+            rrow1.print(report);
 
-                    chartData.get().add(new scala.Tuple2("" + cc, total2.get()));
-                    RCell cr_change = new RCell(new RText(v_change.toString())).rightAllign().between(m_change);
-                    RRow rrow1 = RRow.apply(cr_fundName, cr_value1, cr_value2, cr_change);
-                    Float y3 = rrow1.calculate(report);
-                    rrow1.print(report);
+            if (GroupUtil.isLastRecord(rec)) {
+                report.line().from(10, report.getY() + 2).to(m_change.right(), -1).width(0.5f).draw();
+            } else {
+                report.line().from(10, report.getY() + 2).to(m_change.right(), -1).color(200, 200, 200).lineType(new LineDashType(2, 1)).width(0.5f).draw();
+            }
+            firstChar.set(firstChar.get() + 1);
+            report.nextLine();
+            return BoxedUnit.UNIT;
+        });
 
-                    if (GroupUtil.isLastRecord(rec1)) {
-                        report.line().from(10, report.getY() + 2).to(m_change.right(), -1).width(0.5f).draw();
-                    } else {
-                        report.line().from(10, report.getY() + 2).to(m_change.right(), -1).color(200, 200, 200).lineType(new LineDashType(2, 1)).width(0.5f).draw();
-                    }
-                    firstChar.set(firstChar.get() + 1);
-                    report.nextLine();
-                }), materializer);
-        result.toCompletableFuture().get();
+
         RRow trow = RRow.apply(new RCell(new RText("Total").bold()).between(m_fundName),
                 new RCell(new RText(total1.toString()).bold()).rightAllign().between(m_value1),
                 new RCell(new RText(total2.toString()).bold()).rightAllign().between(m_value2),
@@ -255,7 +242,6 @@ public class MutualFundsAkkaJavaReport {
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from tran_account");
-        Source<Map<String, Object>, NotUsed> source = ResultSetStream.toSource(rs);
         AtomicReference<Double> total1 = new AtomicReference<>();
         AtomicReference<Double> total2 = new AtomicReference<>();
         AtomicReference<Double> total3 = new AtomicReference<>();
@@ -263,34 +249,34 @@ public class MutualFundsAkkaJavaReport {
         total2.set(0.);
         total3.set(0.);
 
-        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.foreach(
-                rec1 -> {
-                    Map<String, Object> crtRec = GroupUtil.getRec(rec1);
-                    String name = ResultSetUtil.getRecordValue(crtRec, "name");
-                    BigDecimal r_value1 = ResultSetUtil.getRecordValue(crtRec, "value1");
-                    BigDecimal r_value2 = ResultSetUtil.getRecordValue(crtRec, "value2");
-                    BigDecimal r_value3 = ResultSetUtil.getRecordValue(crtRec, "value3");
+        ResultSetGroup rsGroup = ResultSetUtil.toGroup(rs);
+        rsGroup.foreach(rec -> {
+            Map<String, Object> crtRec = GroupUtil.getRec(rec);
+            String name = ResultSetUtil.getRecordValue(crtRec, "name");
+            BigDecimal r_value1 = ResultSetUtil.getRecordValue(crtRec, "value1");
+            BigDecimal r_value2 = ResultSetUtil.getRecordValue(crtRec, "value2");
+            BigDecimal r_value3 = ResultSetUtil.getRecordValue(crtRec, "value3");
+            RCell c_account = new RCell(new RText(name)).leftAllign().between(account);
+            RCell c_value1 = new RCell(new RText(r_value1.toString())).rightAllign().between(value1);
+            RCell c_value2 = new RCell(new RText(r_value2.toString())).rightAllign().between(value2);
+            RCell c_value3 = new RCell(new RText(r_value3.toString())).rightAllign().between(value3);
+            total1.set(total1.get() + r_value1.doubleValue());
+            total2.set(total2.get() + r_value2.doubleValue());
+            total3.set(total3.get() + r_value3.doubleValue());
+            RRow rrow1 = RRow.apply(c_account, c_value1, c_value2, c_value3);
+            Float y21 = rrow1.calculate(report);
+            rrow1.print(report);
+            RColor rcolor = null;
+            if (GroupUtil.isLastRecord(rec)) {
+                rcolor = new RColor(0, 0, 0, 1f);
+            } else {
+                rcolor = new RColor(200, 200, 200, 1f);
+            }
+            report.line().from(10, report.getY() + 2).to(value3.right(), -1).color(rcolor).width(0.5f).draw();
+            report.nextLine();
+            return BoxedUnit.UNIT;
+        });
 
-                    RCell c_account = new RCell(new RText(name)).leftAllign().between(account);
-                    RCell c_value1 = new RCell(new RText(r_value1.toString())).rightAllign().between(value1);
-                    RCell c_value2 = new RCell(new RText(r_value2.toString())).rightAllign().between(value2);
-                    RCell c_value3 = new RCell(new RText(r_value3.toString())).rightAllign().between(value3);
-                    total1.set(total1.get() + r_value1.doubleValue());
-                    total2.set(total2.get() + r_value2.doubleValue());
-                    total3.set(total3.get() + r_value3.doubleValue());
-                    RRow rrow1 = RRow.apply(c_account, c_value1, c_value2, c_value3);
-                    Float y21 = rrow1.calculate(report);
-                    rrow1.print(report);
-                    RColor rcolor = null;
-                    if (GroupUtil.isLastRecord(rec1)) {
-                        rcolor = new RColor(0, 0, 0, 1f);
-                    } else {
-                        rcolor = new RColor(200, 200, 200, 1f);
-                    }
-                    report.line().from(10, report.getY() + 2).to(value3.right(), -1).color(rcolor).width(0.5f).draw();
-                    report.nextLine();
-                }), materializer);
-        result.toCompletableFuture().get();
         rs.close();
         RCell accountSum = new RCell(new RText("Value of  account on " + sd.format(date2)).bold()).leftAllign().between(account);
         RCell value1Sum = new RCell(new RText("" + total1.get()).bold()).rightAllign().between(value1);
@@ -392,6 +378,6 @@ public class MutualFundsAkkaJavaReport {
 
     public static void main(String[] args) throws Exception {
         MutualFundsInitData.initDb();
-        new MutualFundsAkkaJavaReport().run();
+        new MutualFundsNoAkkaJavaReport().run();
     }
 }

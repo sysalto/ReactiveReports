@@ -24,6 +24,7 @@ import java.sql.ResultSet
 
 import akka.NotUsed
 import akka.stream.scaladsl.{Sink, Source}
+import com.sysalto.report.util.ResultSetUtil
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -36,52 +37,39 @@ import scala.util.control.NonFatal
 trait ResultSetStreamUtil {
 
 
-  implicit class ResultsetStreamToSource(rs: ResultSet) {
-
-    def toSource:Source[Map[String,AnyRef],NotUsed] = {
-      val stream = Source.unfoldAsync(()) { _ =>
-        Future {
-          if (rs.next()) Some(() -> toMap)
-          else None
-        }
-      }
-
-      stream.alsoTo(Sink.onComplete {
-        _  => Future(cleanup(rs))
-      })
-      stream
-    }
-
-    private def cleanup(rs: ResultSet): Unit = {
-      val stmt = rs.getStatement
-      try {
-        if (rs != null) rs.close()
-      } catch {
-        case NonFatal(exception) => exception.printStackTrace()
-      }
-      try {
-        if (stmt != null) stmt.close()
-      } catch {
-        case NonFatal(exception) => exception.printStackTrace()
-      }
-    }
-
-
-    def toMap:Map[String,AnyRef] = {
-      val meta = rs.getMetaData
-      (for (i <- 1 to meta.getColumnCount) yield {
-        meta.getColumnName(i) -> rs.getObject(i)
-      }).toMap
-    }
-
-  }
-
-
-  implicit class GetValueRecord(rec: Map[String, AnyRef]) {
-    def value(key: String):AnyRef = rec(key.toUpperCase())
-  }
+	implicit class ResultsetStreamToSource(rs: ResultSet) {
+		def toSource: Source[Map[String, AnyRef], NotUsed] = ResultSetStream.toSource(rs)
+	}
 
 }
 
 
-object ResultSetStreamUtil extends  ResultSetStreamUtil
+object ResultSetStream  {
+	private def cleanup(rs: ResultSet): Unit = {
+		val stmt = rs.getStatement
+		try {
+			if (rs != null) rs.close()
+		} catch {
+			case NonFatal(exception) => exception.printStackTrace()
+		}
+		try {
+			if (stmt != null) stmt.close()
+		} catch {
+			case NonFatal(exception) => exception.printStackTrace()
+		}
+	}
+
+	def toSource(rs: ResultSet): Source[Map[String, AnyRef], NotUsed] = {
+		val stream = Source.unfoldAsync(()) { _ =>
+			Future {
+				if (rs.next()) Some(() -> ResultSetUtil.toMap(rs))
+				else None
+			}
+		}
+
+		stream.alsoTo(Sink.onComplete {
+			_ => Future(cleanup(rs))
+		})
+		stream
+	}
+}

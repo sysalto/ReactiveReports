@@ -29,8 +29,9 @@ import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
 import com.sysalto.report.reportTypes.GroupUtil
+import com.sysalto.report.util.ResultSetUtilTrail
 
-object MutualFundsReport extends ReportAppAkka with AkkaGroupUtil{
+object MutualFundsReport extends ReportAppAkka {
   val sd = new SimpleDateFormat("MMM dd yyyy")
   private val date1 = new GregorianCalendar(2013, 0, 1).getTime
   private val date2 = new GregorianCalendar(2013, 11, 31).getTime

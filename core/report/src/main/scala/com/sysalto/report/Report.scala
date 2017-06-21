@@ -458,7 +458,7 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 }
 
 object Report {
-	def create(name: String, pdfFactory: PdfFactory): Report = {
-		new Report(name)(pdfFactory)
+	def create(name: String, orientation: ReportPageOrientation.Value ,pdfFactory: PdfFactory): Report = {
+		new Report(name,orientation)(pdfFactory)
 	}
 }
