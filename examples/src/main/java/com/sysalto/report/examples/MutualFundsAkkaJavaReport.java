@@ -7,11 +7,9 @@ import akka.stream.javadsl.Sink;
 import akka.stream.scaladsl.Source;
 import com.sysalto.render.PdfNativeFactory;
 import com.sysalto.report.ReportTypes;
-import com.sysalto.report.akka.util.JavaUtil;
 import com.sysalto.report.Report;
 import com.sysalto.report.akka.util.GroupTransform;
 import com.sysalto.report.akka.util.ResultSetStream;
-import com.sysalto.report.akka.util.ResultSetStreamUtil;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
 import com.sysalto.report.util.PdfFactory;
@@ -182,7 +180,7 @@ public class MutualFundsAkkaJavaReport {
         total3.set(0.);
         firstChar.set((int) 'A');
 
-        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.foreach(
+        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.<scala.Tuple3<scala.Option<Map>,scala.Option<Map>,scala.Option<Map>>>foreach(
                 rec1 -> {
                     if (GroupUtil.isFirstRecord(rec1)) {
                         firstY.set(report.getY());
@@ -263,7 +261,7 @@ public class MutualFundsAkkaJavaReport {
         total2.set(0.);
         total3.set(0.);
 
-        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.foreach(
+        CompletionStage result = (CompletionStage) source.via(new GroupTransform()).runWith(Sink.<scala.Tuple3<scala.Option<Map>,scala.Option<Map>,scala.Option<Map>>>foreach(
                 rec1 -> {
                     Map<String, Object> crtRec = GroupUtil.getRec(rec1);
                     String name = ResultSetUtil.getRecordValue(crtRec, "name");

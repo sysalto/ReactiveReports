@@ -60,21 +60,6 @@ class GroupUtil[T](groupList: List[Group[T]]) {
 		}
 	}
 
-
-	def isHeader(name: String, rec: Any): Boolean = {
-		assert(rec.isInstanceOf[(Option[T], Option[T], Option[T])])
-		isHeader(name, rec.asInstanceOf[(Option[T], Option[T], Option[T])])
-	}
-
-	def isFoter(name: String, rec: Any): Boolean = {
-		assert(rec.isInstanceOf[(Option[T], Option[T], Option[T])])
-		isFooter(name, rec.asInstanceOf[(Option[T], Option[T], Option[T])])
-	}
-
-	//  def isFirstRecord(rec: Any): Boolean = {
-	//    assert(rec.isInstanceOf[Tuple3[Any, Any, Any]])
-	//    isFirstRecord(rec.asInstanceOf[Tuple3[Option[T], Option[T], Option[T]]])
-	//  }
 }
 
 object GroupUtil {
@@ -91,10 +76,6 @@ object GroupUtil {
 		}
 	}
 
-	def getRec[T](rec: Any): T = {
-		assert(rec.isInstanceOf[(Option[T], Option[T], Option[T])])
-		getRec(rec.asInstanceOf[(Option[T], Option[T], Option[T])])
-	}
 
 	def isFirstRecord[T](rec: (Option[T], Option[T], Option[T])): Boolean = {
 		rec._1.isEmpty
@@ -104,13 +85,4 @@ object GroupUtil {
 		rec._3.isEmpty
 	}
 
-	def isFirstRecord[T](rec: Any): Boolean = {
-		assert(rec.isInstanceOf[(Option[T], Option[T], Option[T])])
-		isFirstRecord(rec.asInstanceOf[(Option[T], Option[T], Option[T])])
-	}
-
-	def isLastRecord[T](rec: Any): Boolean = {
-		assert(rec.isInstanceOf[(Option[T], Option[T], Option[T])])
-		isLastRecord(rec.asInstanceOf[(Option[T], Option[T], Option[T])])
-	}
 }
