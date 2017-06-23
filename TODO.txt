@@ -1,5 +1,0 @@
-1. fix pdf warnings - DONE
-2. lines with color and thinkies DONE
-2. detach from akka
-3. java maven projects
-4. tomcat example

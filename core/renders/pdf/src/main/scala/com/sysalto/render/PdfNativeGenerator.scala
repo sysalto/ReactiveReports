@@ -113,7 +113,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
 		//    println("drawImage not yet implemented.")
-		val pdfImage = new PdfImage(nextId(), "img0", file)
+		val pdfImage = new PdfImage(nextId(), file)
 		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
 		graphicList += PdfDrawImage(pdfImage, x, y, scale)
 		currentPage.imageList = List(pdfImage)
@@ -302,7 +302,8 @@ class ImageMeta(fileName: String) {
 	val pixelSize: Int = bimg.getColorModel.getComponentSize(0)
 }
 
-class PdfImage(id: Long, val name: String, fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+	val name = "img" + id
 	val imageMeta = new ImageMeta(fileName)
 
 	override def content: Array[Byte] = {

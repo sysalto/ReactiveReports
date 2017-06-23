@@ -8,9 +8,9 @@ val TYPESAFE_CONFIG = "latest.release"
 
 val LOGBACK_VERSION = "latest.release"
 
-val ROCKSDB_VERSION = "latest.release"
+val ROCKSDB_VERSION = "5.4.5"
 
-val KRYO_VERSION = "latest.release"
+val KRYO_VERSION = "0.5.2"
 
 val ITEXT_VERSION = "latest.release"
 
@@ -66,14 +66,14 @@ lazy val commonInclude = Seq(
 
 lazy val commonSettings = Seq(
   scalaVersion := SCALA_VERSION,
-  libraryDependencies += "com.typesafe" % "config" % TYPESAFE_CONFIG,
-  libraryDependencies += "ch.qos.logback" % "logback-classic" % LOGBACK_VERSION,
-  libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
-  libraryDependencies += "com.github.romix.akka" %% "akka-kryo-serialization" % KRYO_VERSION
+//  libraryDependencies += "ch.qos.logback" % "logback-classic" % LOGBACK_VERSION,
+  libraryDependencies += "com.github.romix.akka" %% "akka-kryo-serialization" % KRYO_VERSION,
+  libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION
 )
 
 lazy val akkaSettings = Seq(
   scalaVersion := SCALA_VERSION,
+  libraryDependencies += "com.typesafe" % "config" % TYPESAFE_CONFIG,
   libraryDependencies += "com.typesafe.akka" %% "akka-actor" % AKKA_VERSION,
   libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % AKKA_VERSION,
   libraryDependencies += "com.typesafe.akka" %% "akka-stream" % AKKA_VERSION
