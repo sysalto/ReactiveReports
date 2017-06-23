@@ -1,4 +1,11 @@
 
+## 1.0.0-beta.1 (2017-06-23)
+* removed Itext dependency.
+* changed License type.
+* detached Akka dependency from the core report and added as a separate dependency.
+* added ResultSet connector for report.
+* added java non akka maven project example that builds an war.
+
 ## 1.0.0-alpha.2 (2017-03-25)
 * add Java port
 * refactor the framework to support Java

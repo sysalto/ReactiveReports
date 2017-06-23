@@ -31,7 +31,7 @@ public class Example2InitData {
                 "name varchar(255)," +
                 "addr varchar(255))");
         Long groupNbr = 1L;
-        for (int i = 1; i < 3000000; i++) {
+        for (int i = 1; i < 3000; i++) {
             if (i % 30 == 0) {
                 groupNbr++;
             }
