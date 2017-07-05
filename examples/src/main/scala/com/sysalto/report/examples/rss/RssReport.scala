@@ -33,6 +33,7 @@ import com.sysalto.report.Implicits._
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
 import com.sysalto.report.reportTypes.GroupUtil
+import com.sysalto.report.util.ResultSetUtil.ReportRecord
 
 
 
@@ -41,7 +42,7 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
 
   type RssType = (String, String, String, String)
 
-  type RssReportType = (Option[RssType], Option[RssType], Option[RssType])
+  type RssReportType = ReportRecord[RssType]
 
   val headerColor = RColor(240, 250, 255)
 

@@ -1,5 +1,7 @@
 package com.sysalto.report.reportTypes
 
+import com.sysalto.report.util.ResultSetUtil.{RecordMap, ReportRecord}
+
 import scala.annotation.varargs
 import scala.collection.JavaConverters._
 
@@ -9,9 +11,9 @@ import scala.collection.JavaConverters._
 
 class GroupUtil[T](groupList: List[Group[T]]) {
 	@annotation.tailrec
-	final def isHeader(name: String, rec: (Option[T], Option[T], Option[T])): Boolean = {
+	final def isHeader(name: String, rec: ReportRecord[T]): Boolean = {
 		rec match {
-			case (prev: Option[T], crt: Option[T], _: Option[T]) =>
+			case ReportRecord(prev, crt, _) =>
 				if (prev.isEmpty) {
 					return true
 				}
@@ -35,9 +37,9 @@ class GroupUtil[T](groupList: List[Group[T]]) {
 	}
 
 	@annotation.tailrec
-	final def isFooter(name: String, rec: (Option[T], Option[T], Option[T])): Boolean = {
+	final def isFooter(name: String, rec: ReportRecord[T]): Boolean = {
 		rec match {
-			case (_: Option[T], crt: Option[T], next: Option[T]) =>
+			case ReportRecord(_, crt, next) =>
 				if (next.isEmpty) {
 					return true
 				}
@@ -69,20 +71,19 @@ object GroupUtil {
 		new GroupUtil(list.toList)
 	}
 
-	def getRec[T](rec: (Option[T], Option[T], Option[T])): T = {
+	def getRec[T](rec:ReportRecord[T]): T = {
 		rec match {
-			case (_: Option[T], crt: Option[T], _: Option[T]) =>
-				crt.get
+			case ReportRecord(_, crt, _) => crt.get
 		}
 	}
 
 
-	def isFirstRecord[T](rec: (Option[T], Option[T], Option[T])): Boolean = {
-		rec._1.isEmpty
+	def isFirstRecord[T](rec: ReportRecord[T]): Boolean = {
+		rec.prev.isEmpty
 	}
 
-	def isLastRecord[T](rec: (Option[T], Option[T], Option[T])): Boolean = {
-		rec._3.isEmpty
+	def isLastRecord[T](rec: ReportRecord[T]): Boolean = {
+		rec.next.isEmpty
 	}
 
 }

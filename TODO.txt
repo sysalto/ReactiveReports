@@ -1,0 +1,4 @@
+align center
+add a hashmap<string,any> to each page obj
+add optional header/footer structure (height, whatToPrint) for each page
+add license and copyright to each source

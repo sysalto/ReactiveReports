@@ -46,14 +46,19 @@ public class Example2InitData {
     static public void initDb() {
         try {
             init();
-            initDb1();
+            query("select count(*) from clnt");
+
         } catch (Exception e) {
-            e.printStackTrace();
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+            try {
+                initDb1();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                if (conn != null) {
+                    try {
+                        conn.close();
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
                 }
             }
         }
