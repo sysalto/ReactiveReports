@@ -92,8 +92,7 @@ public class Example2Report {
     }
 
     public static void main(String[] args) throws Exception {
-        Example2InitData.init();
-//        Example2InitData.initDb();
+        Example2InitData.initDb();
         new Example2Report().run("Example2.pdf");
     }
 }

@@ -9,8 +9,8 @@ import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAllign, WrapOptions}
 import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
-import pdfGenerator.PageTree
 import util.FontAfmParser.{parseFont, parseGlyph}
+import util.PageTree
 import util.wrapper.WordWrap
 
 import scala.collection.mutable.ListBuffer

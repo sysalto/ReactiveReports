@@ -1,17 +1,17 @@
-package pdfGenerator
+package util
+
+import com.sysalto.render._
+
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by marian on 06/01/16.
   */
-object PageTreeOld {
+object PageTree {
+
   val MAX_NBR = 25
-  var currentObjNbr = 0L
   var leafList: List[Long] = List()
 
-  def getNextNumber = {
-    currentObjNbr += 1
-    currentObjNbr
-  }
 
   def make(list: List[Long]): List[Long] = {
     leafList = list
@@ -106,34 +106,49 @@ object PageTreeOld {
   class Node(var id: Long, var parent: Option[Node] = None, var children: List[Node] = List())
 
 
-
-
-  def main(args: Array[String]) {
-    currentObjNbr = 1000L
-    val listObj = (100L to 102L).toList
+  def generatePdfCode(pageList: List[PdfPage])(getNextNumberFct: () => Long)(implicit result: ListBuffer[PdfBaseItem]): PdfPageList = {
+    var root: PdfPageList = null
+    val listObj = pageList.map(pg => pg.id)
     val list = make(listObj)
+    val pageMap = pageList.map(page => (page.id -> page)).toMap
 
-    println("Levels size:" + list)
-    display(listObj.size, List(), list) {
-      () => getNextNumber
-    } {
+    display(listObj.size, List(), list)(getNextNumberFct) {
       (parent: Option[Long], nodeId: Long, children: List[Long], leafNbr: Long, isleaf: Boolean) => {
-        println("-" * 30)
-        if (isleaf) {
-          println("LEAF")
-        } else {
-          println("NODE")
-        }
-        if (parent.isDefined) {
-          print("PARENT:" + parent.get)
-        }
-        println(" ID:" + nodeId)
         if (!isleaf) {
-          println("children:" + children)
-          println("Leaf nbr:" + leafNbr)
+          val pageList = new PdfPageList(nodeId, parent, children)
+          if (parent.isEmpty) {
+            root = pageList
+          }
+        } else {
+          if (pageMap.get(nodeId).isDefined) {
+            pageMap.get(nodeId).get.pdfPageListId = parent.get
+          }
         }
       }
     }
+
+
+    root
+  }
+
+
+  def main(args: Array[String]) {
+//    var currentObjNbr = 0L
+//
+//    def getNextNumber = {
+//      currentObjNbr += 1
+//      currentObjNbr
+//    }
+//
+//    implicit val result = new ListBuffer[PdfBaseItem]()
+//    currentObjNbr = 1000L
+//    val pageList = for (i <- 1 to 2) yield new PdfPage(getNextNumber)
+//    val root = generatePdfCode(pageList.toList) {
+//      () => getNextNumber
+//    }(result)
+//
+//    println(result.mkString("\n"))
+//    println("ROOT:" + root)
   }
 
 }
