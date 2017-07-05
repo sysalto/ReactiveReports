@@ -1,7 +1,7 @@
 
 ## 1.0.0-beta.1 (2017-06-23)
 * removed Itext dependency.
-* changed License type.
+* changed License type to LGPL.
 * detached Akka dependency from the core report and added as a separate dependency.
 * added ResultSet connector for report.
 * added java non akka maven project example that builds an war.
