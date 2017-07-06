@@ -4,25 +4,13 @@ Reactive Reports is a framework developed in Scala, designed for generating repo
 
 Combining powerful Scala language with the report DSL you can create amazing documents.
 
-It is using the iText pdf library (http://itextpdf.com/) and JFreeChart (http://www.jfree.org/jfreechart/).
-
-Please see LICENSE.md and ItextLICENSE.md.
+Please see LICENSE.md.
 
 It is powered by Akka, and it enables the creation of multiple reports from streams.
 It can process huge amount of data without increasing the memory by rendering it one record at a time. 
 
-It consists of two jars:
-* reactive-reports-core - the main core report framework that is render agnostic
-* reactive-reports-itext-render - itext render for reactive reports
+ReactiveReports can be used in Scala 2.12 and in Java 8.
 
-In this second  release, ReactiveReports can be used in Scala 2.12 and in Java 8.
-
-### Sbt installation:
-
-  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % "1.0.0-alpha.2",
-  
-  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % "1.0.0-alpha.2".
-  
   
 ### Getting started
    
