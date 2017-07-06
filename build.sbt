@@ -45,8 +45,8 @@ lazy val commonInclude = Seq(
     <url>https://github.com/sysalto/ReactiveReports</url>
       <licenses>
         <license>
-          <name>GNU Affero General Public License version 3</name>
-          <url>https://www.gnu.org/licenses/agpl-3.0.en.html.</url>
+          <name>GNU Lesser General Public License version 3</name>
+          <url>https://www.gnu.org/licenses/lgpl-3.0.en.html</url>
           <distribution>repo</distribution>
         </license>
       </licenses>
