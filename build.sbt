@@ -2,19 +2,13 @@ import sbt.Keys.publishMavenStyle
 
 val SCALA_VERSION = "2.12.2"
 
-val AKKA_VERSION = "latest.release"
+val AKKA_VERSION = "2.5.3"
 
-val TYPESAFE_CONFIG = "latest.release"
+val TYPESAFE_CONFIG = "1.3.0"
 
-val LOGBACK_VERSION = "latest.release"
-
-val ROCKSDB_VERSION = "5.4.5"
+val ROCKSDB_VERSION = "5.5.1"
 
 val KRYO_VERSION = "0.5.2"
-
-val ITEXT_VERSION = "latest.release"
-
-val JFREECHART_VERSION = "latest.release"
 
 val projectVersion = "1.0.0-beta.1"
 
@@ -66,7 +60,6 @@ lazy val commonInclude = Seq(
 
 lazy val commonSettings = Seq(
   scalaVersion := SCALA_VERSION,
-//  libraryDependencies += "ch.qos.logback" % "logback-classic" % LOGBACK_VERSION,
   libraryDependencies += "com.github.romix.akka" %% "akka-kryo-serialization" % KRYO_VERSION,
   libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION
 )
@@ -79,16 +72,10 @@ lazy val akkaSettings = Seq(
   libraryDependencies += "com.typesafe.akka" %% "akka-stream" % AKKA_VERSION
 )
 
-//lazy val renderItextSettings = Seq(
-//  scalaVersion := SCALA_VERSION,
-//  libraryDependencies += "com.itextpdf" % "itextpdf" % ITEXT_VERSION,
-//  libraryDependencies += "org.jfree" % "jfreechart" % JFREECHART_VERSION
-//)
-
 
 lazy val reactiveReports = (project in file(".")).settings(commonInclude: _*).
   settings(commonSettings: _*).enablePlugins(JavaAppPackaging) dependsOn(
-    coreReport, coreReportAkka,renderPdf,examples /*, renderItext */)
+    coreReport, coreReportAkka,renderPdf ,examples)
 
 lazy val coreReport = (project in file("core/report")).settings(commonInclude: _*).
   settings(name := "ReactiveReports Core").
@@ -99,9 +86,6 @@ lazy val coreReportAkka = (project in file("core/reportAkka")).settings(commonIn
   settings(name := "ReactiveReports Core Akka").
   settings(akkaSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
 
-//lazy val renderItext = (project in file("core/renders/itext")).settings(commonInclude: _*).
-//  settings(name := "ReactiveReports Itext Render").
-//  settings(renderItextSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
 
 lazy val renderPdf = (project in file("core/renders/pdf")).settings(commonInclude: _*).
   settings(name := "ReactiveReports Pdf Render").
@@ -114,7 +98,7 @@ lazy val exampleSettings = Seq(
   version := projectVersion,
   cancelable in Global := true,
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
-  scalaVersion := "2.12.1",
+  scalaVersion := "2.12.2",
   incOptions := incOptions.value.withNameHashing(true),
   Keys.fork in run := true,
   resolvers += Resolver.sonatypeRepo("public"),
@@ -123,9 +107,6 @@ lazy val exampleSettings = Seq(
   libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
   libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release"),
   libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release"
-  //  libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % projectVersion,
-  //  libraryDependencies += "com.github.sysalto" %% "reactivereports-itext-render" % projectVersion
-
 )
 
 lazy val examples = (project in file("examples")).
@@ -135,5 +116,5 @@ lazy val examples = (project in file("examples")).
     libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release",
     libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
     libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release")
-  ).enablePlugins(JavaAppPackaging) dependsOn(coreReport,coreReportAkka, /*renderItext, */renderPdf)
+  ).enablePlugins(JavaAppPackaging) dependsOn(coreReport,coreReportAkka,renderPdf)
 
