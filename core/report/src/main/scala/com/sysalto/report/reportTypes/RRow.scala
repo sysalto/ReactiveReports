@@ -26,7 +26,7 @@
 
 package com.sysalto.report.reportTypes
 
-import com.sysalto.report.{Report, WrapOptions}
+import com.sysalto.report.Report
 
 import scala.annotation.varargs
 
@@ -37,7 +37,7 @@ case class RRow(cells: List[RCell]) {
   def calculate(report: Report): Float = {
     val y = report.getY
     val wrapList = cells.map(cell => {
-      val result = report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, WrapOptions.LIMIT_TO_BOX, cell.allign, true)
+      val result = report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue,  cell.allign, true)
       result.get.currentY
     })
     report.setYPosition(y)
@@ -47,7 +47,7 @@ case class RRow(cells: List[RCell]) {
   def print(report: Report): Unit = {
     val y = report.getY
     cells.foreach(cell => {
-      report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, WrapOptions.LIMIT_TO_BOX, cell.allign)
+      report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue,  cell.allign)
     })
     report.setYPosition(y)
   }

@@ -99,10 +99,10 @@ object ReportTypes {
   text wrap class
    */
   case class ReportTextWrap(text: List[RText],
-                            x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
+                            x0: Float, y0: Float, x1: Float, y1: Float,
                             wrapAllign: WrapAllign.Value, startY: Option[Float]) extends ReportItem() {
     override def render(report: Report): Unit = {
-      report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY, wrapOption, wrapAllign, false, startY)
+      report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY,wrapAllign, false, startY)
 
     }
   }
@@ -172,10 +172,6 @@ object ReportTypes {
 
 }
 
-
-object WrapOptions extends Enumeration {
-  val LIMIT_TO_BOX, WRAP_TO_BOX, UNLIMITED = Value
-}
 
 object WrapAllign extends Enumeration {
   val NO_WRAP, WRAP_LEFT, WRAP_RIGHT, WRAP_CENTER, WRAP_JUSTIFIED = Value

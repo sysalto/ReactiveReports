@@ -29,7 +29,7 @@ package com.sysalto.report.util
 
 import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
-import com.sysalto.report.{WrapAllign, WrapOptions}
+import com.sysalto.report.WrapAllign
 
 import scala.collection.mutable.ListBuffer
 
@@ -65,7 +65,7 @@ abstract class PdfUtil() {
 
   def close()
 
-  def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
+  def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
            wrapAllign: WrapAllign.Value, simulate: Boolean = false, startY: Option[Float] = None,lineHeight:Float=0): Option[WrapBox]
 
   def verticalShade(rectangle: DRectangle, from: RColor, to: RColor)

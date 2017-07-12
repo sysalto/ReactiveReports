@@ -23,8 +23,6 @@
  */
 
 
-
-
 package com.sysalto.report
 
 
@@ -93,9 +91,9 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 
 
 	private[report] def reportWrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
-	                               wrapOption: WrapOptions.Value, wrapAllign: WrapAllign.Value, simulate: Boolean = false,
+	                               wrapAllign: WrapAllign.Value, simulate: Boolean = false,
 	                               startY: Option[Float] = None): Option[WrapBox] = {
-		pdfUtil.wrap(text, x0, y0, x1, y1, wrapOption, wrapAllign, simulate, startY, lineHeight)
+		pdfUtil.wrap(text, x0, y0, x1, y1, wrapAllign, simulate, startY, lineHeight)
 	}
 
 	/*
@@ -262,16 +260,16 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 		This is a low level function.
 		Easy way is to use [RRow]
 	 */
-	def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
+	def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAllign: WrapAllign.Value = WrapAllign.WRAP_LEFT, simulate: Boolean = false): Option[WrapBox] = {
 		val text1 = text.map(item => {
 			val font = item.font
 			RText(item.txt, font)
 		})
 		if (simulate) {
-			reportWrap(text1, x0, y0, x1, y1, wrapOption, wrapAllign, simulate)
+			reportWrap(text1, x0, y0, x1, y1, wrapAllign, simulate)
 		} else {
-			val reportItem = ReportTextWrap(text1, x0, y0, x1, y1, wrapOption, wrapAllign, None)
+			val reportItem = ReportTextWrap(text1, x0, y0, x1, y1, wrapAllign, None)
 			crtPage.items += reportItem
 			None
 		}
@@ -344,8 +342,7 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 	print a cell (means wrapping text).
 	 */
 	def print(cell: RCell): Unit = {
-		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue,
-			WrapOptions.LIMIT_TO_BOX, cell.allign)
+		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.allign)
 	}
 
 	/*
@@ -367,8 +364,7 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 	only calculate a cell.
 	 */
 	def calculate(cell: RCell): WrapBox = {
-		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue,
-			WrapOptions.LIMIT_TO_BOX, cell.allign, true).get
+		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.allign, true).get
 	}
 
 	/*
@@ -465,7 +461,7 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 }
 
 object Report {
-	def create(name: String, orientation: ReportPageOrientation.Value ,pdfFactory: PdfFactory): Report = {
-		new Report(name,orientation)(pdfFactory)
+	def create(name: String, orientation: ReportPageOrientation.Value, pdfFactory: PdfFactory): Report = {
+		new Report(name, orientation)(pdfFactory)
 	}
 }

@@ -33,7 +33,7 @@ import javax.imageio.ImageIO
 
 import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.WrapBox
-import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAllign, WrapOptions}
+import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAllign}
 import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
 import util.FontAfmParser.{parseFont, parseGlyph}
 import util.PageTree
@@ -94,7 +94,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		graphicList += DrawStroke()
 	}
 
-	def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float, wrapOption: WrapOptions.Value,
+	def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAllign: WrapAllign.Value, simulate: Boolean, startY: Option[Float], lineHeight: Float): Option[ReportTypes.WrapBox] = {
 		implicit val fontMetric = parseFont("Helvetica")
 		implicit val wordSeparators = List(',', '.')
