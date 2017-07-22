@@ -2,15 +2,16 @@ import sbt.Keys.publishMavenStyle
 
 val SCALA_VERSION = "2.12.2"
 
-val AKKA_VERSION = "2.5.3"
+val AKKA_VERSION = "latest.release" //"2.5.3"
 
-val TYPESAFE_CONFIG = "1.3.0"
+val TYPESAFE_CONFIG ="latest.release"  //"1.3.0"
 
-val ROCKSDB_VERSION = "5.5.1"
+val ROCKSDB_VERSION = "latest.release" //"5.5.1"
 
-val KRYO_VERSION = "0.5.2"
+val KRYO_VERSION = "latest.release" //"0.5.2"
 
-val projectVersion = "1.0.0-beta.1"
+val projectVersion = "1.0.0-beta.2"
+
 
 lazy val commonInclude = Seq(
   organization := "com.github.sysalto",
@@ -57,16 +58,18 @@ lazy val commonInclude = Seq(
 
 )
 
-
 lazy val commonSettings = Seq(
-  scalaVersion := SCALA_VERSION,
-  libraryDependencies += "com.github.romix.akka" %% "akka-kryo-serialization" % KRYO_VERSION,
+  scalaVersion := SCALA_VERSION
+)
+
+lazy val coreSettings = Seq(
+  libraryDependencies += "com.typesafe" % "config" % TYPESAFE_CONFIG,
+  libraryDependencies += "com.github.romix.akka" %% "akka-kryo-serialization" % KRYO_VERSION excludeAll (
+    ExclusionRule(organization = "com.typesafe.akka")),
   libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION
 )
 
 lazy val akkaSettings = Seq(
-  scalaVersion := SCALA_VERSION,
-  libraryDependencies += "com.typesafe" % "config" % TYPESAFE_CONFIG,
   libraryDependencies += "com.typesafe.akka" %% "akka-actor" % AKKA_VERSION,
   libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % AKKA_VERSION,
   libraryDependencies += "com.typesafe.akka" %% "akka-stream" % AKKA_VERSION
@@ -74,22 +77,23 @@ lazy val akkaSettings = Seq(
 
 
 lazy val reactiveReports = (project in file(".")).settings(commonInclude: _*).
-  settings(commonSettings: _*).enablePlugins(JavaAppPackaging) dependsOn(
+  settings(commonSettings: _*).
+  enablePlugins(JavaAppPackaging) dependsOn(
     coreReport, coreReportAkka,renderPdf ,examples)
 
 lazy val coreReport = (project in file("core/report")).settings(commonInclude: _*).
-  settings(name := "ReactiveReports Core").
-  settings(commonSettings: _*).enablePlugins(JavaAppPackaging)
+  settings(name := "ReactiveReports Core").settings(commonSettings: _*).
+  settings(coreSettings: _*).enablePlugins(JavaAppPackaging)
 
 
 lazy val coreReportAkka = (project in file("core/reportAkka")).settings(commonInclude: _*).
-  settings(name := "ReactiveReports Core Akka").
+  settings(name := "ReactiveReports Core Akka").settings(commonSettings: _*).
   settings(akkaSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
 
 
 lazy val renderPdf = (project in file("core/renders/pdf")).settings(commonInclude: _*).
-  settings(name := "ReactiveReports Pdf Render").
-  settings(commonSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
+  settings(name := "ReactiveReports Pdf Render").settings(commonSettings: _*).
+  enablePlugins(JavaAppPackaging) dependsOn coreReport
 
 
 lazy val exampleSettings = Seq(
@@ -98,7 +102,7 @@ lazy val exampleSettings = Seq(
   version := projectVersion,
   cancelable in Global := true,
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
-  scalaVersion := "2.12.2",
+  scalaVersion := SCALA_VERSION,
   incOptions := incOptions.value.withNameHashing(true),
   Keys.fork in run := true,
   resolvers += Resolver.sonatypeRepo("public"),

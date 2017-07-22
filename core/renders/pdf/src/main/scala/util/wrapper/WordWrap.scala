@@ -195,12 +195,9 @@ object WordWrap {
 				None
 			}
 		}
-
-		val a1 = input.flatMap(item => item.txt.map(cc => CharF(cc, item.font)))
-
-
+		val result1 = input.flatMap(item => item.txt.map(cc => CharF(cc, item.font)))
 		val result = ListBuffer[Word]()
-		stringToWord(a1, result)
+		stringToWord(result1, result)
 
 
 		val wordList = result.flatMap(item => {

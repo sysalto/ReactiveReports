@@ -25,13 +25,19 @@
     <dependency>
       <groupId>com.github.sysalto</groupId>
       <artifactId>reactivereports-core_2.12</artifactId>
-      <version>1.0.0-beta.1</version>
+      <version>1.0.0-beta.2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.typesafe.akka</groupId>
+          <artifactId>akka-remote_2.12</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
       <groupId>com.github.sysalto</groupId>
       <artifactId>reactivereports-pdf-render_2.12</artifactId>
-      <version>1.0.0-beta.1</version>
+      <version>1.0.0-beta.2</version>
     </dependency>
 
   </dependencies>
