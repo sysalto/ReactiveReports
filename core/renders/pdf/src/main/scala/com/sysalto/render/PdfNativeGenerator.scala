@@ -203,9 +203,10 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 			pdfWriter <<< s"${offsetFrmt} 00000 n "
 		})
 		pdfWriter <<< "trailer"
-		pdfWriter <<< s"  <<  /Size ${allItems.length + 1}"
+		pdfWriter <<< s"<</Size ${allItems.length + 1}"
 		pdfWriter <<< "   /Root 1 0 R"
-		pdfWriter <<< " >>"
+		pdfWriter <<< "   /ID [ < 81b14aafa313db63dbd6f981e49f94f4 >\n< 81b14aafa313db63dbd6f981e49f94f4 >\n]"
+		pdfWriter <<< ">>"
 		pdfWriter <<< "startxref"
 		pdfWriter <<< xrefOffset.toString
 		pdfWriter << "%%EOF"
