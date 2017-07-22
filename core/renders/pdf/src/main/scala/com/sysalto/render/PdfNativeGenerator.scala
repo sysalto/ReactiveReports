@@ -62,8 +62,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 	private def pdfHeader(): Unit = {
 		pdfWriter <<< "%PDF-1.7"
-		pdfWriter <<< "%\u00a0"
-		pdfWriter <<< "%"
+		pdfWriter <<< s"%${128.toChar}${129.toChar}${130.toChar}${131.toChar}"
 	}
 
 
@@ -260,7 +259,7 @@ class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ var pdfP
 			 |      /Pages ${pdfPageList.get.id} 0 R
 			 |  >>
 			 |endobj
-     """.stripMargin.getBytes
+			 |""".stripMargin.getBytes
 	}
 }
 
@@ -275,7 +274,7 @@ class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Lo
 			 |      /Count ${pageList.length}
 			 |  >>
 			 |endobj
-     """.stripMargin.getBytes
+     |""".stripMargin.getBytes
 	}
 }
 
@@ -287,8 +286,8 @@ class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
 
 		s"""${id} 0 obj
 			 |  <</FunctionType 2/Domain[0 1]/C0[${colorNbr1._1} ${colorNbr1._2} ${colorNbr1._3}]/C1[${colorNbr2._1} ${colorNbr2._2} ${colorNbr2._3}]/N 1>>
-			 |  endobj
-     """.stripMargin.getBytes
+			 |endobj
+     |""".stripMargin.getBytes
 	}
 }
 
@@ -297,8 +296,8 @@ class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdf
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R>>
-			 |  endobj
-     """.stripMargin.getBytes
+			 |endobj
+     |""".stripMargin.getBytes
 	}
 }
 
@@ -309,8 +308,8 @@ class PdfGPattern(id: Long, pdfShadding: PdfColorShadding)
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 |  <</PatternType 2/Shading ${pdfShadding.id} 0 R/Matrix[1 0 0 1 0 0]>>
-			 |  endobj
-     """.stripMargin.getBytes
+			 |endobj
+     |""".stripMargin.getBytes
 	}
 }
 
@@ -344,10 +343,10 @@ class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBase
 			 |  /Length ${imageMeta.imageInByte.length}
 			 |  /Filter /DCTDecode
 			 |  >>
-			 |  stream
+			 |stream
 			 |""".stripMargin.getBytes ++
 			imageMeta.imageInByte ++
-			"endstream\n endobj\n".getBytes
+			"\nendstream\nendobj\n".getBytes
 	}
 }
 
@@ -388,7 +387,7 @@ class PdfPage(id: Long, var pdfPageListId: Long = 0, var pageWidth: Float, var p
 			 |                  >>
 			 |  >>
 			 |endobj
-     """.stripMargin.getBytes
+     |""".stripMargin.getBytes
 	}
 }
 
@@ -402,7 +401,7 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String)(implicit itemL
 			 |      /Encoding /WinAnsiEncoding
 			 |  >>
 			 |endobj
-     """.stripMargin.getBytes
+     |""".stripMargin.getBytes
 	}
 }
 
@@ -412,10 +411,11 @@ class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem]
 		val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
 		s"""${id} 0 obj
 			 |  <<  /Length ${itemsStr.length} >>
-			 |      stream
-			 |${itemsStr}endstream
+			 |stream
+			 |${itemsStr}
+			 |endstream
 			 |endobj
-     """.stripMargin.getBytes
+     |""".stripMargin.getBytes
 	}
 }
 
