@@ -28,7 +28,7 @@ package com.sysalto.render
 
 import java.awt.image.BufferedImage
 import java.io.{ByteArrayOutputStream, File, FileOutputStream, PrintWriter}
-import java.nio.charset.Charset
+import java.security.MessageDigest
 import javax.imageio.ImageIO
 
 import com.sysalto.render.PdfDraw._
@@ -180,6 +180,22 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		graphicList.clear()
 	}
 
+	def metaData():Long ={
+		val id=nextId()
+		val s=	s"""${id} 0 obj
+				       |  <<  /Producer (Reactive Reports - Copyright 2017 SysAlto Corporation)
+				       |  >>
+				       |endobj
+				       |""".stripMargin.getBytes
+		pdfWriter << s
+		id
+	}
+
+	def md5(s: String) = {
+		val result=MessageDigest.getInstance("MD5").digest(s.getBytes)
+		javax.xml.bind.DatatypeConverter.printHexBinary(result)
+	}
+
 	def done(): Unit = {
 		saveCurrentPage()
 
@@ -191,6 +207,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 
 		allItems.foreach(item => item.write(pdfWriter))
+
+		val metaDataId=metaData()
 
 		val xrefOffset = pdfWriter.position
 		pdfWriter <<< "xref"
@@ -205,7 +223,11 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		pdfWriter <<< "trailer"
 		pdfWriter <<< s"<</Size ${allItems.length + 1}"
 		pdfWriter <<< "   /Root 1 0 R"
-		pdfWriter <<< "   /ID [ < 81b14aafa313db63dbd6f981e49f94f4 >\n< 81b14aafa313db63dbd6f981e49f94f4 >\n]"
+		pdfWriter <<< s"   /Info ${metaDataId} 0 R"
+
+		val fileId=md5(name+System.currentTimeMillis())
+
+		pdfWriter <<< s"   /ID [ < ${fileId} >\n<  ${fileId} >\n]"
 		pdfWriter <<< ">>"
 		pdfWriter <<< "startxref"
 		pdfWriter <<< xrefOffset.toString
