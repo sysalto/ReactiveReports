@@ -227,7 +227,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 		val fileId=md5(name+System.currentTimeMillis())
 
-		pdfWriter <<< s"   /ID [ < ${fileId} >\n<  ${fileId} >\n]"
+		pdfWriter <<< s"   /ID [<${fileId}><${fileId}>]"
 		pdfWriter <<< ">>"
 		pdfWriter <<< "startxref"
 		pdfWriter <<< xrefOffset.toString
