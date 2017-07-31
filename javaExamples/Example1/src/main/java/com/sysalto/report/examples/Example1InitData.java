@@ -23,13 +23,12 @@
  */
 
 
-
 package com.sysalto.report.examples;
 
 import java.io.File;
 import java.sql.*;
 
-public class Example2InitData {
+public class Example1InitData {
     static Connection conn = null;
 
     static private void dbUpdate(String sql) throws SQLException {
@@ -46,8 +45,8 @@ public class Example2InitData {
     static public void init() throws Exception {
         Class.forName("org.hsqldb.jdbc.JDBCDriver");
         String tmpName = File.createTempFile("database", "dat").getAbsolutePath();
-        String path=tmpName.substring(0,tmpName.lastIndexOf("/"));
-        conn = DriverManager.getConnection("jdbc:hsqldb:file:"+path+"/example2", "SA", "");
+        String path = tmpName.substring(0, tmpName.lastIndexOf("/"));
+        conn = DriverManager.getConnection("jdbc:hsqldb:file:" + path + "/example2", "SA", "");
     }
 
     static private void initDb1() throws SQLException {
@@ -64,7 +63,7 @@ public class Example2InitData {
             String group = "Group" + groupNbr;
             dbUpdate("insert into  clnt ( " +
                     "groupName,name, addr) " +
-                    "values('"+group+"','Name" + i + "',' " + i + " Main New York,NY')");
+                    "values('" + group + "','Name" + i + "',' " + i + " Main New York,NY')");
         }
 
     }
@@ -88,10 +87,6 @@ public class Example2InitData {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        initDb();
     }
 
 }

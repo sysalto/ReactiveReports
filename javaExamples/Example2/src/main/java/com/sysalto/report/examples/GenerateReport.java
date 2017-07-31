@@ -24,6 +24,9 @@
 
 
 
+
+
+
 package com.sysalto.report.examples;
 
 import javax.servlet.ServletException;
@@ -40,7 +43,7 @@ public class GenerateReport extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Example2InitData.initDb();
+        MutualFundsInitData.initDb();
         try {
             String reportName = File.createTempFile("Report", ".pdf").getAbsolutePath();
             new MutualFundsNoAkkaJavaReport().run(reportName);

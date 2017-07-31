@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Example2Report {
+public class Example1Report {
     static RColor headerColor = new RColor(156, 76, 6, 1f);
     static RColor headerFontColor = new RColor(255, 255, 255, 1f);
 
@@ -70,7 +70,7 @@ public class Example2Report {
             report.print(cell);
         });
         report.nextLine();
-        ResultSet rs = Example2InitData.query("select * from clnt");
+        ResultSet rs = Example1InitData.query("select * from clnt");
         Group group = new Group("groupName", rec -> {
             return ResultSetUtil.getRecordValue((Map<String, Object>) rec, "groupName");
         });
@@ -118,7 +118,7 @@ public class Example2Report {
     }
 
     public static void main(String[] args) throws Exception {
-        Example2InitData.initDb();
-        new Example2Report().run("Example2.pdf");
+        Example1InitData.initDb();
+        new Example1Report().run("Example1.pdf");
     }
 }

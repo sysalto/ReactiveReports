@@ -1,6 +1,6 @@
 import sbt.Keys.publishMavenStyle
 
-val SCALA_VERSION = "2.12.2"
+val SCALA_VERSION = "2.12.3"
 
 val AKKA_VERSION = "latest.release" //"2.5.3"
 

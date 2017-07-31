@@ -55,11 +55,11 @@ public class MutualFundsNoAkkaJavaReport {
     static RColor headerFontColor = new RColor(255, 255, 255, 1f);
     static private final SimpleDateFormat sd = new SimpleDateFormat("MMM dd yyyy");
 
-    PdfFactory pdfFactory = new PdfNativeFactory();
+    PdfFactory pdfITextFactory = new PdfNativeFactory();
 
     public void run(String fileName) throws Exception {
 
-        Report report = Report.create(fileName, ReportPageOrientation.LANDSCAPE(), pdfFactory);
+        Report report = Report.create(fileName, ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
         report.getHeaderSize(pg -> {
             Long pgNbr = new Long(pg.toString());
             if (pgNbr == 1) return 0f;
@@ -110,7 +110,7 @@ public class MutualFundsNoAkkaJavaReport {
 
     private void reportHeader(Report report) throws Exception {
         drawbackgroundImage(report);
-        ResultSet rs = Example2InitData.query("select * from clnt");
+        ResultSet rs = MutualFundsInitData.query("select * from clnt");
         rs.next();
 
         Map<String, Object> record = ResultSetUtil.toMap(rs);
@@ -174,7 +174,7 @@ public class MutualFundsNoAkkaJavaReport {
         rrow.print(report);
         report.setYPosition(y2);
         report.nextLine();
-        ResultSet rs = Example2InitData.query("select * from sum_investment");
+        ResultSet rs = MutualFundsInitData.query("select * from sum_investment");
         ResultSetGroup rsGroup = ResultSetUtil.toGroup(rs);
         AtomicReference<Float> firstY = new AtomicReference<>();
         AtomicReference<Double> total1 = new AtomicReference<>();
@@ -260,7 +260,7 @@ public class MutualFundsNoAkkaJavaReport {
         rrow.print(report);
         report.setYPosition(y2);
         report.nextLine();
-        ResultSet rs = Example2InitData.query("select * from tran_account");
+        ResultSet rs = MutualFundsInitData.query("select * from tran_account");
         AtomicReference<Double> total1 = new AtomicReference<>();
         AtomicReference<Double> total2 = new AtomicReference<>();
         AtomicReference<Double> total3 = new AtomicReference<>();
@@ -309,7 +309,7 @@ public class MutualFundsNoAkkaJavaReport {
     }
 
     private void accountPerformance(Report report) throws Exception {
-        ResultSet rs = Example2InitData.query("select * from account_perf");
+        ResultSet rs = MutualFundsInitData.query("select * from account_perf");
         rs.next();
         Map<String, Object> record = ResultSetUtil.toMap(rs);
         rs.close();
@@ -396,7 +396,7 @@ public class MutualFundsNoAkkaJavaReport {
     }
 
     public static void main(String[] args) throws Exception {
-        Example2InitData.initDb();
+        MutualFundsInitData.initDb();
         new MutualFundsNoAkkaJavaReport().run("MutualFundsJava.pdf");
     }
 }
