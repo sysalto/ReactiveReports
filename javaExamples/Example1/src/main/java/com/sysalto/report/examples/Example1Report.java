@@ -87,6 +87,7 @@ public class Example1Report {
             Map<String, Object> crtRec = GroupUtil.getRec(rec);
             String groupName = ResultSetUtil.getRecordValue(crtRec, "groupName");
             String name = ResultSetUtil.getRecordValue(crtRec, "name");
+            String addr = ResultSetUtil.getRecordValue(crtRec, "addr");
             if (groupUtil.isHeader("groupName", rec)) {
                 if (report.lineLeft() < 35) {
                     report.newPage();
@@ -100,7 +101,10 @@ public class Example1Report {
                 report.setYPosition(y2);
                 report.nextLine();
             }
-            report.print(new RCell(new RText(name)).at(50));
+            RCell d_name = new RCell(new RText(name)).leftAllign().between(m_name);
+            RCell d_addr = new RCell(new RText(addr)).leftAllign().between(m_addr);
+            RRow drow = RRow.apply(d_name, d_addr);
+            drow.print(report);
             report.nextLine();
             if (groupUtil.isFooter("groupName", rec)) {
                 report.print(new RCell(new RText("FOOTER " + groupName).bold()).at(50));
