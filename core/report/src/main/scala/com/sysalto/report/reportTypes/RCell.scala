@@ -27,7 +27,7 @@
 package com.sysalto.report.reportTypes
 
 import com.sysalto.report.ReportTypes.WrapBox
-import com.sysalto.report.{Report, WrapAllign}
+import com.sysalto.report.{Report, WrapAlign}
 
 /**
 	* Created by marian on 3/4/17.
@@ -35,10 +35,10 @@ import com.sysalto.report.{Report, WrapAllign}
 /*
 class for wrapping text
  */
-case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var allign: WrapAllign.Value = WrapAllign.NO_WRAP) {
+case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var align: WrapAlign.Value = WrapAlign.NO_WRAP) {
 
 	def this(txt: List[RText]) = {
-		this(txt, RMargin(0, 0), WrapAllign.NO_WRAP)
+		this(txt, RMargin(0, 0), WrapAlign.NO_WRAP)
 	}
 
 	def this(rtext: RText) = {
@@ -46,30 +46,30 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alli
 	}
 
 	def this(rtext: RText, left: Float, right: Float) = {
-		this(List(rtext), RMargin(left, right), WrapAllign.NO_WRAP)
+		this(List(rtext), RMargin(left, right), WrapAlign.NO_WRAP)
 	}
 
 	/*
-	allign left
+	align left
 	 */
-	def leftAllign(): RCell = {
-		allign = WrapAllign.WRAP_LEFT
+	def leftAlign(): RCell = {
+		align = WrapAlign.WRAP_LEFT
 		this
 	}
 
 	/*
-	allign center
+	align center
 	 */
-	def centerAllign(): RCell = {
-		allign = WrapAllign.WRAP_CENTER
+	def centerAlign(): RCell = {
+		align = WrapAlign.WRAP_CENTER
 		this
 	}
 
 	/*
-	allign right
+	align right
 	 */
-	def rightAllign(): RCell = {
-		allign = WrapAllign.WRAP_RIGHT
+	def rightAlign(): RCell = {
+		align = WrapAlign.WRAP_RIGHT
 		this
 	}
 
@@ -95,7 +95,7 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alli
 		this
 	}
 
-	def calculate(report: Report): WrapBox = report.wrap(txt, margin.left, report.getY, margin.right, Float.MaxValue, WrapAllign.WRAP_LEFT, simulate=true).get
+	def calculate(report: Report): WrapBox = report.wrap(txt, margin.left, report.getY, margin.right, Float.MaxValue, WrapAlign.WRAP_LEFT, simulate=true).get
 }
 
 object RCell {

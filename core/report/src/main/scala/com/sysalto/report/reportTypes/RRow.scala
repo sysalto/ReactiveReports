@@ -37,7 +37,7 @@ case class RRow(cells: List[RCell]) {
   def calculate(report: Report): Float = {
     val y = report.getY
     val wrapList = cells.map(cell => {
-      val result = report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue,  cell.allign, simulate=true)
+      val result = report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue,  cell.align, simulate=true)
       result.get.currentY
     })
     report.setYPosition(y)
@@ -47,7 +47,7 @@ case class RRow(cells: List[RCell]) {
   def print(report: Report): Unit = {
     val y = report.getY
     cells.foreach(cell => {
-      report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue,  cell.allign)
+      report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue,  cell.align)
     })
     report.setYPosition(y)
   }

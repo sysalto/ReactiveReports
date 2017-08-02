@@ -58,7 +58,7 @@ public class Example1Report {
 
         report.headerFct((pg, pgMax) -> {
             report.setYPosition(10);
-            RCell cell = new RCell(new RText("Header").bold()).rightAllign().between(0, report.pgSize().width() - 10);
+            RCell cell = new RCell(new RText("Header").bold()).rightAlign().between(0, report.pgSize().width() - 10);
             report.print(cell);
         });
 
@@ -66,7 +66,7 @@ public class Example1Report {
             report.setYPosition(report.pgSize().height() - report.lineHeight() * 3);
             report.line().from(10, report.getY()).to(report.pgSize().width() - 10, -1).draw();
             report.nextLine();
-            RCell cell = new RCell(new RText("Page " + pg + " of " + pgMax).bold()).rightAllign().between(0, report.pgSize().width() - 10);
+            RCell cell = new RCell(new RText("Page " + pg + " of " + pgMax).bold()).rightAlign().between(0, report.pgSize().width() - 10);
             report.print(cell);
         });
         report.nextLine();
@@ -79,8 +79,8 @@ public class Example1Report {
                 Column.apply("addr", 150f));
         RMargin m_name = row.getColumnBound("name");
         RMargin m_addr = row.getColumnBound("addr");
-        RCell h_name = new RCell(new RText("Name").bold().color(headerFontColor)).leftAllign().between(m_name);
-        RCell h_addr = new RCell(new RText("Addr").bold().color(headerFontColor)).leftAllign().between(m_addr);
+        RCell h_name = new RCell(new RText("Name").bold().color(headerFontColor)).leftAlign().between(m_name);
+        RCell h_addr = new RCell(new RText("Addr").bold().color(headerFontColor)).leftAlign().between(m_addr);
 
         ResultSetGroup rsGroup = ResultSetUtil.toGroup(rs);
         rsGroup.foreachJ(rec -> {
@@ -100,8 +100,8 @@ public class Example1Report {
                 hrow.print(report);
                 report.nextLine();
             }
-            RCell d_name = new RCell(new RText(name)).leftAllign().between(m_name);
-            RCell d_addr = new RCell(new RText(addr)).leftAllign().between(m_addr);
+            RCell d_name = new RCell(new RText(name)).leftAlign().between(m_name);
+            RCell d_addr = new RCell(new RText(addr)).leftAlign().between(m_addr);
             RRow drow = RRow.apply(d_name, d_addr);
             drow.print(report);
             report.nextLine();

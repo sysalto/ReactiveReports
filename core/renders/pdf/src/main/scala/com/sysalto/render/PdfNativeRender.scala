@@ -30,7 +30,7 @@ import java.io.{File, PrintWriter}
 
 import com.sysalto.report.ReportTypes.{DRectangle, Rectangle}
 import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
-import com.sysalto.report.{ReportTypes, WrapAllign}
+import com.sysalto.report.{ReportTypes, WrapAlign}
 import com.sysalto.report.util.PdfUtil
 
 /**
@@ -99,9 +99,9 @@ class PdfNativeRender extends PdfUtil {
   }
 
   override def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
-                     wrapAllign: WrapAllign.Value, simulate: Boolean,
+                    wrapAlign: WrapAlign.Value, simulate: Boolean,
                     startY: Option[Float], lineHeight: Float = 0): Option[ReportTypes.WrapBox] = {
-    pdfNativeGenerator.wrap(txtList, x0, convertY(y0), x1, convertY(y1), wrapAllign, simulate, startY, lineHeight)
+    pdfNativeGenerator.wrap(txtList, x0, convertY(y0), x1, convertY(y1), wrapAlign, simulate, startY, lineHeight)
   }
 
   override def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {

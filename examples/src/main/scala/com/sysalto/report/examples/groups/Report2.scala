@@ -51,7 +51,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
         report.setYPosition(report.pgSize.height - report.lineHeight * 2)
         report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
         report.setYPosition(report.getY + report.lineHeight * 0.5f)
-        report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
+        report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() between RMargin(0, report.pgSize.width - 10))
     }
 
     val account = List(DataField("id", NumericType), DataField("accountName", StringType, 20), DataField("planType",
@@ -71,9 +71,9 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
     val accountNmeC = row.getColumnBound("accountNme")
     val planTypeC = row.getColumnBound("planType")
 
-    val h_accountNbr = RCell("Account Number" bold()) leftAllign() between accountNbrC
-    val h_accountNme = RCell("Account name" bold()) leftAllign() between accountNmeC
-    val h_planType = RCell("Plan Type" bold()) rightAllign() between planTypeC
+    val h_accountNbr = RCell("Account Number" bold()) leftAlign() between accountNbrC
+    val h_accountNme = RCell("Account name" bold()) leftAlign() between accountNmeC
+    val h_planType = RCell("Plan Type" bold()) rightAlign() between planTypeC
     val hrow = RRow(List(h_accountNbr, h_accountNme, h_planType))
 
 
@@ -118,9 +118,9 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
             report.nextLine()
           }
 
-          val accountNbr = RCell(accountRec("id")) leftAllign() between accountNbrC
-          val accountNme = RCell(accountRec("accountName")) leftAllign() between accountNmeC
-          val planType = RCell(accountRec("planType")) rightAllign() between planTypeC
+          val accountNbr = RCell(accountRec("id")) leftAlign() between accountNbrC
+          val accountNme = RCell(accountRec("accountName")) leftAlign() between accountNmeC
+          val planType = RCell(accountRec("planType")) rightAlign() between planTypeC
           val row = RRow(List(accountNbr, accountNme, planType))
           if (report.lineLeft < 5) {
             val toPast = if (agentFirstItem.isDefined) {

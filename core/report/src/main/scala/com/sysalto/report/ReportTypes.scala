@@ -86,7 +86,7 @@ object ReportTypes {
   }
 
   /*
-  draws a text allign at index at the point(x,y)
+  draws a text align at index at the point(x,y)
    */
   case class ReportTextAligned(rText: RText, x: Float, y: Float, index: Int) extends ReportItem() {
     override def render(report: Report): Unit = {
@@ -100,9 +100,9 @@ object ReportTypes {
    */
   case class ReportTextWrap(text: List[RText],
                             x0: Float, y0: Float, x1: Float, y1: Float,
-                            wrapAllign: WrapAllign.Value, startY: Option[Float]) extends ReportItem() {
+                            wrapAlign: WrapAlign.Value, startY: Option[Float]) extends ReportItem() {
     override def render(report: Report): Unit = {
-      report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY,wrapAllign, simulate=false, startY)
+      report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY,wrapAlign, simulate=false, startY)
 
     }
   }
@@ -173,7 +173,7 @@ object ReportTypes {
 }
 
 
-object WrapAllign extends Enumeration {
+object WrapAlign extends Enumeration {
   val NO_WRAP, WRAP_LEFT, WRAP_RIGHT, WRAP_CENTER, WRAP_JUSTIFIED = Value
 }
 

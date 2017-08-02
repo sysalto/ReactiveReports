@@ -112,9 +112,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 
 	private[report] def reportWrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
-	                               wrapAllign: WrapAllign.Value, simulate: Boolean = false,
+	                               wrapAlign: WrapAlign.Value, simulate: Boolean = false,
 	                               startY: Option[Float] = None): Option[WrapBox] = {
-		pdfUtil.wrap(text, x0, y0, x1, y1, wrapAllign, simulate, startY, lineHeight)
+		pdfUtil.wrap(text, x0, y0, x1, y1, wrapAlign, simulate, startY, lineHeight)
 	}
 
 	/*
@@ -228,7 +228,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	/*
-	Draw text allign at index and position (x,y).
+	Draw text align at index and position (x,y).
 	By default y is current y.
 	 */
 	def textAligned(txt: RText, index: Int, x: Float, y: Float = -1): Unit = {
@@ -273,7 +273,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	/*
-	Write the text in wrap mode in a box from (x0,y0) to (x1,y1) with wrapOption and wrap allign.
+	Write the text in wrap mode in a box from (x0,y0) to (x1,y1) with wrapOption and wrap align.
 	There are two types of invocations:
 		simulate =true only calculate the new coordinates
 		simulate=false write the text
@@ -281,15 +281,15 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		Easy way is to use [RRow]
 	 */
 	def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
-	         wrapAllign: WrapAllign.Value = WrapAllign.WRAP_LEFT, simulate: Boolean = false): Option[WrapBox] = {
+	         wrapAlign: WrapAlign.Value = WrapAlign.WRAP_LEFT, simulate: Boolean = false): Option[WrapBox] = {
 		val text1 = text.map(item => {
 			val font = item.font
 			RText(item.txt, font)
 		})
 		if (simulate) {
-			reportWrap(text1, x0, y0, x1, y1, wrapAllign, simulate)
+			reportWrap(text1, x0, y0, x1, y1, wrapAlign, simulate)
 		} else {
-			val reportItem = ReportTextWrap(text1, x0, y0, x1, y1, wrapAllign, None)
+			val reportItem = ReportTextWrap(text1, x0, y0, x1, y1, wrapAlign, None)
 			crtPage.items += reportItem
 			None
 		}
@@ -363,7 +363,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	print a cell (means wrapping text).
 	 */
 	def print(cell: RCell): Unit = {
-		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.allign)
+		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.align)
 	}
 
 	/*
@@ -385,7 +385,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	only calculate a cell.
 	 */
 	def calculate(cell: RCell): WrapBox = {
-		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.allign,simulate=true).get
+		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.align,simulate=true).get
 	}
 
 	/*
