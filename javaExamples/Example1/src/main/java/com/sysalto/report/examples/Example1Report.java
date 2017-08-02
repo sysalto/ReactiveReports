@@ -49,12 +49,12 @@ public class Example1Report {
     public void run(String fileName) throws Exception {
 
         Report report = Report.create(fileName, ReportPageOrientation.LANDSCAPE(), pdfFactory);
-        report.getHeaderSize(pg -> {
+        report.headerSizeCallback(pg -> {
             Long pgNbr = new Long(pg.toString());
             if (pgNbr == 1) return 0f;
             else return 50f;
         });
-        report.getFooterSize(pg -> 30f);
+        report.footerSizeCallback(pg -> 30f);
 
         report.headerFct((pg, pgMax) -> {
             report.setYPosition(10);

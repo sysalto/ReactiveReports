@@ -54,11 +54,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 
 
-public class MutualFundsAkkaJavaReport {
+class MutualFundsAkkaJavaReport {
     static private Date date1 = (new GregorianCalendar(2013, 0, 1)).getTime();
     static private Date date2 = (new GregorianCalendar(2013, 11, 31)).getTime();
-    static RColor headerColor = new RColor(156, 76, 6, 1f);
-    static RColor headerFontColor = new RColor(255, 255, 255, 1f);
+    private static RColor headerColor = new RColor(156, 76, 6, 1f);
+    private static RColor headerFontColor = new RColor(255, 255, 255, 1f);
     //    static private Float total1 = 0f;
 //    static private Float total2 = 0f;
 //    static private Float total3 = 0f;
@@ -67,23 +67,23 @@ public class MutualFundsAkkaJavaReport {
 //    static private java.util.Map<String, Object> chartData = new java.util.HashMap<>();
     static private final SimpleDateFormat sd = new SimpleDateFormat("MMM dd yyyy");
 
-    PdfFactory pdfITextFactory = new PdfNativeFactory();
-    Config config = ConfigFactory.parseString(
+    private PdfFactory pdfITextFactory = new PdfNativeFactory();
+    private Config config = ConfigFactory.parseString(
             "akka.log-dead-letters=off\n" +
                     "akka.jvm-exit-on-fatal-error = true\n" +
                     "akka.log-dead-letters-during-shutdown=off");
-    ActorSystem system = ActorSystem.create("Sys", config);
-    ActorMaterializer materializer = ActorMaterializer.create(system);
+    private ActorSystem system = ActorSystem.create("Sys", config);
+    private ActorMaterializer materializer = ActorMaterializer.create(system);
 
     private void run() throws Exception {
 
         Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
-        report.getHeaderSize(pg -> {
+        report.headerSizeCallback(pg -> {
             Long pgNbr = new Long(pg.toString());
             if (pgNbr == 1) return 0f;
             else return 50f;
         });
-        report.getFooterSize(pg -> 30f);
+        report.footerSizeCallback(pg -> 30f);
 
         report.headerFct((pg, pgMax) -> {
             report.setYPosition(10);

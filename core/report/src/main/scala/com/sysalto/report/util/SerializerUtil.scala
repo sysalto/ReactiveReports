@@ -31,7 +31,7 @@ package com.sysalto.report.util
 object SerializerUtil {
   def write(data: AnyRef): Array[Byte] = KryoUtil.serialize(data)
 
-  def read[T <: AnyRef](bytes: Array[Byte]) = KryoUtil.deserialize[T](bytes)
+  def read[T <: AnyRef](bytes: Array[Byte]): T = KryoUtil.deserialize[T](bytes)
 //
 //  private val system = ActorSystem("serializer", ConfigFactory.load("application"))
 //  private val serialization = SerializationExtension(system)

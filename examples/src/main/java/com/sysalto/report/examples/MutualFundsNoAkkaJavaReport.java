@@ -8,9 +8,6 @@ import com.sysalto.report.reportTypes.*;
 import com.sysalto.report.util.PdfFactory;
 import com.sysalto.report.util.ResultSetGroup;
 import com.sysalto.report.util.ResultSetUtil;
-import com.sysalto.report.util.ResultSetUtilTrail;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import scala.collection.immutable.Map;
 import scala.runtime.BoxedUnit;
 
@@ -21,7 +18,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.concurrent.CompletionStage;
 import java.util.concurrent.atomic.AtomicReference;
 
 /*
@@ -68,12 +64,12 @@ public class MutualFundsNoAkkaJavaReport {
     private void run() throws Exception {
 
         Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
-        report.getHeaderSize(pg -> {
+        report.headerSizeCallback(pg -> {
             Long pgNbr = new Long(pg.toString());
             if (pgNbr == 1) return 0f;
             else return 50f;
         });
-        report.getFooterSize(pg -> 30f);
+        report.footerSizeCallback(pg -> 30f);
 
         report.headerFct((pg, pgMax) -> {
             report.setYPosition(10);

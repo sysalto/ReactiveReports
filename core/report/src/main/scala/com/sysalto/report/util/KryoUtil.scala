@@ -43,7 +43,7 @@ import org.objenesis.strategy.StdInstantiatorStrategy
 object KryoUtil {
   val compress = true
 
-  def getKryo() = {
+  def getKryo: Kryo = {
     val kryo = new Kryo()
 
     kryo.addDefaultSerializer(classOf[scala.Enumeration#Value], classOf[EnumerationSerializer])
@@ -66,13 +66,13 @@ object KryoUtil {
     kryo
   }
 
-  val kryoD = getKryo
+  val kryoD: Kryo = getKryo
 
-  def register(classList: Class[_]*) = {
+  def register(classList: Class[_]*): Unit = {
     classList.foreach(clazz => kryoD.register(clazz))
   }
 
-  def serialize(item: Any, kryo: Kryo = kryoD) = {
+  def serialize(item: Any, kryo: Kryo = kryoD): Array[Byte] = {
     val byteArrayOutputStream = new ByteArrayOutputStream()
     val output = if (compress) {
       val deflaterOutputStream = new DeflaterOutputStream(byteArrayOutputStream)
@@ -81,7 +81,7 @@ object KryoUtil {
     else new Output(byteArrayOutputStream)
     kryo.writeClassAndObject(output, item)
     output.close()
-    byteArrayOutputStream.toByteArray()
+    byteArrayOutputStream.toByteArray
   }
 
 

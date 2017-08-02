@@ -95,7 +95,7 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alli
 		this
 	}
 
-	def calculate(report: Report): WrapBox = report.wrap(txt, margin.left, report.getY, margin.right, Float.MaxValue, WrapAllign.WRAP_LEFT, true).get
+	def calculate(report: Report): WrapBox = report.wrap(txt, margin.left, report.getY, margin.right, Float.MaxValue, WrapAllign.WRAP_LEFT, simulate=true).get
 }
 
 object RCell {

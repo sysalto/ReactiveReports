@@ -37,11 +37,11 @@ import scala.collection.JavaConverters._
 
 /** Report class- for Scala
 	*
-	* @param name - name of the pdf file. It shopuld include the pdf extension
+	* @param name - name of the pdf file. It should include the pdf extension
 	* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
 	* @param pdfFactory - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 	*/
-case class Report(name: String, val orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT)(implicit pdfFactory: PdfFactory) {
+case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT)(implicit pdfFactory: PdfFactory) {
 	private var pageNbrs = 1L
 	private var crtPageNbr = 1L
 	private val crtPage = ReportPage(new ListBuffer[ReportItem]())
@@ -52,14 +52,33 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 
 	private var crtYPosition = 0f
 
-
+	/** header callback
+		*  first param - current page
+		*  second param - total number of pages
+		*/
 	var headerFct: (Long, Long) => Unit = {
 		case ( _, _) =>
 	}
+
+	/** footer callback
+		*  first param - current page
+		*  second param - total number of pages
+		*/
 	var footerFct: (Long, Long) => Unit = {
 		case ( _, _) =>
 	}
+	/** Get size of the header
+		*  param - current page - can be use to set up header size only for some pages -
+		*  for example if (crtPage==0) return 0 -> no header for the first page.
+		*  @return size of the header - by default 0 (no header)
+		*/
 	var getHeaderSize: Long => Float = { _ => 0 }
+
+	/** Get size of the footer
+		*  param - current page - can be use to set up footer size only for some pages -
+		*  for example if (crtPage==0) return 0 -> no header for the first page.
+		*  @return size of the header - by default 0 (no header)
+		*/
 	var getFooterSize: Long => Float = { _ => 0 }
 
 
@@ -228,7 +247,6 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 
 	/*
 	Draw a pie chart with title, data from (x0,y0) with width and height dimensions.
-	See jfreechart for details.
 	 */
 	def drawPieChart(title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
 		crtPage.items += ReportPieChart(title, data, x0, y0, width, height)
@@ -367,7 +385,7 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 	only calculate a cell.
 	 */
 	def calculate(cell: RCell): WrapBox = {
-		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.allign, true).get
+		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.allign,simulate=true).get
 	}
 
 	/*
@@ -411,15 +429,15 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 
 	// java compatibility
 
-	def getHeaderSize(fct: Function[Long, Float]) {
+	def headerSizeCallback(fct: Function[Long, Float]) {
 		getHeaderSize = { pgNbr =>
-			fct.apply(pgNbr.asInstanceOf[Long])
+			fct.apply(pgNbr)
 		}
 	}
 
-	def getFooterSize(fct: Function[Long, Float]) {
+	def footerSizeCallback(fct: Function[Long, Float]) {
 		getFooterSize = { pgNbr =>
-			fct.apply(pgNbr.asInstanceOf[Long])
+			fct.apply(pgNbr)
 		}
 	}
 
@@ -466,7 +484,7 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 object Report {
 	/** Static method to create a new report from Java
 		*
-		* @param name  - name of the pdf file. It shopuld include the pdf extension
+		* @param name  - name of the pdf file. It should include the pdf extension
 		* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
 		* @param pdfFactory - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 		* @return the new report

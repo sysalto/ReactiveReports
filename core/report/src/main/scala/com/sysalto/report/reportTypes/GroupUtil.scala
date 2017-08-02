@@ -91,7 +91,7 @@ class GroupUtil[T](groupList: List[Group[T]]) {
 }
 
 object GroupUtil {
-	def instance = this
+	def instance: GroupUtil.type = this
 
 	@varargs def apply[T](list: Group[T]*): GroupUtil[T] = {
 		new GroupUtil(list.toList)

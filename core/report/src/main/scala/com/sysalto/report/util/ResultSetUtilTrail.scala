@@ -128,7 +128,7 @@ object ResultSetUtil {
 	def toGroup(rs: ResultSet): ResultSetGroup = ResultSetGroup(rs)
 
 	def getRecordValue[T](rec: Map[String, AnyRef], field: String): T = {
-		(rec value (field)).asInstanceOf[T]
+		(rec value field).asInstanceOf[T]
 	}
 
 }

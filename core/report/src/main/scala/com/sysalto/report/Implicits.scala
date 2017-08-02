@@ -30,25 +30,25 @@ package com.sysalto.report
 import com.sysalto.report.util.ReportColumnUtil
 
 object Implicits extends ScalaReportUtil {
-	val RText = com.sysalto.report.reportTypes.RText
-	val LineDashType = com.sysalto.report.reportTypes.LineDashType
-	val RMargin = com.sysalto.report.reportTypes.RMargin
-	val Row = com.sysalto.report.reportTypes.Row
-	val Column = com.sysalto.report.reportTypes.Column
-	val Flex = ReportColumnUtil.Flex
-	val RCell = com.sysalto.report.reportTypes.RCell
-	val Report = com.sysalto.report.Report
+	val RText: com.sysalto.report.reportTypes.RText.type = com.sysalto.report.reportTypes.RText
+	val LineDashType: com.sysalto.report.reportTypes.LineDashType.type = com.sysalto.report.reportTypes.LineDashType
+	val RMargin: com.sysalto.report.reportTypes.RMargin.type = com.sysalto.report.reportTypes.RMargin
+	val Row: com.sysalto.report.reportTypes.Row.type = com.sysalto.report.reportTypes.Row
+	val Column: com.sysalto.report.reportTypes.Column.type = com.sysalto.report.reportTypes.Column
+	val Flex: ReportColumnUtil.Flex.type = ReportColumnUtil.Flex
+	val RCell: com.sysalto.report.reportTypes.RCell.type = com.sysalto.report.reportTypes.RCell
+	val Report: com.sysalto.report.Report.type = com.sysalto.report.Report
 	type Report = com.sysalto.report.Report
-	val RRow = com.sysalto.report.reportTypes.RRow
-	val ReportCheckpoint = com.sysalto.report.ReportTypes.ReportCheckpoint
+	val RRow: com.sysalto.report.reportTypes.RRow.type = com.sysalto.report.reportTypes.RRow
+	val ReportCheckpoint: ReportTypes.ReportCheckpoint.type = com.sysalto.report.ReportTypes.ReportCheckpoint
 	type ReportCheckpoint = com.sysalto.report.ReportTypes.ReportCheckpoint
-	val ReportCut = com.sysalto.report.ReportTypes.ReportCut
+	val ReportCut: ReportTypes.ReportCut.type = com.sysalto.report.ReportTypes.ReportCut
 	type ReportItem = com.sysalto.report.ReportTypes.ReportItem
-	val RColor = com.sysalto.report.reportTypes.RColor
+	val RColor: com.sysalto.report.reportTypes.RColor.type = com.sysalto.report.reportTypes.RColor
 
 
-	val Await = scala.concurrent.Await
-	val Duration = scala.concurrent.duration.Duration
-	val Group = com.sysalto.report.reportTypes.Group
+	val Await: scala.concurrent.Await.type = scala.concurrent.Await
+	val Duration: scala.concurrent.duration.Duration.type = scala.concurrent.duration.Duration
+	val Group: com.sysalto.report.reportTypes.Group.type = com.sysalto.report.reportTypes.Group
 	type GroupUtil[T] = com.sysalto.report.reportTypes.GroupUtil[T]
 }

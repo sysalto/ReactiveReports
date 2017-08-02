@@ -111,7 +111,7 @@ case class Row(left: Float, right: Float, columns: List[Column]) {
 
 
 object Row {
-  def instance = this
+  def instance: Row.type = this
 
   def apply(left: Float, right: Float, columns: java.util.List[Column]) =
     new Row(left, right, columns.asScala.toList)
