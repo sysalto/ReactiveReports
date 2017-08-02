@@ -150,7 +150,6 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
 
 
     report.render()
-    report.close()
     system.terminate()
 
   }

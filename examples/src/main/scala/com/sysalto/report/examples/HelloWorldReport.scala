@@ -142,7 +142,6 @@ object HelloWorldReport extends ReportAppAkka with AkkaGroupUtil {
 
     // render and close the report
     report.render()
-    report.close()
     system.terminate()
 
   }

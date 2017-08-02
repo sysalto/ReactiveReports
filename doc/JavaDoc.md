@@ -62,8 +62,14 @@ We need to define a row starting at 10. to report page's with -10 and has two co
     You can use  hrow.calculate(report) if you need the new line position.
     
     Let's draw a round corner rectangle before putting the header:
+    
     report.rectangle().from(9, report.getY() - report.lineHeight()).radius(3).to(report.pgSize().width() - 9, y2 + 2).fillColor(headerColor).draw();
 
+    Now print the row with columns:hrow.print(report);.
+    
+    At the end report.render(); creates teh pdf
+    
+    
     
     
                 

@@ -359,8 +359,6 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     accountPerformance(report)
     disclaimer(report)
     report.render()
-    report.close()
-
   }
 
 

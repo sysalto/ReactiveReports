@@ -351,8 +351,6 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrail {
 		accountPerformance(report)
 		disclaimer(report)
 		report.render()
-		report.close()
-
 	}
 
 

@@ -110,9 +110,7 @@ public class MutualFundsNoAkkaJavaReport {
         changeAccount(report);
         accountPerformance(report);
         disclaimer(report);
-
         report.render();
-        report.close();
     }
 
 

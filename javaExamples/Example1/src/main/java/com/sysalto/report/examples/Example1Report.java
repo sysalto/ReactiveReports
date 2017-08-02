@@ -98,7 +98,6 @@ public class Example1Report {
                 Float y2 = hrow.calculate(report);
                 report.rectangle().from(9, report.getY() - report.lineHeight()).radius(3).to(report.pgSize().width() - 9, y2 + 2).fillColor(headerColor).draw();
                 hrow.print(report);
-                report.setYPosition(y2);
                 report.nextLine();
             }
             RCell d_name = new RCell(new RText(name)).leftAllign().between(m_name);
@@ -117,7 +116,6 @@ public class Example1Report {
 
         rs.close();
         report.render();
-        report.close();
 
     }
 

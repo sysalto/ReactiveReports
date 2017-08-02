@@ -86,7 +86,6 @@ object TestReport  {
     report.drawPieChart("", chartData.toList, 100,100,100,300)
 
     report.render()
-    report.close()
   }
 
 

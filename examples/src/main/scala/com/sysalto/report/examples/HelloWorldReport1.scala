@@ -141,9 +141,6 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
 
     // render and close the report
     report.render()
-    report.close()
-
-
   }
 
 //  def runItext(): Unit = {

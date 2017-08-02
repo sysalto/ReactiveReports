@@ -219,7 +219,7 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 	/*
 	close the report.
 	 */
-	def close(): Unit = {
+	private def close(): Unit = {
 		pdfUtil.close()
 		db.close()
 	}
@@ -330,6 +330,7 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 				}
 			}
 		}
+		close()
 	}
 
 

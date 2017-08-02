@@ -136,7 +136,6 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
         }
         if (GroupUtil.isLastRecord(rec)) {
           report.render()
-          report.close()
         }
       }
       catch {
