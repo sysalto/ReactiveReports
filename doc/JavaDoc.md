@@ -67,7 +67,7 @@ We need to define a row starting at 10. to report page's with -10 and has two co
 
     Now print the row with columns:hrow.print(report);.
     
-    At the end report.render(); creates teh pdf
+    At the end report.render(); creates the pdf file and close the report.
     
     
     

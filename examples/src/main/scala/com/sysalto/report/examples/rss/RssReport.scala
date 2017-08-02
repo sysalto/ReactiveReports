@@ -98,7 +98,7 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
 
     def footerSizeFct(pg: Long) = 30f
 
-    def footerRptFct(report: Report, pgNbr: Long, pgMax: Long): Unit = {
+    def footerRptFct(report: Report)( pgNbr: Long, pgMax: Long): Unit = {
       report.setYPosition(report.pgSize.height - report.lineHeight * 3)
       report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
       report.nextLine()
@@ -108,8 +108,8 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
     reportAmerica.getFooterSize = footerSizeFct
     reportEuro.getFooterSize = footerSizeFct
 
-    reportAmerica.footerFct = footerRptFct
-    reportEuro.footerFct = footerRptFct
+    reportAmerica.footerFct = footerRptFct(reportAmerica)
+    reportEuro.footerFct = footerRptFct(reportEuro)
 
     val americaFilter = Flow[RssType].filter { case (rssSrc, _, _, _) => rssSrc.contains("US") || rssSrc.contains("Americas") }
     val euroFilter = Flow[RssType].filter { case (rssSrc, _, _, _) => rssSrc.contains("Europe") }

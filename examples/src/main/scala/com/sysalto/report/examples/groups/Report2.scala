@@ -47,11 +47,11 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
     }
 
     report.footerFct = {
-      case (rpt, pgNbr, pgMax) =>
-        rpt.setYPosition(rpt.pgSize.height - rpt.lineHeight * 2)
-        rpt line() from(10, rpt.getY) to (rpt.pgSize.width - 10) draw()
+      case ( pgNbr, pgMax) =>
+        report.setYPosition(report.pgSize.height - report.lineHeight * 2)
+        report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
         report.setYPosition(report.getY + report.lineHeight * 0.5f)
-        rpt print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
+        report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
     }
 
     val account = List(DataField("id", NumericType), DataField("accountName", StringType, 20), DataField("planType",

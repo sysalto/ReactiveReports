@@ -318,9 +318,9 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     }
 
     report.headerFct = {
-      case (rpt, _,_) =>
-        rpt.setYPosition(10)
-        val row = Row(10, rpt.pgSize.width - 10, List(Column("column1", Flex(1)), Column("column2", Flex(1)),
+      case ( _,_) =>
+        report.setYPosition(10)
+        val row = Row(10, report.pgSize.width - 10, List(Column("column1", Flex(1)), Column("column2", Flex(1)),
           Column("column3", Flex(1))))
         val column1 = row.getColumnBound("column1")
         val column2 = row.getColumnBound("column2")
@@ -330,27 +330,27 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
         val h_column2 = RCell("Your account number" bold()) leftAllign() between column2
         val h_column3 = RCell("Your investment statement" bold()) rightAllign() between column3
         val hrow = RRow(List(h_column1, h_column2, h_column3))
-        hrow.print(rpt)
+        hrow.print(report)
 
-        rpt.nextLine()
+        report.nextLine()
 
         val str = sd.format(date1) + " to " + sd.format(date2)
         val r_column1 = RCell("Group Registered Retirement Saving Plan") leftAllign() between column1
         val r_column2 = RCell("123456789") leftAllign() between column2
         val r_column3 = RCell(str) rightAllign() between column3
         val rrow = RRow(List(r_column1, r_column2, r_column3))
-        rrow.print(rpt)
-        rpt.nextLine(2)
-        rpt line() from(10, rpt.getY) to (rpt.pgSize.width - 10) draw()
+        rrow.print(report)
+        report.nextLine(2)
+        report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
         drawbackgroundImage(report)
     }
 
     report.footerFct = {
-      case (rpt, pgNbr, pgMax) =>
-        rpt.setYPosition(rpt.pgSize.height - rpt.lineHeight * 3)
-        rpt line() from(10, rpt.getY) to (rpt.pgSize.width - 10) draw()
-        rpt.nextLine()
-        rpt print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
+      case (pgNbr, pgMax) =>
+        report.setYPosition(report.pgSize.height - report.lineHeight * 3)
+        report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+        report.nextLine()
+        report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAllign() between RMargin(0, report.pgSize.width - 10))
     }
 
     reportHeader(report)

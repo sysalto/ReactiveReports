@@ -35,9 +35,11 @@ import _root_.java.util.function.{BiConsumer, Function}
 
 import scala.collection.JavaConverters._
 
-/**
-	* Main report class
-	* name - pdf file name
+/** Report class- for Scala
+	*
+	* @param name - name of the pdf file. It shopuld include the pdf extension
+	* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
+	* @param pdfFactory - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 	*/
 case class Report(name: String, val orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT)(implicit pdfFactory: PdfFactory) {
 	private var pageNbrs = 1L
@@ -51,11 +53,11 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 	private var crtYPosition = 0f
 
 
-	var headerFct: (Report, Long, Long) => Unit = {
-		case (_, _, _) =>
+	var headerFct: (Long, Long) => Unit = {
+		case ( _, _) =>
 	}
-	var footerFct: (Report, Long, Long) => Unit = {
-		case (_, _, _) =>
+	var footerFct: (Long, Long) => Unit = {
+		case ( _, _) =>
 	}
 	var getHeaderSize: Long => Float = { _ => 0 }
 	var getFooterSize: Long => Float = { _ => 0 }
@@ -311,10 +313,10 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 				crtPage.items.clear()
 				crtPage.items.appendAll(page.items)
 				if (getHeaderSize(i) > 0) {
-					headerFct(this, i, pageNbrs)
+					headerFct( i, pageNbrs)
 				}
 				if (getFooterSize(i) > 0) {
-					footerFct(this, i, pageNbrs)
+					footerFct(i, pageNbrs)
 				}
 				db.write(s"page$i", crtPage)
 			}
@@ -423,14 +425,14 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 
 	def headerFct(fct: BiConsumer[Long, Long]) {
 		headerFct = {
-			case (rpt, pgNbr, pgMax) =>
+			case (pgNbr, pgMax) =>
 				fct.accept(pgNbr, pgMax)
 		}
 	}
 
 	def footerFct(fct: BiConsumer[Long, Long]) {
 		footerFct = {
-			case (rpt, pgNbr, pgMax) =>
+			case ( pgNbr, pgMax) =>
 				fct.accept(pgNbr, pgMax)
 		}
 	}
@@ -462,6 +464,13 @@ case class Report(name: String, val orientation: ReportPageOrientation.Value = R
 }
 
 object Report {
+	/** Static method to create a new report from Java
+		*
+		* @param name  - name of the pdf file. It shopuld include the pdf extension
+		* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
+		* @param pdfFactory - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
+		* @return the new report
+		*/
 	def create(name: String, orientation: ReportPageOrientation.Value, pdfFactory: PdfFactory): Report = {
 		new Report(name, orientation)(pdfFactory)
 	}
