@@ -19,10 +19,11 @@ lazy val commonInclude = Seq(
   version := projectVersion,
   cancelable in Global := true,
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
-  incOptions := incOptions.value.withNameHashing(true),
+  //incOptions := incOptions.value.withNameHashing(true),
   Keys.fork in run := true,
   resolvers += Resolver.sonatypeRepo("snapshots"),
-  resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
+  resolvers +="Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
+  
 
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
@@ -103,7 +104,7 @@ lazy val exampleSettings = Seq(
   cancelable in Global := true,
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   scalaVersion := SCALA_VERSION,
-  incOptions := incOptions.value.withNameHashing(true),
+//  incOptions := incOptions.value.withNameHashing(true),
   Keys.fork in run := true,
   resolvers += Resolver.sonatypeRepo("public"),
   resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
