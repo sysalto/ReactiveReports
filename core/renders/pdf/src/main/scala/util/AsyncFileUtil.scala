@@ -1,13 +1,12 @@
-package utility
+package util
 
 import java.nio.ByteBuffer
 import java.nio.channels.{AsynchronousFileChannel, FileChannel}
 import java.nio.file.{Paths, StandardOpenOption}
 
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
-import collection.JavaConverters._
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 class AsyncFileUtil(fileName: String, options: StandardOpenOption*) {
 	val fileChannel = AsynchronousFileChannel.open(Paths.get(fileName), options: _*)
