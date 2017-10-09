@@ -35,7 +35,7 @@ import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes.{LineDashType, RColor, RText, ReportPageOrientation}
-import util.FontAfmParser.{parseFont, parseGlyph}
+import util.fonts.parsers.FontAfmParser.{parseFont, parseGlyph}
 import util.PageTree
 import util.wrapper.WordWrap
 

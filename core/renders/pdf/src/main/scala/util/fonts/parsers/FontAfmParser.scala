@@ -24,10 +24,9 @@
 
 
 
-package util
+package util.fonts.parsers
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 /**
   * Created by marian on 5/6/17.

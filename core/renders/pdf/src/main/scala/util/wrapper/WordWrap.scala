@@ -28,8 +28,8 @@ package util.wrapper
 
 import com.sysalto.report.RFontAttribute
 import com.sysalto.report.reportTypes.{RFont, RText}
-import util.FontAfmParser
-import util.FontAfmParser.{FontAfmMetric, parseFont, parseGlyph}
+import util.fonts.parsers.FontAfmParser.{FontAfmMetric, parseFont, parseGlyph}
+import util.fonts.parsers.FontAfmParser
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
