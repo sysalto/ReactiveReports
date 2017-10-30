@@ -22,25 +22,28 @@ class TtfParser(fontFile: String) {
 	}
 
 
-	private case class Hmtx(size:Short,unitsPerEm:Short) {
+	private case class Hmtx(size: Short, unitsPerEm: Short) {
 		private val tbl = tables.get("hmtx").get
-		f.seek(tbl.offset )
-		val hMetrics=(for (i<-0 until size) yield {
-			val v=f.readShort()
+		f.seek(tbl.offset)
+		val hMetrics = (for (i <- 0 until size) yield {
+			val v = f.readShort()
 			f.skip(2)
-			(v*1000 / unitsPerEm ).toInt
+			(v * 1000 / unitsPerEm).toInt
 		}).toList
 	}
 
 	private case class CMap() {
-		def getGlyphList(hMetrics:List[Int]): Map[Char,List[Short]]  = {
-			val f10=cmapSubTables.get((1,0)).get
-			val glyphWidth=f10.map(id=>(id,hMetrics(id)))
+		def getGlyphList(hMetrics: List[Int]): Map[Char, List[Short]] = {
+			val f10 = cmapSubTables.get((1, 0)).get
+			val glyphWidth = f10.map { case (char, id) => {
+				char -> (id,hMetrics(id))
+			}
+			}
 			println("ok1")
 			null
 		}
 
-		private def getCMapSubTables(): Map[(Short, Short), Map[Char,Short]] = {
+		private def getCMapSubTables(): Map[(Short, Short), Map[Char, Short]] = {
 			val nameRecordsCount =
 				f.readShort()
 			val ll =
@@ -64,24 +67,24 @@ class TtfParser(fontFile: String) {
 							(platformId, platformEncodeId) -> readCMapFormat(format)
 						}
 						case _ => {
-							(platformId, platformEncodeId) -> Map[Char,Short]()
+							(platformId, platformEncodeId) -> Map[Char, Short]()
 						}
 					}
 				}
 			}
 		}
 
-		private def readCMapFormat(format: Short): Map[Char,Short] = {
+		private def readCMapFormat(format: Short): Map[Char, Short] = {
 			format match {
 				case 6 => {
 					f.skip(4)
 					val firstChar = f.readShort().toChar
 					val charLength = f.readShort()
 					(for (i <- 0 until charLength) yield {
-						(firstChar+i).toChar->f.readShort()
+						(firstChar + i).toChar -> f.readShort()
 					}).toMap
 				}
-				case _ => Map[Char,Short]()
+				case _ => Map[Char, Short]()
 			}
 
 		}
@@ -90,7 +93,7 @@ class TtfParser(fontFile: String) {
 		private val tbl = tables.get("cmap").get
 		private val tblOffset = tbl.offset.toLong
 		f.seek(tblOffset + 2)
-		val cmapSubTables=getCMapSubTables()
+		val cmapSubTables = getCMapSubTables()
 
 	}
 
@@ -134,7 +137,7 @@ class TtfParser(fontFile: String) {
 	}
 
 	def readTTf(): Unit = {
-		val ll=cmap.getGlyphList(hmtx.hMetrics)
+		val ll = cmap.getGlyphList(hmtx.hMetrics)
 		println(ll)
 		println("OK")
 
@@ -153,7 +156,7 @@ class TtfParser(fontFile: String) {
 	private val tables = getTables()
 	private val head = Head()
 	private val hhea = Hhea()
-	private val hmtx = Hmtx(hhea.numOfLongHorMetrics,head.unitsPerEm)
+	private val hmtx = Hmtx(hhea.numOfLongHorMetrics, head.unitsPerEm)
 	private val cmap = CMap()
 	private val name = Name()
 }
