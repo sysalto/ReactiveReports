@@ -41,6 +41,7 @@ trait  ScalaReportUtil {
     def printFormat(localeCode: String): String = formatNumber(number, localeCode)
   }
 
+
   implicit def stringToRText(txt: String): RText = RText(txt, RFont(10))
 
 

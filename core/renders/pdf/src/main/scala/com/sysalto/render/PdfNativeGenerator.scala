@@ -149,15 +149,13 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	}
 
 	def text(x: Float, y: Float, txt: RText): Unit = {
-		val font=txt.font match {
-			case font: REmbeddedFont => {
-				val fontStream = new PdfFontStream(nextId(), "/home/marian/transfer/font/Roboto-Regular.ttf")
+		val font= if (txt.font.fontFile.isDefined) {
+				val fontStream = new PdfFontStream(nextId(), txt.font.fontFile.get)
 				val fontDescr = new PdfFontDescriptor(nextId(), fontStream.id)
-				val font1 = new PdfFontEmbedded(nextId(), nextFontId(), "PIRQZU+Roboto-Regular", fontDescr.id)
+				val font1 = new PdfFontEmbedded(nextId(), nextFontId(), txt.font.fontKeyName, fontDescr.id)
 				fontMap += (txt.font.fontKeyName -> font1)
 				font1
-			}
-			case _: RFont => {
+			} else {
 				val font = if (!fontMap.contains(txt.font.fontKeyName)) {
 					val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
 					fontMap += (txt.font.fontKeyName -> font1)
@@ -165,7 +163,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 				} else fontMap(txt.font.fontKeyName)
 				font
 			}
-		}
+
 
 //		val font = if (txt.font.isInstanceOf[RFont]) {
 //			val font = if (!fontMap.contains(txt.font.fontKeyName)) {

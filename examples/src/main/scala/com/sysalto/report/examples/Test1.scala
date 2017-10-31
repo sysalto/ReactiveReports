@@ -28,7 +28,7 @@ package com.sysalto.report.examples
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.ReportPageOrientation
+import com.sysalto.report.reportTypes.{RFont, ReportPageOrientation}
 
 /**
   * Created by marian on 4/1/17.
@@ -43,8 +43,19 @@ object Test1  {
 
   def runReport(report: Report): Unit = {
     report.nextLine(3)
-    report print "A" at 100
-
+    val char="C"
+    val size=20
+    val txt1=RText(char,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
+    val txt3=RText(char,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
+    val txt4=RText(char,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
+    val txt2=RText(char,RFont(size))
+    report print txt1 at 100
+    report.nextLine()
+    report print txt2 at 100
+    report.nextLine()
+    report print txt3 at 100
+    report.nextLine()
+    report print txt4 at 100
 
     report.render()
   }
