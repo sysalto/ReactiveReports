@@ -149,38 +149,23 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	}
 
 	def text(x: Float, y: Float, txt: RText): Unit = {
-		val font= if (txt.font.fontFile.isDefined) {
+		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
+			if (txt.font.fontFile.isDefined) {
 				val fontStream = new PdfFontStream(nextId(), txt.font.fontFile.get)
-				val fontDescr = new PdfFontDescriptor(nextId(), fontStream.id)
-				val font1 = new PdfFontEmbedded(nextId(), nextFontId(), txt.font.fontKeyName, fontDescr.id)
+				val fontDescr = new PdfFontDescriptor(nextId(), fontStream,txt.font.fontKeyName)
+				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName, Some(fontDescr))
 				fontMap += (txt.font.fontKeyName -> font1)
 				font1
 			} else {
-				val font = if (!fontMap.contains(txt.font.fontKeyName)) {
-					val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
-					fontMap += (txt.font.fontKeyName -> font1)
-					font1
-				} else fontMap(txt.font.fontKeyName)
-				font
+				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
+				fontMap += (txt.font.fontKeyName -> font1)
+				font1
 			}
-
-
-//		val font = if (txt.font.isInstanceOf[RFont]) {
-//			val font = if (!fontMap.contains(txt.font.fontKeyName)) {
-//				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
-//				fontMap += (txt.font.fontKeyName -> font1)
-//				font1
-//			} else fontMap(txt.font.fontKeyName)
-//			font
-//		} else {
-//			val fontStream = new PdfFontStream(nextId(), "/home/marian/transfer/font/Roboto-Regular.ttf")
-//			val fontDescr = new PdfFontDescriptor(nextId(), fontStream.id)
-//			val font1 = new PdfFontEmbedded(nextId(), nextFontId(), "PIRQZU+Roboto-Regular", fontDescr.id)
-//			fontMap += (txt.font.fontKeyName -> font1)
-//			font1
-//		}
+		}
+		else fontMap(txt.font.fontKeyName)
 		txtList += PdfTxtChuck(x, y, txt, font.refName)
 	}
+	
 
 	def startPdf(): Unit = {
 		pdfHeader()
@@ -441,16 +426,32 @@ class PdfPage(id: Long, var pdfPageListId: Long = 0, var pageWidth: Float, var p
 }
 
 
-class PdfFont(id: Long, val refName: String, fontKeyName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfFont(id: Long, val refName: String, fontKeyName: String, fontDescriptorOpt: Option[PdfFontDescriptor] = None)
+             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
-		s"""${id} 0 obj
-			 |  <<  /Type /Font
-			 |      /Subtype /Type1
-			 |      /BaseFont /${fontKeyName}
-			 |      /Encoding /WinAnsiEncoding
-			 |  >>
-			 |endobj
-			 |""".stripMargin.getBytes
+		if (fontDescriptorOpt.isEmpty) {
+			s"""${id} 0 obj
+<<  /Type /Font
+/Subtype /Type1
+/BaseFont /${fontKeyName}
+/Encoding /WinAnsiEncoding
+>>
+endobj
+""".getBytes
+		} else {
+			s"""${id} 0 obj
+				 | << /Type/Font
+				 |   /Subtype/TrueType
+				 |   /BaseFont/${fontKeyName}
+				 |   /Encoding/WinAnsiEncoding
+				 |   /FirstChar 50
+				 |   /LastChar 116
+				 |   /Widths[562 562 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 585 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 528 0 0 0 0 0 0 0 0 0 0 0 0 0 522 345]
+				 |   /FontDescriptor ${fontDescriptorOpt.get.id} 0 R
+				 |   >>
+				 |endobj
+				 |""".stripMargin.getBytes
+		}
 	}
 }
 
@@ -467,7 +468,8 @@ class PdfFontStream(id: Long, fontStreamName: String)(implicit itemList: ListBuf
 	}
 }
 
-class PdfFontDescriptor(id: Long, fontStreamId: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream,fontKeyName:String)
+                       (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 |    <</Type/FontDescriptor
@@ -475,29 +477,11 @@ class PdfFontDescriptor(id: Long, fontStreamId: Long)(implicit itemList: ListBuf
 			 |    /CapHeight 710
 			 |    /Descent -270
 			 |    /FontBBox[-478 -270 1169 1058]
-			 |    /FontName/PIRQZU+Roboto-Regular
+			 |    /FontName/${fontKeyName}
 			 |    /ItalicAngle 0
 			 |    /StemV 80
-			 |    /FontFile2 ${fontStreamId} 0 R
+			 |    /FontFile2 ${pdfFontStream.id} 0 R
 			 |    /Flags 32>>
-			 |endobj
-			 |""".stripMargin.getBytes
-	}
-}
-
-class PdfFontEmbedded(id: Long, refName: String, fontKeyName: String, fondDescrId: Long)
-                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfFont(id, refName, fontKeyName) {
-	override def content: Array[Byte] = {
-		s"""${id} 0 obj
-			 | << /Type/Font
-			 |   /Subtype/TrueType
-			 |   /BaseFont/PIRQZU+Roboto-Regular
-			 |   /Encoding/WinAnsiEncoding
-			 |   /FirstChar 50
-			 |   /LastChar 116
-			 |   /Widths[562 562 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 585 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 528 0 0 0 0 0 0 0 0 0 0 0 0 0 522 345]
-			 |   /FontDescriptor ${fondDescrId} 0 R
-			 |   >>
 			 |endobj
 			 |""".stripMargin.getBytes
 	}
