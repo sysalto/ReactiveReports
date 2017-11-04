@@ -138,6 +138,8 @@ class TtfParser(fontFile: String) {
 
 	def getFontName: String = name.nameList.get(4).get
 
+	def getWidths:List[Int]=hmtx.hMetrics
+
 	def readTTf(): Unit = {
 
 
@@ -170,7 +172,7 @@ class TtfParser(fontFile: String) {
 object TtfParser {
 
 	def test(): Unit = {
-		val ttfParser = new TtfParser("/home/marian/transfer/font/Roboto-Black.ttf")
+		val ttfParser = new TtfParser("/home/marian/transfer/font/Roboto-Regular.ttf")
 		ttfParser.readTTf()
 	}
 
