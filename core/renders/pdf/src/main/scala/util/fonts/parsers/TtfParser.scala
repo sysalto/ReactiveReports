@@ -36,7 +36,7 @@ class TtfParser(fontFile: String) {
 		def getGlyphList(hMetrics: List[Int]): Map[Char, List[Short]] = {
 			val f10 = cmapSubTables.get((1, 0)).get
 			val glyphWidth = f10.map { case (char, id) => {
-				char -> (id,hMetrics(id))
+				char -> (id, hMetrics(id))
 			}
 			}
 			println("ok1")
@@ -136,11 +136,17 @@ class TtfParser(fontFile: String) {
 		tables1.toMap
 	}
 
-	def readTTf(): Unit = {
-		val ll = cmap.getGlyphList(hmtx.hMetrics)
-		println(ll)
-		println("OK")
+	def getFontName: String = name.nameList.get(4).get
 
+	def readTTf(): Unit = {
+
+
+		//		val ll = cmap.getGlyphList(hmtx.hMetrics)
+		//		println(ll)
+		//		println("OK")
+		println("NAME:" + getFontName)
+		println("NR:"+hhea.numOfLongHorMetrics)
+		println("W:"+hmtx.hMetrics.size)
 
 		//		val fontName = getNameTbl(f, tables)
 		//		val head = getHeadTbl(f, tables)

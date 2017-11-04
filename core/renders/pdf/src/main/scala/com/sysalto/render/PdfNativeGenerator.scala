@@ -165,7 +165,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		else fontMap(txt.font.fontKeyName)
 		txtList += PdfTxtChuck(x, y, txt, font.refName)
 	}
-	
+
 
 	def startPdf(): Unit = {
 		pdfHeader()
