@@ -173,7 +173,9 @@ object TtfParser {
 
 	def test(): Unit = {
 		val ttfParser = new TtfParser("/home/marian/transfer/font/Roboto-Regular.ttf")
-		ttfParser.readTTf()
+		val l1=ttfParser.getWidths.slice(48,119)
+		println(l1.mkString("\n"))
+		//ttfParser.readTTf()
 	}
 
 	def main(args: Array[String]): Unit = {

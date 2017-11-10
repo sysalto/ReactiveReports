@@ -478,11 +478,12 @@ class PdfFontStream(id: Long, fontStreamName: String)(implicit itemList: ListBuf
 
 class PdfFontWidths(id: Long, pdfFontStream: PdfFontStream)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
   val firstChar=0
-  val lastChar=pdfFontStream.ttfParser.getWidths.size
+  val lastChar=pdfFontStream.ttfParser.getWidths.size-1
   override def content: Array[Byte] = {
-    s"""${id} 0 obj [
-       			 			 | ${pdfFontStream.ttfParser.getWidths.mkString(" ")}
-       			 			 |]
+    s"""${id} 0 obj
+	     |[
+	     | ${pdfFontStream.ttfParser.getWidths.mkString(" ")}
+       |]
        |endobj
        |""".stripMargin.getBytes
   }
