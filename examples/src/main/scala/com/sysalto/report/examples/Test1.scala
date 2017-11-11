@@ -49,10 +49,10 @@ object Test1  {
   //  val txt5=RText(char,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
 //    val txt3=RText(char,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
 //    val txt4=RText(char,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
- //   val txt2=RText(char,RFont(size))
+    val txt2=RText(char,RFont(size))
     report print txt1 at 100
     report.nextLine()
-  //  report print txt2 at 100
+    report print txt2 at 100
  //   report.nextLine()
 //    report print txt5 at 100
 //    report.nextLine()

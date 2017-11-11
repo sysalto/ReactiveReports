@@ -28,7 +28,8 @@ class TtfParser(fontFile: String) {
 		val hMetrics = (for (i <- 0 until size) yield {
 			val v = f.readShort()
 			f.skip(2)
-			(v * 1000 / unitsPerEm).toInt
+//			(v * 1000 / unitsPerEm).toInt
+			v.toInt
 		}).toList
 	}
 
@@ -173,7 +174,7 @@ object TtfParser {
 
 	def test(): Unit = {
 		val ttfParser = new TtfParser("/home/marian/transfer/font/Roboto-Regular.ttf")
-		val l1=ttfParser.getWidths.slice(48,119)
+		val l1=ttfParser.getWidths.slice(0,20)
 		println(l1.mkString("\n"))
 		//ttfParser.readTTf()
 	}
