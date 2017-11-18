@@ -27,7 +27,7 @@ package com.sysalto.render
 
 import java.awt.image.BufferedImage
 import java.io.{ByteArrayOutputStream, File, FileOutputStream, PrintWriter}
-import java.nio.file.{Files, Paths}
+import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.security.MessageDigest
 import javax.imageio.ImageIO
 
@@ -36,7 +36,7 @@ import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
 import util.fonts.parsers.FontAfmParser.{parseFont, parseGlyph}
-import util.PageTree
+import util.{PageTree, SyncFileUtil}
 import util.fonts.parsers.TtfParser
 import util.wrapper.WordWrap
 
@@ -467,6 +467,15 @@ class PdfFontStream(id: Long, fontStreamName: String)(implicit itemList: ListBuf
 
   override def content: Array[Byte] = {
     val byteArray = Files.readAllBytes(Paths.get(fontStreamName))
+    val byteArray2={
+      val f = new SyncFileUtil("/home/marian/workspace/GenSNew/good2.pdf",271, StandardOpenOption.READ)
+      val bytes=f.read(8712,None)
+      bytes.rewind()
+      val nr=bytes.remaining().toInt
+      val b1 =  new Array[Byte](nr)
+      bytes.get(b1)
+      b1
+    }
     val lg = byteArray.length
     s"""${id} 0 obj
        			 | <</Length ${lg}/Length1 ${lg}>>stream
@@ -477,12 +486,17 @@ class PdfFontStream(id: Long, fontStreamName: String)(implicit itemList: ListBuf
 }
 
 class PdfFontWidths(id: Long, pdfFontStream: PdfFontStream)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-  val firstChar=0
-  val lastChar=pdfFontStream.ttfParser.getWidths.size-1
+  val withObj=pdfFontStream.ttfParser.getWidthsN
+//  val firstChar=0
+//  val lastChar=pdfFontStream.ttfParser.getWidths.size-1
+
+  val firstChar=withObj._1
+  val lastChar=withObj._2
+
   override def content: Array[Byte] = {
     s"""${id} 0 obj
 	     |[
-	     | ${pdfFontStream.ttfParser.getWidths.mkString(" ")}
+	     | ${withObj._3.mkString(" ")}
        |]
        |endobj
        |""".stripMargin.getBytes

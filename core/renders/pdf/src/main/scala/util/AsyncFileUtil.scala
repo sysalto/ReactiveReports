@@ -43,9 +43,9 @@ class AsyncFileUtil(fileName: String, options: StandardOpenOption*) {
 }
 
 
-class SyncFileUtil(fileName: String, options: StandardOpenOption*) {
+class SyncFileUtil(fileName: String,offset:Long, options: StandardOpenOption*) {
 	val fileChannel = FileChannel.open(Paths.get(fileName), options: _*)
-	private var currentPos: Long = 0
+	private var currentPos: Long = offset
 
 	def close(): Unit = {
 		fileChannel.close()
@@ -56,15 +56,16 @@ class SyncFileUtil(fileName: String, options: StandardOpenOption*) {
 		currentPos += size
 	}
 
-	def seek(size: Long): Unit = {
-		currentPos = size
+	def seek(pos: Long): Unit = {
+		currentPos = pos+offset
 	}
 
 
-	def read(size: Int, offset: Option[Long]): ByteBuffer = {
+	def read(size: Int, offsetPos: Option[Long]): ByteBuffer = {
 		val buffer = ByteBuffer.allocate(size)
-		fileChannel.read(buffer, offset.getOrElse(currentPos))
-		if (offset.isEmpty) {
+		val pos=if (offsetPos.isEmpty) currentPos else offsetPos.get+offset
+		fileChannel.read(buffer, pos)
+		if (offsetPos.isEmpty) {
 			currentPos += size
 		}
 		buffer
