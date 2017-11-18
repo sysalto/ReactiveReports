@@ -35,11 +35,11 @@ import scala.collection.mutable.ListBuffer
 
 class RectangleDsl(report: Report) {
 
-	private var x1, y1, x2, y2, dradius = 0.0f
-	private var from: RColor = _
-	private var to: RColor = _
-	private var dcolor: Option[RColor] = None
-	private var dFillColor: Option[RColor] = None
+	private[this] var x1, y1, x2, y2, dradius = 0.0f
+	private[this] var from: RColor = _
+	private[this] var to: RColor = _
+	private[this] var dcolor: Option[RColor] = None
+	private[this] var dFillColor: Option[RColor] = None
 
 	/*
 	start point of the rectangle
@@ -116,11 +116,11 @@ class TextDsl(report: Report, var rText: RText) {
 }
 
 class LineDsl(report: Report) {
-	private var fromX, fromY = 0f
-	private var toX, toY = 0f
-	private var lcolor: RColor = RColor(0, 0, 0)
-	private var lineDashType: Option[LineDashType] = None
-	private var lineWidth = 1f
+	private[this] var fromX, fromY = 0f
+	private[this] var toX, toY = 0f
+	private[this] var lcolor: RColor = RColor(0, 0, 0)
+	private[this] var lineDashType: Option[LineDashType] = None
+	private[this] var lineWidth = 1f
 
 	/*
 	start point of the line

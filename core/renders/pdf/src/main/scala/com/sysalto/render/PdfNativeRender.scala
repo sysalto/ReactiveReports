@@ -37,10 +37,10 @@ import com.sysalto.report.util.PdfUtil
   * Created by marian on 4/1/17.
   */
 class PdfNativeRender extends PdfUtil {
-  var pdfNativeGenerator: PdfNativeGenerator = null
-  var orientation = ReportPageOrientation.PORTRAIT
-  lazy val PAGE_WIDTH = if (orientation == ReportPageOrientation.PORTRAIT) 612 else 792
-  lazy val PAGE_HEIGHT = if (orientation == ReportPageOrientation.PORTRAIT) 792 else 612
+  private[this] var pdfNativeGenerator: PdfNativeGenerator = null
+  private[this] var orientation = ReportPageOrientation.PORTRAIT
+  private[this] lazy val PAGE_WIDTH = if (orientation == ReportPageOrientation.PORTRAIT) 612 else 792
+  private[this] lazy val PAGE_HEIGHT = if (orientation == ReportPageOrientation.PORTRAIT) 792 else 612
 
   override def open(name: String, orientation: ReportPageOrientation.Value): Unit = {
     new File(name).delete()

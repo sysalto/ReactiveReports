@@ -51,12 +51,12 @@ trait ResultSetUtilTrail {
 
 case class ResultSetGroup(rs: ResultSet) {
 	type RecordMap = Map[String, AnyRef]
-	private val meta = rs.getMetaData
-	private val columnList = for (i <- 1 to meta.getColumnCount) yield meta.getColumnName(i)
-	private val reportRecord = ReportRecord[RecordMap](None, None, None)
-	//	private var prevRecord: Option[RecordMap] = None
-	//	private var currentRecord: Option[RecordMap] = None
-	//	private var nextRecord: Option[RecordMap] = None
+	private[this] val meta = rs.getMetaData
+	private[this] val columnList = for (i <- 1 to meta.getColumnCount) yield meta.getColumnName(i)
+	private[this] val reportRecord = ReportRecord[RecordMap](None, None, None)
+	//	private[this] var prevRecord: Option[RecordMap] = None
+	//	private[this] var currentRecord: Option[RecordMap] = None
+	//	private[this] var nextRecord: Option[RecordMap] = None
 
 	def getRecord: RecordMap = {
 		columnList.map(column => column -> rs.getObject(column)).toMap

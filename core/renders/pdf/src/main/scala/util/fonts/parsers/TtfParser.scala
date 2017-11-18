@@ -7,44 +7,45 @@ import util.SyncFileUtil
 
 class TtfParser(fontFile: String) {
 
-	private case class TtfTable(offset: Int, length: Int)
+	case class GlyphWidth(firstChar: Short, lastChar: Short, widthList: List[Short])
 
-	private case class Head(f: SyncFileUtil, tables: Map[String, TtfTable]) {
-		private val tbl = tables.get("head").get
+	private[this] case class TtfTable(offset: Int, length: Int)
+
+	private[this] case class Head(f: SyncFileUtil, tables: Map[String, TtfTable]) {
+		private[this] val tbl = tables("head")
 		f.seek(tbl.offset + 18)
-		val unitsPerEm = f.readShort()
+		val unitsPerEm: Short = f.readShort()
 	}
 
-	private case class Hhea(f: SyncFileUtil, tables: Map[String, TtfTable]) {
-		private val tbl = tables.get("hhea").get
+	private[this] case class Hhea(f: SyncFileUtil, tables: Map[String, TtfTable]) {
+		private[this] val tbl = tables("hhea")
 		f.seek(tbl.offset + 34)
-		val numOfLongHorMetrics = f.readShort()
+		val numOfLongHorMetrics: Short = f.readShort()
 	}
 
 
-	private case class Hmtx(f: SyncFileUtil, tables: Map[String, TtfTable], size: Short, unitsPerEm: Short) {
-		private val tbl = tables.get("hmtx").get
+	private[this] case class Hmtx(f: SyncFileUtil, tables: Map[String, TtfTable], size: Short, unitsPerEm: Short) {
+		private[this] val tbl = tables("hmtx")
 		f.seek(tbl.offset)
-		val hMetrics = (for (i <- 0 until size) yield {
+		val hMetrics: List[Int] = (for (i <- 0 until size) yield {
 			val v = f.readShort()
-			f.skip(2)
-			(v * 1000 / unitsPerEm)
+			f.skipBytes(2)
+			v * 1000 / unitsPerEm
 		}).toList
 	}
 
-	private case class CMap(f: SyncFileUtil) {
+	private[this] case class CMap(f: SyncFileUtil) {
 		def getGlyphList(hMetrics: List[Int]): Map[Char, Int] = {
-			val f10 = cmapSubTables.get((1, 0)).get
+			val f10 = cmapSubTables((1, 0))
 			val glyphWidth = f10.map {
-				case (char, id) => {
+				case (char, id) =>
 					char -> hMetrics(id)
-				}
 			}
 			glyphWidth
 		}
 
 
-		private def getCMapSubTables(f: SyncFileUtil): Map[(Short, Short), Map[Char, Short]] = {
+		private[this] def getCMapSubTables(f: SyncFileUtil): Map[(Short, Short), Map[Char, Short]] = {
 			val nameRecordsCount =
 				f.readShort()
 			val ll =
@@ -60,7 +61,7 @@ class TtfParser(fontFile: String) {
 				}
 				}
 			ll1.map {
-				case ((platformId, platformEncodeId), offset) => {
+				case ((platformId, platformEncodeId), offset) =>
 					(platformId, platformEncodeId) match {
 						case (1, 0) => {
 							f.seek(tblOffset + offset)
@@ -71,14 +72,13 @@ class TtfParser(fontFile: String) {
 							(platformId, platformEncodeId) -> Map[Char, Short]()
 						}
 					}
-				}
 			}
 		}
 
-		private def readCMapFormat(format: Short): Map[Char, Short] = {
+		private[this] def readCMapFormat(format: Short): Map[Char, Short] = {
 			format match {
 				case 6 => {
-					f.skip(4)
+					f.skipBytes(4)
 					val firstChar = f.readShort().toChar
 					val charLength = f.readShort()
 					(for (i <- 0 until charLength) yield {
@@ -91,20 +91,20 @@ class TtfParser(fontFile: String) {
 		}
 
 
-		private val tbl = tables.get("cmap").get
-		private val tblOffset = tbl.offset.toLong
+		private[this] val tbl = tables("cmap")
+		private[this] val tblOffset = tbl.offset.toLong
 		f.seek(tblOffset + 2)
 		val cmapSubTables = getCMapSubTables(f)
 
 	}
 
 
-	private case class Name(f: SyncFileUtil) {
-		private val tbl = tables.get("name").get
-		private val nameOffset = tbl.offset.toLong
+	private[this] case class Name(f: SyncFileUtil) {
+		private[this] val tbl = tables("name")
+		private[this] val nameOffset = tbl.offset.toLong
 		f.seek(nameOffset + 2)
-		private val nameRecordsCount = f.readShort()
-		private val storageStart = f.readShort()
+		private[this] val nameRecordsCount = f.readShort()
+		private[this] val storageStart = f.readShort()
 		val nameList = (for (i <- 1 to nameRecordsCount) yield {
 			val platformId = f.readShort()
 			val encodingId = f.readShort()
@@ -124,12 +124,12 @@ class TtfParser(fontFile: String) {
 		}).toMap
 	}
 
-	private def getTables(f: SyncFileUtil): Map[String, TtfTable] = {
+	private[this] def getTables(f: SyncFileUtil): Map[String, TtfTable] = {
 		val numTables = f.readShort()
-		f.skip(6)
+		f.skipBytes(6)
 		val tables1 = for (i <- 1 to numTables) yield {
 			val tag = f.readString(4)
-			f.skip(4)
+			f.skipBytes(4)
 			val offset = f.readInt()
 			val length = f.readInt()
 			tag -> TtfTable(offset, length)
@@ -137,14 +137,13 @@ class TtfParser(fontFile: String) {
 		tables1.toMap
 	}
 
-	def getFontName: String = name.nameList.get(4).get
+	def getFontName: String = name.nameList(4)
 
-	def getWidths: List[Int] = hmtx.hMetrics //.map(f=>f+500)
-	def getWidthsN: (Short,Short,List[Short]) = {
-		val l1=cmap.getGlyphList(hmtx.hMetrics)
-		val keyset=l1.keySet
-		val min=keyset.min.toShort
-		val max=keyset.max.toShort
+	def getWidthsN: GlyphWidth = {
+		val l1 = cmap.getGlyphList(hmtx.hMetrics)
+		val keyset = l1.keySet
+		val min = keyset.min.toShort
+		val max = keyset.max.toShort
 		val l3 = l1.map {
 			case (key, value) => (key.toInt, value)
 		}.toList.sortBy {
@@ -152,13 +151,13 @@ class TtfParser(fontFile: String) {
 		}.map {
 			case (key, value) => value.toShort
 		}
-		(min,max,l3)
+		GlyphWidth(min, max, l3)
 	}
 
 
 	def test() {
 		val f = new SyncFileUtil("/home/marian/workspace/GenSNew/good2.pdf", 271, StandardOpenOption.READ)
-		f.skip(4)
+		f.skipBytes(4)
 		val tables = getTables(f)
 		println(tables.mkString("\n"))
 		val head = Head(f, tables)
@@ -170,37 +169,17 @@ class TtfParser(fontFile: String) {
 	}
 
 
-	private val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
-	f.skip(4)
-	private val tables = getTables(f)
-	private val head = Head(f, tables)
-	private val hhea = Hhea(f, tables)
-	private val hmtx = Hmtx(f, tables, hhea.numOfLongHorMetrics, head.unitsPerEm)
-	private val cmap = CMap(f)
-	private val name = Name(f)
+	private[this] val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
+	f.skipBytes(4)
+	private[this] val tables = getTables(f)
+	private[this] val head = Head(f, tables)
+	private[this] val hhea = Hhea(f, tables)
+	private[this] val hmtx = Hmtx(f, tables, hhea.numOfLongHorMetrics, head.unitsPerEm)
+	private[this] val cmap = CMap(f)
+	private[this] val name = Name(f)
 }
 
 object TtfParser {
-
-
-
-	def test1(): Unit = {
-		val name = "/home/marian/workspace/GenSNew/good2.pdf"
-		//		val name="/home/marian/workspace/ReactiveReports/Test.pdf"
-		//		val name="/home/marian/transfer/font/Roboto-Regular.ttf"
-		val f = new SyncFileUtil(name, 271, StandardOpenOption.READ)
-		f.skip(4)
-		val numTables = f.readShort()
-		f.skip(6)
-		val tables1 = for (i <- 1 to numTables) yield {
-			val tag = f.readString(4)
-			f.skip(4)
-			val offset = f.readInt()
-			val length = f.readInt()
-			println(tag)
-		}
-	}
-
 	def main(args: Array[String]): Unit = {
 		//test()
 	}

@@ -8,51 +8,17 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
-class AsyncFileUtil(fileName: String, options: StandardOpenOption*) {
-	val fileChannel = AsynchronousFileChannel.open(Paths.get(fileName), options: _*)
-
-	def close(): Unit = {
-		fileChannel.close()
-	}
-
-	def read(buffer: ByteBuffer, offset: Long): Future[Int] = Future {
-		fileChannel.read(buffer, offset).get
-	}
-
-	def read(size: Int, offset: Long): Future[ByteBuffer] = Future {
-		val buffer = ByteBuffer.allocate(size)
-		fileChannel.read(buffer, offset).get
-		buffer
-	}
-
-	def readShort(offset: Long): Future[Short] = {
-		read(2, offset).map(bytes => bytes.getShort(0))
-	}
-
-	def readInt(offset: Long): Future[Int] = {
-		read(4, offset).map(bytes => bytes.getInt(0))
-	}
-
-	def readString(size: Int, offset: Long): Future[String] = {
-		read(size, offset).map(bytes => {
-			bytes.rewind()
-			val l = for (i <- 1 to size) yield bytes.get.toChar
-			l.mkString("")
-		})
-	}
-}
-
 
 class SyncFileUtil(fileName: String,offset:Long, options: StandardOpenOption*) {
-	val fileChannel = FileChannel.open(Paths.get(fileName), options: _*)
-	private var currentPos: Long = offset
+	private[this] val fileChannel = FileChannel.open(Paths.get(fileName), options: _*)
+	private[this] var currentPos: Long = offset
 
 	def close(): Unit = {
 		fileChannel.close()
 	}
 
 
-	def skip(size: Long): Unit = {
+	def skipBytes(size: Long): Unit = {
 		currentPos += size
 	}
 
@@ -92,41 +58,4 @@ class SyncFileUtil(fileName: String,offset:Long, options: StandardOpenOption*) {
 	}
 }
 
-object AsyncFileUtil {
 
-
-	def test(): Unit = {
-		val myFile = "/home/marian/transfer/tahoma.ttf"
-		val fileChannel = AsynchronousFileChannel.open(Paths.get(myFile), StandardOpenOption.READ)
-		import java.nio.ByteBuffer
-		val buffer = ByteBuffer.allocate(100)
-		val operation = fileChannel.read(buffer, 0)
-		val op = Future {
-			operation.get
-		}
-		Await.result(op, Duration.Inf)
-		val arr = buffer.array()
-		println("OK")
-	}
-
-	def test1(): Unit = {
-		val f = new AsyncFileUtil("/home/marian/transfer/tahoma.ttf", StandardOpenOption.READ)
-		val buffer = ByteBuffer.allocate(100)
-		val op = f.read(buffer, 0)
-		Await.result(op, Duration.Inf)
-		val arr = buffer.array()
-		println("OK")
-	}
-
-	//  def test2(): Unit = {
-	//    val f = new AsyncFileUtil("/home/marian/transfer/tahoma.ttf", StandardOpenOption.READ)
-	//    val op = f.read(100, Some(0))
-	//    val res = Await.result(op, Duration.Inf)
-	//    println("OK")
-	//  }
-
-	def main(args: Array[String]): Unit = {
-		//    test2()
-	}
-
-}

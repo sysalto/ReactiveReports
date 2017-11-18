@@ -42,15 +42,15 @@ import scala.collection.JavaConverters._
 	* @param pdfFactory - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 	*/
 case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT)(implicit pdfFactory: PdfFactory) {
-	private var pageNbrs = 1L
-	private var crtPageNbr = 1L
-	private val crtPage = ReportPage(new ListBuffer[ReportItem]())
-	private val db = RockDbUtil()
-	private var fontSize = 10
+	private[this] var pageNbrs = 1L
+	private[this] var crtPageNbr = 1L
+	private[this] val crtPage = ReportPage(new ListBuffer[ReportItem]())
+	private[this] val db = RockDbUtil()
+	private[this] var fontSize = 10
 	private[report] val pdfUtil = pdfFactory.getPdf
 
 
-	private var crtYPosition = 0f
+	private[this] var crtYPosition = 0f
 
 	/** header callback
 		*  first param - current page
@@ -82,7 +82,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	var getFooterSize: Long => Float = { _ => 0 }
 
 
-	private def switchPages(newPage: Long): Unit = {
+	private[this] def switchPages(newPage: Long): Unit = {
 		if (newPage > pageNbrs + 1) {
 			throw new Exception(s"$newPage > ${pageNbrs + 1}")
 		}
@@ -104,7 +104,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtYPosition = pdfUtil.pgSize.height - getHeaderSize(newPage)
 	}
 
-	private def newPageInternal(): Unit = {
+	private[this] def newPageInternal(): Unit = {
 		pdfUtil.newPage()
 
 		setFontSize(fontSize)
@@ -240,7 +240,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	close the report.
 	 */
-	private def close(): Unit = {
+	private[this] def close(): Unit = {
 		pdfUtil.close()
 		db.close()
 	}

@@ -53,20 +53,20 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
     file.listFiles().foreach(file => file.delete())
   }
 
-  private val options = new Options().setCreateIfMissing(true)
-  private val file = File.createTempFile(prefix, extension, new File(dbFolder))
+  private[this] val options = new Options().setCreateIfMissing(true)
+  private[this] val file = File.createTempFile(prefix, extension, new File(dbFolder))
 
   RocksDB.loadLibrary()
   file.delete
-  private val db = RocksDB.open(options, file.getAbsolutePath)
+  private[this] val db = RocksDB.open(options, file.getAbsolutePath)
 }
 
 object RockDbUtil {
 
-  private val persistence = ConfigFactory.load("persistence")
-  private val dbFolder = persistence.getString("persistence.folder")
-  private val prefix = persistence.getString("persistence.prefix")
-  private val extension = persistence.getString("persistence.extension")
+  private[this] val persistence = ConfigFactory.load("persistence")
+  private[this] val dbFolder = persistence.getString("persistence.folder")
+  private[this] val prefix = persistence.getString("persistence.prefix")
+  private[this] val extension = persistence.getString("persistence.extension")
 
   def apply(): RockDbUtil = new RockDbUtil(prefix, extension, dbFolder)
 

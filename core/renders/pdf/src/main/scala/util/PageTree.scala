@@ -35,11 +35,11 @@ import scala.collection.mutable.ListBuffer
   */
 object PageTree {
 
-  val MAX_NBR = 25
-  var leafList: List[Long] = List()
+  private[this] val MAX_NBR = 25
+  private[this]  var leafList: List[Long] = List()
 
 
-  def make(list: List[Long]): List[Long] = {
+  private[this] def make(list: List[Long]): List[Long] = {
     leafList = list
     build(list.size)
   }
@@ -55,7 +55,7 @@ object PageTree {
   }
 
 
-  def displayRow(leafNbr: Long, parentList: List[Long], objNbrList: List[Long], childrenList: List[Long],
+  private[this]  def displayRow(leafNbr: Long, parentList: List[Long], objNbrList: List[Long], childrenList: List[Long],
                  isLeaf: Boolean, level: Long)
                 (writeNode: (Option[Long], Long, List[Long], Long, Boolean) => Unit): Unit = {
     val l1 = objNbrList.zipWithIndex.groupBy {
@@ -94,7 +94,7 @@ object PageTree {
   }
 
 
-  def display(leafNbr: Long, parentList: List[Long], list: List[Long], objectNbrList: Option[List[Long]] = None)
+  private[this]  def display(leafNbr: Long, parentList: List[Long], list: List[Long], objectNbrList: Option[List[Long]] = None)
              (getNextNumberFct: () => Long)(writeNode: (Option[Long], Long, List[Long], Long, Boolean) => Unit): Unit = {
     if (list.isEmpty) {
       val objNbrList = leafList
@@ -121,7 +121,7 @@ object PageTree {
     display(leafNbr, objNbrList, list.tail, Some(childrenList1))(getNextNumberFct)(writeNode)
   }
 
-  def getLeafNbr(leafNbr: Long, level: Long, totalChildNbr: Long, childNbr: Long, isRightNode: Boolean): Long = {
+  private[this]  def getLeafNbr(leafNbr: Long, level: Long, totalChildNbr: Long, childNbr: Long, isRightNode: Boolean): Long = {
     if (!isRightNode) Math.pow(MAX_NBR.toDouble, level.toDouble).toLong
     else {
       leafNbr
@@ -129,7 +129,7 @@ object PageTree {
   }
 
 
-  class Node(var id: Long, var parent: Option[Node] = None, var children: List[Node] = List())
+  private[this]  class Node(var id: Long, var parent: Option[Node] = None, var children: List[Node] = List())
 
 
   def generatePdfCode(pageList: List[PdfPage])(getNextNumberFct: () => Long)(implicit result: ListBuffer[PdfBaseItem]): PdfPageList = {

@@ -33,9 +33,9 @@ import com.sysalto.render.basic.PdfBasic._
 object PdfChart {
 
 	//http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
-	val rnd = new scala.util.Random
+	private[this] val rnd = new scala.util.Random
 
-	private def randomColor(): RColor = {
+	private[this] def randomColor(): RColor = {
 		def hsvToRgb(h: Double, s: Double, v: Double): RColor = {
 			val h1 = (h * 6).floor.toInt
 			val f = h * 6 - h1
@@ -59,7 +59,7 @@ object PdfChart {
 		hsvToRgb((h + goldenRatio) % 1, 1, 0.95)
 	}
 
-	private def getColor(i:Int,total:Int):RColor=RColor((256.0*i/total).toInt,(256.0*(256.0-i)/total).toInt,(256.0*(256.0-i)/total).toInt)
+	private[this] def getColor(i:Int,total:Int):RColor=RColor((256.0*i/total).toInt,(256.0*(256.0-i)/total).toInt,(256.0*(256.0-i)/total).toInt)
 
 	def pieChart(pdfgenerator:PdfNativeGenerator,title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): String = {
 		def getPoint(center: DrawPoint, radius: Float, angle: Float): DrawPoint =

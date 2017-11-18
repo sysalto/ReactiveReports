@@ -45,7 +45,7 @@ trait  ScalaReportUtil {
   implicit def stringToRText(txt: String): RText = RText(txt, RFont(10))
 
 
-  private def getFormatter(localeCode: String) = {
+  private[this] def getFormatter(localeCode: String) = {
     val locale = new _root_.java.util.Locale(localeCode)
     _root_.java.text.NumberFormat.getNumberInstance(locale)
   }

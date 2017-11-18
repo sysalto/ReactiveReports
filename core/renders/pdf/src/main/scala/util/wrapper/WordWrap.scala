@@ -177,7 +177,7 @@ object WordWrap {
 		}
 	}
 
-	private def wordWrapInternal(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
+	private[this] def wordWrapInternal(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
 
 		// function that calculate the size of a string including spaces
 		def size(l: List[Float], font: RFont): Float = {
@@ -238,7 +238,7 @@ object WordWrap {
 	}
 
 	@tailrec
-	private def wordWrapT(input: List[RText], max: Float, accum: ListBuffer[List[RTextPos]])(implicit wordSeparators: List[Char]): Unit = {
+	private[this] def wordWrapT(input: List[RText], max: Float, accum: ListBuffer[List[RTextPos]])(implicit wordSeparators: List[Char]): Unit = {
 		val i1 = input.indexWhere(item => item.txt.contains("\n"))
 		if (i1 == -1) {
 			accum ++= wordWrapInternal(input, max)
