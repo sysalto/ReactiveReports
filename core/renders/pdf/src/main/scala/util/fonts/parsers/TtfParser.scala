@@ -28,8 +28,8 @@ class TtfParser(fontFile: String) {
 		val hMetrics = (for (i <- 0 until size) yield {
 			val v = f.readShort()
 			f.skip(2)
-//			(v * 1000 / unitsPerEm).toInt
-			v.toInt
+			(v * 1000 / unitsPerEm).toInt
+//			v.toInt
 		}).toList
 	}
 
@@ -43,6 +43,9 @@ class TtfParser(fontFile: String) {
 			println("ok1")
 			null
 		}
+
+
+
 
 		private def getCMapSubTables(): Map[(Short, Short), Map[Char, Short]] = {
 			val nameRecordsCount =
@@ -124,6 +127,13 @@ class TtfParser(fontFile: String) {
 		}).toMap
 	}
 
+
+	private case class Kern() {
+		private val tbl = tables.get("kern").get
+		f.seek(tbl.offset + 18)
+		val unitsPerEm = f.readShort()
+	}
+
 	private def getTables(): Map[String, TtfTable] = {
 		val numTables = f.readShort()
 		f.skip(6)
@@ -139,7 +149,7 @@ class TtfParser(fontFile: String) {
 
 	def getFontName: String = name.nameList.get(4).get
 
-	def getWidths:List[Int]=hmtx.hMetrics
+	def getWidths:List[Int]=hmtx.hMetrics.map(f=>f+300)
 
 	def readTTf(): Unit = {
 
@@ -163,18 +173,20 @@ class TtfParser(fontFile: String) {
 	private val f = new SyncFileUtil(fontFile, StandardOpenOption.READ)
 	f.skip(4)
 	private val tables = getTables()
+	println(tables.keySet.mkString("\n"))
 	private val head = Head()
 	private val hhea = Hhea()
 	private val hmtx = Hmtx(hhea.numOfLongHorMetrics, head.unitsPerEm)
 	private val cmap = CMap()
 	private val name = Name()
+	private val kern=Kern()
 }
 
 object TtfParser {
 
 	def test(): Unit = {
 		val ttfParser = new TtfParser("/home/marian/transfer/font/Roboto-Regular.ttf")
-		val l1=ttfParser.getWidths.slice(0,20)
+		val l1=ttfParser.getWidths.slice(37,38)
 		println(l1.mkString("\n"))
 		//ttfParser.readTTf()
 	}

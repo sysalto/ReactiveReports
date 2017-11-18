@@ -549,7 +549,7 @@ class PdfText(txtList: List[PdfTxtChuck])
       s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
          				 |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
          				 |  ${color._1} ${color._2} ${color._3} rg
-         				 |        ( ${item.rtext.txt} ) Tj
+         				 |        (${item.rtext.txt}) Tj
        """.stripMargin
 
     val s2 = firstItemTxt + txtListSimple.tail.zipWithIndex.map {
