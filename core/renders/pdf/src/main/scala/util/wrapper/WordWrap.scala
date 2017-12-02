@@ -59,7 +59,7 @@ object WordWrap {
 
 	}
 
-	val fontAfmParser=new AfmParser()
+	//val fontAfmParser=new AfmParser("Helvetica")
 
 	//implicit val glypList = fontAfmParser.parseGlyph()
 
@@ -81,14 +81,16 @@ object WordWrap {
 
 	def getWordSize(word: Word): Float = {
 		word.charList.foldLeft(0.toFloat)((total, char) => {
-			val fontMetric = fontAfmParser.parseFont(char.font.fontKeyName)
-			total + fontAfmParser.getCharWidth(char.char, fontMetric) * char.font.size
+			val afmParser=new AfmParser((char.font.fontKeyName))
+			val fontMetric = afmParser.fontAfmMetric
+			total + afmParser.getCharWidth(char.char, fontMetric) * char.font.size
 		})
 	}
 
 	def getCharSize(char: CharF): Float = {
-		val fontMetric = fontAfmParser.parseFont(char.font.fontKeyName)
-		fontAfmParser.getCharWidth(char.char, fontMetric) * char.font.size
+		val afmParser=new AfmParser((char.font.fontKeyName))
+		val fontMetric = afmParser.fontAfmMetric
+		afmParser.getCharWidth(char.char, fontMetric) * char.font.size
 	}
 
 	def splitAtMax(item: Word, max: Float): (Word, Word) = {

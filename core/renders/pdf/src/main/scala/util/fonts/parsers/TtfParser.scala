@@ -24,10 +24,10 @@ class TtfParser(fontFile: String) extends AbstractFontParser {
 		f.seek(tbl.offset + 18)
 		val unitsPerEm: Short = f.readShort()
 		f.skipBytes(16)
-		val xMin = f.readShort()
-		val yMin = f.readShort()
-		val xMax = f.readShort()
-		val yMax = f.readShort()
+		val xMin:Short = f.readShort()
+		val yMin:Short = f.readShort()
+		val xMax:Short = f.readShort()
+		val yMax:Short = f.readShort()
 	}
 
 	private[this] case class Hhea(f: SyncFileUtil) {
@@ -193,12 +193,6 @@ class TtfParser(fontFile: String) extends AbstractFontParser {
 		(number * 1000 / head.unitsPerEm).toShort
 	}
 
-
-
-
-
-
-	override def parseFont(fontName: String): FontAfmMetric = ???
 
 	override def getCharWidth(char: Char, fontMetric: FontAfmMetric): Float = ???
 
