@@ -424,11 +424,11 @@ endobj
 				 				 | << /Type/Font
 				 				 |   /Subtype/TrueType
 				 				 |   /BaseFont/${fontKeyName}
-				 				 |   /Encoding/WinAnsiEncoding
 				 				 |   /FirstChar ${pdfFontWidths.firstChar}
 				 				 |   /LastChar ${pdfFontWidths.lastChar}
 				 				 |   /Widths ${pdfFontWidths.id} 0 R
 				 				 |   /FontDescriptor ${embeddedDefOpt.get.pdfFontDescriptor.id} 0 R
+				         |   /Encoding/WinAnsiEncoding
 				 				 |   >>
 				 				 |endobj
 				 				 |""".stripMargin.getBytes
@@ -481,15 +481,16 @@ class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: Str
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 			 |    <</Type/FontDescriptor
+			       |    /FontName/${fontKeyName}
+			       |    /Flags ${pdfFontStream.ttfParser.fontDescriptor.flags}
+			       |    /FontBBox[${pdfFontStream.ttfParser.fontDescriptor.fontBBox}]
+						 |    /ItalicAngle ${pdfFontStream.ttfParser.fontDescriptor.italicAngle}
 			 			 |    /Ascent ${pdfFontStream.ttfParser.fontDescriptor.ascent}
+			       |    /Descent ${pdfFontStream.ttfParser.fontDescriptor.descent}
 			 			 |    /CapHeight ${pdfFontStream.ttfParser.fontDescriptor.capHeight}
-			 			 |    /Descent -270
-			 			 |    /FontBBox[-478 -270 1169 1058]
-			 			 |    /FontName/${fontKeyName}
-			 			 |    /ItalicAngle 0
-			 			 |    /StemV 80
+			 			 |    /StemV 0
 			 			 |    /FontFile2 ${pdfFontStream.id} 0 R
-			 			 |    /Flags 32>>
+			 			 |>>
 			 			 |endobj
 			 			 |""".stripMargin.getBytes
 	}
