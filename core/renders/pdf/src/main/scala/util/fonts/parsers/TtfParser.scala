@@ -7,6 +7,8 @@ import util.SyncFileUtil
 
 class TtfParser(fontFile: String) {
 
+	case class FontDescriptor(ascent:Short)
+
 	case class GlyphWidth(firstChar: Short, lastChar: Short, widthList: List[Short])
 
 	private[this] case class TtfTable(offset: Int, length: Int)
@@ -19,10 +21,18 @@ class TtfParser(fontFile: String) {
 
 	private[this] case class Hhea(f: SyncFileUtil, tables: Map[String, TtfTable]) {
 		private[this] val tbl = tables("hhea")
+		f.seek(tbl.offset + 4)
+		val ascent  = f.readShort()
 		f.seek(tbl.offset + 34)
-		val numOfLongHorMetrics: Short = f.readShort()
+		val numOfLongHorMetrics = f.readShort()
 	}
 
+
+	private[this] case class Os2(f: SyncFileUtil) {
+		private[this] val tbl = tables("OS/2")
+		f.seek(tbl.offset+68)
+		val sTypoAscender=f.readShort()
+	}
 
 	private[this] case class Hmtx(f: SyncFileUtil, tables: Map[String, TtfTable], size: Short, unitsPerEm: Short) {
 		private[this] val tbl = tables("hmtx")
@@ -172,16 +182,20 @@ class TtfParser(fontFile: String) {
 	private[this] val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
 	f.skipBytes(4)
 	private[this] val tables = getTables(f)
+	println(tables.mkString("\n"))
 	private[this] val head = Head(f, tables)
 	private[this] val hhea = Hhea(f, tables)
 	private[this] val hmtx = Hmtx(f, tables, hhea.numOfLongHorMetrics, head.unitsPerEm)
 	private[this] val cmap = CMap(f)
 	private[this] val name = Name(f)
+	private[this] val os2 = Os2(f)
+	val fontDescriptor=FontDescriptor((os2.sTypoAscender*1000/head.unitsPerEm).toShort)
 }
 
 object TtfParser {
 	def main(args: Array[String]): Unit = {
-		//test()
+		val ttfParser=new TtfParser("/home/marian/transfer/font/Roboto-Regular.ttf")
+		ttfParser.test()
 	}
 
 }

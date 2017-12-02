@@ -481,7 +481,7 @@ class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: Str
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 			 |    <</Type/FontDescriptor
-			 			 |    /Ascent 1047
+			 			 |    /Ascent ${pdfFontStream.ttfParser.fontDescriptor.ascent}
 			 			 |    /CapHeight 710
 			 			 |    /Descent -270
 			 			 |    /FontBBox[-478 -270 1169 1058]

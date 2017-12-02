@@ -48,12 +48,12 @@ trait AkkaGroupUtil {
 
 
 class GroupTransform[T] extends GraphStage[FlowShape[T, ReportRecord[T]]] {
-	private val in = Inlet[T]("GroupTransform.in")
-	private val out = Outlet[ReportRecord[T]]("GroupTransform.out")
+	private[this] val in = Inlet[T]("GroupTransform.in")
+	private[this] val out = Outlet[ReportRecord[T]]("GroupTransform.out")
 	override val shape: FlowShape[T, ReportRecord[T]] = FlowShape.of(in, out)
 
 	override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
-		private var prev: Option[T] = None
+		private[this] var prev: Option[T] = None
 		private var next: Option[T] = None
 		private var crt: Option[T] = None
 		setHandler(out, new OutHandler {

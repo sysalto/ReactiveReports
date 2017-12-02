@@ -97,8 +97,8 @@ case class Row(left: Float, right: Float, columns: List[Column]) {
     ).toMap
   }
 
-  private lazy val columnsBounds = calculate()
-  private lazy val columnNameList = columnsBounds.keySet.toList.sortBy(name => name)
+  private[this] lazy val columnsBounds = calculate()
+  private[this] lazy val columnNameList = columnsBounds.keySet.toList.sortBy(name => name)
 
 
   def getColumnBound(columnName: String): RMargin = {
