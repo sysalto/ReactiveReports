@@ -1,11 +1,10 @@
 package util.fonts.parsers
 
-import java.io.FileOutputStream
 import java.nio.file.StandardOpenOption
 
 import util.SyncFileUtil
 
-class TtfParser(fontFile: String) {
+class TtfParser(fontFile: String) extends AbstractFontParser {
 
 	case class FontBBox(lowerLeftX: Short, lowerLeftY: Short, upperRightX: Short, upperRightY: Short) {
 		override def toString: String = {
@@ -196,10 +195,16 @@ class TtfParser(fontFile: String) {
 
 
 
+
+
+
+	override def parseFont(fontName: String): FontAfmMetric = ???
+
+	override def getCharWidth(char: Char, fontMetric: FontAfmMetric): Float = ???
+
 	private[this] val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
 	f.skipBytes(4)
 	private[this] val tables = getTables(f)
-		println(tables.mkString("\n"))
 	private[this] val head = Head(f)
 	private[this] val hhea = Hhea(f)
 	private[this] val hmtx = Hmtx(f) //, hhea.numOfLongHorMetrics, head.unitsPerEm)

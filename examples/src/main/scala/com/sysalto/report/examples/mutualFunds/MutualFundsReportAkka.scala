@@ -57,11 +57,11 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     report.nextLine()
     report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 45, 100, 40)
 
-    report print (RCell("Investment statement" size 15 bold()) rightAlign() between RMargin(0, report.pgSize.width - 10))
+    report print (RCell("Investment statement" size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
     report.nextLine()
 
     val str = sd.format(date1) + " to " + sd.format(date2)
-    report print (RCell(str size 15 bold()) rightAlign() between RMargin(0, report.pgSize.width - 10))
+    report print (RCell(str size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
     report.nextLine(2)
     report print ("Mutual Funds Inc." bold()) at 10
     report.nextLine()
@@ -76,9 +76,9 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     report.nextLine()
     report print (record value "addr3").toString at 10
     report.setYPosition(y)
-    report print (RCell("Beneficiary information" bold()) rightAlign() between RMargin(0, report.pgSize.width - 10))
+    report print (RCell("Beneficiary information" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
     report.nextLine()
-    report print (RCell((record value "benef_name").toString)  rightAlign() between RMargin(0, report.pgSize.width - 10))
+    report print (RCell((record value "benef_name").toString)  rightAlign() inside RMargin(0, report.pgSize.width - 10))
     report.nextLine(2)
   }
 
@@ -94,11 +94,11 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     val value2 = row.getColumnBound("value2")
     val change = row.getColumnBound("change")
     val graphic = row.getColumnBound("graphic")
-    val c_fundName = RCell("Summary of investments" bold() color headerFontColor) leftAlign() between fundName
-    val c_value1 = RCell(s"Value on\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() between value1
-    val c_value2 = RCell(s"Value on\n${sd.format(date2)}($$)" bold() color headerFontColor) rightAlign() between value2
-    val c_change = RCell(s"Change($$)" bold() color headerFontColor) rightAlign() between change
-    val c_graphic = RCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAlign() between graphic
+    val c_fundName = RCell("Summary of investments" bold() color headerFontColor) leftAlign() inside fundName
+    val c_value1 = RCell(s"Value on\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() inside value1
+    val c_value2 = RCell(s"Value on\n${sd.format(date2)}($$)" bold() color headerFontColor) rightAlign() inside value2
+    val c_change = RCell(s"Change($$)" bold() color headerFontColor) rightAlign() inside change
+    val c_graphic = RCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAlign() inside graphic
     val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change, c_graphic))
     val y2 = rrow.calculate(report)
     report rectangle() from(9, report.getY-report.lineHeight) radius (3) to(report.pgSize.width - 9, y2+2) fillColor headerColor draw()
@@ -124,10 +124,10 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
             firstY = report.getY
           }
           val crtRec = GroupUtil.getRec(rec)
-          val c_fundName = RCell(RText(firstChar.asInstanceOf[Char].toString + " ").bold() + (crtRec value "fund_name").toString) leftAlign() between fundName
+          val c_fundName = RCell(RText(firstChar.asInstanceOf[Char].toString + " ").bold() + (crtRec value "fund_name").toString) leftAlign() inside fundName
 
-          val c_value1 = RCell((crtRec value "value1").toString) rightAlign() between value1
-          val c_value2 = RCell((crtRec value "value2").toString) rightAlign() between value2
+          val c_value1 = RCell((crtRec value "value1").toString) rightAlign() inside value1
+          val c_value2 = RCell((crtRec value "value2").toString) rightAlign() inside value2
           val val1 = (crtRec value "value1").toString
           val val2 = (crtRec value "value2").toString
           val v_change = val2.toFloat - val1.toFloat
@@ -135,7 +135,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
           total2 += val2.toFloat
           total3 += v_change
           chartData += (firstChar.asInstanceOf[Char].toString -> total2.toDouble)
-          val c_change = RCell(v_change.toString) rightAlign() between change
+          val c_change = RCell(v_change.toString) rightAlign() inside change
           val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change))
           val y2 = rrow.calculate(report)
           rrow.print(report)
@@ -155,8 +155,8 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     Await.ready(result1, Duration.Inf)
     rs.close()
 
-    val trow = RRow(List(RCell("Total" bold()) between fundName, RCell(total1.toString bold()) rightAlign() between value1,
-      RCell(total2.toString bold()) rightAlign() between value2, RCell(total3.toString bold()) rightAlign() between change))
+    val trow = RRow(List(RCell("Total" bold()) inside fundName, RCell(total1.toString bold()) rightAlign() inside value1,
+      RCell(total2.toString bold()) rightAlign() inside value2, RCell(total3.toString bold()) rightAlign() inside change))
     trow.print(report)
     val chartHeight = report.getY - firstY
     report.drawPieChart("", chartData.toList, graphic.left + 5, firstY , graphic.right - graphic.left - 10, chartHeight)
@@ -171,10 +171,10 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     val value1 = row.getColumnBound("value1")
     val value2 = row.getColumnBound("value2")
     val value3 = row.getColumnBound("value3")
-    val accountHdr = RCell("Change in the value of account" bold() color headerFontColor) leftAlign() between account
-    val value1Hdr = RCell("This period($)" bold() color headerFontColor) rightAlign() between value1
-    val value2Hdr = RCell("Year-to-date($)" bold() color headerFontColor) rightAlign() between value2
-    val value3Hdr = RCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() between value3
+    val accountHdr = RCell("Change in the value of account" bold() color headerFontColor) leftAlign() inside account
+    val value1Hdr = RCell("This period($)" bold() color headerFontColor) rightAlign() inside value1
+    val value2Hdr = RCell("Year-to-date($)" bold() color headerFontColor) rightAlign() inside value2
+    val value3Hdr = RCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() inside value3
     val rrow = RRow(List(accountHdr, value1Hdr, value2Hdr, value3Hdr))
     val y2 = rrow.calculate(report)
     report rectangle() from(9, report.getY-report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
@@ -192,10 +192,10 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
           val r_value1 = (crtRec value "value1").toString
           val r_value2 = (crtRec value "value2").toString
           val r_value3 = (crtRec value "value3").toString
-          val c_account = RCell(name) leftAlign() between account
-          val c_value1 = RCell(r_value1) rightAlign() between value1
-          val c_value2 = RCell(r_value2) rightAlign() between value2
-          val c_value3 = RCell(r_value3) rightAlign() between value3
+          val c_account = RCell(name) leftAlign() inside account
+          val c_value1 = RCell(r_value1) rightAlign() inside value1
+          val c_value2 = RCell(r_value2) rightAlign() inside value2
+          val c_value3 = RCell(r_value3) rightAlign() inside value3
           total1 += r_value1.toFloat
           total2 += r_value2.toFloat
           total3 += r_value3.toFloat
@@ -215,10 +215,10 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
 
     Await.ready(result1, Duration.Inf)
     rs.close()
-    val accountSum = RCell(s"Value of  account on ${sd.format(date2)}" bold()) leftAlign() between account
-    val value1Sum = RCell(total1.toString bold()) rightAlign() between value1
-    val value2Sum = RCell(total2.toString bold()) rightAlign() between value2
-    val value3Sum = RCell(total3.toString bold()) rightAlign() between value3
+    val accountSum = RCell(s"Value of  account on ${sd.format(date2)}" bold()) leftAlign() inside account
+    val value1Sum = RCell(total1.toString bold()) rightAlign() inside value1
+    val value2Sum = RCell(total2.toString bold()) rightAlign() inside value2
+    val value3Sum = RCell(total3.toString bold()) rightAlign() inside value3
     val frow = RRow(List(accountSum, value1Sum, value2Sum, value3Sum))
     val y3 = frow.calculate(report)
     frow.print(report)
@@ -246,13 +246,13 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     val annualized = row.getColumnBound("annualized")
     report.nextLine(3)
 
-    val h_accountPerf = RCell("Account performance" bold() color headerFontColor) leftAlign() between accountPerf
-    val h_value3m = RCell("3 Months (%)" bold() color headerFontColor) rightAlign() between value3m
-    val h_value1y = RCell("1 Year (%)" bold() color headerFontColor) rightAlign() between value1y
-    val h_value3y = RCell("3 Years (%)" bold() color headerFontColor) rightAlign() between value3y
-    val h_value5y = RCell("5 Years (%)" bold() color headerFontColor) rightAlign() between value5y
-    val h_value10y = RCell("10 Years (%)" bold() color headerFontColor) rightAlign() between value10y
-    val h_annualized = RCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAlign() between annualized
+    val h_accountPerf = RCell("Account performance" bold() color headerFontColor) leftAlign() inside accountPerf
+    val h_value3m = RCell("3 Months (%)" bold() color headerFontColor) rightAlign() inside value3m
+    val h_value1y = RCell("1 Year (%)" bold() color headerFontColor) rightAlign() inside value1y
+    val h_value3y = RCell("3 Years (%)" bold() color headerFontColor) rightAlign() inside value3y
+    val h_value5y = RCell("5 Years (%)" bold() color headerFontColor) rightAlign() inside value5y
+    val h_value10y = RCell("10 Years (%)" bold() color headerFontColor) rightAlign() inside value10y
+    val h_annualized = RCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAlign() inside annualized
     val hrow = RRow(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
     val y1 = hrow.calculate(report)
     report rectangle() from(9, report.getY-report.lineHeight) radius (3) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
@@ -260,13 +260,13 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     report.setYPosition(y1)
     report.nextLine()
 
-    val r_accountPerf = RCell("Your personal rate of return") leftAlign() between accountPerf
-    val r_value3m = RCell((record value "value3m").toString) rightAlign() between value3m
-    val r_value1y = RCell((record value "value1y").toString) rightAlign() between value1y
-    val r_value3y = RCell((record value "value3y").toString) rightAlign() between value3y
-    val r_value5y = RCell((record value "value5y").toString) rightAlign() between value5y
-    val r_value10y = RCell((record value "value10y").toString) rightAlign() between value10y
-    val r_annualized = RCell((record value "annualized").toString) rightAlign() between annualized
+    val r_accountPerf = RCell("Your personal rate of return") leftAlign() inside accountPerf
+    val r_value3m = RCell((record value "value3m").toString) rightAlign() inside value3m
+    val r_value1y = RCell((record value "value1y").toString) rightAlign() inside value1y
+    val r_value3y = RCell((record value "value3y").toString) rightAlign() inside value3y
+    val r_value5y = RCell((record value "value5y").toString) rightAlign() inside value5y
+    val r_value10y = RCell((record value "value10y").toString) rightAlign() inside value10y
+    val r_annualized = RCell((record value "annualized").toString) rightAlign() inside annualized
 
     val rrow = RRow(List(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized))
     val y2 = rrow.calculate(report)
@@ -295,7 +295,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
         "Per iriure latine regione ei, libris maiorum sensibus ne qui, te iisque deseruisse nam. Cu mel doming ocurreret, quot rebum volumus an per. Nec laudem partem recusabo in, ei animal luptatum mea. Atqui possim deterruisset qui at, cu dolore intellegebat vim. Sit ad intellegebat vituperatoribus, eu dolores salutatus qui, mei at suas option suscipit. Veniam quodsi patrioque cu qui, ornatus voluptua neglegentur cum eu.",
         "Ea sit brute atqui soluta, qui et mollis eleifend elaboraret. Nec ex tritani repudiare. Ne ornatus salutandi disputationi eos. Sed possit omnesque disputationi et, nominavi recusabo vix in, tota recusabo sententiae et cum. Mei cu ipsum euripidis philosophia, vel homero verterem instructior ex.")
         txtList.foreach( txt=>{
-          val cell=RCell(txt) between RMargin(10, report.pgSize.width - 10)
+          val cell=RCell(txt) inside RMargin(10, report.pgSize.width - 10)
           val box = cell.calculate(report)
           report print cell
           report.setYPosition(box.currentY+report.lineHeight)
@@ -326,18 +326,18 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
         val column2 = row.getColumnBound("column2")
         val column3 = row.getColumnBound("column3")
 
-        val h_column1 = RCell("Type of Account" bold()) leftAlign() between column1
-        val h_column2 = RCell("Your account number" bold()) leftAlign() between column2
-        val h_column3 = RCell("Your investment statement" bold()) rightAlign() between column3
+        val h_column1 = RCell("Type of Account" bold()) leftAlign() inside column1
+        val h_column2 = RCell("Your account number" bold()) leftAlign() inside column2
+        val h_column3 = RCell("Your investment statement" bold()) rightAlign() inside column3
         val hrow = RRow(List(h_column1, h_column2, h_column3))
         hrow.print(report)
 
         report.nextLine()
 
         val str = sd.format(date1) + " to " + sd.format(date2)
-        val r_column1 = RCell("Group Registered Retirement Saving Plan") leftAlign() between column1
-        val r_column2 = RCell("123456789") leftAlign() between column2
-        val r_column3 = RCell(str) rightAlign() between column3
+        val r_column1 = RCell("Group Registered Retirement Saving Plan") leftAlign() inside column1
+        val r_column2 = RCell("123456789") leftAlign() inside column2
+        val r_column3 = RCell(str) rightAlign() inside column3
         val rrow = RRow(List(r_column1, r_column2, r_column3))
         rrow.print(report)
         report.nextLine(2)
@@ -350,7 +350,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
         report.setYPosition(report.pgSize.height - report.lineHeight * 3)
         report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
         report.nextLine()
-        report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() between RMargin(0, report.pgSize.width - 10))
+        report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
     }
 
     reportHeader(report)

@@ -76,12 +76,12 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alig
 	/*
 	define boundaries
 	 */
-	def between(margin: RMargin): RCell = {
+	def inside(margin: RMargin): RCell = {
 		this.margin = margin
 		this
 	}
 
-	def between(left: Float, right: Float): RCell = {
+	def inside(left: Float, right: Float): RCell = {
 		this.margin = RMargin(left, right)
 		this
 	}

@@ -52,7 +52,7 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
         report.setYPosition(report.pgSize.height - report.lineHeight * 2)
         report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
         report.setYPosition(report.getY + report.lineHeight * 0.5f)
-        report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() between RMargin(0, report.pgSize.width - 10))
+        report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
     }
 
     // generate 200 records for printing
@@ -77,8 +77,8 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
     val nameC = row.getColumnBound("name")
     val addressC = row.getColumnBound("address")
 
-    val h_row = RCell("Name" bold()) leftAlign() between nameC
-    val h_address = RCell("Address" bold()) leftAlign() between addressC
+    val h_row = RCell("Name" bold()) leftAlign() inside nameC
+    val h_address = RCell("Address" bold()) leftAlign() inside addressC
     val hrow = RRow(List(h_row, h_address))
 
 
@@ -108,8 +108,8 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
             //            report.nextLine()
           }
 
-          val name = RCell(currentRecord.name) leftAlign() between nameC
-          val address = RCell(currentRecord.address) leftAlign() between addressC
+          val name = RCell(currentRecord.name) leftAlign() inside nameC
+          val address = RCell(currentRecord.address) leftAlign() inside addressC
           val row = RRow(List(name, address))
 
           if (report.lineLeft < 5) {

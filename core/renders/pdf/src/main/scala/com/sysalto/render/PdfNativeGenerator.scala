@@ -35,9 +35,8 @@ import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
-import util.fonts.parsers.FontAfmParser.{parseFont, parseGlyph}
 import util.{PageTree, SyncFileUtil}
-import util.fonts.parsers.TtfParser
+import util.fonts.parsers.{AfmParser, TtfParser}
 import util.wrapper.WordWrap
 
 import scala.collection.mutable.ListBuffer
@@ -50,7 +49,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 	private[this] implicit val pdfWriter = new PdfWriter(name)
 	private[this] implicit val allItems = ListBuffer[PdfBaseItem]()
-	private[this] implicit val glypList = parseGlyph()
+	private [this] val fontAfmParser=new AfmParser()
 	private[this] val txtList = ListBuffer[PdfTxtChuck]()
 	private[this] val graphicList = ListBuffer[PdfGraphicChuck]()
 	private[this] var id: Long = 0
@@ -96,7 +95,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 	def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value, simulate: Boolean, startY: Option[Float], lineHeight: Float): Option[ReportTypes.WrapBox] = {
-		implicit val fontMetric = parseFont("Helvetica")
+		implicit val fontMetric = fontAfmParser.parseFont("Helvetica")
 		implicit val wordSeparators = List(',', '.')
 		val lines = WordWrap.wordWrap(txtList, x1 - x0)
 		var crtY = y0

@@ -28,11 +28,12 @@ package util.wrapper
 
 import com.sysalto.report.RFontAttribute
 import com.sysalto.report.reportTypes.{RFont, RText}
-import util.fonts.parsers.FontAfmParser.{FontAfmMetric, parseFont, parseGlyph}
-import util.fonts.parsers.FontAfmParser
+import util.fonts.parsers.AfmParser
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
+
+//TODO: see https://gist.github.com/adamretter/9d3f1b2c2c6b5e4cb574    modificat numele variabilelor
 
 /**
 	* Created by marian on 11/05/17.
@@ -44,22 +45,23 @@ object WordWrap {
 	@tailrec
 	def calculate[Key](lookup: Map[Key, List[(Double, Key)]], fringe: List[Path[Key]], dest: Key,
 	                   visited: Set[Key]): Path[Key] = fringe match {
-		case (dist, path) :: fringe_rest => path match {
+		case (dist, path) :: rest => path match {
 			case Nil => (0, List())
-			case key :: path_rest =>
+			case key :: _ =>
 				if (key == dest) (dist, path.reverse)
 				else {
-					val paths = lookup(key).flatMap { case (d, key) => if (!visited.contains(key)) List((dist + d, key :: path)) else Nil }
-					val sorted_fringe = (paths ++ fringe_rest).sortWith { case ((d1, _), (d2, _)) => d1 < d2 }
-					calculate(lookup, sorted_fringe, dest, visited + key)
+					val paths = lookup(key).flatMap { case (d, key1) => if (!visited.contains(key1)) List((dist + d, key1 :: path)) else Nil }
+					val sorted = (paths ++ rest).sortWith { case ((d1, _), (d2, _)) => d1 < d2 }
+					calculate(lookup, sorted, dest, visited + key)
 				}
 		}
 		case _ => (0, List())
 
 	}
 
+	val fontAfmParser=new AfmParser()
 
-	implicit val glypList = parseGlyph()
+	//implicit val glypList = fontAfmParser.parseGlyph()
 
 
 	case class CharF(char: Char, font: RFont)
@@ -79,14 +81,14 @@ object WordWrap {
 
 	def getWordSize(word: Word): Float = {
 		word.charList.foldLeft(0.toFloat)((total, char) => {
-			val fontMetric = parseFont(char.font.fontKeyName)
-			total + FontAfmParser.getCharWidth(char.char, fontMetric) * char.font.size
+			val fontMetric = fontAfmParser.parseFont(char.font.fontKeyName)
+			total + fontAfmParser.getCharWidth(char.char, fontMetric) * char.font.size
 		})
 	}
 
 	def getCharSize(char: CharF): Float = {
-		val fontMetric = parseFont(char.font.fontKeyName)
-		FontAfmParser.getCharWidth(char.char, fontMetric) * char.font.size
+		val fontMetric = fontAfmParser.parseFont(char.font.fontKeyName)
+		fontAfmParser.getCharWidth(char.char, fontMetric) * char.font.size
 	}
 
 	def splitAtMax(item: Word, max: Float): (Word, Word) = {
