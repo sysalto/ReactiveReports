@@ -49,7 +49,6 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 	private[this] implicit val pdfWriter = new PdfWriter(name)
 	private[this] implicit val allItems = ListBuffer[PdfBaseItem]()
-	private [this] val fontAfmParser=new AfmParser("Helvetica")
 	private[this] val txtList = ListBuffer[PdfTxtChuck]()
 	private[this] val graphicList = ListBuffer[PdfGraphicChuck]()
 	private[this] var id: Long = 0

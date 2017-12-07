@@ -30,10 +30,7 @@ import scala.collection.mutable
 /**
 	* Created by marian on 5/6/17.
 	*/
-class AfmParser(fontFile: String) extends AbstractFontParser {
-
-
-	private[this] val fontsMetrict = mutable.Map[String, FontMetric]()
+class AfmParser(fontFile: String) extends FontParser {
 
 
 	private[this] def getValue(list: List[String], key: String): (Int, Int) = {
@@ -49,10 +46,10 @@ class AfmParser(fontFile: String) extends AbstractFontParser {
 
 
 	private[this] def parseFont(fontName: String): FontMetric = {
-		if (!fontsMetrict.contains(fontName)) {
-			fontsMetrict += fontName -> parseFontInternal(fontName)
+		if (!fontsMetricMap.contains(fontName)) {
+			fontsMetricMap += fontName -> parseFontInternal(fontName)
 		}
-		fontsMetrict(fontName)
+		fontsMetricMap(fontName)
 	}
 
 	private[this] def parseFontInternal(fontName: String): FontMetric = {

@@ -4,7 +4,7 @@ import java.nio.file.StandardOpenOption
 
 import util.SyncFileUtil
 
-class TtfParser(fontFile: String) extends AbstractFontParser {
+class TtfParser(fontFile: String) extends FontParser {
 
 
 	case class FontBBox(lowerLeftX: Short, lowerLeftY: Short, upperRightX: Short, upperRightY: Short) {
@@ -200,6 +200,7 @@ class TtfParser(fontFile: String) extends AbstractFontParser {
 		FontMetric(l1)
 	}
 
+	
 
 	private[this] val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
 	f.skipBytes(4)
@@ -215,6 +216,8 @@ class TtfParser(fontFile: String) extends AbstractFontParser {
 	val fontDescriptor = FontDescriptor(convertToPdfUnits(os2.sTypoAscender), convertToPdfUnits(os2.sCapHeight),
 		convertToPdfUnits(os2.sTypoDescender), fontBBox, post.italicAngle, 1 << 5)
 	override protected[this] val fontMetric: FontMetric  = getFontMetric()
+
+
 }
 
 object TtfParser {

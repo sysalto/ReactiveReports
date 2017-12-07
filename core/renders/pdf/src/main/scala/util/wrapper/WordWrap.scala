@@ -27,8 +27,8 @@
 package util.wrapper
 
 import com.sysalto.report.RFontAttribute
-import com.sysalto.report.reportTypes.{RFont, RText}
-import util.fonts.parsers.AfmParser
+import com.sysalto.report.reportTypes.{FontType, RFont, RText}
+import util.fonts.parsers.{AfmParser, FontParser, TtfParser}
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
@@ -81,14 +81,16 @@ object WordWrap {
 
 	def getWordSize(word: Word): Float = {
 		word.charList.foldLeft(0.toFloat)((total, char) => {
-			val afmParser=new AfmParser((char.font.fontKeyName))
-			total + afmParser.getCharWidth(char.char) * char.font.size
+			val font=char.font
+			val fontParser:FontParser=if (font.fontType==FontType.Afm) new AfmParser(font.fontKeyName) else new TtfParser(font.fontFile.get)
+			total + fontParser.getCharWidth(char.char) * char.font.size
 		})
 	}
 
 	def getCharSize(char: CharF): Float = {
-		val afmParser=new AfmParser((char.font.fontKeyName))
-		afmParser.getCharWidth(char.char) * char.font.size
+		val font=char.font
+		val fontParser:FontParser=if (font.fontType==FontType.Afm) new AfmParser(font.fontKeyName) else new TtfParser(font.fontFile.get)
+		fontParser.getCharWidth(char.char) * char.font.size
 	}
 
 	def splitAtMax(item: Word, max: Float): (Word, Word) = {

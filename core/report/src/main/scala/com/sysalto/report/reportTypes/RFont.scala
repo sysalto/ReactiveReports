@@ -31,6 +31,11 @@ import com.sysalto.report.RFontAttribute
 /**
   * Created by marian on 3/4/17.
   */
+
+object FontType extends Enumeration {
+  val Afm,Ttf = Value
+}
+
 case class RFont(var size: Int, var fontName: String = "Helvetica",
                  var attribute: RFontAttribute.Value = RFontAttribute.NORMAL,
                  var color: RColor = RColor(0, 0, 0),var fontFile:Option[String]=None) {
@@ -41,4 +46,5 @@ case class RFont(var size: Int, var fontName: String = "Helvetica",
     case RFontAttribute.ITALIC=>"-Oblique"
     case RFontAttribute.BOLD_ITALIC=>"-BoldOblique"
   })
+  val fontType=if (fontFile.isEmpty) FontType.Afm else FontType.Ttf
 }
