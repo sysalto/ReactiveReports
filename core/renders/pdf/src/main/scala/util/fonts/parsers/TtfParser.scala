@@ -6,14 +6,15 @@ import util.SyncFileUtil
 
 class TtfParser(fontFile: String) extends AbstractFontParser {
 
+
 	case class FontBBox(lowerLeftX: Short, lowerLeftY: Short, upperRightX: Short, upperRightY: Short) {
 		override def toString: String = {
-			lowerLeftX+" "+lowerLeftY+" "+upperRightX+" "+upperRightY
+			lowerLeftX + " " + lowerLeftY + " " + upperRightX + " " + upperRightY
 		}
 	}
 
 	case class FontDescriptor(ascent: Short, capHeight: Short, descent: Short, fontBBox: FontBBox
-	                          ,italicAngle:Short,flags:Int)
+	                          , italicAngle: Short, flags: Int)
 
 	case class GlyphWidth(firstChar: Short, lastChar: Short, widthList: List[Short])
 
@@ -24,10 +25,10 @@ class TtfParser(fontFile: String) extends AbstractFontParser {
 		f.seek(tbl.offset + 18)
 		val unitsPerEm: Short = f.readShort()
 		f.skipBytes(16)
-		val xMin:Short = f.readShort()
-		val yMin:Short = f.readShort()
-		val xMax:Short = f.readShort()
-		val yMax:Short = f.readShort()
+		val xMin: Short = f.readShort()
+		val yMin: Short = f.readShort()
+		val xMax: Short = f.readShort()
+		val yMax: Short = f.readShort()
 	}
 
 	private[this] case class Hhea(f: SyncFileUtil) {
@@ -54,7 +55,6 @@ class TtfParser(fontFile: String) extends AbstractFontParser {
 		f.skipBytes(16)
 		val sCapHeight = f.readShort()
 	}
-
 
 
 	private[this] case class Hmtx(f: SyncFileUtil) {
@@ -173,7 +173,7 @@ class TtfParser(fontFile: String) extends AbstractFontParser {
 
 	def getFontName: String = name.nameList(4)
 
-	def getWidthsN: GlyphWidth = {
+	def getWidths: GlyphWidth = {
 		val l1 = cmap.getGlyphList(hmtx.hMetrics)
 		val keyset = l1.keySet
 		val min = keyset.min.toShort
@@ -193,8 +193,13 @@ class TtfParser(fontFile: String) extends AbstractFontParser {
 		(number * 1000 / head.unitsPerEm).toShort
 	}
 
+	def getFontMetric(): FontMetric = {
+		val l1 = cmap.getGlyphList(hmtx.hMetrics).map {
+			case (char, lg) => char.toByte.toInt -> lg.toFloat
+		}
+		FontMetric(l1)
+	}
 
-	override def getCharWidth(char: Char, fontMetric: FontAfmMetric): Float = ???
 
 	private[this] val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
 	f.skipBytes(4)
@@ -208,7 +213,8 @@ class TtfParser(fontFile: String) extends AbstractFontParser {
 	private[this] val post = Post(f)
 	val fontBBox = FontBBox(convertToPdfUnits(head.xMin), convertToPdfUnits(head.yMin), convertToPdfUnits(head.xMax), convertToPdfUnits(head.yMax))
 	val fontDescriptor = FontDescriptor(convertToPdfUnits(os2.sTypoAscender), convertToPdfUnits(os2.sCapHeight),
-		convertToPdfUnits(os2.sTypoDescender), fontBBox,post.italicAngle,1<<5)
+		convertToPdfUnits(os2.sTypoDescender), fontBBox, post.italicAngle, 1 << 5)
+	override protected[this] val fontMetric: FontMetric  = getFontMetric()
 }
 
 object TtfParser {

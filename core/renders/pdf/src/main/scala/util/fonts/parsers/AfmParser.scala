@@ -33,7 +33,7 @@ import scala.collection.mutable
 class AfmParser(fontFile: String) extends AbstractFontParser {
 
 
-	private[this] val fontsMetrict = mutable.Map[String, FontAfmMetric]()
+	private[this] val fontsMetrict = mutable.Map[String, FontMetric]()
 
 
 	private[this] def getValue(list: List[String], key: String): (Int, Int) = {
@@ -48,14 +48,14 @@ class AfmParser(fontFile: String) extends AbstractFontParser {
 	}
 
 
-	private[this] def parseFont(fontName: String): FontAfmMetric = {
+	private[this] def parseFont(fontName: String): FontMetric = {
 		if (!fontsMetrict.contains(fontName)) {
 			fontsMetrict += fontName -> parseFontInternal(fontName)
 		}
 		fontsMetrict(fontName)
 	}
 
-	private[this] def parseFontInternal(fontName: String): FontAfmMetric = {
+	private[this] def parseFontInternal(fontName: String): FontMetric = {
 		val textList = AfmParser.readFile(s"fonts/${fontName}.afm")
 		val upperHeight = getValue(textList, "CapHeight")._2
 		val lowerHeight = getValue(textList, "XHeight")._2
@@ -69,23 +69,17 @@ class AfmParser(fontFile: String) extends AbstractFontParser {
 			name -> (width.toFloat * 0.001).toFloat
 		})
 		val charList1 = charList.map { case (glyph, code) => AfmParser.glyphDef.glypMap(glyph) -> code }.toMap
-		FontAfmMetric(upperHeight, charList1)
+		FontMetric(charList1)
 	}
 
-	def getStringWidth(str: String, fontMetric: FontAfmMetric): Float = {
+	def getStringWidth(str: String, fontMetric: FontMetric): Float = {
 		str.toCharArray.map(char => fontMetric.fontMap(char.toInt)).sum
 	}
 
-	override def getCharWidth(char: Char, fontMetric: FontAfmMetric): Float = {
-		if (!fontMetric.fontMap.contains(char.toInt)) {
-			0f
-		} else {
-			fontMetric.fontMap(char.toInt)
-		}
-	}
 
 
-	val fontAfmMetric:FontAfmMetric=parseFont(fontFile)
+
+	override protected[this] val fontMetric:FontMetric=parseFont(fontFile)
 
 
 

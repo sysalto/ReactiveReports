@@ -459,7 +459,7 @@ class PdfFontStream(id: Long, fontStreamName: String)(implicit itemList: ListBuf
 }
 
 class PdfFontWidths(id: Long, pdfFontStream: PdfFontStream)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-	private[this] val withObj = pdfFontStream.ttfParser.getWidthsN
+	private[this] val withObj = pdfFontStream.ttfParser.getWidths
 	private[render] val firstChar = withObj.firstChar
 	private[render] val lastChar = withObj.lastChar
 

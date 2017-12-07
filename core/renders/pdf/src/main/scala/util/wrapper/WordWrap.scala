@@ -82,15 +82,13 @@ object WordWrap {
 	def getWordSize(word: Word): Float = {
 		word.charList.foldLeft(0.toFloat)((total, char) => {
 			val afmParser=new AfmParser((char.font.fontKeyName))
-			val fontMetric = afmParser.fontAfmMetric
-			total + afmParser.getCharWidth(char.char, fontMetric) * char.font.size
+			total + afmParser.getCharWidth(char.char) * char.font.size
 		})
 	}
 
 	def getCharSize(char: CharF): Float = {
 		val afmParser=new AfmParser((char.font.fontKeyName))
-		val fontMetric = afmParser.fontAfmMetric
-		afmParser.getCharWidth(char.char, fontMetric) * char.font.size
+		afmParser.getCharWidth(char.char) * char.font.size
 	}
 
 	def splitAtMax(item: Word, max: Float): (Word, Word) = {

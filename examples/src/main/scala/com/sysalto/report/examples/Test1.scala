@@ -57,11 +57,11 @@ object Test1  {
     val cell1 = RCell(txt1) inside bound1
     val cell2 = RCell(txt2) inside bound2
     val rrow = RRow(List(
-      //cell1,
+//      cell1,
       cell2))
     rrow.print(report)
 
-    //report print txt1 at 100
+//    report print txt1 at 100
 //    report.nextLine()
 //    report print txt2 at 100
 //    report.nextLine()

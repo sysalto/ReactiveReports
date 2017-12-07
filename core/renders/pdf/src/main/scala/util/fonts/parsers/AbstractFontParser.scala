@@ -3,8 +3,15 @@ package util.fonts.parsers
 
 trait AbstractFontParser {
 
+	case class FontMetric(fontMap: Map[Int, Float])
 
-	case class FontAfmMetric(maxHeight: Int, fontMap: Map[Int, Float])
+	protected[this] val fontMetric: FontMetric
 
-	def getCharWidth(char: Char, fontMetric: FontAfmMetric): Float
+	def getCharWidth(char: Char): Float = {
+		if (!fontMetric.fontMap.contains(char.toInt)) {
+			0f
+		} else {
+			fontMetric.fontMap(char.toInt)
+		}
+	}
 }
