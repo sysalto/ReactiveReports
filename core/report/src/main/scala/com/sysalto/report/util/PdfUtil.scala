@@ -44,8 +44,6 @@ abstract class PdfUtil() {
 
   def newPage()
 
-  def setFontSize(size: Int)
-
   def text(txt: RText, x1: Float, y1: Float, x2: Float = Float.MaxValue, y2: Float = Float.MaxValue): Unit
 
   def textAlignedAtPosition(txt: RText, x: Float, y: Float, index: Int): Unit

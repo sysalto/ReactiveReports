@@ -46,7 +46,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	private[this] var crtPageNbr = 1L
 	private[this] val crtPage = ReportPage(new ListBuffer[ReportItem]())
 	private[this] val db = RockDbUtil()
-	private[this] var fontSize = 10
+	//private[this] var fontSize = 10
+	private[this] var font = RFont(10,"Helvetica")
 	private[report] val pdfUtil = pdfFactory.getPdf
 
 
@@ -106,8 +107,6 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	private[this] def newPageInternal(): Unit = {
 		pdfUtil.newPage()
-
-		setFontSize(fontSize)
 	}
 
 
@@ -125,7 +124,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	Returns line's height
 	 */
-	def lineHeight: Float = (fontSize * 1.5).toFloat
+	def lineHeight: Float = (font.size * 1.5).toFloat
 
 	/*
 	keep page size
@@ -300,8 +299,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	set default report font size
 	 */
 	def setFontSize(size: Int): Unit = {
-		pdfUtil.setFontSize(size)
-		fontSize = size
+		font.size=size
 	}
 
 	/*
@@ -312,10 +310,6 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
-	/*
-	get Font size
-	 */
-	def getFontSize: Float = fontSize
 
 
 	/*
@@ -476,7 +470,6 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	pdfUtil.open(name, orientation)
 	crtYPosition = pdfUtil.pgSize.height
-	setFontSize(fontSize)
 	KryoUtil.register(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass)
 
 }

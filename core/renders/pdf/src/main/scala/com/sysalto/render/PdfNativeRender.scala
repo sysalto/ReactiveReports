@@ -58,9 +58,6 @@ class PdfNativeRender extends PdfUtil {
     pdfNativeGenerator.newPage()
   }
 
-  override def setFontSize(size: Int): Unit = {
-
-  }
 
   def convertY(y:Float)=PAGE_HEIGHT-y
 
