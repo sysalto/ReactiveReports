@@ -46,7 +46,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	private[this] var crtPageNbr = 1L
 	private[this] val crtPage = ReportPage(new ListBuffer[ReportItem]())
 	private[this] val db = RockDbUtil()
-	private[this] var font = RFont(10,"Helvetica")
+	var font = RFont(10,"Helvetica")
 	private[report] val pdfUtil = pdfFactory.getPdf
 
 

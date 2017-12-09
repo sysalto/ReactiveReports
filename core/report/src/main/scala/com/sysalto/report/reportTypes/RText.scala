@@ -33,7 +33,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by marian on 3/4/17.
   */
-case class RText(txt: String, var font: RFont = RFont(10)) {
+case class RText(txt: String, var font: RFont = RFont(10))  {
 
   def this(txt: String) = {
     this(txt, RFont(10))
