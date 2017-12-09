@@ -167,21 +167,6 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 	}
 
 
-	//
-	//	private[this] val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
-	//	f.skipBytes(4)
-	//	private[this] val tables = getTables(f)
-	//	private[this] val head = Head(f)
-	//	private[this] val hhea = Hhea(f)
-	//	private[this] val hmtx = Hmtx(f) //, hhea.numOfLongHorMetrics, head.unitsPerEm)
-	//	private[this] val cmap = CMap(f)
-	//	private[this] val name = Name(f)
-	//	private[this] val os2 = Os2(f)
-	//	private[this] val post = Post(f)
-	//	val fontBBox = FontBBox(convertToPdfUnits(head.xMin), convertToPdfUnits(head.yMin), convertToPdfUnits(head.xMax), convertToPdfUnits(head.yMax))
-	//	val fontDescriptor = FontDescriptor(convertToPdfUnits(os2.sTypoAscender), convertToPdfUnits(os2.sCapHeight),
-	//		convertToPdfUnits(os2.sTypoDescender), fontBBox, post.italicAngle, 1 << 5)
-
 
 	override protected[this] def parseFont(): FontMetric = {
 		val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)

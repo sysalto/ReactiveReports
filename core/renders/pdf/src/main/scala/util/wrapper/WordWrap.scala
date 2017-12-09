@@ -32,29 +32,27 @@ import util.fonts.parsers.{AfmParser, FontParser, TtfParser}
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 
-//TODO: see https://gist.github.com/adamretter/9d3f1b2c2c6b5e4cb574    modificat numele variabilelor
-
 /**
 	* Created by marian on 11/05/17.
 	*/
 object WordWrap {
 
-	private[this] type Path[Key] = (Double, List[Key])
+	private[this] type Cost[T] = (Double, List[T])
 
 	@tailrec
-	private[this] def calculate[Key](lookup: Map[Key, List[(Double, Key)]], fringe: List[Path[Key]], dest: Key,
-	                                 visited: Set[Key]): Path[Key] = fringe match {
+	private[this] def calculate[T](widthList: Map[T, List[(Double, T)]], accumList: List[Cost[T]], dest: T,
+	                                 visited: Set[T]): Cost[T] = accumList match {
 		case (dist, path) :: rest => path match {
 			case Nil => (0, List())
 			case key :: _ =>
 				if (key == dest) (dist, path.reverse)
 				else {
-					val paths = lookup(key).flatMap { case (d, key1) => if (!visited.contains(key1)) List((dist + d, key1 :: path)) else Nil }
+					val paths = widthList(key).flatMap { case (d, key1) => if (!visited.contains(key1)) List((dist + d, key1 :: path)) else Nil }
 					val sorted = (paths ++ rest).sortWith { case ((d1, _), (d2, _)) => d1 < d2 }
-					calculate(lookup, sorted, dest, visited + key)
+					calculate(widthList, sorted, dest, visited + key)
 				}
 		}
-		case _ => (0, List())
+		case Nil => (0, List())
 
 	}
 

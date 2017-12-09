@@ -36,6 +36,7 @@ import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
+import com.sysalto.report.util.PdfFactory
 
 object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
   val sd = new SimpleDateFormat("MMM dd yyyy")
@@ -362,22 +363,16 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
   }
 
 
-//  def runItext(): Unit = {
-//    implicit val pdfITextFactory = new PdfITextFactory()
-//    val report1=Report("MutualFunds1.pdf")
-//    report(report1)
-//  }
 
-  def runNative(): Unit = {
-    implicit val pdfFactory = new PdfNativeFactory()
+  def runReport(): Unit = {
+    implicit val pdfFactory:PdfFactory = new PdfNativeFactory()
     val report1=Report("MutualFunds2.pdf",ReportPageOrientation.LANDSCAPE)
     report(report1)
   }
 
   def main(args: Array[String]): Unit = {
     MutualFundsInitData.initDb()
-//    runItext
-    runNative
+    runReport()
     system.terminate()
   }
 }

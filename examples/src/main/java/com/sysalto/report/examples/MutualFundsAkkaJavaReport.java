@@ -59,12 +59,7 @@ class MutualFundsAkkaJavaReport {
     static private Date date2 = (new GregorianCalendar(2013, 11, 31)).getTime();
     private static RColor headerColor = new RColor(156, 76, 6, 1f);
     private static RColor headerFontColor = new RColor(255, 255, 255, 1f);
-    //    static private Float total1 = 0f;
-//    static private Float total2 = 0f;
-//    static private Float total3 = 0f;
-//    static private int firstChar = 'A';
-//    static private float firstY = 0f;
-//    static private java.util.Map<String, Object> chartData = new java.util.HashMap<>();
+
     static private final SimpleDateFormat sd = new SimpleDateFormat("MMM dd yyyy");
 
     private PdfFactory pdfITextFactory = new PdfNativeFactory();

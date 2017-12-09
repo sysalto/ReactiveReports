@@ -33,7 +33,7 @@ import java.util.GregorianCalendar
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
-import com.sysalto.report.util.ResultSetUtilTrail
+import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrail}
 
 import scala.collection.mutable.ListBuffer
 
@@ -352,14 +352,14 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrail {
 	}
 
 
-	def runNative(): Unit = {
-		implicit val pdfFactory = new PdfNativeFactory()
+	def runReport(): Unit = {
+		implicit val pdfFactory:PdfFactory = new PdfNativeFactory()
 		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
 		report(report1)
 	}
 
 	def main(args: Array[String]): Unit = {
 		MutualFundsInitData.initDb()
-		runNative
+		runReport()
 	}
 }
