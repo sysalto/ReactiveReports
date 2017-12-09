@@ -1,15 +1,15 @@
 package util.fonts.parsers
 
+import util.fonts.parsers.FontParser.FontMetric
+
 import scala.collection.mutable
 
 
 trait FontParser {
 
-	case class FontMetric(fontMap: Map[Int, Float])
-
 	protected[this] val fontMetric: FontMetric
 
-	protected [this] val fontsMetricMap = mutable.Map[String, FontMetric]()
+
 
 	def getCharWidth(char: Char): Float = {
 		if (!fontMetric.fontMap.contains(char.toInt)) {
@@ -18,4 +18,12 @@ trait FontParser {
 			fontMetric.fontMap(char.toInt)
 		}
 	}
+}
+
+
+object FontParser {
+
+	case class FontMetric(fontMap: Map[Int, Float])
+
+	private[parsers] val fontsMetricMap = mutable.Map[String, FontMetric]()
 }

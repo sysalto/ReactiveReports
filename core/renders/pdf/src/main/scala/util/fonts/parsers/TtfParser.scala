@@ -3,6 +3,7 @@ package util.fonts.parsers
 import java.nio.file.StandardOpenOption
 
 import util.SyncFileUtil
+import util.fonts.parsers.FontParser.FontMetric
 
 class TtfParser(fontFile: String) extends FontParser {
 
@@ -200,7 +201,7 @@ class TtfParser(fontFile: String) extends FontParser {
 		FontMetric(l1)
 	}
 
-	
+
 
 	private[this] val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
 	f.skipBytes(4)

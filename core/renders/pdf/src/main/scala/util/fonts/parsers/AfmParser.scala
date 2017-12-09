@@ -25,6 +25,8 @@
 
 package util.fonts.parsers
 
+import util.fonts.parsers.FontParser.FontMetric
+
 import scala.collection.mutable
 
 /**
@@ -45,14 +47,14 @@ class AfmParser(fontFile: String) extends FontParser {
 	}
 
 
-	private[this] def parseFont(fontName: String): FontMetric = {
-		if (!fontsMetricMap.contains(fontName)) {
-			fontsMetricMap += fontName -> parseFontInternal(fontName)
+	private[this] def getFontMetrics(fontName: String): FontMetric = {
+		if (!FontParser.fontsMetricMap.contains(fontName)) {
+			FontParser.fontsMetricMap += fontName -> parseFont(fontName)
 		}
-		fontsMetricMap(fontName)
+		FontParser.fontsMetricMap(fontName)
 	}
 
-	private[this] def parseFontInternal(fontName: String): FontMetric = {
+	private[this] def parseFont(fontName: String): FontMetric = {
 		val textList = AfmParser.readFile(s"fonts/${fontName}.afm")
 		val upperHeight = getValue(textList, "CapHeight")._2
 		val lowerHeight = getValue(textList, "XHeight")._2
@@ -76,7 +78,7 @@ class AfmParser(fontFile: String) extends FontParser {
 
 
 
-	override protected[this] val fontMetric:FontMetric=parseFont(fontFile)
+	override protected[this] val fontMetric:FontMetric=getFontMetrics(fontFile)
 
 
 
