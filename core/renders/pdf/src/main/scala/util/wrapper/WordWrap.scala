@@ -35,7 +35,7 @@ import scala.collection.mutable.ListBuffer
 /**
 	* Created by marian on 11/05/17.
 	*/
-object WordWrap {
+class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParserFamily]) {
 
 	private[this] type Cost[T] = (Double, List[T])
 
@@ -76,8 +76,13 @@ object WordWrap {
 	}
 
 	private[this] def getFontParser(font:RFont):FontParser={
-		val fontType=if (font.externalFont.isEmpty) FontType.Afm else FontType.Ttf
-		if (fontType == FontType.Afm) new AfmParser(font.fontKeyName) else new TtfParser(font.externalFont.get.regular)
+		val fontFamily=fontFamilyMap(font.fontName)
+		font.attribute match {
+			case RFontAttribute.NORMAL => fontFamily.regular
+			case RFontAttribute.BOLD=>fontFamily.bold.get
+			case RFontAttribute.ITALIC=>fontFamily.italic.get
+			case RFontAttribute.BOLD_ITALIC=>fontFamily.boldItalic.get
+		}
 	}
 
 	private[this] def getWordSize(word: Word): Float = {
@@ -238,7 +243,7 @@ object WordWrap {
 	}
 
 
-	def wordWrap(input: List[RText], max: Float,fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParserFamily])
+	def wordWrap(input: List[RText], max: Float)
 	            (implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
 		val result = ListBuffer[List[RTextPos]]()
 		wordWrapT(input, max, result)

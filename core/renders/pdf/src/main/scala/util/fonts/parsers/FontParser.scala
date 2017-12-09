@@ -5,16 +5,10 @@ import util.fonts.parsers.FontParser.FontMetric
 import scala.collection.mutable
 
 
-abstract class FontParser(fontName: String) {
+abstract class FontParser(val fontName: String) {
 
-	lazy val fontMetric: FontMetric = getFontMetrics()
+	val fontMetric: FontMetric = parseFont() //getFontMetrics()
 
-	protected[this] def getFontMetrics(): FontMetric = {
-		if (!FontParser.fontsMetricMap.contains(fontName)) {
-			FontParser.fontsMetricMap += fontName -> parseFont()
-		}
-		FontParser.fontsMetricMap(fontName)
-	}
 
 	protected[this] def parseFont(): FontMetric
 
@@ -43,5 +37,4 @@ object FontParser {
 
 	case class FontMetric(fontName: String, fontMap: Map[Int, Float], fontDescriptor: Option[EmbeddedFontDescriptor])
 
-	private[parsers] val fontsMetricMap = mutable.Map[String, FontMetric]()
 }

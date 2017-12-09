@@ -36,7 +36,7 @@ import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
 import util.{PageTree, SyncFileUtil}
-import util.fonts.parsers.{AfmParser, RFontParserFamily, TtfParser}
+import util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
 import util.wrapper.WordWrap
 
 import scala.collection.mutable.ListBuffer
@@ -52,6 +52,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	private[this] val txtList = ListBuffer[PdfTxtChuck]()
 	private[this] val graphicList = ListBuffer[PdfGraphicChuck]()
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
+	private[this] val wordWrap=new WordWrap(fontFamilyMap)
 	private[this] var id: Long = 0
 	private[this] var fontId: Long = 0
 
@@ -109,7 +110,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value, simulate: Boolean, startY: Option[Float], lineHeight: Float): Option[ReportTypes.WrapBox] = {
 		implicit val wordSeparators = List(',', '.')
-		val lines = WordWrap.wordWrap(txtList, x1 - x0,fontFamilyMap)
+		val lines = wordWrap.wordWrap(txtList, x1 - x0)
 		var crtY = y0
 		if (!simulate) {
 			lines.foreach(line => {
@@ -149,10 +150,20 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		graphicList += DrawPieChart(this, title, data, x, y, width, height)
 	}
 
+	private[this] def getFontParser(font:RFont):FontParser={
+		val fontFamily=fontFamilyMap(font.fontName)
+		font.attribute match {
+			case RFontAttribute.NORMAL => fontFamily.regular
+			case RFontAttribute.BOLD=>fontFamily.bold.get
+			case RFontAttribute.ITALIC=>fontFamily.italic.get
+			case RFontAttribute.BOLD_ITALIC=>fontFamily.boldItalic.get
+		}
+	}
+
 	def text(x: Float, y: Float, txt: RText): Unit = {
 		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
 			if (txt.font.externalFont.isDefined) {
-				val fontStream = new PdfFontStream(nextId(), txt.font.externalFont.get.regular)
+				val fontStream = new PdfFontStream(nextId(), getFontParser(txt.font))
 				val pdfFontWidths = new PdfFontWidths(nextId(), fontStream)
 				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
 				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
@@ -451,11 +462,9 @@ endobj
 }
 
 
-class PdfFontStream(id: Long, fontStreamName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-	val ttfParser = new TtfParser(fontStreamName)
-
+class PdfFontStream(id: Long, val fontParser: FontParser)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
-		val byteArray = Files.readAllBytes(Paths.get(fontStreamName))
+		val byteArray = Files.readAllBytes(Paths.get(fontParser.fontName))
 		val byteArray2 = {
 			val f = new SyncFileUtil("/home/marian/workspace/GenSNew/good2.pdf", 271, StandardOpenOption.READ)
 			val bytes = f.read(8712, None)
@@ -475,7 +484,7 @@ class PdfFontStream(id: Long, fontStreamName: String)(implicit itemList: ListBuf
 }
 
 class PdfFontWidths(id: Long, pdfFontStream: PdfFontStream)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-	private[this] val withObj = pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.glyphWidth
+	private[this] val withObj = pdfFontStream.fontParser.fontMetric.fontDescriptor.get.glyphWidth
 	private[render] val firstChar = withObj.firstChar
 	private[render] val lastChar = withObj.lastChar
 
@@ -496,12 +505,12 @@ class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: Str
 		s"""${id} 0 obj
 			 			 |    <</Type/FontDescriptor
 			 |    /FontName/${fontKeyName}
-			 |    /Flags ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.flags}
-			 |    /FontBBox[${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.fontBBox}]
-			 |    /ItalicAngle ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.italicAngle}
-			 			 |    /Ascent ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.ascent}
-			 |    /Descent ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.descent}
-			 			 |    /CapHeight ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.capHeight}
+			 |    /Flags ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.flags}
+			 |    /FontBBox[${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.fontBBox}]
+			 |    /ItalicAngle ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.italicAngle}
+			 			 |    /Ascent ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.ascent}
+			 |    /Descent ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.descent}
+			 			 |    /CapHeight ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.capHeight}
 			 			 |    /StemV 0
 			 			 |    /FontFile2 ${pdfFontStream.id} 0 R
 			 			 |>>
