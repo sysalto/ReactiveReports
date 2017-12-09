@@ -183,8 +183,7 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 	//		convertToPdfUnits(os2.sTypoDescender), fontBBox, post.italicAngle, 1 << 5)
 
 
-	override protected[this] def parseFont(fontName: String): FontMetric = {
-
+	override protected[this] def parseFont(): FontMetric = {
 		val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
 		f.skipBytes(4)
 		val tables = getTables(f)

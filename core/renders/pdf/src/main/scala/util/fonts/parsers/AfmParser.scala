@@ -47,8 +47,8 @@ class AfmParser(fontFile: String) extends FontParser(fontFile) {
 	}
 
 
-	override protected[this] def parseFont(fontName: String): FontMetric = {
-		val textList = AfmParser.readFile(s"fonts/${fontName}.afm")
+	override protected[this] def parseFont(): FontMetric = {
+		val textList = AfmParser.readFile(s"fonts/${fontFile}.afm")
 		val upperHeight = getValue(textList, "CapHeight")._2
 		val lowerHeight = getValue(textList, "XHeight")._2
 		val metrics = getValue(textList, "StartCharMetrics")
@@ -61,7 +61,7 @@ class AfmParser(fontFile: String) extends FontParser(fontFile) {
 			name -> (width.toFloat * 0.001).toFloat
 		})
 		val charList1 = charList.map { case (glyph, code) => AfmParser.glyphDef.glypMap(glyph) -> code }.toMap
-		FontMetric(fontName, charList1, None)
+		FontMetric(fontFile, charList1, None)
 	}
 
 	def getStringWidth(str: String, fontMetric: FontMetric): Float = {
@@ -97,11 +97,4 @@ object AfmParser {
 
 	private val glyphDef = parseGlyph()
 
-
-	//	def main(args: Array[String]): Unit = {
-	//		implicit val glypList = parseGlyph()
-	//		val fontMetric = parseFont("Helvetica")
-	//		val w = getStringWidth("IAW", fontMetric)
-	//		println(w)
-	//	}
 }

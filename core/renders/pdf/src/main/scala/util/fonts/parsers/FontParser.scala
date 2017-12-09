@@ -7,16 +7,16 @@ import scala.collection.mutable
 
 abstract class FontParser(fontName: String) {
 
-	lazy val fontMetric: FontMetric = getFontMetrics(fontName)
+	lazy val fontMetric: FontMetric = getFontMetrics()
 
-	protected[this] def getFontMetrics(fontName: String): FontMetric = {
+	protected[this] def getFontMetrics(): FontMetric = {
 		if (!FontParser.fontsMetricMap.contains(fontName)) {
-			FontParser.fontsMetricMap += fontName -> parseFont(fontName)
+			FontParser.fontsMetricMap += fontName -> parseFont()
 		}
 		FontParser.fontsMetricMap(fontName)
 	}
 
-	protected[this] def parseFont(fontName: String): FontMetric
+	protected[this] def parseFont(): FontMetric
 
 	def getCharWidth(char: Char): Float = {
 		if (!fontMetric.fontMap.contains(char.toInt)) {

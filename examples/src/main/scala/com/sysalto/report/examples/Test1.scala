@@ -43,7 +43,7 @@ object Test1  {
 
   def runReport(report: Report): Unit = {
     report.nextLine(3)
-    val str="Catelus cu parul cret fura rata din cotet el se jura ca nu fura"
+    val str="Catelus cu parul cret fura rata din cotet el se jura ca nu fura dar l-am prins cu rata-n gura"
     val size=12
     val txt1=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
   //  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))

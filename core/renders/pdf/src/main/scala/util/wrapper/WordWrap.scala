@@ -23,11 +23,10 @@
  */
 
 
-
 package util.wrapper
 
 import com.sysalto.report.RFontAttribute
-import com.sysalto.report.reportTypes.{FontType, RFont, RText}
+import com.sysalto.report.reportTypes.{ RFont, RText}
 import util.fonts.parsers.{AfmParser, FontParser, TtfParser}
 
 import scala.annotation.tailrec
@@ -40,11 +39,11 @@ import scala.collection.mutable.ListBuffer
 	*/
 object WordWrap {
 
-	type Path[Key] = (Double, List[Key])
+	private[this] type Path[Key] = (Double, List[Key])
 
 	@tailrec
-	def calculate[Key](lookup: Map[Key, List[(Double, Key)]], fringe: List[Path[Key]], dest: Key,
-	                   visited: Set[Key]): Path[Key] = fringe match {
+	private[this] def calculate[Key](lookup: Map[Key, List[(Double, Key)]], fringe: List[Path[Key]], dest: Key,
+	                                 visited: Set[Key]): Path[Key] = fringe match {
 		case (dist, path) :: rest => path match {
 			case Nil => (0, List())
 			case key :: _ =>
@@ -59,17 +58,12 @@ object WordWrap {
 
 	}
 
-	//val fontAfmParser=new AfmParser("Helvetica")
-
-	//implicit val glypList = fontAfmParser.parseGlyph()
-
-
 	case class CharF(char: Char, font: RFont)
 
 	case class Word(charList: List[CharF])
 
 	@tailrec
-	def stringToWord(ll: List[CharF], accum: ListBuffer[Word]): Unit = {
+	private[this] def stringToWord(ll: List[CharF], accum: ListBuffer[Word]): Unit = {
 		if (!ll.exists(item => item.char == ' ')) {
 			accum += Word(ll)
 		} else {
@@ -79,21 +73,30 @@ object WordWrap {
 		}
 	}
 
-	def getWordSize(word: Word): Float = {
+	private[this] object FontType extends Enumeration {
+		val Afm,Ttf = Value
+	}
+
+	private[this] def getFontParser(font:RFont):FontParser={
+		val fontType=if (font.fontFile.isEmpty) FontType.Afm else FontType.Ttf
+		if (fontType == FontType.Afm) new AfmParser(font.fontKeyName) else new TtfParser(font.fontFile.get)
+	}
+
+	private[this] def getWordSize(word: Word): Float = {
 		word.charList.foldLeft(0.toFloat)((total, char) => {
-			val font=char.font
-			val fontParser:FontParser=if (font.fontType==FontType.Afm) new AfmParser(font.fontKeyName) else new TtfParser(font.fontFile.get)
+			val font = char.font
+			val fontParser: FontParser = getFontParser(font)
 			total + fontParser.getCharWidth(char.char) * char.font.size
 		})
 	}
 
-	def getCharSize(char: CharF): Float = {
-		val font=char.font
-		val fontParser:FontParser=if (font.fontType==FontType.Afm) new AfmParser(font.fontKeyName) else new TtfParser(font.fontFile.get)
+	private[this] def getCharSize(char: CharF): Float = {
+		val font = char.font
+		val fontParser: FontParser = getFontParser(font)
 		fontParser.getCharWidth(char.char) * char.font.size
 	}
 
-	def splitAtMax(item: Word, max: Float): (Word, Word) = {
+	private[this] def splitAtMax(item: Word, max: Float): (Word, Word) = {
 		@tailrec
 		def getMaxStr(word: Word): Word = {
 			if (getWordSize(word) <= max) {
@@ -109,7 +112,7 @@ object WordWrap {
 	}
 
 	@tailrec
-	def splitWord(word: Word, max: Float, accum: ListBuffer[Word]): Unit = {
+	private[this] def splitWord(word: Word, max: Float, accum: ListBuffer[Word]): Unit = {
 		if (getWordSize(word) <= max) {
 			accum += word
 		} else {
@@ -122,7 +125,7 @@ object WordWrap {
 	case class RTextPos(x: Float, textLength: Float, rtext: RText)
 
 	@tailrec
-	def wordToRTextPos(offset: Float, word: Word, accum: ListBuffer[RTextPos]): Unit = {
+	private[this] def wordToRTextPos(offset: Float, word: Word, accum: ListBuffer[RTextPos]): Unit = {
 		if (word.charList.isEmpty) {
 			return
 		}
@@ -142,29 +145,7 @@ object WordWrap {
 		}
 	}
 
-	//  def combineRTextPos(input:List[RTextPos]):RTextPos={
-	//    val str = input.map(item => item.rtext.txt).foldLeft("")((a,b)=>a+b)
-	//    RTextPos(input(0).x, RText(str, input(0).rtext.font))
-	//  }
-	//
-	//  @tailrec
-	//  def mergeRTextPos(input: List[RTextPos], accum: ListBuffer[RTextPos]): Unit = {
-	//    if (input.isEmpty) {
-	//      return
-	//    }
-	//    val firstFont = input(0).rtext.font
-	//    val i1 = input.indexWhere(item => item.rtext.font != firstFont)
-	//    if (i1 == -1) {
-	//      accum +=combineRTextPos(input)
-	//    } else {
-	//      val elem1=input.take(i1)
-	//      val elem2=input.drop(i1)
-	//      accum +=combineRTextPos(elem1)
-	//      mergeRTextPos(elem2,accum)
-	//    }
-	//  }
-
-	def lineToRTextPos(line: List[Word]): List[RTextPos] = {
+	private[this] def lineToRTextPos(line: List[Word]): List[RTextPos] = {
 		val result1 = ListBuffer[RTextPos]()
 		var offset = 0f
 		line.foreach(word => {
@@ -199,6 +180,7 @@ object WordWrap {
 				None
 			}
 		}
+
 		val result1 = input.flatMap(item => item.txt.map(cc => CharF(cc, item.font)))
 		val result = ListBuffer[Word]()
 		stringToWord(result1, result)
@@ -265,13 +247,4 @@ object WordWrap {
 	}
 
 
-	def main(x: Array[String]): Unit = {
-		val list = List(RText("ii ii ii", RFont(8)), RText("11 11 \n11 abc II jj kkkk ", RFont(8)), RText(" WWWABWCD rrr", RFont(12)), RText("iii ", RFont(10)),
-			RText("uuu", RFont(10, attribute = RFontAttribute.BOLD)))
-		implicit val wordSeparators = List(',', '.')
-		//    val lines = wordWrapInternal(list, 50)
-		//    println(lines.mkString("\n"))
-		val result = wordWrap(list, 50)
-		println(result.mkString("\n"))
-	}
 }
