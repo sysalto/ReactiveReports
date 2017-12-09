@@ -36,7 +36,7 @@ import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
 import util.{PageTree, SyncFileUtil}
-import util.fonts.parsers.{AfmParser, TtfParser}
+import util.fonts.parsers.{AfmParser, RFontParserFamily, TtfParser}
 import util.wrapper.WordWrap
 
 import scala.collection.mutable.ListBuffer
@@ -51,6 +51,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	private[this] implicit val allItems = ListBuffer[PdfBaseItem]()
 	private[this] val txtList = ListBuffer[PdfTxtChuck]()
 	private[this] val graphicList = ListBuffer[PdfGraphicChuck]()
+	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] var id: Long = 0
 	private[this] var fontId: Long = 0
 
@@ -69,6 +70,19 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		pdfWriter.close()
 	}
 
+	def setExternalFont(externalFont: RFontFamily): Unit = {
+		fontFamilyMap += externalFont.name -> RFontParserFamily(externalFont.name, externalFont,false)
+	}
+
+	private[this] def initEmbeddedFonts(): Unit = {
+		initEmbeddedFont(RFontFamily("Courier","Courier",Some("Courier-Bold"),Some("Courier-Oblique"),Some("Courier-BoldOblique")))
+		initEmbeddedFont(RFontFamily("Helvetica","Helvetica",Some("Helvetica-Bold"),Some("Helvetica-Oblique"),Some("Helvetica-BoldOblique")))
+		initEmbeddedFont(RFontFamily("Times","Times-Roman",Some("Times-Bold"),Some("Times-Italic"),Some("Times-BoldItalic")))
+	}
+
+	private[this] def initEmbeddedFont(rFontFamily:RFontFamily) {
+		fontFamilyMap += rFontFamily.name ->  RFontParserFamily(rFontFamily.name, rFontFamily,true)
+	}
 
 	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
 		graphicList += DrawLine(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
@@ -95,7 +109,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value, simulate: Boolean, startY: Option[Float], lineHeight: Float): Option[ReportTypes.WrapBox] = {
 		implicit val wordSeparators = List(',', '.')
-		val lines = WordWrap.wordWrap(txtList, x1 - x0)
+		val lines = WordWrap.wordWrap(txtList, x1 - x0,fontFamilyMap)
 		var crtY = y0
 		if (!simulate) {
 			lines.foreach(line => {
@@ -233,6 +247,9 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		fontId += 1
 		"F" + fontId
 	}
+
+	initEmbeddedFonts()
+
 }
 
 
@@ -425,7 +442,7 @@ endobj
 				 				 |   /LastChar ${pdfFontWidths.lastChar}
 				 				 |   /Widths ${pdfFontWidths.id} 0 R
 				 				 |   /FontDescriptor ${embeddedDefOpt.get.pdfFontDescriptor.id} 0 R
-				         |   /Encoding/WinAnsiEncoding
+				 |   /Encoding/WinAnsiEncoding
 				 				 |   >>
 				 				 |endobj
 				 				 |""".stripMargin.getBytes
@@ -478,12 +495,12 @@ class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: Str
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 			 |    <</Type/FontDescriptor
-			       |    /FontName/${fontKeyName}
-			       |    /Flags ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.flags}
-			       |    /FontBBox[${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.fontBBox}]
-						 |    /ItalicAngle ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.italicAngle}
+			 |    /FontName/${fontKeyName}
+			 |    /Flags ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.flags}
+			 |    /FontBBox[${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.fontBBox}]
+			 |    /ItalicAngle ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.italicAngle}
 			 			 |    /Ascent ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.ascent}
-			       |    /Descent ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.descent}
+			 |    /Descent ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.descent}
 			 			 |    /CapHeight ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.capHeight}
 			 			 |    /StemV 0
 			 			 |    /FontFile2 ${pdfFontStream.id} 0 R

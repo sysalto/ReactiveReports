@@ -465,6 +465,10 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		drawImage(file, x, y, width, height, 1f)
 	}
 
+	def setExternalFont(externalFont:RFontFamily): Unit = {
+		pdfUtil.setExternalFont(externalFont)
+	}
+
 	// class initialize
 
 	pdfUtil.open(name, orientation)

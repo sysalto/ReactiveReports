@@ -26,8 +26,8 @@
 package util.wrapper
 
 import com.sysalto.report.RFontAttribute
-import com.sysalto.report.reportTypes.{ RFont, RText}
-import util.fonts.parsers.{AfmParser, FontParser, TtfParser}
+import com.sysalto.report.reportTypes.{RFont, RText}
+import util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
@@ -238,7 +238,8 @@ object WordWrap {
 	}
 
 
-	def wordWrap(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
+	def wordWrap(input: List[RText], max: Float,fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParserFamily])
+	            (implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
 		val result = ListBuffer[List[RTextPos]]()
 		wordWrapT(input, max, result)
 		result.toList
