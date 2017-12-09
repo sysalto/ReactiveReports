@@ -36,7 +36,7 @@ import com.sysalto.report.RFontAttribute
 
 case class RFont(var size: Int, var fontName: String = "Helvetica",
                  var attribute: RFontAttribute.Value = RFontAttribute.NORMAL,
-                 var color: RColor = RColor(0, 0, 0),var fontFile:Option[String]=None) {
+                 var color: RColor = RColor(0, 0, 0),var externalFont:Option[ExternalFont]=None) {
   def fontKeyName: String = fontName +
     (attribute match {
     case RFontAttribute.NORMAL => ""

@@ -137,8 +137,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 
 	def text(x: Float, y: Float, txt: RText): Unit = {
 		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
-			if (txt.font.fontFile.isDefined) {
-				val fontStream = new PdfFontStream(nextId(), txt.font.fontFile.get)
+			if (txt.font.externalFont.isDefined) {
+				val fontStream = new PdfFontStream(nextId(), txt.font.externalFont.get.regular)
 				val pdfFontWidths = new PdfFontWidths(nextId(), fontStream)
 				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
 				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,

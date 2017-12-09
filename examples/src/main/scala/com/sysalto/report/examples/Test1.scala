@@ -28,7 +28,7 @@ package com.sysalto.report.examples
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.{RFont, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{RFont, ExternalFont, ReportPageOrientation}
 
 /**
   * Created by marian on 4/1/17.
@@ -42,10 +42,15 @@ object Test1  {
   }
 
   def runReport(report: Report): Unit = {
+    val font=ExternalFont(name="Roboto",
+      regular="/home/marian/transfer/font/Roboto-Regular.ttf",
+      bold="/home/marian/transfer/font/Roboto-Bold.ttf",
+      italic="/home/marian/transfer/font/Roboto-Italic.ttf",
+      boldItalic = "/home/marian/transfer/font/Roboto-BoldItalic.ttf")
     report.nextLine(3)
     val str="Lorem ipsum dolor sit amet, quo consul dolores te, et modo timeam assentior mei. Eos et sonet soleat copiosae."
     val size=8
-    val txt1=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
+    val txt1=RText(str,RFont(size,fontName = "Roboto",externalFont = Some(font)))
   //  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
 //    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
 //    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
