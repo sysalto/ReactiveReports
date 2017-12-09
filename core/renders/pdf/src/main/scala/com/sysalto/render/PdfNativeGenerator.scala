@@ -542,7 +542,7 @@ class PdfText(txtList: List[PdfTxtChuck])
 				s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
 					 					 |  ${xRel} ${yRel} Td
 					 					 |  ${color._1} ${color._2} ${color._3} rg
-					 					 |  ( ${item.rtext.txt} ) Tj
+					 					 |  (${item.rtext.txt}) Tj
        """.stripMargin
 			}
 		}.mkString("")
@@ -555,7 +555,7 @@ class PdfText(txtList: List[PdfTxtChuck])
 				 				 |/${item.fontRefName} ${item.rtext.font.size} Tf
 				 				 |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
 				 				 |  ${color._1} ${color._2} ${color._3} rg
-				 				 |        ( ${item.rtext.txt} ) Tj
+				 				 |        (${item.rtext.txt}) Tj
 				 				 |Q
        """.mkString("")
 		})
