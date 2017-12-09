@@ -23,7 +23,6 @@
  */
 
 
-
 package com.sysalto.report.examples
 
 import com.sysalto.render.PdfNativeFactory
@@ -31,59 +30,59 @@ import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{RFont, RFontFamily, ReportPageOrientation}
 
 /**
-  * Created by marian on 4/1/17.
-  */
-object Test1  {
+	* Created by marian on 4/1/17.
+	*/
+object Test1 {
 
-  def run(): Unit = {
-    implicit val pdfFactory = new PdfNativeFactory()
-    val report = Report("Test.pdf" ,ReportPageOrientation.LANDSCAPE)
-    runReport(report)
-  }
+	def run(): Unit = {
+		implicit val pdfFactory = new PdfNativeFactory()
+		val report = Report("Test.pdf", ReportPageOrientation.LANDSCAPE)
+		runReport(report)
+	}
 
-  def runReport(report: Report): Unit = {
-    val fontFamily=RFontFamily(name="Roboto",
-      regular="/home/marian/transfer/font/Roboto-Regular.ttf",
-      bold=Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
-      italic=Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
-      boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
-    report.setExternalFont(fontFamily)
-    report.nextLine(3)
-    val size=8
-    val font=RFont(size,fontName = "Roboto",externalFont = Some(fontFamily))
-    report.font=font
-    val str="Lorem ipsum dolor sit amet, quo consul dolores te, et modo timeam assentior mei. Eos et sonet soleat copiosae."
+	def runReport(report: Report): Unit = {
+		val fontFamily = RFontFamily(name = "Roboto",
+			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
+			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
+			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
+			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
+		report.setExternalFont(fontFamily)
+		report.nextLine(3)
+		val size = 8
+		val font = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily))
+		report.font = font
+		val str = "Lorem ipsum dolor sit amet, quo consul dolores te, et modo timeam assentior mei. Eos et sonet soleat copiosae."
+		implicit val rr = report
+		val txt1 = RText(str)
+		//  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
+		//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
+		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
+		val txt2 = RText(str, RFont(size, "Helvetica"))
 
-    val txt1=RText(str)
-  //  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
-//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
-//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
-    val txt2=RText(str,RFont(size,"Helvetica"))
+		val row = Row(10, report.pgSize.width - 10, List(Column("column1", 100), Column("column2", 100)))
+		val bound1 = row.getColumnBound("column1")
+		val bound2 = row.getColumnBound("column2")
+		val cell1 = RCell(txt1) inside bound1
+		val cell2 = RCell(txt2) inside bound2
+		val rrow = RRow(List(
+			cell1,
+			cell2))
+		rrow.print(report)
 
-    val row = Row(10, report.pgSize.width - 10, List(Column("column1", 100), Column("column2", 100)))
-    val bound1 = row.getColumnBound("column1")
-    val bound2 = row.getColumnBound("column2")
-    val cell1 = RCell(txt1) inside bound1
-    val cell2 = RCell(txt2) inside bound2
-    val rrow = RRow(List(
-      cell1,
-      cell2))
-    rrow.print(report)
+		//    report print txt1 at 100
+		//    report.nextLine()
+		//    report print txt2 at 100
+		//    report.nextLine()
+		//    report print txt5 at 100
+		//    report.nextLine()
+		//    report print txt4 at 100
 
-//    report print txt1 at 100
-//    report.nextLine()
-//    report print txt2 at 100
-//    report.nextLine()
-//    report print txt5 at 100
-//    report.nextLine()
-//    report print txt4 at 100
-
-    report.render()
-  }
+		report.render()
+	}
 
 
-  def main(args: Array[String]): Unit = {
-    run()
-  }
+	def main(args: Array[String]): Unit = {
+		run()
+	}
 
 }
