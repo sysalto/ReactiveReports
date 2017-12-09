@@ -32,7 +32,7 @@ import scala.collection.mutable
 /**
 	* Created by marian on 5/6/17.
 	*/
-class AfmParser(fontFile: String) extends FontParser {
+class AfmParser(fontFile: String) extends FontParser(fontFile) {
 
 
 	private[this] def getValue(list: List[String], key: String): (Int, Int) = {
@@ -47,14 +47,7 @@ class AfmParser(fontFile: String) extends FontParser {
 	}
 
 
-	private[this] def getFontMetrics(fontName: String): FontMetric = {
-		if (!FontParser.fontsMetricMap.contains(fontName)) {
-			FontParser.fontsMetricMap += fontName -> parseFont(fontName)
-		}
-		FontParser.fontsMetricMap(fontName)
-	}
-
-	private[this] def parseFont(fontName: String): FontMetric = {
+	override protected[this] def parseFont(fontName: String): FontMetric = {
 		val textList = AfmParser.readFile(s"fonts/${fontName}.afm")
 		val upperHeight = getValue(textList, "CapHeight")._2
 		val lowerHeight = getValue(textList, "XHeight")._2
@@ -68,19 +61,12 @@ class AfmParser(fontFile: String) extends FontParser {
 			name -> (width.toFloat * 0.001).toFloat
 		})
 		val charList1 = charList.map { case (glyph, code) => AfmParser.glyphDef.glypMap(glyph) -> code }.toMap
-		FontMetric(charList1)
+		FontMetric(fontName, charList1, None)
 	}
 
 	def getStringWidth(str: String, fontMetric: FontMetric): Float = {
 		str.toCharArray.map(char => fontMetric.fontMap(char.toInt)).sum
 	}
-
-
-
-
-	override protected[this] val fontMetric:FontMetric=getFontMetrics(fontFile)
-
-
 
 }
 

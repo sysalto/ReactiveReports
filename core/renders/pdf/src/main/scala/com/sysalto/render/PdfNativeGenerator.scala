@@ -458,7 +458,7 @@ class PdfFontStream(id: Long, fontStreamName: String)(implicit itemList: ListBuf
 }
 
 class PdfFontWidths(id: Long, pdfFontStream: PdfFontStream)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-	private[this] val withObj = pdfFontStream.ttfParser.getWidths
+	private[this] val withObj = pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.glyphWidth
 	private[render] val firstChar = withObj.firstChar
 	private[render] val lastChar = withObj.lastChar
 
@@ -479,12 +479,12 @@ class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: Str
 		s"""${id} 0 obj
 			 			 |    <</Type/FontDescriptor
 			       |    /FontName/${fontKeyName}
-			       |    /Flags ${pdfFontStream.ttfParser.fontDescriptor.flags}
-			       |    /FontBBox[${pdfFontStream.ttfParser.fontDescriptor.fontBBox}]
-						 |    /ItalicAngle ${pdfFontStream.ttfParser.fontDescriptor.italicAngle}
-			 			 |    /Ascent ${pdfFontStream.ttfParser.fontDescriptor.ascent}
-			       |    /Descent ${pdfFontStream.ttfParser.fontDescriptor.descent}
-			 			 |    /CapHeight ${pdfFontStream.ttfParser.fontDescriptor.capHeight}
+			       |    /Flags ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.flags}
+			       |    /FontBBox[${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.fontBBox}]
+						 |    /ItalicAngle ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.italicAngle}
+			 			 |    /Ascent ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.ascent}
+			       |    /Descent ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.descent}
+			 			 |    /CapHeight ${pdfFontStream.ttfParser.fontMetric.fontDescriptor.get.capHeight}
 			 			 |    /StemV 0
 			 			 |    /FontFile2 ${pdfFontStream.id} 0 R
 			 			 |>>
