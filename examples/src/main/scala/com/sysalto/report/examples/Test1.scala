@@ -40,7 +40,7 @@ object Test1 {
 		runReport(report)
 	}
 
-	def runReport(report: Report): Unit = {
+	def runReport(implicit report: Report): Unit = {
 		val fontFamily = RFontFamily(name = "Roboto",
 			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
 			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
@@ -52,12 +52,11 @@ object Test1 {
 		val font = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily))
 		report.font = font
 		val str = "Lorem ipsum dolor sit amet, quo consul dolores te, et modo timeam assentior mei. Eos et sonet soleat copiosae."
-		implicit val rr = report
 		val txt1 = RText(str)
 		//  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
 		//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
 		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
-		val txt2 = RText(str, RFont(size, "Helvetica"))
+		val txt2 = RText(str)
 
 		val row = Row(10, report.pgSize.width - 10, List(Column("column1", 100), Column("column2", 100)))
 		val bound1 = row.getColumnBound("column1")

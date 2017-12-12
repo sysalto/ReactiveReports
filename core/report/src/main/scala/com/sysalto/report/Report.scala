@@ -282,6 +282,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	         wrapAlign: WrapAlign.Value = WrapAlign.WRAP_LEFT, simulate: Boolean = false): Option[WrapBox] = {
 		val text1 = text.map(item => {
 			val font = item.font
+			if (font.fontName.isEmpty) {
+				font.fontName=this.font.fontName
+			}
 			RText(item.txt, font)
 		})
 		if (simulate) {
