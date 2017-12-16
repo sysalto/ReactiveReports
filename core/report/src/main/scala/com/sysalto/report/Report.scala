@@ -112,6 +112,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	private[report] def reportWrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
 	                               wrapAlign: WrapAlign.Value, simulate: Boolean = false,
 	                               startY: Option[Float] = None): Option[WrapBox] = {
+
 		pdfUtil.wrap(text, x0, y0, x1, y1, wrapAlign, simulate, startY, lineHeight)
 	}
 
@@ -222,7 +223,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def text(txt: RText, x: Float, y: Float = -1): Unit = {
 		val y1 = if (y == -1) getY else y
 		if (txt.font.fontName.isEmpty) {
-			txt.font.fontName=this.font.fontName
+			txt.font=this.font
+			txt.font.size=txt.font.size
 		}
 		val reportItem = ReportText(txt, x, y1)
 		crtPage.items += reportItem
@@ -235,7 +237,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def textAligned(txt: RText, index: Int, x: Float, y: Float = -1): Unit = {
 		val y1 = if (y == -1) getY else y
 		if (txt.font.fontName.isEmpty) {
-			txt.font.fontName=this.font.fontName
+			txt.font=this.font
+			txt.font.size=txt.font.size
 		}
 		val reportItem = ReportTextAligned(txt, x, y1, index)
 		crtPage.items += reportItem
@@ -253,11 +256,11 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	Draw a pie chart with title, data from (x0,y0) with width and height dimensions.
 	 */
 	def drawPieChart(title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += ReportPieChart(title, data, x0, y0, width, height)
+		crtPage.items += ReportPieChart(font,title, data, x0, y0, width, height)
 	}
 
 	def drawPieChart1(title: String, data: _root_.java.util.List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += ReportPieChart(title, data.asScala.toList, x0, y0, width, height)
+		crtPage.items += ReportPieChart(font,title, data.asScala.toList, x0, y0, width, height)
 	}
 
 	/*
@@ -287,9 +290,12 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value = WrapAlign.WRAP_LEFT, simulate: Boolean = false): Option[WrapBox] = {
 		val text1 = text.map(item => {
-			val font = item.font
-			if (font.fontName.isEmpty) {
-				font.fontName=this.font.fontName
+			val font=if (item.font.fontName.isEmpty) {
+				val font1=this.font
+				font1.size=item.font.size
+				font1
+			} else{
+				item.font
 			}
 			RText(item.txt, font)
 		})
@@ -373,7 +379,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def print(txt: RText): TextDsl = {
 		if (txt.font.fontName.isEmpty) {
-			txt.font.fontName=this.font.fontName
+			txt.font=this.font
+			txt.font.size=txt.font.size
 		}
 		val result = new TextDsl(this, txt)
 		result

@@ -1,3 +1,5 @@
+package com.sysalto.report.examples
+
 /*
  * ReactiveReports - Free Java /Scala Reporting Library.
  * Copyright (C) 2017 SysAlto Corporation. All rights reserved.
@@ -23,21 +25,19 @@
  */
 
 
-
-
-package com.sysalto.report.examples.mutualFunds
-
 import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
+import com.sysalto.report.examples.mutualFunds.MutualFundsInitData
 import com.sysalto.report.reportTypes.{GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrail}
 
 import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.ListBuffer
 
-object MutualFundsReportNoAkka extends ResultSetUtilTrail {
+object Test2 extends ResultSetUtilTrail {
 	val sd = new SimpleDateFormat("MMM dd yyyy")
 	private val date1 = new GregorianCalendar(2013, 0, 1).getTime
 	private val date2 = new GregorianCalendar(2013, 11, 31).getTime
@@ -49,37 +49,39 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrail {
 	}
 
 	private def reportHeader(report: Report): Unit = {
-		drawbackgroundImage(report)
+		//drawbackgroundImage(report)
 		val rs = MutualFundsInitData.query("select * from clnt")
 		rs.next()
 		val record = rs.toMap
 		rs.close()
 		report.nextLine()
-		report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 45, 100, 40)
+	//	report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 45, 100, 40)
 
-		report print (RCell("Investment statement" size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+//		report print (RCell("Investment statement" size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
 		report.nextLine()
 
 		val str = sd.format(date1) + " to " + sd.format(date2)
-		report print (RCell(str size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+//		report print (RCell(str size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
 		report.nextLine(2)
-		report print ("Mutual Funds Inc." bold()) at 10
+//		report print ("Mutual Funds Inc." bold()) at 10
 		report.nextLine()
 		report print ("Group Registered Retirement Saving Plan" bold()) at 10
 		report.nextLine(2)
-		val y = report.getY
-		report print ((record value "name").toString bold()) at 10
-		report.nextLine()
-		report print (record value "addr1").toString at 10
-		report.nextLine()
-		report print (record value "addr2").toString at 10
-		report.nextLine()
-		report print (record value "addr3").toString at 10
-		report.setYPosition(y)
-		report print (RCell("Beneficiary information" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
-		report.nextLine()
-		report print (RCell((record value "benef_name").toString) rightAlign() inside RMargin(0, report.pgSize.width - 10))
-		report.nextLine(2)
+//		val y = report.getY
+//		report print ((record value "name").toString bold()) at 10
+//		report.nextLine()
+//		report print (record value "addr1").toString at 10
+//		report.nextLine()
+//		report print (record value "addr2").toString at 10
+//		report.nextLine()
+//		report print (record value "addr3").toString at 10
+//		report.setYPosition(y)
+//		report print (RCell("Beneficiary information" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+//		report.nextLine()
+//		report print (RCell((record value "benef_name").toString) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+//		report.nextLine(2)
+
+
 	}
 
 
@@ -318,14 +320,14 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrail {
 				val column2 = row.getColumnBound("column2")
 				val column3 = row.getColumnBound("column3")
 
-				val h_column1 = RCell("Type of Account" bold()) leftAlign() inside column1
-				val h_column2 = RCell("Your account number" bold()) leftAlign() inside column2
-				val h_column3 = RCell("Your investment statement" bold()) rightAlign() inside column3
+				val h_column1 = RCell("Type of Account" bold())  inside column1
+				val h_column2 = RCell("Your account number" bold()) inside column2
+				val h_column3 = RCell("Your investment statement" bold())  inside column3
 				val hrow = RRow(List(h_column1, h_column2, h_column3))
 				hrow.print(report)
 				report.nextLine()
 				val str = sd.format(date1) + " to " + sd.format(date2)
-				val r_column1 = RCell("Group Registered Retirement Saving Plan") leftAlign() inside column1
+				val r_column1 = RCell("Group Registered Retirement Saving Plan")  inside column1
 				val r_column2 = RCell("123456789") leftAlign() inside column2
 				val r_column3 = RCell(str) rightAlign() inside column3
 				val rrow = RRow(List(r_column1, r_column2, r_column3))
@@ -335,19 +337,19 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrail {
 				drawbackgroundImage(report)
 		}
 
-		report.footerFct = {
-			case (pgNbr, pgMax) =>
-				report.setYPosition(report.pgSize.height - report.lineHeight * 3)
-				report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
-				report.nextLine()
-				report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
-		}
+//		report.footerFct = {
+//			case (pgNbr, pgMax) =>
+//				report.setYPosition(report.pgSize.height - report.lineHeight * 3)
+//				report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+//				report.nextLine()
+//				report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+//		}
 
 		reportHeader(report)
-		summaryOfInvestment(report)
-		changeAccount(report)
-		accountPerformance(report)
-		disclaimer(report)
+//		summaryOfInvestment(report)
+//		changeAccount(report)
+//		accountPerformance(report)
+//		disclaimer(report)
 		report.render()
 	}
 
@@ -364,6 +366,9 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrail {
 		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
 		report1.font = font
 
+		//				val font = RFont(10, fontName = "Helvetica")
+		//				report1.font = font
+
 		report(report1)
 	}
 
@@ -372,3 +377,4 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrail {
 		runReport()
 	}
 }
+

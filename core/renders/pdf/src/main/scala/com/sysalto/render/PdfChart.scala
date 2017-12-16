@@ -27,7 +27,7 @@
 package com.sysalto.render
 
 import com.sysalto.render.PdfDraw._
-import com.sysalto.report.reportTypes.{RColor, RText}
+import com.sysalto.report.reportTypes.{RColor, RFont, RText}
 import com.sysalto.render.basic.PdfBasic._
 
 object PdfChart {
@@ -61,7 +61,7 @@ object PdfChart {
 
 	private[this] def getColor(i:Int,total:Int):RColor=RColor((256.0*i/total).toInt,(256.0*(256.0-i)/total).toInt,(256.0*(256.0-i)/total).toInt)
 
-	def pieChart(pdfgenerator:PdfNativeGenerator,title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): String = {
+	def pieChart(pdfgenerator:PdfNativeGenerator,font:RFont,title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): String = {
 		def getPoint(center: DrawPoint, radius: Float, angle: Float): DrawPoint =
 			DrawPoint((center.x + radius * Math.cos(angle)).toFloat, (center.y + radius * Math.sin(angle)).toFloat)
 
@@ -98,7 +98,7 @@ object PdfChart {
 		val str2 = angleList.map {
 			case (label, (startAngle, endAngle, color)) => {
 				val s=rectangle(x+2.0f*(radius+offset),y-ycrt,10,10)+fill(color)+fillStroke(true,false)
-				pdfgenerator.text(x+2.0f*(radius+offset)+20,y-ycrt+1,RText(label).size(10))
+				pdfgenerator.text(x+2.0f*(radius+offset)+20,y-ycrt+1,RText(label,font).size(10))
 				ycrt += 12
 				s
 			}

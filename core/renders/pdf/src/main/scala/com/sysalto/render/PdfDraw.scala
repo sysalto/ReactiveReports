@@ -26,7 +26,7 @@
 
 package com.sysalto.render
 
-import com.sysalto.report.reportTypes.{LineDashType, RColor}
+import com.sysalto.report.reportTypes.{LineDashType, RColor, RFont}
 import com.sysalto.render.basic.PdfBasic._
 import PdfChart._
 
@@ -147,8 +147,8 @@ object PdfDraw {
 
 	}
 
-	case class DrawPieChart(pdfgenerator: PdfNativeGenerator, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicChuck {
-		private[this] val s = pieChart(pdfgenerator, title, data.toList, x, y, width, height)
+	case class DrawPieChart(pdfgenerator: PdfNativeGenerator,font:RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicChuck {
+		private[this] val s = pieChart(pdfgenerator, font,title, data.toList, x, y, width, height)
 
 		override def content: String = s
 	}

@@ -146,8 +146,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		currentPage.imageList = List(pdfImage)
 	}
 
-	def drawPieChart(title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
-		graphicList += DrawPieChart(this, title, data, x, y, width, height)
+	def drawPieChart(font:RFont,title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
+		graphicList += DrawPieChart(this, font,title, data, x, y, width, height)
 	}
 
 	private[this] def getFontParser(font:RFont):FontParser={

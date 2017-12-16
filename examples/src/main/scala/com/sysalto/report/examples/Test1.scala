@@ -48,11 +48,11 @@ object Test1 {
 			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
 		report.setExternalFont(fontFamily)
 		report.nextLine(3)
-		val size = 8
+		val size = 10
 		val font = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily))
-		report.font = font
-		val str = "Lorem ipsum dolor sit amet, quo consul dolores te, et modo timeam assentior mei. Eos et sonet soleat copiosae."
-		val txt1 = RText(str)
+//		report.font = font
+		val str = "Group Registered Retirement Saving Plan"
+		val txt1 = RText(str,font)
 		//  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
 		//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
 		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
@@ -67,8 +67,8 @@ object Test1 {
 			cell1,
 			cell2))
 		rrow.print(report)
+		report.nextLine(10)
 
-		//    report print txt1 at 100
 		//    report.nextLine()
 		//    report print txt2 at 100
 		//    report.nextLine()

@@ -110,10 +110,10 @@ object ReportTypes {
   /*
   pie chart class
    */
-  case class ReportPieChart(title: String, data: List[(String, Double)],
+  case class ReportPieChart(font:RFont,title: String, data: List[(String, Double)],
                             x0: Float, y0: Float, width: Float, height: Float) extends ReportItem() {
     override def render(report: Report): Unit = {
-      report.pdfUtil.drawPieChart(title, data, x0, y0 - deltaY, width, height)
+      report.pdfUtil.drawPieChart(font,title, data, x0, y0 - deltaY, width, height)
     }
   }
 
