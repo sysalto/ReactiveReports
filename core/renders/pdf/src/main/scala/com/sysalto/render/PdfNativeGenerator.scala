@@ -165,7 +165,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
 			if (txt.font.externalFont.isDefined) {
 				val fontStream = new PdfFontStream(nextId(), getFontParser(txt.font))
-				val pdfFontWidths = new PdfFontWidths(nextId(), fontStream)
+				val pdfFontWidths = new PdfFontWidths(nextId(), fontStream,pdfCompression)
 				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
 				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
 					Some(FontEmbeddedDef(fontDescr, pdfFontWidths)))
@@ -273,10 +273,11 @@ object PdfNativeGenerator {
 		(r, g, b)
 	}
 
-	def writeData(id: Long, input: String, pdfCompression: Boolean): Array[Byte] = {
+	def writeData(id: Long, input: String, pdfCompression: Boolean,hasLength1:Boolean=false): Array[Byte] = {
+		val length1=if (hasLength1) s"/Length1 ${input.size}" else ""
 		val result = if (!pdfCompression) {
 			s"""${id} 0 obj
-				 |<</Length ${input.length} >>
+				 |<</Length ${input.length} ${length1}>>
 				 |stream
 				 |${input}
 				 |endstream
@@ -292,7 +293,7 @@ object PdfNativeGenerator {
 			compresser.end()
 			val compressTxt = output.take(compressedDataLength)
 			s"""${id} 0 obj
-				 |<</Filter/FlateDecode/Length ${compressTxt.length}>>
+				 |<</Filter/FlateDecode/Length ${compressTxt.length} ${length1}>>
 				 |stream
 				 |""".stripMargin.getBytes ++
 				compressTxt ++
@@ -512,21 +513,22 @@ class PdfFontStream(id: Long, val fontParser: FontParser)(implicit itemList: Lis
 			 			 |""".stripMargin.getBytes ++
 			byteArray ++
 			"\nendstream\nendobj\n".getBytes
+	//	PdfNativeGenerator.writeData(id, itemsStr, pdfCompression)
 	}
 }
 
-class PdfFontWidths(id: Long, pdfFontStream: PdfFontStream)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfFontWidths(id: Long, pdfFontStream: PdfFontStream,pdfCompression:Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	private[this] val withObj = pdfFontStream.fontParser.fontMetric.fontDescriptor.get.glyphWidth
 	private[render] val firstChar = withObj.firstChar
 	private[render] val lastChar = withObj.lastChar
 
 	override def content: Array[Byte] = {
-		s"""${id} 0 obj
-			 |[
-			 | ${withObj.widthList.mkString(" ")}
-			 |]
-			 |endobj
-			 |""".stripMargin.getBytes
+		val itemsStr=
+			s""" |[
+				 |${withObj.widthList.mkString(" ")}
+				 }]
+			 """.stripMargin
+		PdfNativeGenerator.writeData(id, itemsStr, pdfCompression)
 	}
 }
 
