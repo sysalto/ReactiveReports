@@ -164,7 +164,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	def text(x: Float, y: Float, txt: RText): Unit = {
 		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
 			if (txt.font.externalFont.isDefined) {
-				val fontStream = new PdfFontStream(nextId(), getFontParser(txt.font))
+				val fontStream = new PdfFontStream(nextId(), getFontParser(txt.font),pdfCompression)
 				val pdfFontWidths = new PdfFontWidths(nextId(), fontStream,pdfCompression)
 				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
 				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
@@ -273,20 +273,21 @@ object PdfNativeGenerator {
 		(r, g, b)
 	}
 
-	def writeData(id: Long, input: String, pdfCompression: Boolean,hasLength1:Boolean=false): Array[Byte] = {
+	def writeData(id: Long, input: Array[Byte], pdfCompression: Boolean,hasLength1:Boolean=false): Array[Byte] = {
 		val length1=if (hasLength1) s"/Length1 ${input.size}" else ""
 		val result = if (!pdfCompression) {
 			s"""${id} 0 obj
 				 |<</Length ${input.length} ${length1}>>
 				 |stream
-				 |${input}
-				 |endstream
-				 |endobj
-				 |""".stripMargin.getBytes
+				 |""".stripMargin.getBytes++
+				 input++
+				 s"""
+					  |endstream
+				    |endobj
+				    |""".stripMargin.getBytes
 		} else {
-			val binput = input.getBytes
 			val compresser = new Deflater(Deflater.BEST_COMPRESSION)
-			compresser.setInput(binput)
+			compresser.setInput(input)
 			compresser.finish()
 			val output = new Array[Byte](input.length)
 			val compressedDataLength = compresser.deflate(output)
@@ -495,7 +496,7 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String,
 }
 
 
-class PdfFontStream(id: Long, val fontParser: FontParser)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfFontStream(id: Long, val fontParser: FontParser,pdfCompression:Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val byteArray = Files.readAllBytes(Paths.get(fontParser.fontName))
 		val byteArray2 = {
@@ -513,7 +514,7 @@ class PdfFontStream(id: Long, val fontParser: FontParser)(implicit itemList: Lis
 			 			 |""".stripMargin.getBytes ++
 			byteArray ++
 			"\nendstream\nendobj\n".getBytes
-	//	PdfNativeGenerator.writeData(id, itemsStr, pdfCompression)
+		PdfNativeGenerator.writeData(id, byteArray, pdfCompression)
 	}
 }
 
@@ -528,7 +529,7 @@ class PdfFontWidths(id: Long, pdfFontStream: PdfFontStream,pdfCompression:Boolea
 				 |${withObj.widthList.mkString(" ")}
 				 }]
 			 """.stripMargin
-		PdfNativeGenerator.writeData(id, itemsStr, pdfCompression)
+		PdfNativeGenerator.writeData(id, itemsStr.getBytes, pdfCompression)
 	}
 }
 
@@ -558,7 +559,7 @@ class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem]
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
-		PdfNativeGenerator.writeData(id, itemsStr, pdfCompression)
+		PdfNativeGenerator.writeData(id, itemsStr.getBytes, pdfCompression)
 	}
 }
 
