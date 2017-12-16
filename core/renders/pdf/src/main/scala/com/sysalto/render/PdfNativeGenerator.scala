@@ -384,7 +384,7 @@ class PdfGPattern(id: Long, pdfShadding: PdfColorShadding)
 	}
 }
 
-class ImageMeta(fileName: String) {
+private class ImageMeta(fileName: String) {
 	val file = new File(fileName)
 	val bimg: BufferedImage = ImageIO.read(file)
 	val width: Int = bimg.getWidth()
