@@ -301,7 +301,7 @@ object PdfNativeGenerator {
 				s"""
 					 |endstream
 					 |endobj
-			 """.stripMargin.getBytes
+			 |""".stripMargin.getBytes
 		}
 		result
 	}
@@ -487,7 +487,7 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String,
 				 				 |   /LastChar ${pdfFontWidths.lastChar}
 				 				 |   /Widths ${pdfFontWidths.id} 0 R
 				 				 |   /FontDescriptor ${embeddedDefOpt.get.pdfFontDescriptor.id} 0 R
-				 |   /Encoding/WinAnsiEncoding
+				         |   /Encoding/WinAnsiEncoding
 				 				 |   >>
 				 				 |endobj
 				 				 |""".stripMargin.getBytes
@@ -514,7 +514,7 @@ class PdfFontStream(id: Long, val fontParser: FontParser,pdfCompression:Boolean)
 			 			 |""".stripMargin.getBytes ++
 			byteArray ++
 			"\nendstream\nendobj\n".getBytes
-		PdfNativeGenerator.writeData(id, byteArray, pdfCompression)
+		PdfNativeGenerator.writeData(id, byteArray, pdfCompression,true)
 	}
 }
 
