@@ -29,6 +29,7 @@ import java.awt.image.BufferedImage
 import java.io.{ByteArrayOutputStream, File, FileOutputStream, PrintWriter}
 import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.security.MessageDigest
+import java.util.zip.Deflater
 import javax.imageio.ImageIO
 
 import com.sysalto.render.PdfDraw._
@@ -44,7 +45,7 @@ import scala.collection.mutable.ListBuffer
 /**
 	* Created by marian on 4/1/17.
 	*/
-class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
+class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
 
 
 	private[this] implicit val pdfWriter = new PdfWriter(name)
@@ -52,7 +53,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	private[this] val txtList = ListBuffer[PdfTxtChuck]()
 	private[this] val graphicList = ListBuffer[PdfGraphicChuck]()
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
-	private[this] val wordWrap=new WordWrap(fontFamilyMap)
+	private[this] val wordWrap = new WordWrap(fontFamilyMap)
 	private[this] var id: Long = 0
 	private[this] var fontId: Long = 0
 
@@ -72,17 +73,17 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	}
 
 	def setExternalFont(externalFont: RFontFamily): Unit = {
-		fontFamilyMap += externalFont.name -> RFontParserFamily(externalFont.name, externalFont,false)
+		fontFamilyMap += externalFont.name -> RFontParserFamily(externalFont.name, externalFont, false)
 	}
 
 	private[this] def initEmbeddedFonts(): Unit = {
-		initEmbeddedFont(RFontFamily("Courier","Courier",Some("Courier-Bold"),Some("Courier-Oblique"),Some("Courier-BoldOblique")))
-		initEmbeddedFont(RFontFamily("Helvetica","Helvetica",Some("Helvetica-Bold"),Some("Helvetica-Oblique"),Some("Helvetica-BoldOblique")))
-		initEmbeddedFont(RFontFamily("Times","Times-Roman",Some("Times-Bold"),Some("Times-Italic"),Some("Times-BoldItalic")))
+		initEmbeddedFont(RFontFamily("Courier", "Courier", Some("Courier-Bold"), Some("Courier-Oblique"), Some("Courier-BoldOblique")))
+		initEmbeddedFont(RFontFamily("Helvetica", "Helvetica", Some("Helvetica-Bold"), Some("Helvetica-Oblique"), Some("Helvetica-BoldOblique")))
+		initEmbeddedFont(RFontFamily("Times", "Times-Roman", Some("Times-Bold"), Some("Times-Italic"), Some("Times-BoldItalic")))
 	}
 
-	private[this] def initEmbeddedFont(rFontFamily:RFontFamily) {
-		fontFamilyMap += rFontFamily.name ->  RFontParserFamily(rFontFamily.name, rFontFamily,true)
+	private[this] def initEmbeddedFont(rFontFamily: RFontFamily) {
+		fontFamilyMap += rFontFamily.name -> RFontParserFamily(rFontFamily.name, rFontFamily, true)
 	}
 
 	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
@@ -146,17 +147,17 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 		currentPage.imageList = List(pdfImage)
 	}
 
-	def drawPieChart(font:RFont,title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
-		graphicList += DrawPieChart(this, font,title, data, x, y, width, height)
+	def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
+		graphicList += DrawPieChart(this, font, title, data, x, y, width, height)
 	}
 
-	private[this] def getFontParser(font:RFont):FontParser={
-		val fontFamily=fontFamilyMap(font.fontName)
+	private[this] def getFontParser(font: RFont): FontParser = {
+		val fontFamily = fontFamilyMap(font.fontName)
 		font.attribute match {
 			case RFontAttribute.NORMAL => fontFamily.regular
-			case RFontAttribute.BOLD=>fontFamily.bold.get
-			case RFontAttribute.ITALIC=>fontFamily.italic.get
-			case RFontAttribute.BOLD_ITALIC=>fontFamily.boldItalic.get
+			case RFontAttribute.BOLD => fontFamily.bold.get
+			case RFontAttribute.ITALIC => fontFamily.italic.get
+			case RFontAttribute.BOLD_ITALIC => fontFamily.boldItalic.get
 		}
 	}
 
@@ -195,7 +196,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float) {
 	def saveCurrentPage(): Unit = {
 		val text = new PdfText(txtList.toList)
 		val graphic = new PdfGraphic(graphicList.toList)
-		currentPage.contentPage = Some(new PdfPageContent(nextId(), currentPage, List(graphic, text)))
+		currentPage.contentPage = Some(new PdfPageContent(nextId(), currentPage, List(graphic, text), pdfCompression))
 		currentPage.fontList = fontMap.values.toList.sortBy(font => font.refName)
 		pageList += currentPage
 		txtList.clear()
@@ -270,6 +271,37 @@ object PdfNativeGenerator {
 		val g = color.g / 255f
 		val b = color.b / 255f
 		(r, g, b)
+	}
+
+	def writeData(id: Long, input: String, pdfCompression: Boolean): Array[Byte] = {
+		val result = if (!pdfCompression) {
+			s"""${id} 0 obj
+				 |<</Length ${input.length} >>
+				 |stream
+				 |${input}
+				 |endstream
+				 |endobj
+				 |""".stripMargin.getBytes
+		} else {
+			val binput = input.getBytes
+			val compresser = new Deflater(Deflater.BEST_COMPRESSION)
+			compresser.setInput(binput)
+			compresser.finish()
+			val output = new Array[Byte](input.length)
+			val compressedDataLength = compresser.deflate(output)
+			compresser.end()
+			val compressTxt = output.take(compressedDataLength)
+			s"""${id} 0 obj
+				 |<</Filter/FlateDecode/Length ${compressTxt.length}>>
+				 |stream
+				 |""".stripMargin.getBytes ++
+				compressTxt ++
+				s"""
+					 |endstream
+					 |endobj
+			 """.stripMargin.getBytes
+		}
+		result
 	}
 }
 
@@ -436,13 +468,13 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String,
 	override def content: Array[Byte] = {
 		if (embeddedDefOpt.isEmpty) {
 			s"""${id} 0 obj
-<<  /Type /Font
-/Subtype /Type1
-/BaseFont /${fontKeyName}
-/Encoding /WinAnsiEncoding
->>
-endobj
-""".getBytes
+				 |<<  /Type /Font
+				 |/Subtype /Type1
+				 |/BaseFont /${fontKeyName}
+				 |/Encoding /WinAnsiEncoding
+				 |>>
+				 |endobj
+				 |""".stripMargin.getBytes
 		} else {
 			val pdfFontWidths = embeddedDefOpt.get.pdfFontWidths
 			s"""${id} 0 obj
@@ -520,17 +552,11 @@ class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: Str
 }
 
 
-class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem])
+class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
-		s"""${id} 0 obj
-			 			 |  <<  /Length ${itemsStr.length} >>
-			 			 |stream
-			 			 |${itemsStr}
-			 			 |endstream
-			 			 |endobj
-			 			 |""".stripMargin.getBytes
+		PdfNativeGenerator.writeData(id, itemsStr, pdfCompression)
 	}
 }
 

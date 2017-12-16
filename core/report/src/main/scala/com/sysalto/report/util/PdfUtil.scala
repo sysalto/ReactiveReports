@@ -37,7 +37,7 @@ import scala.collection.mutable.ListBuffer
 abstract class PdfUtil() {
   var name = ""
 
-  def open(name: String,orientation: ReportPageOrientation.Value)
+  def open(name: String,orientation: ReportPageOrientation.Value,pdfCompression:Boolean)
 
 
   def setPagesNumber(pgNbr:Long)

@@ -41,7 +41,7 @@ import scala.collection.JavaConverters._
 	* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
 	* @param pdfFactory - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 	*/
-case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT)(implicit pdfFactory: PdfFactory) {
+case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT,pdfCompression:Boolean=true)(implicit pdfFactory: PdfFactory) {
 	private[this] var pageNbrs = 1L
 	private[this] var crtPageNbr = 1L
 	private[this] val crtPage = ReportPage(new ListBuffer[ReportItem]())
@@ -491,7 +491,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	// class initialize
 
-	pdfUtil.open(name, orientation)
+	pdfUtil.open(name, orientation,pdfCompression)
 	crtYPosition = pdfUtil.pgSize.height
 	KryoUtil.register(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass)
 
