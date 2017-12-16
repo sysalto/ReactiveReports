@@ -221,6 +221,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def text(txt: RText, x: Float, y: Float = -1): Unit = {
 		val y1 = if (y == -1) getY else y
+		if (txt.font.fontName.isEmpty) {
+			txt.font.fontName=this.font.fontName
+		}
 		val reportItem = ReportText(txt, x, y1)
 		crtPage.items += reportItem
 	}
@@ -231,6 +234,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def textAligned(txt: RText, index: Int, x: Float, y: Float = -1): Unit = {
 		val y1 = if (y == -1) getY else y
+		if (txt.font.fontName.isEmpty) {
+			txt.font.fontName=this.font.fontName
+		}
 		val reportItem = ReportTextAligned(txt, x, y1, index)
 		crtPage.items += reportItem
 	}
@@ -366,6 +372,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	print a RText (no wrapping).
 	 */
 	def print(txt: RText): TextDsl = {
+		if (txt.font.fontName.isEmpty) {
+			txt.font.fontName=this.font.fontName
+		}
 		val result = new TextDsl(this, txt)
 		result
 	}
