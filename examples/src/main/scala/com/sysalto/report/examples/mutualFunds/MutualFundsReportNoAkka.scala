@@ -79,7 +79,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrail {
 		report print (RCell("Beneficiary information" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
 		report.nextLine()
 		report print (RCell((record value "benef_name").toString) rightAlign() inside RMargin(0, report.pgSize.width - 10))
-		report.nextLine(4)
+		report.nextLine(2)
 	}
 
 
