@@ -223,8 +223,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def text(txt: RText, x: Float, y: Float = -1): Unit = {
 		val y1 = if (y == -1) getY else y
 		if (txt.font.fontName.isEmpty) {
-			txt.font=this.font
-			txt.font.size=txt.font.size
+			txt.font.fontName=this.font.fontName
+			txt.font.externalFont=this.font.externalFont
 		}
 		val reportItem = ReportText(txt, x, y1)
 		crtPage.items += reportItem
@@ -237,8 +237,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def textAligned(txt: RText, index: Int, x: Float, y: Float = -1): Unit = {
 		val y1 = if (y == -1) getY else y
 		if (txt.font.fontName.isEmpty) {
-			txt.font=this.font
-			txt.font.size=txt.font.size
+			txt.font.fontName=this.font.fontName
+			txt.font.externalFont=this.font.externalFont
 		}
 		val reportItem = ReportTextAligned(txt, x, y1, index)
 		crtPage.items += reportItem
@@ -291,8 +291,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	         wrapAlign: WrapAlign.Value = WrapAlign.WRAP_LEFT, simulate: Boolean = false): Option[WrapBox] = {
 		val text1 = text.map(item => {
 			val font=if (item.font.fontName.isEmpty) {
-				val font1=this.font
-				font1.size=item.font.size
+				val font1=item.font
+				font1.fontName=this.font.fontName
+				font1.externalFont=this.font.externalFont
 				font1
 			} else{
 				item.font
@@ -379,8 +380,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def print(txt: RText): TextDsl = {
 		if (txt.font.fontName.isEmpty) {
-			txt.font=this.font
-			txt.font.size=txt.font.size
+			txt.font.fontName=this.font.fontName
+			txt.font.externalFont=this.font.externalFont
 		}
 		val result = new TextDsl(this, txt)
 		result
