@@ -165,7 +165,6 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
 			if (txt.font.externalFont.isDefined) {
 				val fontStream = new PdfFontStream(nextId(), getFontParser(txt.font), pdfCompression)
-				//				val pdfFontWidths = new PdfFontWidths(nextId(), fontStream,pdfCompression)
 				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
 				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
 					Some(FontEmbeddedDef(fontDescr, fontStream)))
@@ -323,7 +322,7 @@ abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseIt
 	}
 }
 
-class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ var pdfPageList: Option[PdfPageList] = None)
+private class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ var pdfPageList: Option[PdfPageList] = None)
                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
@@ -335,7 +334,7 @@ class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ var pdfP
 	}
 }
 
-class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Long] = List())
+private class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Long] = List())
                  (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val parentIdStr = if (parentId.isDefined) s"/Parent ${parentId.get} 0 R" else ""
@@ -350,7 +349,7 @@ class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Lo
 	}
 }
 
-class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
+private class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
                          (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val colorNbr1 = PdfNativeGenerator.convertColor(color1)
@@ -363,7 +362,7 @@ class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
 	}
 }
 
-class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdfShaddingFctColor: PdfShaddingFctColor)
+private class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdfShaddingFctColor: PdfShaddingFctColor)
                       (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
@@ -399,7 +398,7 @@ class ImageMeta(fileName: String) {
 	val pixelSize: Int = bimg.getColorModel.getComponentSize(0)
 }
 
-class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+private class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	val name = "img" + id
 	val imageMeta = new ImageMeta(fileName)
 
@@ -423,7 +422,7 @@ class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBase
 }
 
 
-case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
+private case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
                        (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfGraphicChuck {
 	private[this] val image = pdfImage.imageMeta
 	private[this] val width = image.width * scale
@@ -440,7 +439,7 @@ case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1
 
 }
 
-class PdfPage(id: Long, var pdfPageListId: Long = 0, var pageWidth: Float, var pageHeight: Float, var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfGPattern] = List(), var imageList: List[PdfImage] = List(), var contentPage: Option[PdfPageContent] = None)
+private class PdfPage(id: Long, var pdfPageListId: Long = 0, var pageWidth: Float, var pageHeight: Float, var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfGPattern] = List(), var imageList: List[PdfImage] = List(), var contentPage: Option[PdfPageContent] = None)
              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val contentStr = if (contentPage.isDefined) s"/Contents ${contentPage.get.id} 0 R" else ""
@@ -462,9 +461,9 @@ class PdfPage(id: Long, var pdfPageListId: Long = 0, var pageWidth: Float, var p
 	}
 }
 
-case class FontEmbeddedDef(pdfFontDescriptor: PdfFontDescriptor, pdfFontStream: PdfFontStream)
+private case class FontEmbeddedDef(pdfFontDescriptor: PdfFontDescriptor, pdfFontStream: PdfFontStream)
 
-class PdfFont(id: Long, val refName: String, fontKeyName: String,
+private class PdfFont(id: Long, val refName: String, fontKeyName: String,
               embeddedDefOpt: Option[FontEmbeddedDef] = None)
              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
@@ -504,7 +503,7 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String,
 }
 
 
-class PdfFontStream(id: Long, val fontParser: FontParser, pdfCompression: Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+private class PdfFontStream(id: Long, val fontParser: FontParser, pdfCompression: Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val byteArray = Files.readAllBytes(Paths.get(fontParser.fontName))
 		val byteArray2 = {
@@ -526,23 +525,7 @@ class PdfFontStream(id: Long, val fontParser: FontParser, pdfCompression: Boolea
 	}
 }
 
-//class PdfFontWidths(id: Long, pdfFontStream: PdfFontStream,pdfCompression:Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
-//	private[this] val withObj = pdfFontStream.fontParser.fontMetric.fontDescriptor.get.glyphWidth
-//	private[render] val firstChar = withObj.firstChar
-//	private[render] val lastChar = withObj.lastChar
-//
-//	override def content: Array[Byte] = {
-//		val itemsStr=
-//			s""" |[
-//				 |${withObj.widthList.mkString(" ")}
-//				 }]
-//			 """.stripMargin
-//		PdfNativeGenerator.writeData(id, itemsStr.getBytes, pdfCompression)
-//	}
-//}
-
-
-class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: String)
+private class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: String)
                        (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
@@ -563,7 +546,7 @@ class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: Str
 }
 
 
-class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
+private class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
@@ -571,16 +554,16 @@ class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem]
 	}
 }
 
-abstract class PdfPageItem {
+private abstract class PdfPageItem {
 	def content: String
 }
 
-case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfGPattern)
+private case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfGPattern)
 
-case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String, pattern: Option[PatternDraw] = None)
+private case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String, pattern: Option[PatternDraw] = None)
 
 
-class PdfText(txtList: List[PdfTxtChuck])
+private class PdfText(txtList: List[PdfTxtChuck])
 	extends PdfPageItem {
 	override def content: String = {
 		if (txtList.isEmpty) {
@@ -631,7 +614,7 @@ class PdfText(txtList: List[PdfTxtChuck])
 
 }
 
-class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
+private class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
 	override def content: String = {
 		val str = items.map(item => {
 			item.content
@@ -648,7 +631,7 @@ class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
 }
 
 
-class PdfWriter(name: String) {
+private class PdfWriter(name: String) {
 	new File(name).delete()
 	private[this] val writer = new FileOutputStream(name)
 	private[render] var position: Long = 0
