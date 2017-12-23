@@ -36,8 +36,8 @@ import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
-import util.PageTreeN.PageNode
-import util.{PageTreeN, SyncFileUtil}
+import util.PageTree.PageNode
+import util.{PageTree, SyncFileUtil}
 import util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
 import util.wrapper.WordWrap
 
@@ -226,7 +226,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		//			() => nextId
 		//		}(allItems)
 
-		val pageTreeList = PageTreeN.pageTree(pageList.toList) {
+		val pageTreeList = PageTree.pageTree(pageList.toList) {
 			() => {
 				new PdfPageList(nextId())
 			}

@@ -5,7 +5,7 @@ import com.sysalto.render.{PdfBaseItem, PdfPage, PdfPageList}
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 
-object PageTreeN {
+object PageTree {
 	private[this] val MAX_NBR = 25
 
 
