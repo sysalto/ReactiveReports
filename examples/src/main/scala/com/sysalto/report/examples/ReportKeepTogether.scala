@@ -25,20 +25,17 @@
 
 package com.sysalto.report.examples
 
-import java.text.SimpleDateFormat
-import java.util.GregorianCalendar
-
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.{GroupUtil, RFont, RFontFamily, ReportPageOrientation}
+import com.sysalto.report.reportTypes.ReportPageOrientation
 import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
 
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-object ReportMultiColumn extends ResultSetUtilTrait {
-	val MAX_TRAN_LENGTH=100
-	val MAX_AMMOUNT=100000
+object ReportKeepTogether extends ResultSetUtilTrait {
+	val MAX_TRAN_LENGTH = 100
+	val MAX_AMMOUNT = 100000
 
 	case class Transaction(clientId: Long, amount: Int)
 
@@ -46,64 +43,68 @@ object ReportMultiColumn extends ResultSetUtilTrait {
 	                  transList1: List[Transaction], transList2: List[Transaction],
 	                  transList3: List[Transaction], transList4: List[Transaction])
 
-	val clientList:ListBuffer[Client]=ListBuffer()
+	val clientList: ListBuffer[Client] = ListBuffer()
 
 	def initClients(): Unit = {
-		(1 to 50).foreach(clientId=>{
-			val nbr1=Random.nextInt(MAX_TRAN_LENGTH)
-			val nbr2=Random.nextInt(MAX_TRAN_LENGTH)
-			val nbr3=Random.nextInt(MAX_TRAN_LENGTH)
-			val nbr4=Random.nextInt(MAX_TRAN_LENGTH)
-			val transList1=for (i<-1 to nbr1) yield Transaction(clientId,Random.nextInt(MAX_AMMOUNT))
-			val transList2=for (i<-1 to nbr2) yield Transaction(clientId,Random.nextInt(MAX_AMMOUNT))
-			val transList3=for (i<-1 to nbr3) yield Transaction(clientId,Random.nextInt(MAX_AMMOUNT))
-			val transList4=for (i<-1 to nbr4) yield Transaction(clientId,Random.nextInt(MAX_AMMOUNT))
-			clientList += Client(clientId,"name"+clientId,"address"+clientId,transList1.toList,transList2.toList,transList3.toList,transList4.toList)
+		(1 to 50).foreach(clientId => {
+			val nbr1 = Random.nextInt(MAX_TRAN_LENGTH)
+			val nbr2 = Random.nextInt(MAX_TRAN_LENGTH)
+			val nbr3 = Random.nextInt(MAX_TRAN_LENGTH)
+			val nbr4 = Random.nextInt(MAX_TRAN_LENGTH)
+			val transList1 = for (i <- 1 to nbr1) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
+			val transList2 = for (i <- 1 to nbr2) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
+			val transList3 = for (i <- 1 to nbr3) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
+			val transList4 = for (i <- 1 to nbr4) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
+			clientList += Client(clientId, "name" + clientId, "address" + clientId, transList1.toList, transList2.toList, transList3.toList, transList4.toList)
 		})
 	}
 
 	private def report(report: Report): Unit = {
-		clientList.foreach(client=>{
+		clientList.foreach(client => {
 			report.nextLine()
-			val crtPos=report.getCurrentPosition
+			val crtPos = report.getCurrentPosition
+			var lastPosition=crtPos
 			report print "Name: " at 10
 			report print client.name at 60
 			report.nextLine()
 			report print "Address: " at 10
 			report print client.address at 60
 			report.setCurrentPosition(crtPos)
-			client.transList1.foreach(tran1=>{
-				report print ""+tran1.amount at 200
+			client.transList1.foreach(tran1 => {
+				report print "" + tran1.amount at 200
 				report.nextLine()
-				if (report.lineLeft<10) {
+				if (report.lineLeft < 10) {
 					report.nextPage()
 				}
 			})
 			report.setCurrentPosition(crtPos)
-			client.transList2.foreach(tran1=>{
-				report print ""+tran1.amount at 300
+			client.transList2.foreach(tran1 => {
+				report print "" + tran1.amount at 300
 				report.nextLine()
-				if (report.lineLeft<10) {
+				if (report.lineLeft < 10) {
 					report.nextPage()
 				}
 			})
 			report.setCurrentPosition(crtPos)
-			client.transList3.foreach(tran1=>{
-				report print ""+tran1.amount at 400
+			client.transList3.foreach(tran1 => {
+				report print "" + tran1.amount at 400
 				report.nextLine()
-				if (report.lineLeft<10) {
+				if (report.lineLeft < 10) {
 					report.nextPage()
 				}
 			})
 			report.setCurrentPosition(crtPos)
-			client.transList4.foreach(tran1=>{
-				report print ""+tran1.amount at 500
+			client.transList4.foreach(tran1 => {
+				report print "" + tran1.amount at 500
 				report.nextLine()
-				if (report.lineLeft<10) {
+				if (report.lineLeft < 10) {
 					report.nextPage()
 				}
 			})
-			report.newPage()
+			report.nextLine(5)
+			if (report.lineLeft < 10) {
+				report.newPage()
+			}
 		})
 
 		report.render()
@@ -112,7 +113,7 @@ object ReportMultiColumn extends ResultSetUtilTrait {
 
 	def runReport(): Unit = {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
-		val report1 = Report("MultiColumn.pdf", ReportPageOrientation.LANDSCAPE)
+		val report1 = Report("KeepTogether.pdf", ReportPageOrientation.LANDSCAPE)
 		report(report1)
 	}
 

@@ -177,7 +177,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def getY: Float = pdfUtil.pgSize.height - crtYPosition
 
 	/*
-	Create and go to the next page
+	Go to the next page (create a new one if necessary)
 	 */
 	def nextPage(): Unit = {
 		val newPage = if (crtPageNbr < pageNbrs) crtPageNbr + 1 else {
@@ -193,7 +193,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 	}
 
-
+	/*
+		Create and go to the next page
+		 */
 	def newPage(): Unit = {
 		pageNbrs += 1
 		pageNbrs
