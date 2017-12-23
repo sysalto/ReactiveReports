@@ -36,7 +36,7 @@ import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-object Checkpoints extends ResultSetUtilTrait {
+object ReportMultiColumn extends ResultSetUtilTrait {
 	val MAX_TRAN_LENGTH=100
 	val MAX_AMMOUNT=100000
 
