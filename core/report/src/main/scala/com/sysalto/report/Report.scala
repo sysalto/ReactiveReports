@@ -37,47 +37,49 @@ import scala.collection.JavaConverters._
 
 /** Report class- for Scala
 	*
-	* @param name - name of the pdf file. It should include the pdf extension
+	* @param name        - name of the pdf file. It should include the pdf extension
 	* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
-	* @param pdfFactory - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
+	* @param pdfFactory  - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 	*/
-case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT,pdfCompression:Boolean=true)(implicit pdfFactory: PdfFactory) {
+case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, pdfCompression: Boolean = true)(implicit pdfFactory: PdfFactory) {
 	private[this] var pageNbrs = 1L
 	private[this] var crtPageNbr = 1L
 	private[this] val crtPage = ReportPage(new ListBuffer[ReportItem]())
 	private[this] val db = RockDbUtil()
-	var font = RFont(10,"Helvetica")
+	var font = RFont(10, "Helvetica")
 	private[report] val pdfUtil = pdfFactory.getPdf
 
 
 	private[this] var crtYPosition = 0f
 
 	/** header callback
-		*  first param - current page
-		*  second param - total number of pages
+		* first param - current page
+		* second param - total number of pages
 		*/
 	var headerFct: (Long, Long) => Unit = {
-		case ( _, _) =>
+		case (_, _) =>
 	}
 
 	/** footer callback
-		*  first param - current page
-		*  second param - total number of pages
+		* first param - current page
+		* second param - total number of pages
 		*/
 	var footerFct: (Long, Long) => Unit = {
-		case ( _, _) =>
+		case (_, _) =>
 	}
 	/** Get size of the header
-		*  param - current page - can be use to set up header size only for some pages -
-		*  for example if (crtPage==0) return 0 -> no header for the first page.
-		*  @return size of the header - by default 0 (no header)
+		* param - current page - can be use to set up header size only for some pages -
+		* for example if (crtPage==0) return 0 -> no header for the first page.
+		*
+		* @return size of the header - by default 0 (no header)
 		*/
 	var getHeaderSize: Long => Float = { _ => 0 }
 
 	/** Get size of the footer
-		*  param - current page - can be use to set up footer size only for some pages -
-		*  for example if (crtPage==0) return 0 -> no header for the first page.
-		*  @return size of the header - by default 0 (no header)
+		* param - current page - can be use to set up footer size only for some pages -
+		* for example if (crtPage==0) return 0 -> no header for the first page.
+		*
+		* @return size of the header - by default 0 (no header)
 		*/
 	var getFooterSize: Long => Float = { _ => 0 }
 
@@ -177,8 +179,24 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	Create and go to the next page
 	 */
+	def nextPage(): Unit = {
+		val newPage = if (crtPageNbr < pageNbrs) crtPageNbr + 1 else {
+			pageNbrs += 1
+			pageNbrs
+		}
+		try {
+			switchPages(newPage)
+			nextLine()
+		} catch {
+			case e: Throwable =>
+				e.printStackTrace()
+		}
+	}
+
+
 	def newPage(): Unit = {
 		pageNbrs += 1
+		pageNbrs
 		try {
 			switchPages(pageNbrs)
 			nextLine()
@@ -223,8 +241,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def text(txt: RText, x: Float, y: Float = -1): Unit = {
 		val y1 = if (y == -1) getY else y
 		if (txt.font.fontName.isEmpty) {
-			txt.font.fontName=this.font.fontName
-			txt.font.externalFont=this.font.externalFont
+			txt.font.fontName = this.font.fontName
+			txt.font.externalFont = this.font.externalFont
 		}
 		val reportItem = ReportText(txt, x, y1)
 		crtPage.items += reportItem
@@ -237,8 +255,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def textAligned(txt: RText, index: Int, x: Float, y: Float = -1): Unit = {
 		val y1 = if (y == -1) getY else y
 		if (txt.font.fontName.isEmpty) {
-			txt.font.fontName=this.font.fontName
-			txt.font.externalFont=this.font.externalFont
+			txt.font.fontName = this.font.fontName
+			txt.font.externalFont = this.font.externalFont
 		}
 		val reportItem = ReportTextAligned(txt, x, y1, index)
 		crtPage.items += reportItem
@@ -256,11 +274,11 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	Draw a pie chart with title, data from (x0,y0) with width and height dimensions.
 	 */
 	def drawPieChart(title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += ReportPieChart(font,title, data, x0, y0, width, height)
+		crtPage.items += ReportPieChart(font, title, data, x0, y0, width, height)
 	}
 
 	def drawPieChart1(title: String, data: _root_.java.util.List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += ReportPieChart(font,title, data.asScala.toList, x0, y0, width, height)
+		crtPage.items += ReportPieChart(font, title, data.asScala.toList, x0, y0, width, height)
 	}
 
 	/*
@@ -290,12 +308,12 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value = WrapAlign.WRAP_LEFT, simulate: Boolean = false): Option[WrapBox] = {
 		val text1 = text.map(item => {
-			val font=if (item.font.fontName.isEmpty) {
-				val font1=item.font
-				font1.fontName=this.font.fontName
-				font1.externalFont=this.font.externalFont
+			val font = if (item.font.fontName.isEmpty) {
+				val font1 = item.font
+				font1.fontName = this.font.fontName
+				font1.externalFont = this.font.externalFont
 				font1
-			} else{
+			} else {
 				item.font
 			}
 			RText(item.txt, font)
@@ -314,7 +332,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	set default report font size
 	 */
 	def setFontSize(size: Int): Unit = {
-		font.size=size
+		font.size = size
 	}
 
 	/*
@@ -323,8 +341,6 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def verticalShade(rectangle: DRectangle, from: RColor, to: RColor): Unit = {
 		crtPage.items += ReportVerticalShade(rectangle, from, to)
 	}
-
-
 
 
 	/*
@@ -340,7 +356,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 				crtPage.items.clear()
 				crtPage.items.appendAll(page.items)
 				if (getHeaderSize(i) > 0) {
-					headerFct( i, pageNbrs)
+					headerFct(i, pageNbrs)
 				}
 				if (getFooterSize(i) > 0) {
 					footerFct(i, pageNbrs)
@@ -380,8 +396,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def print(txt: RText): TextDsl = {
 		if (txt.font.fontName.isEmpty) {
-			txt.font.fontName=this.font.fontName
-			txt.font.externalFont=this.font.externalFont
+			txt.font.fontName = this.font.fontName
+			txt.font.externalFont = this.font.externalFont
 		}
 		val result = new TextDsl(this, txt)
 		result
@@ -398,7 +414,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	only calculate a cell.
 	 */
 	def calculate(cell: RCell): WrapBox = {
-		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.align,simulate=true).get
+		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.align, simulate = true).get
 	}
 
 	/*
@@ -463,7 +479,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	def footerFct(fct: BiConsumer[Long, Long]) {
 		footerFct = {
-			case ( pgNbr, pgMax) =>
+			case (pgNbr, pgMax) =>
 				fct.accept(pgNbr, pgMax)
 		}
 	}
@@ -485,13 +501,13 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		drawImage(file, x, y, width, height, 1f)
 	}
 
-	def setExternalFont(externalFont:RFontFamily): Unit = {
+	def setExternalFont(externalFont: RFontFamily): Unit = {
 		pdfUtil.setExternalFont(externalFont)
 	}
 
 	// class initialize
 
-	pdfUtil.open(name, orientation,pdfCompression)
+	pdfUtil.open(name, orientation, pdfCompression)
 	crtYPosition = pdfUtil.pgSize.height
 	KryoUtil.register(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass)
 
@@ -500,9 +516,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 object Report {
 	/** Static method to create a new report from Java
 		*
-		* @param name  - name of the pdf file. It should include the pdf extension
+		* @param name        - name of the pdf file. It should include the pdf extension
 		* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
-		* @param pdfFactory - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
+		* @param pdfFactory  - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 		* @return the new report
 		*/
 	def create(name: String, orientation: ReportPageOrientation.Value, pdfFactory: PdfFactory): Report = {
