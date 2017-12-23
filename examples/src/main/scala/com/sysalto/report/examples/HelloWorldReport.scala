@@ -58,7 +58,7 @@ object HelloWorldReport extends ReportAppAkka with AkkaGroupUtil {
 
     // generate 200 records for printing
     case class Record(city: String, name: String, address: String)
-    val records = for (i <- 1 to 200) yield {
+    val records = for (i <- 1 to 24) yield {
       val city = i match {
         case nbr if nbr < 40 => "Toronto"
         case nbr if nbr < 150 => "Ottawa"
@@ -129,7 +129,7 @@ object HelloWorldReport extends ReportAppAkka with AkkaGroupUtil {
             }
           }
           row.print(report)
-
+          report.newPage()
           report.nextLine()
 
         } catch {

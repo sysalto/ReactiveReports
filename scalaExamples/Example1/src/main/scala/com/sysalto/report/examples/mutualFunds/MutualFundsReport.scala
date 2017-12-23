@@ -37,7 +37,7 @@ import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
 import com.sysalto.report.reportTypes.GroupUtil
-import com.sysalto.report.util.ResultSetUtilTrail
+import com.sysalto.report.util.ResultSetUtilTrait
 
 object MutualFundsReport extends ReportAppAkka {
   val sd = new SimpleDateFormat("MMM dd yyyy")

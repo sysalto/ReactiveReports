@@ -36,7 +36,8 @@ import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.WrapBox
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
-import util.{PageTree, SyncFileUtil}
+import util.PageTreeN.PageNode
+import util.{PageTreeN, SyncFileUtil}
 import util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
 import util.wrapper.WordWrap
 
@@ -221,9 +222,16 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 	def done(): Unit = {
 		saveCurrentPage()
-		val pageTreeList = PageTree.generatePdfCode(pageList.toList) {
-			() => nextId
-		}(allItems)
+		//		val pageTreeList = PageTree.generatePdfCode(pageList.toList) {
+		//			() => nextId
+		//		}(allItems)
+
+		val pageTreeList = PageTreeN.pageTree(pageList.toList) {
+			() => {
+				new PdfPageList(nextId())
+			}
+		}.asInstanceOf[PdfPageList]
+
 		catalog.pdfPageList = Some(pageTreeList)
 		allItems.foreach(item => item.write(pdfWriter))
 		val metaDataId = metaData()
@@ -323,7 +331,7 @@ abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseIt
 }
 
 private class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ var pdfPageList: Option[PdfPageList] = None)
-                (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+                        (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 			 |  <<  /Type /Catalog
@@ -334,15 +342,30 @@ private class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ 
 	}
 }
 
-private class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList: List[Long] = List())
-                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfPageList(id: Long, var parentId: Option[Long] = None, var pageList: ListBuffer[Long] = ListBuffer())
+                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) with PageNode {
+
+	override def addChild(child: PageNode): Unit = {
+		child match {
+			case pdfPageList: PdfPageList => {
+				pdfPageList.parentId = Some(this.id)
+				pageList += pdfPageList.id
+				leafNbr += child.leafNbr
+			}
+			case pdfPage: PdfPage => {
+				pageList += pdfPage.id
+				leafNbr += 1
+			}
+		}
+	}
+
 	override def content: Array[Byte] = {
 		val parentIdStr = if (parentId.isDefined) s"/Parent ${parentId.get} 0 R" else ""
 		val pageListStr = pageList.map(id => id + " 0 R").mkString("\n")
 		s"""${id} 0 obj
 			 			 |  <<  /Type /Pages ${parentIdStr}
 			 			 |      /Kids [ ${pageListStr} ]
-			 			 |      /Count ${pageList.length}
+			 			 |      /Count ${leafNbr}
 			 			 |  >>
 			 			 |endobj
 			 			 |""".stripMargin.getBytes
@@ -350,7 +373,7 @@ private class PdfPageList(id: Long, parentId: Option[Long] = None, var pageList:
 }
 
 private class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
-                         (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+                                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val colorNbr1 = PdfNativeGenerator.convertColor(color1)
 		val colorNbr2 = PdfNativeGenerator.convertColor(color2)
@@ -363,7 +386,7 @@ private class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
 }
 
 private class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdfShaddingFctColor: PdfShaddingFctColor)
-                      (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+                              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 			 |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R>>
@@ -384,7 +407,7 @@ class PdfGPattern(id: Long, pdfShadding: PdfColorShadding)
 	}
 }
 
-private class ImageMeta(fileName: String) {
+class ImageMeta(fileName: String) {
 	val file = new File(fileName)
 	val bimg: BufferedImage = ImageIO.read(file)
 	val width: Int = bimg.getWidth()
@@ -398,7 +421,7 @@ private class ImageMeta(fileName: String) {
 	val pixelSize: Int = bimg.getColorModel.getComponentSize(0)
 }
 
-private class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	val name = "img" + id
 	val imageMeta = new ImageMeta(fileName)
 
@@ -423,7 +446,7 @@ private class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer
 
 
 private case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
-                       (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfGraphicChuck {
+                               (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfGraphicChuck {
 	private[this] val image = pdfImage.imageMeta
 	private[this] val width = image.width * scale
 	private[this] val height = image.height * scale
@@ -439,8 +462,13 @@ private case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: F
 
 }
 
-private class PdfPage(id: Long, var pdfPageListId: Long = 0, var pageWidth: Float, var pageHeight: Float, var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfGPattern] = List(), var imageList: List[PdfImage] = List(), var contentPage: Option[PdfPageContent] = None)
-             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfPage(id: Long, var pdfPageListId: Long = 0, var pageWidth: Float, var pageHeight: Float, var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfGPattern] = List(), var imageList: List[PdfImage] = List(), var contentPage: Option[PdfPageContent] = None)
+             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) with PageNode {
+
+	override def addChild(child: PageNode): Unit = {
+
+	}
+
 	override def content: Array[Byte] = {
 		val contentStr = if (contentPage.isDefined) s"/Contents ${contentPage.get.id} 0 R" else ""
 		val fontStr = "/Font<<" + fontList.map(font => s"/${font.refName} ${font.id} 0 R").mkString("") + ">>"
@@ -461,9 +489,9 @@ private class PdfPage(id: Long, var pdfPageListId: Long = 0, var pageWidth: Floa
 	}
 }
 
-private case class FontEmbeddedDef(pdfFontDescriptor: PdfFontDescriptor, pdfFontStream: PdfFontStream)
+case class FontEmbeddedDef(pdfFontDescriptor: PdfFontDescriptor, pdfFontStream: PdfFontStream)
 
-private class PdfFont(id: Long, val refName: String, fontKeyName: String,
+class PdfFont(id: Long, val refName: String, fontKeyName: String,
               embeddedDefOpt: Option[FontEmbeddedDef] = None)
              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
@@ -503,7 +531,7 @@ private class PdfFont(id: Long, val refName: String, fontKeyName: String,
 }
 
 
-private class PdfFontStream(id: Long, val fontParser: FontParser, pdfCompression: Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfFontStream(id: Long, val fontParser: FontParser, pdfCompression: Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val byteArray = Files.readAllBytes(Paths.get(fontParser.fontName))
 		val byteArray2 = {
@@ -525,7 +553,7 @@ private class PdfFontStream(id: Long, val fontParser: FontParser, pdfCompression
 	}
 }
 
-private class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: String)
+class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: String)
                        (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
@@ -546,7 +574,7 @@ private class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyN
 }
 
 
-private class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
+class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
