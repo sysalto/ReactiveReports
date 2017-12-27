@@ -2,14 +2,13 @@ package com.sysalto.report
 
 import java.sql.{DriverManager, ResultSet}
 
-
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
 import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
 
 
-object TestBirt extends ResultSetUtilTrait {
+object TestBig extends ResultSetUtilTrait {
 	implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 	Class.forName("org.hsqldb.jdbc.JDBCDriver")
@@ -24,28 +23,16 @@ object TestBirt extends ResultSetUtilTrait {
 
 	def report(): Unit = {
 
-		val report = Report("birt.pdf", ReportPageOrientation.PORTRAIT)
-		val rs = query("select  * from test")
-		val rs1 = query("select  count(*) from test")
-		rs1.next()
-		println("Size:"+rs1.getLong(1))
-		rs1.close()
-		val rsGroup = rs.toGroup
-		rsGroup.foreach(
-			rec => try {
-				val crtRec = GroupUtil.getRec(rec)
-				report print (crtRec("NAME").toString) at 10
-				report print (crtRec("ADDRESS").toString) at 100
+		val report = Report("big.pdf", ReportPageOrientation.PORTRAIT)
+		for (i<-1 to 100000000) {
+				report print s"NAME${i}" at 10
+				report print s"ADDRESS${i}" at 100
 
 				if (report.lineLeft < 10) {
 					report.nextPage()
 				}
 				report.nextLine()
-			} catch {
-				case e: Throwable =>
-					e.printStackTrace()
-			})
-		rs.close()
+			}
 		report.render()
 	}
 

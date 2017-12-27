@@ -55,7 +55,7 @@ object MutualFundsInitData {
       """create table test (
     |   name varchar(255),
     |   address varchar(255))""".stripMargin)
-    for (i<-1 to 1000000) {
+    for (i<-1 to 10000000) {
       dbUpdate(s"insert into test values('name${i}','address${i}')")
     }
   }

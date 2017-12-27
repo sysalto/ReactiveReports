@@ -51,7 +51,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 
 	private[this] var crtYPosition = 0f
-	private[this] var lastPosition:ReportPosition=ReportPosition(0,0)
+	private[this] var lastPosition: ReportPosition = ReportPosition(0, 0)
 
 	/** header callback
 		* first param - current page
@@ -84,6 +84,12 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		*/
 	var getFooterSize: Long => Float = { _ => 0 }
 
+	def getCrtPageNbr()=crtPageNbr
+
+	private[this] def saveCrtPage() {
+		db.write(s"page$crtPageNbr", crtPage)
+		crtPage.items.clear()
+	}
 
 	private[this] def switchPages(newPage: Long): Unit = {
 		if (newPage > pageNbrs + 1) {
@@ -92,8 +98,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		if (newPage == crtPageNbr) {
 			return
 		}
-		db.write(s"page$crtPageNbr", crtPage)
-		crtPage.items.clear()
+		saveCrtPage()
 		if (newPage <= pageNbrs) {
 			val pageOpt = db.read[ReportPage](s"page$newPage")
 			if (pageOpt.isDefined) {
@@ -105,8 +110,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			pageNbrs = newPage
 		}
 		crtYPosition = pdfUtil.pgSize.height - getHeaderSize(newPage)
-		if (lastPosition<getCurrentPosition) {
-			lastPosition=getCurrentPosition
+		if (lastPosition < getCurrentPosition) {
+			lastPosition = getCurrentPosition
 		}
 	}
 
@@ -206,14 +211,13 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
-
 	/*
 	go to the next lineNbr line
 	 */
 	def nextLine(lineNbr: Int): Unit = {
 		crtYPosition = crtYPosition - lineNbr * lineHeight
 		if (lastPosition < getCurrentPosition) {
-			lastPosition=getCurrentPosition
+			lastPosition = getCurrentPosition
 		}
 	}
 
@@ -351,7 +355,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	render the report.
 	 */
 	def render(): Unit = {
-		db.write(s"page$crtPageNbr", crtPage)
+		saveCrtPage()
 		// call header and footer handler
 		// pageNbrs=1
 		for (i <- 1L to pageNbrs) {
@@ -457,11 +461,30 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			reportCut.list.foreach(item => item.update(reportCheckpoint.yCrt - getY))
 			crtPage.items ++= reportCut.list
 			setYPosition(getY + reportCut.yCrt - reportCheckpoint.yCrt)
-			if (lastPosition<getCurrentPosition) {
-				lastPosition=getCurrentPosition
+			if (lastPosition < getCurrentPosition) {
+				lastPosition = getCurrentPosition
 			}
 		}
 	}
+
+	/*
+	Insert a new page before pageNbr
+	*/
+	def insertPage(pageNbr: Long): Unit = {
+		saveCrtPage()
+		for (i <- pageNbrs to pageNbr by -1) {
+			val page = db.read[ReportPage](s"page$i")
+			if (page.isDefined) {
+				db.write(s"page${i + 1}", page.get)
+			}
+		}
+		pageNbrs += 1
+		crtPageNbr = pageNbr
+		crtYPosition
+
+
+	}
+
 
 	// java compatibility
 
@@ -516,8 +539,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	pdfUtil.open(name, orientation, pdfCompression)
 	crtYPosition = pdfUtil.pgSize.height
-	if (lastPosition<getCurrentPosition) {
-		lastPosition=getCurrentPosition
+	if (lastPosition < getCurrentPosition) {
+		lastPosition = getCurrentPosition
 	}
 	KryoUtil.register(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass)
 
