@@ -65,7 +65,7 @@ object ReportTypes {
 			if (this.pageNbr > pos1.pageNbr) {
 				return false
 			}
-			return this.pageNbr < pos1.pageNbr
+			return this.y >= pos1.y
 		}
 	}
 

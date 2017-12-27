@@ -51,6 +51,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 
 	private[this] var crtYPosition = 0f
+	private[this] var lastPosition:ReportPosition=ReportPosition(0,0)
 
 	/** header callback
 		* first param - current page
@@ -104,6 +105,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			pageNbrs = newPage
 		}
 		crtYPosition = pdfUtil.pgSize.height - getHeaderSize(newPage)
+		if (lastPosition<getCurrentPosition) {
+			lastPosition=getCurrentPosition
+		}
 	}
 
 	private[this] def newPageInternal(): Unit = {
@@ -137,6 +141,14 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	Returns report's current position (page number and vertical position on page)
 	 */
 	def getCurrentPosition: ReportPosition = ReportPosition(crtPageNbr, crtYPosition)
+
+	/*
+		GoTo the last known position in the report
+		 */
+	def gotoLastPosition(): Unit = {
+		setCurrentPosition(lastPosition)
+	}
+
 
 	/*
 	Restore a report position (page and vertical position on page)
@@ -213,6 +225,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def nextLine(lineNbr: Int): Unit = {
 		crtYPosition = crtYPosition - lineNbr * lineHeight
+		if (lastPosition < getCurrentPosition) {
+			lastPosition=getCurrentPosition
+		}
 	}
 
 
@@ -511,6 +526,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	pdfUtil.open(name, orientation, pdfCompression)
 	crtYPosition = pdfUtil.pgSize.height
+	if (lastPosition<getCurrentPosition) {
+		lastPosition=getCurrentPosition
+	}
 	KryoUtil.register(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass)
 
 }

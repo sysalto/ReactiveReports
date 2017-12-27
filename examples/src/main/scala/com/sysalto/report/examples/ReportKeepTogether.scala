@@ -101,7 +101,8 @@ object ReportKeepTogether extends ResultSetUtilTrait {
 					report.nextPage()
 				}
 			})
-			report.nextLine(5)
+			report.gotoLastPosition()
+			report.nextLine(2)
 			if (report.lineLeft < 10) {
 				report.newPage()
 			}
