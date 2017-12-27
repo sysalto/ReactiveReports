@@ -103,7 +103,11 @@ object ReportMultiColumn extends ResultSetUtilTrait {
 					report.nextPage()
 				}
 			})
-			report.newPage()
+			report.gotoLastPosition()
+			report.nextLine(2)
+			if (report.lineLeft < 10) {
+				report.nextPage()
+			}
 		})
 
 		report.render()

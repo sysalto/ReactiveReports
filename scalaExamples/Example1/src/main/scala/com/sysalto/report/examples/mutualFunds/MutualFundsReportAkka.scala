@@ -278,7 +278,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
   }
 
   private def disclaimer(report: Report): Unit = {
-    report.newPage()
+    report.nextPage()
 //    drawbackgroundImage(report)
     report.nextLine()
     report print (RCell("Disclaimer" bold() size 20) at 50)
@@ -303,7 +303,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
           report print cell
           report.setYPosition(box.currentY+report.lineHeight)
           if (report.lineLeft<10) {
-            report.newPage()
+            report.nextPage()
           }
 //          report.nextLine()
         })

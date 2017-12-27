@@ -34,7 +34,7 @@ object TestBirt extends ResultSetUtilTrait {
 				report print (crtRec("ADDRESS").toString) at 100
 
 				if (report.lineLeft < 10) {
-					report.newPage()
+					report.nextPage()
 				}
 				report.nextLine()
 			} catch {

@@ -376,7 +376,7 @@ class MutualFundsAkkaJavaReport {
     }
 
     private void disclaimer(Report report) throws Exception {
-        report.newPage();
+        report.nextPage();
         drawbackgroundImage(report);
         report.nextLine();
         report.print(new RCell(new RText("Disclaimer").bold().size(20)).at(50));
@@ -399,7 +399,7 @@ class MutualFundsAkkaJavaReport {
             report.print(cell);
             report.setYPosition(box.currentY() + report.lineHeight());
             if (report.lineLeft() < 10) {
-                report.newPage();
+                report.nextPage();
             }
         }
     }

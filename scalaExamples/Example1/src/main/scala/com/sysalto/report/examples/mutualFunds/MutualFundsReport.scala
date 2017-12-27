@@ -276,7 +276,7 @@ object MutualFundsReport extends ReportAppAkka {
   }
 
   private def disclaimer(report: Report): Unit = {
-    report.newPage()
+    report.nextPage()
     drawbackgroundImage(report)
     report.nextLine()
     report print (RCell("Disclaimer" bold() size 20) at 50)

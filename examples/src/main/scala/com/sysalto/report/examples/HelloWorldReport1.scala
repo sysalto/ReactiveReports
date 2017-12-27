@@ -92,7 +92,7 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
           val isHeader = reportGroupUtil.isHeader("city", rec1)
           var newPageForCity = false
           if (!GroupUtil.isFirstRecord(rec1) && reportGroupUtil.isHeader("city", rec1)) {
-            report.newPage()
+            report.nextPage()
             newPageForCity = true
           }
           if (GroupUtil.isFirstRecord(rec1)) {
@@ -117,7 +117,7 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
           }
 
           if (report.lineLeft < 5) {
-            report.newPage()
+            report.nextPage()
             if (!isHeader) {
               report.nextLine()
               hrow.print(report)

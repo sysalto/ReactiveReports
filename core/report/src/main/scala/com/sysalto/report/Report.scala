@@ -205,20 +205,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 	}
 
-	/*
-		Create and go to the next page
-		 */
-	def newPage(): Unit = {
-		pageNbrs += 1
-		pageNbrs
-		try {
-			switchPages(pageNbrs)
-			nextLine()
-		} catch {
-			case e: Throwable =>
-				e.printStackTrace()
-		}
-	}
+
 
 	/*
 	go to the next lineNbr line
@@ -451,7 +438,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def checkpoint(): ReportCheckpoint = ReportCheckpoint(crtPage.items.length, getY)
 
 	/*
-	cut all the items from the previous checkpoint
+	cut all the items from the reportCheckpoint to the current
 	 */
 	def cut(reportCheckpoint: ReportCheckpoint): ReportCut = {
 		val nbr = reportCheckpoint.itemPos
@@ -463,13 +450,16 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	/*
-	paste the previous cut into current page.
+	paste the reportCheckpoint into current page.
 	 */
 	def paste(reportCheckpoint: ReportCheckpoint, reportCut: ReportCut): Unit = {
 		if (reportCut.list.nonEmpty) {
 			reportCut.list.foreach(item => item.update(reportCheckpoint.yCrt - getY))
 			crtPage.items ++= reportCut.list
 			setYPosition(getY + reportCut.yCrt - reportCheckpoint.yCrt)
+			if (lastPosition<getCurrentPosition) {
+				lastPosition=getCurrentPosition
+			}
 		}
 	}
 

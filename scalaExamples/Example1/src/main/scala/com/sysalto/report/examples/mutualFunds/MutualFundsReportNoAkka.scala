@@ -271,7 +271,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 	}
 
 	private def disclaimer(report: Report): Unit = {
-		report.newPage()
+		report.nextPage()
 		report.nextLine()
 		report print (RCell("Disclaimer" bold() size 20) at 50)
 		report.nextLine(2)
@@ -295,7 +295,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 			report print cell
 			report.setYPosition(box.currentY + report.lineHeight)
 			if (report.lineLeft < 10) {
-				report.newPage()
+				report.nextPage()
 			}
 			//          report.nextLine()
 		})

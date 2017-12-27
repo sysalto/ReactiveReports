@@ -88,7 +88,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
           val isHeader = accountGroupUtil.isHeader("agent", rec1)
           var newPageForAgent = false
           if (!GroupUtil.isFirstRecord(rec1) && accountGroupUtil.isHeader("branch", rec1)) {
-            report.newPage()
+            report.nextPage()
             newPageForAgent = true
           }
           if (GroupUtil.isFirstRecord(rec1)) {
@@ -129,7 +129,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
             } else {
               ReportCut(0f, List[ReportItem]())
             }
-            report.newPage()
+            report.nextPage()
             if (!isHeader && agentFirstItem.isEmpty) {
               report.nextLine()
               hrow.print(report)

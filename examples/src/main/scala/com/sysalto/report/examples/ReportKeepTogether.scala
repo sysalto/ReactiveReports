@@ -34,34 +34,31 @@ import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
 object ReportKeepTogether extends ResultSetUtilTrait {
-	val MAX_TRAN_LENGTH = 100
+	val MAX_TRAN_LENGTH = 20
 	val MAX_AMMOUNT = 100000
 
 	case class Transaction(clientId: Long, amount: Int)
 
 	case class Client(id: Long, name: String, address: String,
-	                  transList1: List[Transaction], transList2: List[Transaction],
-	                  transList3: List[Transaction], transList4: List[Transaction])
+	                  transList1: List[Transaction])
 
 	val clientList: ListBuffer[Client] = ListBuffer()
 
 	def initClients(): Unit = {
 		(1 to 50).foreach(clientId => {
 			val nbr1 = Random.nextInt(MAX_TRAN_LENGTH)
-			val nbr2 = Random.nextInt(MAX_TRAN_LENGTH)
-			val nbr3 = Random.nextInt(MAX_TRAN_LENGTH)
-			val nbr4 = Random.nextInt(MAX_TRAN_LENGTH)
 			val transList1 = for (i <- 1 to nbr1) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
-			val transList2 = for (i <- 1 to nbr2) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
-			val transList3 = for (i <- 1 to nbr3) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
-			val transList4 = for (i <- 1 to nbr4) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
-			clientList += Client(clientId, "name" + clientId, "address" + clientId, transList1.toList, transList2.toList, transList3.toList, transList4.toList)
+			clientList += Client(clientId, "name" + clientId, "address" + clientId, transList1.toList)
 		})
 	}
 
 	private def report(report: Report): Unit = {
+		var firstRecord=true
 		clientList.foreach(client => {
 			report.nextLine()
+			val checkpoint=report.checkpoint()
+			var detailMoved=firstRecord
+			firstRecord=false
 			val crtPos = report.getCurrentPosition
 			var lastPosition=crtPos
 			report print "Name: " at 10
@@ -73,38 +70,21 @@ object ReportKeepTogether extends ResultSetUtilTrait {
 			client.transList1.foreach(tran1 => {
 				report print "" + tran1.amount at 200
 				report.nextLine()
-				if (report.lineLeft < 10) {
-					report.nextPage()
-				}
-			})
-			report.setCurrentPosition(crtPos)
-			client.transList2.foreach(tran1 => {
-				report print "" + tran1.amount at 300
-				report.nextLine()
-				if (report.lineLeft < 10) {
-					report.nextPage()
-				}
-			})
-			report.setCurrentPosition(crtPos)
-			client.transList3.foreach(tran1 => {
-				report print "" + tran1.amount at 400
-				report.nextLine()
-				if (report.lineLeft < 10) {
-					report.nextPage()
-				}
-			})
-			report.setCurrentPosition(crtPos)
-			client.transList4.foreach(tran1 => {
-				report print "" + tran1.amount at 500
-				report.nextLine()
-				if (report.lineLeft < 10) {
-					report.nextPage()
+				if (report.lineLeft < 3) {
+					if (detailMoved) {
+						report.nextPage()
+					} else {
+						val cut = report.cut(checkpoint)
+						report.nextPage()
+						report.paste(checkpoint, cut)
+						detailMoved = true
+					}
 				}
 			})
 			report.gotoLastPosition()
 			report.nextLine(2)
-			if (report.lineLeft < 10) {
-				report.newPage()
+			if (report.lineLeft < 3) {
+				report.nextPage()
 			}
 		})
 

@@ -132,7 +132,7 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
           report.setYPosition(wrapBox.currentY)
         }
         if (report.lineLeft < 10) {
-          report.newPage()
+          report.nextPage()
         }
         if (GroupUtil.isLastRecord(rec)) {
           report.render()

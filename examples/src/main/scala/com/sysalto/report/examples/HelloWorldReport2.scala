@@ -68,7 +68,7 @@ object HelloWorldReport2 extends ReportAppAkka with AkkaGroupUtil {
       runWith(Sink.foreach(
         rec1 => try {
           val currentRecord = GroupUtil.getRec(rec1)
-          report.newPage()
+          report.nextPage()
           report.nextLine()
 
         } catch {
