@@ -46,7 +46,7 @@ object ReportSummary extends ResultSetUtilTrait {
 	val clientList: ListBuffer[Client] = ListBuffer()
 
 	def initClients(): Unit = {
-		(1 to 50).foreach(clientId => {
+		(1 to 111).foreach(clientId => {
 			val nbr1 = Random.nextInt(MAX_TRAN_LENGTH)
 			val transList1 = for (i <- 1 to nbr1) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
 			clientList += Client(clientId, "name" + clientId, "address" + clientId, transList1.toList)
@@ -86,6 +86,7 @@ object ReportSummary extends ResultSetUtilTrait {
 		report print "SUMMARY " at 100
 		report.nextLine(2)
 		summaryList.foreach(item=>{
+			println("print "+item._1+" y:"+report.getY)
 			if (report.lineLeft<3) {
 				report.nextPage()
 			}
@@ -98,10 +99,11 @@ object ReportSummary extends ResultSetUtilTrait {
 
 	def computeSummaryPages(report:Report,summaryList:ListBuffer[(String,Long)]): Long = {
 		var pageNbrs=1L
-		report.simulation=true
+		report.setSimulation(true)
 		report print "SUMMARY " at 100
 		report.nextLine(2)
 		summaryList.foreach(item=>{
+			println("compute "+item._1+" y:"+report.getY)
 			if (report.lineLeft<3) {
 				report.nextPage()
 				pageNbrs +=1
@@ -110,7 +112,7 @@ object ReportSummary extends ResultSetUtilTrait {
 			report print ""+item._2 at 200
 			report.nextLine()
 		})
-		report.simulation=false
+		report.setSimulation(false)
 		pageNbrs
 	}
 

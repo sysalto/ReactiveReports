@@ -47,12 +47,18 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	private[this] val crtPage = ReportPage(new ListBuffer[ReportItem]())
 	private[this] val db = RockDbUtil()
 	var font = RFont(10, "Helvetica")
-	var simulation=false
+	private[this] var simulation=false
 	private[report] val pdfUtil = pdfFactory.getPdf
 
 
 	private[this] var crtYPosition = 0f
 	private[this] var lastPosition: ReportPosition = ReportPosition(0, 0)
+
+
+	def setSimulation(value:Boolean): Unit = {
+		simulation=value
+		crtYPosition = pdfUtil.pgSize.height - getHeaderSize(crtPageNbr)
+	}
 
 	/** header callback
 		* first param - current page
@@ -208,7 +214,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 		try {
 			switchPages(newPage)
-			nextLine()
+
 		} catch {
 			case e: Throwable =>
 				e.printStackTrace()
