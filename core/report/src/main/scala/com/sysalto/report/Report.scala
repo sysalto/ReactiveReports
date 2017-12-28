@@ -480,7 +480,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 		pageNbrs += 1
 		crtPageNbr = pageNbr
-		crtYPosition
+		crtYPosition = pdfUtil.pgSize.height - getHeaderSize(pageNbr)
 
 
 	}
