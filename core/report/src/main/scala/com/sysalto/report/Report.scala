@@ -47,6 +47,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	private[this] val crtPage = ReportPage(new ListBuffer[ReportItem]())
 	private[this] val db = RockDbUtil()
 	var font = RFont(10, "Helvetica")
+	var simulation=false
 	private[report] val pdfUtil = pdfFactory.getPdf
 
 
@@ -197,6 +198,10 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	Go to the next page (create a new one if necessary)
 	 */
 	def nextPage(): Unit = {
+		if (simulation) {
+			crtYPosition = pdfUtil.pgSize.height - getHeaderSize(pageNbrs+1)
+			return
+		}
 		val newPage = if (crtPageNbr < pageNbrs) crtPageNbr + 1 else {
 			pageNbrs += 1
 			pageNbrs
@@ -247,6 +252,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		By default y is the current y
 	 */
 	def text(txt: RText, x: Float, y: Float = -1): Unit = {
+		if (simulation) {
+			return
+		}
 		val y1 = if (y == -1) getY else y
 		if (txt.font.fontName.isEmpty) {
 			txt.font.fontName = this.font.fontName
@@ -468,18 +476,22 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	/*
-	Insert a new page before pageNbr
+	Insert a new number pages before pageNbr
 	*/
-	def insertPage(pageNbr: Long): Unit = {
+	def insertPages(number:Long,pageNbr: Long): Unit = {
 		saveCrtPage()
 		for (i <- pageNbrs to pageNbr by -1) {
 			val page = db.read[ReportPage](s"page$i")
 			if (page.isDefined) {
-				db.write(s"page${i + 1}", page.get)
+				db.write(s"page${i + number}", page.get)
 			}
 		}
-		pageNbrs += 1
+		pageNbrs += number
 		crtPageNbr = pageNbr
+		for (i<-pageNbr to pageNbr+number-1) {
+			val emptyPage=ReportPage(ListBuffer[ReportItem]())
+			db.write(s"page${i}", emptyPage)
+		}
 		crtYPosition = pdfUtil.pgSize.height - getHeaderSize(pageNbr)
 
 

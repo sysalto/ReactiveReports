@@ -76,12 +76,18 @@ object ReportSummary extends ResultSetUtilTrait {
 			})
 			report.nextPage()
 		})
-		report.insertPage(1)
+
+		val summaryPages=computeSummaryPages(report,summaryList)
+		summaryList.zipWithIndex.foreach {case (key,index)=>{
+			summaryList.update(index,(key._1,key._2+summaryPages))
+		}}
+
+		report.insertPages(summaryPages,1)
 		report print "SUMMARY " at 100
 		report.nextLine(2)
 		summaryList.foreach(item=>{
 			if (report.lineLeft<3) {
-				report.insertPage(2)
+				report.nextPage()
 			}
 			report print item._1 at 10
 			report print ""+item._2 at 200
@@ -90,6 +96,23 @@ object ReportSummary extends ResultSetUtilTrait {
 		report.render()
 	}
 
+	def computeSummaryPages(report:Report,summaryList:ListBuffer[(String,Long)]): Long = {
+		var pageNbrs=1L
+		report.simulation=true
+		report print "SUMMARY " at 100
+		report.nextLine(2)
+		summaryList.foreach(item=>{
+			if (report.lineLeft<3) {
+				report.nextPage()
+				pageNbrs +=1
+			}
+			report print item._1 at 10
+			report print ""+item._2 at 200
+			report.nextLine()
+		})
+		report.simulation=false
+		pageNbrs
+	}
 
 	def runReport(): Unit = {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
