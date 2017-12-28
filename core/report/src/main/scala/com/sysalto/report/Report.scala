@@ -553,6 +553,11 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		pdfUtil.setExternalFont(externalFont)
 	}
 
+	def setLink(pageNbr:Long,left:Int=0,top:Int=0): Unit = {
+		val reportLink = ReportLink(pageNbr,left,top)
+		crtPage.items += reportLink
+	}
+
 	// class initialize
 
 	pdfUtil.open(name, orientation, pdfCompression)

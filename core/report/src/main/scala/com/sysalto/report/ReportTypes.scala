@@ -82,6 +82,16 @@ object ReportTypes {
 	private[report] case class ReportPage(items: ListBuffer[ReportItem])
 
 	/*
+		link
+ */
+	case class ReportLink(pageNbr:Long,left:Int,top:Int) extends ReportItem() {
+
+		override def render(report: Report): Unit = {
+			report.pdfUtil.link(pageNbr,left,top)
+		}
+	}
+
+	/*
 	draws a text at (x,y)
 	 */
 	case class ReportText(txt: RText, x: Float, y: Float) extends ReportItem() {

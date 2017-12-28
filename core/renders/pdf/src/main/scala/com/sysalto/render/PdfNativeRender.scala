@@ -109,4 +109,8 @@ class PdfNativeRender extends PdfUtil {
 	override def setExternalFont(externalFont:RFontFamily): Unit = {
 		pdfNativeGenerator.setExternalFont(externalFont)
 	}
+
+	override def link(pageNbr: Long, left: Int, top: Int): Unit = {
+		pdfNativeGenerator.link(pageNbr,left,top)
+	}
 }

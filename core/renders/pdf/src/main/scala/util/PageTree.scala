@@ -21,7 +21,7 @@ object PageTree {
 	}
 
 	@tailrec
-	private def pageTreeN(input: List[PageNode])(newNode: () => PageNode): List[PageNode] = {
+	private[this] def pageTreeN(input: List[PageNode])(newNode: () => PageNode): List[PageNode] = {
 		if (input.lengthCompare(1) == 0) {
 			input
 		} else {
