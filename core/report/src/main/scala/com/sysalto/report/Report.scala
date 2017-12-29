@@ -188,6 +188,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtYPosition = pdfUtil.pgSize.height - y
 	}
 
+	private[report] def getYPosition=crtYPosition
+
 	/*
 	set vertical position on current page to the line position
 	 */
@@ -553,8 +555,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		pdfUtil.setExternalFont(externalFont)
 	}
 
-	def setLink(pageNbr:Long,left:Int=0,top:Int=0): Unit = {
-		val reportLink = ReportLink(pageNbr,left,top)
+	def setLink(boundaryRect:BoundaryRect,pageNbr:Long,left:Int=0,top:Int=0): Unit = {
+		val reportLink = ReportLink(boundaryRect,pageNbr,left,top)
 		crtPage.items += reportLink
 	}
 

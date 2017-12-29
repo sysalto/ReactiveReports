@@ -120,6 +120,7 @@ lazy val examples = (project in file("examples")).
     name := "ReactiveReports Examples",
     libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release",
     libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
-    libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release")
+    libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release"),
+    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "latest.release"
   ).enablePlugins(JavaAppPackaging) dependsOn(coreReport,coreReportAkka,renderPdf)
 

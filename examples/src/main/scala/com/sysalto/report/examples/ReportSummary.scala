@@ -46,7 +46,7 @@ object ReportSummary extends ResultSetUtilTrait {
 	val clientList: ListBuffer[Client] = ListBuffer()
 
 	def initClients(): Unit = {
-		(1 to 110).foreach(clientId => {
+		(1 to 4).foreach(clientId => {
 			val nbr1 = Random.nextInt(MAX_TRAN_LENGTH)
 			val transList1 = for (i <- 1 to nbr1) yield Transaction(clientId, Random.nextInt(MAX_AMMOUNT))
 			clientList += Client(clientId, "name" + clientId, "address" + clientId, transList1.toList)
@@ -83,21 +83,17 @@ object ReportSummary extends ResultSetUtilTrait {
 		}}
 
 		report.insertPages(summaryPages,1)
+		report.nextLine()
 		report print "SUMMARY " at 100
 		report.nextLine(2)
-		var test=true
 		summaryList.foreach(item=>{
-			if (test) {
-				report.setLink(2,0,0)
-				test=false
-			}
 			if (report.lineLeft<3) {
 				report.nextPage()
 				report.nextLine()
 			}
-			println("print "+item._1+" y:"+report.getY)
 			report print item._1 at 10
-			report print ""+item._2 at 200
+			val bound=report print ""+item._2 at 200
+			report.setLink(bound,item._2, 0, 0)
 			report.nextLine()
 		})
 		report.render()
@@ -114,7 +110,6 @@ object ReportSummary extends ResultSetUtilTrait {
 				report.nextLine()
 				pageNbrs +=1
 			}
-			println("simulate "+item._1+" y:"+report.getY)
 			report print item._1 at 10
 			report print ""+item._2 at 200
 			report.nextLine()
@@ -125,7 +120,7 @@ object ReportSummary extends ResultSetUtilTrait {
 
 	def runReport(): Unit = {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
-		val report1 = Report("Summary.pdf", ReportPageOrientation.LANDSCAPE)
+		val report1 = Report("Summary.pdf", ReportPageOrientation.LANDSCAPE,false)
 		report(report1)
 	}
 

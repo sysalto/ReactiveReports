@@ -27,7 +27,7 @@ package com.sysalto.render
 
 import java.io.{File, PrintWriter}
 
-import com.sysalto.report.ReportTypes.{DRectangle, Rectangle}
+import com.sysalto.report.ReportTypes.{BoundaryRect, DRectangle, Rectangle}
 import com.sysalto.report.reportTypes._
 import com.sysalto.report.{ReportTypes, WrapAlign}
 import com.sysalto.report.util.PdfUtil
@@ -110,7 +110,7 @@ class PdfNativeRender extends PdfUtil {
 		pdfNativeGenerator.setExternalFont(externalFont)
 	}
 
-	override def link(pageNbr: Long, left: Int, top: Int): Unit = {
-		pdfNativeGenerator.link(pageNbr,left,top)
+	override def link(boundaryRect:BoundaryRect,pageNbr: Long, left: Int, top: Int): Unit = {
+		pdfNativeGenerator.link(boundaryRect,pageNbr,left,top)
 	}
 }

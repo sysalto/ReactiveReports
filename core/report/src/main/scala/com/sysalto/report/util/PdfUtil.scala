@@ -43,7 +43,7 @@ abstract class PdfUtil() {
   def setPagesNumber(pgNbr:Long)
 
   def newPage()
-  def link(pageNbr:Long,left:Int,top:Int)
+  def link(boundaryRect:BoundaryRect,pageNbr:Long,left:Int,top:Int)
 
   def text(txt: RText, x1: Float, y1: Float, x2: Float = Float.MaxValue, y2: Float = Float.MaxValue): Unit
 

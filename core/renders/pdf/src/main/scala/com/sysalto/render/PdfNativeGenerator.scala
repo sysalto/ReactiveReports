@@ -33,7 +33,7 @@ import java.util.zip.Deflater
 import javax.imageio.ImageIO
 
 import com.sysalto.render.PdfDraw._
-import com.sysalto.report.ReportTypes.WrapBox
+import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
 import util.PageTree.PageNode
@@ -182,9 +182,10 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	}
 
 
-	def link(pageNbr: Long, left: Int, top: Int): Unit = {
-		val pdfLink=new PdfLink(nextId(),pageNbr,left,top)
-		currentPage.annotation=List(pdfLink)
+	def link(boundaryRect:BoundaryRect,pageNbr: Long, left: Int, top: Int): Unit = {
+		val goto = new PdfGoTo(nextId(), pageNbr, left, top)
+		val pdfLink = new PdfLink(nextId(),boundaryRect, goto)
+		currentPage.annotation = currentPage.annotation:::List(pdfLink)
 	}
 
 	def startPdf(): Unit = {
@@ -359,7 +360,7 @@ class PdfPageList(id: Long, var parentId: Option[Long] = None, var pageList: Lis
 			}
 			case pdfPage: PdfPage => {
 				pageList += pdfPage.id
-				pdfPage.parentId=id
+				pdfPage.parentId = id
 				leafNbr += 1
 			}
 		}
@@ -470,7 +471,7 @@ private case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: F
 
 class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHeight: Float,
               var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfGPattern] = List(),
-              var annotation: List[PdfAnnotation]=List(),
+              var annotation: List[PdfAnnotation] = List(),
               var imageList: List[PdfImage] = List(), var contentPage: Option[PdfPageContent] = None)
              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) with PageNode {
 
@@ -481,38 +482,55 @@ class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHe
 		val fontStr = "/Font<<" + fontList.map(font => s"/${font.refName} ${font.id} 0 R").mkString("") + ">>"
 		val patternStr = if (pdfPatternList.isEmpty) "" else "/Pattern <<" + pdfPatternList.map(item => s"/${item.name} ${item.id} 0 R").mkString(" ") + ">>"
 		val imageStr = if (imageList.isEmpty) "" else "/XObject <<" + imageList.map(item => s"/${item.name} ${item.id} 0 R").mkString(" ") + ">>"
-		val annotsStr=if(annotation.isEmpty) "" else "/Annots ["+annotation.map(item=>s"${item.id} 0 R").mkString(" ")+"]"
-		s"""${id} 0 obj
-			 			 |  <<  /Type /Page
+		val annotsStr = if (annotation.isEmpty) "" else "/Annots [" + annotation.map(item => s"${item.id} 0 R").mkString(" ") + "]"
+		val result=s"""${id} 0 obj
+			 			 |<<  /Type /Page
 			 			 |      /Parent ${parentId} 0 R
 			 			 |      /MediaBox [ 0 0 ${pageWidth} ${pageHeight} ]
 			 			 |      ${contentStr}
-			 			 |      /Resources  << ${fontStr}
-			 			 |      ${patternStr}
-			 			 |      ${imageStr}
 			       |      ${annotsStr}
-			 			 |                  >>
-			 			 |  >>
+			 			 |      /Resources
+			       |        <<  ${fontStr}
+			 			 |            ${patternStr}
+			 			 |            ${imageStr}
+			 			 |        >>
+			 			 |>>
 			 			 |endobj
-			 			 |""".stripMargin.getBytes
+			 			 |""".stripMargin
+			result.replaceAll("(?m)^\\s+\\n","").getBytes
 	}
 }
 
 case class FontEmbeddedDef(pdfFontDescriptor: PdfFontDescriptor, pdfFontStream: PdfFontStream)
 
-abstract class PdfAnnotation(id: Long) (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
 
-class PdfLink(id:Long,pageNbr: Long, left: Int, top: Int) (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAnnotation(id) {
+abstract class PdfAction(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
+
+class PdfGoTo(id: Long, pageNbr: Long, left: Int, top: Int)
+             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAction(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
-			 |  << /Type /Annot
+			 |<<
+			 |  /Type /Action
+			 |  /S /GoTo
+			 |  /D [ ${pageNbr - 1} /Fit ]
+			 |>>
+			 |endobj
+			 |""".stripMargin.getBytes
+	}
+}
+
+abstract class PdfAnnotation(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
+
+class PdfLink(id: Long,boundaryRect:BoundaryRect, action: PdfAction)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAnnotation(id) {
+	override def content: Array[Byte] = {
+		s"""${id} 0 obj
+			 |  <<
 			 |  /Subtype /Link
-			 |  /Rect [0 560 400 695 ]
-			 |  /Border [ 16 16 1 ]
-			 |  /A << /Type /Action
-			 |    /S /GoTo
-			 |    /D [ ${pageNbr-1} /Fit ]
-			 |  >>
+			 |  /Rect [${boundaryRect}]
+			 |  /F 4
+			 |  /P 2 0 R
+			 |  /A ${action.id} 0 R
 			 |>>
 			 |endobj
 			 |""".stripMargin.getBytes

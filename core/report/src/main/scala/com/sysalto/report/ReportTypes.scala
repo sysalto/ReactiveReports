@@ -45,6 +45,12 @@ object ReportTypes {
 	 */
 	case class Rectangle(width: Float, height: Float)
 
+	case class BoundaryRect(left:Float,bottom:Float,right:Float,top:Float) {
+		override def toString: String = {
+			""+left+" "+bottom+" "+right+ " "+top
+		}
+	}
+
 
 	class RColorBase()
 
@@ -84,10 +90,10 @@ object ReportTypes {
 	/*
 		link
  */
-	case class ReportLink(pageNbr:Long,left:Int,top:Int) extends ReportItem() {
+	case class ReportLink(boundaryRect:BoundaryRect,pageNbr:Long,left:Int,top:Int) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
-			report.pdfUtil.link(pageNbr,left,top)
+			report.pdfUtil.link(boundaryRect,pageNbr,left,top)
 		}
 	}
 
