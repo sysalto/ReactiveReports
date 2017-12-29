@@ -525,9 +525,10 @@ abstract class PdfAnnotation(id: Long)(implicit itemList: ListBuffer[PdfBaseItem
 class PdfLink(id: Long,boundaryRect:BoundaryRect, action: PdfAction)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAnnotation(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
-			 |  <<
+			 |  << /Type /Annot
 			 |  /Subtype /Link
 			 |  /Rect [${boundaryRect}]
+			 |  /Border [ 0 0 0 ]
 			 |  /A ${action.id} 0 R
 			 |>>
 			 |endobj
