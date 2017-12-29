@@ -528,8 +528,6 @@ class PdfLink(id: Long,boundaryRect:BoundaryRect, action: PdfAction)(implicit it
 			 |  <<
 			 |  /Subtype /Link
 			 |  /Rect [${boundaryRect}]
-			 |  /F 4
-			 |  /P 2 0 R
 			 |  /A ${action.id} 0 R
 			 |>>
 			 |endobj
