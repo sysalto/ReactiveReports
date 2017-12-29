@@ -30,8 +30,6 @@ import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.ReportPageOrientation
 import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
 
-import scala.collection.mutable.ListBuffer
-import scala.util.Random
 
 object TestLink extends ResultSetUtilTrait {
 	val MAX_TRAN_LENGTH = 20
