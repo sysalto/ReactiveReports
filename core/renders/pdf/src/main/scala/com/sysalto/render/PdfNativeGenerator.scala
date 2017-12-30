@@ -182,10 +182,15 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	}
 
 
-	def link(boundaryRect:BoundaryRect,pageNbr: Long, left: Int, top: Int): Unit = {
+	def link(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
+//		if (catalog.pdfNames.isEmpty) {
+//			val pdfDest=new PdfDests(nextId())
+//			catalog.pdfNames=Some(new PdfNames(nextId(),pdfDest))
+//		}
+//		catalog.pdfNames.get.dests.dests += Tuple2("test1","test2")
 		val goto = new PdfGoTo(nextId(), pageNbr, left, top)
-		val pdfLink = new PdfLink(nextId(),boundaryRect, goto)
-		currentPage.annotation = currentPage.annotation:::List(pdfLink)
+		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
+		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
 	}
 
 	def startPdf(): Unit = {
@@ -209,7 +214,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		graphicList.clear()
 	}
 
-	def metaData(): Long = {
+	def metaData(): (Long,Long) = {
 		val id = nextId()
 		val s =
 			s"""${id} 0 obj
@@ -217,8 +222,9 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 				 				 |  >>
 				 				 |endobj
 				 				 |""".stripMargin.getBytes
+		val offset = pdfWriter.position
 		pdfWriter << s
-		id
+		(id,offset)
 	}
 
 	def md5(s: String) = {
@@ -240,18 +246,22 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 		catalog.pdfPageList = Some(pageTreeList)
 		allItems.foreach(item => item.write(pdfWriter))
-		val metaDataId = metaData()
+		val metaDataObj=metaData()
+		val metaDataId = metaDataObj._1
 		val xrefOffset = pdfWriter.position
 		pdfWriter <<< "xref"
-		pdfWriter <<< s"0 ${allItems.length + 1}"
+		pdfWriter <<< s"0 ${allItems.length + 2}"
 		pdfWriter <<< "0000000000 65535 f"
 		allItems.foreach(item => {
 			val offset = item.offset.toString
 			val offsetFrmt = "0" * (10 - offset.length) + offset
 			pdfWriter <<< s"${offsetFrmt} 00000 n "
 		})
+		val metaOffset=metaDataObj._2.toString
+		val offsetFrmt = "0" * (10 - metaOffset.length) + metaOffset
+		pdfWriter <<< s"${offsetFrmt} 00000 n "
 		pdfWriter <<< "trailer"
-		pdfWriter <<< s"<</Size ${allItems.length + 1}"
+		pdfWriter <<< s"<</Size ${allItems.length + 2}"
 		pdfWriter <<< "   /Root 1 0 R"
 		pdfWriter <<< s"   /Info ${metaDataId} 0 R"
 		val fileId = md5(name + System.currentTimeMillis())
@@ -336,20 +346,44 @@ abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseIt
 	}
 }
 
-private class PdfCatalog(id: Long, /* var outline: Option[PdfOutline] = None,*/ var pdfPageList: Option[PdfPageList] = None)
-                        (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+
+private[this] class PdfNames(id: Long, val dests: PdfDests)
+                            (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
-			 			 |  <<  /Type /Catalog
-			 			 |      /Pages ${pdfPageList.get.id} 0 R
-			 			 |  >>
-			 			 |endobj
-			 			 |""".stripMargin.getBytes
+			 |<</Dests ${dests.id} 0 R>>
+			 |endobj
+			 |""".stripMargin.getBytes
 	}
 }
 
-class PdfPageList(id: Long, var parentId: Option[Long] = None, var pageList: ListBuffer[Long] = ListBuffer())
-                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) with PageNode {
+private[this] class PdfDests(id: Long,val dests:ListBuffer[(String,String)]=ListBuffer())
+                            (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+	override def content: Array[Byte] = {
+		val head=dests.head
+		s"""${id} 0 obj
+			 |<</Names[(${head._1}) 2 0 R]>>
+			 |endobj
+			 |""".stripMargin.getBytes
+	}
+}
+
+private[this] class PdfCatalog(id: Long, var pdfPageList: Option[PdfPageList] = None,var pdfNames:Option[PdfNames]=None)
+                              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+	override def content: Array[Byte] = {
+		val namesStr=if (pdfNames.isEmpty) "" else s"/Names ${pdfNames.get.id} 0 R"
+		s"""${id} 0 obj
+			 |<<  /Type /Catalog
+			 |    /Pages ${pdfPageList.get.id} 0 R
+			 |    ${namesStr}
+			 |  >>
+			 |endobj
+			 |""".stripMargin.getBytes
+	}
+}
+
+private[this] class PdfPageList(id: Long, var parentId: Option[Long] = None, var pageList: ListBuffer[Long] = ListBuffer())
+                               (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) with PageNode {
 
 	override def addChild(child: PageNode): Unit = {
 		child match {
@@ -379,8 +413,8 @@ class PdfPageList(id: Long, var parentId: Option[Long] = None, var pageList: Lis
 	}
 }
 
-private class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
-                                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+private[this] class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
+                                       (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val colorNbr1 = PdfNativeGenerator.convertColor(color1)
 		val colorNbr2 = PdfNativeGenerator.convertColor(color2)
@@ -392,8 +426,8 @@ private class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
 	}
 }
 
-private class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdfShaddingFctColor: PdfShaddingFctColor)
-                              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+private[this] class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdfShaddingFctColor: PdfShaddingFctColor)
+                                    (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 			 |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R>>
@@ -483,21 +517,22 @@ class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHe
 		val patternStr = if (pdfPatternList.isEmpty) "" else "/Pattern <<" + pdfPatternList.map(item => s"/${item.name} ${item.id} 0 R").mkString(" ") + ">>"
 		val imageStr = if (imageList.isEmpty) "" else "/XObject <<" + imageList.map(item => s"/${item.name} ${item.id} 0 R").mkString(" ") + ">>"
 		val annotsStr = if (annotation.isEmpty) "" else "/Annots [" + annotation.map(item => s"${item.id} 0 R").mkString(" ") + "]"
-		val result=s"""${id} 0 obj
-			 			 |<<  /Type /Page
-			 			 |      /Parent ${parentId} 0 R
-			 			 |      /MediaBox [ 0 0 ${pageWidth} ${pageHeight} ]
-			 			 |      ${contentStr}
-			       |      ${annotsStr}
-			 			 |      /Resources
-			       |        <<  ${fontStr}
-			 			 |            ${patternStr}
-			 			 |            ${imageStr}
-			 			 |        >>
-			 			 |>>
-			 			 |endobj
-			 			 |""".stripMargin
-			result.replaceAll("(?m)^\\s+\\n","").getBytes
+		val result =
+			s"""${id} 0 obj
+				 			 |<<  /Type /Page
+				 			 |      /Parent ${parentId} 0 R
+				 			 |      /MediaBox [ 0 0 ${pageWidth} ${pageHeight} ]
+				 			 |      ${contentStr}
+				 |      ${annotsStr}
+				 			 |      /Resources
+				 |        <<  ${fontStr}
+				 			 |            ${patternStr}
+				 			 |            ${imageStr}
+				 			 |        >>
+				 			 |>>
+				 			 |endobj
+				 			 |""".stripMargin
+		result.replaceAll("(?m)^\\s+\\n", "").getBytes
 	}
 }
 
@@ -522,12 +557,13 @@ class PdfGoTo(id: Long, pageNbr: Long, left: Int, top: Int)
 
 abstract class PdfAnnotation(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
 
-class PdfLink(id: Long,boundaryRect:BoundaryRect, action: PdfAction)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAnnotation(id) {
+private[this] class PdfLink(id: Long, boundaryRect: BoundaryRect, action: PdfAction)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAnnotation(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 |  << /Type /Annot
 			 |  /Subtype /Link
 			 |  /Rect [${boundaryRect}]
+			 |  /F 4
 			 |  /Border [ 0 0 0 ]
 			 |  /A ${action.id} 0 R
 			 |>>
