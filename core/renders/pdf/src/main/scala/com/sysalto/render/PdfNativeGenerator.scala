@@ -522,6 +522,7 @@ class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHe
 				 			 |<<  /Type /Page
 				 			 |      /Parent ${parentId} 0 R
 				 			 |      /MediaBox [ 0 0 ${pageWidth} ${pageHeight} ]
+				 			 |      /TrimBox [ 0 0 ${pageWidth} ${pageHeight} ]
 				 			 |      ${contentStr}
 				 |      ${annotsStr}
 				 			 |      /Resources
