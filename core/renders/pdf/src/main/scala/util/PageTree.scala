@@ -17,7 +17,13 @@ object PageTree {
 
 
 	def pageTree(input: List[PageNode])(newNode: () => PageNode): PageNode = {
-		pageTreeN(input)(newNode)(0)
+		if (input.lengthCompare(1) == 0) {
+			val node = newNode()
+			node.addChild(input.head)
+			node
+		} else {
+			pageTreeN(input)(newNode).head
+		}
 	}
 
 	@tailrec
