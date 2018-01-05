@@ -1,6 +1,5 @@
 package util
 
-import com.sysalto.render.{PdfBaseItem, PdfPage, PdfPageList}
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
@@ -86,29 +85,29 @@ object PageTree {
 	}
 
 
-	def testPageTree1(): Unit = {
-		implicit val result = new ListBuffer[PdfBaseItem]()
-		var currentObjNbr = 1000L
-
-		def getNextNumber() = {
-			currentObjNbr += 1
-			currentObjNbr
-		}
-
-		val pageList = for (i <- 1 to 26) yield new PdfPage(getNextNumber(), 0, 0, 0)
-
-		val t1 = System.currentTimeMillis()
-		val root = pageTree(pageList.toList) {
-			() => {
-				new PdfPageList(getNextNumber())
-			}
-		}
-		val t2 = System.currentTimeMillis()
-		println("Time:" + (t2 - t1) * 0.001)
-	}
+//	def testPageTree1(): Unit = {
+//		implicit val result = new ListBuffer[PdfBaseItem]()
+//		var currentObjNbr = 1000L
+//
+//		def getNextNumber() = {
+//			currentObjNbr += 1
+//			currentObjNbr
+//		}
+//
+//		val pageList = for (i <- 1 to 26) yield new PdfPage(getNextNumber(), 0, 0, 0)
+//
+//		val t1 = System.currentTimeMillis()
+//		val root = pageTree(pageList.toList) {
+//			() => {
+//				new PdfPageList(getNextNumber())
+//			}
+//		}
+//		val t2 = System.currentTimeMillis()
+//		println("Time:" + (t2 - t1) * 0.001)
+//	}
 
 	def main(args: Array[String]) {
 
-		testPageTree1()
+	//	testPageTree1()
 	}
 }

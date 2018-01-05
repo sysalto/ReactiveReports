@@ -519,20 +519,20 @@ class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHe
 		val annotsStr = if (annotation.isEmpty) "" else "/Annots [" + annotation.map(item => s"${item.id} 0 R").mkString(" ") + "]"
 		val result =
 			s"""${id} 0 obj
-				 			 |<<  /Type /Page
-				 			 |      /Parent ${parentId} 0 R
-				 			 |      /MediaBox [ 0 0 ${pageWidth} ${pageHeight} ]
-				 			 |      /TrimBox [ 0 0 ${pageWidth} ${pageHeight} ]
-				 			 |      ${contentStr}
+				 |<<  /Type /Page
+				 |      /Parent ${parentId} 0 R
+				 |      /MediaBox [ 0 0 ${pageWidth} ${pageHeight} ]
+				 |      /TrimBox [ 0 0 ${pageWidth} ${pageHeight} ]
+				 |      ${contentStr}
 				 |      ${annotsStr}
-				 			 |      /Resources
+				 |      /Resources
 				 |        <<  ${fontStr}
-				 			 |            ${patternStr}
-				 			 |            ${imageStr}
-				 			 |        >>
-				 			 |>>
-				 			 |endobj
-				 			 |""".stripMargin
+				 |            ${patternStr}
+				 |            ${imageStr}
+				 |        >>
+				 |>>
+				 |endobj
+				 |""".stripMargin
 		result.replaceAll("(?m)^\\s+\\n", "").getBytes
 	}
 }

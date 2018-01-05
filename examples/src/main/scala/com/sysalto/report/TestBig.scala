@@ -24,7 +24,7 @@ object TestBig extends ResultSetUtilTrait {
 	def report(): Unit = {
 
 		val report = Report("big.pdf", ReportPageOrientation.PORTRAIT)
-		for (i<-1 to 100000000) {
+		for (i<-1 to 10000000) {
 				report print s"NAME${i}" at 10
 				report print s"ADDRESS${i}" at 100
 
