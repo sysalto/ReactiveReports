@@ -1,3 +1,13 @@
+## 1.0.0-beta.3 (2018-01-04)
+* add external font to the report.
+* add compress pdf flag.
+* add link fields to the report.
+* add checkpoints example.
+* add multicolumn example.
+* add group keep together example.
+* add insert summary page example.
+
+
 
 ## 1.0.0-beta.2 (2017-08-04)
 * removed old WrapOption enum type (was for compatibility with IText).
