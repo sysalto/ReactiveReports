@@ -368,7 +368,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 	}
 
 	def main(args: Array[String]): Unit = {
-		MutualFundsInitData.initDb1()
-//		runReport()
+		MutualFundsInitData.initDb()
+		runReport()
 	}
 }
