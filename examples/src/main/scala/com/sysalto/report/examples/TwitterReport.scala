@@ -79,8 +79,6 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 
 		val queue = source1.to(Sink foreach (
 			txt => {
-				println(txt)
-				println
 				if (report.lineLeft<5) {
 					report.nextPage()
 					report.nextLine()
@@ -93,7 +91,7 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 
 
 //		val stream = client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("canada")) {
-		val stream = client.sampleStatuses(languages = List(Language.Spanish), stall_warnings = true) {
+		val stream = client.sampleStatuses(languages = List(Language.English), stall_warnings = true) {
 			case tweet: Tweet => {
 				queue offer tweet.text
 			}
@@ -105,7 +103,7 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 		stream.map(st => st.close())
 		report.render()
 		system.terminate()
-
+		println("Report was generated in Twitter.pdf")
 	}
 
 	def main(args: Array[String]): Unit = {
