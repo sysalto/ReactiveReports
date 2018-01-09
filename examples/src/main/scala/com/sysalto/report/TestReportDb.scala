@@ -9,7 +9,7 @@ import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
 import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
 
 
-object TestBirt extends ResultSetUtilTrait {
+object TestReportDb extends ResultSetUtilTrait {
 	implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 	Class.forName("org.hsqldb.jdbc.JDBCDriver")
@@ -24,7 +24,7 @@ object TestBirt extends ResultSetUtilTrait {
 
 	def report(): Unit = {
 
-		val report = Report("birt.pdf", ReportPageOrientation.PORTRAIT)
+		val report = Report("TestReportDb.pdf", ReportPageOrientation.PORTRAIT)
 		val rs = query("select  * from test")
 		val rs1 = query("select  count(*) from test")
 		rs1.next()
