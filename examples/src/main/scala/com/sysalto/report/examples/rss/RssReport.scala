@@ -161,6 +161,7 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
     val aa1 = source via flow runWith Sink.ignore
     Await.ready(aa1, Duration.Inf)
     system.terminate()
+    println("Reports are generated in AmericaRss.pdf and EuropeRss.pdf.")
   }
 
 
