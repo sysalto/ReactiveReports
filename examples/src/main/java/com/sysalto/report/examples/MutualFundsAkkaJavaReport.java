@@ -31,9 +31,6 @@ import java.util.concurrent.atomic.AtomicReference;
 /*
  * ReactiveReports - Free Java /Scala Reporting Library.
  * Copyright (C) 2017 SysAlto Corporation. All rights reserved.
-  *
- * Unless you have purchased a commercial license agreement from SysAlto
- * the following license terms apply:
  *
  * This program is part of ReactiveReports.
  *
