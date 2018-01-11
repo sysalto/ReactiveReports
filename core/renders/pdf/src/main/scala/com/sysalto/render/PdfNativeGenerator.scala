@@ -269,7 +269,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		pdfWriter <<< ">>"
 		pdfWriter <<< "startxref"
 		pdfWriter <<< xrefOffset.toString
-		pdfWriter << "%%EOF"
+		pdfWriter <<< "%%EOF"
 	}
 
 
