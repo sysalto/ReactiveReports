@@ -248,7 +248,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		val xrefOffset = pdfWriter.position
 		pdfWriter <<< "xref"
 		pdfWriter <<< s"0 ${allItems.length + 2}"
-		pdfWriter <<< "0000000000 65535 f"
+		pdfWriter <<< "0000000000 65535 f "
 		allItems.foreach(item => {
 			val offset = item.offset.toString
 			val offsetFrmt = "0" * (10 - offset.length) + offset
