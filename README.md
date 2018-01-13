@@ -35,7 +35,7 @@ cut and report.paste.
   
 It can create multiple reports based on common data, selecting the database records only once and creating different 
 reports simultaneously.
-Please see com.sysalto.report.examples.rss.RssReport.
+Please see `com.sysalto.report.examples.rss.RssReport`.
 
 
 
