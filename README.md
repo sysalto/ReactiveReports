@@ -17,7 +17,7 @@ The input to the framework can be:
 The output for the report is done in PDF.
 
 In Java, you would create the reports using Java code.
-In Scala, we have provided a DSL - domain specific language - to create the report. This DSL is very simple to use. We will update the Wiki with more explanations on that. This DSL allows printing text of different sizes and colors and enables column wrapping.
+In Scala, we have provided a DSL - domain specific language - to create the report. This DSL is very simple to use. We will update the documentation with more explanations on that. This DSL allows printing text of different sizes and colors and enables column wrapping.
 
 The license is LGPL. Please see LICENSE.md. According to this license, **Reactive Reports is free to use and modify, for both Open Source and commercial uses.** 
 
