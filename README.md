@@ -31,15 +31,15 @@ The output of  MutualFundsReport is MutualFunds.pdf.
    
 ### 1 - Cloning the git repo and running the examples
 ```
-git clone https://github.com/sysalto/ReactiveReports
-sbt update
-sbt compile
-sbt
-projects
-project examples
-run
-Select the number corresponding to the project you want to run
-Check the PDF file newly generated, found in the examples folder
+1 - git clone https://github.com/sysalto/ReactiveReports
+2 - sbt update
+3 - sbt compile
+4 - sbt
+5 - projects
+6 - project examples
+7 - run
+8 - Select the number corresponding to the project you want to run
+9 - Check the PDF file newly generated, found in the examples folder
 ```
 
 ### 2 - For Java, using the maven artifact
