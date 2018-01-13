@@ -2,15 +2,15 @@ import sbt.Keys.publishMavenStyle
 
 val SCALA_VERSION = "2.12.4"
 
-val AKKA_VERSION = "latest.release" //"2.5.3"
+val AKKA_VERSION ="latest.release" //"2.5.9"
 
-val TYPESAFE_CONFIG ="latest.release"  //"1.3.0"
+val TYPESAFE_CONFIG ="latest.release" // "1.3.2"
 
-val ROCKSDB_VERSION = "latest.release" //"5.5.1"
+val ROCKSDB_VERSION ="latest.release" //"5.9.2"
 
-val KRYO_VERSION = "latest.release" //"0.5.2"
+val KRYO_VERSION ="latest.release" // "0.5.2"
 
-val projectVersion = "1.0.0-beta.2"
+val projectVersion = "1.0.0-beta.3"
 
 
 lazy val commonInclude = Seq(
@@ -60,14 +60,19 @@ lazy val commonInclude = Seq(
 )
 
 lazy val commonSettings = Seq(
-  scalaVersion := SCALA_VERSION
+  scalaVersion := SCALA_VERSION,
 )
 
 lazy val coreSettings = Seq(
+  crossScalaVersions := Seq("2.11.12", SCALA_VERSION),
   libraryDependencies += "com.typesafe" % "config" % TYPESAFE_CONFIG,
   libraryDependencies += "com.github.romix.akka" %% "akka-kryo-serialization" % KRYO_VERSION excludeAll (
     ExclusionRule(organization = "com.typesafe.akka")),
   libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION
+)
+
+lazy val renderPdfSettings = Seq(
+  crossScalaVersions := Seq("2.11.12", SCALA_VERSION)
 )
 
 lazy val akkaSettings = Seq(
@@ -94,7 +99,7 @@ lazy val coreReportAkka = (project in file("core/reportAkka")).settings(commonIn
 
 lazy val renderPdf = (project in file("core/renders/pdf")).settings(commonInclude: _*).
   settings(name := "ReactiveReports Pdf Render").settings(commonSettings: _*).
-  enablePlugins(JavaAppPackaging) dependsOn coreReport
+  settings(renderPdfSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
 
 
 lazy val exampleSettings = Seq(

@@ -20,53 +20,63 @@
  */
 
 
-
-
 package com.sysalto.report.util
 
 import java.io.File
 
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config.{ConfigException, ConfigFactory}
 import org.rocksdb.{Options, RocksDB}
 
 
 class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 
-  def write[T <: AnyRef](key: String, value: T): Unit = db.put(key.getBytes, SerializerUtil.write(value))
+	def write[T <: AnyRef](key: String, value: T): Unit = db.put(key.getBytes, SerializerUtil.write(value))
 
-  def read[T <: AnyRef](key: String): Option[T] = {
-    val bytes = db.get(key.getBytes)
-    if (bytes == null) {
-      None
-    } else {
-      Some(SerializerUtil.read[T](bytes))
-    }
-  }
+	def read[T <: AnyRef](key: String): Option[T] = {
+		val bytes = db.get(key.getBytes)
+		if (bytes == null) {
+			None
+		} else {
+			Some(SerializerUtil.read[T](bytes))
+		}
+	}
 
 
-  def close(): Unit = {
-    if (db != null) db.close()
-    options.close()
-    file.listFiles().foreach(file => file.delete())
-  }
+	def close(): Unit = {
+		if (db != null) db.close()
+		options.close()
+		file.listFiles().foreach(file => file.delete())
+	}
 
-  private[this] val options = new Options().setCreateIfMissing(true)
-  private[this] val file = File.createTempFile(prefix, extension, new File(dbFolder))
+	private[this] val options = new Options().setCreateIfMissing(true)
+	private[this] val file = File.createTempFile(prefix, extension, new File(dbFolder))
 
-  RocksDB.loadLibrary()
-  file.delete
-  private[this] val db = RocksDB.open(options, file.getAbsolutePath)
+	RocksDB.loadLibrary()
+	file.delete
+	private[this] val db = RocksDB.open(options, file.getAbsolutePath)
 }
 
 object RockDbUtil {
 
-  private[this] val persistence = ConfigFactory.load("persistence")
-  private[this] val dbFolder = persistence.getString("persistence.folder")
-  private[this] val prefix = persistence.getString("persistence.prefix")
-  private[this] val extension = persistence.getString("persistence.extension")
+	private[this] val persistence = ConfigFactory.load("persistence")
 
-  def apply(): RockDbUtil = new RockDbUtil(prefix, extension, dbFolder)
+	private[this] val dbFolder = try {
+		persistence.getString("persistence.folder")
+	} catch {
+		case e: Throwable => System.getProperty("java.io.tmpdir")
+	}
+	private[this] val prefix = try {
+		persistence.getString("persistence.prefix")
+	} catch {
+		case e: Throwable => "persistence"
+	}
+	private[this] val extension = try {
+		persistence.getString("persistence.extension")
+	} catch {
+		case e: Throwable => ".db"
+	}
 
+	def apply(): RockDbUtil = new RockDbUtil(prefix, extension, dbFolder)
 
 
 }

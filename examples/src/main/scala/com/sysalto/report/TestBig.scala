@@ -5,10 +5,10 @@ import java.sql.{DriverManager, ResultSet}
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
-import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
+import com.sysalto.report.util.{IteratorUtilTrait, PdfFactory, ResultSetUtilTrait}
 
 
-object TestBig extends ResultSetUtilTrait {
+object TestBig extends ResultSetUtilTrait with IteratorUtilTrait {
 	implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 	Class.forName("org.hsqldb.jdbc.JDBCDriver")
@@ -24,7 +24,7 @@ object TestBig extends ResultSetUtilTrait {
 	def report(): Unit = {
 
 		val report = Report("big.pdf", ReportPageOrientation.PORTRAIT)
-		for (i<-1 to 10000000) {
+		for (i<-1 to 100000) {
 				report print s"NAME${i}" at 10
 				report print s"ADDRESS${i}" at 100
 
@@ -36,10 +36,35 @@ object TestBig extends ResultSetUtilTrait {
 		report.render()
 	}
 
+
+	def report1(): Unit = {
+		case class Food(name:String,price:Int,categ:Int)
+
+		val list=for (i<-1 to 200 ) yield Food(s"name $i",i,i/10)
+		val grp=list.iterator.toGroup
+
+		val report = Report("report1.pdf", ReportPageOrientation.PORTRAIT)
+
+		grp.foreach(rec=>{
+			println(rec)
+		})
+//
+//		for (i<-1 to 100000) {
+//			report print s"NAME${i}" at 10
+//			report print s"ADDRESS${i}" at 100
+//
+//			if (report.lineLeft < 10) {
+//				report.nextPage()
+//			}
+//			report.nextLine()
+//		}
+//		report.render()
+	}
+
 	def main(args: Array[String]): Unit = {
 		val t1=System.currentTimeMillis()
 		try {
-			report()
+			report1()
 		} catch {
 			case e:Throwable=>e.printStackTrace()
 		}
