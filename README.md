@@ -3,8 +3,9 @@
  - Reactive Reports is an Open Source, scalable framework developed in Scala, designed for generating reports from code.
  - It uses the Akka framework (https://akka.io) for handling data streams.
  - It can be automated from a shell script or tool, providing maximum flexibility, in terms of automation tools. 
- - Reports can be generated in Scala or Java. Both in Java and Scala, you can generate the reports with or without Akka. 
- - It provides the ability to generate one or mutiple reports at once, in parallel, from the same input stream, or from multiple inputs
+ - Reports can be generated in Scala or Java. Both in Java and Scala, you can generate the reports with or without Akka.  For use with Akka, you have to include `reactivereports-core-akka`.
+ - It provides the ability to generate one or mutiple reports at once, in parallel, from the same input, or from multiple inputs. In doing this, it selects the database records only once and creates different reports simultaneously.
+ Please see `com.sysalto.report.examples.rss.RssReport` as an example.
  - Its architecture is designed to conserve memory, and users will never get out of memory errors for large amounts of data
  - Reactive Reports has the full control and responsibility over the PDF generation capability
 
@@ -22,6 +23,9 @@ The license is LGPL. Please see LICENSE.md. According to this license, **Reactiv
 
 ReactiveReports can be used in Scala 2.12 and in Java 8.
 
+As running examples, please see `com.sysalto.report.examples.mutualFunds.MutualFundsReport` and `com.sysalto.report.examples.rss.RssReport`.
+The output of  MutualFundsReport is MutualFunds.pdf.
+
   
 ### Getting started
    
@@ -29,24 +33,16 @@ ReactiveReports can be used in Scala 2.12 and in Java 8.
 * For java clone the Example2 maven project for standalone java project or Example1 for web based java project.
 You can get these projects from javaExamples. 
 
-This framework can be used with or without Akka in Java or Scala.
-For use with Akka you have to include reactivereports-core-akka.
-
 We provide a helper trait ReportApp for simpler reports. Ths Scala object extends this helper trait and 
 imports Implicits.
-
-The input to the reports can be a list of any Java/Scala objects, of type java.sql.resultset or webservice results. 
-Please see com.sysalto.report.examples.mutualFunds.MutualFundsReport and com.sysalto.report.examples.rss.RssReport.
-The output of  MutualFundsReport is MutualFunds.pdf.
  
 It has a simple DSL for printing text of variable sizes and colors and enables column wrapping.
  
-If you need to keep one group data on the same page, please see com.sysalto.report.examples.groups.Report2 - report.
-cut and report.paste.
-  
-It can create multiple reports based on common data, selecting the database records only once and creating different 
-reports simultaneously.
-Please see `com.sysalto.report.examples.rss.RssReport`.
+If you need to keep one group data on the same page, please see `com.sysalto.report.examples.groups.Report2` - `report.
+cut` and `report.paste`.
+
+
+
 
 
 
