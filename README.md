@@ -48,6 +48,7 @@ For running the Java examples, we recommend using Maven, not sbt. Although sbt c
 
 Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3.  
 
+### Other notes
 We provide a helper trait ReportApp for simpler reports. Ths Scala object extends this helper trait and 
 imports Implicits.
  
