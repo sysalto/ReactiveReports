@@ -17,7 +17,7 @@ The input to the framework can be:
 The output for the report is done in PDF.
 
 In Java, you would create the reports using Java code.
-In Scala, we have provided a DSL - domain specific language - to create the report. This DSL is very simple to use. We will update the Wiki with more explanations on that. 
+In Scala, we have provided a DSL - domain specific language - to create the report. This DSL is very simple to use. We will update the documentation with more explanations on that. This DSL allows printing text of different sizes and colors and enables column wrapping.
 
 The license is LGPL. Please see LICENSE.md. According to this license, **Reactive Reports is free to use and modify, for both Open Source and commercial uses.** 
 
@@ -27,16 +27,30 @@ As running examples, please see `com.sysalto.report.examples.mutualFunds.MutualF
 The output of  MutualFundsReport is MutualFunds.pdf.
 
   
-### Getting started
+## Getting started
    
-* For scala clone the Example1 sbt project. You can get in from scalaExamples.
-* For java clone the Example2 maven project for standalone java project or Example1 for web based java project.
-You can get these projects from javaExamples. 
+### 1 - Cloning the git repo and running the examples
+For running the Scala examples, we recommend cloning the git repo and running the examples, like shown below.
+```
+1 - git clone https://github.com/sysalto/ReactiveReports
+2 - sbt update
+3 - sbt compile
+4 - sbt
+5 - projects
+6 - project examples
+7 - run
+8 - Select the number corresponding to the project you want to run
+9 - Check the PDF file newly generated, found in the examples folder
+```
 
+### 2 - For Java, using the maven artifact
+For running the Java examples, we recommend using Maven, not sbt. Although sbt can be used for Java, as well, adding Maven dependencies is a better practice. 
+
+Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3.  
+
+### Other notes
 We provide a helper trait ReportApp for simpler reports. Ths Scala object extends this helper trait and 
 imports Implicits.
- 
-It has a simple DSL for printing text of variable sizes and colors and enables column wrapping.
  
 If you need to keep one group data on the same page, please see `com.sysalto.report.examples.groups.Report2` - `report.
 cut` and `report.paste`.
