@@ -27,11 +27,11 @@ package com.sysalto.report.akka.template
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import com.sysalto.report.akka.util.AkkaGroupUtil
-import com.sysalto.report.util.ResultSetUtilTrait
+import com.sysalto.report.util.GroupUtilTrait
 import com.typesafe.config.{Config, ConfigFactory}
 
 
-trait ReportAppAkka extends ResultSetUtilTrait with AkkaGroupUtil {
+trait ReportAppAkka extends GroupUtilTrait with AkkaGroupUtil {
 
 	val config: Config = ConfigFactory.parseString(
 		"""akka.log-dead-letters=off

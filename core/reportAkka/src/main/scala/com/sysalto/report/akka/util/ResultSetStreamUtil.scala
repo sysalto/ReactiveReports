@@ -28,7 +28,7 @@ import java.sql.ResultSet
 
 import akka.NotUsed
 import akka.stream.scaladsl.{Sink, Source}
-import com.sysalto.report.util.ResultSetUtil
+import com.sysalto.report.util.GroupUtilDefs
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -66,7 +66,7 @@ object ResultSetStream  {
 	def toSource(rs: ResultSet): Source[Map[String, AnyRef], NotUsed] = {
 		val stream = Source.unfoldAsync(()) { _ =>
 			Future {
-				if (rs.next()) Some(() -> ResultSetUtil.toMap(rs))
+				if (rs.next()) Some(() -> GroupUtilDefs.toMap(rs))
 				else None
 			}
 		}

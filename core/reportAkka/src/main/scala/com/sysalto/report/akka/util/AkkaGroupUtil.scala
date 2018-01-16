@@ -28,8 +28,7 @@ import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
 import akka.stream.scaladsl.{Flow, Source}
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
 import akka.NotUsed
-import com.sysalto.report.reportTypes.Group
-import com.sysalto.report.util.ResultSetUtil.ReportRecord
+import com.sysalto.report.util.GroupUtilDefs.ReportRecord
 
 trait AkkaGroupUtil {
 

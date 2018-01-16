@@ -5,10 +5,10 @@ import java.sql.{DriverManager, ResultSet}
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
-import com.sysalto.report.util.{IteratorUtilTrait, PdfFactory, ResultSetUtilTrait}
+import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
 
-object TestBig extends ResultSetUtilTrait with IteratorUtilTrait {
+object TestBig extends  GroupUtilTrait {
 	implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 	Class.forName("org.hsqldb.jdbc.JDBCDriver")
@@ -46,7 +46,13 @@ object TestBig extends ResultSetUtilTrait with IteratorUtilTrait {
 		val report = Report("report1.pdf", ReportPageOrientation.PORTRAIT)
 
 		grp.foreach(rec=>{
+			if (GroupUtil.isFirstRecord(rec)) {
+				println("FIRST")
+			}
 			println(rec)
+			if (GroupUtil.isLastRecord(rec)) {
+				println("LAST")
+			}
 		})
 //
 //		for (i<-1 to 100000) {

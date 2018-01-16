@@ -26,21 +26,25 @@ package com.sysalto.report.util
 import java.sql.ResultSet
 import java.util.function.Consumer
 
-import com.sysalto.report.util.ResultSetUtil.ReportRecord
+import com.sysalto.report.util.GroupUtilDefs.ReportRecord
 
-trait ResultSetUtilTrait {
+trait GroupUtilTrait {
 	type RecordMap = Map[String, AnyRef]
 
 	implicit class ResultsetToMap(rs: ResultSet) {
-		def toMap: RecordMap = ResultSetUtil.toMap(rs)
+		def toMap: RecordMap = GroupUtilDefs.toMap(rs)
 	}
 
 	implicit class ResultSetToGroup(rs: ResultSet) {
-		def toGroup: ResultSetGroup = ResultSetUtil.toGroup(rs)
+		def toGroup: ResultSetGroup = GroupUtilDefs.toGroup(rs)
 	}
 
 	implicit class GetValueRecord(rec: RecordMap) {
 		def value(key: String): AnyRef = rec(key.toUpperCase())
+	}
+
+	implicit class IteratorToGroup[T](iterator: Iterator[T]) {
+		def toGroup: IteratorGroup[T] = GroupUtilDefs.toGroup[T](iterator)
 	}
 
 
@@ -106,7 +110,34 @@ case class ResultSetGroup(rs: ResultSet) {
 }
 
 
-object ResultSetUtil {
+case class IteratorGroup[T](iterator: Iterator[T]) {
+	private[this] val crtRecord = ReportRecord[T](None, None, None)
+
+	def foreach(call: ReportRecord[T] => Unit): Unit = {
+		while (iterator.hasNext) {
+			if (crtRecord.crt.isEmpty) {
+				crtRecord.crt = Some(iterator.next())
+			} else {
+				if (crtRecord.next.nonEmpty) {
+					crtRecord.prev = crtRecord.crt
+					crtRecord.crt = crtRecord.next
+					crtRecord.next = Some(iterator.next())
+					call(crtRecord)
+				} else {
+					crtRecord.next = Some(iterator.next())
+					call(crtRecord)
+				}
+			}
+		}
+		crtRecord.prev = crtRecord.crt
+		crtRecord.crt = crtRecord.next
+		crtRecord.next = None
+		call(crtRecord)
+	}
+}
+
+
+object GroupUtilDefs {
 	type RecordMap = Map[String, AnyRef]
 
 	case class ReportRecord[T](var prev: Option[T], var crt: Option[T], var next: Option[T])
@@ -127,6 +158,8 @@ object ResultSetUtil {
 	def getRecordValue[T](rec: Map[String, AnyRef], field: String): T = {
 		(rec value field).asInstanceOf[T]
 	}
+
+	def toGroup[T](it:Iterator[T]): IteratorGroup[T] = IteratorGroup[T](it)
 
 }
 

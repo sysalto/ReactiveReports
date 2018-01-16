@@ -23,7 +23,8 @@
 
 package com.sysalto.report.reportTypes
 
-import com.sysalto.report.util.ResultSetUtil.{RecordMap, ReportRecord}
+
+import com.sysalto.report.util.GroupUtilDefs.ReportRecord
 
 import scala.annotation.varargs
 import scala.collection.JavaConverters._
