@@ -40,16 +40,27 @@ object TestBig extends  GroupUtilTrait {
 	def report1(): Unit = {
 		case class Food(name:String,price:Int,categ:Int)
 
+		val reportGroup = List(Group("categ", (r: Food) => r.categ))
+		val reportGroupUtil = new GroupUtil(reportGroup)
+
 		val list=for (i<-1 to 200 ) yield Food(s"name $i",i,i/10)
 		val grp=list.iterator.toGroup
 
 		val report = Report("report1.pdf", ReportPageOrientation.PORTRAIT)
 
 		grp.foreach(rec=>{
+			val crtRec:Food = GroupUtil.getRec(rec)
 			if (GroupUtil.isFirstRecord(rec)) {
 				println("FIRST")
 			}
-			println(rec)
+			if (reportGroupUtil.isHeader("categ",rec)) {
+				println("Header categ:"+crtRec.categ)
+			}
+
+			println(crtRec)
+			if (reportGroupUtil.isFooter("categ",rec)) {
+				println("Footer categ:"+crtRec.categ)
+			}
 			if (GroupUtil.isLastRecord(rec)) {
 				println("LAST")
 			}

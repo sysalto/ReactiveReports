@@ -86,27 +86,27 @@ case class ResultSetGroup(rs: ResultSet) {
 		call(reportRecord)
 	}
 
-	def foreachJ(call: Consumer[ReportRecord[RecordMap]]): Unit = {
-		while (rs.next()) {
-			if (reportRecord.crt.isEmpty) {
-				reportRecord.crt = Some(getRecord)
-			} else {
-				if (reportRecord.next.nonEmpty) {
-					reportRecord.prev = reportRecord.crt
-					reportRecord.crt = reportRecord.next
-					reportRecord.next = Some(getRecord)
-					call.accept(reportRecord)
-				} else {
-					reportRecord.next = Some(getRecord)
-					call.accept(reportRecord)
-				}
-			}
-		}
-		reportRecord.prev = reportRecord.crt
-		reportRecord.crt = reportRecord.next
-		reportRecord.next = None
-		call.accept(reportRecord)
-	}
+//	def foreachJ(call: Consumer[ReportRecord[RecordMap]]): Unit = {
+//		while (rs.next()) {
+//			if (reportRecord.crt.isEmpty) {
+//				reportRecord.crt = Some(getRecord)
+//			} else {
+//				if (reportRecord.next.nonEmpty) {
+//					reportRecord.prev = reportRecord.crt
+//					reportRecord.crt = reportRecord.next
+//					reportRecord.next = Some(getRecord)
+//					call.accept(reportRecord)
+//				} else {
+//					reportRecord.next = Some(getRecord)
+//					call.accept(reportRecord)
+//				}
+//			}
+//		}
+//		reportRecord.prev = reportRecord.crt
+//		reportRecord.crt = reportRecord.next
+//		reportRecord.next = None
+//		call.accept(reportRecord)
+//	}
 }
 
 
