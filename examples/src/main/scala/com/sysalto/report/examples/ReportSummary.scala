@@ -25,13 +25,13 @@ package com.sysalto.report.examples
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.ReportPageOrientation
-import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
+import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-object ReportSummary extends ResultSetUtilTrait {
+object ReportSummary extends GroupUtilTrait {
 	val MAX_TRAN_LENGTH = 20
 	val MAX_AMMOUNT = 100000
 

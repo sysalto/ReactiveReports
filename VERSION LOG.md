@@ -1,6 +1,7 @@
 ## 1.0.0-beta.4 (2018-01-17)
 * fixed Adobe Acrobat  Pro Preflight validation
 * add groups for iterators (Scala and Java)
+* changed the trait name ResultSetUtilTrait with  GroupUtilTrait
 * cleanup code
 
 

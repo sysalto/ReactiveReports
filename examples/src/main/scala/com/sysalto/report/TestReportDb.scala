@@ -2,14 +2,13 @@ package com.sysalto.report
 
 import java.sql.{DriverManager, ResultSet}
 
-
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
-import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
+import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
 
-object TestReportDb extends ResultSetUtilTrait {
+object TestReportDb extends GroupUtilTrait {
 	implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 	Class.forName("org.hsqldb.jdbc.JDBCDriver")

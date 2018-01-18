@@ -28,12 +28,12 @@ import java.util.GregorianCalendar
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{GroupUtil, RFont, RFontFamily, ReportPageOrientation}
-import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
+import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-object ReportMultiColumn extends ResultSetUtilTrait {
+object ReportMultiColumn extends GroupUtilTrait {
 	val MAX_TRAN_LENGTH=100
 	val MAX_AMMOUNT=100000
 

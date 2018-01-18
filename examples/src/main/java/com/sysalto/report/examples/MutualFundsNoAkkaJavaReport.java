@@ -5,11 +5,11 @@ import com.sysalto.report.Report;
 import com.sysalto.report.ReportTypes;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
+import com.sysalto.report.util.GroupUtilDefs;
+import com.sysalto.report.util.GroupUtilTrait;
 import com.sysalto.report.util.PdfFactory;
 import com.sysalto.report.util.ResultSetGroup;
-import com.sysalto.report.util.ResultSetUtil;
 import scala.collection.immutable.Map;
-import scala.runtime.BoxedUnit;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -107,7 +107,7 @@ public class MutualFundsNoAkkaJavaReport {
         ResultSet rs = MutualFundsInitData.query("select * from clnt");
         rs.next();
 
-        Map<String, Object> record = ResultSetUtil.toMap(rs);
+        Map<String, Object> record = GroupUtilDefs.toMap(rs);
         rs.close();
         report.nextLine();
         report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5f, 45f, 100f, 40f);
@@ -122,17 +122,17 @@ public class MutualFundsNoAkkaJavaReport {
         report.print(new RCell(new RText("Group Registered Retirement Saving Plan").bold()).at(10));
         report.nextLine(2);
         Float y = report.getY();
-        report.print(new RCell(new RText(ResultSetUtil.getRecordValue(record, "name").toString()).bold()).at(10));
+        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "name").toString()).bold()).at(10));
         report.nextLine();
-        report.print(new RCell(new RText(ResultSetUtil.getRecordValue(record, "addr1").toString())).at(10));
+        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "addr1").toString())).at(10));
         report.nextLine();
-        report.print(new RCell(new RText(ResultSetUtil.getRecordValue(record, "addr2").toString())).at(10));
+        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "addr2").toString())).at(10));
         report.nextLine();
-        report.print(new RCell(new RText(ResultSetUtil.getRecordValue(record, "addr3").toString())).at(10));
+        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "addr3").toString())).at(10));
         report.setYPosition(y);
         report.print(new RCell(new RText("Beneficiary information").bold()).at(500));
         report.nextLine();
-        report.print(new RCell(new RText(ResultSetUtil.getRecordValue(record, "benef_name").toString())).at(500));
+        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "benef_name").toString())).at(500));
         report.nextLine(2);
     }
 
@@ -165,7 +165,7 @@ public class MutualFundsNoAkkaJavaReport {
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from sum_investment");
-        ResultSetGroup rsGroup = ResultSetUtil.toGroup(rs);
+        ResultSetGroup rsGroup = GroupUtilDefs.toGroup(rs);
         AtomicReference<Float> firstY = new AtomicReference<>();
         AtomicReference<Double> total1 = new AtomicReference<>();
         AtomicReference<Double> total2 = new AtomicReference<>();
@@ -183,9 +183,9 @@ public class MutualFundsNoAkkaJavaReport {
             }
             char cc = (char) (firstChar.get().intValue());
             Map<String, Object> crtRec = GroupUtil.getRec(rec);
-            String fund_name = ResultSetUtil.getRecordValue(crtRec, "fund_name");
-            BigDecimal value1 = ResultSetUtil.getRecordValue(crtRec, "value1");
-            BigDecimal value2 = ResultSetUtil.getRecordValue(crtRec, "value2");
+            String fund_name = GroupUtilDefs.getRecordValue(crtRec, "fund_name");
+            BigDecimal value1 = GroupUtilDefs.getRecordValue(crtRec, "value1");
+            BigDecimal value2 = GroupUtilDefs.getRecordValue(crtRec, "value2");
             RTextList fundTxt = new RText(cc + " ").bold().plus(new RText(fund_name));
             RCell cr_fundName = RCell.apply(fundTxt).leftAlign().inside(m_fundName);
             RCell cr_value1 = new RCell(new RText(value1.toString())).rightAlign().inside(m_value1);
@@ -257,13 +257,13 @@ public class MutualFundsNoAkkaJavaReport {
         total2.set(0.);
         total3.set(0.);
 
-        ResultSetGroup rsGroup = ResultSetUtil.toGroup(rs);
+        ResultSetGroup rsGroup = GroupUtilDefs.toGroup(rs);
         rsGroup.foreachJ(rec -> {
             Map<String, Object> crtRec = GroupUtil.<scala.collection.immutable.Map<java.lang.String,java.lang.Object>>getRec(rec);
-            String name = ResultSetUtil.getRecordValue(crtRec, "name");
-            BigDecimal r_value1 = ResultSetUtil.getRecordValue(crtRec, "value1");
-            BigDecimal r_value2 = ResultSetUtil.getRecordValue(crtRec, "value2");
-            BigDecimal r_value3 = ResultSetUtil.getRecordValue(crtRec, "value3");
+            String name = GroupUtilDefs.getRecordValue(crtRec, "name");
+            BigDecimal r_value1 = GroupUtilDefs.getRecordValue(crtRec, "value1");
+            BigDecimal r_value2 = GroupUtilDefs.getRecordValue(crtRec, "value2");
+            BigDecimal r_value3 = GroupUtilDefs.getRecordValue(crtRec, "value3");
             RCell c_account = new RCell(new RText(name)).leftAlign().inside(account);
             RCell c_value1 = new RCell(new RText(r_value1.toString())).rightAlign().inside(value1);
             RCell c_value2 = new RCell(new RText(r_value2.toString())).rightAlign().inside(value2);
@@ -299,7 +299,7 @@ public class MutualFundsNoAkkaJavaReport {
     private void accountPerformance(Report report) throws Exception {
         ResultSet rs = MutualFundsInitData.query("select * from account_perf");
         rs.next();
-        Map<String, Object> record = ResultSetUtil.toMap(rs);
+        Map<String, Object> record = GroupUtilDefs.toMap(rs);
         rs.close();
         Row row = Row.apply(10.f, report.pgSize().width() - 10, Column.apply("account_perf", 150f),
                 Column.apply("value3m").flex(1), Column.apply("value1y").flex(1),
@@ -335,17 +335,17 @@ public class MutualFundsNoAkkaJavaReport {
 
         RCell r_accountPerf = new RCell(new RText("Your personal rate of return")).
                 leftAlign().inside(accountPerf);
-        RCell r_value3m = new RCell(new RText(ResultSetUtil.getRecordValue(record, "value3m").toString())).
+        RCell r_value3m = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value3m").toString())).
                 rightAlign().inside(value3m);
-        RCell r_value1y = new RCell(new RText(ResultSetUtil.getRecordValue(record, "value1y").toString())).
+        RCell r_value1y = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value1y").toString())).
                 rightAlign().inside(value1y);
-        RCell r_value3y = new RCell(new RText(ResultSetUtil.getRecordValue(record, "value3y").toString())).
+        RCell r_value3y = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value3y").toString())).
                 rightAlign().inside(value3y);
-        RCell r_value5y = new RCell(new RText(ResultSetUtil.getRecordValue(record, "value5y").toString())).
+        RCell r_value5y = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value5y").toString())).
                 rightAlign().inside(value5y);
-        RCell r_value10y = new RCell(new RText(ResultSetUtil.getRecordValue(record, "value10y").toString())).
+        RCell r_value10y = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value10y").toString())).
                 rightAlign().inside(value10y);
-        RCell r_annualized = new RCell(new RText(ResultSetUtil.getRecordValue(record, "annualized").toString())).
+        RCell r_annualized = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "annualized").toString())).
                 rightAlign().inside(annualized);
         RRow rrow = RRow.apply(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized);
         Float y2 = rrow.calculate(report);

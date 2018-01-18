@@ -30,11 +30,11 @@ import java.util.GregorianCalendar
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{GroupUtil, RFont, RFontFamily, ReportPageOrientation}
-import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
+import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
 import scala.collection.mutable.ListBuffer
 
-object MutualFundsReportNoAkka extends ResultSetUtilTrait {
+object MutualFundsReportNoAkka extends GroupUtilTrait {
 	val sd = new SimpleDateFormat("MMM dd yyyy")
 	private val date1 = new GregorianCalendar(2013, 0, 1).getTime
 	private val date2 = new GregorianCalendar(2013, 11, 31).getTime

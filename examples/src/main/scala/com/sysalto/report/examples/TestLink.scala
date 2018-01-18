@@ -25,10 +25,10 @@ package com.sysalto.report.examples
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.ReportPageOrientation
-import com.sysalto.report.util.{PdfFactory, ResultSetUtilTrait}
+import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
 
-object TestLink extends ResultSetUtilTrait {
+object TestLink extends GroupUtilTrait {
 	val MAX_TRAN_LENGTH = 20
 	val MAX_AMMOUNT = 100000
 

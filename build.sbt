@@ -2,15 +2,15 @@ import sbt.Keys.publishMavenStyle
 
 val SCALA_VERSION = "2.12.4"
 
-val AKKA_VERSION ="latest.release" //"2.5.9"
+val AKKA_VERSION = "latest.release" // "2.5.9"
 
-val TYPESAFE_CONFIG ="latest.release" // "1.3.2"
+val TYPESAFE_CONFIG = "latest.release" // "1.3.2"
 
-val ROCKSDB_VERSION ="latest.release" //"5.9.2"
+val ROCKSDB_VERSION = "latest.release" // "5.9.2"
 
-val KRYO_VERSION ="latest.release" // "0.5.2"
+val KRYO_VERSION = "latest.release" // "0.5.2"
 
-val projectVersion = "1.0.0-beta.3"
+val projectVersion = "1.0.0-beta.4"
 
 
 lazy val commonInclude = Seq(
