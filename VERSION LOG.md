@@ -1,4 +1,4 @@
-## 1.0.0-beta.4 (2018-01-04)
+## 1.0.0-beta.4 (2018-01-17)
 * fixed Adobe Acrobat  Pro Preflight validation
 * add groups for iterators (Scala and Java)
 * cleanup code
