@@ -1,3 +1,10 @@
+## 1.0.0-beta.4 (2018-01-04)
+* fixed Adobe Acrobat  Pro Preflight validation
+* add groups for iterators (Scala and Java)
+* cleanup code
+
+
+
 ## 1.0.0-beta.3 (2018-01-04)
 * add external font to the report.
 * add compress pdf flag.

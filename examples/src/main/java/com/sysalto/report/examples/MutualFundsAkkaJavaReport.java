@@ -51,7 +51,6 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 
 
-
 class MutualFundsAkkaJavaReport {
     static private Date date1 = (new GregorianCalendar(2013, 0, 1)).getTime();
     static private Date date2 = (new GregorianCalendar(2013, 11, 31)).getTime();

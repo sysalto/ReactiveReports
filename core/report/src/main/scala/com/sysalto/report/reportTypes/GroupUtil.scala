@@ -20,7 +20,6 @@
  */
 
 
-
 package com.sysalto.report.reportTypes
 
 
@@ -32,6 +31,7 @@ import scala.collection.JavaConverters._
 /**
 	* Created by marian on 3/4/17.
 	*/
+
 
 class GroupUtil[T](groupList: List[Group[T]]) {
 	@annotation.tailrec
@@ -95,7 +95,7 @@ object GroupUtil {
 		new GroupUtil(list.toList)
 	}
 
-	def getRec[T](rec:ReportRecord[T]): T = {
+	def getRec[T](rec: ReportRecord[T]): T = {
 		rec match {
 			case ReportRecord(_, crt, _) => crt.get
 		}

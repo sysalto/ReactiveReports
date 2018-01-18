@@ -177,7 +177,7 @@ public class MutualFundsNoAkkaJavaReport {
         total2.set(0.);
         total3.set(0.);
         firstChar.set((int) 'A');
-        rsGroup.foreach(rec -> {
+        rsGroup.foreachJ(rec -> {
             if (GroupUtil.isFirstRecord(rec)) {
                 firstY.set(report.getY());
             }
@@ -208,7 +208,6 @@ public class MutualFundsNoAkkaJavaReport {
             }
             firstChar.set(firstChar.get() + 1);
             report.nextLine();
-            return BoxedUnit.UNIT;
         });
 
 
@@ -259,7 +258,7 @@ public class MutualFundsNoAkkaJavaReport {
         total3.set(0.);
 
         ResultSetGroup rsGroup = ResultSetUtil.toGroup(rs);
-        rsGroup.foreach(rec -> {
+        rsGroup.foreachJ(rec -> {
             Map<String, Object> crtRec = GroupUtil.<scala.collection.immutable.Map<java.lang.String,java.lang.Object>>getRec(rec);
             String name = ResultSetUtil.getRecordValue(crtRec, "name");
             BigDecimal r_value1 = ResultSetUtil.getRecordValue(crtRec, "value1");
@@ -283,7 +282,6 @@ public class MutualFundsNoAkkaJavaReport {
             }
             report.line().from(10, report.getY() + 2).to(value3.right(), -1).color(rcolor).width(0.5f).draw();
             report.nextLine();
-            return BoxedUnit.UNIT;
         });
 
         rs.close();

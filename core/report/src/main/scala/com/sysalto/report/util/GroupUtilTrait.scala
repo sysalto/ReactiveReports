@@ -20,12 +20,12 @@
  */
 
 
-
 package com.sysalto.report.util
 
 import java.sql.ResultSet
 import java.util.function.Consumer
 
+import scala.collection.JavaConverters._
 import com.sysalto.report.util.GroupUtilDefs.ReportRecord
 
 trait GroupUtilTrait {
@@ -46,7 +46,6 @@ trait GroupUtilTrait {
 	implicit class IteratorToGroup[T](iterator: Iterator[T]) {
 		def toGroup: IteratorGroup[T] = GroupUtilDefs.toGroup[T](iterator)
 	}
-
 
 }
 
@@ -86,27 +85,27 @@ case class ResultSetGroup(rs: ResultSet) {
 		call(reportRecord)
 	}
 
-//	def foreachJ(call: Consumer[ReportRecord[RecordMap]]): Unit = {
-//		while (rs.next()) {
-//			if (reportRecord.crt.isEmpty) {
-//				reportRecord.crt = Some(getRecord)
-//			} else {
-//				if (reportRecord.next.nonEmpty) {
-//					reportRecord.prev = reportRecord.crt
-//					reportRecord.crt = reportRecord.next
-//					reportRecord.next = Some(getRecord)
-//					call.accept(reportRecord)
-//				} else {
-//					reportRecord.next = Some(getRecord)
-//					call.accept(reportRecord)
-//				}
-//			}
-//		}
-//		reportRecord.prev = reportRecord.crt
-//		reportRecord.crt = reportRecord.next
-//		reportRecord.next = None
-//		call.accept(reportRecord)
-//	}
+	def foreachJ(call: Consumer[ReportRecord[RecordMap]]): Unit = {
+		while (rs.next()) {
+			if (reportRecord.crt.isEmpty) {
+				reportRecord.crt = Some(getRecord)
+			} else {
+				if (reportRecord.next.nonEmpty) {
+					reportRecord.prev = reportRecord.crt
+					reportRecord.crt = reportRecord.next
+					reportRecord.next = Some(getRecord)
+					call.accept(reportRecord)
+				} else {
+					reportRecord.next = Some(getRecord)
+					call.accept(reportRecord)
+				}
+			}
+		}
+		reportRecord.prev = reportRecord.crt
+		reportRecord.crt = reportRecord.next
+		reportRecord.next = None
+		call.accept(reportRecord)
+	}
 }
 
 
@@ -134,6 +133,28 @@ case class IteratorGroup[T](iterator: Iterator[T]) {
 		crtRecord.next = None
 		call(crtRecord)
 	}
+
+	def foreachJ(call: Consumer[ReportRecord[T]]): Unit = {
+		while (iterator.hasNext) {
+			if (crtRecord.crt.isEmpty) {
+				crtRecord.crt = Some(iterator.next())
+			} else {
+				if (crtRecord.next.nonEmpty) {
+					crtRecord.prev = crtRecord.crt
+					crtRecord.crt = crtRecord.next
+					crtRecord.next = Some(iterator.next())
+					call.accept(crtRecord)
+				} else {
+					crtRecord.next = Some(iterator.next())
+					call.accept(crtRecord)
+				}
+			}
+		}
+		crtRecord.prev = crtRecord.crt
+		crtRecord.crt = crtRecord.next
+		crtRecord.next = None
+		call.accept(crtRecord)
+	}
 }
 
 
@@ -159,7 +180,11 @@ object GroupUtilDefs {
 		(rec value field).asInstanceOf[T]
 	}
 
-	def toGroup[T](it:Iterator[T]): IteratorGroup[T] = IteratorGroup[T](it)
+	//for Scala
+	def toGroup[T](it: Iterator[T]): IteratorGroup[T] = IteratorGroup[T](it)
+
+	// for Java
+	def toGroup[T](it: java.util.Iterator[T]): IteratorGroup[T] = IteratorGroup[T](it.asScala)
 
 }
 
