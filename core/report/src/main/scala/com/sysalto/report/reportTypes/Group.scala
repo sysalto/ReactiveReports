@@ -23,7 +23,14 @@
 
 package com.sysalto.report.reportTypes
 
+import com.sysalto.report.function.RFunction1
+
 /**
   * Created by marian on 3/4/17.
   */
-case class Group[T](name: String, get: (T) => Any)
+case class Group[T,R](name: String, get: (T) => R)
+
+object Group {
+
+	def apply[T,R](name: String,fct:RFunction1[T,R]): Group[T,R] = new Group[T,R](name,fct.apply)
+}

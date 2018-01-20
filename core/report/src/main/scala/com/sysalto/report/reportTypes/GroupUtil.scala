@@ -33,7 +33,7 @@ import scala.collection.JavaConverters._
 	*/
 
 
-class GroupUtil[T](groupList: List[Group[T]]) {
+class GroupUtil[T,R](groupList: List[Group[T,R]]) {
 	@annotation.tailrec
 	final def isHeader(name: String, rec: ReportRecord[T]): Boolean = {
 		rec match {
@@ -91,7 +91,7 @@ class GroupUtil[T](groupList: List[Group[T]]) {
 object GroupUtil {
 	def instance: GroupUtil.type = this
 
-	@varargs def apply[T](list: Group[T]*): GroupUtil[T] = {
+	@varargs def apply[T,R](list: Group[T,R]*): GroupUtil[T,R] = {
 		new GroupUtil(list.toList)
 	}
 

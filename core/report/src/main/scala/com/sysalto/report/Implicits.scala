@@ -47,5 +47,5 @@ object Implicits extends ScalaReportUtil {
 	val Await: scala.concurrent.Await.type = scala.concurrent.Await
 	val Duration: scala.concurrent.duration.Duration.type = scala.concurrent.duration.Duration
 	val Group: com.sysalto.report.reportTypes.Group.type = com.sysalto.report.reportTypes.Group
-	type GroupUtil[T] = com.sysalto.report.reportTypes.GroupUtil[T]
+	type GroupUtil[T,R] = com.sysalto.report.reportTypes.GroupUtil[T,R]
 }
