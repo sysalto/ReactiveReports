@@ -298,11 +298,11 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 
 	private def report(report: Report): Unit = {
-		report.getHeaderSize = { pgNbr =>
+		report.setHeaderSize = { pgNbr =>
 			if (pgNbr == 1) 0 else 50
 		}
 
-		report.getFooterSize = { _ =>
+		report.setFooterSize = { _ =>
 			30
 		}
 

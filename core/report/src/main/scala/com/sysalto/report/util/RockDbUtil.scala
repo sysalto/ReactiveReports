@@ -24,7 +24,6 @@ package com.sysalto.report.util
 
 import java.io.File
 
-import com.typesafe.config.{ConfigException, ConfigFactory}
 import org.rocksdb.{Options, RocksDB}
 
 
@@ -58,23 +57,9 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 
 object RockDbUtil {
 
-	private[this] val persistence = ConfigFactory.load("persistence")
-
-	private[this] val dbFolder = try {
-		persistence.getString("persistence.folder")
-	} catch {
-		case e: Throwable => System.getProperty("java.io.tmpdir")
-	}
-	private[this] val prefix = try {
-		persistence.getString("persistence.prefix")
-	} catch {
-		case e: Throwable => "persistence"
-	}
-	private[this] val extension = try {
-		persistence.getString("persistence.extension")
-	} catch {
-		case e: Throwable => ".db"
-	}
+	private[this] val dbFolder = System.getProperty("java.io.tmpdir")
+	private[this] val prefix = "persistence"
+	private[this] val extension = ".db"
 
 	def apply(): RockDbUtil = new RockDbUtil(prefix, extension, dbFolder)
 

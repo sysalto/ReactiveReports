@@ -39,7 +39,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
     implicit val pdfFactory = new PdfNativeFactory()
     val report = Report("report2.pdf")
 
-    report.getFooterSize = { _ =>
+    report.setFooterSize = { _ =>
       30
     }
 

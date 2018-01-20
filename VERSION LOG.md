@@ -1,3 +1,10 @@
+## 1.0.0-RC.1 (2018-01-20)
+* add Java 6 support (without Akka)
+* drop dependency of com.typesafe.config
+* remove persistence.conf file
+* renamed report.getHeaderSize and report.getFooterSize to  report.setHeaderSize and report.setFooterSize
+
+
 ## 1.0.0-beta.4 (2018-01-17)
 * fixed Adobe Acrobat  Pro Preflight validation
 * add groups for iterators (Scala and Java)

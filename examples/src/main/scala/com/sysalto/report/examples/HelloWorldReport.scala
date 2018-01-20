@@ -40,7 +40,7 @@ object HelloWorldReport extends ReportAppAkka with AkkaGroupUtil {
     val report = Report("HelloWorld.pdf")
 
     // function for getting the report footer size - in this case it's fixed:30
-    report.getFooterSize = { _ =>
+    report.setFooterSize = { _ =>
       30
     }
 

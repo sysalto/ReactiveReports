@@ -93,17 +93,17 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
     val reportAmerica = Report("AmericaRss.pdf")
     val reportEuro = Report("EuropeRss.pdf")
 
-    def footerSizeFct(pg: Long) = 30f
+    def footerSizeFct(pg: java.lang.Long) = 30f
 
-    def footerRptFct(report: Report)( pgNbr: Long, pgMax: Long): Unit = {
+    def footerRptFct(report: Report)( pgNbr: java.lang.Long, pgMax: java.lang.Long): Unit = {
       report.setYPosition(report.pgSize.height - report.lineHeight * 3)
       report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
       report.nextLine()
       report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
     }
 
-    reportAmerica.getFooterSize = footerSizeFct
-    reportEuro.getFooterSize = footerSizeFct
+    reportAmerica.setFooterSize = footerSizeFct
+    reportEuro.setFooterSize = footerSizeFct
 
     reportAmerica.footerFct = footerRptFct(reportAmerica)
     reportEuro.footerFct = footerRptFct(reportEuro)

@@ -25,6 +25,8 @@ package com.sysalto.report.util
 import java.sql.ResultSet
 import java.util.function.Consumer
 
+import com.sysalto.report.function.RConsumer1
+
 import scala.collection.JavaConverters._
 import com.sysalto.report.util.GroupUtilDefs.ReportRecord
 
@@ -85,7 +87,7 @@ case class ResultSetGroup(rs: ResultSet) {
 		call(reportRecord)
 	}
 
-	def foreachJ(call: Consumer[ReportRecord[RecordMap]]): Unit = {
+	def foreachJ(call: RConsumer1[ReportRecord[RecordMap]]): Unit = {
 		while (rs.next()) {
 			if (reportRecord.crt.isEmpty) {
 				reportRecord.crt = Some(getRecord)
@@ -94,17 +96,17 @@ case class ResultSetGroup(rs: ResultSet) {
 					reportRecord.prev = reportRecord.crt
 					reportRecord.crt = reportRecord.next
 					reportRecord.next = Some(getRecord)
-					call.accept(reportRecord)
+					call.apply(reportRecord)
 				} else {
 					reportRecord.next = Some(getRecord)
-					call.accept(reportRecord)
+					call.apply(reportRecord)
 				}
 			}
 		}
 		reportRecord.prev = reportRecord.crt
 		reportRecord.crt = reportRecord.next
 		reportRecord.next = None
-		call.accept(reportRecord)
+		call.apply(reportRecord)
 	}
 }
 
@@ -134,7 +136,7 @@ case class IteratorGroup[T](iterator: Iterator[T]) {
 		call(crtRecord)
 	}
 
-	def foreachJ(call: Consumer[ReportRecord[T]]): Unit = {
+	def foreachJ(call: RConsumer1[ReportRecord[T]]): Unit = {
 		while (iterator.hasNext) {
 			if (crtRecord.crt.isEmpty) {
 				crtRecord.crt = Some(iterator.next())
@@ -143,17 +145,17 @@ case class IteratorGroup[T](iterator: Iterator[T]) {
 					crtRecord.prev = crtRecord.crt
 					crtRecord.crt = crtRecord.next
 					crtRecord.next = Some(iterator.next())
-					call.accept(crtRecord)
+					call.apply(crtRecord)
 				} else {
 					crtRecord.next = Some(iterator.next())
-					call.accept(crtRecord)
+					call.apply(crtRecord)
 				}
 			}
 		}
 		crtRecord.prev = crtRecord.crt
 		crtRecord.crt = crtRecord.next
 		crtRecord.next = None
-		call.accept(crtRecord)
+		call.apply(crtRecord)
 	}
 }
 

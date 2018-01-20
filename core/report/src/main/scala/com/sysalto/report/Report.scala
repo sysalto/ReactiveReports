@@ -30,7 +30,10 @@ import ReportTypes._
 import com.sysalto.report.reportTypes._
 import _root_.java.util.function.{BiConsumer, Function}
 
+import com.sysalto.report.function.{RConsumer2, RFunction1}
+
 import scala.collection.JavaConverters._
+import scala.runtime.{AbstractFunction1, AbstractFunction2}
 
 /** Report class- for Scala
 	*
@@ -54,14 +57,14 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	def setSimulation(value:Boolean): Unit = {
 		simulation=value
-		crtYPosition = pdfUtil.pgSize.height - getHeaderSize(crtPageNbr)
+		crtYPosition = pdfUtil.pgSize.height - setHeaderSize(crtPageNbr)
 	}
 
 	/** header callback
 		* first param - current page
 		* second param - total number of pages
 		*/
-	var headerFct: (Long, Long) => Unit = {
+	var headerFct: (java.lang.Long, java.lang.Long) => Unit = {
 		case (_, _) =>
 	}
 
@@ -69,7 +72,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		* first param - current page
 		* second param - total number of pages
 		*/
-	var footerFct: (Long, Long) => Unit = {
+	var footerFct: (java.lang.Long, java.lang.Long) => Unit = {
 		case (_, _) =>
 	}
 	/** Get size of the header
@@ -78,7 +81,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		*
 		* @return size of the header - by default 0 (no header)
 		*/
-	var getHeaderSize: Long => Float = { _ => 0 }
+	var setHeaderSize: java.lang.Long => java.lang.Float = { _ => 0 }
 
 	/** Get size of the footer
 		* param - current page - can be use to set up footer size only for some pages -
@@ -86,7 +89,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		*
 		* @return size of the header - by default 0 (no header)
 		*/
-	var getFooterSize: Long => Float = { _ => 0 }
+	var setFooterSize: java.lang.Long => java.lang.Float = { _ => 0 }
 
 	def getCrtPageNbr()=crtPageNbr
 
@@ -113,7 +116,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		if (newPage > pageNbrs) {
 			pageNbrs = newPage
 		}
-		crtYPosition = pdfUtil.pgSize.height - getHeaderSize(newPage)
+		crtYPosition = pdfUtil.pgSize.height - setHeaderSize(newPage)
 		if (lastPosition < getCurrentPosition) {
 			lastPosition = getCurrentPosition
 		}
@@ -204,7 +207,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def nextPage(): Unit = {
 		if (simulation) {
-			crtYPosition = pdfUtil.pgSize.height - getHeaderSize(pageNbrs+1)
+			crtYPosition = pdfUtil.pgSize.height - setHeaderSize(pageNbrs+1)
 			return
 		}
 		val newPage = if (crtPageNbr < pageNbrs) crtPageNbr + 1 else {
@@ -372,14 +375,14 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		// call header and footer handler
 		// pageNbrs=1
 		for (i <- 1L to pageNbrs) {
-			if (getHeaderSize(i) > 0 || getFooterSize(i) > 0) {
+			if (setHeaderSize(i) > 0 || setFooterSize(i) > 0) {
 				val page = db.read[ReportPage](s"page$i").get
 				crtPage.items.clear()
 				crtPage.items.appendAll(page.items)
-				if (getHeaderSize(i) > 0) {
+				if (setHeaderSize(i) > 0) {
 					headerFct(i, pageNbrs)
 				}
-				if (getFooterSize(i) > 0) {
+				if (setFooterSize(i) > 0) {
 					footerFct(i, pageNbrs)
 				}
 				db.write(s"page$i", crtPage)
@@ -497,7 +500,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			val emptyPage=ReportPage(ListBuffer[ReportItem]())
 			db.write(s"page${i}", emptyPage)
 		}
-		crtYPosition = pdfUtil.pgSize.height - getHeaderSize(pageNbr)
+		crtYPosition = pdfUtil.pgSize.height - setHeaderSize(pageNbr)
 
 
 	}
@@ -505,29 +508,31 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	// java compatibility
 
-	def headerSizeCallback(fct: Function[Long, Float]) {
-		getHeaderSize = { pgNbr =>
+	def headerSizeCallback(fct: RFunction1[java.lang.Long, java.lang.Float]) {
+		setHeaderSize = { pgNbr =>
 			fct.apply(pgNbr)
 		}
 	}
 
-	def footerSizeCallback(fct: Function[Long, Float]) {
-		getFooterSize = { pgNbr =>
+
+	def footerSizeCallback(fct: RFunction1[java.lang.Long, java.lang.Float]) {
+		setFooterSize = { pgNbr =>
 			fct.apply(pgNbr)
 		}
 	}
 
-	def headerFct(fct: BiConsumer[Long, Long]) {
+	def headerFct(fct: RConsumer2[java.lang.Long,java.lang.Long]) {
 		headerFct = {
 			case (pgNbr, pgMax) =>
-				fct.accept(pgNbr, pgMax)
+				fct.apply(pgNbr, pgMax)
 		}
 	}
 
-	def footerFct(fct: BiConsumer[Long, Long]) {
+
+	def footerFct(fct: RConsumer2[java.lang.Long, java.lang.Long]) {
 		footerFct = {
 			case (pgNbr, pgMax) =>
-				fct.accept(pgNbr, pgMax)
+				fct.apply(pgNbr, pgMax)
 		}
 	}
 
