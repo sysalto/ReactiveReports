@@ -557,8 +557,13 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		pdfUtil.setExternalFont(externalFont)
 	}
 
-	def setLink(boundaryRect:BoundaryRect,pageNbr:Long,left:Int=0,top:Int=0): Unit = {
-		val reportLink = ReportLink(boundaryRect,pageNbr,left,top)
+	def setLinkToPage(boundaryRect:BoundaryRect, pageNbr:Long, left:Int=0, top:Int=0): Unit = {
+		val reportLink = ReportLinkToPage(boundaryRect,pageNbr,left,top)
+		crtPage.items += reportLink
+	}
+
+	def setLinkToUrl(boundaryRect:BoundaryRect, url:String): Unit = {
+		val reportLink = ReportLinkToUrl(boundaryRect,url)
 		crtPage.items += reportLink
 	}
 

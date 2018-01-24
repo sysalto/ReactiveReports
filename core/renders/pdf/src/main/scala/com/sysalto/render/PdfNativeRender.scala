@@ -107,7 +107,11 @@ class PdfNativeRender extends PdfUtil {
 		pdfNativeGenerator.setExternalFont(externalFont)
 	}
 
-	override def link(boundaryRect:BoundaryRect,pageNbr: Long, left: Int, top: Int): Unit = {
-		pdfNativeGenerator.link(boundaryRect,pageNbr,left,top)
+	override def linkToPage(boundaryRect:BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
+		pdfNativeGenerator.linkToPage(boundaryRect,pageNbr,left,top)
+	}
+
+	override def linkToUrl(boundaryRect:BoundaryRect, url:String): Unit = {
+		pdfNativeGenerator.linkToUrl(boundaryRect,url)
 	}
 }

@@ -92,7 +92,7 @@ object ReportSummary extends GroupUtilTrait {
 			}
 			report print item._1 at 10
 			val bound=report print ""+item._2 at 200
-			report.setLink(bound,item._2, 0, 0)
+			report.setLinkToPage(bound,item._2, 0, 0)
 			report.nextLine()
 		})
 		report.render()

@@ -179,13 +179,14 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	}
 
 
-	def link(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
-//		if (catalog.pdfNames.isEmpty) {
-//			val pdfDest=new PdfDests(nextId())
-//			catalog.pdfNames=Some(new PdfNames(nextId(),pdfDest))
-//		}
-//		catalog.pdfNames.get.dests.dests += Tuple2("test1","test2")
-		val goto = new PdfGoTo(nextId(), pageNbr, left, top)
+	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
+		val goto = new PdfGoToPage(nextId(), pageNbr, left, top)
+		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
+		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
+	}
+
+	def linkToUrl(boundaryRect: BoundaryRect, url:String): Unit = {
+		val goto = new PdfGoToUrl(nextId(), url)
 		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
 		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
 	}
@@ -539,8 +540,23 @@ case class FontEmbeddedDef(pdfFontDescriptor: PdfFontDescriptor, pdfFontStream: 
 
 abstract class PdfAction(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
 
-class PdfGoTo(id: Long, pageNbr: Long, left: Int, top: Int)
-             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAction(id) {
+class PdfGoToUrl(id: Long, url:String)
+                (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAction(id) {
+	override def content: Array[Byte] = {
+		s"""${id} 0 obj
+			 |<<
+			 |  /Type /Action
+			 |  /S /URI
+			 |  /IsMap false
+			 |  /URI(${url})
+			 |>>
+			 |endobj
+			 |""".stripMargin.getBytes
+	}
+}
+
+class PdfGoToPage(id: Long, pageNbr: Long, left: Int, top: Int)
+                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAction(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 |<<

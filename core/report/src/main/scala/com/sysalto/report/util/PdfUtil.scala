@@ -20,8 +20,6 @@
  */
 
 
-
-
 package com.sysalto.report.util
 
 import com.sysalto.report.ReportTypes._
@@ -32,40 +30,43 @@ import scala.collection.mutable.ListBuffer
 
 
 abstract class PdfUtil() {
-  var name = ""
+	var name = ""
 
-  def open(name: String,orientation: ReportPageOrientation.Value,pdfCompression:Boolean)
+	def open(name: String, orientation: ReportPageOrientation.Value, pdfCompression: Boolean)
 
 
-  def setPagesNumber(pgNbr:Long)
+	def setPagesNumber(pgNbr: Long)
 
-  def newPage()
-  def link(boundaryRect:BoundaryRect,pageNbr:Long,left:Int,top:Int)
+	def newPage()
 
-  def text(txt: RText, x1: Float, y1: Float, x2: Float = Float.MaxValue, y2: Float = Float.MaxValue): Unit
+	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int)
 
-  def textAlignedAtPosition(txt: RText, x: Float, y: Float, index: Int): Unit
+	def linkToUrl(boundaryRect: BoundaryRect,url:String)
 
-  def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType])
+	def text(txt: RText, x1: Float, y1: Float, x2: Float = Float.MaxValue, y2: Float = Float.MaxValue): Unit
 
-  def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[RColor], fillColor: Option[RColor])
+	def textAlignedAtPosition(txt: RText, x: Float, y: Float, index: Int): Unit
 
-  def drawPieChart(font:RFont,title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float)
+	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType])
 
-  def drawBarChart(title: String, xLabel: String, yLabel: String,
-                   data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float)
+	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[RColor], fillColor: Option[RColor])
 
-  def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float)
+	def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float)
 
-  def pgSize: Rectangle
+	def drawBarChart(title: String, xLabel: String, yLabel: String,
+	                 data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float)
 
-  def close()
+	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float)
 
-  def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
-           wrapAlign: WrapAlign.Value, simulate: Boolean = false, startY: Option[Float] = None, lineHeight:Float=0): Option[WrapBox]
+	def pgSize: Rectangle
 
-  def verticalShade(rectangle: DRectangle, from: RColor, to: RColor)
+	def close()
 
-  def setExternalFont(externalFont:RFontFamily)
+	def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
+	         wrapAlign: WrapAlign.Value, simulate: Boolean = false, startY: Option[Float] = None, lineHeight: Float = 0): Option[WrapBox]
+
+	def verticalShade(rectangle: DRectangle, from: RColor, to: RColor)
+
+	def setExternalFont(externalFont: RFontFamily)
 }
 

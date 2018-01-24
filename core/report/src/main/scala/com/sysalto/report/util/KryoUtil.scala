@@ -38,7 +38,7 @@ import org.objenesis.strategy.StdInstantiatorStrategy
   * Created by marian on 16/02/16.
   */
 object KryoUtil {
-  val compress = true
+  val compress = false
 
   def getKryo: Kryo = {
     val kryo = new Kryo()

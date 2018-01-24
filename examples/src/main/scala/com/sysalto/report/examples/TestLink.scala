@@ -35,15 +35,19 @@ object TestLink extends GroupUtilTrait {
 
 	private def report(report: Report): Unit = {
 		report.nextLine()
-		report print "Ok1" at 10
-//		val bound1=report print "Link1" at 10
-//		report.nextLine()
-//		val bound2=report print "Link2" at 10
-//		report.setLink(bound1,2, 0, 0)
-//		report.setLink(bound2,3, 0, 0)
-//
-//		report.nextPage()
-//		report.nextPage()
+//		report print "Ok1" at 10
+		val bound1=report print "Link1" at 10
+		report.nextLine()
+		val bound2=report print "Link2" at 10
+		report.setLinkToPage(bound1,2, 0, 0)
+		report.setLinkToPage(bound2,3, 0, 0)
+
+		report.nextLine()
+		val bound3=report print "Link to Yahoo" at 10
+		report.setLinkToUrl(bound3,"https://ca.yahoo.com/")
+
+		report.nextPage()
+		report.nextPage()
 
 		report.render()
 	}
