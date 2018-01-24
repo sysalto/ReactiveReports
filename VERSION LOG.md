@@ -1,3 +1,7 @@
+## 1.0.0-RC.2 (2018-01-24)
+* fixed java6 group error
+
+
 ## 1.0.0-RC.1 (2018-01-20)
 * add Java 6 support (without Akka)
 * drop dependency of com.typesafe.config
