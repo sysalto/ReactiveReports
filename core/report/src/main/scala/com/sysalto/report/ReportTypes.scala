@@ -42,9 +42,9 @@ object ReportTypes {
 	 */
 	case class Rectangle(width: Float, height: Float)
 
-	case class BoundaryRect(left:Float,bottom:Float,right:Float,top:Float) {
+	case class BoundaryRect(left: Float, bottom: Float, right: Float, top: Float) {
 		override def toString: String = {
-			""+left+" "+bottom+" "+right+ " "+top
+			"" + left + " " + bottom + " " + right + " " + top
 		}
 	}
 
@@ -73,7 +73,7 @@ object ReportTypes {
 	}
 
 	sealed abstract class ReportItem() {
-		protected var deltaY = 0f
+		var deltaY = 0f
 
 		private[report] def update(deltaY: Float): Unit = {
 			this.deltaY = deltaY
@@ -87,20 +87,20 @@ object ReportTypes {
 	/*
 		link to page
  */
-	case class ReportLinkToPage(boundaryRect:BoundaryRect, pageNbr:Long, left:Int, top:Int) extends ReportItem() {
+	case class ReportLinkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
-			report.pdfUtil.linkToPage(boundaryRect,pageNbr,left,top)
+			report.pdfUtil.linkToPage(boundaryRect, pageNbr, left, top)
 		}
 	}
 
 	/*
 	link to url
 */
-	case class ReportLinkToUrl(boundaryRect:BoundaryRect,url:String) extends ReportItem() {
+	case class ReportLinkToUrl(boundaryRect: BoundaryRect, url: String) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
-			report.pdfUtil.linkToUrl(boundaryRect,url)
+			report.pdfUtil.linkToUrl(boundaryRect, url)
 		}
 	}
 

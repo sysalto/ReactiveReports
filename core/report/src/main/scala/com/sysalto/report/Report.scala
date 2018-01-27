@@ -23,7 +23,7 @@
 package com.sysalto.report
 
 
-import com.sysalto.report.util.{KryoUtil, PdfFactory, RockDbUtil}
+import com.sysalto.report.util.{PdfFactory, RockDbUtil}
 
 import scala.collection.mutable.ListBuffer
 import ReportTypes._
@@ -574,8 +574,6 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	if (lastPosition < getCurrentPosition) {
 		lastPosition = getCurrentPosition
 	}
-	KryoUtil.register(ReportText.getClass, ReportTextWrap.getClass, ReportLine.getClass, ReportRectangle.getClass)
-
 }
 
 object Report {

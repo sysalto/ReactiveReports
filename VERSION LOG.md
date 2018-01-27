@@ -1,3 +1,8 @@
+## development
+* add linkToUrl
+* replaced Kryo with Google's protobuf serialization library (like Akka team did)
+
+
 ## 1.0.0-RC.2 (2018-01-24)
 * fixed java6 group error
 

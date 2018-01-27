@@ -1,0 +1,218 @@
+syntax = "proto3";
+option optimize_for = SPEED;
+
+package com.sysalto.report.serialization;
+
+
+message BoundaryRect_proto {
+    float left = 1;
+    float bottom = 2;
+    float right = 3;
+    float top = 4;
+}
+
+enum RFontAttribute_proto {
+    NORMAL = 0;
+    BOLD = 1;
+    ITALIC = 2;
+    BOLD_ITALIC = 3;
+}
+
+enum WrapAlign_proto {
+    NO_WRAP = 0;
+    WRAP_LEFT = 1;
+    WRAP_RIGHT = 2;
+    WRAP_CENTER = 3;
+    WRAP_JUSTIFIED = 4;
+}
+
+message RColor_proto {
+    int32 r = 1;
+    int32 g = 2;
+    int32 b = 3;
+    float opacity = 4;
+}
+
+message OptionString {
+    bool null = 1;
+    string value = 2;
+}
+
+message OptionRFontFamily {
+    bool null = 1;
+    RFontFamily_proto value = 2;
+}
+
+message OptionFloat {
+    bool null = 1;
+    float value = 2;
+}
+
+message OptionRColor {
+    bool null = 1;
+    RColor_proto value = 2;
+}
+
+message OptionLineDashType {
+    bool null = 1;
+    LineDashType_proto value = 2;
+}
+
+message StringDouble {
+    string value1 = 1;
+    double value2 = 2;
+}
+
+message DoubleStringString {
+    double value1 = 1;
+    string value2 = 2;
+    string value3 = 3;
+}
+
+message LineDashType_proto {
+    int32 unit = 1;
+    int32 phase = 2;
+}
+
+message RFontFamily_proto {
+    string name = 1;
+    string regular = 2;
+    OptionString bold = 3;
+    OptionString italic = 4;
+    OptionString boldItalic = 5;
+}
+
+
+message RFont_proto {
+    int32 size = 1;
+    string fontName = 2;
+    RFontAttribute_proto attribute = 3;
+    RColor_proto color = 4;
+    OptionRFontFamily externalFont = 5;
+}
+
+message RText_proto {
+    string txt = 1;
+    RFont_proto font = 2;
+}
+
+message DRectangle_proto {
+    float x1 = 1;
+    float y1 = 2;
+    float x2 = 3;
+    float y2 = 4;
+    float radius = 5;
+}
+
+
+
+message ReportPage_proto {
+    repeated ReportItem_proto item = 1;
+}
+
+message ReportItem_proto {
+    float deltaY = 1;
+    oneof field {
+        ReportLinkToPage_proto reportLinkToPage = 2;
+        ReportLinkToUrl_proto reportLinkToUrl = 3;
+        ReportText_proto reportText = 4;
+        ReportTextAligned_proto reportTextAligned = 5;
+        ReportTextWrap_proto reportTextWrap = 6;
+        ReportPieChart_proto reportPieChart = 7;
+        ReportBarChart_proto reportBarChart = 8;
+        ReportImage_proto reportImage = 9;
+        ReportLine_proto reportLine = 10;
+        ReportRectangle_proto reportRectangle = 11;
+        ReportVerticalShade_proto reportVerticalShade = 12;
+    }
+}
+
+message ReportLinkToPage_proto {
+    BoundaryRect_proto boundaryRect = 1;
+    int64 pageNbr = 2;
+    int32 left = 3;
+    int32 top = 4;
+}
+
+message ReportLinkToUrl_proto {
+    BoundaryRect_proto boundaryRect = 1;
+    string url = 2;
+}
+
+message ReportText_proto {
+    RText_proto txt = 1;
+    float x = 2;
+    float y = 3;
+}
+
+message ReportTextAligned_proto {
+    RText_proto txt = 1;
+    float x = 2;
+    float y = 3;
+    int32 index = 4;
+}
+
+message ReportTextWrap_proto {
+    repeated RText_proto text = 1;
+    float x0 = 2;
+    float y0 = 3;
+    float x1 = 4;
+    float y1 = 5;
+    WrapAlign_proto wrapAlign = 6;
+}
+
+message ReportPieChart_proto {
+    RFont_proto font = 1;
+    string title = 2;
+    repeated StringDouble data = 3;
+    float x0 = 4;
+    float y0 = 5;
+    float width = 6;
+    float height = 7;
+}
+
+message ReportBarChart_proto {
+    string title = 1;
+    string xLabel = 2;
+    string yLabel = 3;
+    repeated DoubleStringString data = 4;
+    float x0 = 5;
+    float y0 = 6;
+    float width = 7;
+    float height = 8;
+}
+
+message ReportImage_proto {
+    string file = 1;
+    float x = 2;
+    float y = 3;
+    float width = 4;
+    float height = 5;
+    float opacity = 6;
+}
+
+message ReportLine_proto {
+    float x1 = 1;
+    float y1 = 2;
+    float x2 = 3;
+    float y2 = 4;
+    float lineWidth = 5;
+    RColor_proto color = 6;
+    OptionLineDashType lineDashType = 7;
+}
+
+message ReportRectangle_proto {
+    float x1 = 1;
+    float y1 = 2;
+    float x2 = 3;
+    float y2 = 4;
+    float radius = 5;
+    OptionRColor color = 6;
+    OptionRColor fillColor = 7;
+}
+
+message ReportVerticalShade_proto {
+    DRectangle_proto rectangle = 1;
+    RColor_proto from = 2;
+    RColor_proto to = 3;
+}

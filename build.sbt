@@ -8,6 +8,8 @@ val TYPESAFE_CONFIG = "latest.release" // "1.3.2"
 
 val ROCKSDB_VERSION = "latest.release" // "5.9.2"
 
+val PROTOBUF_VERSION = "latest.release" // "3.5.1"
+
 val projectVersion = "1.0.0-RC.3"
 
 
@@ -69,7 +71,8 @@ lazy val coreSettings = Seq(
 	//libraryDependencies += "com.typesafe" % "config" % TYPESAFE_CONFIG,
 	libraryDependencies += "com.github.romix.akka" %% "akka-kryo-serialization" % (if (scalaVersion.value == SCALA_VERSION) "0.5.2" else "0.5.0") excludeAll (
 		ExclusionRule(organization = "com.typesafe.akka")),
-	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION
+	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
+	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION
 )
 
 lazy val renderPdfSettings = Seq(
