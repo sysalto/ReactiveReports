@@ -1,5 +1,7 @@
 package com.sysalto.report.serialization
 
+import com.sysalto.report.RFontAttribute
+
 import scala.collection.JavaConverters._
 import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes._
@@ -177,20 +179,38 @@ private[serialization] object ReportLinkToUrlSerializer {
 }
 
 
+private[serialization] object RFontAttributeSerializer {
+	def write(input: RFontAttribute.Value): RFontAttribute_proto = {
+		input match {
+			case RFontAttribute.NORMAL => RFontAttribute_proto.NORMAL
+			case RFontAttribute.BOLD => RFontAttribute_proto.BOLD
+			case RFontAttribute.ITALIC => RFontAttribute_proto.ITALIC
+			case RFontAttribute.BOLD_ITALIC => RFontAttribute_proto.BOLD_ITALIC
+		}
+	}
+
+	def read(input: RFontAttribute_proto): RFontAttribute.Value = input match {
+		case RFontAttribute_proto.NORMAL => RFontAttribute.NORMAL
+		case RFontAttribute_proto.BOLD => RFontAttribute.BOLD
+		case RFontAttribute_proto.ITALIC => RFontAttribute.ITALIC
+		case RFontAttribute_proto.BOLD_ITALIC => RFontAttribute.BOLD_ITALIC
+	}
+}
+
+
 private[serialization] object RFontSerializer {
 	def write(obj: RFont): RFont_proto.Builder = {
 		val builder = RFont_proto.newBuilder()
 		builder.setSize(obj.size)
 		builder.setFontName(obj.fontName)
-		//builder.setAttribute(obj.attribute)
+		builder.setAttribute(RFontAttributeSerializer.write(obj.attribute))
 		builder.setColor(RColorSerializer.write(obj.color))
 		builder.setExternalFont(OptionRFontFamilySerializer.write(obj.externalFont))
 		builder
 	}
 
-	def read(input: RFont_proto): RFont = null
-
-	//		RFont (input.getSize,input.getFontName,input.getAttribute,input.getColor,input.getExternalFont)
+	def read(input: RFont_proto): RFont = RFont(input.getSize, input.getFontName, RFontAttributeSerializer.read(input.getAttribute),
+		RColorSerializer.read(input.getColor), OptionRFontFamilySerializer.read(input.getExternalFont))
 }
 
 private[serialization] object RTextSerializer {

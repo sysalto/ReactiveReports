@@ -2,13 +2,13 @@ import sbt.Keys.publishMavenStyle
 
 val SCALA_VERSION = "2.12.4"
 
-val AKKA_VERSION = "latest.release" // "2.5.9"
+val AKKA_VERSION =   "2.5.9" //"latest.release"
 
-val TYPESAFE_CONFIG = "latest.release" // "1.3.2"
+//val TYPESAFE_CONFIG =  // "1.3.2"
 
-val ROCKSDB_VERSION = "latest.release" // "5.9.2"
+val ROCKSDB_VERSION = "5.9.2" // "latest.release"
 
-val PROTOBUF_VERSION = "latest.release" // "3.5.1"
+val PROTOBUF_VERSION ="3.5.1" // "latest.release"
 
 val projectVersion = "1.0.0-RC.3"
 
@@ -68,7 +68,6 @@ lazy val coreSettings = Seq(
 	javacOptions ++= {
 		if (scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	},
-	//libraryDependencies += "com.typesafe" % "config" % TYPESAFE_CONFIG,
 	libraryDependencies += "com.github.romix.akka" %% "akka-kryo-serialization" % (if (scalaVersion.value == SCALA_VERSION) "0.5.2" else "0.5.0") excludeAll (
 		ExclusionRule(organization = "com.typesafe.akka")),
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
