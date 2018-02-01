@@ -29,7 +29,8 @@ The output of  MutualFundsReport is MutualFunds.pdf.
   
 ## Getting started
    
-### 1 - Using SBT - Cloning the git repo and running the examples
+### 1 - Using SBT - Recommended for Scala
+Clone the git repo and run the examples
 For running the Scala examples, we recommend cloning the git repo and running the examples, like shown below.
 ```
 1 - git clone https://github.com/sysalto/ReactiveReports
@@ -43,7 +44,7 @@ For running the Scala examples, we recommend cloning the git repo and running th
 9 - Check the PDF file newly generated, found in the examples folder
 ```
 
-### 2 - Using Maven - For Java, using the maven artifact
+### 2 - Using Maven - Recommeded for Java
 For running the Java examples, we recommend using Maven, not sbt. Although sbt can be used for Java, as well, adding Maven dependencies is a better practice. 
 
 Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3. 
