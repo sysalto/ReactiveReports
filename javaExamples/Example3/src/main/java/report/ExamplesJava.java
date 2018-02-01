@@ -201,7 +201,7 @@ public class ExamplesJava {
 
         // Adding a link to another page
         ReportTypes.BoundaryRect boundRect = report.print(new RText("Click here - go to Page 3")).at(60);
-        report.setLink(boundRect, 3, 0, 0);
+        report.linkToPage(boundRect, 3, 0, 0);
         drawbackgroundImage(report);
         report.nextPage();
 
