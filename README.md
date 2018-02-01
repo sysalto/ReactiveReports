@@ -47,8 +47,14 @@ For running the Scala examples, we recommend cloning the git repo and running th
 For running the Java examples, we recommend using Maven, not sbt. Although sbt can be used for Java, as well, adding Maven dependencies is a better practice. 
 
 Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3. 
+
 **Step 1** - Download Intellij Idea Community Edition from here - https://www.jetbrains.com/idea/download/#section=mac
+
 **Step 2** - Open the Idea editor, and create a Maven artifact, by navigating to `File -> New -> Project -> Maven`
+
+**Step 3** - Use the latest Maven artifacts for Reactive Reports.
+
+**Step 4** - Go to `src/main/java`, and create a class. Paste the code from one of the Java examples in `javaExample/Example3`. This will generate a PDF report in your project, under the root directory. 
 
 
 
