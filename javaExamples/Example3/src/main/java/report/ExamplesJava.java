@@ -80,7 +80,7 @@ public class ExamplesJava {
         ReportTypes.BoundaryRect boundRect = reportSumamry.print(new RText("GoTo Page2").italic()).at(50);
 
         // We set the link, so when the user clicks on the text, it sends you to page 2
-        reportSumamry.setLink(boundRect,2, 0, 0);
+        reportSumamry.setLinkToPage(boundRect,2, 0, 0);
         reportSumamry.nextPage();
         reportSumamry.nextLine();
 
@@ -201,7 +201,7 @@ public class ExamplesJava {
 
         // Adding a link to another page
         ReportTypes.BoundaryRect boundRect = report.print(new RText("Click here - go to Page 3")).at(60);
-        report.setLink(boundRect, 3, 0, 0);
+        report.setLinkToPage(boundRect, 3, 0, 0);
         drawbackgroundImage(report);
         report.nextPage();
 
