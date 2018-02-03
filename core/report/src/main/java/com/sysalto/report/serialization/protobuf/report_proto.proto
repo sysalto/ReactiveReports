@@ -5,7 +5,7 @@ package com.sysalto.report.serialization;
 
 
 message ReportPage_proto {
-    repeated ReportItem_proto items = 1;
+    repeated ReportItem_proto item = 1;
 }
 
 message ReportItem_proto {
@@ -140,7 +140,7 @@ message DoubleStringString_proto {
 message ReportPieChart_proto {
     RFont_proto font = 1;
     string title = 2;
-    StringDouble_proto data = 3;
+    repeated StringDouble_proto data = 3;
     float x0 = 4;
     float y0 = 5;
     float width = 6;
@@ -151,7 +151,7 @@ message ReportBarChart_proto {
     string title = 1;
     string xLabel = 2;
     string yLabel = 3;
-    DoubleStringString_proto data = 4;
+    repeated DoubleStringString_proto data = 4;
     float x0 = 5;
     float y0 = 6;
     float width = 7;

@@ -260,27 +260,27 @@ public final class ReportProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
     java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto> 
-        getItemsList();
+        getItemList();
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
-    com.sysalto.report.serialization.ReportProto.ReportItem_proto getItems(int index);
+    com.sysalto.report.serialization.ReportProto.ReportItem_proto getItem(int index);
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
-    int getItemsCount();
+    int getItemCount();
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
     java.util.List<? extends com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder> 
-        getItemsOrBuilderList();
+        getItemOrBuilderList();
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
-    com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder getItemsOrBuilder(
+    com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder getItemOrBuilder(
         int index);
   }
   /**
@@ -296,7 +296,7 @@ public final class ReportProto {
       super(builder);
     }
     private ReportPage_proto() {
-      items_ = java.util.Collections.emptyList();
+      item_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -332,10 +332,10 @@ public final class ReportProto {
             }
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                items_ = new java.util.ArrayList<com.sysalto.report.serialization.ReportProto.ReportItem_proto>();
+                item_ = new java.util.ArrayList<com.sysalto.report.serialization.ReportProto.ReportItem_proto>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              items_.add(
+              item_.add(
                   input.readMessage(com.sysalto.report.serialization.ReportProto.ReportItem_proto.parser(), extensionRegistry));
               break;
             }
@@ -348,7 +348,7 @@ public final class ReportProto {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          items_ = java.util.Collections.unmodifiableList(items_);
+          item_ = java.util.Collections.unmodifiableList(item_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -366,39 +366,39 @@ public final class ReportProto {
               com.sysalto.report.serialization.ReportProto.ReportPage_proto.class, com.sysalto.report.serialization.ReportProto.ReportPage_proto.Builder.class);
     }
 
-    public static final int ITEMS_FIELD_NUMBER = 1;
-    private java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto> items_;
+    public static final int ITEM_FIELD_NUMBER = 1;
+    private java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto> item_;
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
-    public java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto> getItemsList() {
-      return items_;
+    public java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto> getItemList() {
+      return item_;
     }
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
     public java.util.List<? extends com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder> 
-        getItemsOrBuilderList() {
-      return items_;
+        getItemOrBuilderList() {
+      return item_;
     }
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
-    public int getItemsCount() {
-      return items_.size();
+    public int getItemCount() {
+      return item_.size();
     }
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.ReportItem_proto getItems(int index) {
-      return items_.get(index);
+    public com.sysalto.report.serialization.ReportProto.ReportItem_proto getItem(int index) {
+      return item_.get(index);
     }
     /**
-     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+     * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder getItemsOrBuilder(
+    public com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder getItemOrBuilder(
         int index) {
-      return items_.get(index);
+      return item_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -413,8 +413,8 @@ public final class ReportProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      for (int i = 0; i < items_.size(); i++) {
-        output.writeMessage(1, items_.get(i));
+      for (int i = 0; i < item_.size(); i++) {
+        output.writeMessage(1, item_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -424,9 +424,9 @@ public final class ReportProto {
       if (size != -1) return size;
 
       size = 0;
-      for (int i = 0; i < items_.size(); i++) {
+      for (int i = 0; i < item_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, items_.get(i));
+          .computeMessageSize(1, item_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -444,8 +444,8 @@ public final class ReportProto {
       com.sysalto.report.serialization.ReportProto.ReportPage_proto other = (com.sysalto.report.serialization.ReportProto.ReportPage_proto) obj;
 
       boolean result = true;
-      result = result && getItemsList()
-          .equals(other.getItemsList());
+      result = result && getItemList()
+          .equals(other.getItemList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -457,9 +457,9 @@ public final class ReportProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (getItemsCount() > 0) {
-        hash = (37 * hash) + ITEMS_FIELD_NUMBER;
-        hash = (53 * hash) + getItemsList().hashCode();
+      if (getItemCount() > 0) {
+        hash = (37 * hash) + ITEM_FIELD_NUMBER;
+        hash = (53 * hash) + getItemList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -586,16 +586,16 @@ public final class ReportProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getItemsFieldBuilder();
+          getItemFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
-        if (itemsBuilder_ == null) {
-          items_ = java.util.Collections.emptyList();
+        if (itemBuilder_ == null) {
+          item_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          itemsBuilder_.clear();
+          itemBuilder_.clear();
         }
         return this;
       }
@@ -620,14 +620,14 @@ public final class ReportProto {
       public com.sysalto.report.serialization.ReportProto.ReportPage_proto buildPartial() {
         com.sysalto.report.serialization.ReportProto.ReportPage_proto result = new com.sysalto.report.serialization.ReportProto.ReportPage_proto(this);
         int from_bitField0_ = bitField0_;
-        if (itemsBuilder_ == null) {
+        if (itemBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            items_ = java.util.Collections.unmodifiableList(items_);
+            item_ = java.util.Collections.unmodifiableList(item_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
-          result.items_ = items_;
+          result.item_ = item_;
         } else {
-          result.items_ = itemsBuilder_.build();
+          result.item_ = itemBuilder_.build();
         }
         onBuilt();
         return result;
@@ -670,29 +670,29 @@ public final class ReportProto {
 
       public Builder mergeFrom(com.sysalto.report.serialization.ReportProto.ReportPage_proto other) {
         if (other == com.sysalto.report.serialization.ReportProto.ReportPage_proto.getDefaultInstance()) return this;
-        if (itemsBuilder_ == null) {
-          if (!other.items_.isEmpty()) {
-            if (items_.isEmpty()) {
-              items_ = other.items_;
+        if (itemBuilder_ == null) {
+          if (!other.item_.isEmpty()) {
+            if (item_.isEmpty()) {
+              item_ = other.item_;
               bitField0_ = (bitField0_ & ~0x00000001);
             } else {
-              ensureItemsIsMutable();
-              items_.addAll(other.items_);
+              ensureItemIsMutable();
+              item_.addAll(other.item_);
             }
             onChanged();
           }
         } else {
-          if (!other.items_.isEmpty()) {
-            if (itemsBuilder_.isEmpty()) {
-              itemsBuilder_.dispose();
-              itemsBuilder_ = null;
-              items_ = other.items_;
+          if (!other.item_.isEmpty()) {
+            if (itemBuilder_.isEmpty()) {
+              itemBuilder_.dispose();
+              itemBuilder_ = null;
+              item_ = other.item_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              itemsBuilder_ = 
+              itemBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getItemsFieldBuilder() : null;
+                   getItemFieldBuilder() : null;
             } else {
-              itemsBuilder_.addAllMessages(other.items_);
+              itemBuilder_.addAllMessages(other.item_);
             }
           }
         }
@@ -724,244 +724,244 @@ public final class ReportProto {
       }
       private int bitField0_;
 
-      private java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto> items_ =
+      private java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto> item_ =
         java.util.Collections.emptyList();
-      private void ensureItemsIsMutable() {
+      private void ensureItemIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          items_ = new java.util.ArrayList<com.sysalto.report.serialization.ReportProto.ReportItem_proto>(items_);
+          item_ = new java.util.ArrayList<com.sysalto.report.serialization.ReportProto.ReportItem_proto>(item_);
           bitField0_ |= 0x00000001;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.ReportItem_proto, com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder, com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder> itemsBuilder_;
+          com.sysalto.report.serialization.ReportProto.ReportItem_proto, com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder, com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder> itemBuilder_;
 
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto> getItemsList() {
-        if (itemsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(items_);
+      public java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto> getItemList() {
+        if (itemBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(item_);
         } else {
-          return itemsBuilder_.getMessageList();
+          return itemBuilder_.getMessageList();
         }
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public int getItemsCount() {
-        if (itemsBuilder_ == null) {
-          return items_.size();
+      public int getItemCount() {
+        if (itemBuilder_ == null) {
+          return item_.size();
         } else {
-          return itemsBuilder_.getCount();
+          return itemBuilder_.getCount();
         }
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.ReportItem_proto getItems(int index) {
-        if (itemsBuilder_ == null) {
-          return items_.get(index);
+      public com.sysalto.report.serialization.ReportProto.ReportItem_proto getItem(int index) {
+        if (itemBuilder_ == null) {
+          return item_.get(index);
         } else {
-          return itemsBuilder_.getMessage(index);
+          return itemBuilder_.getMessage(index);
         }
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public Builder setItems(
+      public Builder setItem(
           int index, com.sysalto.report.serialization.ReportProto.ReportItem_proto value) {
-        if (itemsBuilder_ == null) {
+        if (itemBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureItemsIsMutable();
-          items_.set(index, value);
+          ensureItemIsMutable();
+          item_.set(index, value);
           onChanged();
         } else {
-          itemsBuilder_.setMessage(index, value);
+          itemBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public Builder setItems(
+      public Builder setItem(
           int index, com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder builderForValue) {
-        if (itemsBuilder_ == null) {
-          ensureItemsIsMutable();
-          items_.set(index, builderForValue.build());
+        if (itemBuilder_ == null) {
+          ensureItemIsMutable();
+          item_.set(index, builderForValue.build());
           onChanged();
         } else {
-          itemsBuilder_.setMessage(index, builderForValue.build());
+          itemBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public Builder addItems(com.sysalto.report.serialization.ReportProto.ReportItem_proto value) {
-        if (itemsBuilder_ == null) {
+      public Builder addItem(com.sysalto.report.serialization.ReportProto.ReportItem_proto value) {
+        if (itemBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureItemsIsMutable();
-          items_.add(value);
+          ensureItemIsMutable();
+          item_.add(value);
           onChanged();
         } else {
-          itemsBuilder_.addMessage(value);
+          itemBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public Builder addItems(
+      public Builder addItem(
           int index, com.sysalto.report.serialization.ReportProto.ReportItem_proto value) {
-        if (itemsBuilder_ == null) {
+        if (itemBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureItemsIsMutable();
-          items_.add(index, value);
+          ensureItemIsMutable();
+          item_.add(index, value);
           onChanged();
         } else {
-          itemsBuilder_.addMessage(index, value);
+          itemBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public Builder addItems(
+      public Builder addItem(
           com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder builderForValue) {
-        if (itemsBuilder_ == null) {
-          ensureItemsIsMutable();
-          items_.add(builderForValue.build());
+        if (itemBuilder_ == null) {
+          ensureItemIsMutable();
+          item_.add(builderForValue.build());
           onChanged();
         } else {
-          itemsBuilder_.addMessage(builderForValue.build());
+          itemBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public Builder addItems(
+      public Builder addItem(
           int index, com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder builderForValue) {
-        if (itemsBuilder_ == null) {
-          ensureItemsIsMutable();
-          items_.add(index, builderForValue.build());
+        if (itemBuilder_ == null) {
+          ensureItemIsMutable();
+          item_.add(index, builderForValue.build());
           onChanged();
         } else {
-          itemsBuilder_.addMessage(index, builderForValue.build());
+          itemBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public Builder addAllItems(
+      public Builder addAllItem(
           java.lang.Iterable<? extends com.sysalto.report.serialization.ReportProto.ReportItem_proto> values) {
-        if (itemsBuilder_ == null) {
-          ensureItemsIsMutable();
+        if (itemBuilder_ == null) {
+          ensureItemIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, items_);
+              values, item_);
           onChanged();
         } else {
-          itemsBuilder_.addAllMessages(values);
+          itemBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public Builder clearItems() {
-        if (itemsBuilder_ == null) {
-          items_ = java.util.Collections.emptyList();
+      public Builder clearItem() {
+        if (itemBuilder_ == null) {
+          item_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
-          itemsBuilder_.clear();
+          itemBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public Builder removeItems(int index) {
-        if (itemsBuilder_ == null) {
-          ensureItemsIsMutable();
-          items_.remove(index);
+      public Builder removeItem(int index) {
+        if (itemBuilder_ == null) {
+          ensureItemIsMutable();
+          item_.remove(index);
           onChanged();
         } else {
-          itemsBuilder_.remove(index);
+          itemBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder getItemsBuilder(
+      public com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder getItemBuilder(
           int index) {
-        return getItemsFieldBuilder().getBuilder(index);
+        return getItemFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder getItemsOrBuilder(
+      public com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder getItemOrBuilder(
           int index) {
-        if (itemsBuilder_ == null) {
-          return items_.get(index);  } else {
-          return itemsBuilder_.getMessageOrBuilder(index);
+        if (itemBuilder_ == null) {
+          return item_.get(index);  } else {
+          return itemBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
       public java.util.List<? extends com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder> 
-           getItemsOrBuilderList() {
-        if (itemsBuilder_ != null) {
-          return itemsBuilder_.getMessageOrBuilderList();
+           getItemOrBuilderList() {
+        if (itemBuilder_ != null) {
+          return itemBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(items_);
+          return java.util.Collections.unmodifiableList(item_);
         }
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder addItemsBuilder() {
-        return getItemsFieldBuilder().addBuilder(
+      public com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder addItemBuilder() {
+        return getItemFieldBuilder().addBuilder(
             com.sysalto.report.serialization.ReportProto.ReportItem_proto.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder addItemsBuilder(
+      public com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder addItemBuilder(
           int index) {
-        return getItemsFieldBuilder().addBuilder(
+        return getItemFieldBuilder().addBuilder(
             index, com.sysalto.report.serialization.ReportProto.ReportItem_proto.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto items = 1;</code>
+       * <code>repeated .com.sysalto.report.serialization.ReportItem_proto item = 1;</code>
        */
       public java.util.List<com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder> 
-           getItemsBuilderList() {
-        return getItemsFieldBuilder().getBuilderList();
+           getItemBuilderList() {
+        return getItemFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
           com.sysalto.report.serialization.ReportProto.ReportItem_proto, com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder, com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder> 
-          getItemsFieldBuilder() {
-        if (itemsBuilder_ == null) {
-          itemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          getItemFieldBuilder() {
+        if (itemBuilder_ == null) {
+          itemBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.sysalto.report.serialization.ReportProto.ReportItem_proto, com.sysalto.report.serialization.ReportProto.ReportItem_proto.Builder, com.sysalto.report.serialization.ReportProto.ReportItem_protoOrBuilder>(
-                  items_,
+                  item_,
                   ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
-          items_ = null;
+          item_ = null;
         }
-        return itemsBuilder_;
+        return itemBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -15641,17 +15641,28 @@ public final class ReportProto {
         getTitleBytes();
 
     /**
-     * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
      */
-    boolean hasData();
+    java.util.List<com.sysalto.report.serialization.ReportProto.StringDouble_proto> 
+        getDataList();
     /**
-     * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
      */
-    com.sysalto.report.serialization.ReportProto.StringDouble_proto getData();
+    com.sysalto.report.serialization.ReportProto.StringDouble_proto getData(int index);
     /**
-     * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
      */
-    com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder getDataOrBuilder();
+    int getDataCount();
+    /**
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     */
+    java.util.List<? extends com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder> 
+        getDataOrBuilderList();
+    /**
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     */
+    com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder getDataOrBuilder(
+        int index);
 
     /**
      * <code>float x0 = 4;</code>
@@ -15687,6 +15698,7 @@ public final class ReportProto {
     }
     private ReportPieChart_proto() {
       title_ = "";
+      data_ = java.util.Collections.emptyList();
       x0_ = 0F;
       y0_ = 0F;
       width_ = 0F;
@@ -15744,16 +15756,12 @@ public final class ReportProto {
               break;
             }
             case 26: {
-              com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder subBuilder = null;
-              if (data_ != null) {
-                subBuilder = data_.toBuilder();
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                data_ = new java.util.ArrayList<com.sysalto.report.serialization.ReportProto.StringDouble_proto>();
+                mutable_bitField0_ |= 0x00000004;
               }
-              data_ = input.readMessage(com.sysalto.report.serialization.ReportProto.StringDouble_proto.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(data_);
-                data_ = subBuilder.buildPartial();
-              }
-
+              data_.add(
+                  input.readMessage(com.sysalto.report.serialization.ReportProto.StringDouble_proto.parser(), extensionRegistry));
               break;
             }
             case 37: {
@@ -15784,6 +15792,9 @@ public final class ReportProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          data_ = java.util.Collections.unmodifiableList(data_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -15800,6 +15811,7 @@ public final class ReportProto {
               com.sysalto.report.serialization.ReportProto.ReportPieChart_proto.class, com.sysalto.report.serialization.ReportProto.ReportPieChart_proto.Builder.class);
     }
 
+    private int bitField0_;
     public static final int FONT_FIELD_NUMBER = 1;
     private com.sysalto.report.serialization.ReportProto.RFont_proto font_;
     /**
@@ -15856,24 +15868,38 @@ public final class ReportProto {
     }
 
     public static final int DATA_FIELD_NUMBER = 3;
-    private com.sysalto.report.serialization.ReportProto.StringDouble_proto data_;
+    private java.util.List<com.sysalto.report.serialization.ReportProto.StringDouble_proto> data_;
     /**
-     * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
      */
-    public boolean hasData() {
-      return data_ != null;
+    public java.util.List<com.sysalto.report.serialization.ReportProto.StringDouble_proto> getDataList() {
+      return data_;
     }
     /**
-     * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.StringDouble_proto getData() {
-      return data_ == null ? com.sysalto.report.serialization.ReportProto.StringDouble_proto.getDefaultInstance() : data_;
+    public java.util.List<? extends com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder> 
+        getDataOrBuilderList() {
+      return data_;
     }
     /**
-     * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder getDataOrBuilder() {
-      return getData();
+    public int getDataCount() {
+      return data_.size();
+    }
+    /**
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     */
+    public com.sysalto.report.serialization.ReportProto.StringDouble_proto getData(int index) {
+      return data_.get(index);
+    }
+    /**
+     * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+     */
+    public com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder getDataOrBuilder(
+        int index) {
+      return data_.get(index);
     }
 
     public static final int X0_FIELD_NUMBER = 4;
@@ -15930,8 +15956,8 @@ public final class ReportProto {
       if (!getTitleBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, title_);
       }
-      if (data_ != null) {
-        output.writeMessage(3, getData());
+      for (int i = 0; i < data_.size(); i++) {
+        output.writeMessage(3, data_.get(i));
       }
       if (x0_ != 0F) {
         output.writeFloat(4, x0_);
@@ -15960,9 +15986,9 @@ public final class ReportProto {
       if (!getTitleBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, title_);
       }
-      if (data_ != null) {
+      for (int i = 0; i < data_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getData());
+          .computeMessageSize(3, data_.get(i));
       }
       if (x0_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
@@ -16003,11 +16029,8 @@ public final class ReportProto {
       }
       result = result && getTitle()
           .equals(other.getTitle());
-      result = result && (hasData() == other.hasData());
-      if (hasData()) {
-        result = result && getData()
-            .equals(other.getData());
-      }
+      result = result && getDataList()
+          .equals(other.getDataList());
       result = result && (
           java.lang.Float.floatToIntBits(getX0())
           == java.lang.Float.floatToIntBits(
@@ -16041,9 +16064,9 @@ public final class ReportProto {
       }
       hash = (37 * hash) + TITLE_FIELD_NUMBER;
       hash = (53 * hash) + getTitle().hashCode();
-      if (hasData()) {
+      if (getDataCount() > 0) {
         hash = (37 * hash) + DATA_FIELD_NUMBER;
-        hash = (53 * hash) + getData().hashCode();
+        hash = (53 * hash) + getDataList().hashCode();
       }
       hash = (37 * hash) + X0_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
@@ -16182,6 +16205,7 @@ public final class ReportProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getDataFieldBuilder();
         }
       }
       public Builder clear() {
@@ -16195,10 +16219,10 @@ public final class ReportProto {
         title_ = "";
 
         if (dataBuilder_ == null) {
-          data_ = null;
+          data_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
         } else {
-          data_ = null;
-          dataBuilder_ = null;
+          dataBuilder_.clear();
         }
         x0_ = 0F;
 
@@ -16230,6 +16254,8 @@ public final class ReportProto {
 
       public com.sysalto.report.serialization.ReportProto.ReportPieChart_proto buildPartial() {
         com.sysalto.report.serialization.ReportProto.ReportPieChart_proto result = new com.sysalto.report.serialization.ReportProto.ReportPieChart_proto(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
         if (fontBuilder_ == null) {
           result.font_ = font_;
         } else {
@@ -16237,6 +16263,10 @@ public final class ReportProto {
         }
         result.title_ = title_;
         if (dataBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            data_ = java.util.Collections.unmodifiableList(data_);
+            bitField0_ = (bitField0_ & ~0x00000004);
+          }
           result.data_ = data_;
         } else {
           result.data_ = dataBuilder_.build();
@@ -16245,6 +16275,7 @@ public final class ReportProto {
         result.y0_ = y0_;
         result.width_ = width_;
         result.height_ = height_;
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -16293,8 +16324,31 @@ public final class ReportProto {
           title_ = other.title_;
           onChanged();
         }
-        if (other.hasData()) {
-          mergeData(other.getData());
+        if (dataBuilder_ == null) {
+          if (!other.data_.isEmpty()) {
+            if (data_.isEmpty()) {
+              data_ = other.data_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureDataIsMutable();
+              data_.addAll(other.data_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.data_.isEmpty()) {
+            if (dataBuilder_.isEmpty()) {
+              dataBuilder_.dispose();
+              dataBuilder_ = null;
+              data_ = other.data_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+              dataBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getDataFieldBuilder() : null;
+            } else {
+              dataBuilder_.addAllMessages(other.data_);
+            }
+          }
         }
         if (other.getX0() != 0F) {
           setX0(other.getX0());
@@ -16334,6 +16388,7 @@ public final class ReportProto {
         }
         return this;
       }
+      private int bitField0_;
 
       private com.sysalto.report.serialization.ReportProto.RFont_proto font_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -16521,116 +16576,239 @@ public final class ReportProto {
         return this;
       }
 
-      private com.sysalto.report.serialization.ReportProto.StringDouble_proto data_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.StringDouble_proto, com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder, com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder> dataBuilder_;
-      /**
-       * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
-       */
-      public boolean hasData() {
-        return dataBuilder_ != null || data_ != null;
+      private java.util.List<com.sysalto.report.serialization.ReportProto.StringDouble_proto> data_ =
+        java.util.Collections.emptyList();
+      private void ensureDataIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          data_ = new java.util.ArrayList<com.sysalto.report.serialization.ReportProto.StringDouble_proto>(data_);
+          bitField0_ |= 0x00000004;
+         }
       }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.sysalto.report.serialization.ReportProto.StringDouble_proto, com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder, com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder> dataBuilder_;
+
       /**
-       * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.StringDouble_proto getData() {
+      public java.util.List<com.sysalto.report.serialization.ReportProto.StringDouble_proto> getDataList() {
         if (dataBuilder_ == null) {
-          return data_ == null ? com.sysalto.report.serialization.ReportProto.StringDouble_proto.getDefaultInstance() : data_;
+          return java.util.Collections.unmodifiableList(data_);
         } else {
-          return dataBuilder_.getMessage();
+          return dataBuilder_.getMessageList();
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
        */
-      public Builder setData(com.sysalto.report.serialization.ReportProto.StringDouble_proto value) {
+      public int getDataCount() {
+        if (dataBuilder_ == null) {
+          return data_.size();
+        } else {
+          return dataBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.StringDouble_proto getData(int index) {
+        if (dataBuilder_ == null) {
+          return data_.get(index);
+        } else {
+          return dataBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public Builder setData(
+          int index, com.sysalto.report.serialization.ReportProto.StringDouble_proto value) {
         if (dataBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          data_ = value;
+          ensureDataIsMutable();
+          data_.set(index, value);
           onChanged();
         } else {
-          dataBuilder_.setMessage(value);
+          dataBuilder_.setMessage(index, value);
         }
-
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
        */
       public Builder setData(
+          int index, com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder builderForValue) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          dataBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public Builder addData(com.sysalto.report.serialization.ReportProto.StringDouble_proto value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.add(value);
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public Builder addData(
+          int index, com.sysalto.report.serialization.ReportProto.StringDouble_proto value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.add(index, value);
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public Builder addData(
           com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder builderForValue) {
         if (dataBuilder_ == null) {
-          data_ = builderForValue.build();
+          ensureDataIsMutable();
+          data_.add(builderForValue.build());
           onChanged();
         } else {
-          dataBuilder_.setMessage(builderForValue.build());
+          dataBuilder_.addMessage(builderForValue.build());
         }
-
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
        */
-      public Builder mergeData(com.sysalto.report.serialization.ReportProto.StringDouble_proto value) {
+      public Builder addData(
+          int index, com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder builderForValue) {
         if (dataBuilder_ == null) {
-          if (data_ != null) {
-            data_ =
-              com.sysalto.report.serialization.ReportProto.StringDouble_proto.newBuilder(data_).mergeFrom(value).buildPartial();
-          } else {
-            data_ = value;
-          }
+          ensureDataIsMutable();
+          data_.add(index, builderForValue.build());
           onChanged();
         } else {
-          dataBuilder_.mergeFrom(value);
+          dataBuilder_.addMessage(index, builderForValue.build());
         }
-
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public Builder addAllData(
+          java.lang.Iterable<? extends com.sysalto.report.serialization.ReportProto.StringDouble_proto> values) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, data_);
+          onChanged();
+        } else {
+          dataBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
        */
       public Builder clearData() {
         if (dataBuilder_ == null) {
-          data_ = null;
+          data_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
-          data_ = null;
-          dataBuilder_ = null;
+          dataBuilder_.clear();
         }
-
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder getDataBuilder() {
-        
-        onChanged();
-        return getDataFieldBuilder().getBuilder();
+      public Builder removeData(int index) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.remove(index);
+          onChanged();
+        } else {
+          dataBuilder_.remove(index);
+        }
+        return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder getDataOrBuilder() {
-        if (dataBuilder_ != null) {
-          return dataBuilder_.getMessageOrBuilder();
-        } else {
-          return data_ == null ?
-              com.sysalto.report.serialization.ReportProto.StringDouble_proto.getDefaultInstance() : data_;
+      public com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder getDataBuilder(
+          int index) {
+        return getDataFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder getDataOrBuilder(
+          int index) {
+        if (dataBuilder_ == null) {
+          return data_.get(index);  } else {
+          return dataBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      public java.util.List<? extends com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder> 
+           getDataOrBuilderList() {
+        if (dataBuilder_ != null) {
+          return dataBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(data_);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder addDataBuilder() {
+        return getDataFieldBuilder().addBuilder(
+            com.sysalto.report.serialization.ReportProto.StringDouble_proto.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder addDataBuilder(
+          int index) {
+        return getDataFieldBuilder().addBuilder(
+            index, com.sysalto.report.serialization.ReportProto.StringDouble_proto.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.StringDouble_proto data = 3;</code>
+       */
+      public java.util.List<com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder> 
+           getDataBuilderList() {
+        return getDataFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
           com.sysalto.report.serialization.ReportProto.StringDouble_proto, com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder, com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder> 
           getDataFieldBuilder() {
         if (dataBuilder_ == null) {
-          dataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          dataBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.sysalto.report.serialization.ReportProto.StringDouble_proto, com.sysalto.report.serialization.ReportProto.StringDouble_proto.Builder, com.sysalto.report.serialization.ReportProto.StringDouble_protoOrBuilder>(
-                  getData(),
+                  data_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
                   isClean());
           data_ = null;
@@ -16825,17 +17003,28 @@ public final class ReportProto {
         getYLabelBytes();
 
     /**
-     * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
      */
-    boolean hasData();
+    java.util.List<com.sysalto.report.serialization.ReportProto.DoubleStringString_proto> 
+        getDataList();
     /**
-     * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
      */
-    com.sysalto.report.serialization.ReportProto.DoubleStringString_proto getData();
+    com.sysalto.report.serialization.ReportProto.DoubleStringString_proto getData(int index);
     /**
-     * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
      */
-    com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder getDataOrBuilder();
+    int getDataCount();
+    /**
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     */
+    java.util.List<? extends com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder> 
+        getDataOrBuilderList();
+    /**
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     */
+    com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder getDataOrBuilder(
+        int index);
 
     /**
      * <code>float x0 = 5;</code>
@@ -16873,6 +17062,7 @@ public final class ReportProto {
       title_ = "";
       xLabel_ = "";
       yLabel_ = "";
+      data_ = java.util.Collections.emptyList();
       x0_ = 0F;
       y0_ = 0F;
       width_ = 0F;
@@ -16929,16 +17119,12 @@ public final class ReportProto {
               break;
             }
             case 34: {
-              com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder subBuilder = null;
-              if (data_ != null) {
-                subBuilder = data_.toBuilder();
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                data_ = new java.util.ArrayList<com.sysalto.report.serialization.ReportProto.DoubleStringString_proto>();
+                mutable_bitField0_ |= 0x00000008;
               }
-              data_ = input.readMessage(com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(data_);
-                data_ = subBuilder.buildPartial();
-              }
-
+              data_.add(
+                  input.readMessage(com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.parser(), extensionRegistry));
               break;
             }
             case 45: {
@@ -16969,6 +17155,9 @@ public final class ReportProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          data_ = java.util.Collections.unmodifiableList(data_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -16985,6 +17174,7 @@ public final class ReportProto {
               com.sysalto.report.serialization.ReportProto.ReportBarChart_proto.class, com.sysalto.report.serialization.ReportProto.ReportBarChart_proto.Builder.class);
     }
 
+    private int bitField0_;
     public static final int TITLE_FIELD_NUMBER = 1;
     private volatile java.lang.Object title_;
     /**
@@ -17088,24 +17278,38 @@ public final class ReportProto {
     }
 
     public static final int DATA_FIELD_NUMBER = 4;
-    private com.sysalto.report.serialization.ReportProto.DoubleStringString_proto data_;
+    private java.util.List<com.sysalto.report.serialization.ReportProto.DoubleStringString_proto> data_;
     /**
-     * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
      */
-    public boolean hasData() {
-      return data_ != null;
+    public java.util.List<com.sysalto.report.serialization.ReportProto.DoubleStringString_proto> getDataList() {
+      return data_;
     }
     /**
-     * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.DoubleStringString_proto getData() {
-      return data_ == null ? com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.getDefaultInstance() : data_;
+    public java.util.List<? extends com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder> 
+        getDataOrBuilderList() {
+      return data_;
     }
     /**
-     * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder getDataOrBuilder() {
-      return getData();
+    public int getDataCount() {
+      return data_.size();
+    }
+    /**
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     */
+    public com.sysalto.report.serialization.ReportProto.DoubleStringString_proto getData(int index) {
+      return data_.get(index);
+    }
+    /**
+     * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+     */
+    public com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder getDataOrBuilder(
+        int index) {
+      return data_.get(index);
     }
 
     public static final int X0_FIELD_NUMBER = 5;
@@ -17165,8 +17369,8 @@ public final class ReportProto {
       if (!getYLabelBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, yLabel_);
       }
-      if (data_ != null) {
-        output.writeMessage(4, getData());
+      for (int i = 0; i < data_.size(); i++) {
+        output.writeMessage(4, data_.get(i));
       }
       if (x0_ != 0F) {
         output.writeFloat(5, x0_);
@@ -17197,9 +17401,9 @@ public final class ReportProto {
       if (!getYLabelBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, yLabel_);
       }
-      if (data_ != null) {
+      for (int i = 0; i < data_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getData());
+          .computeMessageSize(4, data_.get(i));
       }
       if (x0_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
@@ -17239,11 +17443,8 @@ public final class ReportProto {
           .equals(other.getXLabel());
       result = result && getYLabel()
           .equals(other.getYLabel());
-      result = result && (hasData() == other.hasData());
-      if (hasData()) {
-        result = result && getData()
-            .equals(other.getData());
-      }
+      result = result && getDataList()
+          .equals(other.getDataList());
       result = result && (
           java.lang.Float.floatToIntBits(getX0())
           == java.lang.Float.floatToIntBits(
@@ -17277,9 +17478,9 @@ public final class ReportProto {
       hash = (53 * hash) + getXLabel().hashCode();
       hash = (37 * hash) + YLABEL_FIELD_NUMBER;
       hash = (53 * hash) + getYLabel().hashCode();
-      if (hasData()) {
+      if (getDataCount() > 0) {
         hash = (37 * hash) + DATA_FIELD_NUMBER;
-        hash = (53 * hash) + getData().hashCode();
+        hash = (53 * hash) + getDataList().hashCode();
       }
       hash = (37 * hash) + X0_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
@@ -17418,6 +17619,7 @@ public final class ReportProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getDataFieldBuilder();
         }
       }
       public Builder clear() {
@@ -17429,10 +17631,10 @@ public final class ReportProto {
         yLabel_ = "";
 
         if (dataBuilder_ == null) {
-          data_ = null;
+          data_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
         } else {
-          data_ = null;
-          dataBuilder_ = null;
+          dataBuilder_.clear();
         }
         x0_ = 0F;
 
@@ -17464,10 +17666,16 @@ public final class ReportProto {
 
       public com.sysalto.report.serialization.ReportProto.ReportBarChart_proto buildPartial() {
         com.sysalto.report.serialization.ReportProto.ReportBarChart_proto result = new com.sysalto.report.serialization.ReportProto.ReportBarChart_proto(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
         result.title_ = title_;
         result.xLabel_ = xLabel_;
         result.yLabel_ = yLabel_;
         if (dataBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            data_ = java.util.Collections.unmodifiableList(data_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
           result.data_ = data_;
         } else {
           result.data_ = dataBuilder_.build();
@@ -17476,6 +17684,7 @@ public final class ReportProto {
         result.y0_ = y0_;
         result.width_ = width_;
         result.height_ = height_;
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -17529,8 +17738,31 @@ public final class ReportProto {
           yLabel_ = other.yLabel_;
           onChanged();
         }
-        if (other.hasData()) {
-          mergeData(other.getData());
+        if (dataBuilder_ == null) {
+          if (!other.data_.isEmpty()) {
+            if (data_.isEmpty()) {
+              data_ = other.data_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureDataIsMutable();
+              data_.addAll(other.data_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.data_.isEmpty()) {
+            if (dataBuilder_.isEmpty()) {
+              dataBuilder_.dispose();
+              dataBuilder_ = null;
+              data_ = other.data_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              dataBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getDataFieldBuilder() : null;
+            } else {
+              dataBuilder_.addAllMessages(other.data_);
+            }
+          }
         }
         if (other.getX0() != 0F) {
           setX0(other.getX0());
@@ -17570,6 +17802,7 @@ public final class ReportProto {
         }
         return this;
       }
+      private int bitField0_;
 
       private java.lang.Object title_ = "";
       /**
@@ -17778,116 +18011,239 @@ public final class ReportProto {
         return this;
       }
 
-      private com.sysalto.report.serialization.ReportProto.DoubleStringString_proto data_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.DoubleStringString_proto, com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder, com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder> dataBuilder_;
-      /**
-       * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
-       */
-      public boolean hasData() {
-        return dataBuilder_ != null || data_ != null;
+      private java.util.List<com.sysalto.report.serialization.ReportProto.DoubleStringString_proto> data_ =
+        java.util.Collections.emptyList();
+      private void ensureDataIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          data_ = new java.util.ArrayList<com.sysalto.report.serialization.ReportProto.DoubleStringString_proto>(data_);
+          bitField0_ |= 0x00000008;
+         }
       }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.sysalto.report.serialization.ReportProto.DoubleStringString_proto, com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder, com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder> dataBuilder_;
+
       /**
-       * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.DoubleStringString_proto getData() {
+      public java.util.List<com.sysalto.report.serialization.ReportProto.DoubleStringString_proto> getDataList() {
         if (dataBuilder_ == null) {
-          return data_ == null ? com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.getDefaultInstance() : data_;
+          return java.util.Collections.unmodifiableList(data_);
         } else {
-          return dataBuilder_.getMessage();
+          return dataBuilder_.getMessageList();
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
        */
-      public Builder setData(com.sysalto.report.serialization.ReportProto.DoubleStringString_proto value) {
+      public int getDataCount() {
+        if (dataBuilder_ == null) {
+          return data_.size();
+        } else {
+          return dataBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.DoubleStringString_proto getData(int index) {
+        if (dataBuilder_ == null) {
+          return data_.get(index);
+        } else {
+          return dataBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public Builder setData(
+          int index, com.sysalto.report.serialization.ReportProto.DoubleStringString_proto value) {
         if (dataBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          data_ = value;
+          ensureDataIsMutable();
+          data_.set(index, value);
           onChanged();
         } else {
-          dataBuilder_.setMessage(value);
+          dataBuilder_.setMessage(index, value);
         }
-
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
        */
       public Builder setData(
+          int index, com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder builderForValue) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          dataBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public Builder addData(com.sysalto.report.serialization.ReportProto.DoubleStringString_proto value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.add(value);
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public Builder addData(
+          int index, com.sysalto.report.serialization.ReportProto.DoubleStringString_proto value) {
+        if (dataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDataIsMutable();
+          data_.add(index, value);
+          onChanged();
+        } else {
+          dataBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public Builder addData(
           com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder builderForValue) {
         if (dataBuilder_ == null) {
-          data_ = builderForValue.build();
+          ensureDataIsMutable();
+          data_.add(builderForValue.build());
           onChanged();
         } else {
-          dataBuilder_.setMessage(builderForValue.build());
+          dataBuilder_.addMessage(builderForValue.build());
         }
-
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
        */
-      public Builder mergeData(com.sysalto.report.serialization.ReportProto.DoubleStringString_proto value) {
+      public Builder addData(
+          int index, com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder builderForValue) {
         if (dataBuilder_ == null) {
-          if (data_ != null) {
-            data_ =
-              com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.newBuilder(data_).mergeFrom(value).buildPartial();
-          } else {
-            data_ = value;
-          }
+          ensureDataIsMutable();
+          data_.add(index, builderForValue.build());
           onChanged();
         } else {
-          dataBuilder_.mergeFrom(value);
+          dataBuilder_.addMessage(index, builderForValue.build());
         }
-
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public Builder addAllData(
+          java.lang.Iterable<? extends com.sysalto.report.serialization.ReportProto.DoubleStringString_proto> values) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, data_);
+          onChanged();
+        } else {
+          dataBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
        */
       public Builder clearData() {
         if (dataBuilder_ == null) {
-          data_ = null;
+          data_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
           onChanged();
         } else {
-          data_ = null;
-          dataBuilder_ = null;
+          dataBuilder_.clear();
         }
-
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder getDataBuilder() {
-        
-        onChanged();
-        return getDataFieldBuilder().getBuilder();
+      public Builder removeData(int index) {
+        if (dataBuilder_ == null) {
+          ensureDataIsMutable();
+          data_.remove(index);
+          onChanged();
+        } else {
+          dataBuilder_.remove(index);
+        }
+        return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder getDataOrBuilder() {
-        if (dataBuilder_ != null) {
-          return dataBuilder_.getMessageOrBuilder();
-        } else {
-          return data_ == null ?
-              com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.getDefaultInstance() : data_;
+      public com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder getDataBuilder(
+          int index) {
+        return getDataFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder getDataOrBuilder(
+          int index) {
+        if (dataBuilder_ == null) {
+          return data_.get(index);  } else {
+          return dataBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      public java.util.List<? extends com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder> 
+           getDataOrBuilderList() {
+        if (dataBuilder_ != null) {
+          return dataBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(data_);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder addDataBuilder() {
+        return getDataFieldBuilder().addBuilder(
+            com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder addDataBuilder(
+          int index) {
+        return getDataFieldBuilder().addBuilder(
+            index, com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.sysalto.report.serialization.DoubleStringString_proto data = 4;</code>
+       */
+      public java.util.List<com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder> 
+           getDataBuilderList() {
+        return getDataFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
           com.sysalto.report.serialization.ReportProto.DoubleStringString_proto, com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder, com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder> 
           getDataFieldBuilder() {
         if (dataBuilder_ == null) {
-          dataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          dataBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.sysalto.report.serialization.ReportProto.DoubleStringString_proto, com.sysalto.report.serialization.ReportProto.DoubleStringString_proto.Builder, com.sysalto.report.serialization.ReportProto.DoubleStringString_protoOrBuilder>(
-                  getData(),
+                  data_,
+                  ((bitField0_ & 0x00000008) == 0x00000008),
                   getParentForChildren(),
                   isClean());
           data_ = null;
@@ -24753,124 +25109,124 @@ public final class ReportProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022report_proto.proto\022 com.sysalto.report" +
-      ".serialization\"U\n\020ReportPage_proto\022A\n\005it" +
-      "ems\030\001 \003(\01322.com.sysalto.report.serializa" +
-      "tion.ReportItem_proto\"\263\007\n\020ReportItem_pro" +
-      "to\022\016\n\006deltaY\030\001 \001(\002\022T\n\020reportLinkToPage\030\002" +
-      " \001(\01328.com.sysalto.report.serialization." +
-      "ReportLinkToPage_protoH\000\022R\n\017reportLinkTo" +
-      "Url\030\003 \001(\01327.com.sysalto.report.serializa" +
-      "tion.ReportLinkToUrl_protoH\000\022H\n\nreportTe" +
-      "xt\030\004 \001(\01322.com.sysalto.report.serializat" +
-      "ion.ReportText_protoH\000\022V\n\021reportTextAlig" +
-      "ned\030\005 \001(\01329.com.sysalto.report.serializa" +
-      "tion.ReportTextAligned_protoH\000\022P\n\016report" +
-      "TextWrap\030\006 \001(\01326.com.sysalto.report.seri" +
-      "alization.ReportTextWrap_protoH\000\022P\n\016repo" +
-      "rtPieChart\030\007 \001(\01326.com.sysalto.report.se" +
-      "rialization.ReportPieChart_protoH\000\022P\n\016re" +
-      "portBarChart\030\010 \001(\01326.com.sysalto.report." +
-      "serialization.ReportBarChart_protoH\000\022J\n\013" +
-      "reportImage\030\t \001(\01323.com.sysalto.report.s" +
-      "erialization.ReportImage_protoH\000\022H\n\nrepo" +
-      "rtLine\030\n \001(\01322.com.sysalto.report.serial" +
-      "ization.ReportLine_protoH\000\022R\n\017reportRect" +
-      "angle\030\013 \001(\01327.com.sysalto.report.seriali" +
-      "zation.ReportRectangle_protoH\000\022Z\n\023report" +
-      "VerticalShade\030\014 \001(\0132;.com.sysalto.report" +
-      ".serialization.ReportVerticalShade_proto" +
-      "H\000B\007\n\005field\"\220\001\n\026ReportLinkToPage_proto\022J" +
-      "\n\014boundaryRect\030\001 \001(\01324.com.sysalto.repor" +
-      "t.serialization.BoundaryRect_proto\022\017\n\007pa" +
-      "geNbr\030\002 \001(\003\022\014\n\004left\030\003 \001(\005\022\013\n\003top\030\004 \001(\005\"N" +
-      "\n\022BoundaryRect_proto\022\014\n\004left\030\001 \001(\002\022\016\n\006bo" +
-      "ttom\030\002 \001(\002\022\r\n\005right\030\003 \001(\002\022\013\n\003top\030\004 \001(\002\"p" +
-      "\n\025ReportLinkToUrl_proto\022J\n\014boundaryRect\030" +
-      "\001 \001(\01324.com.sysalto.report.serialization" +
-      ".BoundaryRect_proto\022\013\n\003url\030\002 \001(\t\"d\n\020Repo" +
-      "rtText_proto\022:\n\003txt\030\001 \001(\0132-.com.sysalto." +
-      "report.serialization.RText_proto\022\t\n\001x\030\002 " +
-      "\001(\002\022\t\n\001y\030\003 \001(\002\"W\n\013RText_proto\022\013\n\003txt\030\001 \001" +
-      "(\t\022;\n\004font\030\002 \001(\0132-.com.sysalto.report.se" +
-      "rialization.RFont_proto\"\210\002\n\013RFont_proto\022" +
-      "\014\n\004size\030\001 \001(\005\022\020\n\010fontName\030\002 \001(\t\022I\n\tattri" +
-      "bute\030\003 \001(\01626.com.sysalto.report.serializ" +
-      "ation.RFontAttribute_proto\022=\n\005color\030\004 \001(" +
-      "\0132..com.sysalto.report.serialization.RCo" +
-      "lor_proto\022O\n\014externalFont\030\005 \001(\01329.com.sy" +
-      "salto.report.serialization.OptionRFontFa" +
-      "mily_proto\"@\n\014RColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n" +
-      "\001g\030\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"q\n\027" +
-      "OptionRFontFamily_proto\022\014\n\004null\030\001 \001(\010\022H\n" +
-      "\013rFontFamily\030\002 \001(\01323.com.sysalto.report." +
-      "serialization.RFontFamily_proto\"\206\002\n\021RFon" +
-      "tFamily_proto\022\014\n\004name\030\001 \001(\t\022\017\n\007regular\030\002" +
-      " \001(\t\022B\n\004bold\030\003 \001(\01324.com.sysalto.report." +
-      "serialization.OptionString_proto\022D\n\006ital" +
-      "ic\030\004 \001(\01324.com.sysalto.report.serializat" +
-      "ion.OptionString_proto\022H\n\nboldItalic\030\005 \001" +
-      "(\01324.com.sysalto.report.serialization.Op" +
-      "tionString_proto\"2\n\022OptionString_proto\022\014" +
-      "\n\004null\030\001 \001(\010\022\016\n\006string\030\002 \001(\t\"|\n\027ReportTe" +
-      "xtAligned_proto\022<\n\005rText\030\001 \001(\0132-.com.sys" +
-      "alto.report.serialization.RText_proto\022\t\n" +
-      "\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\r\n\005index\030\004 \001(\005\"\216\002\n\024R" +
-      "eportTextWrap_proto\022;\n\004text\030\001 \003(\0132-.com." +
-      "sysalto.report.serialization.RText_proto" +
-      "\022\n\n\002x0\030\002 \001(\002\022\n\n\002y0\030\003 \001(\002\022\n\n\002x1\030\004 \001(\002\022\n\n\002" +
-      "y1\030\005 \001(\002\022D\n\twrapAlign\030\006 \001(\01621.com.sysalt" +
-      "o.report.serialization.WrapAlign_proto\022C" +
-      "\n\006startY\030\007 \001(\01323.com.sysalto.report.seri" +
-      "alization.OptionFloat_proto\"0\n\021OptionFlo" +
-      "at_proto\022\014\n\004null\030\001 \001(\010\022\r\n\005float\030\002 \001(\002\"4\n" +
-      "\022StringDouble_proto\022\016\n\006value1\030\001 \001(\t\022\016\n\006v" +
-      "alue2\030\002 \001(\001\"J\n\030DoubleStringString_proto\022" +
-      "\016\n\006value1\030\001 \001(\001\022\016\n\006value2\030\002 \001(\t\022\016\n\006value" +
-      "3\030\003 \001(\t\"\335\001\n\024ReportPieChart_proto\022;\n\004font" +
-      "\030\001 \001(\0132-.com.sysalto.report.serializatio" +
-      "n.RFont_proto\022\r\n\005title\030\002 \001(\t\022B\n\004data\030\003 \001" +
-      "(\01324.com.sysalto.report.serialization.St" +
-      "ringDouble_proto\022\n\n\002x0\030\004 \001(\002\022\n\n\002y0\030\005 \001(\002" +
-      "\022\r\n\005width\030\006 \001(\002\022\016\n\006height\030\007 \001(\002\"\306\001\n\024Repo" +
-      "rtBarChart_proto\022\r\n\005title\030\001 \001(\t\022\016\n\006xLabe" +
-      "l\030\002 \001(\t\022\016\n\006yLabel\030\003 \001(\t\022H\n\004data\030\004 \001(\0132:." +
-      "com.sysalto.report.serialization.DoubleS" +
-      "tringString_proto\022\n\n\002x0\030\005 \001(\002\022\n\n\002y0\030\006 \001(" +
-      "\002\022\r\n\005width\030\007 \001(\002\022\016\n\006height\030\010 \001(\002\"g\n\021Repo" +
-      "rtImage_proto\022\014\n\004file\030\001 \001(\t\022\t\n\001x\030\002 \001(\002\022\t" +
-      "\n\001y\030\003 \001(\002\022\r\n\005width\030\004 \001(\002\022\016\n\006height\030\005 \001(\002" +
-      "\022\017\n\007opacity\030\006 \001(\002\"\346\001\n\020ReportLine_proto\022\n" +
-      "\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2" +
-      "\030\004 \001(\002\022\021\n\tlineWidth\030\005 \001(\002\022=\n\005color\030\006 \001(\013" +
-      "2..com.sysalto.report.serialization.RCol" +
-      "or_proto\022P\n\014lineDashType\030\007 \001(\0132:.com.sys" +
-      "alto.report.serialization.OptionLineDash" +
-      "Type_proto\"t\n\030OptionLineDashType_proto\022\014" +
-      "\n\004null\030\001 \001(\010\022J\n\014lineDashType\030\002 \001(\01324.com" +
-      ".sysalto.report.serialization.LineDashTy" +
-      "pe_proto\"1\n\022LineDashType_proto\022\014\n\004unit\030\001" +
-      " \001(\005\022\r\n\005phase\030\002 \001(\005\"\345\001\n\025ReportRectangle_" +
-      "proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(" +
-      "\002\022\n\n\002y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002\022C\n\005color\030\006" +
+      ".serialization\"T\n\020ReportPage_proto\022@\n\004it" +
+      "em\030\001 \003(\01322.com.sysalto.report.serializat" +
+      "ion.ReportItem_proto\"\263\007\n\020ReportItem_prot" +
+      "o\022\016\n\006deltaY\030\001 \001(\002\022T\n\020reportLinkToPage\030\002 " +
+      "\001(\01328.com.sysalto.report.serialization.R" +
+      "eportLinkToPage_protoH\000\022R\n\017reportLinkToU" +
+      "rl\030\003 \001(\01327.com.sysalto.report.serializat" +
+      "ion.ReportLinkToUrl_protoH\000\022H\n\nreportTex" +
+      "t\030\004 \001(\01322.com.sysalto.report.serializati" +
+      "on.ReportText_protoH\000\022V\n\021reportTextAlign" +
+      "ed\030\005 \001(\01329.com.sysalto.report.serializat" +
+      "ion.ReportTextAligned_protoH\000\022P\n\016reportT" +
+      "extWrap\030\006 \001(\01326.com.sysalto.report.seria" +
+      "lization.ReportTextWrap_protoH\000\022P\n\016repor" +
+      "tPieChart\030\007 \001(\01326.com.sysalto.report.ser" +
+      "ialization.ReportPieChart_protoH\000\022P\n\016rep" +
+      "ortBarChart\030\010 \001(\01326.com.sysalto.report.s" +
+      "erialization.ReportBarChart_protoH\000\022J\n\013r" +
+      "eportImage\030\t \001(\01323.com.sysalto.report.se" +
+      "rialization.ReportImage_protoH\000\022H\n\nrepor" +
+      "tLine\030\n \001(\01322.com.sysalto.report.seriali" +
+      "zation.ReportLine_protoH\000\022R\n\017reportRecta" +
+      "ngle\030\013 \001(\01327.com.sysalto.report.serializ" +
+      "ation.ReportRectangle_protoH\000\022Z\n\023reportV" +
+      "erticalShade\030\014 \001(\0132;.com.sysalto.report." +
+      "serialization.ReportVerticalShade_protoH" +
+      "\000B\007\n\005field\"\220\001\n\026ReportLinkToPage_proto\022J\n" +
+      "\014boundaryRect\030\001 \001(\01324.com.sysalto.report" +
+      ".serialization.BoundaryRect_proto\022\017\n\007pag" +
+      "eNbr\030\002 \001(\003\022\014\n\004left\030\003 \001(\005\022\013\n\003top\030\004 \001(\005\"N\n" +
+      "\022BoundaryRect_proto\022\014\n\004left\030\001 \001(\002\022\016\n\006bot" +
+      "tom\030\002 \001(\002\022\r\n\005right\030\003 \001(\002\022\013\n\003top\030\004 \001(\002\"p\n" +
+      "\025ReportLinkToUrl_proto\022J\n\014boundaryRect\030\001" +
       " \001(\01324.com.sysalto.report.serialization." +
-      "OptionRColor_proto\022G\n\tfillColor\030\007 \001(\01324." +
-      "com.sysalto.report.serialization.OptionR" +
-      "Color_proto\"b\n\022OptionRColor_proto\022\014\n\004nul" +
-      "l\030\001 \001(\010\022>\n\006rColor\030\002 \001(\0132..com.sysalto.re" +
-      "port.serialization.RColor_proto\"\334\001\n\031Repo" +
-      "rtVerticalShade_proto\022E\n\trectangle\030\001 \001(\013" +
-      "22.com.sysalto.report.serialization.DRec" +
-      "tangle_proto\022<\n\004from\030\002 \001(\0132..com.sysalto" +
-      ".report.serialization.RColor_proto\022:\n\002to" +
-      "\030\003 \001(\0132..com.sysalto.report.serializatio" +
-      "n.RColor_proto\"R\n\020DRectangle_proto\022\n\n\002x1" +
-      "\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001" +
-      "(\002\022\016\n\006radius\030\005 \001(\002*I\n\024RFontAttribute_pro" +
-      "to\022\n\n\006NORMAL\020\000\022\010\n\004BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013" +
-      "BOLD_ITALIC\020\003*b\n\017WrapAlign_proto\022\013\n\007NO_W" +
-      "RAP\020\000\022\r\n\tWRAP_LEFT\020\001\022\016\n\nWRAP_RIGHT\020\002\022\017\n\013" +
-      "WRAP_CENTER\020\003\022\022\n\016WRAP_JUSTIFIED\020\004B\002H\001b\006p" +
-      "roto3"
+      "BoundaryRect_proto\022\013\n\003url\030\002 \001(\t\"d\n\020Repor" +
+      "tText_proto\022:\n\003txt\030\001 \001(\0132-.com.sysalto.r" +
+      "eport.serialization.RText_proto\022\t\n\001x\030\002 \001" +
+      "(\002\022\t\n\001y\030\003 \001(\002\"W\n\013RText_proto\022\013\n\003txt\030\001 \001(" +
+      "\t\022;\n\004font\030\002 \001(\0132-.com.sysalto.report.ser" +
+      "ialization.RFont_proto\"\210\002\n\013RFont_proto\022\014" +
+      "\n\004size\030\001 \001(\005\022\020\n\010fontName\030\002 \001(\t\022I\n\tattrib" +
+      "ute\030\003 \001(\01626.com.sysalto.report.serializa" +
+      "tion.RFontAttribute_proto\022=\n\005color\030\004 \001(\013" +
+      "2..com.sysalto.report.serialization.RCol" +
+      "or_proto\022O\n\014externalFont\030\005 \001(\01329.com.sys" +
+      "alto.report.serialization.OptionRFontFam" +
+      "ily_proto\"@\n\014RColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001" +
+      "g\030\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"q\n\027O" +
+      "ptionRFontFamily_proto\022\014\n\004null\030\001 \001(\010\022H\n\013" +
+      "rFontFamily\030\002 \001(\01323.com.sysalto.report.s" +
+      "erialization.RFontFamily_proto\"\206\002\n\021RFont" +
+      "Family_proto\022\014\n\004name\030\001 \001(\t\022\017\n\007regular\030\002 " +
+      "\001(\t\022B\n\004bold\030\003 \001(\01324.com.sysalto.report.s" +
+      "erialization.OptionString_proto\022D\n\006itali" +
+      "c\030\004 \001(\01324.com.sysalto.report.serializati" +
+      "on.OptionString_proto\022H\n\nboldItalic\030\005 \001(" +
+      "\01324.com.sysalto.report.serialization.Opt" +
+      "ionString_proto\"2\n\022OptionString_proto\022\014\n" +
+      "\004null\030\001 \001(\010\022\016\n\006string\030\002 \001(\t\"|\n\027ReportTex" +
+      "tAligned_proto\022<\n\005rText\030\001 \001(\0132-.com.sysa" +
+      "lto.report.serialization.RText_proto\022\t\n\001" +
+      "x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\r\n\005index\030\004 \001(\005\"\216\002\n\024Re" +
+      "portTextWrap_proto\022;\n\004text\030\001 \003(\0132-.com.s" +
+      "ysalto.report.serialization.RText_proto\022" +
+      "\n\n\002x0\030\002 \001(\002\022\n\n\002y0\030\003 \001(\002\022\n\n\002x1\030\004 \001(\002\022\n\n\002y" +
+      "1\030\005 \001(\002\022D\n\twrapAlign\030\006 \001(\01621.com.sysalto" +
+      ".report.serialization.WrapAlign_proto\022C\n" +
+      "\006startY\030\007 \001(\01323.com.sysalto.report.seria" +
+      "lization.OptionFloat_proto\"0\n\021OptionFloa" +
+      "t_proto\022\014\n\004null\030\001 \001(\010\022\r\n\005float\030\002 \001(\002\"4\n\022" +
+      "StringDouble_proto\022\016\n\006value1\030\001 \001(\t\022\016\n\006va" +
+      "lue2\030\002 \001(\001\"J\n\030DoubleStringString_proto\022\016" +
+      "\n\006value1\030\001 \001(\001\022\016\n\006value2\030\002 \001(\t\022\016\n\006value3" +
+      "\030\003 \001(\t\"\335\001\n\024ReportPieChart_proto\022;\n\004font\030" +
+      "\001 \001(\0132-.com.sysalto.report.serialization" +
+      ".RFont_proto\022\r\n\005title\030\002 \001(\t\022B\n\004data\030\003 \003(" +
+      "\01324.com.sysalto.report.serialization.Str" +
+      "ingDouble_proto\022\n\n\002x0\030\004 \001(\002\022\n\n\002y0\030\005 \001(\002\022" +
+      "\r\n\005width\030\006 \001(\002\022\016\n\006height\030\007 \001(\002\"\306\001\n\024Repor" +
+      "tBarChart_proto\022\r\n\005title\030\001 \001(\t\022\016\n\006xLabel" +
+      "\030\002 \001(\t\022\016\n\006yLabel\030\003 \001(\t\022H\n\004data\030\004 \003(\0132:.c" +
+      "om.sysalto.report.serialization.DoubleSt" +
+      "ringString_proto\022\n\n\002x0\030\005 \001(\002\022\n\n\002y0\030\006 \001(\002" +
+      "\022\r\n\005width\030\007 \001(\002\022\016\n\006height\030\010 \001(\002\"g\n\021Repor" +
+      "tImage_proto\022\014\n\004file\030\001 \001(\t\022\t\n\001x\030\002 \001(\002\022\t\n" +
+      "\001y\030\003 \001(\002\022\r\n\005width\030\004 \001(\002\022\016\n\006height\030\005 \001(\002\022" +
+      "\017\n\007opacity\030\006 \001(\002\"\346\001\n\020ReportLine_proto\022\n\n" +
+      "\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030" +
+      "\004 \001(\002\022\021\n\tlineWidth\030\005 \001(\002\022=\n\005color\030\006 \001(\0132" +
+      "..com.sysalto.report.serialization.RColo" +
+      "r_proto\022P\n\014lineDashType\030\007 \001(\0132:.com.sysa" +
+      "lto.report.serialization.OptionLineDashT" +
+      "ype_proto\"t\n\030OptionLineDashType_proto\022\014\n" +
+      "\004null\030\001 \001(\010\022J\n\014lineDashType\030\002 \001(\01324.com." +
+      "sysalto.report.serialization.LineDashTyp" +
+      "e_proto\"1\n\022LineDashType_proto\022\014\n\004unit\030\001 " +
+      "\001(\005\022\r\n\005phase\030\002 \001(\005\"\345\001\n\025ReportRectangle_p" +
+      "roto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002" +
+      "\022\n\n\002y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002\022C\n\005color\030\006 " +
+      "\001(\01324.com.sysalto.report.serialization.O" +
+      "ptionRColor_proto\022G\n\tfillColor\030\007 \001(\01324.c" +
+      "om.sysalto.report.serialization.OptionRC" +
+      "olor_proto\"b\n\022OptionRColor_proto\022\014\n\004null" +
+      "\030\001 \001(\010\022>\n\006rColor\030\002 \001(\0132..com.sysalto.rep" +
+      "ort.serialization.RColor_proto\"\334\001\n\031Repor" +
+      "tVerticalShade_proto\022E\n\trectangle\030\001 \001(\0132" +
+      "2.com.sysalto.report.serialization.DRect" +
+      "angle_proto\022<\n\004from\030\002 \001(\0132..com.sysalto." +
+      "report.serialization.RColor_proto\022:\n\002to\030" +
+      "\003 \001(\0132..com.sysalto.report.serialization" +
+      ".RColor_proto\"R\n\020DRectangle_proto\022\n\n\002x1\030" +
+      "\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(" +
+      "\002\022\016\n\006radius\030\005 \001(\002*I\n\024RFontAttribute_prot" +
+      "o\022\n\n\006NORMAL\020\000\022\010\n\004BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013B" +
+      "OLD_ITALIC\020\003*b\n\017WrapAlign_proto\022\013\n\007NO_WR" +
+      "AP\020\000\022\r\n\tWRAP_LEFT\020\001\022\016\n\nWRAP_RIGHT\020\002\022\017\n\013W" +
+      "RAP_CENTER\020\003\022\022\n\016WRAP_JUSTIFIED\020\004B\002H\001b\006pr" +
+      "oto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -24889,7 +25245,7 @@ public final class ReportProto {
     internal_static_com_sysalto_report_serialization_ReportPage_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportPage_proto_descriptor,
-        new java.lang.String[] { "Items", });
+        new java.lang.String[] { "Item", });
     internal_static_com_sysalto_report_serialization_ReportItem_proto_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_sysalto_report_serialization_ReportItem_proto_fieldAccessorTable = new

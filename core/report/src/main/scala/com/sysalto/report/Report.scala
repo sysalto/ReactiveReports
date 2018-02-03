@@ -107,7 +107,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 		saveCrtPage()
 		if (newPage <= pageNbrs) {
-			val pageOpt = db.read[ReportPage](s"page$newPage")
+			val pageOpt = db.read(s"page$newPage")
 			if (pageOpt.isDefined) {
 				crtPage.items.appendAll(pageOpt.get.items)
 			}
@@ -376,7 +376,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		// pageNbrs=1
 		for (i <- 1L to pageNbrs) {
 			if (setHeaderSize(i) > 0 || setFooterSize(i) > 0) {
-				val page = db.read[ReportPage](s"page$i").get
+				val page = db.read(s"page$i").get
 				crtPage.items.clear()
 				crtPage.items.appendAll(page.items)
 				if (setHeaderSize(i) > 0) {
@@ -390,7 +390,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 		pdfUtil.setPagesNumber(pageNbrs)
 		for (i <- 1L to pageNbrs) {
-			val page = db.read[ReportPage](s"page$i")
+			val page = db.read(s"page$i")
 			if (page.isDefined) {
 				val last = i == pageNbrs
 				page.get.items.foreach(item => item.render(this))
@@ -489,7 +489,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def insertPages(number:Long,pageNbr: Long): Unit = {
 		saveCrtPage()
 		for (i <- pageNbrs to pageNbr by -1) {
-			val page = db.read[ReportPage](s"page$i")
+			val page = db.read(s"page$i")
 			if (page.isDefined) {
 				db.write(s"page${i + number}", page.get)
 			}

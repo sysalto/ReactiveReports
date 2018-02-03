@@ -48,26 +48,26 @@ object Test1 {
 		val size = 10
 		val font = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily))
 //		report.font = font
-		val str = "OK"
-//		val txt1 = RText(str,font)
+		val str = "OK11"
+		val txt1 = RText(str,font)
 		//  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
 		//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
 		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
-		val txt2 = RText(str)
+//		val txt2 = RText(str)
 
 		val row = Row(10, report.pgSize.width - 10, List(Column("column1", 100), Column("column2", 100)))
 		val bound1 = row.getColumnBound("column1")
 		val bound2 = row.getColumnBound("column2")
-//		val cell1 = RCell(txt1) inside bound1
+		val cell1 = RCell(txt1) inside bound1
 //		val cell2 = RCell(txt2) inside bound2
-//		val rrow = RRow(List(
-//			cell1,
+		val rrow = RRow(List(
+			cell1))
 //			cell2))
-//		rrow.print(report)
-//		report.nextLine(10)
+		rrow.print(report)
+		report.nextLine(10)
 
-		//    report.nextLine()
-		    report print txt2 at 100
+		    report.nextLine()
+//		    report print txt2 at 100
 		//    report.nextLine()
 		//    report print txt5 at 100
 		//    report.nextLine()

@@ -1,4 +1,4 @@
-## development
+## 1.0.0-RC.4 (2018-02-3)
 * replaced Kryo with Google's protobuf serialization library (like Akka team did)
 
 ## 1.0.0-RC.3 (2018-01-30)

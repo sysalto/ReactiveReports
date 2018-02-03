@@ -24,19 +24,21 @@ package com.sysalto.report.util
 
 import java.io.File
 
+import com.sysalto.report.ReportTypes.ReportPage
+import com.sysalto.report.serialization.ReportPageSerializer
 import org.rocksdb.{Options, RocksDB}
 
 
 class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 
-	def write[T <: AnyRef](key: String, value: T): Unit = db.put(key.getBytes, SerializerUtil.write(value))
+	def write(key: String, page: ReportPage): Unit = db.put(key.getBytes, ReportPageSerializer.write(page))
 
-	def read[T <: AnyRef](key: String): Option[T] = {
+	def read(key: String): Option[ReportPage] = {
 		val bytes = db.get(key.getBytes)
 		if (bytes == null) {
 			None
 		} else {
-			Some(SerializerUtil.read[T](bytes))
+			Some(ReportPageSerializer.read(bytes))
 		}
 	}
 
