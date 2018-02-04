@@ -61,7 +61,7 @@ Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3.
 
 ### Other Open Source products used within Reactive Reports
 
-**Open Source dependencies used by Reactive Reports frameowork**
+**Open Source dependencies used by Reactive Reports framework**
 
 **1 - Akka** - https://akka.io/
 
