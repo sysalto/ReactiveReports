@@ -59,12 +59,21 @@ Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3.
 
 
 
-### Other notes
-We provide a helper trait ReportApp for simpler reports. Ths Scala object extends this helper trait and 
-imports Implicits.
- 
-If you need to keep one group data on the same page, please see `com.sysalto.report.examples.groups.Report2` - `report.
-cut` and `report.paste`.
+### Other Open Source products used within Reactive Reports
+
+**Open Source dependencies used by Reactive Reports frameowork**
+
+**1 - Akka** - https://akka.io/
+
+**2 - RocksDB** - http://rocksdb.org/
+
+**3 - Protobuf3** from Google - https://developers.google.com/protocol-buffers/docs/proto3
+
+**Open Source dependencies only used in examples, not in the framework**
+
+**1 - HyperSQL** - http://hsqldb.org/
+
+**2 - Twitter4s** - https://github.com/DanielaSfregola/twitter4s
 
 
 
