@@ -41,13 +41,6 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 
-
-akka-kryo-serialization - Apache 2.0 Apache 2.0 license
-------------------------
-https://github.com/romix/akka-kryo-serialization
-
-
-
 rocksdbjni - BSD 3-clause "New" or "Revised" License
 -----------
 https://github.com/fusesource/rocksdbjni/blob/master/license.txt

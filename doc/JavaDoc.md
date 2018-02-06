@@ -6,8 +6,6 @@ The java version should be at least 8 (because the framework was developed with 
 
 The core framework has a few dependencies:
 * com.typesafe.config library - it is used for easy setup config.
-* com.github.romix.akka.akka-kryo-serialization - a very efficient and fast serialization library - 
-is is used for marshall/unmarshall data into rocksdb.
 * org.rocksdb.rocksdbjni - a super fast key-value store developed by Facebook - is needed for keeping all of the generating pages in memory before rendering.
  
  
