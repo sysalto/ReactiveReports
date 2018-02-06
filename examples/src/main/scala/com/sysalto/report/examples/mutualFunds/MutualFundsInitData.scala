@@ -29,8 +29,8 @@ import java.sql.{DriverManager, ResultSet}
 
 object MutualFundsInitData {
   Class.forName("org.hsqldb.jdbc.JDBCDriver")
-  private val conn = DriverManager.getConnection("jdbc:hsqldb:mem:mymemdb", "SA", "")
-//  private val conn = DriverManager.getConnection("jdbc:hsqldb:file:/home/marian/transfer/database/test", "SA", "")
+//  private val conn = DriverManager.getConnection("jdbc:hsqldb:mem:mymemdb", "SA", "")
+  private val conn = DriverManager.getConnection("jdbc:hsqldb:file:/home/marian/transfer/database/test", "SA", "")
 
   private def dbUpdate(sql: String): Unit = {
     val st = conn.createStatement()
@@ -52,7 +52,7 @@ object MutualFundsInitData {
       """create table test (
     |   name varchar(255),
     |   address varchar(255))""".stripMargin)
-    for (i<-1 to 1000000) {
+    for (i<-1 to 10000000) {
       try {
         dbUpdate(s"insert into test values('name${i}','address${i}')")
       } catch {

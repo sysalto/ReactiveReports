@@ -4,6 +4,7 @@ import java.sql.{DriverManager, ResultSet}
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
+import com.sysalto.report.examples.mutualFunds.MutualFundsInitData
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
 import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
@@ -49,14 +50,16 @@ object TestReportDb extends GroupUtilTrait {
 	}
 
 	def main(args: Array[String]): Unit = {
-		val t1=System.currentTimeMillis()
+//		MutualFundsInitData.initDb1()
+
+		val t1 = System.currentTimeMillis()
 		try {
 			report()
 		} catch {
-			case e:Throwable=>e.printStackTrace()
+			case e: Throwable => e.printStackTrace()
 		}
-		val t2=System.currentTimeMillis()
-		println((t2-t1)*0.001)
+		val t2 = System.currentTimeMillis()
+		println((t2 - t1) * 0.001)
 	}
 
 }

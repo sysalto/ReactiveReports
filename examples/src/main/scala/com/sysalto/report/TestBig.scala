@@ -11,29 +11,41 @@ import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 object TestBig extends  GroupUtilTrait {
 	implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
-	Class.forName("org.hsqldb.jdbc.JDBCDriver")
-	private val conn = DriverManager.getConnection("jdbc:hsqldb:file:/home/marian/transfer/database/test", "SA", "")
+//	Class.forName("org.hsqldb.jdbc.JDBCDriver")
+//	private val conn = DriverManager.getConnection("jdbc:hsqldb:file:/home/marian/transfer/database/test", "SA", "")
+
+//
+//	def query(sql: String): ResultSet = {
+//		val st = conn.createStatement()
+//		st.executeQuery(sql)
+//	}
 
 
-	def query(sql: String): ResultSet = {
-		val st = conn.createStatement()
-		st.executeQuery(sql)
+	private[this] def getMemory()={
+		System.gc
+		val runtime = Runtime.getRuntime
+		(runtime.totalMemory - runtime.freeMemory)/1024/1024
 	}
-
 
 	def report(): Unit = {
 
 		val report = Report("big.pdf", ReportPageOrientation.PORTRAIT)
-		for (i<-1 to 100000) {
+		println("Start:"+getMemory())
+
+		for (i<-1 to 10000) {
 				report print s"NAME${i}" at 10
 				report print s"ADDRESS${i}" at 100
 
 				if (report.lineLeft < 10) {
+					report.setCrtLine(1)
 					report.nextPage()
 				}
 				report.nextLine()
 			}
+		println("start render")
+		println("before render:"+getMemory())
 		report.render()
+		println("after render:"+getMemory())
 	}
 
 
@@ -81,7 +93,7 @@ object TestBig extends  GroupUtilTrait {
 	def main(args: Array[String]): Unit = {
 		val t1=System.currentTimeMillis()
 		try {
-			report1()
+			report()
 		} catch {
 			case e:Throwable=>e.printStackTrace()
 		}
