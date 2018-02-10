@@ -51,9 +51,9 @@ object PdfBasic {
 
 	def movePoint(x: Float, y: Float): String =s"""${x} ${y} m \n"""
 
-	def lineTo(point: DrawPoint): String = lineTo(point.x, point.y)
+	def lineTo(point: DrawPoint,lineWidth: Float): String = lineTo(point.x, point.y,lineWidth)
 
-	def lineTo(x: Float, y: Float): String =s"""${x} ${y} l \n"""
+	def lineTo(x: Float, y: Float,lineWidth: Float): String =s"""${lineWidth} w \n${x} ${y} l \n"""
 
 	def pattern(patternName: String): String = s"/Pattern cs /${patternName} scn"
 

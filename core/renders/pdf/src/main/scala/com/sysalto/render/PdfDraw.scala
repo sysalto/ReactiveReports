@@ -38,13 +38,13 @@ object PdfDraw {
 
 	def roundRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float): String = {
 		movePoint(DrawPoint(x1 + radius, y1)) +
-			lineTo(DrawPoint(x2 - radius, y1)) +
+			lineTo(DrawPoint(x2 - radius, y1),1) +
 			arc(DrawPoint(x2 - radius, y1 - radius), radius, (Math.PI * 0.5).toFloat, 0f) +
-			lineTo(DrawPoint(x2, y2 + radius)) +
+			lineTo(DrawPoint(x2, y2 + radius),1) +
 			arc(DrawPoint(x2 - radius, y2 + radius), radius, 2 * Math.PI.toFloat, (3.0 * Math.PI * 0.5).toFloat) +
-			lineTo(DrawPoint(x1 + radius, y2)) +
+			lineTo(DrawPoint(x1 + radius, y2),1) +
 			arc(DrawPoint(x1 + radius, y2 + radius), radius, (3.0 * Math.PI * 0.5).toFloat, Math.PI.toFloat) +
-			lineTo(DrawPoint(x1, y1 - radius)) +
+			lineTo(DrawPoint(x1, y1 - radius),1) +
 			arc(DrawPoint(x1 + radius, y1 - radius), radius, Math.PI.toFloat, (Math.PI * 0.5).toFloat) +
 			closePath
 	}
@@ -93,7 +93,7 @@ object PdfDraw {
 
 	case class DrawLine(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]) extends PdfGraphicChuck {
 		override def content: String = {
-			movePoint(x1, y1) + lineTo(x2, y2) +border(color)+fillStroke(false,true)
+			movePoint(x1, y1) + lineTo(x2, y2,lineWidth) +border(color)+fillStroke(false,true)
 		}
 	}
 

@@ -54,7 +54,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.nextLine()
 		report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 45, 100, 40)
 
-		report print (RCell("Investment statement" size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+		report print (RCell("Investment statement" size 15 bold()) centerAlign() inside RMargin(0, report.pgSize.width - 10))
 		report.nextLine()
 
 		val str = sd.format(date1) + " to " + sd.format(date2)
@@ -99,7 +99,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change, c_graphic))
 		val y2 = rrow.calculate(report)
 		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
-		rrow.print(report)
+		report.print(rrow)
 		report.setYPosition(y2)
 		report.nextLine()
 
@@ -134,11 +134,11 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val c_change = RCell(v_change.toString) rightAlign() inside change
 				val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change))
 				val y2 = rrow.calculate(report)
-				rrow.print(report)
+				report.print(rrow)
 				if (GroupUtil.isLastRecord(rec)) {
-					report line() from(10, report.getY + 2) to change.right width 0.5f draw()
+					report line() from(10, report.getY + 2) to change.right width 1f draw()
 				} else {
-					report line() from(10, report.getY + 2) to change.right color(200, 200, 200) draw() //lineType LineDashType(2, 1) draw()
+					report line() from(10, report.getY + 2) to change.right width 0.5f color(200, 200, 200) draw() //lineType LineDashType(2, 1) draw()
 				}
 				firstChar += 1
 				report.nextLine()
@@ -150,7 +150,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 		val trow = RRow(List(RCell("Total" bold()) inside fundName, RCell(total1.toString bold()) rightAlign() inside value1,
 			RCell(total2.toString bold()) rightAlign() inside value2, RCell(total3.toString bold()) rightAlign() inside change))
-		trow.print(report)
+		report.print(trow)
 		val chartHeight = report.getY - firstY
 		report.drawPieChart("", chartData.toList, graphic.left + 5, firstY, graphic.right - graphic.left - 10, chartHeight)
 
@@ -171,7 +171,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val rrow = RRow(List(accountHdr, value1Hdr, value2Hdr, value3Hdr))
 		val y2 = rrow.calculate(report)
 		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
-		rrow.print(report)
+		report.print(rrow)
 		report.setYPosition(y2)
 		report.nextLine()
 		val rs = MutualFundsInitData.query("select * from tran_account")
@@ -194,9 +194,9 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 				val rrow = RRow(List(c_account, c_value1, c_value2, c_value3))
 				val y2 = rrow.calculate(report)
-				rrow.print(report)
+				report.print(rrow)
 				val lColor = if (GroupUtil.isLastRecord(rec)) RColor(0, 0, 0) else RColor(200, 200, 200)
-				report line() from(10, report.getY + 2) to value3.right color (lColor) lineType LineDashType(2, 1) draw()
+				report line() from(10, report.getY + 2) to value3.right width 0.5f color (lColor) lineType LineDashType(2, 1) draw()
 				report.nextLine()
 			} catch {
 				case e: Throwable =>
@@ -211,9 +211,9 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val value3Sum = RCell(total3.toString bold()) rightAlign() inside value3
 		val frow = RRow(List(accountSum, value1Sum, value2Sum, value3Sum))
 		val y3 = frow.calculate(report)
-		frow.print(report)
+		report.print(frow)
 		report.setYPosition(y3)
-		report line() from(10, report.getY + report.lineHeight * 0.5f) to value3.right width 1.5f draw()
+		report line() from(10, report.getY + report.lineHeight * 0.5f) to value3.right  draw()
 		report.nextLine()
 
 	}
@@ -246,7 +246,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val hrow = RRow(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
 		val y1 = hrow.calculate(report)
 		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
-		hrow.print(report)
+		report.print(hrow)
 		report.setYPosition(y1)
 		report.nextLine()
 
@@ -260,7 +260,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 		val rrow = RRow(List(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized))
 		val y2 = rrow.calculate(report)
-		rrow.print(report)
+		report.print(rrow)
 		report.setYPosition(y2)
 	}
 
@@ -319,14 +319,14 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val h_column2 = RCell("Your account number" bold()) leftAlign() inside column2
 				val h_column3 = RCell("Your investment statement" bold()) rightAlign() inside column3
 				val hrow = RRow(List(h_column1, h_column2, h_column3))
-				hrow.print(report)
+				report.print(hrow)
 				report.nextLine()
 				val str = sd.format(date1) + " to " + sd.format(date2)
 				val r_column1 = RCell("Group Registered Retirement Saving Plan") leftAlign() inside column1
 				val r_column2 = RCell("123456789") leftAlign() inside column2
 				val r_column3 = RCell(str) rightAlign() inside column3
 				val rrow = RRow(List(r_column1, r_column2, r_column3))
-				rrow.print(report)
+				report.print(rrow)
 				report.nextLine(2)
 				report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
 				drawbackgroundImage(report)

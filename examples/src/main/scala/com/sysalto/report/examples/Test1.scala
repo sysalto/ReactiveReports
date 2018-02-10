@@ -63,7 +63,7 @@ object Test1 {
 		val rrow = RRow(List(
 			cell1))
 //			cell2))
-		rrow.print(report)
+		report.print(rrow)
 		report.nextLine(10)
 
 		    report.nextLine()
@@ -72,6 +72,9 @@ object Test1 {
 		//    report print txt5 at 100
 		//    report.nextLine()
 		//    report print txt4 at 100
+
+		report line() from(10, report.getY + 2) to 400 width 2f draw()
+		report line() from(10, report.getY + 10) to 400 width 0.5f draw()
 
 		report.render()
 	}

@@ -74,14 +74,14 @@ public class MutualFundsNoAkkaJavaReport {
             RCell h_column2 = new RCell(new RText("Your account number").bold()).leftAlign().inside(column2);
             RCell h_column3 = new RCell(new RText("Your investment statement").bold()).rightAlign().inside(column3);
             RRow hrow = RRow.apply(h_column1, h_column2, h_column3);
-            hrow.print(report);
+            report.print(hrow);
             report.nextLine();
             String str = sd.format(date1) + " to " + sd.format(date2);
             RCell r_column1 = new RCell(new RText("Group Registered Retirement Saving Plan")).leftAlign().inside(column1);
             RCell r_column2 = new RCell(new RText("123456789")).leftAlign().inside(column2);
             RCell r_column3 = new RCell(new RText(str)).rightAlign().inside(column3);
             RRow rrow = RRow.apply(r_column1, r_column2, r_column3);
-            rrow.print(report);
+            report.print(rrow);
             report.nextLine(2);
             report.line().from(10, report.getY()).to(report.pgSize().width() - 10, -1).draw();
         });
@@ -161,7 +161,7 @@ public class MutualFundsNoAkkaJavaReport {
         report.rectangle().from(9, report.getY() - report.lineHeight()).radius(3).to(report.pgSize().width() - 9, y2 + 2).fillColor(headerColor).draw();
 
 
-        rrow.print(report);
+        report.print(rrow);
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from sum_investment");
@@ -199,10 +199,10 @@ public class MutualFundsNoAkkaJavaReport {
             RCell cr_change = new RCell(new RText(v_change.toString())).rightAlign().inside(m_change);
             RRow rrow1 = RRow.apply(cr_fundName, cr_value1, cr_value2, cr_change);
             Float y3 = rrow1.calculate(report);
-            rrow1.print(report);
+            report.print(rrow1);
 
             if (GroupUtil.isLastRecord(rec)) {
-                report.line().from(10, report.getY() + 2).to(m_change.right(), -1).width(0.5f).draw();
+                report.line().from(10, report.getY() + 2).to(m_change.right(), -1).width(0.1f).draw();
             } else {
                 report.line().from(10, report.getY() + 2).to(m_change.right(), -1).color(200, 200, 200).lineType(new LineDashType(2, 1)).width(0.5f).draw();
             }
@@ -215,7 +215,7 @@ public class MutualFundsNoAkkaJavaReport {
                 new RCell(new RText(total1.toString()).bold()).rightAlign().inside(m_value1),
                 new RCell(new RText(total2.toString()).bold()).rightAlign().inside(m_value2),
                 new RCell(new RText(total3.toString()).bold()).rightAlign().inside(m_change));
-        trow.print(report);
+        report.print(trow);
         float chartHeight = report.getY() - firstY.get() - 10;
         report.drawPieChart1("", chartData.get(), m_graphic.left() + 5, firstY.get() - report.lineHeight() + 5, m_graphic.right() -
                 m_graphic.left() - 10, chartHeight);
@@ -246,7 +246,7 @@ public class MutualFundsNoAkkaJavaReport {
         RRow rrow = RRow.apply(accountHdr, value1Hdr, value2Hdr, value3Hdr);
         float y2 = rrow.calculate(report);
         report.rectangle().from(9, report.getY() - report.lineHeight()).radius(3).to(report.pgSize().width() - 9, y2 + 2).fillColor(headerColor).draw();
-        rrow.print(report);
+        report.print(rrow);
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from tran_account");
@@ -273,7 +273,7 @@ public class MutualFundsNoAkkaJavaReport {
             total3.set(total3.get() + r_value3.doubleValue());
             RRow rrow1 = RRow.apply(c_account, c_value1, c_value2, c_value3);
             Float y21 = rrow1.calculate(report);
-            rrow1.print(report);
+            report.print(rrow1);
             RColor rcolor = null;
             if (GroupUtil.isLastRecord(rec)) {
                 rcolor = new RColor(0, 0, 0, 1f);
@@ -291,7 +291,7 @@ public class MutualFundsNoAkkaJavaReport {
         RCell value3Sum = new RCell(new RText("" + total3.get()).bold()).rightAlign().inside(value3);
         RRow frow = RRow.apply(accountSum, value1Sum, value2Sum, value3Sum);
         Float y3 = frow.calculate(report);
-        frow.print(report);
+        report.print(frow);
         report.setYPosition(y3);
         report.nextLine();
     }
@@ -329,7 +329,7 @@ public class MutualFundsNoAkkaJavaReport {
         RRow hrow = RRow.apply(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized);
         Float y1 = hrow.calculate(report);
         report.rectangle().from(9, report.getY()).to(report.pgSize().width() - 9, y1 + 2).fillColor(headerColor).draw();
-        hrow.print(report);
+        report.print(hrow);
         report.setYPosition(y1);
         report.nextLine();
 
@@ -349,7 +349,7 @@ public class MutualFundsNoAkkaJavaReport {
                 rightAlign().inside(annualized);
         RRow rrow = RRow.apply(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized);
         Float y2 = rrow.calculate(report);
-        rrow.print(report);
+        report.print(rrow);
         report.setYPosition(y2);
         report.nextLine();
     }

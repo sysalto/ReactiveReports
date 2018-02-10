@@ -28,8 +28,8 @@ object TestBig extends GroupUtilTrait {
 	}
 
 	def drawImg(report: Report,number:Int): Unit = {
-		val red = RColor(255, 0, 0)
-		val green = RColor(7, 138, 89)
+		val red = RColor(255, 0, 0,0.5f)
+		val green = RColor(7, 138, 89,0.5f)
 		val fontColor = RColor(200, 200, 255)
 		val delimiter=200+number
 		report rectangle() from(200, report.getY - report.lineHeight*0.6f)  to(delimiter, report.getY + report.lineHeight*0.3f) fillColor red draw()
@@ -43,7 +43,11 @@ object TestBig extends GroupUtilTrait {
 		println("Start:" + getMemory())
 		report.nextLine()
 
-		for (i <- 1 to 10) {
+		val title = RCell("Report" bold())  centerAlign() inside RMargin(10,report.pgSize.width - 10)
+		report.print(title)
+		report.nextLine(3)
+
+		for (i <- 1 to 200) {
 			report print s"NAME${i}" at 10
 			report print s"ADDRESS${i}" at 100
 			drawImg(report,(Math.random()*100).toInt)

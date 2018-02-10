@@ -100,7 +100,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change, c_graphic))
     val y2 = rrow.calculate(report)
     report rectangle() from(9, report.getY-report.lineHeight) radius (3) to(report.pgSize.width - 9, y2+2) fillColor headerColor draw()
-    rrow.print(report)
+    report.print(rrow)
     report.setYPosition(y2)
     report.nextLine()
 
@@ -136,7 +136,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
           val c_change = RCell(v_change.toString) rightAlign() inside change
           val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change))
           val y2 = rrow.calculate(report)
-          rrow.print(report)
+          report.print(rrow)
           if (GroupUtil.isLastRecord(rec)) {
             report line() from(10, report.getY+2) to change.right width 0.5f draw()
           } else {
@@ -155,7 +155,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
 
     val trow = RRow(List(RCell("Total" bold()) inside fundName, RCell(total1.toString bold()) rightAlign() inside value1,
       RCell(total2.toString bold()) rightAlign() inside value2, RCell(total3.toString bold()) rightAlign() inside change))
-    trow.print(report)
+    report.print(trow)
     val chartHeight = report.getY - firstY
     report.drawPieChart("", chartData.toList, graphic.left + 5, firstY , graphic.right - graphic.left - 10, chartHeight)
 
@@ -176,7 +176,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     val rrow = RRow(List(accountHdr, value1Hdr, value2Hdr, value3Hdr))
     val y2 = rrow.calculate(report)
     report rectangle() from(9, report.getY-report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
-    rrow.print(report)
+    report.print(rrow)
     report.setYPosition(y2)
     report.nextLine()
     val rs = MutualFundsInitData.query("select * from tran_account")
@@ -200,7 +200,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
 
           val rrow = RRow(List(c_account, c_value1, c_value2, c_value3))
           val y2 = rrow.calculate(report)
-          rrow.print(report)
+          report.print(rrow)
           val lColor=if (GroupUtil.isLastRecord(rec)) RColor(0, 0, 0) else RColor(200,200,200)
           report line() from(10, report.getY+2) to value3.right color(lColor) lineType LineDashType(2, 1) draw()
           report.nextLine()
@@ -219,7 +219,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     val value3Sum = RCell(total3.toString bold()) rightAlign() inside value3
     val frow = RRow(List(accountSum, value1Sum, value2Sum, value3Sum))
     val y3 = frow.calculate(report)
-    frow.print(report)
+    report.print(frow)
     report.setYPosition(y3)
     //    report line() from(10, report.getY + report.lineHeight * 0.5f) to value3.right width 1.5f draw()
     report.nextLine()
@@ -254,7 +254,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
     val hrow = RRow(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
     val y1 = hrow.calculate(report)
     report rectangle() from(9, report.getY-report.lineHeight) radius (3) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
-    hrow.print(report)
+    report.print(hrow)
     report.setYPosition(y1)
     report.nextLine()
 
@@ -268,7 +268,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
 
     val rrow = RRow(List(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized))
     val y2 = rrow.calculate(report)
-    rrow.print(report)
+    report.print(rrow)
     report.setYPosition(y2)
   }
 
@@ -328,7 +328,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
         val h_column2 = RCell("Your account number" bold()) leftAlign() inside column2
         val h_column3 = RCell("Your investment statement" bold()) rightAlign() inside column3
         val hrow = RRow(List(h_column1, h_column2, h_column3))
-        hrow.print(report)
+        report.print(hrow)
 
         report.nextLine()
 
@@ -337,7 +337,7 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
         val r_column2 = RCell("123456789") leftAlign() inside column2
         val r_column3 = RCell(str) rightAlign() inside column3
         val rrow = RRow(List(r_column1, r_column2, r_column3))
-        rrow.print(report)
+        report.print(rrow)
         report.nextLine(2)
         report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
         drawbackgroundImage(report)

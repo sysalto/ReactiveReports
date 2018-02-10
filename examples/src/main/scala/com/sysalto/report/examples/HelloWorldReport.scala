@@ -99,7 +99,7 @@ object HelloWorldReport extends ReportAppAkka with AkkaGroupUtil {
           if (reportGroupUtil.isHeader("city", rec1)) {
             report.text("City:" + currentRecord.city, 10)
             report.nextLine()
-            hrow.print(report)
+            report.print(hrow)
             report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
             report.nextLine()
             //            report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
@@ -118,14 +118,14 @@ object HelloWorldReport extends ReportAppAkka with AkkaGroupUtil {
             report.nextPage()
             if (!isHeader) {
               report.nextLine()
-              hrow.print(report)
+              report.print(hrow)
               report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
               report.nextLine()
               report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
               report.nextLine()
             }
           }
-          row.print(report)
+          report.print(row)
           report.nextPage()
           report.nextLine()
 

@@ -41,13 +41,6 @@ case class RRow(cells: List[RCell]) {
     wrapList.reduceLeft((f1, f2) => if (f1 > f2) f1 else f2)
   }
 
-  def print(report: Report): Unit = {
-    val y = report.getY
-    cells.foreach(cell => {
-      report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue,  cell.align)
-    })
-    report.setYPosition(y)
-  }
 
 }
 

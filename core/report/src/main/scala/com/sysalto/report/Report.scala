@@ -47,7 +47,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	private[this] val crtPage = ReportPage(new ListBuffer[ReportItem]())
 	private[this] val db = RockDbUtil()
 	var font = RFont(10, "Helvetica")
-	private[this] var simulation=false
+	private[this] var simulation = false
 	private[report] val pdfUtil = pdfFactory.getPdf
 
 
@@ -55,8 +55,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	private[this] var lastPosition: ReportPosition = ReportPosition(0, 0)
 
 
-	def setSimulation(value:Boolean): Unit = {
-		simulation=value
+	def setSimulation(value: Boolean): Unit = {
+		simulation = value
 		crtYPosition = pdfUtil.pgSize.height - setHeaderSize(crtPageNbr)
 	}
 
@@ -91,7 +91,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		*/
 	var setFooterSize: java.lang.Long => java.lang.Float = { _ => 0 }
 
-	def getCrtPageNbr()=crtPageNbr
+	def getCrtPageNbr() = crtPageNbr
 
 	private[this] def saveCrtPage() {
 		db.write(s"page$crtPageNbr", crtPage)
@@ -188,7 +188,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtYPosition = pdfUtil.pgSize.height - y
 	}
 
-	private[report] def getYPosition=crtYPosition
+	private[report] def getYPosition = crtYPosition
 
 	/*
 	set vertical position on current page to the line position
@@ -207,7 +207,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def nextPage(): Unit = {
 		if (simulation) {
-			crtYPosition = pdfUtil.pgSize.height - setHeaderSize(pageNbrs+1)
+			crtYPosition = pdfUtil.pgSize.height - setHeaderSize(pageNbrs + 1)
 			return
 		}
 		val newPage = if (crtPageNbr < pageNbrs) crtPageNbr + 1 else {
@@ -427,6 +427,15 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		result
 	}
 
+
+	def print(rrow: RRow): Unit = {
+		val y = getY
+		rrow.cells.foreach(cell => {
+			wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, cell.align)
+		})
+		setYPosition(y)
+	}
+
 	/*
 	function for use with report DSL to print a line.
 	 */
@@ -486,7 +495,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	Insert a new number pages before pageNbr
 	*/
-	def insertPages(number:Long,pageNbr: Long): Unit = {
+	def insertPages(number: Long, pageNbr: Long): Unit = {
 		saveCrtPage()
 		for (i <- pageNbrs to pageNbr by -1) {
 			val page = db.read(s"page$i")
@@ -496,8 +505,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 		pageNbrs += number
 		crtPageNbr = pageNbr
-		for (i<-pageNbr to pageNbr+number-1) {
-			val emptyPage=ReportPage(ListBuffer[ReportItem]())
+		for (i <- pageNbr to pageNbr + number - 1) {
+			val emptyPage = ReportPage(ListBuffer[ReportItem]())
 			db.write(s"page${i}", emptyPage)
 		}
 		crtYPosition = pdfUtil.pgSize.height - setHeaderSize(pageNbr)
@@ -521,7 +530,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 	}
 
-	def headerFct(fct: RConsumer2[java.lang.Long,java.lang.Long]) {
+	def headerFct(fct: RConsumer2[java.lang.Long, java.lang.Long]) {
 		headerFct = {
 			case (pgNbr, pgMax) =>
 				fct.apply(pgNbr, pgMax)
@@ -557,13 +566,13 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		pdfUtil.setExternalFont(externalFont)
 	}
 
-	def setLinkToPage(boundaryRect:BoundaryRect, pageNbr:Long, left:Int=0, top:Int=0): Unit = {
-		val reportLink = ReportLinkToPage(boundaryRect,pageNbr,left,top)
+	def setLinkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int = 0, top: Int = 0): Unit = {
+		val reportLink = ReportLinkToPage(boundaryRect, pageNbr, left, top)
 		crtPage.items += reportLink
 	}
 
-	def setLinkToUrl(boundaryRect:BoundaryRect, url:String): Unit = {
-		val reportLink = ReportLinkToUrl(boundaryRect,url)
+	def setLinkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
+		val reportLink = ReportLinkToUrl(boundaryRect, url)
 		crtPage.items += reportLink
 	}
 

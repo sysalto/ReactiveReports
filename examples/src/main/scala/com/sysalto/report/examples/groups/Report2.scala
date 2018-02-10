@@ -108,7 +108,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
             }
             report.text("Agent:" + accountRec("agent"), 10)
             report.nextLine()
-            hrow.print(report)
+            report.print(hrow)
             report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
             report.nextLine()
             report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
@@ -129,7 +129,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
             report.nextPage()
             if (!isHeader && agentFirstItem.isEmpty) {
               report.nextLine()
-              hrow.print(report)
+              report.print(hrow)
               report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
               report.nextLine()
               report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
@@ -137,7 +137,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
             }
             report.paste(agentFirstItem.get, toPast)
           }
-          row.print(report)
+          report.print(row)
 
           report.nextLine()
 

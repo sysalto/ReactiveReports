@@ -82,9 +82,9 @@ object PdfChart {
 			val p1 = getPoint(center, radius, startAngle)
 			val p2 = getPoint(center, radius, endAngle)
 			movePoint(center) +
-				lineTo(p1) +
+				lineTo(p1,1) +
 				arc(center, radius, startAngle, endAngle) +
-				lineTo(p2) +
+				lineTo(p2,1) +
 				closePath+
 				fill(color) +
 				fillStroke(true, false)

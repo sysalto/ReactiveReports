@@ -88,7 +88,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	}
 
 	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
-		graphicList += DrawLine(x1.toLong, y1.toLong, x2.toLong, y2.toLong, lineWidth.toLong, color, lineDashType)
+		graphicList += DrawLine(x1, y1, x2, y2, lineWidth, color, lineDashType)
 	}
 
 	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
@@ -118,7 +118,11 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 			lines.foreach(line => {
 				val l1: List[Float] = line.map(item => item.textLength)
 				val length = l1.sum
-				val newX = if (wrapAlign == WrapAlign.WRAP_RIGHT) x1 - length else x0
+				val newX = wrapAlign match {
+					case WrapAlign.WRAP_CENTER => (x1 - x0-length)*0.5f
+					case WrapAlign.WRAP_RIGHT => x1 - length
+					case _ =>x0
+				}
 				line.foreach(textPos =>
 					text(newX + textPos.x, crtY, textPos.rtext)
 				)
