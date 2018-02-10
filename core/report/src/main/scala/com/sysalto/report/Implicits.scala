@@ -29,7 +29,7 @@ import com.sysalto.report.util.ReportColumnUtil
 object Implicits extends ScalaReportUtil {
 	val RText: com.sysalto.report.reportTypes.RText.type = com.sysalto.report.reportTypes.RText
 	val LineDashType: com.sysalto.report.reportTypes.LineDashType.type = com.sysalto.report.reportTypes.LineDashType
-	val RMargin: com.sysalto.report.reportTypes.RMargin.type = com.sysalto.report.reportTypes.RMargin
+	val RMargin: com.sysalto.report.reportTypes.ReportMargin.type = com.sysalto.report.reportTypes.ReportMargin
 	val ReportRow: com.sysalto.report.reportTypes.ReportRow.type = com.sysalto.report.reportTypes.ReportRow
 	val Column: com.sysalto.report.reportTypes.Column.type = com.sysalto.report.reportTypes.Column
 	val Flex: ReportColumnUtil.Flex.type = ReportColumnUtil.Flex

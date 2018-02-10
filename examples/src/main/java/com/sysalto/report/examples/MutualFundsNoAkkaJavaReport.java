@@ -66,9 +66,9 @@ public class MutualFundsNoAkkaJavaReport {
             report.setYPosition(10);
             ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("column1").flex(1),
                     Column.apply("column2").flex(1), Column.apply("column3").flex(1));
-            RMargin column1 = reportRow.getColumnBound("column1");
-            RMargin column2 = reportRow.getColumnBound("column2");
-            RMargin column3 = reportRow.getColumnBound("column3");
+            ReportMargin column1 = reportRow.getColumnBound("column1");
+            ReportMargin column2 = reportRow.getColumnBound("column2");
+            ReportMargin column3 = reportRow.getColumnBound("column3");
             ReportCell h_column1 = new ReportCell(new RText("Type of Account").bold()).leftAlign().inside(column1);
             ReportCell h_column2 = new ReportCell(new RText("Your account number").bold()).leftAlign().inside(column2);
             ReportCell h_column3 = new ReportCell(new RText("Your investment statement").bold()).rightAlign().inside(column3);
@@ -110,7 +110,7 @@ public class MutualFundsNoAkkaJavaReport {
         rs.close();
         report.nextLine();
         report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5f, 45f, 100f, 40f);
-        RMargin margin = new RMargin(0, report.pgSize().width() - 10);
+        ReportMargin margin = new ReportMargin(0, report.pgSize().width() - 10);
         report.print(new ReportCell(new RText("Investment statement").size(15).bold()).rightAlign().inside(margin));
         report.nextLine();
         String str = sd.format(date1) + " to " + sd.format(date2);
@@ -142,11 +142,11 @@ public class MutualFundsNoAkkaJavaReport {
         ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("fund_name", 150f),
                 Column.apply("value1").flex(1), Column.apply("value2").flex(1), Column.apply("change").flex(1),
                 Column.apply("graphic").flex(2));
-        RMargin m_fundName = reportRow.getColumnBound("fund_name");
-        RMargin m_value1 = reportRow.getColumnBound("value1");
-        RMargin m_value2 = reportRow.getColumnBound("value2");
-        RMargin m_change = reportRow.getColumnBound("change");
-        RMargin m_graphic = reportRow.getColumnBound("graphic");
+        ReportMargin m_fundName = reportRow.getColumnBound("fund_name");
+        ReportMargin m_value1 = reportRow.getColumnBound("value1");
+        ReportMargin m_value2 = reportRow.getColumnBound("value2");
+        ReportMargin m_change = reportRow.getColumnBound("change");
+        ReportMargin m_graphic = reportRow.getColumnBound("graphic");
         ReportCell c_fundName = new ReportCell(new RText("Summary of investments").bold().color(headerFontColor)).leftAlign().
                 inside(m_fundName);
         ReportCell c_value1 = new ReportCell(new RText("Value on\n" + sd.format(date1) + "($$)").bold().color(headerFontColor)).rightAlign().
@@ -230,10 +230,10 @@ public class MutualFundsNoAkkaJavaReport {
         report.nextLine(2);
         ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("account", 250f),
                 Column.apply("value1").flex(1), Column.apply("value2").flex(1), Column.apply("value3").flex(1));
-        RMargin account = reportRow.getColumnBound("account");
-        RMargin value1 = reportRow.getColumnBound("value1");
-        RMargin value2 = reportRow.getColumnBound("value2");
-        RMargin value3 = reportRow.getColumnBound("value3");
+        ReportMargin account = reportRow.getColumnBound("account");
+        ReportMargin value1 = reportRow.getColumnBound("value1");
+        ReportMargin value2 = reportRow.getColumnBound("value2");
+        ReportMargin value3 = reportRow.getColumnBound("value3");
         ReportCell accountHdr = new ReportCell(new RText("Change in the value of account").bold().
                 color(headerFontColor)).leftAlign().inside(account);
         ReportCell value1Hdr = new ReportCell(new RText("This period($)").bold().
@@ -304,13 +304,13 @@ public class MutualFundsNoAkkaJavaReport {
                 Column.apply("value3m").flex(1), Column.apply("value1y").flex(1),
                 Column.apply("value3y").flex(1), Column.apply("value5y").flex(1),
                 Column.apply("value10y").flex(1), Column.apply("annualized").flex(1));
-        RMargin accountPerf = reportRow.getColumnBound("account_perf");
-        RMargin value3m = reportRow.getColumnBound("value3m");
-        RMargin value1y = reportRow.getColumnBound("value1y");
-        RMargin value3y = reportRow.getColumnBound("value3y");
-        RMargin value5y = reportRow.getColumnBound("value5y");
-        RMargin value10y = reportRow.getColumnBound("value10y");
-        RMargin annualized = reportRow.getColumnBound("annualized");
+        ReportMargin accountPerf = reportRow.getColumnBound("account_perf");
+        ReportMargin value3m = reportRow.getColumnBound("value3m");
+        ReportMargin value1y = reportRow.getColumnBound("value1y");
+        ReportMargin value3y = reportRow.getColumnBound("value3y");
+        ReportMargin value5y = reportRow.getColumnBound("value5y");
+        ReportMargin value10y = reportRow.getColumnBound("value10y");
+        ReportMargin annualized = reportRow.getColumnBound("annualized");
         ReportCell h_accountPerf = new ReportCell(new RText("Account performance").bold().color(headerFontColor)).leftAlign().
                 inside(accountPerf);
         ReportCell h_value3m = new ReportCell(new RText("3 Months (%)").bold().color(headerFontColor)).rightAlign().
@@ -372,7 +372,7 @@ public class MutualFundsNoAkkaJavaReport {
                 "Suscipit ponderum verterem et mel, vim semper facilisi ex, mel aliquid constituam ut. Summo denique complectitur ius at, in quo nobis deterruisset. Ut viris convenire eam. Quo id suscipit quaerendum, magna veniam et vix, duis liber disputando et has. Aliquando democritum id usu, falli diceret invidunt in per, in falli essent quo."
         );
         for (String txt : txtList) {
-            ReportCell cell = (new ReportCell(new RText(txt))).inside(new RMargin(10, report.pgSize().width() - 10));
+            ReportCell cell = (new ReportCell(new RText(txt))).inside(new ReportMargin(10, report.pgSize().width() - 10));
             ReportTypes.WrapBox box = cell.calculate(report);
             report.print(cell);
             report.setYPosition(box.currentY() + report.lineHeight());

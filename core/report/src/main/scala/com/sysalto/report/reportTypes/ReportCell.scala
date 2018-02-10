@@ -32,10 +32,10 @@ import com.sysalto.report.{Report, WrapAlign}
 /*
 class for wrapping text
  */
-case class ReportCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var align: WrapAlign.Value = WrapAlign.NO_WRAP) {
+case class ReportCell(txt: List[RText], var margin: ReportMargin = ReportMargin(0, 0), var align: WrapAlign.Value = WrapAlign.NO_WRAP) {
 
 	def this(txt: List[RText]) = {
-		this(txt, RMargin(0, 0), WrapAlign.NO_WRAP)
+		this(txt, ReportMargin(0, 0), WrapAlign.NO_WRAP)
 	}
 
 	def this(rtext: RText) = {
@@ -43,7 +43,7 @@ case class ReportCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var
 	}
 
 	def this(rtext: RText, left: Float, right: Float) = {
-		this(List(rtext), RMargin(left, right), WrapAlign.NO_WRAP)
+		this(List(rtext), ReportMargin(left, right), WrapAlign.NO_WRAP)
 	}
 
 	/*
@@ -73,13 +73,13 @@ case class ReportCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var
 	/*
 	define boundaries
 	 */
-	def inside(margin: RMargin): ReportCell = {
+	def inside(margin: ReportMargin): ReportCell = {
 		this.margin = margin
 		this
 	}
 
 	def inside(left: Float, right: Float): ReportCell = {
-		this.margin = RMargin(left, right)
+		this.margin = ReportMargin(left, right)
 		this
 	}
 
@@ -88,7 +88,7 @@ case class ReportCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var
 	define only left boundary
 	 */
 	def at(x: Float): ReportCell = {
-		margin = RMargin(x, Float.MaxValue)
+		margin = ReportMargin(x, Float.MaxValue)
 		this
 	}
 

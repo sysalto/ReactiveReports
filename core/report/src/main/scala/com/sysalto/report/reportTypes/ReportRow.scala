@@ -32,7 +32,7 @@ import scala.collection.JavaConverters._
   * Created by marian on 3/4/17.
   */
 case class ReportRow(left: Float, right: Float, columns: List[Column]) {
-  private def calculate(): Map[String, RMargin] = {
+  private def calculate(): Map[String, ReportMargin] = {
     val fixColumnList = columns.filter(column => column.columnWidthType == ColumnWidthType.Fixed)
     val fixWidth = fixColumnList.foldLeft(0.0f)((sum, b) => sum + b.fixedWidth.get)
     val flexColumnCount = columns.count(column => column.columnWidthType == ColumnWidthType.Flex)
@@ -89,7 +89,7 @@ case class ReportRow(left: Float, right: Float, columns: List[Column]) {
         val leftColumnMargin = leftMargin
         val width = mapColumnWidth(column.id)
         leftMargin += width
-        column.id -> RMargin(leftColumnMargin, leftColumnMargin + width)
+        column.id -> ReportMargin(leftColumnMargin, leftColumnMargin + width)
       }
     ).toMap
   }
@@ -98,7 +98,7 @@ case class ReportRow(left: Float, right: Float, columns: List[Column]) {
   private[this] lazy val columnNameList = columnsBounds.keySet.toList.sortBy(name => name)
 
 
-  def getColumnBound(columnName: String): RMargin = {
+  def getColumnBound(columnName: String): ReportMargin = {
     if (!columnNameList.contains(columnName)) {
       throw new Exception("Column list:" + columnNameList + " doesn't contains " + columnName)
     }
