@@ -60,7 +60,7 @@ object Test1 {
 		val bound2 = row.getColumnBound("column2")
 		val cell1 = RCell(txt1) inside bound1
 //		val cell2 = RCell(txt2) inside bound2
-		val rrow = RRow(List(
+		val rrow = ReportCellList(List(
 			cell1))
 //			cell2))
 		report.print(rrow)

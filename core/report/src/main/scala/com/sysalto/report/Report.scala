@@ -428,7 +428,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
-	def print(rrow: RRow): Unit = {
+	def print(rrow: ReportCellList): Unit = {
 		val y = getY
 		rrow.cells.foreach(cell => {
 			wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, cell.align)

@@ -14,7 +14,6 @@ import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
 import com.sysalto.report.util.GroupUtilDefs;
 import com.sysalto.report.util.PdfFactory;
-import com.sysalto.report.util.GroupUtilDefs;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import scala.collection.immutable.Map;
@@ -87,14 +86,14 @@ class MutualFundsAkkaJavaReport {
             RCell h_column1 = new RCell(new RText("Type of Account").bold()).leftAlign().inside(column1);
             RCell h_column2 = new RCell(new RText("Your account number").bold()).leftAlign().inside(column2);
             RCell h_column3 = new RCell(new RText("Your investment statement").bold()).rightAlign().inside(column3);
-            RRow hrow = RRow.apply(h_column1, h_column2, h_column3);
+            ReportCellList hrow = ReportCellList.apply(h_column1, h_column2, h_column3);
             report.print(hrow);
             report.nextLine();
             String str = sd.format(date1) + " to " + sd.format(date2);
             RCell r_column1 = new RCell(new RText("Group Registered Retirement Saving Plan")).leftAlign().inside(column1);
             RCell r_column2 = new RCell(new RText("123456789")).leftAlign().inside(column2);
             RCell r_column3 = new RCell(new RText(str)).rightAlign().inside(column3);
-            RRow rrow = RRow.apply(r_column1, r_column2, r_column3);
+            ReportCellList rrow = ReportCellList.apply(r_column1, r_column2, r_column3);
             report.print(rrow);
             report.nextLine(2);
             report.line().from(10, report.getY()).to(report.pgSize().width() - 10, -1).draw();
@@ -170,7 +169,7 @@ class MutualFundsAkkaJavaReport {
                 inside(m_value2);
         RCell c_change = new RCell(new RText("Change($$)").bold().color(headerFontColor)).rightAlign().inside(m_change);
         RCell c_graphic = new RCell(new RText("Assets mix\n" + sd.format(date2) + "(%)").bold().color(headerFontColor)).rightAlign().inside(m_graphic);
-        RRow rrow = RRow.apply(c_fundName, c_value1, c_value2, c_change, c_graphic);
+        ReportCellList rrow = ReportCellList.apply(c_fundName, c_value1, c_value2, c_change, c_graphic);
         Float y2 = rrow.calculate(report);
         report.rectangle().from(9, report.getY() - report.lineHeight()).radius(3).to(report.pgSize().width() - 9, y2 + 2).fillColor(headerColor).draw();
 
@@ -214,7 +213,7 @@ class MutualFundsAkkaJavaReport {
 
                     chartData.get().add(new scala.Tuple2("" + cc, total2.get()));
                     RCell cr_change = new RCell(new RText(v_change.toString())).rightAlign().inside(m_change);
-                    RRow rrow1 = RRow.apply(cr_fundName, cr_value1, cr_value2, cr_change);
+                    ReportCellList rrow1 = ReportCellList.apply(cr_fundName, cr_value1, cr_value2, cr_change);
                     Float y3 = rrow1.calculate(report);
                     report.print(rrow1);
 
@@ -227,7 +226,7 @@ class MutualFundsAkkaJavaReport {
                     report.nextLine();
                 }), materializer);
         result.toCompletableFuture().get();
-        RRow trow = RRow.apply(new RCell(new RText("Total").bold()).inside(m_fundName),
+        ReportCellList trow = ReportCellList.apply(new RCell(new RText("Total").bold()).inside(m_fundName),
                 new RCell(new RText(total1.toString()).bold()).rightAlign().inside(m_value1),
                 new RCell(new RText(total2.toString()).bold()).rightAlign().inside(m_value2),
                 new RCell(new RText(total3.toString()).bold()).rightAlign().inside(m_change));
@@ -259,7 +258,7 @@ class MutualFundsAkkaJavaReport {
                 color(headerFontColor)).rightAlign().inside(value2);
         RCell value3Hdr = new RCell(new RText("Since\n" + sd.format(date1) + "($)").bold().
                 color(headerFontColor)).rightAlign().inside(value3);
-        RRow rrow = RRow.apply(accountHdr, value1Hdr, value2Hdr, value3Hdr);
+        ReportCellList rrow = ReportCellList.apply(accountHdr, value1Hdr, value2Hdr, value3Hdr);
         float y2 = rrow.calculate(report);
         report.rectangle().from(9, report.getY() - report.lineHeight()).radius(3).to(report.pgSize().width() - 9, y2 + 2).fillColor(headerColor).draw();
         report.print(rrow);
@@ -289,7 +288,7 @@ class MutualFundsAkkaJavaReport {
                     total1.set(total1.get() + r_value1.doubleValue());
                     total2.set(total2.get() + r_value2.doubleValue());
                     total3.set(total3.get() + r_value3.doubleValue());
-                    RRow rrow1 = RRow.apply(c_account, c_value1, c_value2, c_value3);
+                    ReportCellList rrow1 = ReportCellList.apply(c_account, c_value1, c_value2, c_value3);
                     Float y21 = rrow1.calculate(report);
                     report.print(rrow1);
                     RColor rcolor = null;
@@ -307,7 +306,7 @@ class MutualFundsAkkaJavaReport {
         RCell value1Sum = new RCell(new RText("" + total1.get()).bold()).rightAlign().inside(value1);
         RCell value2Sum = new RCell(new RText("" + total2.get()).bold()).rightAlign().inside(value2);
         RCell value3Sum = new RCell(new RText("" + total3.get()).bold()).rightAlign().inside(value3);
-        RRow frow = RRow.apply(accountSum, value1Sum, value2Sum, value3Sum);
+        ReportCellList frow = ReportCellList.apply(accountSum, value1Sum, value2Sum, value3Sum);
         Float y3 = frow.calculate(report);
         report.print(frow);
         report.setYPosition(y3);
@@ -344,7 +343,7 @@ class MutualFundsAkkaJavaReport {
                 inside(value10y);
         RCell h_annualized = new RCell(new RText("Annualized since " + sd.format(date1) + " (%)").bold().
                 color(headerFontColor)).rightAlign().inside(annualized);
-        RRow hrow = RRow.apply(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized);
+        ReportCellList hrow = ReportCellList.apply(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized);
         Float y1 = hrow.calculate(report);
         report.rectangle().from(9, report.getY()).to(report.pgSize().width() - 9, y1 + 2).fillColor(headerColor).draw();
         report.print(hrow);
@@ -365,7 +364,7 @@ class MutualFundsAkkaJavaReport {
                 rightAlign().inside(value10y);
         RCell r_annualized = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "annualized").toString())).
                 rightAlign().inside(annualized);
-        RRow rrow = RRow.apply(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized);
+        ReportCellList rrow = ReportCellList.apply(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized);
         Float y2 = rrow.calculate(report);
         report.print(rrow);
         report.setYPosition(y2);

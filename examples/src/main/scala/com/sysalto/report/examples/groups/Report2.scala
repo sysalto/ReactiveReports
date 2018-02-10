@@ -71,7 +71,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
     val h_accountNbr = RCell("Account Number" bold()) leftAlign() inside accountNbrC
     val h_accountNme = RCell("Account name" bold()) leftAlign() inside accountNmeC
     val h_planType = RCell("Plan Type" bold()) rightAlign() inside planTypeC
-    val hrow = RRow(List(h_accountNbr, h_accountNme, h_planType))
+    val hrow = ReportCellList(List(h_accountNbr, h_accountNme, h_planType))
 
 
     report.nextLine()
@@ -118,7 +118,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
           val accountNbr = RCell(accountRec("id")) leftAlign() inside accountNbrC
           val accountNme = RCell(accountRec("accountName")) leftAlign() inside accountNmeC
           val planType = RCell(accountRec("planType")) rightAlign() inside planTypeC
-          val row = RRow(List(accountNbr, accountNme, planType))
+          val row = ReportCellList(List(accountNbr, accountNme, planType))
           if (report.lineLeft < 5) {
             val toPast = if (agentFirstItem.isDefined) {
               // if agent didn't start from the begining of page , move it from the old page to the new page

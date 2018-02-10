@@ -1,3 +1,23 @@
+## 1.0.0-RC.5 (2018-02-10)
+
+### Changes:
+* replaced RRow.print(report) with report.print(RRow)
+* changed RRow to ReportCellList
+* changed RCell to ReportCell
+* changed Row to ReportRow
+* changed RMargin to ReportMargin
+* changed RText to ReportText
+* changed RColor with ReportColor
+
+
+### Bugs fixed:
+* fixed line width
+* fixed text center allign
+
+
+
+
+
 ## 1.0.0-RC.4 (2018-02-3)
 * replaced Kryo with Google's protobuf serialization library (like Akka team did)
 

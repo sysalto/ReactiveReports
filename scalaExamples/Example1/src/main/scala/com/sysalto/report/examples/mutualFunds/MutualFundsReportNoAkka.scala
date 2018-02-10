@@ -99,7 +99,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 		val c_value2 = RCell(s"Value on\n${sd.format(date2)}($$)" bold() color headerFontColor) rightAlign() inside value2
 		val c_change = RCell(s"Change($$)" bold() color headerFontColor) rightAlign() inside change
 		val c_graphic = RCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAlign() inside graphic
-		val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change, c_graphic))
+		val rrow = ReportCellList(List(c_fundName, c_value1, c_value2, c_change, c_graphic))
 		val y2 = rrow.calculate(report)
 		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
 		rrow.print(report)
@@ -135,7 +135,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 				total3 += v_change
 				chartData += (firstChar.asInstanceOf[Char].toString -> total2.toDouble)
 				val c_change = RCell(v_change.toString) rightAlign() inside change
-				val rrow = RRow(List(c_fundName, c_value1, c_value2, c_change))
+				val rrow = ReportCellList(List(c_fundName, c_value1, c_value2, c_change))
 				val y2 = rrow.calculate(report)
 				rrow.print(report)
 				if (GroupUtil.isLastRecord(rec)) {
@@ -151,7 +151,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 			})
 		rs.close()
 
-		val trow = RRow(List(RCell("Total" bold()) inside fundName, RCell(total1.toString bold()) rightAlign() inside value1,
+		val trow = ReportCellList(List(RCell("Total" bold()) inside fundName, RCell(total1.toString bold()) rightAlign() inside value1,
 			RCell(total2.toString bold()) rightAlign() inside value2, RCell(total3.toString bold()) rightAlign() inside change))
 		trow.print(report)
 		val chartHeight = report.getY - firstY
@@ -171,7 +171,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 		val value1Hdr = RCell("This period($)" bold() color headerFontColor) rightAlign() inside value1
 		val value2Hdr = RCell("Year-to-date($)" bold() color headerFontColor) rightAlign() inside value2
 		val value3Hdr = RCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() inside value3
-		val rrow = RRow(List(accountHdr, value1Hdr, value2Hdr, value3Hdr))
+		val rrow = ReportCellList(List(accountHdr, value1Hdr, value2Hdr, value3Hdr))
 		val y2 = rrow.calculate(report)
 		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
 		rrow.print(report)
@@ -195,7 +195,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 				total2 += r_value2.toFloat
 				total3 += r_value3.toFloat
 
-				val rrow = RRow(List(c_account, c_value1, c_value2, c_value3))
+				val rrow = ReportCellList(List(c_account, c_value1, c_value2, c_value3))
 				val y2 = rrow.calculate(report)
 				rrow.print(report)
 				val lColor = if (GroupUtil.isLastRecord(rec)) RColor(0, 0, 0) else RColor(200, 200, 200)
@@ -212,7 +212,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 		val value1Sum = RCell(total1.toString bold()) rightAlign() inside value1
 		val value2Sum = RCell(total2.toString bold()) rightAlign() inside value2
 		val value3Sum = RCell(total3.toString bold()) rightAlign() inside value3
-		val frow = RRow(List(accountSum, value1Sum, value2Sum, value3Sum))
+		val frow = ReportCellList(List(accountSum, value1Sum, value2Sum, value3Sum))
 		val y3 = frow.calculate(report)
 		frow.print(report)
 		report.setYPosition(y3)
@@ -246,7 +246,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 		val h_value5y = RCell("5 Years (%)" bold() color headerFontColor) rightAlign() inside value5y
 		val h_value10y = RCell("10 Years (%)" bold() color headerFontColor) rightAlign() inside value10y
 		val h_annualized = RCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAlign() inside annualized
-		val hrow = RRow(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
+		val hrow = ReportCellList(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
 		val y1 = hrow.calculate(report)
 		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
 		hrow.print(report)
@@ -261,7 +261,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 		val r_value10y = RCell((record value "value10y").toString) rightAlign() inside value10y
 		val r_annualized = RCell((record value "annualized").toString) rightAlign() inside annualized
 
-		val rrow = RRow(List(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized))
+		val rrow = ReportCellList(List(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized))
 		val y2 = rrow.calculate(report)
 		rrow.print(report)
 		report.setYPosition(y2)
@@ -321,7 +321,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 				val h_column1 = RCell("Type of Account" bold()) leftAlign() inside column1
 				val h_column2 = RCell("Your account number" bold()) leftAlign() inside column2
 				val h_column3 = RCell("Your investment statement" bold()) rightAlign() inside column3
-				val hrow = RRow(List(h_column1, h_column2, h_column3))
+				val hrow = ReportCellList(List(h_column1, h_column2, h_column3))
 				hrow.print(rpt)
 
 				rpt.nextLine()
@@ -330,7 +330,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 				val r_column1 = RCell("Group Registered Retirement Saving Plan") leftAlign() inside column1
 				val r_column2 = RCell("123456789") leftAlign() inside column2
 				val r_column3 = RCell(str) rightAlign() inside column3
-				val rrow = RRow(List(r_column1, r_column2, r_column3))
+				val rrow = ReportCellList(List(r_column1, r_column2, r_column3))
 				rrow.print(rpt)
 				rpt.nextLine(2)
 				rpt line() from(10, rpt.getY) to (rpt.pgSize.width - 10) draw()
