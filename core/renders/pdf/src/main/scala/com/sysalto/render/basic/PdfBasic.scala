@@ -25,7 +25,7 @@ package com.sysalto.render.basic
 
 import com.sysalto.render.PdfDraw.DrawPoint
 import com.sysalto.render.PdfNativeGenerator
-import com.sysalto.report.reportTypes.RColor
+import com.sysalto.report.reportTypes.ReportColor
 
 object PdfBasic {
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): String = {
@@ -57,20 +57,20 @@ object PdfBasic {
 
 	def pattern(patternName: String): String = s"/Pattern cs /${patternName} scn"
 
-	def convertColor(color: RColor): (Float, Float, Float) = {
+	def convertColor(color: ReportColor): (Float, Float, Float) = {
 		val r = color.r / 255f
 		val g = color.g / 255f
 		val b = color.b / 255f
 		(r, g, b)
 	}
 
-	def border(borderColor: RColor): String = {
+	def border(borderColor: ReportColor): String = {
 		val color = PdfNativeGenerator.convertColor(borderColor)
 		s"${color._1} ${color._2} ${color._3} RG\n"
 	}
 
 
-	def fill(fillColor: RColor): String = {
+	def fill(fillColor: ReportColor): String = {
 		val color = PdfNativeGenerator.convertColor(fillColor)
 		s"${color._1} ${color._2} ${color._3} rg\n"
 	}

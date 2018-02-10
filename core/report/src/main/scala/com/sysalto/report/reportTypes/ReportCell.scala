@@ -32,17 +32,17 @@ import com.sysalto.report.{Report, WrapAlign}
 /*
 class for wrapping text
  */
-case class ReportCell(txt: List[RText], var margin: ReportMargin = ReportMargin(0, 0), var align: WrapAlign.Value = WrapAlign.NO_WRAP) {
+case class ReportCell(txt: List[ReportTxt], var margin: ReportMargin = ReportMargin(0, 0), var align: WrapAlign.Value = WrapAlign.NO_WRAP) {
 
-	def this(txt: List[RText]) = {
+	def this(txt: List[ReportTxt]) = {
 		this(txt, ReportMargin(0, 0), WrapAlign.NO_WRAP)
 	}
 
-	def this(rtext: RText) = {
+	def this(rtext: ReportTxt) = {
 		this(List(rtext))
 	}
 
-	def this(rtext: RText, left: Float, right: Float) = {
+	def this(rtext: ReportTxt, left: Float, right: Float) = {
 		this(List(rtext), ReportMargin(left, right), WrapAlign.NO_WRAP)
 	}
 
@@ -96,7 +96,7 @@ case class ReportCell(txt: List[RText], var margin: ReportMargin = ReportMargin(
 }
 
 object ReportCell {
-	def apply(rtext: RText): ReportCell = ReportCell(List(rtext))
+	def apply(rtext: ReportTxt): ReportCell = ReportCell(List(rtext))
 
 	def apply(list: RTextList): ReportCell = ReportCell(list.list.toList)
 }

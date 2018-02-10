@@ -87,13 +87,13 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		fontFamilyMap += rFontFamily.name -> RFontParserFamily(rFontFamily.name, rFontFamily, true)
 	}
 
-	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
+	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]): Unit = {
 		graphicList += DrawLine(x1, y1, x2, y2, lineWidth, color, lineDashType)
 	}
 
 	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
-	              radius: Float, color: Option[RColor] = None,
-	              fillColor: Option[RColor] = None, paternColor: Option[PdfGPattern] = None): Unit = {
+	              radius: Float, color: Option[ReportColor] = None,
+	              fillColor: Option[ReportColor] = None, paternColor: Option[PdfGPattern] = None): Unit = {
 		graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, paternColor)
 	}
 
@@ -109,7 +109,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		graphicList += DrawStroke()
 	}
 
-	def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
+	def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value, simulate: Boolean, startY: Option[Float], lineHeight: Float): Option[ReportTypes.WrapBox] = {
 		implicit val wordSeparators = List(',', '.')
 		val lines = wordWrap.wordWrap(txtList, x1 - x0)
@@ -134,7 +134,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size))
 	}
 
-	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
+	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
 
 		val colorFct = new PdfShaddingFctColor(nextId(), from, to)
 		val pdfShadding = new PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct)
@@ -166,7 +166,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		}
 	}
 
-	def text(x: Float, y: Float, txt: RText): Unit = {
+	def text(x: Float, y: Float, txt: ReportTxt): Unit = {
 		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
 			if (txt.font.externalFont.isDefined) {
 				val fontParser = getFontParser(txt.font)
@@ -292,7 +292,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 
 object PdfNativeGenerator {
-	def convertColor(color: RColor): (Float, Float, Float) = {
+	def convertColor(color: ReportColor): (Float, Float, Float) = {
 		val r = color.r / 255f
 		val g = color.g / 255f
 		val b = color.b / 255f
@@ -416,7 +416,7 @@ private[this] class PdfPageList(id: Long, var parentId: Option[Long] = None, var
 	}
 }
 
-private[this] class PdfShaddingFctColor(id: Long, color1: RColor, color2: RColor)
+private[this] class PdfShaddingFctColor(id: Long, color1: ReportColor, color2: ReportColor)
                                        (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val colorNbr1 = PdfNativeGenerator.convertColor(color1)
@@ -688,7 +688,7 @@ private abstract class PdfPageItem {
 
 private case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfGPattern)
 
-private case class PdfTxtChuck(x: Float, y: Float, rtext: RText, fontRefName: String, pattern: Option[PatternDraw] = None)
+private case class PdfTxtChuck(x: Float, y: Float, rtext: ReportTxt, fontRefName: String, pattern: Option[PatternDraw] = None)
 
 
 private class PdfText(txtList: List[PdfTxtChuck])

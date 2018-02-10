@@ -43,13 +43,13 @@ abstract class PdfUtil() {
 
 	def linkToUrl(boundaryRect: BoundaryRect,url:String)
 
-	def text(txt: RText, x1: Float, y1: Float, x2: Float = Float.MaxValue, y2: Float = Float.MaxValue): Unit
+	def text(txt: ReportTxt, x1: Float, y1: Float, x2: Float = Float.MaxValue, y2: Float = Float.MaxValue): Unit
 
-	def textAlignedAtPosition(txt: RText, x: Float, y: Float, index: Int): Unit
+	def textAlignedAtPosition(txt: ReportTxt, x: Float, y: Float, index: Int): Unit
 
-	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType])
+	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType])
 
-	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[RColor], fillColor: Option[RColor])
+	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[ReportColor], fillColor: Option[ReportColor])
 
 	def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float)
 
@@ -62,10 +62,10 @@ abstract class PdfUtil() {
 
 	def close()
 
-	def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
+	def wrap(text: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value, simulate: Boolean = false, startY: Option[Float] = None, lineHeight: Float = 0): Option[WrapBox]
 
-	def verticalShade(rectangle: DRectangle, from: RColor, to: RColor)
+	def verticalShade(rectangle: DRectangle, from: ReportColor, to: ReportColor)
 
 	def setExternalFont(externalFont: RFontFamily)
 }

@@ -28,8 +28,8 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by marian on 3/14/17.
   */
-case class RTextList(list: ListBuffer[RText]) {
-  def +(other: RText): RTextList = {
+case class RTextList(list: ListBuffer[ReportTxt]) {
+  def +(other: ReportTxt): RTextList = {
     list += other
     this
   }

@@ -25,7 +25,7 @@
 package com.sysalto.report
 
 import com.sysalto.report.ReportTypes._
-import com.sysalto.report.reportTypes.{LineDashType, ReportCell, RColor, RText}
+import com.sysalto.report.reportTypes.{LineDashType, ReportCell, ReportColor, ReportTxt}
 
 import scala.collection.mutable.ListBuffer
 
@@ -33,10 +33,10 @@ import scala.collection.mutable.ListBuffer
 class RectangleDsl(report: Report) {
 
 	private[this] var x1, y1, x2, y2, dradius = 0.0f
-	private[this] var from: RColor = _
-	private[this] var to: RColor = _
-	private[this] var dcolor: Option[RColor] = None
-	private[this] var dFillColor: Option[RColor] = None
+	private[this] var from: ReportColor = _
+	private[this] var to: ReportColor = _
+	private[this] var dcolor: Option[ReportColor] = None
+	private[this] var dFillColor: Option[ReportColor] = None
 
 	/*
 	start point of the rectangle
@@ -67,7 +67,7 @@ class RectangleDsl(report: Report) {
 	/*
 	set border color
  */
-	def color(color: RColor): RectangleDsl = {
+	def color(color: ReportColor): RectangleDsl = {
 		this.dcolor = Some(color)
 		this
 	}
@@ -75,7 +75,7 @@ class RectangleDsl(report: Report) {
 	/*
 set fillColor color
 */
-	def fillColor(color: RColor): RectangleDsl = {
+	def fillColor(color: ReportColor): RectangleDsl = {
 		this.dFillColor = Some(color)
 		this
 	}
@@ -83,7 +83,7 @@ set fillColor color
 	/*
 	fill with vertical shade
 	 */
-	def verticalShade(from: RColor, to: RColor): RectangleDsl = {
+	def verticalShade(from: ReportColor, to: ReportColor): RectangleDsl = {
 		this.from = from
 		this.to = to
 		this
@@ -104,7 +104,7 @@ set fillColor color
 }
 
 
-class TextDsl(report: Report, var rText: RText) {
+class TextDsl(report: Report, var rText: ReportTxt) {
 
 	def at(x: Float): BoundaryRect = {
 		report.text(this.rText, x)
@@ -117,7 +117,7 @@ class TextDsl(report: Report, var rText: RText) {
 class LineDsl(report: Report) {
 	private[this] var fromX, fromY = 0f
 	private[this] var toX, toY = 0f
-	private[this] var lcolor: RColor = RColor(0, 0, 0)
+	private[this] var lcolor: ReportColor = ReportColor(0, 0, 0)
 	private[this] var lineDashType: Option[LineDashType] = None
 	private[this] var lineWidth = 1f
 
@@ -143,11 +143,11 @@ class LineDsl(report: Report) {
 	color of the line
 	 */
 	def color(r: Int, g: Int, b: Int): LineDsl = {
-		lcolor = RColor(r, g, b)
+		lcolor = ReportColor(r, g, b)
 		this
 	}
 
-	def color(color: RColor): LineDsl = {
+	def color(color: ReportColor): LineDsl = {
 		lcolor = color
 		this
 	}

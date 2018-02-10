@@ -127,7 +127,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
-	private[report] def reportWrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
+	private[report] def reportWrap(text: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
 	                               wrapAlign: WrapAlign.Value, simulate: Boolean = false,
 	                               startY: Option[Float] = None): Option[WrapBox] = {
 
@@ -240,7 +240,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	x1,x2 - horizontal coordinates
 	y1,y2 - vertical coordinates  with 0 starting from the top
 	 */
-	def drawRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[RColor] = None, fillColor: Option[RColor] = None) {
+	def drawRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[ReportColor] = None, fillColor: Option[ReportColor] = None) {
 		val reportItem = ReportRectangle(x1, y1, x2, y2, radius, color, fillColor)
 		crtPage.items += reportItem
 	}
@@ -249,7 +249,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		Draws a line between (x1,y1) and (x2,y2) with thickness lineWidth and color
 		x are horizontal coordinates and y vertical starting with 0 from the top
 	 */
-	def line(x1: Float = 0, y1: Float = getY, x2: Float = -1, y2: Float = -1, lineWidth: Float = 1, color: RColor = RColor(0, 0, 0),
+	def line(x1: Float = 0, y1: Float = getY, x2: Float = -1, y2: Float = -1, lineWidth: Float = 1, color: ReportColor = ReportColor(0, 0, 0),
 	         lineDashType: Option[LineDashType] = None) {
 		val reportItem = ReportLine(x1, y1, x2, y2, lineWidth, color, lineDashType)
 		crtPage.items += reportItem
@@ -259,7 +259,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		Draws txt at (x,y)
 		By default y is the current y
 	 */
-	def text(txt: RText, x: Float, y: Float = -1): Unit = {
+	def text(txt: ReportTxt, x: Float, y: Float = -1): Unit = {
 		if (simulation) {
 			return
 		}
@@ -276,7 +276,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	Draw text align at index and position (x,y).
 	By default y is current y.
 	 */
-	def textAligned(txt: RText, index: Int, x: Float, y: Float = -1): Unit = {
+	def textAligned(txt: ReportTxt, index: Int, x: Float, y: Float = -1): Unit = {
 		val y1 = if (y == -1) getY else y
 		if (txt.font.fontName.isEmpty) {
 			txt.font.fontName = this.font.fontName
@@ -329,7 +329,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		This is a low level function.
 		Easy way is to use [RRow]
 	 */
-	def wrap(text: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
+	def wrap(text: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value = WrapAlign.WRAP_LEFT, simulate: Boolean = false): Option[WrapBox] = {
 		val text1 = text.map(item => {
 			val font = if (item.font.fontName.isEmpty) {
@@ -340,7 +340,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			} else {
 				item.font
 			}
-			RText(item.txt, font)
+			ReportTxt(item.txt, font)
 		})
 		if (simulate) {
 			reportWrap(text1, x0, y0, x1, y1, wrapAlign, simulate)
@@ -362,7 +362,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 		draw a rectangle with vertical shade between 'from' and 'to' colors.
 	 */
-	def verticalShade(rectangle: DRectangle, from: RColor, to: RColor): Unit = {
+	def verticalShade(rectangle: DRectangle, from: ReportColor, to: ReportColor): Unit = {
 		crtPage.items += ReportVerticalShade(rectangle, from, to)
 	}
 
@@ -418,7 +418,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	print a RText (no wrapping).
 	 */
-	def print(txt: RText): TextDsl = {
+	def print(txt: ReportTxt): TextDsl = {
 		if (txt.font.fontName.isEmpty) {
 			txt.font.fontName = this.font.fontName
 			txt.font.externalFont = this.font.externalFont
@@ -550,11 +550,11 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	def text(txt: String, x: Float, y: Float): Unit = {
-		text(RText(txt), x, y)
+		text(ReportTxt(txt), x, y)
 	}
 
 	def text(txt: String, x: Float): Unit = {
-		text(RText(txt), x)
+		text(ReportTxt(txt), x)
 	}
 
 

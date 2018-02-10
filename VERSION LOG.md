@@ -6,7 +6,7 @@
 * changed RCell to ReportCell
 * changed Row to ReportRow
 * changed RMargin to ReportMargin
-* changed RText to ReportText
+* changed RText to ReportTxt
 * changed RColor with ReportColor
 
 

@@ -58,18 +58,18 @@ class PdfNativeRender extends PdfUtil {
 
 	def convertY(y: Float) = PAGE_HEIGHT - y
 
-	override def text(txt: RText, x1: Float, y1: Float, x2: Float, y2: Float): Unit = {
+	override def text(txt: ReportTxt, x1: Float, y1: Float, x2: Float, y2: Float): Unit = {
 		pdfNativeGenerator.text(x1, convertY(y1), txt)
 	}
 
-	override def textAlignedAtPosition(txt: RText, x: Float, y: Float, index: Int): Unit = ???
+	override def textAlignedAtPosition(txt: ReportTxt, x: Float, y: Float, index: Int): Unit = ???
 
-	override def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]): Unit = {
+	override def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]): Unit = {
 		pdfNativeGenerator.line(x1, convertY(y1), x2, convertY(y2), lineWidth, color, lineDashType)
 	}
 
 	override def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
-	                       radius: Float, color: Option[RColor], fillColor: Option[RColor]): Unit = {
+	                       radius: Float, color: Option[ReportColor], fillColor: Option[ReportColor]): Unit = {
 		pdfNativeGenerator.rectangle(x1, convertY(y1), x2, convertY(y2), radius, color, fillColor)
 	}
 
@@ -92,13 +92,13 @@ class PdfNativeRender extends PdfUtil {
 		pdfNativeGenerator.close()
 	}
 
-	override def wrap(txtList: List[RText], x0: Float, y0: Float, x1: Float, y1: Float,
+	override def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
 	                  wrapAlign: WrapAlign.Value, simulate: Boolean,
 	                  startY: Option[Float], lineHeight: Float = 0): Option[ReportTypes.WrapBox] = {
 		pdfNativeGenerator.wrap(txtList, x0, convertY(y0), x1, convertY(y1), wrapAlign, simulate, startY, lineHeight)
 	}
 
-	override def verticalShade(rectangle: ReportTypes.DRectangle, from: RColor, to: RColor): Unit = {
+	override def verticalShade(rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
 		val rectangle1 = DRectangle(rectangle.x1, convertY(rectangle.y1), rectangle.x2, convertY(rectangle.y2))
 		pdfNativeGenerator.axialShade(rectangle.x1, convertY(rectangle.y1), rectangle.x1, convertY(rectangle.y2), rectangle1, from, to)
 	}

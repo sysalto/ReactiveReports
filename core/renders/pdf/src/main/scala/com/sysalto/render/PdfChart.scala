@@ -24,7 +24,7 @@
 package com.sysalto.render
 
 import com.sysalto.render.PdfDraw._
-import com.sysalto.report.reportTypes.{RColor, RFont, RText}
+import com.sysalto.report.reportTypes.{ReportColor, RFont, ReportTxt}
 import com.sysalto.render.basic.PdfBasic._
 
 object PdfChart {
@@ -32,8 +32,8 @@ object PdfChart {
 	//http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
 	private[this] val rnd = new scala.util.Random
 
-	private[this] def randomColor(): RColor = {
-		def hsvToRgb(h: Double, s: Double, v: Double): RColor = {
+	private[this] def randomColor(): ReportColor = {
+		def hsvToRgb(h: Double, s: Double, v: Double): ReportColor = {
 			val h1 = (h * 6).floor.toInt
 			val f = h * 6 - h1
 			val p = v * (1 - s)
@@ -47,7 +47,7 @@ object PdfChart {
 				case 4 => (t, p, v)
 				case 5 => (v, p, q)
 			}
-			RColor((r * 256).toInt, (g * 256).toInt, (b * 256).toInt)
+			ReportColor((r * 256).toInt, (g * 256).toInt, (b * 256).toInt)
 		}
 
 		val goldenRatio = 0.618033988749895
@@ -56,7 +56,7 @@ object PdfChart {
 		hsvToRgb((h + goldenRatio) % 1, 1, 0.95)
 	}
 
-	private[this] def getColor(i:Int,total:Int):RColor=RColor((256.0*i/total).toInt,(256.0*(256.0-i)/total).toInt,(256.0*(256.0-i)/total).toInt)
+	private[this] def getColor(i:Int,total:Int):ReportColor=ReportColor((256.0*i/total).toInt,(256.0*(256.0-i)/total).toInt,(256.0*(256.0-i)/total).toInt)
 
 	def pieChart(pdfgenerator:PdfNativeGenerator,font:RFont,title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): String = {
 		def getPoint(center: DrawPoint, radius: Float, angle: Float): DrawPoint =
@@ -95,7 +95,7 @@ object PdfChart {
 		val str2 = angleList.map {
 			case (label, (startAngle, endAngle, color)) => {
 				val s=rectangle(x+2.0f*(radius+offset),y-ycrt,10,10)+fill(color)+fillStroke(true,false)
-				pdfgenerator.text(x+2.0f*(radius+offset)+20,y-ycrt+1,RText(label,font).size(10))
+				pdfgenerator.text(x+2.0f*(radius+offset)+20,y-ycrt+1,ReportTxt(label,font).size(10))
 				ycrt += 12
 				s
 			}

@@ -27,9 +27,9 @@ package com.sysalto.report
 import com.sysalto.report.util.ReportColumnUtil
 
 object Implicits extends ScalaReportUtil {
-	val RText: com.sysalto.report.reportTypes.RText.type = com.sysalto.report.reportTypes.RText
+	val ReportTxt: com.sysalto.report.reportTypes.ReportTxt.type = com.sysalto.report.reportTypes.ReportTxt
 	val LineDashType: com.sysalto.report.reportTypes.LineDashType.type = com.sysalto.report.reportTypes.LineDashType
-	val RMargin: com.sysalto.report.reportTypes.ReportMargin.type = com.sysalto.report.reportTypes.ReportMargin
+	val ReportMargin: com.sysalto.report.reportTypes.ReportMargin.type = com.sysalto.report.reportTypes.ReportMargin
 	val ReportRow: com.sysalto.report.reportTypes.ReportRow.type = com.sysalto.report.reportTypes.ReportRow
 	val Column: com.sysalto.report.reportTypes.Column.type = com.sysalto.report.reportTypes.Column
 	val Flex: ReportColumnUtil.Flex.type = ReportColumnUtil.Flex
@@ -41,7 +41,7 @@ object Implicits extends ScalaReportUtil {
 	type ReportCheckpoint = com.sysalto.report.ReportTypes.ReportCheckpoint
 	val ReportCut: ReportTypes.ReportCut.type = com.sysalto.report.ReportTypes.ReportCut
 	type ReportItem = com.sysalto.report.ReportTypes.ReportItem
-	val RColor: com.sysalto.report.reportTypes.RColor.type = com.sysalto.report.reportTypes.RColor
+	val ReportColor: com.sysalto.report.reportTypes.ReportColor.type = com.sysalto.report.reportTypes.ReportColor
 
 
 	val Await: scala.concurrent.Await.type = scala.concurrent.Await

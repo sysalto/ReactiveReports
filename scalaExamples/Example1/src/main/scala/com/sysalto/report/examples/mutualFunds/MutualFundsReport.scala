@@ -40,11 +40,11 @@ object MutualFundsReport extends ReportAppAkka {
   val sd = new SimpleDateFormat("MMM dd yyyy")
   private val date1 = new GregorianCalendar(2013, 0, 1).getTime
   private val date2 = new GregorianCalendar(2013, 11, 31).getTime
-  val headerColor = RColor(156, 76, 6)
-  val headerFontColor = RColor(255, 255, 255)
+  val headerColor = ReportColor(156, 76, 6)
+  val headerFontColor = ReportColor(255, 255, 255)
 
   private def drawbackgroundImage(report: Report): Unit = {
-    report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
+    report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
   }
 
   private def reportHeader(report: Report): Unit = {
@@ -59,11 +59,11 @@ object MutualFundsReport extends ReportAppAkka {
     report.drawImage(file.getAbsolutePath, 5, 45, 100, 40)
 
     //    report rectangle() from(500, report.getY) to(report.pgSize.width - 5, report.getY + 40) fillColor RColor(220, 255, 220) color RColor(200, 200, 250) radius 10 draw()
-    report print (ReportCell("Investment statement" size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+    report print (ReportCell("Investment statement" size 15 bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
     report.nextLine()
 
     val str = sd.format(date1) + " to " + sd.format(date2)
-    report print (ReportCell(str size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+    report print (ReportCell(str size 15 bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
     report.nextLine(2)
     report print ("Mutual Funds Inc." bold()) at 10
     report.nextLine()
@@ -123,7 +123,7 @@ object MutualFundsReport extends ReportAppAkka {
             firstY = report.getY
           }
           val crtRec = GroupUtil.getRec(rec)
-          val c_fundName = ReportCell(RText(firstChar.asInstanceOf[Char].toString + " ").bold() + (crtRec value "fund_name").toString) leftAlign() inside fundName
+          val c_fundName = ReportCell(ReportTxt(firstChar.asInstanceOf[Char].toString + " ").bold() + (crtRec value "fund_name").toString) leftAlign() inside fundName
 
           val c_value1 = ReportCell((crtRec value "value1").toString) rightAlign() inside value1
           val c_value2 = ReportCell((crtRec value "value2").toString) rightAlign() inside value2
@@ -298,7 +298,7 @@ object MutualFundsReport extends ReportAppAkka {
         |Pro stet oratio exerci in. Per no nullam salutatus scriptorem. Stet alterum nam ei, congue tamquam sed ea. Eam ut virtute disputationi, ea labitur voluptua has. Est ea graecis definitiones, pro ea mutat oportere adipiscing.
         |
         |Suscipit ponderum verterem et mel, vim semper facilisi ex, mel aliquid constituam ut. Summo denique complectitur ius at, in quo nobis deterruisset. Ut viris convenire eam. Quo id suscipit quaerendum, magna veniam et vix, duis liber disputando et has. Aliquando democritum id usu, falli diceret invidunt in per, in falli essent quo.""".stripMargin
-    report print (ReportCell(txt) inside RMargin(10, report.pgSize.width - 10))
+    report print (ReportCell(txt) inside ReportMargin(10, report.pgSize.width - 10))
   }
 
 
@@ -343,7 +343,7 @@ object MutualFundsReport extends ReportAppAkka {
         rpt.setYPosition(rpt.pgSize.height - rpt.lineHeight * 3)
         rpt line() from(10, rpt.getY) to (rpt.pgSize.width - 10) draw()
         rpt.nextLine()
-        rpt print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+        rpt print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
     }
 
     reportHeader(report)

@@ -28,13 +28,13 @@ object TestBig extends GroupUtilTrait {
 	}
 
 	def drawImg(report: Report,number:Int): Unit = {
-		val red = RColor(255, 0, 0,0.5f)
-		val green = RColor(7, 138, 89,0.5f)
-		val fontColor = RColor(200, 200, 255)
+		val red = ReportColor(255, 0, 0,0.5f)
+		val green = ReportColor(7, 138, 89,0.5f)
+		val fontColor = ReportColor(200, 200, 255)
 		val delimiter=200+number
 		report rectangle() from(200, report.getY - report.lineHeight*0.6f)  to(delimiter, report.getY + report.lineHeight*0.3f) fillColor red draw()
 		report rectangle() from(delimiter, report.getY - report.lineHeight*0.6f)  to(300, report.getY + report.lineHeight*0.3f) fillColor green draw()
-		report print RText(""+number).bold().color(fontColor) at 250
+		report print ReportTxt(""+number).bold().color(fontColor) at 250
 	}
 
 	def report(): Unit = {
@@ -43,7 +43,7 @@ object TestBig extends GroupUtilTrait {
 		println("Start:" + getMemory())
 		report.nextLine()
 
-		val title = ReportCell("Report" bold())  centerAlign() inside RMargin(10,report.pgSize.width - 10)
+		val title = ReportCell("Report" bold())  centerAlign() inside ReportMargin(10,report.pgSize.width - 10)
 		report.print(title)
 		report.nextLine(3)
 

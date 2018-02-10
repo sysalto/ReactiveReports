@@ -39,11 +39,11 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 	val sd = new SimpleDateFormat("MMM dd yyyy")
 	private val date1 = new GregorianCalendar(2013, 0, 1).getTime
 	private val date2 = new GregorianCalendar(2013, 11, 31).getTime
-	val headerColor = RColor(156, 76, 6)
-	val headerFontColor = RColor(255, 255, 255)
+	val headerColor = ReportColor(156, 76, 6)
+	val headerFontColor = ReportColor(255, 255, 255)
 
 	private def drawbackgroundImage(report: Report): Unit = {
-		report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
+		report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
 	}
 
 	private def reportHeader(report: Report): Unit = {
@@ -57,11 +57,11 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 		val file = Paths.get(resource.toURI).toFile
 		report.drawImage(file.getAbsolutePath, 5, 45, 100, 40)
 
-		report print (ReportCell("Investment statement" size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+		report print (ReportCell("Investment statement" size 15 bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
 		report.nextLine()
 
 		val str = sd.format(date1) + " to " + sd.format(date2)
-		report print (ReportCell(str size 15 bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+		report print (ReportCell(str size 15 bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
 		report.nextLine(2)
 		report print ("Mutual Funds Inc." bold()) at 10
 		report.nextLine()
@@ -76,9 +76,9 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 		report.nextLine()
 		report print (record value "addr3").toString at 10
 		report.setYPosition(y)
-		report print (ReportCell("Beneficiary information" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+		report print (ReportCell("Beneficiary information" bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
 		report.nextLine()
-		report print (ReportCell((record value "benef_name").toString) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+		report print (ReportCell((record value "benef_name").toString) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
 		report.nextLine(2)
 	}
 
@@ -123,7 +123,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 					firstY = report.getY
 				}
 				val crtRec = GroupUtil.getRec(rec)
-				val c_fundName = ReportCell(RText(firstChar.asInstanceOf[Char].toString + " ").bold() + (crtRec value "fund_name").toString) leftAlign() inside fundName
+				val c_fundName = ReportCell(ReportTxt(firstChar.asInstanceOf[Char].toString + " ").bold() + (crtRec value "fund_name").toString) leftAlign() inside fundName
 
 				val c_value1 = ReportCell((crtRec value "value1").toString) rightAlign() inside value1
 				val c_value2 = ReportCell((crtRec value "value2").toString) rightAlign() inside value2
@@ -198,7 +198,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 				val rrow = ReportCellList(List(c_account, c_value1, c_value2, c_value3))
 				val y2 = rrow.calculate(report)
 				rrow.print(report)
-				val lColor = if (GroupUtil.isLastRecord(rec)) RColor(0, 0, 0) else RColor(200, 200, 200)
+				val lColor = if (GroupUtil.isLastRecord(rec)) ReportColor(0, 0, 0) else ReportColor(200, 200, 200)
 				report line() from(10, report.getY + 2) to value3.right color (lColor) lineType LineDashType(2, 1) draw()
 				report.nextLine()
 			} catch {
@@ -287,7 +287,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 				"Per iriure latine regione ei, libris maiorum sensibus ne qui, te iisque deseruisse nam. Cu mel doming ocurreret, quot rebum volumus an per. Nec laudem partem recusabo in, ei animal luptatum mea. Atqui possim deterruisset qui at, cu dolore intellegebat vim. Sit ad intellegebat vituperatoribus, eu dolores salutatus qui, mei at suas option suscipit. Veniam quodsi patrioque cu qui, ornatus voluptua neglegentur cum eu.",
 				"Ea sit brute atqui soluta, qui et mollis eleifend elaboraret. Nec ex tritani repudiare. Ne ornatus salutandi disputationi eos. Sed possit omnesque disputationi et, nominavi recusabo vix in, tota recusabo sententiae et cum. Mei cu ipsum euripidis philosophia, vel homero verterem instructior ex.")
 		txtList.foreach(txt => {
-			val cell = ReportCell(txt) inside RMargin(10, report.pgSize.width - 10)
+			val cell = ReportCell(txt) inside ReportMargin(10, report.pgSize.width - 10)
 			val box = cell.calculate(report)
 			report print cell
 			report.setYPosition(box.currentY + report.lineHeight)
@@ -342,7 +342,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 				rpt.setYPosition(rpt.pgSize.height - rpt.lineHeight * 3)
 				rpt line() from(10, rpt.getY) to (rpt.pgSize.width - 10) draw()
 				rpt.nextLine()
-				rpt print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+				rpt print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
 		}
 
 		reportHeader(report)

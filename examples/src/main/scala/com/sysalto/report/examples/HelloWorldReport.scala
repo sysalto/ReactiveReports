@@ -50,7 +50,7 @@ object HelloWorldReport extends ReportAppAkka with AkkaGroupUtil {
         report.setYPosition(report.pgSize.height - report.lineHeight * 2)
         report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
         report.setYPosition(report.getY + report.lineHeight * 0.5f)
-        report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+        report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
     }
 
     // generate 200 records for printing

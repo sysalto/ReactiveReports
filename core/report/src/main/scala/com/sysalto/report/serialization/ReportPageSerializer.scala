@@ -93,7 +93,7 @@ private[serialization] object RFontAttributeSerializer {
 
 
 private[serialization] object RColorSerializer {
-	def write(obj: RColor): RColor_proto = {
+	def write(obj: ReportColor): RColor_proto = {
 		val builder = RColor_proto.newBuilder()
 		builder.setR(obj.r)
 		builder.setG(obj.g)
@@ -102,8 +102,8 @@ private[serialization] object RColorSerializer {
 		builder.build()
 	}
 
-	def read(input: RColor_proto): RColor =
-		RColor(input.getR, input.getG, input.getB, input.getOpacity)
+	def read(input: RColor_proto): ReportColor =
+		ReportColor(input.getR, input.getG, input.getB, input.getOpacity)
 }
 
 private[serialization] object OptionStringSerializer {
@@ -173,15 +173,15 @@ private[serialization] object RFontSerializer {
 }
 
 private[serialization] object RTextSerializer {
-	def write(obj: RText): RText_proto = {
+	def write(obj: ReportTxt): RText_proto = {
 		val builder = RText_proto.newBuilder()
 		builder.setTxt(obj.txt)
 		builder.setFont(RFontSerializer.write(obj.font))
 		builder.build()
 	}
 
-	def read(input: RText_proto): RText =
-		RText(input.getTxt, RFontSerializer.read(input.getFont))
+	def read(input: RText_proto): ReportTxt =
+		ReportTxt(input.getTxt, RFontSerializer.read(input.getFont))
 }
 
 
@@ -278,7 +278,7 @@ private[serialization] object ReportLineSerializer {
 
 
 private[serialization] object OptionRColorSerializer {
-	def write(obj: Option[RColor]): OptionRColor_proto = {
+	def write(obj: Option[ReportColor]): OptionRColor_proto = {
 		val builder = OptionRColor_proto.newBuilder()
 		if (obj.isEmpty) {
 			builder.setNull(true)
@@ -289,7 +289,7 @@ private[serialization] object OptionRColorSerializer {
 		builder.build()
 	}
 
-	def read(input: OptionRColor_proto): Option[RColor] =
+	def read(input: OptionRColor_proto): Option[ReportColor] =
 		if (input.getNull) None else Some(RColorSerializer.read(input.getRColor))
 
 }

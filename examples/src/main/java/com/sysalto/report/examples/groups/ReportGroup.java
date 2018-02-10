@@ -4,15 +4,13 @@ import com.sysalto.render.PdfNativeFactory;
 import com.sysalto.report.Report;
 import com.sysalto.report.reportTypes.Group;
 import com.sysalto.report.reportTypes.GroupUtil;
-import com.sysalto.report.reportTypes.RText;
+import com.sysalto.report.reportTypes.ReportTxt;
 import com.sysalto.report.reportTypes.ReportPageOrientation;
 import com.sysalto.report.util.GroupUtilDefs;
 import com.sysalto.report.util.IteratorGroup;
 import com.sysalto.report.util.PdfFactory;
-import scala.runtime.BoxedUnit;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ReportGroup {
@@ -31,22 +29,22 @@ public class ReportGroup {
             report.nextLine();
             Food crtRec = GroupUtil.getRec(rec);
             if (GroupUtil.isFirstRecord(rec)) {
-                report.print(new RText("FIRST")).at(100);
+                report.print(new ReportTxt("FIRST")).at(100);
                 report.nextLine();
             }
             if (reportGroupUtil.isHeader("categ",rec)) {
-                report.print(new RText("Header categ:"+crtRec.getCategory())).at(10);
+                report.print(new ReportTxt("Header categ:"+crtRec.getCategory())).at(10);
                 report.nextLine();
             }
-            report.print(new RText(crtRec.getName())).at(50);
-            report.print(new RText(crtRec.getPrice().toString())).at(100);
+            report.print(new ReportTxt(crtRec.getName())).at(50);
+            report.print(new ReportTxt(crtRec.getPrice().toString())).at(100);
             report.nextLine();
             if (reportGroupUtil.isFooter("categ",rec)) {
-                report.print(new RText("Footer categ:"+crtRec.getCategory())).at(10);
+                report.print(new ReportTxt("Footer categ:"+crtRec.getCategory())).at(10);
                 report.nextLine();
             }
             if (GroupUtil.isLastRecord(rec)) {
-                report.print(new RText("LAST")).at(100);
+                report.print(new ReportTxt("LAST")).at(100);
                 report.nextLine();
             }
             if (report.lineLeft()<5) {

@@ -23,7 +23,7 @@
 
 package com.sysalto.render
 
-import com.sysalto.report.reportTypes.{LineDashType, RColor, RFont}
+import com.sysalto.report.reportTypes.{LineDashType, ReportColor, RFont}
 import com.sysalto.render.basic.PdfBasic._
 import PdfChart._
 
@@ -91,7 +91,7 @@ object PdfDraw {
 		}
 	}
 
-	case class DrawLine(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]) extends PdfGraphicChuck {
+	case class DrawLine(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]) extends PdfGraphicChuck {
 		override def content: String = {
 			movePoint(x1, y1) + lineTo(x2, y2,lineWidth) +border(color)+fillStroke(false,true)
 		}
@@ -103,14 +103,14 @@ object PdfDraw {
 		}
 	}
 
-	case class DrawBorderColor(borderColor: RColor) extends PdfGraphicChuck {
+	case class DrawBorderColor(borderColor: ReportColor) extends PdfGraphicChuck {
 		override def content: String = {
 			val color = convertColor(borderColor)
 			s"${color._1} ${color._2} ${color._3} RG"
 		}
 	}
 
-	case class DrawFillColor(borderColor: RColor) extends PdfGraphicChuck {
+	case class DrawFillColor(borderColor: ReportColor) extends PdfGraphicChuck {
 		override def content: String = {
 			val color = convertColor(borderColor)
 			s"${color._1} ${color._2} ${color._3} rg"
@@ -124,8 +124,8 @@ object PdfDraw {
 	}
 
 
-	case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[RColor],
-	                        fillColor: Option[RColor], patternColor: Option[PdfGPattern] = None) extends PdfGraphicChuck {
+	case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[ReportColor],
+	                        fillColor: Option[ReportColor], patternColor: Option[PdfGPattern] = None) extends PdfGraphicChuck {
 		override def content: String = {
 			val paternStr = if (patternColor.isDefined) pattern(patternColor.get.name) else ""
 			val borderStr = if (borderColor.isDefined) border(borderColor.get) else ""

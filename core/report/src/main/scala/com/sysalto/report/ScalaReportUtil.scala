@@ -24,7 +24,7 @@
 
 package com.sysalto.report
 
-import com.sysalto.report.reportTypes.{RFont, RText}
+import com.sysalto.report.reportTypes.{RFont, ReportTxt}
 
 import scala.language.implicitConversions
 
@@ -39,7 +39,7 @@ trait  ScalaReportUtil {
   }
 
 
-  implicit def stringToRText(txt: String): RText = RText(txt, RFont(10))
+  implicit def stringToRText(txt: String): ReportTxt = ReportTxt(txt, RFont(10))
 
 
   private[this] def getFormatter(localeCode: String) = {

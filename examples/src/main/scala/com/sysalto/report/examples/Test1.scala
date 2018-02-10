@@ -49,7 +49,7 @@ object Test1 {
 		val font = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily))
 //		report.font = font
 		val str = "OK11"
-		val txt1 = RText(str,font)
+		val txt1 = ReportTxt(str,font)
 		//  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
 		//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
 		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))

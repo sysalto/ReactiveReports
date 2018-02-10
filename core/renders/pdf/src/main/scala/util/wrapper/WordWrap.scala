@@ -23,7 +23,7 @@
 package util.wrapper
 
 import com.sysalto.report.RFontAttribute
-import com.sysalto.report.reportTypes.{RFont, RText}
+import com.sysalto.report.reportTypes.{RFont, ReportTxt}
 import util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
 
 import scala.annotation.tailrec
@@ -122,7 +122,7 @@ class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParse
 		}
 	}
 
-	case class RTextPos(x: Float, textLength: Float, rtext: RText)
+	case class RTextPos(x: Float, textLength: Float, rtext: ReportTxt)
 
 	@tailrec
 	private[this] def wordToRTextPos(offset: Float, word: Word, accum: ListBuffer[RTextPos]): Unit = {
@@ -132,13 +132,13 @@ class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParse
 		if (word.charList.groupBy(char => char.font).size == 1) {
 			// one font ->keep it together
 			val str = word.charList.map(char => char.char)
-			val rtext = RText(str.mkString, word.charList(0).font)
+			val rtext = ReportTxt(str.mkString, word.charList(0).font)
 			accum += RTextPos(offset, getWordSize(word), rtext)
 		} else {
 			val firstFont = word.charList(0).font
 			val i1 = word.charList.indexWhere(char => char.font != firstFont)
 			val word1 = Word(word.charList.take(i1))
-			accum += RTextPos(offset, getWordSize(word1), RText(word.charList.take(i1).map(char => char.char).mkString, firstFont))
+			accum += RTextPos(offset, getWordSize(word1), ReportTxt(word.charList.take(i1).map(char => char.char).mkString, firstFont))
 
 			val word2 = Word(word.charList.drop(i1))
 			wordToRTextPos(offset + getWordSize(word1), word2, accum)
@@ -162,7 +162,7 @@ class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParse
 		}
 	}
 
-	private[this] def wordWrapInternal(input: List[RText], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
+	private[this] def wordWrapInternal(input: List[ReportTxt], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
 
 		// function that calculate the size of a string including spaces
 		def size(l: List[Float], font: RFont): Float = {
@@ -224,7 +224,7 @@ class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParse
 	}
 
 	@tailrec
-	private[this] def wordWrapT(input: List[RText], max: Float, accum: ListBuffer[List[RTextPos]])(implicit wordSeparators: List[Char]): Unit = {
+	private[this] def wordWrapT(input: List[ReportTxt], max: Float, accum: ListBuffer[List[RTextPos]])(implicit wordSeparators: List[Char]): Unit = {
 		val i1 = input.indexWhere(item => item.txt.contains("\n"))
 		if (i1 == -1) {
 			accum ++= wordWrapInternal(input, max)
@@ -232,15 +232,15 @@ class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParse
 			val l1 = input.take(i1)
 			val elem = input(i1)
 			val i2 = elem.txt.indexOf('\n')
-			val list1 = input.take(i1) ++ List(RText(elem.txt.substring(0, i2), elem.font))
-			val list2 = List(RText(elem.txt.substring(i2 + 1), elem.font)) ++ input.drop(i1 + 1)
+			val list1 = input.take(i1) ++ List(ReportTxt(elem.txt.substring(0, i2), elem.font))
+			val list2 = List(ReportTxt(elem.txt.substring(i2 + 1), elem.font)) ++ input.drop(i1 + 1)
 			accum ++= wordWrapInternal(list1, max)
 			wordWrapT(list2, max, accum)
 		}
 	}
 
 
-	def wordWrap(input: List[RText], max: Float)
+	def wordWrap(input: List[ReportTxt], max: Float)
 	            (implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
 		val result = ListBuffer[List[RTextPos]]()
 		wordWrapT(input, max, result)

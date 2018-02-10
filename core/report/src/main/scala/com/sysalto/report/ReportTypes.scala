@@ -52,7 +52,7 @@ object ReportTypes {
 	class RColorBase()
 
 
-	case class RGradientColor(x0: Float, y0: Float, x1: Float, y1: Float, startColor: RColor, endColor: RColor) extends RColorBase
+	case class RGradientColor(x0: Float, y0: Float, x1: Float, y1: Float, startColor: ReportColor, endColor: ReportColor) extends RColorBase
 
 	case class DRectangle(x1: Float, y1: Float, x2: Float, y2: Float,
 	                      radius: Float = 0)
@@ -107,7 +107,7 @@ object ReportTypes {
 	/*
 	draws a text at (x,y)
 	 */
-	case class ReportText(txt: RText, x: Float, y: Float) extends ReportItem() {
+	case class ReportText(txt: ReportTxt, x: Float, y: Float) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.text(txt, x, y - deltaY)
@@ -117,7 +117,7 @@ object ReportTypes {
 	/*
 	draws a text align at index at the point(x,y)
 	 */
-	case class ReportTextAligned(rText: RText, x: Float, y: Float, index: Int) extends ReportItem() {
+	case class ReportTextAligned(rText: ReportTxt, x: Float, y: Float, index: Int) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.textAlignedAtPosition(rText, x, y - deltaY, index)
 
@@ -127,7 +127,7 @@ object ReportTypes {
 	/*
 	text wrap class
 	 */
-	case class ReportTextWrap(text: List[RText],
+	case class ReportTextWrap(text: List[ReportTxt],
 	                          x0: Float, y0: Float, x1: Float, y1: Float,
 	                          wrapAlign: WrapAlign.Value, startY: Option[Float]) extends ReportItem() {
 		override def render(report: Report): Unit = {
@@ -168,7 +168,7 @@ object ReportTypes {
 	/*
 	line class
 	 */
-	case class ReportLine(x1: Float = 0, y1: Float = -1, x2: Float = -1, y2: Float = -1, lineWidth: Float, color: RColor, lineDashType: Option[LineDashType]) extends ReportItem() {
+	case class ReportLine(x1: Float = 0, y1: Float = -1, x2: Float = -1, y2: Float = -1, lineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.line(x1, y1 - deltaY, x2, y2 - deltaY, lineWidth, color, lineDashType)
 		}
@@ -178,7 +178,7 @@ object ReportTypes {
 	rectangle class
 	 */
 	case class ReportRectangle(x1: Float, y1: Float, x2: Float, y2: Float,
-	                           radius: Float = 0, color: Option[RColor], fillColor: Option[RColor]) extends ReportItem() {
+	                           radius: Float = 0, color: Option[ReportColor], fillColor: Option[ReportColor]) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.rectangle(x1, y1 - deltaY, x2, y2 - deltaY, radius, color, fillColor)
 		}
@@ -187,7 +187,7 @@ object ReportTypes {
 	/*
 	vertical shade rectangle
 	 */
-	case class ReportVerticalShade(rectangle: DRectangle, from: RColor, to: RColor) extends ReportItem() {
+	case class ReportVerticalShade(rectangle: DRectangle, from: ReportColor, to: ReportColor) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.verticalShade(rectangle, from, to)
 		}
