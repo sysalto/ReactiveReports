@@ -25,7 +25,7 @@
 package com.sysalto.report
 
 import com.sysalto.report.ReportTypes._
-import com.sysalto.report.reportTypes.{LineDashType, RCell, RColor, RText}
+import com.sysalto.report.reportTypes.{LineDashType, ReportCell, RColor, RText}
 
 import scala.collection.mutable.ListBuffer
 

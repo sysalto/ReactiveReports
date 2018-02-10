@@ -411,7 +411,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	print a cell (means wrapping text).
 	 */
-	def print(cell: RCell): Unit = {
+	def print(cell: ReportCell): Unit = {
 		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.align)
 	}
 
@@ -446,7 +446,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	only calculate a cell.
 	 */
-	def calculate(cell: RCell): WrapBox = {
+	def calculate(cell: ReportCell): WrapBox = {
 		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.align, simulate = true).get
 	}
 

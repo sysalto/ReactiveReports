@@ -99,7 +99,7 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
       report.setYPosition(report.pgSize.height - report.lineHeight * 3)
       report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
       report.nextLine()
-      report print (RCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
+      report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside RMargin(0, report.pgSize.width - 10))
     }
 
     reportAmerica.setFooterSize = footerSizeFct
@@ -123,7 +123,7 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
         val txt = (if (txt1.contains(img)) txt1.substring(0, txt1.indexOf(img)) else txt1).trim
 
         if (!txt.isEmpty) {
-          val details = RCell(txt) inside RMargin(10, report.pgSize.width - 10)
+          val details = ReportCell(txt) inside RMargin(10, report.pgSize.width - 10)
           val wrapBox = report calculate details
           report print details
           report.setYPosition(wrapBox.currentY)

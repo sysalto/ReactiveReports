@@ -32,7 +32,7 @@ import com.sysalto.report.{Report, WrapAlign}
 /*
 class for wrapping text
  */
-case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var align: WrapAlign.Value = WrapAlign.NO_WRAP) {
+case class ReportCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var align: WrapAlign.Value = WrapAlign.NO_WRAP) {
 
 	def this(txt: List[RText]) = {
 		this(txt, RMargin(0, 0), WrapAlign.NO_WRAP)
@@ -49,7 +49,7 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alig
 	/*
 	align left
 	 */
-	def leftAlign(): RCell = {
+	def leftAlign(): ReportCell = {
 		align = WrapAlign.WRAP_LEFT
 		this
 	}
@@ -57,7 +57,7 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alig
 	/*
 	align center
 	 */
-	def centerAlign(): RCell = {
+	def centerAlign(): ReportCell = {
 		align = WrapAlign.WRAP_CENTER
 		this
 	}
@@ -65,7 +65,7 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alig
 	/*
 	align right
 	 */
-	def rightAlign(): RCell = {
+	def rightAlign(): ReportCell = {
 		align = WrapAlign.WRAP_RIGHT
 		this
 	}
@@ -73,12 +73,12 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alig
 	/*
 	define boundaries
 	 */
-	def inside(margin: RMargin): RCell = {
+	def inside(margin: RMargin): ReportCell = {
 		this.margin = margin
 		this
 	}
 
-	def inside(left: Float, right: Float): RCell = {
+	def inside(left: Float, right: Float): ReportCell = {
 		this.margin = RMargin(left, right)
 		this
 	}
@@ -87,7 +87,7 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alig
 	/*
 	define only left boundary
 	 */
-	def at(x: Float): RCell = {
+	def at(x: Float): ReportCell = {
 		margin = RMargin(x, Float.MaxValue)
 		this
 	}
@@ -95,9 +95,9 @@ case class RCell(txt: List[RText], var margin: RMargin = RMargin(0, 0), var alig
 	def calculate(report: Report): WrapBox = report.wrap(txt, margin.left, report.getY, margin.right, Float.MaxValue, WrapAlign.WRAP_LEFT, simulate=true).get
 }
 
-object RCell {
-	def apply(rtext: RText): RCell = RCell(List(rtext))
+object ReportCell {
+	def apply(rtext: RText): ReportCell = ReportCell(List(rtext))
 
-	def apply(list: RTextList): RCell = RCell(list.list.toList)
+	def apply(list: RTextList): ReportCell = ReportCell(list.list.toList)
 }
 

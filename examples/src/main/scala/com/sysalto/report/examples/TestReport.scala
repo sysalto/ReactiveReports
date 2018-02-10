@@ -26,7 +26,7 @@ package com.sysalto.report.examples
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.akka.template.ReportAppAkka
-import com.sysalto.report.reportTypes.{RCell, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{ReportCell, ReportPageOrientation}
 
 /**
   * Created by marian on 4/1/17.

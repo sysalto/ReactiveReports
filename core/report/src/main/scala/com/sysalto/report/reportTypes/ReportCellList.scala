@@ -30,7 +30,7 @@ import scala.annotation.varargs
 /**
   * Created by marian on 3/4/17.
   */
-case class ReportCellList(cells: List[RCell]) {
+case class ReportCellList(cells: List[ReportCell]) {
   def calculate(report: Report): Float = {
     val y = report.getY
     val wrapList = cells.map(cell => {
@@ -48,7 +48,7 @@ case class ReportCellList(cells: List[RCell]) {
 object ReportCellList {
   def instance: ReportCellList.type = this
 
-  @varargs def apply(cells: RCell*): ReportCellList = {
+  @varargs def apply(cells: ReportCell*): ReportCellList = {
     new ReportCellList(cells.toList)
   }
 }

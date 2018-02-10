@@ -69,16 +69,16 @@ public class MutualFundsNoAkkaJavaReport {
             RMargin column1 = row.getColumnBound("column1");
             RMargin column2 = row.getColumnBound("column2");
             RMargin column3 = row.getColumnBound("column3");
-            RCell h_column1 = new RCell(new RText("Type of Account").bold()).leftAlign().inside(column1);
-            RCell h_column2 = new RCell(new RText("Your account number").bold()).leftAlign().inside(column2);
-            RCell h_column3 = new RCell(new RText("Your investment statement").bold()).rightAlign().inside(column3);
+            ReportCell h_column1 = new ReportCell(new RText("Type of Account").bold()).leftAlign().inside(column1);
+            ReportCell h_column2 = new ReportCell(new RText("Your account number").bold()).leftAlign().inside(column2);
+            ReportCell h_column3 = new ReportCell(new RText("Your investment statement").bold()).rightAlign().inside(column3);
             ReportCellList hrow = ReportCellList.apply(h_column1, h_column2, h_column3);
             report.print(hrow);
             report.nextLine();
             String str = sd.format(date1) + " to " + sd.format(date2);
-            RCell r_column1 = new RCell(new RText("Group Registered Retirement Saving Plan")).leftAlign().inside(column1);
-            RCell r_column2 = new RCell(new RText("123456789")).leftAlign().inside(column2);
-            RCell r_column3 = new RCell(new RText(str)).rightAlign().inside(column3);
+            ReportCell r_column1 = new ReportCell(new RText("Group Registered Retirement Saving Plan")).leftAlign().inside(column1);
+            ReportCell r_column2 = new ReportCell(new RText("123456789")).leftAlign().inside(column2);
+            ReportCell r_column3 = new ReportCell(new RText(str)).rightAlign().inside(column3);
             ReportCellList rrow = ReportCellList.apply(r_column1, r_column2, r_column3);
             report.print(rrow);
             report.nextLine(2);
@@ -89,7 +89,7 @@ public class MutualFundsNoAkkaJavaReport {
             report.setYPosition(report.pgSize().height() - report.lineHeight() * 3);
             report.line().from(10, report.getY()).to(report.pgSize().width() - 10, -1).draw();
             report.nextLine();
-            RCell cell = new RCell(new RText("Page " + pg + " of " + pgMax).bold()).rightAlign().inside(0, report.pgSize().width() - 10);
+            ReportCell cell = new ReportCell(new RText("Page " + pg + " of " + pgMax).bold()).rightAlign().inside(0, report.pgSize().width() - 10);
             report.print(cell);
         });
         reportHeader(report);
@@ -111,27 +111,27 @@ public class MutualFundsNoAkkaJavaReport {
         report.nextLine();
         report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5f, 45f, 100f, 40f);
         RMargin margin = new RMargin(0, report.pgSize().width() - 10);
-        report.print(new RCell(new RText("Investment statement").size(15).bold()).rightAlign().inside(margin));
+        report.print(new ReportCell(new RText("Investment statement").size(15).bold()).rightAlign().inside(margin));
         report.nextLine();
         String str = sd.format(date1) + " to " + sd.format(date2);
-        report.print(new RCell(new RText(str).size(15).bold()).rightAlign().inside(margin));
+        report.print(new ReportCell(new RText(str).size(15).bold()).rightAlign().inside(margin));
         report.nextLine(2);
-        report.print(new RCell(new RText("Mutual Funds Inc.").bold()).at(10));
+        report.print(new ReportCell(new RText("Mutual Funds Inc.").bold()).at(10));
         report.nextLine();
-        report.print(new RCell(new RText("Group Registered Retirement Saving Plan").bold()).at(10));
+        report.print(new ReportCell(new RText("Group Registered Retirement Saving Plan").bold()).at(10));
         report.nextLine(2);
         Float y = report.getY();
-        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "name").toString()).bold()).at(10));
+        report.print(new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "name").toString()).bold()).at(10));
         report.nextLine();
-        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "addr1").toString())).at(10));
+        report.print(new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "addr1").toString())).at(10));
         report.nextLine();
-        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "addr2").toString())).at(10));
+        report.print(new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "addr2").toString())).at(10));
         report.nextLine();
-        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "addr3").toString())).at(10));
+        report.print(new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "addr3").toString())).at(10));
         report.setYPosition(y);
-        report.print(new RCell(new RText("Beneficiary information").bold()).at(500));
+        report.print(new ReportCell(new RText("Beneficiary information").bold()).at(500));
         report.nextLine();
-        report.print(new RCell(new RText(GroupUtilDefs.getRecordValue(record, "benef_name").toString())).at(500));
+        report.print(new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "benef_name").toString())).at(500));
         report.nextLine(2);
     }
 
@@ -147,14 +147,14 @@ public class MutualFundsNoAkkaJavaReport {
         RMargin m_value2 = row.getColumnBound("value2");
         RMargin m_change = row.getColumnBound("change");
         RMargin m_graphic = row.getColumnBound("graphic");
-        RCell c_fundName = new RCell(new RText("Summary of investments").bold().color(headerFontColor)).leftAlign().
+        ReportCell c_fundName = new ReportCell(new RText("Summary of investments").bold().color(headerFontColor)).leftAlign().
                 inside(m_fundName);
-        RCell c_value1 = new RCell(new RText("Value on\n" + sd.format(date1) + "($$)").bold().color(headerFontColor)).rightAlign().
+        ReportCell c_value1 = new ReportCell(new RText("Value on\n" + sd.format(date1) + "($$)").bold().color(headerFontColor)).rightAlign().
                 inside(m_value1);
-        RCell c_value2 = new RCell(new RText("Value on\n" + sd.format(date2) + "($$)").bold().color(headerFontColor)).rightAlign().
+        ReportCell c_value2 = new ReportCell(new RText("Value on\n" + sd.format(date2) + "($$)").bold().color(headerFontColor)).rightAlign().
                 inside(m_value2);
-        RCell c_change = new RCell(new RText("Change($$)").bold().color(headerFontColor)).rightAlign().inside(m_change);
-        RCell c_graphic = new RCell(new RText("Assets mix\n" + sd.format(date2) + "(%)").bold().color(headerFontColor)).rightAlign().inside(m_graphic);
+        ReportCell c_change = new ReportCell(new RText("Change($$)").bold().color(headerFontColor)).rightAlign().inside(m_change);
+        ReportCell c_graphic = new ReportCell(new RText("Assets mix\n" + sd.format(date2) + "(%)").bold().color(headerFontColor)).rightAlign().inside(m_graphic);
         ReportCellList rrow = ReportCellList.apply(c_fundName, c_value1, c_value2, c_change, c_graphic);
         Float y2 = rrow.calculate(report);
         report.rectangle().from(9, report.getY() - report.lineHeight()).radius(3).to(report.pgSize().width() - 9, y2 + 2).fillColor(headerColor).draw();
@@ -186,16 +186,16 @@ public class MutualFundsNoAkkaJavaReport {
             BigDecimal value1 = GroupUtilDefs.getRecordValue(crtRec, "value1");
             BigDecimal value2 = GroupUtilDefs.getRecordValue(crtRec, "value2");
             RTextList fundTxt = new RText(cc + " ").bold().plus(new RText(fund_name));
-            RCell cr_fundName = RCell.apply(fundTxt).leftAlign().inside(m_fundName);
-            RCell cr_value1 = new RCell(new RText(value1.toString())).rightAlign().inside(m_value1);
-            RCell cr_value2 = new RCell(new RText(value2.toString())).rightAlign().inside(m_value2);
+            ReportCell cr_fundName = ReportCell.apply(fundTxt).leftAlign().inside(m_fundName);
+            ReportCell cr_value1 = new ReportCell(new RText(value1.toString())).rightAlign().inside(m_value1);
+            ReportCell cr_value2 = new ReportCell(new RText(value2.toString())).rightAlign().inside(m_value2);
             Float v_change = value2.floatValue() - value1.floatValue();
             total1.set(total1.get() + value1.floatValue());
             total2.set(total2.get() + value2.floatValue());
             total3.set(total3.get() + v_change.floatValue());
 
             chartData.get().add(new scala.Tuple2("" + cc, total2.get()));
-            RCell cr_change = new RCell(new RText(v_change.toString())).rightAlign().inside(m_change);
+            ReportCell cr_change = new ReportCell(new RText(v_change.toString())).rightAlign().inside(m_change);
             ReportCellList rrow1 = ReportCellList.apply(cr_fundName, cr_value1, cr_value2, cr_change);
             Float y3 = rrow1.calculate(report);
             report.print(rrow1);
@@ -210,10 +210,10 @@ public class MutualFundsNoAkkaJavaReport {
         });
 
 
-        ReportCellList trow = ReportCellList.apply(new RCell(new RText("Total").bold()).inside(m_fundName),
-                new RCell(new RText(total1.toString()).bold()).rightAlign().inside(m_value1),
-                new RCell(new RText(total2.toString()).bold()).rightAlign().inside(m_value2),
-                new RCell(new RText(total3.toString()).bold()).rightAlign().inside(m_change));
+        ReportCellList trow = ReportCellList.apply(new ReportCell(new RText("Total").bold()).inside(m_fundName),
+                new ReportCell(new RText(total1.toString()).bold()).rightAlign().inside(m_value1),
+                new ReportCell(new RText(total2.toString()).bold()).rightAlign().inside(m_value2),
+                new ReportCell(new RText(total3.toString()).bold()).rightAlign().inside(m_change));
         report.print(trow);
         float chartHeight = report.getY() - firstY.get() - 10;
         report.drawPieChart1("", chartData.get(), m_graphic.left() + 5, firstY.get() - report.lineHeight() + 5, m_graphic.right() -
@@ -234,13 +234,13 @@ public class MutualFundsNoAkkaJavaReport {
         RMargin value1 = row.getColumnBound("value1");
         RMargin value2 = row.getColumnBound("value2");
         RMargin value3 = row.getColumnBound("value3");
-        RCell accountHdr = new RCell(new RText("Change in the value of account").bold().
+        ReportCell accountHdr = new ReportCell(new RText("Change in the value of account").bold().
                 color(headerFontColor)).leftAlign().inside(account);
-        RCell value1Hdr = new RCell(new RText("This period($)").bold().
+        ReportCell value1Hdr = new ReportCell(new RText("This period($)").bold().
                 color(headerFontColor)).rightAlign().inside(value1);
-        RCell value2Hdr = new RCell(new RText("Year-to-date($)").bold().
+        ReportCell value2Hdr = new ReportCell(new RText("Year-to-date($)").bold().
                 color(headerFontColor)).rightAlign().inside(value2);
-        RCell value3Hdr = new RCell(new RText("Since\n" + sd.format(date1) + "($)").bold().
+        ReportCell value3Hdr = new ReportCell(new RText("Since\n" + sd.format(date1) + "($)").bold().
                 color(headerFontColor)).rightAlign().inside(value3);
         ReportCellList rrow = ReportCellList.apply(accountHdr, value1Hdr, value2Hdr, value3Hdr);
         float y2 = rrow.calculate(report);
@@ -263,10 +263,10 @@ public class MutualFundsNoAkkaJavaReport {
             BigDecimal r_value1 = GroupUtilDefs.getRecordValue(crtRec, "value1");
             BigDecimal r_value2 = GroupUtilDefs.getRecordValue(crtRec, "value2");
             BigDecimal r_value3 = GroupUtilDefs.getRecordValue(crtRec, "value3");
-            RCell c_account = new RCell(new RText(name)).leftAlign().inside(account);
-            RCell c_value1 = new RCell(new RText(r_value1.toString())).rightAlign().inside(value1);
-            RCell c_value2 = new RCell(new RText(r_value2.toString())).rightAlign().inside(value2);
-            RCell c_value3 = new RCell(new RText(r_value3.toString())).rightAlign().inside(value3);
+            ReportCell c_account = new ReportCell(new RText(name)).leftAlign().inside(account);
+            ReportCell c_value1 = new ReportCell(new RText(r_value1.toString())).rightAlign().inside(value1);
+            ReportCell c_value2 = new ReportCell(new RText(r_value2.toString())).rightAlign().inside(value2);
+            ReportCell c_value3 = new ReportCell(new RText(r_value3.toString())).rightAlign().inside(value3);
             total1.set(total1.get() + r_value1.doubleValue());
             total2.set(total2.get() + r_value2.doubleValue());
             total3.set(total3.get() + r_value3.doubleValue());
@@ -284,10 +284,10 @@ public class MutualFundsNoAkkaJavaReport {
         });
 
         rs.close();
-        RCell accountSum = new RCell(new RText("Value of  account on " + sd.format(date2)).bold()).leftAlign().inside(account);
-        RCell value1Sum = new RCell(new RText("" + total1.get()).bold()).rightAlign().inside(value1);
-        RCell value2Sum = new RCell(new RText("" + total2.get()).bold()).rightAlign().inside(value2);
-        RCell value3Sum = new RCell(new RText("" + total3.get()).bold()).rightAlign().inside(value3);
+        ReportCell accountSum = new ReportCell(new RText("Value of  account on " + sd.format(date2)).bold()).leftAlign().inside(account);
+        ReportCell value1Sum = new ReportCell(new RText("" + total1.get()).bold()).rightAlign().inside(value1);
+        ReportCell value2Sum = new ReportCell(new RText("" + total2.get()).bold()).rightAlign().inside(value2);
+        ReportCell value3Sum = new ReportCell(new RText("" + total3.get()).bold()).rightAlign().inside(value3);
         ReportCellList frow = ReportCellList.apply(accountSum, value1Sum, value2Sum, value3Sum);
         Float y3 = frow.calculate(report);
         report.print(frow);
@@ -311,19 +311,19 @@ public class MutualFundsNoAkkaJavaReport {
         RMargin value5y = row.getColumnBound("value5y");
         RMargin value10y = row.getColumnBound("value10y");
         RMargin annualized = row.getColumnBound("annualized");
-        RCell h_accountPerf = new RCell(new RText("Account performance").bold().color(headerFontColor)).leftAlign().
+        ReportCell h_accountPerf = new ReportCell(new RText("Account performance").bold().color(headerFontColor)).leftAlign().
                 inside(accountPerf);
-        RCell h_value3m = new RCell(new RText("3 Months (%)").bold().color(headerFontColor)).rightAlign().
+        ReportCell h_value3m = new ReportCell(new RText("3 Months (%)").bold().color(headerFontColor)).rightAlign().
                 inside(value3m);
-        RCell h_value1y = new RCell(new RText("1 Year (%)").bold().color(headerFontColor)).rightAlign().
+        ReportCell h_value1y = new ReportCell(new RText("1 Year (%)").bold().color(headerFontColor)).rightAlign().
                 inside(value1y);
-        RCell h_value3y = new RCell(new RText("3 Years (%)").bold().color(headerFontColor)).rightAlign().
+        ReportCell h_value3y = new ReportCell(new RText("3 Years (%)").bold().color(headerFontColor)).rightAlign().
                 inside(value3y);
-        RCell h_value5y = new RCell(new RText("5 Years (%)").bold().color(headerFontColor)).rightAlign().
+        ReportCell h_value5y = new ReportCell(new RText("5 Years (%)").bold().color(headerFontColor)).rightAlign().
                 inside(value5y);
-        RCell h_value10y = new RCell(new RText("10 Years (%)").bold().color(headerFontColor)).rightAlign().
+        ReportCell h_value10y = new ReportCell(new RText("10 Years (%)").bold().color(headerFontColor)).rightAlign().
                 inside(value10y);
-        RCell h_annualized = new RCell(new RText("Annualized since " + sd.format(date1) + " (%)").bold().
+        ReportCell h_annualized = new ReportCell(new RText("Annualized since " + sd.format(date1) + " (%)").bold().
                 color(headerFontColor)).rightAlign().inside(annualized);
         ReportCellList hrow = ReportCellList.apply(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized);
         Float y1 = hrow.calculate(report);
@@ -332,19 +332,19 @@ public class MutualFundsNoAkkaJavaReport {
         report.setYPosition(y1);
         report.nextLine();
 
-        RCell r_accountPerf = new RCell(new RText("Your personal rate of return")).
+        ReportCell r_accountPerf = new ReportCell(new RText("Your personal rate of return")).
                 leftAlign().inside(accountPerf);
-        RCell r_value3m = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value3m").toString())).
+        ReportCell r_value3m = new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "value3m").toString())).
                 rightAlign().inside(value3m);
-        RCell r_value1y = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value1y").toString())).
+        ReportCell r_value1y = new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "value1y").toString())).
                 rightAlign().inside(value1y);
-        RCell r_value3y = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value3y").toString())).
+        ReportCell r_value3y = new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "value3y").toString())).
                 rightAlign().inside(value3y);
-        RCell r_value5y = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value5y").toString())).
+        ReportCell r_value5y = new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "value5y").toString())).
                 rightAlign().inside(value5y);
-        RCell r_value10y = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "value10y").toString())).
+        ReportCell r_value10y = new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "value10y").toString())).
                 rightAlign().inside(value10y);
-        RCell r_annualized = new RCell(new RText(GroupUtilDefs.getRecordValue(record, "annualized").toString())).
+        ReportCell r_annualized = new ReportCell(new RText(GroupUtilDefs.getRecordValue(record, "annualized").toString())).
                 rightAlign().inside(annualized);
         ReportCellList rrow = ReportCellList.apply(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized);
         Float y2 = rrow.calculate(report);
@@ -357,7 +357,7 @@ public class MutualFundsNoAkkaJavaReport {
         report.nextPage();
         drawbackgroundImage(report);
         report.nextLine();
-        report.print(new RCell(new RText("Disclaimer").bold().size(20)).at(50));
+        report.print(new ReportCell(new RText("Disclaimer").bold().size(20)).at(50));
         report.nextLine(2);
         List<String> txtList = Arrays.asList(
                 "Lorem ipsum dolor sit amet, quo consul dolores te, et modo timeam assentior mei. Eos et sonet soleat copiosae. Malis labitur constituam cu cum. Qui unum probo an. Ne verear dolorem quo, sed mediocrem hendrerit id. In alia persecuti nam, cum te equidem elaboraret.",
@@ -372,7 +372,7 @@ public class MutualFundsNoAkkaJavaReport {
                 "Suscipit ponderum verterem et mel, vim semper facilisi ex, mel aliquid constituam ut. Summo denique complectitur ius at, in quo nobis deterruisset. Ut viris convenire eam. Quo id suscipit quaerendum, magna veniam et vix, duis liber disputando et has. Aliquando democritum id usu, falli diceret invidunt in per, in falli essent quo."
         );
         for (String txt : txtList) {
-            RCell cell = (new RCell(new RText(txt))).inside(new RMargin(10, report.pgSize().width() - 10));
+            ReportCell cell = (new ReportCell(new RText(txt))).inside(new RMargin(10, report.pgSize().width() - 10));
             ReportTypes.WrapBox box = cell.calculate(report);
             report.print(cell);
             report.setYPosition(box.currentY() + report.lineHeight());

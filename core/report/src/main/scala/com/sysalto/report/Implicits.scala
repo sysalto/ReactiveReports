@@ -33,7 +33,7 @@ object Implicits extends ScalaReportUtil {
 	val Row: com.sysalto.report.reportTypes.Row.type = com.sysalto.report.reportTypes.Row
 	val Column: com.sysalto.report.reportTypes.Column.type = com.sysalto.report.reportTypes.Column
 	val Flex: ReportColumnUtil.Flex.type = ReportColumnUtil.Flex
-	val RCell: com.sysalto.report.reportTypes.RCell.type = com.sysalto.report.reportTypes.RCell
+	val ReportCell: com.sysalto.report.reportTypes.ReportCell.type = com.sysalto.report.reportTypes.ReportCell
 	val Report: com.sysalto.report.Report.type = com.sysalto.report.Report
 	type Report = com.sysalto.report.Report
 	val ReportCellList: com.sysalto.report.reportTypes.ReportCellList.type = com.sysalto.report.reportTypes.ReportCellList
