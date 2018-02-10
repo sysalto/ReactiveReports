@@ -33,8 +33,8 @@ import scala.collection.mutable.ListBuffer
 class RectangleDsl(report: Report) {
 
 	private[this] var x1, y1, x2, y2, dradius = 0.0f
-	private[this] var from: ReportColor = _
-	private[this] var to: ReportColor = _
+	private[this] var fromColor: ReportColor = _
+	private[this] var toColor: ReportColor = _
 	private[this] var dcolor: Option[ReportColor] = None
 	private[this] var dFillColor: Option[ReportColor] = None
 
@@ -84,8 +84,8 @@ set fillColor color
 	fill with vertical shade
 	 */
 	def verticalShade(from: ReportColor, to: ReportColor): RectangleDsl = {
-		this.from = from
-		this.to = to
+		this.fromColor = from
+		this.toColor = to
 		this
 	}
 
@@ -94,8 +94,8 @@ set fillColor color
 	 */
 	def draw(): Unit = {
 		val vrectangle = DRectangle(x1, y1, x2, y2, dradius)
-		if (from != null) {
-			report.verticalShade(vrectangle, from, to)
+		if (fromColor != null) {
+			report.verticalShade(vrectangle, fromColor, toColor)
 		} else {
 			report.drawRectangle(x1, y1, x2, y2, dradius, dcolor, dFillColor)
 		}

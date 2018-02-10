@@ -47,7 +47,7 @@ object TestBig extends GroupUtilTrait {
 		report.print(title)
 		report.nextLine(3)
 
-		for (i <- 1 to 200) {
+		for (i <- 1 to 1) {
 			report print s"NAME${i}" at 10
 			report print s"ADDRESS${i}" at 100
 			drawImg(report,(Math.random()*100).toInt)
