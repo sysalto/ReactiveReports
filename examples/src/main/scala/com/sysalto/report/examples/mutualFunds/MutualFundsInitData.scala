@@ -29,8 +29,8 @@ import java.sql.{DriverManager, ResultSet}
 
 object MutualFundsInitData {
   Class.forName("org.hsqldb.jdbc.JDBCDriver")
-//  private val conn = DriverManager.getConnection("jdbc:hsqldb:mem:mymemdb", "SA", "")
-  private val conn = DriverManager.getConnection("jdbc:hsqldb:file:/home/marian/transfer/database/test", "SA", "")
+  private val conn = DriverManager.getConnection("jdbc:hsqldb:mem:mymemdb", "SA", "")
+//  private val conn = DriverManager.getConnection("jdbc:hsqldb:file:/home/marian/transfer/database/test", "SA", "")
 
   private def dbUpdate(sql: String): Unit = {
     val st = conn.createStatement()

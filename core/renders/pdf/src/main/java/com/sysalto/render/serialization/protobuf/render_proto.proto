@@ -1,0 +1,490 @@
+syntax = "proto3";
+option optimize_for = SPEED;
+
+package com.sysalto.render.serialization;
+
+message ListPdfBaseItem_proto {
+    repeated PdfBaseItem_proto item = 1;
+}
+
+message PdfBaseItem_proto {
+    int64 offset = 1;
+    oneof field {
+        PdfNames_proto pdfNames_proto = 2;
+        PdfDests_proto pdfDests_proto = 3;
+        PdfCatalog_proto pdfCatalog_proto = 4;
+        PdfPageList_proto pdfPageList_proto = 5;
+        PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 6;
+        PdfColorShadding_proto pdfColorShadding_proto = 7;
+        PdfGPattern_proto PpdfGPattern_proto = 8;
+        PdfImage_proto pdfImage_proto = 9;
+        PdfPage_proto pdfPage_proto = 10;
+        PdfAction_proto pdfAction_proto = 11;
+        PdfAnnotation_proto pdfAnnotation = 12;
+        PdfFont_proto pdfFont_proto = 13;
+        PdfFontStream_proto PpdfFontStream_proto = 14;
+        PdfFontDescriptor_proto pdfFontDescriptor_proto = 15;
+        PdfPageContent_proto pdfPageContent_proto = 16;
+    }
+}
+
+message PdfNames_proto {
+    int64 id = 1;
+    PdfDests_proto dests = 2;
+}
+
+message PdfDests_proto {
+    int64 id = 1;
+    repeated StringString_proto dests = 2;
+}
+
+
+message PdfCatalog_proto {
+    int64 id = 1;
+    OptionPdfPageList_proto pdfPageList = 2;
+    OptionPdfNames_proto pdfNames = 3;
+}
+
+
+message PdfPageList_proto {
+    int64 id = 1;
+    OptionLong_proto parentId = 2;
+    repeated int64 pageList = 3;
+}
+
+
+message PdfShaddingFctColor_proto {
+    int64 id = 1;
+    RColor_proto color1 = 2;
+    RColor_proto color2 = 3;
+}
+
+
+message PdfColorShadding_proto {
+    int64 id = 1;
+    float x0 = 2;
+    float y0 = 3;
+    float x1 = 4;
+    float y1 = 5;
+    PdfShaddingFctColor_proto pdfShaddingFctColor = 6;
+}
+
+message PdfGPattern_proto {
+    int64 id = 1;
+    PdfColorShadding_proto pdfShadding = 2;
+}
+
+message PdfImage_proto {
+    int64 id = 1;
+    string fileName = 2;
+}
+
+message PdfDrawImage_proto {
+    PdfImage_proto pdfImage = 1;
+    float x = 2;
+    float y = 3;
+    float scale = 4;
+    OptionFloat_proto opacity = 5;
+}
+
+
+message PdfPage_proto {
+    int64 id = 1;
+    int64 parentId = 2;
+    float pageWidth = 3;
+    float pageHeight = 4;
+    repeated PdfFont_proto fontList = 5;
+    repeated PdfGPattern_proto pdfPatternList = 6;
+    repeated PdfAnnotation_proto annotation = 7;
+    repeated PdfImage_proto imageList = 8;
+    OptionPdfPageContent_proto contentPage = 9;
+}
+
+
+message PdfFontStream_proto {
+    int64 id = 1;
+    FontParser_proto fontParser = 2;
+    bool pdfCompression = 3;
+}
+
+message FontParser_proto {
+    string fontName = 1;
+    FontMetric_proto fontMetric = 2;
+}
+
+
+message PdfAction_proto {
+    int64 id = 1;
+    oneof field {
+        PdfGoToUrl_proto pdfGoToUrl_proto = 2;
+        PdfGoToPage_proto pdfGoToPage_proto = 3;
+    }
+}
+
+// additional declarations
+
+message PdfGoToUrl_proto {
+    int64 id = 1;
+    string url = 2;
+}
+
+message PdfGoToPage_proto {
+    int64 id = 1;
+    int64 pageNbr = 2;
+    int32 left = 3;
+    int32 top = 4;
+}
+
+message StringString_proto {
+    string value1 = 1;
+    string value2 = 2;
+}
+
+
+message OptionPdfNames_proto {
+    bool null = 1;
+    PdfNames_proto valuePdfNames = 2;
+}
+
+
+message OptionPdfPageList_proto {
+    bool null = 1;
+    PdfPageList_proto valuePdfPageList = 2;
+}
+
+
+message OptionLong_proto {
+    bool null = 1;
+    int64 valueLong = 2;
+}
+
+
+message RColor_proto {
+    int32 r = 1;
+    int32 g = 2;
+    int32 b = 3;
+    float opacity = 4;
+}
+
+message OptionFloat_proto {
+    bool null = 1;
+    float valueFloat = 2;
+}
+
+message OptionPdfPageContent_proto {
+    bool null = 1;
+    PdfPageContent_proto valuePdfPageContent = 2;
+}
+
+message PdfPageContent_proto {
+    int64 id = 1;
+    repeated PdfPageItem_proto pageItemList = 2;
+    bool pdfCompression = 3;
+}
+
+
+message PdfPageItem_proto {
+    string content = 1;
+    oneof field {
+        PdfText_proto pdfText_proto = 2;
+        PdfGraphic_proto pdfGraphic_proto = 3;
+    }
+}
+
+message PdfFont_proto {
+    int64 id = 1;
+    string refName = 2;
+    string fontKeyName = 3;
+    OptionFontEmbeddedDef_proto embeddedDefOpt = 4;
+}
+
+message OptionFontEmbeddedDef_proto {
+    bool null = 1;
+    FontEmbeddedDef_proto valueFontEmbeddedDef = 2;
+}
+
+message FontEmbeddedDef_proto {
+    PdfFontDescriptor_proto pdfFontDescriptor = 1;
+    PdfFontStream_proto pdfFontStream = 2;
+}
+
+message PdfFontDescriptor_proto {
+    int64 id = 1;
+    PdfFontStream_proto pdfFontStream = 2;
+    string fontKeyName = 3;
+}
+
+
+message FontMetric_proto {
+    string fontName = 1;
+    map<int32, float> fontMap = 2;
+    OptionEmbeddedFontDescriptor_proto fontDescriptor = 3;
+}
+
+message OptionEmbeddedFontDescriptor_proto {
+    bool null = 1;
+    EmbeddedFontDescriptor_proto valueEmbeddedFontDescriptor = 2;
+}
+
+message EmbeddedFontDescriptor_proto {
+    int32 ascent = 1;
+    int32 capHeight = 2;
+    int32 descent = 3;
+    FontBBox_proto fontBBox = 4;
+    int32 italicAngle = 5;
+    int32 flags = 6;
+    GlyphWidth_proto glyphWidth = 7;
+}
+
+message FontBBox_proto {
+    int32 lowerLeftX = 1;
+    int32 lowerLeftY = 2;
+    int32 upperRightX = 3;
+    int32 upperRightY = 4;
+}
+
+
+message GlyphWidth_proto {
+    int32 firstChar = 1;
+    int32 lastChar = 2;
+    repeated int32 widthList = 3;
+}
+
+message PdfAnnotation_proto {
+    int64 id = 1;
+    oneof field {
+        PdfLink_proto pdfLink_proto = 2;
+    }
+}
+message PdfLink_proto {
+    int64 id = 1;
+    BoundaryRect_proto boundaryRect = 2;
+    PdfAction_proto action = 3;
+}
+
+message BoundaryRect_proto {
+    float left = 1;
+    float bottom = 2;
+    float right = 3;
+    float top = 4;
+}
+
+message PdfText_proto {
+    repeated PdfTxtChuck_proto txtList = 1;
+}
+
+
+message PdfGraphic_proto {
+    repeated PdfGraphicChuck_proto items = 1;
+}
+
+enum RFontAttribute_proto {
+    NORMAL = 0;
+    BOLD = 1;
+    ITALIC = 2;
+    BOLD_ITALIC = 3;
+}
+
+
+message OptionString_proto {
+    bool null = 1;
+    string valueString = 2;
+}
+
+
+message RFontFamily_proto {
+    string name = 1;
+    string regular = 2;
+    OptionString_proto bold = 3;
+    OptionString_proto italic = 4;
+    OptionString_proto boldItalic = 5;
+}
+
+
+message OptionRFontFamily_proto {
+    bool null = 1;
+    RFontFamily_proto valueRFontFamily = 2;
+}
+
+
+message RFont_proto {
+    int32 size = 1;
+    string fontName = 2;
+    RFontAttribute_proto attribute = 3;
+    RColor_proto color = 4;
+    OptionRFontFamily_proto externalFont = 5;
+}
+
+
+message RText_proto {
+    string txt = 1;
+    RFont_proto font = 2;
+}
+
+
+message PatternDraw_proto {
+    float x1 = 1;
+    float y1 = 2;
+    float x2 = 3;
+    float y2 = 4;
+    PdfGPattern_proto pattern = 5;
+}
+
+
+message OptionPatternDraw_proto {
+    bool null = 1;
+    PatternDraw_proto valuePatternDraw = 2;
+}
+
+
+message PdfTxtChuck_proto {
+    float x = 1;
+    float y = 2;
+    RText_proto rtext = 3;
+    string fontRefName = 4;
+    OptionPatternDraw_proto pattern = 5;
+}
+
+message PdfGraphicChuck_proto {
+    string content = 1;
+    oneof field {
+        DrawArc_proto drawArc_proto = 2;
+        DrawCircle_proto drawCircle_proto = 3;
+        DrawStroke_proto drawStroke_proto = 4;
+        DrawFill_proto drawFill_proto = 5;
+        DrawFillStroke_proto drawFillStroke_proto = 6;
+        DrawMovePoint_proto drawMovePoint_proto = 7;
+        DrawLine_proto drawLine_proto = 8;
+        DrawRectangle_proto drawRectangle_proto = 9;
+        DrawBorderColor_proto drawBorderColor_proto = 10;
+        DrawFillColor_proto drawFillColor_proto = 11;
+        DrawPattern_proto drawPattern_proto = 12;
+        PdfRectangle_proto pdfRectangle_proto = 13;
+        DrawPieChart_proto drawPieChart_proto = 14;
+        PdfDrawImage_proto pdfDrawImage_proto = 15;
+    }
+}
+
+message DrawPoint_proto {
+    float x = 1;
+    float y = 2;
+}
+
+
+message DrawArc_proto {
+    DrawPoint_proto center = 1;
+    float radius = 2;
+    float startAngle = 3;
+    float endAngle = 4;
+}
+
+
+message DrawCircle_proto {
+    DrawPoint_proto center = 1;
+    float radius = 2;
+}
+
+message DrawStroke_proto {
+
+}
+
+message DrawFill_proto {
+
+}
+
+message DrawFillStroke_proto {
+
+}
+
+
+message DrawMovePoint_proto {
+    float x = 1;
+    float y = 2;
+}
+
+
+message OptionLineDashType_proto {
+    bool null = 1;
+    LineDashType_proto valueLineDashType = 2;
+}
+
+message LineDashType_proto {
+    int32 unit = 1;
+    int32 phase = 2;
+}
+
+message DrawLine_proto {
+    float x1 = 1;
+    float y1 = 2;
+    float x2 = 3;
+    float y2 = 4;
+    float lineWidth = 5;
+    RColor_proto color = 6;
+    OptionLineDashType_proto lineDashType = 7;
+}
+
+message DrawRectangle_proto {
+    float x = 1;
+    float y = 2;
+    float width = 3;
+    float height = 4;
+}
+
+message DrawBorderColor_proto {
+    RColor_proto borderColor = 1;
+}
+
+message DrawFillColor_proto {
+    RColor_proto borderColor = 1;
+}
+
+message DrawPattern_proto {
+    PdfGPattern_proto pdfPattern = 1;
+}
+
+message PdfRectangle_proto {
+    int64 x1 = 1;
+    int64 y1 = 2;
+    int64 x2 = 3;
+    int64 y2 = 4;
+    float radius = 5;
+    OptionRColor_proto borderColor = 6;
+    OptionRColor_proto fillColor = 7;
+    OptionPdfGPattern_proto patternColor = 8;
+}
+
+
+message OptionPdfGPattern_proto {
+    bool null = 1;
+    PdfGPattern_proto valuePdfGPattern = 2;
+}
+
+message OptionRColor_proto {
+    bool null = 1;
+    RColor_proto valueRColor = 2;
+}
+
+message DrawPieChart_proto {
+    PdfNativeGenerator_proto pdfgenerator = 1;
+    RFont_proto font = 2;
+    string title = 3;
+    repeated StringDouble_proto data = 4;
+    float x = 5;
+    float y = 6;
+    float width = 7;
+    float height = 8;
+}
+
+
+message StringDouble_proto {
+    string value1 = 1;
+    double value2 = 2;
+}
+
+
+message PdfNativeGenerator_proto {
+    string name = 1;
+    float PAGE_WIDTH = 2;
+    float PAGE_HEIGHT = 3;
+    bool pdfCompression = 4;
+}

@@ -33,7 +33,9 @@ import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
+import com.sysalto.report.util.RockDbUtil
 import util.PageTree.PageNode
+import util.fonts.parsers.FontParser.FontMetric
 import util.{PageTree, SyncFileUtil}
 import util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
 import util.wrapper.WordWrap
@@ -44,7 +46,7 @@ import scala.collection.mutable.ListBuffer
 	* Created by marian on 4/1/17.
 	*/
 class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
-
+	private[this] val db = RockDbUtil()
 
 	private[this] implicit val pdfWriter = new PdfWriter(name)
 	private[this] implicit val allItems = ListBuffer[PdfBaseItem]()
@@ -68,6 +70,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 	def close(): Unit = {
 		pdfWriter.close()
+		db.close()
 	}
 
 	def setExternalFont(externalFont: RFontFamily): Unit = {
@@ -162,7 +165,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	def text(x: Float, y: Float, txt: RText): Unit = {
 		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
 			if (txt.font.externalFont.isDefined) {
-				val fontStream = new PdfFontStream(nextId(), getFontParser(txt.font), pdfCompression)
+				val fontParser = getFontParser(txt.font)
+				val fontStream = new PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
 				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
 				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
 					Some(FontEmbeddedDef(fontDescr, fontStream)))
@@ -185,7 +189,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
 	}
 
-	def linkToUrl(boundaryRect: BoundaryRect, url:String): Unit = {
+	def linkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
 		val goto = new PdfGoToUrl(nextId(), url)
 		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
 		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
@@ -205,14 +209,14 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	def saveCurrentPage(): Unit = {
 		val text = new PdfText(txtList.toList)
 		val graphic = new PdfGraphic(graphicList.toList)
-		currentPage.contentPage = Some(new PdfPageContent(nextId(), currentPage, List(graphic, text), pdfCompression))
+		currentPage.contentPage = Some(new PdfPageContent(nextId(), List(graphic, text), pdfCompression))
 		currentPage.fontList = fontMap.values.toList.sortBy(font => font.refName)
 		pageList += currentPage
 		txtList.clear()
 		graphicList.clear()
 	}
 
-	def metaData(): (Long,Long) = {
+	def metaData(): (Long, Long) = {
 		val id = nextId()
 		val s =
 			s"""${id} 0 obj
@@ -222,7 +226,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 				 				 |""".stripMargin.getBytes
 		val offset = pdfWriter.position
 		pdfWriter << s
-		(id,offset)
+		(id, offset)
 	}
 
 	def md5(s: String) = {
@@ -232,9 +236,6 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 	def done(): Unit = {
 		saveCurrentPage()
-		//		val pageTreeList = PageTree.generatePdfCode(pageList.toList) {
-		//			() => nextId
-		//		}(allItems)
 
 		val pageTreeList = PageTree.pageTree(pageList.toList) {
 			() => {
@@ -244,7 +245,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 		catalog.pdfPageList = Some(pageTreeList)
 		allItems.foreach(item => item.write(pdfWriter))
-		val metaDataObj=metaData()
+		val metaDataObj = metaData()
 		val metaDataId = metaDataObj._1
 		val xrefOffset = pdfWriter.position
 		pdfWriter <<< "xref"
@@ -255,7 +256,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 			val offsetFrmt = "0" * (10 - offset.length) + offset
 			pdfWriter <<< s"${offsetFrmt} 00000 n "
 		})
-		val metaOffset=metaDataObj._2.toString
+		val metaOffset = metaDataObj._2.toString
 		val offsetFrmt = "0" * (10 - metaOffset.length) + metaOffset
 		pdfWriter <<< s"${offsetFrmt} 00000 n "
 		pdfWriter <<< "trailer"
@@ -355,10 +356,10 @@ private[this] class PdfNames(id: Long, val dests: PdfDests)
 	}
 }
 
-private[this] class PdfDests(id: Long,val dests:ListBuffer[(String,String)]=ListBuffer())
+private[this] class PdfDests(id: Long, val dests: ListBuffer[(String, String)] = ListBuffer())
                             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
-		val head=dests.head
+		val head = dests.head
 		s"""${id} 0 obj
 			 |<</Names[(${head._1}) 2 0 R]>>
 			 |endobj
@@ -366,10 +367,10 @@ private[this] class PdfDests(id: Long,val dests:ListBuffer[(String,String)]=List
 	}
 }
 
-private[this] class PdfCatalog(id: Long, var pdfPageList: Option[PdfPageList] = None,var pdfNames:Option[PdfNames]=None)
+private[this] class PdfCatalog(id: Long, var pdfPageList: Option[PdfPageList] = None, var pdfNames: Option[PdfNames] = None)
                               (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
-		val namesStr=if (pdfNames.isEmpty) "" else s"/Names ${pdfNames.get.id} 0 R"
+		val namesStr = if (pdfNames.isEmpty) "" else s"/Names ${pdfNames.get.id} 0 R"
 		s"""${id} 0 obj
 			 |<<  /Type /Catalog
 			 |    /Pages ${pdfPageList.get.id} 0 R
@@ -540,7 +541,7 @@ case class FontEmbeddedDef(pdfFontDescriptor: PdfFontDescriptor, pdfFontStream: 
 
 abstract class PdfAction(id: Long)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id)
 
-class PdfGoToUrl(id: Long, url:String)
+class PdfGoToUrl(id: Long, url: String)
                 (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfAction(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
@@ -601,7 +602,7 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String,
 				 |""".stripMargin.getBytes
 		} else {
 			val fontEmbedeedDef = embeddedDefOpt.get
-			val withObj = fontEmbedeedDef.pdfFontStream.fontParser.fontMetric.fontDescriptor.get.glyphWidth
+			val withObj = fontEmbedeedDef.pdfFontStream.fontMetric.fontDescriptor.get.glyphWidth
 			val firstChar = withObj.firstChar
 			val lastChar = withObj.lastChar
 			s"""${id} 0 obj
@@ -626,9 +627,9 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String,
 }
 
 
-class PdfFontStream(id: Long, val fontParser: FontParser, pdfCompression: Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+class PdfFontStream(id: Long, val fontName: String, val fontMetric: FontMetric, pdfCompression: Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
-		val byteArray = Files.readAllBytes(Paths.get(fontParser.fontName))
+		val byteArray = Files.readAllBytes(Paths.get(fontName))
 		val byteArray2 = {
 			val f = new SyncFileUtil("/home/marian/workspace/GenSNew/good2.pdf", 271, StandardOpenOption.READ)
 			val bytes = f.read(8712, None)
@@ -652,24 +653,24 @@ class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: Str
                        (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
-			 			 |    <</Type/FontDescriptor
+			 |    <</Type/FontDescriptor
 			 |    /FontName/${fontKeyName}
-			 |    /Flags ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.flags}
-			 |    /FontBBox[${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.fontBBox}]
-			 |    /ItalicAngle ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.italicAngle}
-			 			 |    /Ascent ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.ascent}
-			 |    /Descent ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.descent}
-			 			 |    /CapHeight ${pdfFontStream.fontParser.fontMetric.fontDescriptor.get.capHeight}
-			 			 |    /StemV 0
-			 			 |    /FontFile2 ${pdfFontStream.id} 0 R
-			 			 |>>
-			 			 |endobj
-			 			 |""".stripMargin.getBytes
+			 |    /Flags ${pdfFontStream.fontMetric.fontDescriptor.get.flags}
+			 |    /FontBBox[${pdfFontStream.fontMetric.fontDescriptor.get.fontBBox}]
+			 |    /ItalicAngle ${pdfFontStream.fontMetric.fontDescriptor.get.italicAngle}
+			 |    /Ascent ${pdfFontStream.fontMetric.fontDescriptor.get.ascent}
+			 |    /Descent ${pdfFontStream.fontMetric.fontDescriptor.get.descent}
+			 |    /CapHeight ${pdfFontStream.fontMetric.fontDescriptor.get.capHeight}
+			 |    /StemV 0
+			 |    /FontFile2 ${pdfFontStream.id} 0 R
+			 |>>
+			 |endobj
+			 |""".stripMargin.getBytes
 	}
 }
 
 
-class PdfPageContent(id: Long, pdfPage: PdfPage, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
+class PdfPageContent(id: Long, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
