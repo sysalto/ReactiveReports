@@ -64,11 +64,11 @@ public class MutualFundsNoAkkaJavaReport {
 
         report.headerFct((pg, pgMax) -> {
             report.setYPosition(10);
-            Row row = Row.apply(10.f, report.pgSize().width() - 10, Column.apply("column1").flex(1),
+            ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("column1").flex(1),
                     Column.apply("column2").flex(1), Column.apply("column3").flex(1));
-            RMargin column1 = row.getColumnBound("column1");
-            RMargin column2 = row.getColumnBound("column2");
-            RMargin column3 = row.getColumnBound("column3");
+            RMargin column1 = reportRow.getColumnBound("column1");
+            RMargin column2 = reportRow.getColumnBound("column2");
+            RMargin column3 = reportRow.getColumnBound("column3");
             ReportCell h_column1 = new ReportCell(new RText("Type of Account").bold()).leftAlign().inside(column1);
             ReportCell h_column2 = new ReportCell(new RText("Your account number").bold()).leftAlign().inside(column2);
             ReportCell h_column3 = new ReportCell(new RText("Your investment statement").bold()).rightAlign().inside(column3);
@@ -139,14 +139,14 @@ public class MutualFundsNoAkkaJavaReport {
     private void summaryOfInvestment(Report report) throws Exception {
 
         report.nextLine(2);
-        Row row = Row.apply(10.f, report.pgSize().width() - 10, Column.apply("fund_name", 150f),
+        ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("fund_name", 150f),
                 Column.apply("value1").flex(1), Column.apply("value2").flex(1), Column.apply("change").flex(1),
                 Column.apply("graphic").flex(2));
-        RMargin m_fundName = row.getColumnBound("fund_name");
-        RMargin m_value1 = row.getColumnBound("value1");
-        RMargin m_value2 = row.getColumnBound("value2");
-        RMargin m_change = row.getColumnBound("change");
-        RMargin m_graphic = row.getColumnBound("graphic");
+        RMargin m_fundName = reportRow.getColumnBound("fund_name");
+        RMargin m_value1 = reportRow.getColumnBound("value1");
+        RMargin m_value2 = reportRow.getColumnBound("value2");
+        RMargin m_change = reportRow.getColumnBound("change");
+        RMargin m_graphic = reportRow.getColumnBound("graphic");
         ReportCell c_fundName = new ReportCell(new RText("Summary of investments").bold().color(headerFontColor)).leftAlign().
                 inside(m_fundName);
         ReportCell c_value1 = new ReportCell(new RText("Value on\n" + sd.format(date1) + "($$)").bold().color(headerFontColor)).rightAlign().
@@ -228,12 +228,12 @@ public class MutualFundsNoAkkaJavaReport {
 
     private void changeAccount(Report report) throws Exception {
         report.nextLine(2);
-        Row row = Row.apply(10.f, report.pgSize().width() - 10, Column.apply("account", 250f),
+        ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("account", 250f),
                 Column.apply("value1").flex(1), Column.apply("value2").flex(1), Column.apply("value3").flex(1));
-        RMargin account = row.getColumnBound("account");
-        RMargin value1 = row.getColumnBound("value1");
-        RMargin value2 = row.getColumnBound("value2");
-        RMargin value3 = row.getColumnBound("value3");
+        RMargin account = reportRow.getColumnBound("account");
+        RMargin value1 = reportRow.getColumnBound("value1");
+        RMargin value2 = reportRow.getColumnBound("value2");
+        RMargin value3 = reportRow.getColumnBound("value3");
         ReportCell accountHdr = new ReportCell(new RText("Change in the value of account").bold().
                 color(headerFontColor)).leftAlign().inside(account);
         ReportCell value1Hdr = new ReportCell(new RText("This period($)").bold().
@@ -300,17 +300,17 @@ public class MutualFundsNoAkkaJavaReport {
         rs.next();
         Map<String, Object> record = GroupUtilDefs.toMap(rs);
         rs.close();
-        Row row = Row.apply(10.f, report.pgSize().width() - 10, Column.apply("account_perf", 150f),
+        ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("account_perf", 150f),
                 Column.apply("value3m").flex(1), Column.apply("value1y").flex(1),
                 Column.apply("value3y").flex(1), Column.apply("value5y").flex(1),
                 Column.apply("value10y").flex(1), Column.apply("annualized").flex(1));
-        RMargin accountPerf = row.getColumnBound("account_perf");
-        RMargin value3m = row.getColumnBound("value3m");
-        RMargin value1y = row.getColumnBound("value1y");
-        RMargin value3y = row.getColumnBound("value3y");
-        RMargin value5y = row.getColumnBound("value5y");
-        RMargin value10y = row.getColumnBound("value10y");
-        RMargin annualized = row.getColumnBound("annualized");
+        RMargin accountPerf = reportRow.getColumnBound("account_perf");
+        RMargin value3m = reportRow.getColumnBound("value3m");
+        RMargin value1y = reportRow.getColumnBound("value1y");
+        RMargin value3y = reportRow.getColumnBound("value3y");
+        RMargin value5y = reportRow.getColumnBound("value5y");
+        RMargin value10y = reportRow.getColumnBound("value10y");
+        RMargin annualized = reportRow.getColumnBound("annualized");
         ReportCell h_accountPerf = new ReportCell(new RText("Account performance").bold().color(headerFontColor)).leftAlign().
                 inside(accountPerf);
         ReportCell h_value3m = new ReportCell(new RText("3 Months (%)").bold().color(headerFontColor)).rightAlign().

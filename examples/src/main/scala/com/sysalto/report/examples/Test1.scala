@@ -55,7 +55,7 @@ object Test1 {
 		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
 //		val txt2 = RText(str)
 
-		val row = Row(10, report.pgSize.width - 10, List(Column("column1", 100), Column("column2", 100)))
+		val row = ReportRow(10, report.pgSize.width - 10, List(Column("column1", 100), Column("column2", 100)))
 		val bound1 = row.getColumnBound("column1")
 		val bound2 = row.getColumnBound("column2")
 		val cell1 = ReportCell(txt1) inside bound1

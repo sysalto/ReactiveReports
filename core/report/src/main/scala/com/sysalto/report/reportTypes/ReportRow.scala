@@ -31,7 +31,7 @@ import scala.collection.JavaConverters._
 /**
   * Created by marian on 3/4/17.
   */
-case class Row(left: Float, right: Float, columns: List[Column]) {
+case class ReportRow(left: Float, right: Float, columns: List[Column]) {
   private def calculate(): Map[String, RMargin] = {
     val fixColumnList = columns.filter(column => column.columnWidthType == ColumnWidthType.Fixed)
     val fixWidth = fixColumnList.foldLeft(0.0f)((sum, b) => sum + b.fixedWidth.get)
@@ -107,13 +107,13 @@ case class Row(left: Float, right: Float, columns: List[Column]) {
 }
 
 
-object Row {
-  def instance: Row.type = this
+object ReportRow {
+  def instance: ReportRow.type = this
 
   def apply(left: Float, right: Float, columns: java.util.List[Column]) =
-    new Row(left, right, columns.asScala.toList)
+    new ReportRow(left, right, columns.asScala.toList)
 
-  @varargs def apply(left: Float, right: Float, columns: Column*): Row =
-    new Row(left, right, columns.toList)
+  @varargs def apply(left: Float, right: Float, columns: Column*): ReportRow =
+    new ReportRow(left, right, columns.toList)
 
 }

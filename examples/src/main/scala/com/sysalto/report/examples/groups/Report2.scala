@@ -62,7 +62,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
       Group("agent", (r: Map[String, String]) => r("agent")))
     val accountGroupUtil = new GroupUtil(accountGroup)
 
-    val row = Row(10, report.pgSize.width - 10, List(Column("accountNbr", Flex(1)), Column("accountNme", Flex(1)),
+    val row = ReportRow(10, report.pgSize.width - 10, List(Column("accountNbr", Flex(1)), Column("accountNme", Flex(1)),
       Column("planType", Flex(1))))
     val accountNbrC = row.getColumnBound("accountNbr")
     val accountNmeC = row.getColumnBound("accountNme")

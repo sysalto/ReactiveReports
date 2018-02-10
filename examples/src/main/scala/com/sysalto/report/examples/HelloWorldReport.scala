@@ -71,7 +71,7 @@ object HelloWorldReport extends ReportAppAkka with AkkaGroupUtil {
     val reportGroupUtil = new GroupUtil(reportGroup)
 
     // print the header
-    val row = Row(10, report.pgSize.width - 10, List(Column("name", 200), Column("address", Flex(1))))
+    val row = ReportRow(10, report.pgSize.width - 10, List(Column("name", 200), Column("address", Flex(1))))
     val nameC = row.getColumnBound("name")
     val addressC = row.getColumnBound("address")
 

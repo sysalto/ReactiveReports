@@ -30,7 +30,7 @@ object Implicits extends ScalaReportUtil {
 	val RText: com.sysalto.report.reportTypes.RText.type = com.sysalto.report.reportTypes.RText
 	val LineDashType: com.sysalto.report.reportTypes.LineDashType.type = com.sysalto.report.reportTypes.LineDashType
 	val RMargin: com.sysalto.report.reportTypes.RMargin.type = com.sysalto.report.reportTypes.RMargin
-	val Row: com.sysalto.report.reportTypes.Row.type = com.sysalto.report.reportTypes.Row
+	val ReportRow: com.sysalto.report.reportTypes.ReportRow.type = com.sysalto.report.reportTypes.ReportRow
 	val Column: com.sysalto.report.reportTypes.Column.type = com.sysalto.report.reportTypes.Column
 	val Flex: ReportColumnUtil.Flex.type = ReportColumnUtil.Flex
 	val ReportCell: com.sysalto.report.reportTypes.ReportCell.type = com.sysalto.report.reportTypes.ReportCell

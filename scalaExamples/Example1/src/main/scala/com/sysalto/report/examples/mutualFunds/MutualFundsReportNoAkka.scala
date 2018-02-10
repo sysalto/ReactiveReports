@@ -87,7 +87,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 
 		report.nextLine(2)
 		//    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
-		val row = Row(10, report.pgSize.width - 10, List(Column("fund_name", 150), Column("value1", Flex(1)),
+		val row = ReportRow(10, report.pgSize.width - 10, List(Column("fund_name", 150), Column("value1", Flex(1)),
 			Column("value2", Flex(1)), Column("change", Flex(1)), Column("graphic", Flex(2)), Column("", 5)))
 		val fundName = row.getColumnBound("fund_name")
 		val value1 = row.getColumnBound("value1")
@@ -161,7 +161,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 
 	private def changeAccount(report: Report): Unit = {
 		report.nextLine(2)
-		val row = Row(10, report.pgSize.width - 10, List(Column("account", 250), Column("value1", Flex(1)),
+		val row = ReportRow(10, report.pgSize.width - 10, List(Column("account", 250), Column("value1", Flex(1)),
 			Column("value2", Flex(1)), Column("value3", Flex(1)), Column("", 5)))
 		val account = row.getColumnBound("account")
 		val value1 = row.getColumnBound("value1")
@@ -227,7 +227,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 		rs.next()
 		val record = rs.toMap
 		rs.close()
-		val row = Row(10, report.pgSize.width - 10, List(Column("account_perf", 150), Column("value3m", Flex(1)),
+		val row = ReportRow(10, report.pgSize.width - 10, List(Column("account_perf", 150), Column("value3m", Flex(1)),
 			Column("value1y", Flex(1)), Column("value3y", Flex(1)), Column("value5y", Flex(1)),
 			Column("value10y", Flex(1)), Column("annualized", Flex(1)), Column("", 5)))
 		val accountPerf = row.getColumnBound("account_perf")
@@ -312,7 +312,7 @@ object MutualFundsReportNoAkka extends ResultSetUtilTrait {
 		report.headerFct = {
 			case (rpt, _, _) =>
 				rpt.setYPosition(10)
-				val row = Row(10, rpt.pgSize.width - 10, List(Column("column1", Flex(1)), Column("column2", Flex(1)),
+				val row = ReportRow(10, rpt.pgSize.width - 10, List(Column("column1", Flex(1)), Column("column2", Flex(1)),
 					Column("column3", Flex(1))))
 				val column1 = row.getColumnBound("column1")
 				val column2 = row.getColumnBound("column2")
