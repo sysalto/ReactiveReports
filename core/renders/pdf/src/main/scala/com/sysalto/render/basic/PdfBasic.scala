@@ -25,7 +25,7 @@ package com.sysalto.render.basic
 
 import com.sysalto.render.PdfDraw.DrawPoint
 import com.sysalto.render.PdfNativeGenerator
-import com.sysalto.report.reportTypes.ReportColor
+import com.sysalto.report.reportTypes.{LineDashType, ReportColor}
 
 object PdfBasic {
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): String = {
@@ -51,9 +51,13 @@ object PdfBasic {
 
 	def movePoint(x: Float, y: Float): String =s"""${x} ${y} m \n"""
 
-	def lineTo(point: DrawPoint,lineWidth: Float): String = lineTo(point.x, point.y,lineWidth)
+	def lineDash(lineDashType:LineDashType):String=s"""[${lineDashType.unit}] ${lineDashType.phase} d\n"""
 
-	def lineTo(x: Float, y: Float,lineWidth: Float): String =s"""${lineWidth} w \n${x} ${y} l \n"""
+	def lineTo(point: DrawPoint,lineWidth: Float): String = lineTo(point.x, point.y)
+
+	def lineWidth(lineWidth: Float):String=s"""${lineWidth} w\n"""
+
+	def lineTo(x: Float, y: Float): String =s"""${x} ${y} l \n"""
 
 	def pattern(patternName: String): String = s"/Pattern cs /${patternName} scn"
 

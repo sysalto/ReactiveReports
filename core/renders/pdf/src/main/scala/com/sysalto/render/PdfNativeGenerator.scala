@@ -119,9 +119,9 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 				val l1: List[Float] = line.map(item => item.textLength)
 				val length = l1.sum
 				val newX = wrapAlign match {
-					case WrapAlign.WRAP_CENTER => (x1 - x0-length)*0.5f
+					case WrapAlign.WRAP_CENTER =>x0+ (x1 - x0 - length) * 0.5f
 					case WrapAlign.WRAP_RIGHT => x1 - length
-					case _ =>x0
+					case _ => x0
 				}
 				line.foreach(textPos =>
 					text(newX + textPos.x, crtY, textPos.rtext)
@@ -693,6 +693,13 @@ private case class PdfTxtChuck(x: Float, y: Float, rtext: ReportTxt, fontRefName
 
 private class PdfText(txtList: List[PdfTxtChuck])
 	extends PdfPageItem {
+
+	private[this] def escapeText(input: String): String = {
+		val s1 = input.replace("\\", "\\\\")
+		val s2 = s1.replace("(", "\\(")
+		s2.replace(")", "\\)")
+	}
+
 	override def content: String = {
 		if (txtList.isEmpty) {
 			return ""
@@ -705,7 +712,7 @@ private class PdfText(txtList: List[PdfTxtChuck])
 			s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
 				 				 |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
 				 				 |  ${color._1} ${color._2} ${color._3} rg
-				 				 |        (${item.rtext.txt}) Tj
+				 				 |        (${escapeText(item.rtext.txt)}) Tj
        """.stripMargin
 
 		val s2 = firstItemTxt + txtListSimple.tail.zipWithIndex.map {
@@ -716,7 +723,7 @@ private class PdfText(txtList: List[PdfTxtChuck])
 				s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
 					 					 |  ${xRel} ${yRel} Td
 					 					 |  ${color._1} ${color._2} ${color._3} rg
-					 					 |  (${item.rtext.txt}) Tj
+					 					 |  (${escapeText(item.rtext.txt)}) Tj
        """.stripMargin
 			}
 		}.mkString("")
@@ -729,7 +736,7 @@ private class PdfText(txtList: List[PdfTxtChuck])
 				 				 |/${item.fontRefName} ${item.rtext.font.size} Tf
 				 				 |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
 				 				 |  ${color._1} ${color._2} ${color._3} rg
-				 				 |        (${item.rtext.txt}) Tj
+				 				 |        (${escapeText(item.rtext.txt)}) Tj
 				 				 |Q
        """.mkString("")
 		})

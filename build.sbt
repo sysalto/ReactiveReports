@@ -2,18 +2,18 @@ import sbt.Keys.publishMavenStyle
 
 val SCALA_VERSION = "2.12.4"
 
-val AKKA_VERSION = "latest.release" // "2.5.9"
+val AKKA_VERSION = "2.5.9" // "latest.release"
 
-val ROCKSDB_VERSION ="latest.release" // "5.9.2"
+val ROCKSDB_VERSION = "5.9.2" // "latest.release"
 
-val PROTOBUF_VERSION ="latest.release"   // "3.5.1"
+val PROTOBUF_VERSION ="3.5.1" // "latest.release"
 
-val projectVersion = "1.0.0-RC.5"
-
+//val projectVersion = "1.0.0-RC.5.3"
+val projectVersion = "1.0.0-SNAPSHOT"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",
-	isSnapshot := false,
+	isSnapshot := true,
 	version := projectVersion,
 	cancelable in Global := true,
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),

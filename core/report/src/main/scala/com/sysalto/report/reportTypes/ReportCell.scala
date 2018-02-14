@@ -20,10 +20,9 @@
  */
 
 
-
 package com.sysalto.report.reportTypes
 
-import com.sysalto.report.ReportTypes.WrapBox
+import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{Report, WrapAlign}
 
 /**
@@ -92,7 +91,13 @@ case class ReportCell(txt: List[ReportTxt], var margin: ReportMargin = ReportMar
 		this
 	}
 
-	def calculate(report: Report): WrapBox = report.wrap(txt, margin.left, report.getY, margin.right, Float.MaxValue, WrapAlign.WRAP_LEFT, simulate=true).get
+	def calculate(report: Report): WrapBox = report.wrap(txt, margin.left, report.getY, margin.right, Float.MaxValue, WrapAlign.WRAP_LEFT, simulate = true).get
+
+
+	def getBoundaryRect(report: Report): BoundaryRect = {
+		val box = calculate(report)
+		BoundaryRect(margin.left, report.getYPosition(box.currentY)+report.lineHeight, margin.right, report.getYPosition(box.initialY))
+	}
 }
 
 object ReportCell {

@@ -188,6 +188,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtYPosition = pdfUtil.pgSize.height - y
 	}
 
+	private[report] def getYPosition(y:Float) = pdfUtil.pgSize.height - y
+
 	private[report] def getYPosition = crtYPosition
 
 	/*

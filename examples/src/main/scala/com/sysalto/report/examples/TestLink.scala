@@ -36,9 +36,14 @@ object TestLink extends GroupUtilTrait {
 	private def report(report: Report): Unit = {
 		report.nextLine()
 //		report print "Ok1" at 10
+		val cell=ReportCell("Link to Yahoo" size 15 bold()) centerAlign() inside ReportMargin(0, report.pgSize.width - 10)
+		report print (cell)
+		report.setLinkToPage(cell.getBoundaryRect(report),2,0,0)
+		report.nextLine()
 		val bound1=report print "Link1" at 10
 		report.nextLine()
 		val bound2=report print "Link2" at 10
+		val ll=report.getYPosition
 		report.setLinkToPage(bound1,2, 0, 0)
 		report.setLinkToPage(bound2,3, 0, 0)
 
