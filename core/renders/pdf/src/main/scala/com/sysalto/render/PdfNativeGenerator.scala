@@ -119,7 +119,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 				val l1: List[Float] = line.map(item => item.textLength)
 				val length = l1.sum
 				val newX = wrapAlign match {
-					case WrapAlign.WRAP_CENTER =>x0+ (x1 - x0 - length) * 0.5f
+					case WrapAlign.WRAP_CENTER => x0 + (x1 - x0 - length) * 0.5f
 					case WrapAlign.WRAP_RIGHT => x1 - length
 					case _ => x0
 				}
@@ -227,14 +227,14 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 				 				 |  <<  /Producer (Reactive Reports - Copyright 2017 SysAlto Corporation)
 				 				 |  >>
 				 				 |endobj
-				 				 |""".stripMargin.getBytes
+				 				 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 		val offset = pdfWriter.position
 		pdfWriter << s
 		(id, offset)
 	}
 
 	def md5(s: String) = {
-		val result = MessageDigest.getInstance("MD5").digest(s.getBytes)
+		val result = MessageDigest.getInstance("MD5").digest(s.getBytes(PdfNativeGenerator.ENCODING))
 		javax.xml.bind.DatatypeConverter.printHexBinary(result)
 	}
 
@@ -292,6 +292,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 
 object PdfNativeGenerator {
+	private[render] val ENCODING = "ISO-8859-1"
+
 	def convertColor(color: ReportColor): (Float, Float, Float) = {
 		val r = color.r / 255f
 		val g = color.g / 255f
@@ -305,12 +307,12 @@ object PdfNativeGenerator {
 			s"""${id} 0 obj
 				 |<</Length ${input.length} ${length1}>>
 				 |stream
-				 |""".stripMargin.getBytes ++
+				 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING) ++
 				input ++
 				s"""
 					 |endstream
 					 |endobj
-					 |""".stripMargin.getBytes
+					 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 		} else {
 			val compresser = new Deflater(Deflater.BEST_COMPRESSION)
 			compresser.setInput(input)
@@ -322,12 +324,12 @@ object PdfNativeGenerator {
 			s"""${id} 0 obj
 				 |<</Filter/FlateDecode/Length ${compressTxt.length} ${length1}>>
 				 |stream
-				 |""".stripMargin.getBytes ++
+				 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING) ++
 				compressTxt ++
 				s"""
 					 |endstream
 					 |endobj
-					 |""".stripMargin.getBytes
+					 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 		}
 		result
 	}
@@ -356,7 +358,7 @@ private[this] class PdfNames(id: Long, val dests: PdfDests)
 		s"""${id} 0 obj
 			 |<</Dests ${dests.id} 0 R>>
 			 |endobj
-			 |""".stripMargin.getBytes
+			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -367,7 +369,7 @@ private[this] class PdfDests(id: Long, val dests: ListBuffer[(String, String)] =
 		s"""${id} 0 obj
 			 |<</Names[(${head._1}) 2 0 R]>>
 			 |endobj
-			 |""".stripMargin.getBytes
+			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -381,7 +383,7 @@ private[this] class PdfCatalog(id: Long, var pdfPageList: Option[PdfPageList] = 
 			 |    ${namesStr}
 			 |  >>
 			 |endobj
-			 |""".stripMargin.getBytes
+			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -412,7 +414,7 @@ private[this] class PdfPageList(id: Long, var parentId: Option[Long] = None, var
 			 			 |      /Count ${leafNbr}
 			 			 |  >>
 			 			 |endobj
-			 			 |""".stripMargin.getBytes
+			 			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -425,7 +427,7 @@ private[this] class PdfShaddingFctColor(id: Long, color1: ReportColor, color2: R
 		s"""${id} 0 obj
 			 			 |  <</FunctionType 2/Domain[0 1]/C0[${colorNbr1._1} ${colorNbr1._2} ${colorNbr1._3}]/C1[${colorNbr2._1} ${colorNbr2._2} ${colorNbr2._3}]/N 1>>
 			 			 |endobj
-			 			 |""".stripMargin.getBytes
+			 			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -435,7 +437,7 @@ private[this] class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, 
 		s"""${id} 0 obj
 			 			 |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R>>
 			 			 |endobj
-			 			 |""".stripMargin.getBytes
+			 			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -447,7 +449,7 @@ class PdfGPattern(id: Long, pdfShadding: PdfColorShadding)
 		s"""${id} 0 obj
 			 			 |  <</PatternType 2/Shading ${pdfShadding.id} 0 R/Matrix[1 0 0 1 0 0]>>
 			 			 |endobj
-			 			 |""".stripMargin.getBytes
+			 			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -482,9 +484,9 @@ class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBase
 			 			 |  /Filter /DCTDecode
 			 			 |  >>
 			 			 |stream
-			 			 |""".stripMargin.getBytes ++
+			 			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING) ++
 			imageMeta.imageInByte ++
-			"\nendstream\nendobj\n".getBytes
+			"\nendstream\nendobj\n".getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -536,7 +538,7 @@ class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHe
 				 |>>
 				 |endobj
 				 |""".stripMargin
-		result.replaceAll("(?m)^\\s+\\n", "").getBytes
+		result.replaceAll("(?m)^\\s+\\n", "").getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -556,7 +558,7 @@ class PdfGoToUrl(id: Long, url: String)
 			 |  /URI(${url})
 			 |>>
 			 |endobj
-			 |""".stripMargin.getBytes
+			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -570,7 +572,7 @@ class PdfGoToPage(id: Long, pageNbr: Long, left: Int, top: Int)
 			 |  /D [ ${pageNbr - 1} /Fit ]
 			 |>>
 			 |endobj
-			 |""".stripMargin.getBytes
+			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -587,7 +589,7 @@ private[this] class PdfLink(id: Long, boundaryRect: BoundaryRect, action: PdfAct
 			 |  /A ${action.id} 0 R
 			 |>>
 			 |endobj
-			 |""".stripMargin.getBytes
+			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -603,7 +605,7 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String,
 				 |/Encoding /WinAnsiEncoding
 				 |>>
 				 |endobj
-				 |""".stripMargin.getBytes
+				 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 		} else {
 			val fontEmbedeedDef = embeddedDefOpt.get
 			val withObj = fontEmbedeedDef.pdfFontStream.fontMetric.fontDescriptor.get.glyphWidth
@@ -623,7 +625,7 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String,
 				 |   /Encoding/WinAnsiEncoding
 				 				 |   >>
 				 				 |endobj
-				 				 |""".stripMargin.getBytes
+				 				 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 		}
 
 
@@ -646,9 +648,9 @@ class PdfFontStream(id: Long, val fontName: String, val fontMetric: FontMetric, 
 		val lg = byteArray.length
 		s"""${id} 0 obj
 			 			 | <</Length ${lg}/Length1 ${lg}>>stream
-			 			 |""".stripMargin.getBytes ++
+			 			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING) ++
 			byteArray ++
-			"\nendstream\nendobj\n".getBytes
+			"\nendstream\nendobj\n".getBytes(PdfNativeGenerator.ENCODING)
 		PdfNativeGenerator.writeData(id, byteArray, pdfCompression, true)
 	}
 }
@@ -669,7 +671,7 @@ class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: Str
 			 |    /FontFile2 ${pdfFontStream.id} 0 R
 			 |>>
 			 |endobj
-			 |""".stripMargin.getBytes
+			 |""".stripMargin.getBytes(PdfNativeGenerator.ENCODING)
 	}
 }
 
@@ -678,7 +680,7 @@ class PdfPageContent(id: Long, pageItemList: List[PdfPageItem], pdfCompression: 
                     (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
-		PdfNativeGenerator.writeData(id, itemsStr.getBytes, pdfCompression)
+		PdfNativeGenerator.writeData(id, itemsStr.getBytes(PdfNativeGenerator.ENCODING), pdfCompression)
 	}
 }
 
@@ -772,12 +774,12 @@ private class PdfWriter(name: String) {
 	private[render] var position: Long = 0
 
 	def <<(str: String): Unit = {
-		<<(str.getBytes)
+		<<(str.getBytes(PdfNativeGenerator.ENCODING))
 	}
 
 	def <<<(str: String): Unit = {
 		val str1 = str + "\n"
-		<<(str1.getBytes)
+		<<(str1.getBytes(PdfNativeGenerator.ENCODING))
 	}
 
 	def <<(str: Array[Byte]): Unit = {
