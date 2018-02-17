@@ -1,0 +1,102 @@
+%PDF-1.7
+%ÄÅÇÉ
+1 0 obj
+<<  /Type /Catalog
+    /Pages 5 0 R
+    
+  >>
+endobj
+2 0 obj
+<<  /Type /Page
+      /Parent 5 0 R
+      /MediaBox [ 0 0 792.0 612.0 ]
+      /TrimBox [ 0 0 792.0 612.0 ]
+      /Contents 4 0 R
+      /Resources
+        <<  /Font<</F1 3 0 R>>
+        >>
+>>
+endobj
+3 0 obj
+<<  /Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+>>
+endobj
+4 0 obj
+<</Length 456 >>
+stream
+
+q
+0 0 0 RG
+1 w
+
+q
+72.24 567.0 m 
+1.0 w
+300.0 567.0 l 
+0.78431374 0.78431374 0.78431374 RG
+S
+Q
+
+q
+72.24 552.0 m 
+1.0 w
+774.44 552.0 l 
+0.78431374 0.78431374 0.78431374 RG
+S
+Q
+
+Q
+ 
+ BT /F1 10 Tf
+  1 0 0 1 10 567 Tm
+  0.0 0.0 0.0 rg
+        (Text1 ABCDE) Tj
+         /F1 10 Tf
+  0 -15 Td
+  0.0 0.0 0.0 rg
+  (Text1) Tj
+         /F1 10 Tf
+  27 0 Td
+  0.0 0.0 0.0 rg
+  (ABCDE) Tj
+         /F1 10 Tf
+  736 0 Td
+  0.0 0.0 0.0 rg
+  (1) Tj
+       
+
+      ET
+       
+endstream
+endobj
+5 0 obj
+  <<  /Type /Pages 
+      /Kids [ 2 0 R ]
+      /Count 1
+  >>
+endobj
+6 0 obj
+  <<  /Producer (Reactive Reports - Copyright 2017 SysAlto Corporation)
+  >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000015 00000 n 
+0000000076 00000 n 
+0000000282 00000 n 
+0000000380 00000 n 
+0000000886 00000 n 
+0000000963 00000 n 
+trailer
+<</Size 7
+   /Root 1 0 R
+   /Info 6 0 R
+   /ID [<34ED6A256E364797BB09D7BEE738F395><34ED6A256E364797BB09D7BEE738F395>]
+>>
+startxref
+1055
+%%EOF

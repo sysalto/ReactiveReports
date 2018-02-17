@@ -585,7 +585,12 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		lastPosition = getCurrentPosition
 	}
 
-	def getTextWidth(txt: ReportTxt): Float = pdfUtil.getTextWidth(txt)
+	def getTextWidth(txt: ReportTxt): Float = {
+		val txt1=if (txt.font.fontName.isEmpty) {
+			ReportTxt(txt.txt,this.font)
+		}  else txt
+		pdfUtil.getTextWidth(txt1)
+	}
 }
 
 object Report {

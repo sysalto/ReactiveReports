@@ -85,15 +85,22 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 		}
 	}
 
-	private[this] def getWordSize(word: Word): Float = {
-		word.charList.foldLeft(0.toFloat)((total, char) => {
-			total + getCharSize(char)
-		})
+	private[this] def getWordSizeIncludingSpace(word: Word): Float = {
+		if (word.charList.isEmpty) {
+			0f
+		} else {
+			val space = CharF(' ', word.charList.head.font)
+			(space :: word.charList).foldLeft(0.toFloat)((total, char) => {
+				total + getCharSize(char)
+			})
+		}
 	}
 
 	def getTextWidth(text: ReportTxt): Float = {
 		val word = Word(text.txt.map(char => CharF(char, text.font)).toList)
-		getWordSize(word)
+		word.charList.foldLeft(0.toFloat)((total, char) => {
+			total + getCharSize(char)
+		})
 	}
 
 	private[this] def getCharSize(char: CharF): Float = {
@@ -105,7 +112,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 	private[this] def splitAtMax(item: Word, max: Float): (Word, Word) = {
 		@tailrec
 		def getMaxStr(word: Word): Word = {
-			if (getWordSize(word) <= max) {
+			if (getWordSizeIncludingSpace(word) <= max) {
 				word
 			}
 			else {
@@ -119,7 +126,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 
 	@tailrec
 	private[this] def splitWord(word: Word, max: Float, accum: ListBuffer[Word]): Unit = {
-		if (getWordSize(word) <= max) {
+		if (getWordSizeIncludingSpace(word) <= max) {
 			accum += word
 		} else {
 			val (part1, part2) = splitAtMax(word, max)
@@ -138,15 +145,15 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 			// one font ->keep it together
 			val str = word.charList.map(char => char.char)
 			val rtext = ReportTxt(str.mkString, word.charList(0).font)
-			accum += RTextPos(offset, getWordSize(word), rtext)
+			accum += RTextPos(offset, getWordSizeIncludingSpace(word), rtext)
 		} else {
 			val firstFont = word.charList(0).font
 			val i1 = word.charList.indexWhere(char => char.font != firstFont)
 			val word1 = Word(word.charList.take(i1))
-			accum += RTextPos(offset, getWordSize(word1), ReportTxt(word.charList.take(i1).map(char => char.char).mkString, firstFont))
+			accum += RTextPos(offset, getWordSizeIncludingSpace(word1), ReportTxt(word.charList.take(i1).map(char => char.char).mkString, firstFont))
 
 			val word2 = Word(word.charList.drop(i1))
-			wordToRTextPos(offset + getWordSize(word1), word2, accum)
+			wordToRTextPos(offset + getWordSizeIncludingSpace(word1), word2, accum)
 		}
 	}
 
@@ -155,7 +162,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 		var offset = 0f
 		line.foreach(word => {
 			wordToRTextPos(offset, word, result1)
-			offset += getWordSize(word)
+			offset += getWordSizeIncludingSpace(word)
 		})
 		//    val result= ListBuffer[RTextPos]()
 		//    mergeRTextPos(result1.toList,result)
@@ -197,7 +204,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 			result.toList
 		}).toList
 
-		val list = wordList.map(item => getWordSize(item))
+		val list = wordList.map(item => getWordSizeIncludingSpace(item))
 
 
 		val l1 = list.indices

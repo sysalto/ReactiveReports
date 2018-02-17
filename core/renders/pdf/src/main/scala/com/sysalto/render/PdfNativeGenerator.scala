@@ -110,27 +110,24 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	}
 
 	def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
-	         wrapAlign: WrapAlign.Value, simulate: Boolean,lineHeight: Float): Option[ReportTypes.WrapBox] = {
+	         wrapAlign: WrapAlign.Value, simulate: Boolean, lineHeight: Float): Option[ReportTypes.WrapBox] = {
 		implicit val wordSeparators = List(',', '.')
 		val lines = wordWrap.wordWrap(txtList, x1 - x0)
 		var crtY = y0
 		if (!simulate) {
 			lines.foreach(line => {
-				val line1 = line.map(item => {
-					val length = item.textLength + wordWrap.getTextWidth(ReportTxt(" ", item.rtext.font))
-					RTextPos(item.x, length, item.rtext)
-				})
-				val l1: List[Float] = line1.map(item => item.textLength)
+				val l1: List[Float] = line.map(item => item.textLength)
 				val length = l1.sum
 				val newX = wrapAlign match {
 					case WrapAlign.WRAP_CENTER => x0 + (x1 - x0 - length) * 0.5f
 					case WrapAlign.WRAP_RIGHT => x1 - length
 					case _ => x0
 				}
-				line1.zipWithIndex.foreach { case (textPos, index) => {
-					val offset = line1.take(index).map(item => item.textLength).sum
-					text(newX + offset, crtY, textPos.rtext)
-				}
+				line.zipWithIndex.foreach {
+					case (textPos, index) => {
+						val offset = line.take(index).map(item => item.textLength).sum
+						text(newX + offset, crtY, textPos.rtext)
+					}
 				}
 				crtY -= lineHeight
 			})
@@ -139,6 +136,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		}
 		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size))
 	}
+
 
 	def getTextWidth(txt: ReportTxt): Float = wordWrap.getTextWidth(txt)
 

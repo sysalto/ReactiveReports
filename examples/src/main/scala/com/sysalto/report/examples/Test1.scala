@@ -55,33 +55,40 @@ object Test1 {
 		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
 		//		val txt2 = RText(str)
 
-		val row = ReportRow(10, report.pgSize.width - 10, List(Column("column1", 130), Column("column2", 100),
-			Column("c3",83),Column("c4",83),Column("c5",Flex(1))))
-		val bound1 = row.getColumnBound("column2")
-		val bound2 = row.getColumnBound("column2")
-		val cell1 = ReportCell(" asaSD  \n  ASAS AaS    table des \nmatières").centerAlign() inside bound1
-		val cell2 = ReportCell(txt1).leftAlign() inside bound2
-		val rrow1 = ReportCellList(List(cell1)) //,cell2))
-		//			cell2))
-		report.print(rrow1)
-		report.nextLine(5)
+//		val row = ReportRow(10, report.pgSize.width - 10, List(Column("column1", 130), Column("column2", 100),
+//			Column("c3",83),Column("c4",83),Column("c5",Flex(1))))
+//		val bound1 = row.getColumnBound("column2")
+//		val bound2 = row.getColumnBound("column2")
+//		val cell1 = ReportCell(" asaSD  \n  ASAS AaS    table des \nmatières").centerAlign() inside bound1
+//		val cell2 = ReportCell(txt1).leftAlign() inside bound2
+//		val rrow1 = ReportCellList(List(cell1)) //,cell2))
+//		//			cell2))
+//		report.print(rrow1)
+//		report.nextLine(5)
+
+		val txt="Text1 ABCDE"
+
+		report.print(txt) at 10
+		val x1=10+report.getTextWidth(txt)
+		report line() from(x1, report.getY ) to (300) color(200, 200, 200) draw()
+		report.nextLine()
 
 		val row1 = ReportRow(10, report.pgSize.width - 10, List(Column("c1", 130), Column("c2", Flex(1))))
 		val b1 = row1.getColumnBound("c1")
 		val b2 = row1.getColumnBound("c2")
-		val c1a = ReportCell("Test1").leftAlign() inside b1
+		val c1a = ReportCell(txt).leftAlign() inside b1
 		val c2a = ReportCell("1").rightAlign() inside b2
 		report.print(ReportCellList(List(c1a,c2a)))
-		val m1a=b1.left+report.getTextWidth(c1a.txt.head)+2
+		val m1a=b1.left+report.getTextWidth(c1a.txt.head)
 		val m2a=b2.right-report.getTextWidth(c2a.txt.head)-2
 		report line() from(m1a, report.getY ) to (m2a) color(200, 200, 200) draw()
 		report.nextLine()
-		val c1b = ReportCell(" Test1 asdsadsaads  asdas asdaS D").leftAlign() inside b1
-		val c2b = ReportCell(" 2345").rightAlign() inside b2
-		report.print(ReportCellList(List(c1b,c2b)))
-		val m1b=b1.left+report.getTextWidth(c1b.txt.head)+2
-		val m2b=b2.right-report.getTextWidth(c2b.txt.head)-2
-		report line() from(m1b, report.getY ) to (m2b) color(200, 200, 200) draw()
+//		val c1b = ReportCell(" Test1 asdsadsaads  asdas asdaS D").leftAlign() inside b1
+//		val c2b = ReportCell(" 2345").rightAlign() inside b2
+//		report.print(ReportCellList(List(c1b,c2b)))
+//		val m1b=b1.left+report.getTextWidth(c1b.txt.head)+2
+//		val m2b=b2.right-report.getTextWidth(c2b.txt.head)-2
+//		report line() from(m1b, report.getY ) to (m2b) color(200, 200, 200) draw()
 
 		report.nextLine(10)
 
