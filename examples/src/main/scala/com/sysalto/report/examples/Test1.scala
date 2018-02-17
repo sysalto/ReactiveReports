@@ -85,10 +85,12 @@ object Test1 {
 		report.nextLine()
 		val c1b = ReportCell(" Test1 asdsadsaads  asdas asdaS D").leftAlign() inside b1
 		val c2b = ReportCell(" 2345").rightAlign() inside b2
-		report.print(ReportCellList(List(c1b,c2b)))
+		val rrow=ReportCellList(List(c1b,c2b))
+		report.print(rrow)
 		val m1b=b1.left+report.getTextWidth(c1b).last
 		val m2b=b2.right-report.getTextWidth(c2b.txt.head)
-		report line() from(m1b, report.getY+10 ) to (m2b) color(200, 200, 200) draw()
+		val y2 = rrow.calculate(report)
+		report line() from(m1b, y2 ) to (m2b) color(200, 200, 200) draw()
 
 		report.nextLine(10)
 
