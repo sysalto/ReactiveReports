@@ -130,9 +130,11 @@ case class IteratorGroup[T](iterator: Iterator[T]) {
 				}
 			}
 		}
-		crtRecord.prev = crtRecord.crt
-		crtRecord.crt = crtRecord.next
-		crtRecord.next = None
+		if (crtRecord.next.isDefined) {
+			crtRecord.prev = crtRecord.crt
+			crtRecord.crt = crtRecord.next
+			crtRecord.next = None
+		}
 		call(crtRecord)
 	}
 

@@ -55,11 +55,11 @@ object Test1 {
 		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
 		//		val txt2 = RText(str)
 
-		val row = ReportRow(10, report.pgSize.width - 10, List(Column("column1", 130), Column("column2", 300),
+		val row = ReportRow(10, report.pgSize.width - 10, List(Column("column1", 130), Column("column2", 100),
 			Column("c3",83),Column("c4",83),Column("c5",Flex(1))))
-		val bound1 = row.getColumnBound("c5")
+		val bound1 = row.getColumnBound("column2")
 		val bound2 = row.getColumnBound("column2")
-		val cell1 = ReportCell("table des matières").centerAlign() inside bound1
+		val cell1 = ReportCell(" asaSD    ASAS AaS    table des matières").rightAlign() inside bound1
 		val cell2 = ReportCell(txt1).leftAlign() inside bound2
 		val rrow1 = ReportCellList(List(cell1)) //,cell2))
 		//			cell2))

@@ -71,7 +71,7 @@ object TestBig extends GroupUtilTrait {
 		val reportGroup = List(Group("categ", (r: Food) => r.categ))
 		val reportGroupUtil = new GroupUtil(reportGroup)
 
-		val list = for (i <- 1 to 200) yield Food(s"name $i", i, i / 10)
+		val list = for (i <- 1 to 2) yield Food(s"name $i", i, i / 10)
 		val grp = list.iterator.toGroup
 
 		val report = Report("report1.pdf", ReportPageOrientation.PORTRAIT)
@@ -109,7 +109,7 @@ object TestBig extends GroupUtilTrait {
 	def main(args: Array[String]): Unit = {
 		val t1 = System.currentTimeMillis()
 		try {
-			report()
+			report1()
 		} catch {
 			case e: Throwable => e.printStackTrace()
 		}
