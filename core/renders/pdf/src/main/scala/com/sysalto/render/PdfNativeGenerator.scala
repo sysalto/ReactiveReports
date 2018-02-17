@@ -116,9 +116,9 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		var crtY = y0
 		if (!simulate) {
 			lines.foreach(line => {
-				val line1=line.map(item=>{
-					val length=item.textLength+wordWrap.getTextSize(ReportTxt(" ",item.rtext.font))
-					RTextPos(item.x,length,item.rtext)
+				val line1 = line.map(item => {
+					val length = item.textLength + wordWrap.getTextWidth(ReportTxt(" ", item.rtext.font))
+					RTextPos(item.x, length, item.rtext)
 				})
 				val l1: List[Float] = line1.map(item => item.textLength)
 				val length = l1.sum
@@ -127,10 +127,11 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 					case WrapAlign.WRAP_RIGHT => x1 - length
 					case _ => x0
 				}
-				line1.zipWithIndex.foreach { case(textPos,index)=>{
-					val offset=line1.take(index).map(item=>item.textLength).sum
-					text(newX+offset,crtY,textPos.rtext)
-				}}
+				line1.zipWithIndex.foreach { case (textPos, index) => {
+					val offset = line1.take(index).map(item => item.textLength).sum
+					text(newX + offset, crtY, textPos.rtext)
+				}
+				}
 				crtY -= lineHeight
 			})
 		} else {
@@ -138,6 +139,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		}
 		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size))
 	}
+
+	def getTextWidth(txt: ReportTxt): Float = wordWrap.getTextWidth(txt)
 
 	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
 

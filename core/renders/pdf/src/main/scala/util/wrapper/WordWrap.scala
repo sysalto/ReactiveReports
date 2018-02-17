@@ -91,7 +91,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 		})
 	}
 
-	def getTextSize(text: ReportTxt): Float = {
+	def getTextWidth(text: ReportTxt): Float = {
 		val word = Word(text.txt.map(char => CharF(char, text.font)).toList)
 		getWordSize(word)
 	}

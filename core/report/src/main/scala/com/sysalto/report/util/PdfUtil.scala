@@ -41,7 +41,7 @@ abstract class PdfUtil() {
 
 	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int)
 
-	def linkToUrl(boundaryRect: BoundaryRect,url:String)
+	def linkToUrl(boundaryRect: BoundaryRect, url: String)
 
 	def text(txt: ReportTxt, x1: Float, y1: Float, x2: Float = Float.MaxValue, y2: Float = Float.MaxValue): Unit
 
@@ -68,5 +68,7 @@ abstract class PdfUtil() {
 	def verticalShade(rectangle: DRectangle, from: ReportColor, to: ReportColor)
 
 	def setExternalFont(externalFont: RFontFamily)
+
+	def getTextWidth(txt: ReportTxt): Float
 }
 

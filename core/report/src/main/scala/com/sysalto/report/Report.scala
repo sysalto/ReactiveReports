@@ -188,7 +188,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtYPosition = pdfUtil.pgSize.height - y
 	}
 
-	private[report] def getYPosition(y:Float) = pdfUtil.pgSize.height - y
+	private[report] def getYPosition(y: Float) = pdfUtil.pgSize.height - y
 
 	private[report] def getYPosition = crtYPosition
 
@@ -585,6 +585,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	if (lastPosition < getCurrentPosition) {
 		lastPosition = getCurrentPosition
 	}
+
+	def getTextWidth(txt: ReportTxt): Float = pdfUtil.getTextWidth(txt)
 }
 
 object Report {

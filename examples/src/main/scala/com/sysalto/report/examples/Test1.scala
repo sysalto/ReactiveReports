@@ -59,19 +59,30 @@ object Test1 {
 			Column("c3",83),Column("c4",83),Column("c5",Flex(1))))
 		val bound1 = row.getColumnBound("column2")
 		val bound2 = row.getColumnBound("column2")
-		val cell1 = ReportCell(" asaSD  \n  ASAS AaS    table des matières").centerAlign() inside bound1
+		val cell1 = ReportCell(" asaSD  \n  ASAS AaS    table des \nmatières").centerAlign() inside bound1
 		val cell2 = ReportCell(txt1).leftAlign() inside bound2
 		val rrow1 = ReportCellList(List(cell1)) //,cell2))
 		//			cell2))
 		report.print(rrow1)
+		report.nextLine(5)
+
+		val row1 = ReportRow(10, report.pgSize.width - 10, List(Column("c1", 130), Column("c2", Flex(1))))
+		val b1 = row1.getColumnBound("c1")
+		val b2 = row1.getColumnBound("c2")
+		val c1a = ReportCell("Test1").leftAlign() inside b1
+		val c2a = ReportCell("1").rightAlign() inside b2
+		report.print(ReportCellList(List(c1a,c2a)))
+		val m1a=b1.left+report.getTextWidth(c1a.txt.head)+2
+		val m2a=b2.right-report.getTextWidth(c2a.txt.head)-2
+		report line() from(m1a, report.getY ) to (m2a) color(200, 200, 200) draw()
 		report.nextLine()
-		val cell3 = ReportCell("LEFT").leftAlign() inside bound1
-//		val rrow2 = ReportCellList(List(cell3,cell2))
-//		report.print(rrow2)
-//		report.nextLine()
-//		val cell4 = ReportCell("RIGHT").rightAlign() inside bound1
-//		val rrow3 = ReportCellList(List(cell4,cell2))
-//		report.print(rrow3)
+		val c1b = ReportCell(" Test1 asdsadsaads").leftAlign() inside b1
+		val c2b = ReportCell(" 2345").rightAlign() inside b2
+		report.print(ReportCellList(List(c1b,c2b)))
+		val m1b=b1.left+report.getTextWidth(c1b.txt.head)+2
+		val m2b=b2.right-report.getTextWidth(c2b.txt.head)-2
+		report line() from(m1b, report.getY ) to (m2b) color(200, 200, 200) draw()
+
 		report.nextLine(10)
 
 		report.nextLine()

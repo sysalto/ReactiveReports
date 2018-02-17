@@ -114,4 +114,6 @@ class PdfNativeRender extends PdfUtil {
 	override def linkToUrl(boundaryRect:BoundaryRect, url:String): Unit = {
 		pdfNativeGenerator.linkToUrl(boundaryRect,url)
 	}
+
+	override def getTextWidth(txt: ReportTxt): Float = pdfNativeGenerator.getTextWidth(txt)
 }
