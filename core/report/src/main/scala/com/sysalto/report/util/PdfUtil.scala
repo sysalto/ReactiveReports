@@ -70,5 +70,7 @@ abstract class PdfUtil() {
 	def setExternalFont(externalFont: RFontFamily)
 
 	def getTextWidth(txt: ReportTxt): Float
+
+	def getTextWidth(cell: ReportCell): List[Float]
 }
 

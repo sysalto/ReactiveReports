@@ -116,4 +116,5 @@ class PdfNativeRender extends PdfUtil {
 	}
 
 	override def getTextWidth(txt: ReportTxt): Float = pdfNativeGenerator.getTextWidth(txt)
+	override def getTextWidth(cell: ReportCell): List[Float]=pdfNativeGenerator.getTextWidth(cell)
 }

@@ -586,11 +586,13 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	def getTextWidth(txt: ReportTxt): Float = {
-		val txt1=if (txt.font.fontName.isEmpty) {
-			ReportTxt(txt.txt,this.font)
-		}  else txt
+		val txt1 = if (txt.font.fontName.isEmpty) {
+			ReportTxt(txt.txt, this.font)
+		} else txt
 		pdfUtil.getTextWidth(txt1)
 	}
+
+	def getTextWidth(cell: ReportCell): List[Float] = pdfUtil.getTextWidth(cell)
 }
 
 object Report {

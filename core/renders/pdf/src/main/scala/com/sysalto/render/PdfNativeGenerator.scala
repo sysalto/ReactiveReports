@@ -46,6 +46,7 @@ import scala.collection.mutable.ListBuffer
 	* Created by marian on 4/1/17.
 	*/
 class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
+	implicit val wordSeparators = List(',', '.')
 	private[this] val db = RockDbUtil()
 
 	private[this] implicit val pdfWriter = new PdfWriter(name)
@@ -111,7 +112,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 	def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value, simulate: Boolean, lineHeight: Float): Option[ReportTypes.WrapBox] = {
-		implicit val wordSeparators = List(',', '.')
+
 		val lines = wordWrap.wordWrap(txtList, x1 - x0)
 		var crtY = y0
 		if (!simulate) {
@@ -139,6 +140,14 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 
 	def getTextWidth(txt: ReportTxt): Float = wordWrap.getTextWidth(txt)
+
+	def getTextWidth(cell: ReportCell): List[Float] = {
+		val lines = wordWrap.wordWrap(cell.txt, cell.margin.right - cell.margin.left)
+		lines.map(line => {
+			val lastWord=line.last
+			line.map(word => word.textLength-(if (word==lastWord) wordWrap.getTextWidth(ReportTxt(" ",word.rtext.font)) else 0)).sum
+		})
+	}
 
 	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
 
