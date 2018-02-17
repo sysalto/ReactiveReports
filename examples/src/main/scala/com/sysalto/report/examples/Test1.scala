@@ -59,7 +59,7 @@ object Test1 {
 			Column("c3",83),Column("c4",83),Column("c5",Flex(1))))
 		val bound1 = row.getColumnBound("column2")
 		val bound2 = row.getColumnBound("column2")
-		val cell1 = ReportCell(" asaSD    ASAS AaS    table des matières").rightAlign() inside bound1
+		val cell1 = ReportCell(" asaSD  \n  ASAS AaS    table des matières").centerAlign() inside bound1
 		val cell2 = ReportCell(txt1).leftAlign() inside bound2
 		val rrow1 = ReportCellList(List(cell1)) //,cell2))
 		//			cell2))

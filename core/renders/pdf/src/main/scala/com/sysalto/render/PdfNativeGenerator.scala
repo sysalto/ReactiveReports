@@ -38,7 +38,7 @@ import util.PageTree.PageNode
 import util.fonts.parsers.FontParser.FontMetric
 import util.{PageTree, SyncFileUtil}
 import util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
-import util.wrapper.WordWrap
+import util.wrapper.{RTextPos, WordWrap}
 
 import scala.collection.mutable.ListBuffer
 
@@ -116,16 +116,21 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		var crtY = y0
 		if (!simulate) {
 			lines.foreach(line => {
-				val l1: List[Float] = line.map(item => item.textLength)
+				val line1=line.map(item=>{
+					val length=item.textLength+wordWrap.getTextSize(ReportTxt(" ",item.rtext.font))
+					RTextPos(item.x,length,item.rtext)
+				})
+				val l1: List[Float] = line1.map(item => item.textLength)
 				val length = l1.sum
 				val newX = wrapAlign match {
 					case WrapAlign.WRAP_CENTER => x0 + (x1 - x0 - length) * 0.5f
 					case WrapAlign.WRAP_RIGHT => x1 - length
 					case _ => x0
 				}
-				line.foreach(textPos =>
-					text(newX + textPos.x, crtY, textPos.rtext)
-				)
+				line1.zipWithIndex.foreach { case(textPos,index)=>{
+					val offset=line1.take(index).map(item=>item.textLength).sum
+					text(newX+offset,crtY,textPos.rtext)
+				}}
 				crtY -= lineHeight
 			})
 		} else {

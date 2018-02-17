@@ -32,13 +32,13 @@ import scala.collection.mutable.ListBuffer
 /**
 	* Created by marian on 11/05/17.
 	*/
-class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParserFamily]) {
+class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontParserFamily]) {
 
 	private[this] type Cost[T] = (Double, List[T])
 
 	@tailrec
 	private[this] def calculate[T](widthList: Map[T, List[(Double, T)]], accumList: List[Cost[T]], dest: T,
-	                                 visited: Set[T]): Cost[T] = accumList match {
+	                               visited: Set[T]): Cost[T] = accumList match {
 		case (dist, path) :: rest => path match {
 			case Nil => (0, List())
 			case key :: _ =>
@@ -62,32 +62,38 @@ class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParse
 		if (!ll.exists(item => item.char == ' ')) {
 			accum += Word(ll)
 		} else {
-			val ll1 = ll.splitAt(ll.indexWhere(item => item.char == ' ') + 1)
-			accum += Word(ll1._1)
+			val l1 = ll.dropWhile(item => item.char == ' ')
+			val ll1 = l1.splitAt(l1.indexWhere(item => item.char == ' ') + 1)
+			val newWordList = ll1._1
+			val newWord = newWordList.take(newWordList.length - 1)
+			accum += Word(newWord)
 			stringToWord(ll1._2, accum)
 		}
 	}
 
 	private[this] object FontType extends Enumeration {
-		val Afm,Ttf = Value
+		val Afm, Ttf = Value
 	}
 
-	private[this] def getFontParser(font:RFont):FontParser={
-		val fontFamily=fontFamilyMap(font.fontName)
+	private[this] def getFontParser(font: RFont): FontParser = {
+		val fontFamily = fontFamilyMap(font.fontName)
 		font.attribute match {
 			case RFontAttribute.NORMAL => fontFamily.regular
-			case RFontAttribute.BOLD=>fontFamily.bold.get
-			case RFontAttribute.ITALIC=>fontFamily.italic.get
-			case RFontAttribute.BOLD_ITALIC=>fontFamily.boldItalic.get
+			case RFontAttribute.BOLD => fontFamily.bold.get
+			case RFontAttribute.ITALIC => fontFamily.italic.get
+			case RFontAttribute.BOLD_ITALIC => fontFamily.boldItalic.get
 		}
 	}
 
 	private[this] def getWordSize(word: Word): Float = {
 		word.charList.foldLeft(0.toFloat)((total, char) => {
-			val font = char.font
-			val fontParser: FontParser = getFontParser(font)
-			total + fontParser.getCharWidth(char.char) * char.font.size
+			total + getCharSize(char)
 		})
+	}
+
+	def getTextSize(text: ReportTxt): Float = {
+		val word = Word(text.txt.map(char => CharF(char, text.font)).toList)
+		getWordSize(word)
 	}
 
 	private[this] def getCharSize(char: CharF): Float = {
@@ -122,7 +128,6 @@ class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParse
 		}
 	}
 
-	case class RTextPos(x: Float, textLength: Float, rtext: ReportTxt)
 
 	@tailrec
 	private[this] def wordToRTextPos(offset: Float, word: Word, accum: ListBuffer[RTextPos]): Unit = {
@@ -249,3 +254,6 @@ class WordWrap(fontFamilyMap:scala.collection.mutable.HashMap[String, RFontParse
 
 
 }
+
+
+case class RTextPos(x: Float, textLength: Float, rtext: ReportTxt)
