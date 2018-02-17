@@ -12522,19 +12522,6 @@ public final class ReportProto {
      * <code>.com.sysalto.report.serialization.WrapAlign_proto wrapAlign = 6;</code>
      */
     com.sysalto.report.serialization.ReportProto.WrapAlign_proto getWrapAlign();
-
-    /**
-     * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-     */
-    boolean hasStartY();
-    /**
-     * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-     */
-    com.sysalto.report.serialization.ReportProto.OptionFloat_proto getStartY();
-    /**
-     * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-     */
-    com.sysalto.report.serialization.ReportProto.OptionFloat_protoOrBuilder getStartYOrBuilder();
   }
   /**
    * Protobuf type {@code com.sysalto.report.serialization.ReportTextWrap_proto}
@@ -12621,19 +12608,6 @@ public final class ReportProto {
               int rawValue = input.readEnum();
 
               wrapAlign_ = rawValue;
-              break;
-            }
-            case 58: {
-              com.sysalto.report.serialization.ReportProto.OptionFloat_proto.Builder subBuilder = null;
-              if (startY_ != null) {
-                subBuilder = startY_.toBuilder();
-              }
-              startY_ = input.readMessage(com.sysalto.report.serialization.ReportProto.OptionFloat_proto.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(startY_);
-                startY_ = subBuilder.buildPartial();
-              }
-
               break;
             }
           }
@@ -12751,27 +12725,6 @@ public final class ReportProto {
       return result == null ? com.sysalto.report.serialization.ReportProto.WrapAlign_proto.UNRECOGNIZED : result;
     }
 
-    public static final int STARTY_FIELD_NUMBER = 7;
-    private com.sysalto.report.serialization.ReportProto.OptionFloat_proto startY_;
-    /**
-     * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-     */
-    public boolean hasStartY() {
-      return startY_ != null;
-    }
-    /**
-     * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-     */
-    public com.sysalto.report.serialization.ReportProto.OptionFloat_proto getStartY() {
-      return startY_ == null ? com.sysalto.report.serialization.ReportProto.OptionFloat_proto.getDefaultInstance() : startY_;
-    }
-    /**
-     * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-     */
-    public com.sysalto.report.serialization.ReportProto.OptionFloat_protoOrBuilder getStartYOrBuilder() {
-      return getStartY();
-    }
-
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -12801,9 +12754,6 @@ public final class ReportProto {
       }
       if (wrapAlign_ != com.sysalto.report.serialization.ReportProto.WrapAlign_proto.NO_WRAP.getNumber()) {
         output.writeEnum(6, wrapAlign_);
-      }
-      if (startY_ != null) {
-        output.writeMessage(7, getStartY());
       }
       unknownFields.writeTo(output);
     }
@@ -12836,10 +12786,6 @@ public final class ReportProto {
       if (wrapAlign_ != com.sysalto.report.serialization.ReportProto.WrapAlign_proto.NO_WRAP.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(6, wrapAlign_);
-      }
-      if (startY_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, getStartY());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -12876,11 +12822,6 @@ public final class ReportProto {
           == java.lang.Float.floatToIntBits(
               other.getY1()));
       result = result && wrapAlign_ == other.wrapAlign_;
-      result = result && (hasStartY() == other.hasStartY());
-      if (hasStartY()) {
-        result = result && getStartY()
-            .equals(other.getStartY());
-      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -12910,10 +12851,6 @@ public final class ReportProto {
           getY1());
       hash = (37 * hash) + WRAPALIGN_FIELD_NUMBER;
       hash = (53 * hash) + wrapAlign_;
-      if (hasStartY()) {
-        hash = (37 * hash) + STARTY_FIELD_NUMBER;
-        hash = (53 * hash) + getStartY().hashCode();
-      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -13060,12 +12997,6 @@ public final class ReportProto {
 
         wrapAlign_ = 0;
 
-        if (startYBuilder_ == null) {
-          startY_ = null;
-        } else {
-          startY_ = null;
-          startYBuilder_ = null;
-        }
         return this;
       }
 
@@ -13104,11 +13035,6 @@ public final class ReportProto {
         result.x1_ = x1_;
         result.y1_ = y1_;
         result.wrapAlign_ = wrapAlign_;
-        if (startYBuilder_ == null) {
-          result.startY_ = startY_;
-        } else {
-          result.startY_ = startYBuilder_.build();
-        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -13191,9 +13117,6 @@ public final class ReportProto {
         }
         if (other.wrapAlign_ != 0) {
           setWrapAlignValue(other.getWrapAlignValue());
-        }
-        if (other.hasStartY()) {
-          mergeStartY(other.getStartY());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -13609,123 +13532,6 @@ public final class ReportProto {
         wrapAlign_ = 0;
         onChanged();
         return this;
-      }
-
-      private com.sysalto.report.serialization.ReportProto.OptionFloat_proto startY_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.OptionFloat_proto, com.sysalto.report.serialization.ReportProto.OptionFloat_proto.Builder, com.sysalto.report.serialization.ReportProto.OptionFloat_protoOrBuilder> startYBuilder_;
-      /**
-       * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-       */
-      public boolean hasStartY() {
-        return startYBuilder_ != null || startY_ != null;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-       */
-      public com.sysalto.report.serialization.ReportProto.OptionFloat_proto getStartY() {
-        if (startYBuilder_ == null) {
-          return startY_ == null ? com.sysalto.report.serialization.ReportProto.OptionFloat_proto.getDefaultInstance() : startY_;
-        } else {
-          return startYBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-       */
-      public Builder setStartY(com.sysalto.report.serialization.ReportProto.OptionFloat_proto value) {
-        if (startYBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          startY_ = value;
-          onChanged();
-        } else {
-          startYBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-       */
-      public Builder setStartY(
-          com.sysalto.report.serialization.ReportProto.OptionFloat_proto.Builder builderForValue) {
-        if (startYBuilder_ == null) {
-          startY_ = builderForValue.build();
-          onChanged();
-        } else {
-          startYBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-       */
-      public Builder mergeStartY(com.sysalto.report.serialization.ReportProto.OptionFloat_proto value) {
-        if (startYBuilder_ == null) {
-          if (startY_ != null) {
-            startY_ =
-              com.sysalto.report.serialization.ReportProto.OptionFloat_proto.newBuilder(startY_).mergeFrom(value).buildPartial();
-          } else {
-            startY_ = value;
-          }
-          onChanged();
-        } else {
-          startYBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-       */
-      public Builder clearStartY() {
-        if (startYBuilder_ == null) {
-          startY_ = null;
-          onChanged();
-        } else {
-          startY_ = null;
-          startYBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-       */
-      public com.sysalto.report.serialization.ReportProto.OptionFloat_proto.Builder getStartYBuilder() {
-        
-        onChanged();
-        return getStartYFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-       */
-      public com.sysalto.report.serialization.ReportProto.OptionFloat_protoOrBuilder getStartYOrBuilder() {
-        if (startYBuilder_ != null) {
-          return startYBuilder_.getMessageOrBuilder();
-        } else {
-          return startY_ == null ?
-              com.sysalto.report.serialization.ReportProto.OptionFloat_proto.getDefaultInstance() : startY_;
-        }
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.OptionFloat_proto startY = 7;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.OptionFloat_proto, com.sysalto.report.serialization.ReportProto.OptionFloat_proto.Builder, com.sysalto.report.serialization.ReportProto.OptionFloat_protoOrBuilder> 
-          getStartYFieldBuilder() {
-        if (startYBuilder_ == null) {
-          startYBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.sysalto.report.serialization.ReportProto.OptionFloat_proto, com.sysalto.report.serialization.ReportProto.OptionFloat_proto.Builder, com.sysalto.report.serialization.ReportProto.OptionFloat_protoOrBuilder>(
-                  getStartY(),
-                  getParentForChildren(),
-                  isClean());
-          startY_ = null;
-        }
-        return startYBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -25170,63 +24976,61 @@ public final class ReportProto {
       "\004null\030\001 \001(\010\022\016\n\006string\030\002 \001(\t\"|\n\027ReportTex" +
       "tAligned_proto\022<\n\005rText\030\001 \001(\0132-.com.sysa" +
       "lto.report.serialization.RText_proto\022\t\n\001" +
-      "x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\r\n\005index\030\004 \001(\005\"\216\002\n\024Re" +
+      "x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\r\n\005index\030\004 \001(\005\"\311\001\n\024Re" +
       "portTextWrap_proto\022;\n\004text\030\001 \003(\0132-.com.s" +
       "ysalto.report.serialization.RText_proto\022" +
       "\n\n\002x0\030\002 \001(\002\022\n\n\002y0\030\003 \001(\002\022\n\n\002x1\030\004 \001(\002\022\n\n\002y" +
       "1\030\005 \001(\002\022D\n\twrapAlign\030\006 \001(\01621.com.sysalto" +
-      ".report.serialization.WrapAlign_proto\022C\n" +
-      "\006startY\030\007 \001(\01323.com.sysalto.report.seria" +
-      "lization.OptionFloat_proto\"0\n\021OptionFloa" +
-      "t_proto\022\014\n\004null\030\001 \001(\010\022\r\n\005float\030\002 \001(\002\"4\n\022" +
-      "StringDouble_proto\022\016\n\006value1\030\001 \001(\t\022\016\n\006va" +
-      "lue2\030\002 \001(\001\"J\n\030DoubleStringString_proto\022\016" +
-      "\n\006value1\030\001 \001(\001\022\016\n\006value2\030\002 \001(\t\022\016\n\006value3" +
-      "\030\003 \001(\t\"\335\001\n\024ReportPieChart_proto\022;\n\004font\030" +
-      "\001 \001(\0132-.com.sysalto.report.serialization" +
-      ".RFont_proto\022\r\n\005title\030\002 \001(\t\022B\n\004data\030\003 \003(" +
-      "\01324.com.sysalto.report.serialization.Str" +
-      "ingDouble_proto\022\n\n\002x0\030\004 \001(\002\022\n\n\002y0\030\005 \001(\002\022" +
-      "\r\n\005width\030\006 \001(\002\022\016\n\006height\030\007 \001(\002\"\306\001\n\024Repor" +
-      "tBarChart_proto\022\r\n\005title\030\001 \001(\t\022\016\n\006xLabel" +
-      "\030\002 \001(\t\022\016\n\006yLabel\030\003 \001(\t\022H\n\004data\030\004 \003(\0132:.c" +
-      "om.sysalto.report.serialization.DoubleSt" +
-      "ringString_proto\022\n\n\002x0\030\005 \001(\002\022\n\n\002y0\030\006 \001(\002" +
-      "\022\r\n\005width\030\007 \001(\002\022\016\n\006height\030\010 \001(\002\"g\n\021Repor" +
-      "tImage_proto\022\014\n\004file\030\001 \001(\t\022\t\n\001x\030\002 \001(\002\022\t\n" +
-      "\001y\030\003 \001(\002\022\r\n\005width\030\004 \001(\002\022\016\n\006height\030\005 \001(\002\022" +
-      "\017\n\007opacity\030\006 \001(\002\"\346\001\n\020ReportLine_proto\022\n\n" +
-      "\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030" +
-      "\004 \001(\002\022\021\n\tlineWidth\030\005 \001(\002\022=\n\005color\030\006 \001(\0132" +
-      "..com.sysalto.report.serialization.RColo" +
-      "r_proto\022P\n\014lineDashType\030\007 \001(\0132:.com.sysa" +
-      "lto.report.serialization.OptionLineDashT" +
-      "ype_proto\"t\n\030OptionLineDashType_proto\022\014\n" +
-      "\004null\030\001 \001(\010\022J\n\014lineDashType\030\002 \001(\01324.com." +
-      "sysalto.report.serialization.LineDashTyp" +
-      "e_proto\"1\n\022LineDashType_proto\022\014\n\004unit\030\001 " +
-      "\001(\005\022\r\n\005phase\030\002 \001(\005\"\345\001\n\025ReportRectangle_p" +
+      ".report.serialization.WrapAlign_proto\"0\n" +
+      "\021OptionFloat_proto\022\014\n\004null\030\001 \001(\010\022\r\n\005floa" +
+      "t\030\002 \001(\002\"4\n\022StringDouble_proto\022\016\n\006value1\030" +
+      "\001 \001(\t\022\016\n\006value2\030\002 \001(\001\"J\n\030DoubleStringStr" +
+      "ing_proto\022\016\n\006value1\030\001 \001(\001\022\016\n\006value2\030\002 \001(" +
+      "\t\022\016\n\006value3\030\003 \001(\t\"\335\001\n\024ReportPieChart_pro" +
+      "to\022;\n\004font\030\001 \001(\0132-.com.sysalto.report.se" +
+      "rialization.RFont_proto\022\r\n\005title\030\002 \001(\t\022B" +
+      "\n\004data\030\003 \003(\01324.com.sysalto.report.serial" +
+      "ization.StringDouble_proto\022\n\n\002x0\030\004 \001(\002\022\n" +
+      "\n\002y0\030\005 \001(\002\022\r\n\005width\030\006 \001(\002\022\016\n\006height\030\007 \001(" +
+      "\002\"\306\001\n\024ReportBarChart_proto\022\r\n\005title\030\001 \001(" +
+      "\t\022\016\n\006xLabel\030\002 \001(\t\022\016\n\006yLabel\030\003 \001(\t\022H\n\004dat" +
+      "a\030\004 \003(\0132:.com.sysalto.report.serializati" +
+      "on.DoubleStringString_proto\022\n\n\002x0\030\005 \001(\002\022" +
+      "\n\n\002y0\030\006 \001(\002\022\r\n\005width\030\007 \001(\002\022\016\n\006height\030\010 \001" +
+      "(\002\"g\n\021ReportImage_proto\022\014\n\004file\030\001 \001(\t\022\t\n" +
+      "\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\r\n\005width\030\004 \001(\002\022\016\n\006he" +
+      "ight\030\005 \001(\002\022\017\n\007opacity\030\006 \001(\002\"\346\001\n\020ReportLi" +
+      "ne_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003" +
+      " \001(\002\022\n\n\002y2\030\004 \001(\002\022\021\n\tlineWidth\030\005 \001(\002\022=\n\005c" +
+      "olor\030\006 \001(\0132..com.sysalto.report.serializ" +
+      "ation.RColor_proto\022P\n\014lineDashType\030\007 \001(\013" +
+      "2:.com.sysalto.report.serialization.Opti" +
+      "onLineDashType_proto\"t\n\030OptionLineDashTy" +
+      "pe_proto\022\014\n\004null\030\001 \001(\010\022J\n\014lineDashType\030\002" +
+      " \001(\01324.com.sysalto.report.serialization." +
+      "LineDashType_proto\"1\n\022LineDashType_proto" +
+      "\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002 \001(\005\"\345\001\n\025Report" +
+      "Rectangle_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022" +
+      "\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002\022" +
+      "C\n\005color\030\006 \001(\01324.com.sysalto.report.seri" +
+      "alization.OptionRColor_proto\022G\n\tfillColo" +
+      "r\030\007 \001(\01324.com.sysalto.report.serializati" +
+      "on.OptionRColor_proto\"b\n\022OptionRColor_pr" +
+      "oto\022\014\n\004null\030\001 \001(\010\022>\n\006rColor\030\002 \001(\0132..com." +
+      "sysalto.report.serialization.RColor_prot" +
+      "o\"\334\001\n\031ReportVerticalShade_proto\022E\n\trecta" +
+      "ngle\030\001 \001(\01322.com.sysalto.report.serializ" +
+      "ation.DRectangle_proto\022<\n\004from\030\002 \001(\0132..c" +
+      "om.sysalto.report.serialization.RColor_p" +
+      "roto\022:\n\002to\030\003 \001(\0132..com.sysalto.report.se" +
+      "rialization.RColor_proto\"R\n\020DRectangle_p" +
       "roto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002" +
-      "\022\n\n\002y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002\022C\n\005color\030\006 " +
-      "\001(\01324.com.sysalto.report.serialization.O" +
-      "ptionRColor_proto\022G\n\tfillColor\030\007 \001(\01324.c" +
-      "om.sysalto.report.serialization.OptionRC" +
-      "olor_proto\"b\n\022OptionRColor_proto\022\014\n\004null" +
-      "\030\001 \001(\010\022>\n\006rColor\030\002 \001(\0132..com.sysalto.rep" +
-      "ort.serialization.RColor_proto\"\334\001\n\031Repor" +
-      "tVerticalShade_proto\022E\n\trectangle\030\001 \001(\0132" +
-      "2.com.sysalto.report.serialization.DRect" +
-      "angle_proto\022<\n\004from\030\002 \001(\0132..com.sysalto." +
-      "report.serialization.RColor_proto\022:\n\002to\030" +
-      "\003 \001(\0132..com.sysalto.report.serialization" +
-      ".RColor_proto\"R\n\020DRectangle_proto\022\n\n\002x1\030" +
-      "\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(" +
-      "\002\022\016\n\006radius\030\005 \001(\002*I\n\024RFontAttribute_prot" +
-      "o\022\n\n\006NORMAL\020\000\022\010\n\004BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013B" +
-      "OLD_ITALIC\020\003*b\n\017WrapAlign_proto\022\013\n\007NO_WR" +
-      "AP\020\000\022\r\n\tWRAP_LEFT\020\001\022\016\n\nWRAP_RIGHT\020\002\022\017\n\013W" +
-      "RAP_CENTER\020\003\022\022\n\016WRAP_JUSTIFIED\020\004B\002H\001b\006pr" +
-      "oto3"
+      "\022\n\n\002y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002*I\n\024RFontAtt" +
+      "ribute_proto\022\n\n\006NORMAL\020\000\022\010\n\004BOLD\020\001\022\n\n\006IT" +
+      "ALIC\020\002\022\017\n\013BOLD_ITALIC\020\003*b\n\017WrapAlign_pro" +
+      "to\022\013\n\007NO_WRAP\020\000\022\r\n\tWRAP_LEFT\020\001\022\016\n\nWRAP_R" +
+      "IGHT\020\002\022\017\n\013WRAP_CENTER\020\003\022\022\n\016WRAP_JUSTIFIE" +
+      "D\020\004B\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -25323,7 +25127,7 @@ public final class ReportProto {
     internal_static_com_sysalto_report_serialization_ReportTextWrap_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportTextWrap_proto_descriptor,
-        new java.lang.String[] { "Text", "X0", "Y0", "X1", "Y1", "WrapAlign", "StartY", });
+        new java.lang.String[] { "Text", "X0", "Y0", "X1", "Y1", "WrapAlign", });
     internal_static_com_sysalto_report_serialization_OptionFloat_proto_descriptor =
       getDescriptor().getMessageTypes().get(14);
     internal_static_com_sysalto_report_serialization_OptionFloat_proto_fieldAccessorTable = new

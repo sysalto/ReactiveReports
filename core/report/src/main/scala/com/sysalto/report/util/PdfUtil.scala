@@ -63,7 +63,7 @@ abstract class PdfUtil() {
 	def close()
 
 	def wrap(text: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
-	         wrapAlign: WrapAlign.Value, simulate: Boolean = false, startY: Option[Float] = None, lineHeight: Float = 0): Option[WrapBox]
+	         wrapAlign: WrapAlign.Value, simulate: Boolean = false, lineHeight: Float = 0): Option[WrapBox]
 
 	def verticalShade(rectangle: DRectangle, from: ReportColor, to: ReportColor)
 

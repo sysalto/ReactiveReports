@@ -129,9 +129,9 @@ object ReportTypes {
 	 */
 	case class ReportTextWrap(text: List[ReportTxt],
 	                          x0: Float, y0: Float, x1: Float, y1: Float,
-	                          wrapAlign: WrapAlign.Value, startY: Option[Float]) extends ReportItem() {
+	                          wrapAlign: WrapAlign.Value) extends ReportItem() {
 		override def render(report: Report): Unit = {
-			report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY, wrapAlign, simulate = false, startY)
+			report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY, wrapAlign, simulate = false)
 
 		}
 	}

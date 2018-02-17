@@ -128,10 +128,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 
 	private[report] def reportWrap(text: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
-	                               wrapAlign: WrapAlign.Value, simulate: Boolean = false,
-	                               startY: Option[Float] = None): Option[WrapBox] = {
+	                               wrapAlign: WrapAlign.Value, simulate: Boolean = false): Option[WrapBox] = {
 
-		pdfUtil.wrap(text, x0, y0, x1, y1, wrapAlign, simulate, startY, lineHeight)
+		pdfUtil.wrap(text, x0, y0, x1, y1, wrapAlign, simulate, lineHeight)
 	}
 
 	/*
@@ -347,7 +346,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		if (simulate) {
 			reportWrap(text1, x0, y0, x1, y1, wrapAlign, simulate)
 		} else {
-			val reportItem = ReportTextWrap(text1, x0, y0, x1, y1, wrapAlign, None)
+			val reportItem = ReportTextWrap(text1, x0, y0, x1, y1, wrapAlign)
 			crtPage.items += reportItem
 			None
 		}

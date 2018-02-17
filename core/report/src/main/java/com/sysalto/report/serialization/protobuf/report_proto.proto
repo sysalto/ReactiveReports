@@ -118,7 +118,6 @@ message ReportTextWrap_proto {
     float x1 = 4;
     float y1 = 5;
     WrapAlign_proto wrapAlign = 6;
-    OptionFloat_proto startY = 7;
 }
 
 message OptionFloat_proto {

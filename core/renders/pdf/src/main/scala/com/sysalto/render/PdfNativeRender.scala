@@ -38,10 +38,10 @@ class PdfNativeRender extends PdfUtil {
 	private[this] lazy val PAGE_WIDTH = if (orientation == ReportPageOrientation.PORTRAIT) 612 else 792
 	private[this] lazy val PAGE_HEIGHT = if (orientation == ReportPageOrientation.PORTRAIT) 792 else 612
 
-	override def open(name: String, orientation: ReportPageOrientation.Value,pdfCompression:Boolean): Unit = {
+	override def open(name: String, orientation: ReportPageOrientation.Value, pdfCompression: Boolean): Unit = {
 		new File(name).delete()
 		this.orientation = orientation
-		pdfNativeGenerator = new PdfNativeGenerator(name, PAGE_WIDTH, PAGE_HEIGHT,pdfCompression)
+		pdfNativeGenerator = new PdfNativeGenerator(name, PAGE_WIDTH, PAGE_HEIGHT, pdfCompression)
 		pdfNativeGenerator.startPdf()
 
 	}
@@ -73,8 +73,8 @@ class PdfNativeRender extends PdfUtil {
 		pdfNativeGenerator.rectangle(x1, convertY(y1), x2, convertY(y2), radius, color, fillColor)
 	}
 
-	override def drawPieChart(font:RFont,title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		pdfNativeGenerator.drawPieChart(font,title, data, x0, convertY(y0), width, height)
+	override def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
+		pdfNativeGenerator.drawPieChart(font, title, data, x0, convertY(y0), width, height)
 	}
 
 	override def drawBarChart(title: String, xLabel: String, yLabel: String, data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float): Unit = ???
@@ -94,8 +94,8 @@ class PdfNativeRender extends PdfUtil {
 
 	override def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
 	                  wrapAlign: WrapAlign.Value, simulate: Boolean,
-	                  startY: Option[Float], lineHeight: Float = 0): Option[ReportTypes.WrapBox] = {
-		pdfNativeGenerator.wrap(txtList, x0, convertY(y0), x1, convertY(y1), wrapAlign, simulate, startY, lineHeight)
+	                  lineHeight: Float = 0): Option[ReportTypes.WrapBox] = {
+		pdfNativeGenerator.wrap(txtList, x0, convertY(y0), x1, convertY(y1), wrapAlign, simulate, lineHeight)
 	}
 
 	override def verticalShade(rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
@@ -103,16 +103,16 @@ class PdfNativeRender extends PdfUtil {
 		pdfNativeGenerator.axialShade(rectangle.x1, convertY(rectangle.y1), rectangle.x1, convertY(rectangle.y2), rectangle1, from, to)
 	}
 
-	override def setExternalFont(externalFont:RFontFamily): Unit = {
+	override def setExternalFont(externalFont: RFontFamily): Unit = {
 		pdfNativeGenerator.setExternalFont(externalFont)
 	}
 
-	override def linkToPage(boundaryRect:BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
-		pdfNativeGenerator.linkToPage(boundaryRect,pageNbr,left,top)
+	override def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
+		pdfNativeGenerator.linkToPage(boundaryRect, pageNbr, left, top)
 	}
 
-	override def linkToUrl(boundaryRect:BoundaryRect, url:String): Unit = {
-		pdfNativeGenerator.linkToUrl(boundaryRect,url)
+	override def linkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
+		pdfNativeGenerator.linkToUrl(boundaryRect, url)
 	}
 
 	override def getTextWidth(txt: ReportTxt): Float = pdfNativeGenerator.getTextWidth(txt)

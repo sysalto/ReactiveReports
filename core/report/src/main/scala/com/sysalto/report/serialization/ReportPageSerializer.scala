@@ -392,14 +392,13 @@ private[serialization] object ReportTextWrapSerializer {
 		builder.setX1(obj.x1)
 		builder.setY1(obj.y1)
 		builder.setWrapAlign(WrapAlignSerializer.write(obj.wrapAlign))
-		builder.setStartY(OptionFloatSerializer.write(obj.startY))
 		builder.build()
 	}
 
 	def read(input: ReportTextWrap_proto): ReportTextWrap =
 		ReportTextWrap(input.getTextList.asScala.map(item => {
 			RTextSerializer.read(item)
-		}).toList, input.getX0, input.getY0, input.getX1, input.getY1, WrapAlignSerializer.read(input.getWrapAlign), OptionFloatSerializer.read(input.getStartY))
+		}).toList, input.getX0, input.getY0, input.getX1, input.getY1, WrapAlignSerializer.read(input.getWrapAlign))
 }
 
 private[serialization] object StringDoubleSerializer {

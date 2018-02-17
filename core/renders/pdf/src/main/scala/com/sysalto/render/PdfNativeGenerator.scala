@@ -110,7 +110,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	}
 
 	def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
-	         wrapAlign: WrapAlign.Value, simulate: Boolean, startY: Option[Float], lineHeight: Float): Option[ReportTypes.WrapBox] = {
+	         wrapAlign: WrapAlign.Value, simulate: Boolean,lineHeight: Float): Option[ReportTypes.WrapBox] = {
 		implicit val wordSeparators = List(',', '.')
 		val lines = wordWrap.wordWrap(txtList, x1 - x0)
 		var crtY = y0
