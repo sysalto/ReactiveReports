@@ -32,5 +32,5 @@ case class Group[T,R](name: String, get: (T) => R)
 
 object Group {
 
-	def apply[T,R](name: String,fct:RFunction1[T,R]): Group[T,R] = new Group[T,R](name,fct.apply)
+	def create[T,R](name: String,fct:RFunction1[T,R]): Group[T,R] = new Group[T,R](name,fct.apply)
 }

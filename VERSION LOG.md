@@ -1,9 +1,13 @@
 ## Development
 ### Changes:
 * removed ReportCellList - should be replaced with List[ReportCell]
+* ReportCellList.calculate(report) replaced with report.calculate(List{ReportCell])
 * add function report.getTextWidth(cell)
 * removed unused stratY param from wrpa
 * add getTextWidth to measure text
+* GroupUtil.apply -> GroupUtil.create
+* Group.apply -> Group.create
+* add print align CENTER/TOP/BOTTOM to report.print(cells)
 
 ### Bugs fixed:
 * fixed group bug

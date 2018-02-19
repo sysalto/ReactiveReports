@@ -24,7 +24,7 @@ public class ReportGroup {
             foodList.add(food);
         }
         IteratorGroup<Food> grp = GroupUtilDefs.toGroup(foodList.iterator());
-        GroupUtil<Food,Integer> reportGroupUtil=GroupUtil.apply(new Group<Food,Integer>("categ", food -> food.getCategory()));
+        GroupUtil<Food,Integer> reportGroupUtil=GroupUtil.create(new Group<Food,Integer>("categ", food -> food.getCategory()));
         grp.foreachJ(rec->{
             report.nextLine();
             Food crtRec = GroupUtil.getRec(rec);

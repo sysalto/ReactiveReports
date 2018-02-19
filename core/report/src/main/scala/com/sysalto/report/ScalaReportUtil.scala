@@ -39,7 +39,7 @@ trait  ScalaReportUtil {
   }
 
 
-  implicit def stringToRText(txt: String): ReportTxt = ReportTxt(txt, RFont(10))
+  implicit def stringToRText(txt: String): ReportTxt = ReportTxt(txt, RFont(10, "Helvetica"))
 
 
   private[this] def getFormatter(localeCode: String) = {

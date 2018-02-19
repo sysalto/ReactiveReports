@@ -207,6 +207,10 @@ object WrapAlign extends Enumeration {
 }
 
 
+object CellAlign extends Enumeration {
+	val TOP, BOTTOM, CENTER = Value
+}
+
 /*
 Font attributes enum
  */

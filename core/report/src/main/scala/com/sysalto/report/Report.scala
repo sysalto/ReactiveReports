@@ -430,12 +430,45 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
-	def print(cells: List[ReportCell]): Unit = {
-		val y = getY
-		cells.foreach(cell => {
-			wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, cell.align)
-		})
-		setYPosition(y)
+	def print(cells: List[ReportCell], cellAlign: CellAlign.Value = CellAlign.TOP, top: Float = 0, bottom: Float = 0): Unit = {
+		cellAlign match {
+			case CellAlign.TOP => {
+				val y = getY
+				cells.foreach(cell => {
+					wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, cell.align)
+				})
+				setYPosition(y)
+			}
+			case c@(CellAlign.BOTTOM | CellAlign.CENTER) => {
+				val y = getY
+				val wrapList = calculateWrapList(cells)
+				if (c == CellAlign.CENTER) {
+					val middle = (top + bottom) * 0.5
+					cells.zipWithIndex.foreach {
+						case (cell, index) => {
+							val wrapBox = wrapList(index)
+							val fontHeight = cell.txt.head.font.size
+							val height = wrapBox.currentY - wrapBox.initialY + fontHeight
+							val y1 = (middle - height * 0.5 + fontHeight).toFloat
+							wrap(cell.txt, cell.margin.left, y1, cell.margin.right, Float.MaxValue, cell.align)
+						}
+					}
+				} else {
+					cells.zipWithIndex.foreach {
+						case (cell, index) => {
+							val wrapBox = wrapList(index)
+							val fontHeight = cell.txt.head.font.size
+							val height = wrapBox.currentY - wrapBox.initialY + fontHeight
+							val y1 = bottom - height + fontHeight
+							wrap(cell.txt, cell.margin.left, y1, cell.margin.right, Float.MaxValue, cell.align)
+						}
+					}
+				}
+
+				setYPosition(y)
+			}
+		}
+
 	}
 
 
@@ -456,13 +489,17 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	def calculate(cells: List[ReportCell]): Float = {
+		val yPosList = calculateWrapList(cells).map(wrap => wrap.currentY)
+		yPosList.reduceLeft((f1, f2) => if (f1 > f2) f1 else f2)
+	}
+
+	private[this] def calculateWrapList(cells: List[ReportCell]): List[WrapBox] = {
 		val y = getY
 		val wrapList = cells.map(cell => {
-			val result = wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, cell.align, simulate = true)
-			result.get.currentY
+			wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, cell.align, simulate = true).get
 		})
 		setYPosition(y)
-		wrapList.reduceLeft((f1, f2) => if (f1 > f2) f1 else f2)
+		wrapList
 	}
 
 

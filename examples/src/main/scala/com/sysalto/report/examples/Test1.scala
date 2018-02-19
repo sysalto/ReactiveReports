@@ -23,6 +23,7 @@
 package com.sysalto.report.examples
 
 import com.sysalto.render.PdfNativeFactory
+import com.sysalto.report.CellAlign
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{RFont, RFontFamily, ReportPageOrientation}
 
@@ -65,28 +66,20 @@ object Test1 {
 //		//			cell2))
 //		report.print(rrow1)
 //		report.nextLine(5)
-
-		val txt="Text1 ABCDE"
-
-		report.print(txt) at 10
-		val x1=10+report.getTextWidth(txt)
-		report line() from(x1, report.getY ) to (300) color(200, 200, 200) draw()
-		report.nextLine()
-
 		val row1 = ReportRow(10, report.pgSize.width - 10, List(Column("c1", 130), Column("c2", Flex(1))))
 		val b1 = row1.getColumnBound("c1")
 		val b2 = row1.getColumnBound("c2")
-		val c1a = ReportCell(txt).leftAlign() inside b1
-		val c2a = ReportCell("1").rightAlign() inside b2
-		report.print(List(c1a,c2a))
-		val m1a=b1.left+report.getTextWidth(c1a).head
-		val m2a=b2.right-report.getTextWidth(c2a.txt.head)-2
-		report line() from(m1a, report.getY ) to (m2a) color(200, 200, 200) draw()
 		report.nextLine()
 		val c1b = ReportCell(" Test1 asdsadsaads  asdas asdaS D").leftAlign() inside b1
 		val c2b = ReportCell(" 2345").rightAlign() inside b2
 		val rrow=List(c1b,c2b)
-		report.print(rrow)
+
+		val top=report.getY-20
+		val bottom=report.getY+50
+		report rectangle() from(9, top) radius (3) to(report.pgSize.width - 9, bottom)  draw()
+
+
+		report.print(rrow,CellAlign.CENTER,top,bottom)
 		val m1b=b1.left+report.getTextWidth(c1b).last
 		val m2b=b2.right-report.getTextWidth(c2b.txt.head)
 		val y2 = report.calculate(rrow)

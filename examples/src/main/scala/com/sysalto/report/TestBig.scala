@@ -39,7 +39,7 @@ object TestBig extends GroupUtilTrait {
 
 	def report(): Unit = {
 
-		val report = Report("big.pdf", ReportPageOrientation.PORTRAIT)
+		implicit val report = Report("big.pdf", ReportPageOrientation.PORTRAIT)
 		println("Start:" + getMemory())
 		report.nextLine()
 
