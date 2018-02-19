@@ -448,8 +448,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 						case (cell, index) => {
 							val wrapBox = wrapList(index)
 							val fontHeight = cell.txt.head.font.size
-							val height = wrapBox.currentY - wrapBox.initialY + fontHeight
-							val y1 = (middle - height * 0.5 + fontHeight).toFloat
+							val height = wrapBox.currentY - wrapBox.initialY + wrapBox.textHeight
+							val y1 = (middle - height * 0.5 + wrapBox.textHeight).toFloat
 							wrap(cell.txt, cell.margin.left, y1, cell.margin.right, Float.MaxValue, cell.align)
 						}
 					}
@@ -458,8 +458,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 						case (cell, index) => {
 							val wrapBox = wrapList(index)
 							val fontHeight = cell.txt.head.font.size
-							val height = wrapBox.currentY - wrapBox.initialY + fontHeight
-							val y1 = bottom - height + fontHeight
+							val height = wrapBox.currentY - wrapBox.initialY + wrapBox.textHeight
+							val y1 = bottom - height + + wrapBox.textHeight
 							wrap(cell.txt, cell.margin.left, y1, cell.margin.right, Float.MaxValue, cell.align)
 						}
 					}

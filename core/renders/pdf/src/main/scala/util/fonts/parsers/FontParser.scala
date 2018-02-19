@@ -19,6 +19,14 @@ abstract class FontParser(val fontName: String) {
 			fontMetric.fontMap(char.toInt)
 		}
 	}
+
+	def getCharHeight(char: Char): Float = {
+		if (!fontMetric.fontMap.contains(char.toInt)) {
+			0f
+		} else {
+			if (char.isLower) fontMetric.fontHeight._1 else fontMetric.fontHeight._2
+		}
+	}
 }
 
 
@@ -35,6 +43,6 @@ object FontParser {
 	case class EmbeddedFontDescriptor(ascent: Short, capHeight: Short, descent: Short, fontBBox: FontBBox
 	                                  , italicAngle: Short, flags: Int, glyphWidth: GlyphWidth)
 
-	case class FontMetric(fontName: String, fontMap: Map[Int, Float], fontDescriptor: Option[EmbeddedFontDescriptor])
+	case class FontMetric(fontName: String, fontMap: Map[Int, Float], fontHeight: (Float, Float), fontDescriptor: Option[EmbeddedFontDescriptor])
 
 }

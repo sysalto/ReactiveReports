@@ -207,7 +207,7 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 			val l1 = cmap.getGlyphList(hmtx.hMetrics).map {
 				case (char, lg) => char.toByte.toInt -> (lg.toFloat*0.001).toFloat
 			}
-			FontMetric(name.nameList(4), l1, Some(fontDescriptor))
+			FontMetric(name.nameList(4), l1,(0,0), Some(fontDescriptor))
 		}
 
 		getFontMetric()

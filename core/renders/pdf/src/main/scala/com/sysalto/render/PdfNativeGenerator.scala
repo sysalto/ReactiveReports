@@ -135,7 +135,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		} else {
 			crtY -= lineHeight * (lines.size - 1)
 		}
-		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size))
+		val textHeight=lines.head.map(textPos=>wordWrap.getTextHeight(textPos.rtext)).max
+		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size,textHeight))
 	}
 
 

@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
 import com.sysalto.render.PdfNativeFactory
+import com.sysalto.report.CellAlign
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
@@ -98,8 +99,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val c_graphic = ReportCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAlign() inside graphic
 		val rrow = List(c_fundName, c_value1, c_value2, c_change, c_graphic)
 		val y2 = report.calculate(rrow)
-		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
-		report.print(rrow)
+		val top=report.getY - report.lineHeight
+		val bottom= y2 + 2
+		report rectangle() from(9,top ) radius (3) to(report.pgSize.width - 9,bottom) fillColor headerColor draw()
+		report.print(rrow,CellAlign.CENTER,top,bottom)
 		report.setYPosition(y2)
 		report.nextLine()
 
@@ -170,8 +173,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val value3Hdr = ReportCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() inside value3
 		val rrow = List(accountHdr, value1Hdr, value2Hdr, value3Hdr)
 		val y2 = report.calculate(rrow)
-		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
-		report.print(rrow)
+		val top=report.getY - report.lineHeight
+		val bottom=y2 + 2
+		report rectangle() from(9, top) radius (3) to(report.pgSize.width - 9,bottom ) fillColor headerColor draw()
+		report.print(rrow,CellAlign.CENTER,top,bottom)
 		report.setYPosition(y2)
 		report.nextLine()
 		val rs = MutualFundsInitData.query("select * from tran_account")
@@ -245,8 +250,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val h_annualized = ReportCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAlign() inside annualized
 		val hrow = List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized)
 		val y1 = report.calculate(hrow)
-		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
-		report.print(hrow)
+		val top=report.getY - report.lineHeight
+		val bottom=y1 + 2
+		report rectangle() from(9,top ) radius (3) to(report.pgSize.width - 9,bottom ) fillColor headerColor draw()
+		report.print(hrow,CellAlign.CENTER,top,bottom)
 		report.setYPosition(y1)
 		report.nextLine()
 

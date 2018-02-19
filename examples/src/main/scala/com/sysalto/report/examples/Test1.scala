@@ -71,12 +71,12 @@ object Test1 {
 		val b2 = row1.getColumnBound("c2")
 		report.nextLine()
 		val c1b = ReportCell(" Test1 asdsadsaads  asdas asdaS D").leftAlign() inside b1
-		val c2b = ReportCell(" 2345").rightAlign() inside b2
-		val rrow=List(c1b,c2b)
+		val c2b = ReportCell(" I22XXEEAA").rightAlign() inside b2
+		val rrow=List(c2b)
 
-		val top=report.getY-20
-		val bottom=report.getY+50
-		report rectangle() from(9, top) radius (3) to(report.pgSize.width - 9, bottom)  draw()
+		val top=report.getY-4
+		val bottom=report.getY+4
+		report rectangle() from(2, top) radius (3) to(report.pgSize.width - 9, bottom)  draw()
 
 
 		report.print(rrow,CellAlign.CENTER,top,bottom)

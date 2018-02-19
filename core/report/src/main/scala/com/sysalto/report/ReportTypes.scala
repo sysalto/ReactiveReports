@@ -35,7 +35,7 @@ object ReportTypes {
  currentY - current coordinate  - the Y of the last line of text
  linesWritten - number of lines that will be written
  */
-	case class WrapBox(initialY: Float, currentY: Float, linesWritten: Int)
+	case class WrapBox(initialY: Float, currentY: Float, linesWritten: Int,textHeight:Float)
 
 	/*
 	class to keep the size of a page

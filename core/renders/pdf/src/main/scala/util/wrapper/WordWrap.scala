@@ -91,7 +91,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 		} else {
 			val space = CharF(' ', word.charList.head.font)
 			(space :: word.charList).foldLeft(0.toFloat)((total, char) => {
-				total + getCharSize(char)
+				total + getCharWidth(char)
 			})
 		}
 	}
@@ -99,15 +99,29 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 	def getTextWidth(text: ReportTxt): Float = {
 		val word = Word(text.txt.map(char => CharF(char, text.font)).toList)
 		word.charList.foldLeft(0.toFloat)((total, char) => {
-			total + getCharSize(char)
+			total + getCharWidth(char)
 		})
 	}
 
-	private[this] def getCharSize(char: CharF): Float = {
+
+	def getTextHeight(text: ReportTxt): Float = {
+		val word = Word(text.txt.map(char => CharF(char, text.font)).toList)
+		word.charList.map(char => getCharWidth(char)).max
+	}
+
+
+	private[this] def getCharWidth(char: CharF): Float = {
 		val font = char.font
 		val fontParser: FontParser = getFontParser(font)
 		fontParser.getCharWidth(char.char) * char.font.size
 	}
+
+	private[this] def getCharHeight(char: CharF): Float = {
+		val font = char.font
+		val fontParser: FontParser = getFontParser(font)
+		fontParser.getCharHeight(char.char) * char.font.size
+	}
+
 
 	private[this] def splitAtMax(item: Word, max: Float): (Word, Word) = {
 		@tailrec
