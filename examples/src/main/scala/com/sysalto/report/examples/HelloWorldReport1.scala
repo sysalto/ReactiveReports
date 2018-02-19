@@ -76,7 +76,7 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
 
     val h_row = ReportCell("Name" bold()) leftAlign() inside nameC
     val h_address = ReportCell("Address" bold()) leftAlign() inside addressC
-    val hrow = ReportCellList(List(h_row, h_address))
+    val hrow = List(h_row, h_address)
 
 
     report.nextLine()
@@ -107,7 +107,7 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
 
           val name = ReportCell(currentRecord.name) leftAlign() inside nameC
           val address = ReportCell(currentRecord.address) leftAlign() inside addressC
-          val row = ReportCellList(List(name, address))
+          val row = List(name, address)
 
           if (report.lineLeft < 5) {
             done = true

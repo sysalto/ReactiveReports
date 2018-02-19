@@ -32,6 +32,7 @@ import _root_.java.util.function.{BiConsumer, Function}
 
 import com.sysalto.report.function.{RConsumer2, RFunction1}
 
+import scala.annotation.varargs
 import scala.collection.JavaConverters._
 import scala.runtime.{AbstractFunction1, AbstractFunction2}
 
@@ -429,13 +430,16 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
-	def print(rrow: ReportCellList): Unit = {
+	def print(cells: List[ReportCell]): Unit = {
 		val y = getY
-		rrow.cells.foreach(cell => {
+		cells.foreach(cell => {
 			wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, cell.align)
 		})
 		setYPosition(y)
 	}
+
+
+	@varargs def print(cells: ReportCell*): Unit = print(cells.toList)
 
 	/*
 	function for use with report DSL to print a line.
@@ -450,6 +454,19 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def calculate(cell: ReportCell): WrapBox = {
 		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.align, simulate = true).get
 	}
+
+	def calculate(cells: List[ReportCell]): Float = {
+		val y = getY
+		val wrapList = cells.map(cell => {
+			val result = wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, cell.align, simulate = true)
+			result.get.currentY
+		})
+		setYPosition(y)
+		wrapList.reduceLeft((f1, f2) => if (f1 > f2) f1 else f2)
+	}
+
+
+	@varargs def calculate(cells: ReportCell*): Float = calculate(cells.toList)
 
 	/*
 	draw a rectamgle using dsl

@@ -1,3 +1,17 @@
+## Development
+### Changes:
+* removed ReportCellList - should be replaced with List[ReportCell]
+* add function report.getTextWidth(cell)
+* removed unused stratY param from wrpa
+* add getTextWidth to measure text
+
+### Bugs fixed:
+* fixed group bug
+* fixed unicode text rendering in pdf
+* fixed cell center
+
+
+
 ## 1.0.0-RC.5 (2018-02-10)
 
 ### Changes:

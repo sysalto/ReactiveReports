@@ -96,8 +96,8 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val c_value2 = ReportCell(s"Value on\n${sd.format(date2)}($$)" bold() color headerFontColor) rightAlign() inside value2
 		val c_change = ReportCell(s"Change($$)" bold() color headerFontColor) rightAlign() inside change
 		val c_graphic = ReportCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAlign() inside graphic
-		val rrow = ReportCellList(List(c_fundName, c_value1, c_value2, c_change, c_graphic))
-		val y2 = rrow.calculate(report)
+		val rrow = List(c_fundName, c_value1, c_value2, c_change, c_graphic)
+		val y2 = report.calculate(rrow)
 		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
 		report.print(rrow)
 		report.setYPosition(y2)
@@ -132,8 +132,8 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				total3 += v_change
 				chartData += (firstChar.asInstanceOf[Char].toString -> total2.toDouble)
 				val c_change = ReportCell(v_change.toString) rightAlign() inside change
-				val rrow = ReportCellList(List(c_fundName, c_value1, c_value2, c_change))
-				val y2 = rrow.calculate(report)
+				val rrow = List(c_fundName, c_value1, c_value2, c_change)
+				val y2 = report.calculate(rrow)
 				report.print(rrow)
 				if (GroupUtil.isLastRecord(rec)) {
 					report line() from(10, report.getY + 2) to change.right width 1f draw()
@@ -148,8 +148,8 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			})
 		rs.close()
 
-		val trow = ReportCellList(List(ReportCell("Total" bold()) inside fundName, ReportCell(total1.toString bold()) rightAlign() inside value1,
-			ReportCell(total2.toString bold()) rightAlign() inside value2, ReportCell(total3.toString bold()) rightAlign() inside change))
+		val trow = List(ReportCell("Total" bold()) inside fundName, ReportCell(total1.toString bold()) rightAlign() inside value1,
+			ReportCell(total2.toString bold()) rightAlign() inside value2, ReportCell(total3.toString bold()) rightAlign() inside change)
 		report.print(trow)
 		val chartHeight = report.getY - firstY
 		report.drawPieChart("", chartData.toList, graphic.left + 5, firstY, graphic.right - graphic.left - 10, chartHeight)
@@ -168,8 +168,8 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val value1Hdr = ReportCell("This period($)" bold() color headerFontColor) rightAlign() inside value1
 		val value2Hdr = ReportCell("Year-to-date($)" bold() color headerFontColor) rightAlign() inside value2
 		val value3Hdr = ReportCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() inside value3
-		val rrow = ReportCellList(List(accountHdr, value1Hdr, value2Hdr, value3Hdr))
-		val y2 = rrow.calculate(report)
+		val rrow = List(accountHdr, value1Hdr, value2Hdr, value3Hdr)
+		val y2 = report.calculate(rrow)
 		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
 		report.print(rrow)
 		report.setYPosition(y2)
@@ -192,8 +192,8 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				total2 += r_value2.toFloat
 				total3 += r_value3.toFloat
 
-				val rrow = ReportCellList(List(c_account, c_value1, c_value2, c_value3))
-				val y2 = rrow.calculate(report)
+				val rrow = List(c_account, c_value1, c_value2, c_value3)
+				val y2 = report.calculate(rrow)
 				report.print(rrow)
 				val lColor = if (GroupUtil.isLastRecord(rec)) ReportColor(0, 0, 0) else ReportColor(200, 200, 200)
 				report line() from(10, report.getY + 2) to value3.right width 0.5f color (lColor) lineType LineDashType(2, 1) draw()
@@ -209,8 +209,8 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val value1Sum = ReportCell(total1.toString bold()) rightAlign() inside value1
 		val value2Sum = ReportCell(total2.toString bold()) rightAlign() inside value2
 		val value3Sum = ReportCell(total3.toString bold()) rightAlign() inside value3
-		val frow = ReportCellList(List(accountSum, value1Sum, value2Sum, value3Sum))
-		val y3 = frow.calculate(report)
+		val frow = List(accountSum, value1Sum, value2Sum, value3Sum)
+		val y3 = report.calculate(frow)
 		report.print(frow)
 		report.setYPosition(y3)
 		report line() from(10, report.getY + report.lineHeight * 0.5f) to value3.right  draw()
@@ -243,8 +243,8 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val h_value5y = ReportCell("5 Years (%)" bold() color headerFontColor) rightAlign() inside value5y
 		val h_value10y = ReportCell("10 Years (%)" bold() color headerFontColor) rightAlign() inside value10y
 		val h_annualized = ReportCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAlign() inside annualized
-		val hrow = ReportCellList(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
-		val y1 = hrow.calculate(report)
+		val hrow = List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized)
+		val y1 = report.calculate(hrow)
 		report rectangle() from(9, report.getY - report.lineHeight) radius (3) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
 		report.print(hrow)
 		report.setYPosition(y1)
@@ -258,8 +258,8 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val r_value10y = ReportCell((record value "value10y").toString) rightAlign() inside value10y
 		val r_annualized = ReportCell((record value "annualized").toString) rightAlign() inside annualized
 
-		val rrow = ReportCellList(List(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized))
-		val y2 = rrow.calculate(report)
+		val rrow = List(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized)
+		val y2 = report.calculate(rrow)
 		report.print(rrow)
 		report.setYPosition(y2)
 	}
@@ -318,14 +318,14 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val h_column1 = ReportCell("Type of Account" bold()) leftAlign() inside column1
 				val h_column2 = ReportCell("Your account number" bold()) leftAlign() inside column2
 				val h_column3 = ReportCell("Your investment statement" bold()) rightAlign() inside column3
-				val hrow = ReportCellList(List(h_column1, h_column2, h_column3))
+				val hrow = List(h_column1, h_column2, h_column3)
 				report.print(hrow)
 				report.nextLine()
 				val str = sd.format(date1) + " to " + sd.format(date2)
 				val r_column1 = ReportCell("Group Registered Retirement Saving Plan") leftAlign() inside column1
 				val r_column2 = ReportCell("123456789") leftAlign() inside column2
 				val r_column3 = ReportCell(str) rightAlign() inside column3
-				val rrow = ReportCellList(List(r_column1, r_column2, r_column3))
+				val rrow = List(r_column1, r_column2, r_column3)
 				report.print(rrow)
 				report.nextLine(2)
 				report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
