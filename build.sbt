@@ -8,12 +8,12 @@ val ROCKSDB_VERSION = "5.9.2" // "latest.release"
 
 val PROTOBUF_VERSION = "3.5.1" // "latest.release"
 
-//val projectVersion = "1.0.0-RC.5.3"
-val projectVersion = "1.0.0-SNAPSHOT"
+val projectVersion = "1.0.0-RC.6"
+//val projectVersion = "1.0.0-SNAPSHOT"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",
-	isSnapshot := true,
+	isSnapshot := false,
 	version := projectVersion,
 	cancelable in Global := true,
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),

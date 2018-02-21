@@ -1,4 +1,4 @@
-## Development
+## 1.0.0-RC.6 (2018-02-20)
 ### Changes:
 * removed ReportCellList - should be replaced with List[ReportCell]
 * ReportCellList.calculate(report) replaced with report.calculate(List{ReportCell])
