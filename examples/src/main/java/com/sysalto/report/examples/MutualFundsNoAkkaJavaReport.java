@@ -1,6 +1,7 @@
 package com.sysalto.report.examples;
 
 import com.sysalto.render.PdfNativeFactory;
+import com.sysalto.report.CellAlign;
 import com.sysalto.report.Report;
 import com.sysalto.report.ReportTypes;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
@@ -156,10 +157,12 @@ public class MutualFundsNoAkkaJavaReport {
         ReportCell c_graphic = new ReportCell(new ReportTxt("Assets mix\n" + sd.format(date2) + "(%)").bold().color(headerFontColor)).rightAlign().inside(m_graphic);
         ReportCell[] rrow = new ReportCell[]{c_fundName, c_value1, c_value2, c_change, c_graphic};
         Float y2 = report.calculate(rrow);
-        report.rectangle().from(9, report.getY() - report.lineHeight()).radius(3).to(report.pgSize().width() - 9, y2 + 2).fillColor(headerColor).draw();
+        Float top = report.getY() - report.lineHeight();
+        Float bottom = y2 + 2;
+        report.rectangle().from(9, top).radius(3).to(report.pgSize().width() - 9, bottom).fillColor(headerColor).draw();
 
 
-        report.print(rrow);
+        report.print(CellAlign.CENTER(),top,bottom,rrow);
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from sum_investment");
@@ -243,8 +246,10 @@ public class MutualFundsNoAkkaJavaReport {
                 color(headerFontColor)).rightAlign().inside(value3);
         ReportCell[] rrow = new ReportCell[]{accountHdr, value1Hdr, value2Hdr, value3Hdr};
         float y2 = report.calculate(rrow);
-        report.rectangle().from(9, report.getY() - report.lineHeight()).radius(3).to(report.pgSize().width() - 9, y2 + 2).fillColor(headerColor).draw();
-        report.print(rrow);
+        Float top=report.getY() - report.lineHeight();
+        Float bottom=y2 + 2;
+        report.rectangle().from(9,top ).radius(3).to(report.pgSize().width() - 9,bottom ).fillColor(headerColor).draw();
+        report.print(CellAlign.CENTER(),top,bottom,rrow);
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from tran_account");
@@ -291,7 +296,7 @@ public class MutualFundsNoAkkaJavaReport {
         Float y3 = report.calculate(frow);
         report.print(frow);
         report.setYPosition(y3);
-        report.nextLine();
+        report.nextLine(3);
     }
 
     private void accountPerformance(Report report) throws Exception {
@@ -326,8 +331,10 @@ public class MutualFundsNoAkkaJavaReport {
                 color(headerFontColor)).rightAlign().inside(annualized);
         ReportCell[] hrow = new ReportCell[]{h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized};
         Float y1 = report.calculate(hrow);
-        report.rectangle().from(9, report.getY()).to(report.pgSize().width() - 9, y1 + 2).fillColor(headerColor).draw();
-        report.print(hrow);
+        Float top=report.getY() - report.lineHeight();
+        Float bottom=y1+2;
+        report.rectangle().from(9, top).to(report.pgSize().width() - 9, bottom).fillColor(headerColor).draw();
+        report.print(CellAlign.CENTER(),top,bottom,hrow);
         report.setYPosition(y1);
         report.nextLine();
 
@@ -355,7 +362,7 @@ public class MutualFundsNoAkkaJavaReport {
     private void disclaimer(Report report) throws Exception {
         report.nextPage();
         drawbackgroundImage(report);
-        report.nextLine();
+        report.nextLine(3);
         report.print(new ReportCell(new ReportTxt("Disclaimer").bold().size(20)).at(50));
         report.nextLine(2);
         List<String> txtList = Arrays.asList(
@@ -375,7 +382,7 @@ public class MutualFundsNoAkkaJavaReport {
             ReportTypes.WrapBox box = cell.calculate(report);
             report.print(cell);
             report.setYPosition(box.currentY() + report.lineHeight());
-            if (report.lineLeft() < 10) {
+            if (report.lineLeft() < 5) {
                 report.nextPage();
             }
         }

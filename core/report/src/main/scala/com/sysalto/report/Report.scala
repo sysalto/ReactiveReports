@@ -459,7 +459,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 							val wrapBox = wrapList(index)
 							val fontHeight = cell.txt.head.font.size
 							val height = wrapBox.currentY - wrapBox.initialY + wrapBox.textHeight
-							val y1 = bottom - height + + wrapBox.textHeight
+							val y1 = bottom - height + +wrapBox.textHeight
 							wrap(cell.txt, cell.margin.left, y1, cell.margin.right, Float.MaxValue, cell.align)
 						}
 					}
@@ -471,6 +471,10 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	}
 
+
+
+	// java wrappers
+	@varargs def print(cellAlign: CellAlign.Value, top: Float, bottom: Float, cells: ReportCell*): Unit = print(cells.toList,cellAlign,top,bottom)
 
 	@varargs def print(cells: ReportCell*): Unit = print(cells.toList)
 

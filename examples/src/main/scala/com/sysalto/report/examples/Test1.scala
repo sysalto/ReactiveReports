@@ -72,10 +72,10 @@ object Test1 {
 		report.nextLine()
 		val c1b = ReportCell(" Test1 asdsadsaads  asdas asdaS D").leftAlign() inside b1
 		val c2b = ReportCell(" I22XXEEAA").rightAlign() inside b2
-		val rrow=List(c2b)
+		val rrow=List(c1b,c2b)
 
-		val top=report.getY-4
-		val bottom=report.getY+4
+		val top=report.getY-15
+		val bottom=report.getY+15
 		report rectangle() from(2, top) radius (3) to(report.pgSize.width - 9, bottom)  draw()
 
 
