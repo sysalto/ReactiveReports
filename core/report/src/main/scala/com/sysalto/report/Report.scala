@@ -472,9 +472,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
-
 	// java wrappers
-	@varargs def print(cellAlign: CellAlign, top: Float, bottom: Float, cells: ReportCell*): Unit = print(cells.toList,cellAlign,top,bottom)
+	@varargs def print(cellAlign: CellAlign, top: Float, bottom: Float, cells: ReportCell*): Unit = print(cells.toList, cellAlign, top, bottom)
 
 	@varargs def print(cells: ReportCell*): Unit = print(cells.toList)
 
@@ -650,7 +649,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		pdfUtil.getTextWidth(txt1)
 	}
 
-	def getTextWidth(cell: ReportCell): List[java.lang.Float] = pdfUtil.getTextWidth(cell).map(item=>item.asInstanceOf[java.lang.Float])
+	def getTextWidth(cell: ReportCell): List[Float] = pdfUtil.getTextWidth(cell)
+
+	def getTextWidthJ(cell: ReportCell): java.util.List[java.lang.Float] = pdfUtil.getTextWidth(cell).map(item => item.asInstanceOf[java.lang.Float]).asJava
 }
 
 object Report {

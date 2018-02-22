@@ -78,6 +78,7 @@ public class MutualFundsNoAkkaJavaReport {
             ReportCell r_column1 = new ReportCell(new ReportTxt("Group Registered Retirement Saving Plan")).leftAlign().inside(column1);
             ReportCell r_column2 = new ReportCell(new ReportTxt("123456789")).leftAlign().inside(column2);
             ReportCell r_column3 = new ReportCell(new ReportTxt(str)).rightAlign().inside(column3);
+
             ReportCell[] rrow = new ReportCell[]{r_column1, r_column2, r_column3};
             report.print(rrow);
             report.nextLine(2);
