@@ -96,10 +96,10 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
     def footerSizeFct(pg: java.lang.Long) = 30f
 
     def footerRptFct(report: Report)( pgNbr: java.lang.Long, pgMax: java.lang.Long): Unit = {
-      report.setYPosition(report.pgSize.height - report.lineHeight * 3)
-      report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+      report.setYPosition(report.pageLayout.height - report.lineHeight * 3)
+      report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
       report.nextLine()
-      report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
+      report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
     }
 
     reportAmerica.setFooterSize = footerSizeFct
@@ -115,7 +115,7 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
       try {
         val crtRec = GroupUtil.getRec(rec)
         report.nextLine(2)
-        report rectangle() from(9, report.getY) to(report.pgSize.width - 9, report.getY + report.lineHeight) fillColor headerColor draw()
+        report rectangle() from(9, report.getY) to(report.pageLayout.width - 9, report.getY + report.lineHeight) fillColor headerColor draw()
         report print crtRec._2 at 10
         report.nextLine()
         val txt1 = crtRec._3
@@ -123,7 +123,7 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
         val txt = (if (txt1.contains(img)) txt1.substring(0, txt1.indexOf(img)) else txt1).trim
 
         if (!txt.isEmpty) {
-          val details = ReportCell(txt) inside ReportMargin(10, report.pgSize.width - 10)
+          val details = ReportCell(txt) inside ReportMargin(10, report.pageLayout.width - 10)
           val wrapBox = report calculate details
           report print details
           report.setYPosition(wrapBox.currentY)

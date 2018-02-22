@@ -1,3 +1,8 @@
+## SNAPSHOT
+### Changes:
+* change report.pgSize to report.pageLayout
+* change  Scala Enum CellAlign to Java enum 
+
 ## 1.0.0-RC.6 (2018-02-20)
 ### Changes:
 * removed ReportCellList - should be replaced with List[ReportCell]

@@ -45,10 +45,10 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
 
     report.footerFct = {
       case ( pgNbr, pgMax) =>
-        report.setYPosition(report.pgSize.height - report.lineHeight * 2)
-        report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+        report.setYPosition(report.pageLayout.height - report.lineHeight * 2)
+        report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
         report.setYPosition(report.getY + report.lineHeight * 0.5f)
-        report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
+        report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
     }
 
     val account = List(DataField("id", NumericType), DataField("accountName", StringType, 20), DataField("planType",
@@ -62,7 +62,7 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
       Group("agent", (r: Map[String, String]) => r("agent")))
     val accountGroupUtil = new GroupUtil(accountGroup)
 
-    val row = ReportRow(10, report.pgSize.width - 10, List(Column("accountNbr", Flex(1)), Column("accountNme", Flex(1)),
+    val row = ReportRow(10, report.pageLayout.width - 10, List(Column("accountNbr", Flex(1)), Column("accountNme", Flex(1)),
       Column("planType", Flex(1))))
     val accountNbrC = row.getColumnBound("accountNbr")
     val accountNmeC = row.getColumnBound("accountNme")
@@ -109,9 +109,9 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
             report.text("Agent:" + accountRec("agent"), 10)
             report.nextLine()
             report.print(hrow)
-            report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+            report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
             report.nextLine()
-            report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+            report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
             report.nextLine()
           }
 
@@ -130,9 +130,9 @@ object Report2 extends ReportAppAkka with AkkaGroupUtil {
             if (!isHeader && agentFirstItem.isEmpty) {
               report.nextLine()
               report.print(hrow)
-              report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+              report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
               report.nextLine()
-              report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+              report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
               report.nextLine()
             }
             report.paste(agentFirstItem.get, toPast)

@@ -65,7 +65,7 @@ object Test1 {
 //		//			cell2))
 //		report.print(rrow1)
 //		report.nextLine(5)
-		val row1 = ReportRow(10, report.pgSize.width - 10, List(Column("c1", 130), Column("c2", Flex(1))))
+		val row1 = ReportRow(10, report.pageLayout.width - 10, List(Column("c1", 130), Column("c2", Flex(1))))
 		val b1 = row1.getColumnBound("c1")
 		val b2 = row1.getColumnBound("c2")
 		report.nextLine()
@@ -75,7 +75,7 @@ object Test1 {
 
 		val top=report.getY-15
 		val bottom=report.getY+15
-		report rectangle() from(2, top) radius (3) to(report.pgSize.width - 9, bottom)  draw()
+		report rectangle() from(2, top) radius (3) to(report.pageLayout.width - 9, bottom)  draw()
 
 
 		report.print(rrow,CellAlign.CENTER,top,bottom)

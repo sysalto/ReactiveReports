@@ -147,7 +147,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	keep page size
 	 */
-	lazy val pgSize: Rectangle = pdfUtil.pgSize
+	lazy val pageLayout: Rectangle = pdfUtil.pgSize
 
 	/*
 	Returns report's current position (page number and vertical position on page)

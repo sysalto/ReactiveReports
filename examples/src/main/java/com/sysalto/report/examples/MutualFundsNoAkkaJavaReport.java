@@ -63,7 +63,7 @@ public class MutualFundsNoAkkaJavaReport {
 
         report.headerFct((pg, pgMax) -> {
             report.setYPosition(10);
-            ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("column1").flex(1),
+            ReportRow reportRow = ReportRow.apply(10.f, report.pageLayout().width() - 10, Column.apply("column1").flex(1),
                     Column.apply("column2").flex(1), Column.apply("column3").flex(1));
             ReportMargin column1 = reportRow.getColumnBound("column1");
             ReportMargin column2 = reportRow.getColumnBound("column2");
@@ -81,14 +81,14 @@ public class MutualFundsNoAkkaJavaReport {
             ReportCell[] rrow = new ReportCell[]{r_column1, r_column2, r_column3};
             report.print(rrow);
             report.nextLine(2);
-            report.line().from(10, report.getY()).to(report.pgSize().width() - 10, -1).draw();
+            report.line().from(10, report.getY()).to(report.pageLayout().width() - 10, -1).draw();
         });
 
         report.footerFct((pg, pgMax) -> {
-            report.setYPosition(report.pgSize().height() - report.lineHeight() * 3);
-            report.line().from(10, report.getY()).to(report.pgSize().width() - 10, -1).draw();
+            report.setYPosition(report.pageLayout().height() - report.lineHeight() * 3);
+            report.line().from(10, report.getY()).to(report.pageLayout().width() - 10, -1).draw();
             report.nextLine();
-            ReportCell cell = new ReportCell(new ReportTxt("Page " + pg + " of " + pgMax).bold()).rightAlign().inside(0, report.pgSize().width() - 10);
+            ReportCell cell = new ReportCell(new ReportTxt("Page " + pg + " of " + pgMax).bold()).rightAlign().inside(0, report.pageLayout().width() - 10);
             report.print(cell);
         });
         reportHeader(report);
@@ -109,7 +109,7 @@ public class MutualFundsNoAkkaJavaReport {
         rs.close();
         report.nextLine();
         report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5f, 45f, 100f, 40f);
-        ReportMargin margin = new ReportMargin(0, report.pgSize().width() - 10);
+        ReportMargin margin = new ReportMargin(0, report.pageLayout().width() - 10);
         report.print(new ReportCell(new ReportTxt("Investment statement").size(15).bold()).rightAlign().inside(margin));
         report.nextLine();
         String str = sd.format(date1) + " to " + sd.format(date2);
@@ -138,7 +138,7 @@ public class MutualFundsNoAkkaJavaReport {
     private void summaryOfInvestment(Report report) throws Exception {
 
         report.nextLine(2);
-        ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("fund_name", 150f),
+        ReportRow reportRow = ReportRow.apply(10.f, report.pageLayout().width() - 10, Column.apply("fund_name", 150f),
                 Column.apply("value1").flex(1), Column.apply("value2").flex(1), Column.apply("change").flex(1),
                 Column.apply("graphic").flex(2));
         ReportMargin m_fundName = reportRow.getColumnBound("fund_name");
@@ -158,7 +158,7 @@ public class MutualFundsNoAkkaJavaReport {
         Float y2 = report.calculate(rrow);
         Float top = report.getY() - report.lineHeight();
         Float bottom = y2 + 2;
-        report.rectangle().from(9, top).radius(3).to(report.pgSize().width() - 9, bottom).fillColor(headerColor).draw();
+        report.rectangle().from(9, top).radius(3).to(report.pageLayout().width() - 9, bottom).fillColor(headerColor).draw();
 
 
         report.print(CellAlign.CENTER,top,bottom,rrow);
@@ -222,14 +222,14 @@ public class MutualFundsNoAkkaJavaReport {
     }
 
     private void drawbackgroundImage(Report report) {
-        report.rectangle().from(0, 0).to(report.pgSize().width(), report.pgSize().height()).
+        report.rectangle().from(0, 0).to(report.pageLayout().width(), report.pageLayout().height()).
                 verticalShade(new ReportColor(255, 255, 255, 1), new ReportColor(255, 255, 180, 1)).draw();
     }
 
 
     private void changeAccount(Report report) throws Exception {
         report.nextLine(2);
-        ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("account", 250f),
+        ReportRow reportRow = ReportRow.apply(10.f, report.pageLayout().width() - 10, Column.apply("account", 250f),
                 Column.apply("value1").flex(1), Column.apply("value2").flex(1), Column.apply("value3").flex(1));
         ReportMargin account = reportRow.getColumnBound("account");
         ReportMargin value1 = reportRow.getColumnBound("value1");
@@ -247,7 +247,7 @@ public class MutualFundsNoAkkaJavaReport {
         float y2 = report.calculate(rrow);
         Float top=report.getY() - report.lineHeight();
         Float bottom=y2 + 2;
-        report.rectangle().from(9,top ).radius(3).to(report.pgSize().width() - 9,bottom ).fillColor(headerColor).draw();
+        report.rectangle().from(9,top ).radius(3).to(report.pageLayout().width() - 9,bottom ).fillColor(headerColor).draw();
         report.print(CellAlign.CENTER,top,bottom,rrow);
         report.setYPosition(y2);
         report.nextLine();
@@ -303,7 +303,7 @@ public class MutualFundsNoAkkaJavaReport {
         rs.next();
         Map<String, Object> record = GroupUtilDefs.toMap(rs);
         rs.close();
-        ReportRow reportRow = ReportRow.apply(10.f, report.pgSize().width() - 10, Column.apply("account_perf", 150f),
+        ReportRow reportRow = ReportRow.apply(10.f, report.pageLayout().width() - 10, Column.apply("account_perf", 150f),
                 Column.apply("value3m").flex(1), Column.apply("value1y").flex(1),
                 Column.apply("value3y").flex(1), Column.apply("value5y").flex(1),
                 Column.apply("value10y").flex(1), Column.apply("annualized").flex(1));
@@ -332,7 +332,7 @@ public class MutualFundsNoAkkaJavaReport {
         Float y1 = report.calculate(hrow);
         Float top=report.getY() - report.lineHeight();
         Float bottom=y1+2;
-        report.rectangle().from(9, top).to(report.pgSize().width() - 9, bottom).fillColor(headerColor).draw();
+        report.rectangle().from(9, top).to(report.pageLayout().width() - 9, bottom).fillColor(headerColor).draw();
         report.print(CellAlign.CENTER,top,bottom,hrow);
         report.setYPosition(y1);
         report.nextLine();
@@ -377,7 +377,7 @@ public class MutualFundsNoAkkaJavaReport {
                 "Suscipit ponderum verterem et mel, vim semper facilisi ex, mel aliquid constituam ut. Summo denique complectitur ius at, in quo nobis deterruisset. Ut viris convenire eam. Quo id suscipit quaerendum, magna veniam et vix, duis liber disputando et has. Aliquando democritum id usu, falli diceret invidunt in per, in falli essent quo."
         );
         for (String txt : txtList) {
-            ReportCell cell = (new ReportCell(new ReportTxt(txt))).inside(new ReportMargin(10, report.pgSize().width() - 10));
+            ReportCell cell = (new ReportCell(new ReportTxt(txt))).inside(new ReportMargin(10, report.pageLayout().width() - 10));
             ReportTypes.WrapBox box = cell.calculate(report);
             report.print(cell);
             report.setYPosition(box.currentY() + report.lineHeight());

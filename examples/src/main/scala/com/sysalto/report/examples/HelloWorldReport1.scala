@@ -46,10 +46,10 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
     //print report footer
     report.footerFct = {
       case (pgNbr, pgMax) =>
-        report.setYPosition(report.pgSize.height - report.lineHeight * 2)
-        report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+        report.setYPosition(report.pageLayout.height - report.lineHeight * 2)
+        report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
         report.setYPosition(report.getY + report.lineHeight * 0.5f)
-        report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
+        report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
     }
 
     // generate 200 records for printing
@@ -70,7 +70,7 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
     val reportGroupUtil = new GroupUtil(reportGroup)
 
     // print the header
-    val row = ReportRow(10, report.pgSize.width - 10, List(Column("name", 200), Column("address", Flex(1))))
+    val row = ReportRow(10, report.pageLayout.width - 10, List(Column("name", 200), Column("address", Flex(1))))
     val nameC = row.getColumnBound("name")
     val addressC = row.getColumnBound("address")
 
@@ -99,7 +99,7 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
             report.text("City:" + currentRecord.city, 10)
             report.nextLine()
             report.print(hrow)
-            report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+            report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
             report.nextLine()
             //            report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
             //            report.nextLine()
@@ -118,9 +118,9 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
             if (!isHeader) {
               report.nextLine()
               report.print(hrow)
-              report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+              report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
               report.nextLine()
-              report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
+              report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
               report.nextLine()
             }
           }

@@ -44,7 +44,7 @@ object MutualFundsReport extends ReportAppAkka {
   val headerFontColor = ReportColor(255, 255, 255)
 
   private def drawbackgroundImage(report: Report): Unit = {
-    report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
+    report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
   }
 
   private def reportHeader(report: Report): Unit = {
@@ -59,11 +59,11 @@ object MutualFundsReport extends ReportAppAkka {
     report.drawImage(file.getAbsolutePath, 5, 45, 100, 40)
 
     //    report rectangle() from(500, report.getY) to(report.pgSize.width - 5, report.getY + 40) fillColor RColor(220, 255, 220) color RColor(200, 200, 250) radius 10 draw()
-    report print (ReportCell("Investment statement" size 15 bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
+    report print (ReportCell("Investment statement" size 15 bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
     report.nextLine()
 
     val str = sd.format(date1) + " to " + sd.format(date2)
-    report print (ReportCell(str size 15 bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
+    report print (ReportCell(str size 15 bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
     report.nextLine(2)
     report print ("Mutual Funds Inc." bold()) at 10
     report.nextLine()
@@ -89,7 +89,7 @@ object MutualFundsReport extends ReportAppAkka {
 
     report.nextLine(2)
     //    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
-    val row = ReportRow(10, report.pgSize.width - 10, List(Column("fund_name", 150), Column("value1", Flex(1)),
+    val row = ReportRow(10, report.pageLayout.width - 10, List(Column("fund_name", 150), Column("value1", Flex(1)),
       Column("value2", Flex(1)), Column("change", Flex(1)), Column("graphic", Flex(2))))
     val fundName = row.getColumnBound("fund_name")
     val value1 = row.getColumnBound("value1")
@@ -103,7 +103,7 @@ object MutualFundsReport extends ReportAppAkka {
     val c_graphic = ReportCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAlign() inside graphic
     val rrow = ReportCellList(List(c_fundName, c_value1, c_value2, c_change, c_graphic))
     val y2 = rrow.calculate(report)
-    report rectangle() from(9, report.getY) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
+    report rectangle() from(9, report.getY) to(report.pageLayout.width - 9, y2 + 2) fillColor headerColor draw()
     rrow.print(report)
     report.setYPosition(y2)
     report.nextLine()
@@ -164,7 +164,7 @@ object MutualFundsReport extends ReportAppAkka {
 
   private def changeAccount(report: Report): Unit = {
     report.nextLine(2)
-    val row = ReportRow(10, report.pgSize.width - 10, List(Column("account", 250), Column("value1", Flex(1)),
+    val row = ReportRow(10, report.pageLayout.width - 10, List(Column("account", 250), Column("value1", Flex(1)),
       Column("value2", Flex(1)), Column("value3", Flex(1))))
     val account = row.getColumnBound("account")
     val value1 = row.getColumnBound("value1")
@@ -176,7 +176,7 @@ object MutualFundsReport extends ReportAppAkka {
     val value3Hdr = ReportCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() inside value3
     val rrow = ReportCellList(List(accountHdr, value1Hdr, value2Hdr, value3Hdr))
     val y2 = rrow.calculate(report)
-    report rectangle() from(9, report.getY) to(report.pgSize.width - 9, y2 + 2) fillColor headerColor draw()
+    report rectangle() from(9, report.getY) to(report.pageLayout.width - 9, y2 + 2) fillColor headerColor draw()
     rrow.print(report)
     report.setYPosition(y2)
     report.nextLine()
@@ -233,7 +233,7 @@ object MutualFundsReport extends ReportAppAkka {
     rs.next()
     val record = rs.toMap
     rs.close()
-    val row = ReportRow(10, report.pgSize.width - 10, List(Column("account_perf", 150), Column("value3m", Flex(1)),
+    val row = ReportRow(10, report.pageLayout.width - 10, List(Column("account_perf", 150), Column("value3m", Flex(1)),
       Column("value1y", Flex(1)), Column("value3y", Flex(1)), Column("value5y", Flex(1)),
       Column("value10y", Flex(1)), Column("annualized", Flex(1))))
     val accountPerf = row.getColumnBound("account_perf")
@@ -253,7 +253,7 @@ object MutualFundsReport extends ReportAppAkka {
     val h_annualized = ReportCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAlign() inside annualized
     val hrow = ReportCellList(List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized))
     val y1 = hrow.calculate(report)
-    report rectangle() from(9, report.getY) to(report.pgSize.width - 9, y1 + 2) fillColor headerColor draw()
+    report rectangle() from(9, report.getY) to(report.pageLayout.width - 9, y1 + 2) fillColor headerColor draw()
     hrow.print(report)
     report.setYPosition(y1)
     report.nextLine()
@@ -298,7 +298,7 @@ object MutualFundsReport extends ReportAppAkka {
         |Pro stet oratio exerci in. Per no nullam salutatus scriptorem. Stet alterum nam ei, congue tamquam sed ea. Eam ut virtute disputationi, ea labitur voluptua has. Est ea graecis definitiones, pro ea mutat oportere adipiscing.
         |
         |Suscipit ponderum verterem et mel, vim semper facilisi ex, mel aliquid constituam ut. Summo denique complectitur ius at, in quo nobis deterruisset. Ut viris convenire eam. Quo id suscipit quaerendum, magna veniam et vix, duis liber disputando et has. Aliquando democritum id usu, falli diceret invidunt in per, in falli essent quo.""".stripMargin
-    report print (ReportCell(txt) inside ReportMargin(10, report.pgSize.width - 10))
+    report print (ReportCell(txt) inside ReportMargin(10, report.pageLayout.width - 10))
   }
 
 
@@ -343,7 +343,7 @@ object MutualFundsReport extends ReportAppAkka {
         rpt.setYPosition(rpt.pgSize.height - rpt.lineHeight * 3)
         rpt line() from(10, rpt.getY) to (rpt.pgSize.width - 10) draw()
         rpt.nextLine()
-        rpt print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pgSize.width - 10))
+        rpt print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
     }
 
     reportHeader(report)

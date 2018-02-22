@@ -43,7 +43,7 @@ object TestBig extends GroupUtilTrait {
 		println("Start:" + getMemory())
 		report.nextLine()
 
-		val title = ReportCell("Report" bold())  centerAlign() inside ReportMargin(10,report.pgSize.width - 10)
+		val title = ReportCell("Report" bold())  centerAlign() inside ReportMargin(10,report.pageLayout.width - 10)
 		report.print(title)
 		report.nextLine(3)
 
