@@ -430,7 +430,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
-	def print(cells: List[ReportCell], cellAlign: CellAlign.Value = CellAlign.TOP, top: Float = 0, bottom: Float = 0): Unit = {
+	def print(cells: List[ReportCell], cellAlign: CellAlign = CellAlign.TOP, top: Float = 0, bottom: Float = 0): Unit = {
 		cellAlign match {
 			case CellAlign.TOP => {
 				val y = getY
@@ -474,7 +474,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 
 	// java wrappers
-	@varargs def print(cellAlign: CellAlign.Value, top: Float, bottom: Float, cells: ReportCell*): Unit = print(cells.toList,cellAlign,top,bottom)
+	@varargs def print(cellAlign: CellAlign, top: Float, bottom: Float, cells: ReportCell*): Unit = print(cells.toList,cellAlign,top,bottom)
 
 	@varargs def print(cells: ReportCell*): Unit = print(cells.toList)
 

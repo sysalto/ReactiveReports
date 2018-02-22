@@ -1,7 +1,6 @@
 package com.sysalto.report.examples;
 
 import com.sysalto.render.PdfNativeFactory;
-import com.sysalto.report.CellAlign;
 import com.sysalto.report.Report;
 import com.sysalto.report.ReportTypes;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
@@ -162,7 +161,7 @@ public class MutualFundsNoAkkaJavaReport {
         report.rectangle().from(9, top).radius(3).to(report.pgSize().width() - 9, bottom).fillColor(headerColor).draw();
 
 
-        report.print(CellAlign.CENTER(),top,bottom,rrow);
+        report.print(CellAlign.CENTER,top,bottom,rrow);
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from sum_investment");
@@ -249,7 +248,7 @@ public class MutualFundsNoAkkaJavaReport {
         Float top=report.getY() - report.lineHeight();
         Float bottom=y2 + 2;
         report.rectangle().from(9,top ).radius(3).to(report.pgSize().width() - 9,bottom ).fillColor(headerColor).draw();
-        report.print(CellAlign.CENTER(),top,bottom,rrow);
+        report.print(CellAlign.CENTER,top,bottom,rrow);
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from tran_account");
@@ -334,7 +333,7 @@ public class MutualFundsNoAkkaJavaReport {
         Float top=report.getY() - report.lineHeight();
         Float bottom=y1+2;
         report.rectangle().from(9, top).to(report.pgSize().width() - 9, bottom).fillColor(headerColor).draw();
-        report.print(CellAlign.CENTER(),top,bottom,hrow);
+        report.print(CellAlign.CENTER,top,bottom,hrow);
         report.setYPosition(y1);
         report.nextLine();
 

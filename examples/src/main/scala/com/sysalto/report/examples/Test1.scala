@@ -23,9 +23,8 @@
 package com.sysalto.report.examples
 
 import com.sysalto.render.PdfNativeFactory
-import com.sysalto.report.CellAlign
 import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.{RFont, RFontFamily, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{CellAlign, RFont, RFontFamily, ReportPageOrientation}
 
 /**
 	* Created by marian on 4/1/17.

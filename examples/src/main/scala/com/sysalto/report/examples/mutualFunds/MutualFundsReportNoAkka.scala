@@ -28,9 +28,8 @@ import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
 import com.sysalto.render.PdfNativeFactory
-import com.sysalto.report.CellAlign
 import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.{GroupUtil, RFont, RFontFamily, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
 import scala.collection.mutable.ListBuffer
