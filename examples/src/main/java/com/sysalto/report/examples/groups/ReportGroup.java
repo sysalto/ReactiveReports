@@ -19,7 +19,7 @@ public class ReportGroup {
     private void run() throws Exception {
         Report report = Report.create("ReportGroupJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
         List<Food> foodList = new ArrayList<Food>();
-        for (int i = 1; i < 100; i++) {
+        for (int i = 1; i < 2; i++) {
             Food food = new Food("name" + i, i, i / 10);
             foodList.add(food);
         }
