@@ -2,6 +2,8 @@
 ### Changes:
 * change report.pgSize to report.pageLayout
 * change  Scala Enum CellAlign to Java enum 
+### Bugs fixed:
+* report.drawImage supports jpg from internet 
 
 ## 1.0.0-RC.6 (2018-02-20)
 ### Changes:

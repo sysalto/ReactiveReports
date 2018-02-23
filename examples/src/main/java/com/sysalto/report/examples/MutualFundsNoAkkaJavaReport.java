@@ -55,8 +55,7 @@ public class MutualFundsNoAkkaJavaReport {
 
         Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
         report.headerSizeCallback(pg -> {
-            Long pgNbr = new Long(pg.toString());
-            if (pgNbr == 1) return 0f;
+            if (pg == 1) return 0f;
             else return 50f;
         });
         report.footerSizeCallback(pg -> 30f);

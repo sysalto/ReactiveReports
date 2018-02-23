@@ -70,7 +70,7 @@ object Test1 {
 		val b2 = row1.getColumnBound("c2")
 		report.nextLine()
 		val c1b = ReportCell(" Test1 asdsadsaads  asdas asdaS D").leftAlign() inside b1
-		val c2b = ReportCell(" I22XXEEAA").rightAlign() inside b2
+		val c2b = ReportCell(" ").rightAlign() inside b2
 		val rrow=List(c1b,c2b)
 
 		val top=report.getY-15
@@ -87,6 +87,11 @@ object Test1 {
 		report.nextLine(10)
 
 		report.nextLine()
+
+		report.drawImage("/mnt/data/Archive/poze/20170825/IMG_20170906_133733718_HDR.jpg", 5, 300, 500, 200)
+//		report.drawImage("/mnt/data/Archive/poze/20170825/IMG_20170906_133733718_HDR.jpg", 500, 100, 500, 200)
+//		report.drawImage("https://upload.wikimedia.org/wikipedia/commons/d/dd/Matterhorn.jpg", 400, 500, 600, 300)
+
 		//		    report print txt2 at 100
 		//    report.nextLine()
 		//    report print txt5 at 100

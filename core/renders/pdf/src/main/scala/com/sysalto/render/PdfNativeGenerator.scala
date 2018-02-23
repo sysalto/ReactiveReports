@@ -24,11 +24,12 @@ package com.sysalto.render
 
 import java.awt.image.BufferedImage
 import java.io.{ByteArrayOutputStream, File, FileOutputStream, PrintWriter}
+import java.net.URL
 import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.security.MessageDigest
 import java.util.zip.Deflater
-import javax.imageio.ImageIO
 
+import javax.imageio.ImageIO
 import com.sysalto.render.PdfDraw._
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
@@ -135,7 +136,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		} else {
 			crtY -= lineHeight * (lines.size - 1)
 		}
-		val textHeight=lines.head.map(textPos=>wordWrap.getTextHeight(textPos.rtext)).max
+		val l1=lines.head.map(textPos=>wordWrap.getTextHeight(textPos.rtext))
+		val textHeight=if (l1.isEmpty) 0 else l1.max
 		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size,textHeight))
 	}
 
@@ -470,7 +472,16 @@ class PdfGPattern(id: Long, pdfShadding: PdfColorShadding)
 }
 
 class ImageMeta(fileName: String) {
-	val file = new File(fileName)
+	val file=if (fileName.startsWith("http://") || fileName.startsWith("https://")) {
+		val url = new URL(fileName)
+		val img1 = ImageIO.read(url)
+		val tempFile = File.createTempFile("rap", ".jpg")
+		tempFile.deleteOnExit()
+		ImageIO.write(img1, "jpg", tempFile)
+		tempFile
+	} else {
+		new File(fileName)
+	}
 	val bimg: BufferedImage = ImageIO.read(file)
 	val width: Int = bimg.getWidth()
 	val height: Int = bimg.getHeight()
