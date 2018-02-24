@@ -2,8 +2,10 @@
 ### Changes:
 * change report.pgSize to report.pageLayout
 * change  Scala Enum CellAlign to Java enum 
+* upgrade to AKKA 2.5.10
 ### Bugs fixed:
-* report.drawImage supports jpg from internet 
+* report.drawImage supports jpg from internet
+* fix bug in multiple rendering images
 
 ## 1.0.0-RC.6 (2018-02-20)
 ### Changes:
