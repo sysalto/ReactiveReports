@@ -167,7 +167,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		val pdfImage = new PdfImage(nextId(), file)
 		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
 		graphicList += PdfDrawImage(pdfImage, x, y, scale)
-		currentPage.imageList = List(pdfImage)
+		currentPage.imageList += pdfImage
 	}
 
 	def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
@@ -538,7 +538,7 @@ private case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: F
 class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHeight: Float,
               var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfGPattern] = List(),
               var annotation: List[PdfAnnotation] = List(),
-              var imageList: List[PdfImage] = List(), var contentPage: Option[PdfPageContent] = None)
+              var imageList: ListBuffer[PdfImage] = ListBuffer(), var contentPage: Option[PdfPageContent] = None)
              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) with PageNode {
 
 	override def addChild(child: PageNode): Unit = {}

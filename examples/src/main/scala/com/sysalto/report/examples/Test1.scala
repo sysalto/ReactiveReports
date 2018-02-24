@@ -75,21 +75,21 @@ object Test1 {
 
 		val top=report.getY-15
 		val bottom=report.getY+15
-		report rectangle() from(2, top) radius (3) to(report.pageLayout.width - 9, bottom)  draw()
+//		report rectangle() from(2, top) radius (3) to(report.pageLayout.width - 9, bottom)  draw()
 
 
-		report.print(rrow,CellAlign.CENTER,top,bottom)
+//		report.print(rrow,CellAlign.CENTER,top,bottom)
 		val m1b=b1.left+report.getTextWidth(c1b).last
 		val m2b=b2.right-report.getTextWidth(c2b.txt.head)
 		val y2 = report.calculate(rrow)
-		report line() from(m1b, y2 ) to (m2b) color(200, 200, 200) draw()
+//		report line() from(m1b, y2 ) to (m2b) color(200, 200, 200) draw()
 
 		report.nextLine(10)
 
 		report.nextLine()
 
-//		report.drawImage("/mnt/data/Archive/poze/20170825/IMG_20170906_133733718_HDR.jpg", 5, 300, 500, 200)
-//		report.drawImage("/mnt/data/Archive/poze/20170825/IMG_20170906_133733718_HDR.jpg", 500, 100, 500, 200)
+//		report.drawImage("/mnt/data/Archive/poze/20170825/IMG_20170906_133733718_HDR.jpg", 5, 300, 100, 100)
+//		report.drawImage("/mnt/data/Archive/poze/20170825/IMG_20170906_133733718_HDR.jpg", 120, 300, 100, 100)
 		report.drawImage("https://upload.wikimedia.org/wikipedia/commons/d/dd/Matterhorn.jpg", 400, 500, 600, 300)
 
 		//		    report print txt2 at 100
