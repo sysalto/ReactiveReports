@@ -1,4 +1,4 @@
-package util
+package com.sysalto.render.util
 
 import java.nio.ByteBuffer
 import java.nio.channels.{AsynchronousFileChannel, FileChannel}

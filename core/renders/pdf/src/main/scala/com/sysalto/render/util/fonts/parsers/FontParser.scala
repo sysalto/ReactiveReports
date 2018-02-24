@@ -1,6 +1,6 @@
-package util.fonts.parsers
+package com.sysalto.render.util.fonts.parsers
 
-import util.fonts.parsers.FontParser.FontMetric
+import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
 
 import scala.collection.mutable
 

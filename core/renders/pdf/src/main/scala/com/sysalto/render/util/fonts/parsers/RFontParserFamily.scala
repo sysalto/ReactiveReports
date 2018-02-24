@@ -1,4 +1,4 @@
-package util.fonts.parsers
+package com.sysalto.render.util.fonts.parsers
 
 import com.sysalto.report.reportTypes.RFontFamily
 

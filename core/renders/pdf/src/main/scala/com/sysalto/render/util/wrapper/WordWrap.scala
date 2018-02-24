@@ -20,11 +20,11 @@
  */
 
 
-package util.wrapper
+package com.sysalto.render.util.wrapper
 
 import com.sysalto.report.RFontAttribute
 import com.sysalto.report.reportTypes.{RFont, ReportTxt}
-import util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
+import com.sysalto.render.util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer

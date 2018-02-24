@@ -35,11 +35,11 @@ import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
 import com.sysalto.report.util.RockDbUtil
-import util.PageTree.PageNode
-import util.fonts.parsers.FontParser.FontMetric
-import util.{PageTree, SyncFileUtil}
-import util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
-import util.wrapper.{RTextPos, WordWrap}
+import com.sysalto.render.util.PageTree.PageNode
+import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
+import com.sysalto.render.util.{PageTree, SyncFileUtil}
+import com.sysalto.render.util.fonts.parsers.{AfmParser, FontParser, RFontParserFamily, TtfParser}
+import com.sysalto.render.util.wrapper.{RTextPos, WordWrap}
 
 import scala.collection.mutable.ListBuffer
 

@@ -1,5 +1,4 @@
-package util
-
+package com.sysalto.render.util
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer

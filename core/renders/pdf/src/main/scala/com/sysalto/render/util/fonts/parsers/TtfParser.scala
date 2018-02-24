@@ -1,9 +1,13 @@
-package util.fonts.parsers
+
+package com.sysalto.render.util.fonts.parsers
 
 import java.nio.file.StandardOpenOption
 
-import util.SyncFileUtil
-import util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
+import com.sysalto.render.util.SyncFileUtil
+import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
+
+import com.sysalto.render.util.SyncFileUtil
+import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
 
 class TtfParser(fontFile: String) extends FontParser(fontFile) {
 	private[this] type Tables = Map[String, TtfTable]
