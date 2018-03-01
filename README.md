@@ -21,7 +21,7 @@ In Scala, we have provided a DSL - domain specific language - to create the repo
 
 The license is LGPL. Please see LICENSE.md. According to this license, **Reactive Reports is free to use and modify, for both Open Source and commercial uses.** 
 
-ReactiveReports can be used in Scala 2.12 and in Java 8.
+ReactiveReports can be used in Scala 2.12 and in Java 7 and 8.
 
 As running examples, please see `com.sysalto.report.examples.mutualFunds.MutualFundsReport` and `com.sysalto.report.examples.rss.RssReport`.
 The output of  MutualFundsReport is MutualFunds.pdf.

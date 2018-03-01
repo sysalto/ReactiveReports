@@ -26,7 +26,7 @@ import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{CellAlign, RFont, RFontFamily, ReportPageOrientation}
 
-/
+
 object Test1 {
 
 	def run(): Unit = {
