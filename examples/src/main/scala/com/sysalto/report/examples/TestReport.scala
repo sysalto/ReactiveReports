@@ -33,11 +33,7 @@ import com.sysalto.report.reportTypes.{ReportCell, ReportPageOrientation}
   */
 object TestReport  {
 
-//  def run1(): Unit = {
-//    implicit val pdfITextFactory = new PdfITextFactory()
-//    val report = Report("Test1.pdf")
-//    runReport(report)
-//  }
+
 
   def run2(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()
@@ -47,9 +43,6 @@ object TestReport  {
 
   def runReport(report: Report): Unit = {
     report.nextLine(3)
-//    report print (RCell(("line1 \nline2" size 8)+(" WW line 3" size 12) +" iii"+( "uuu line4" bold()))  between RMargin(0, 50))
-//    report.nextLine()
-//
     report print "line1".bold() at 100
 //    report.nextLine(3)
 //    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()

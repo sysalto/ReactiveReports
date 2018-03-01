@@ -140,20 +140,15 @@ object HelloWorldReport1 extends ReportAppAkka with AkkaGroupUtil {
     report.render()
   }
 
-//  def runItext(): Unit = {
-//    implicit val pdfITextFactory = new PdfITextFactory()
-//    val report = Report("HelloWord1.pdf")
-//    run(report)
-//  }
+
 
   def runNative(): Unit = {
-    implicit val pdfITextFactory = new PdfNativeFactory()
+    implicit val pdfFactory = new PdfNativeFactory()
     val report = Report("HelloWord2.pdf")
     run(report)
   }
 
   def main(args: Array[String]): Unit = {
-//    runItext
     runNative
     system.terminate()
   }

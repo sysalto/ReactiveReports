@@ -58,7 +58,7 @@ class MutualFundsAkkaJavaReport {
 
     static private final SimpleDateFormat sd = new SimpleDateFormat("MMM dd yyyy");
 
-    private PdfFactory pdfITextFactory = new PdfNativeFactory();
+    private PdfFactory pdfFactory = new PdfNativeFactory();
     private Config config = ConfigFactory.parseString(
             "akka.log-dead-letters=off\n" +
                     "akka.jvm-exit-on-fatal-error = true\n" +
@@ -68,7 +68,7 @@ class MutualFundsAkkaJavaReport {
 
     private void run() throws Exception {
 
-        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
+        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
         report.headerSizeCallback(pg -> {
             Long pgNbr = new Long(pg.toString());
             if (pgNbr == 1) return 0f;

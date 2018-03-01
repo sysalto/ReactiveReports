@@ -357,12 +357,6 @@ object MutualFundsReport extends ReportAppAkka {
   }
 
 
-//  def runItext(): Unit = {
-//    implicit val pdfITextFactory = new PdfITextFactory()
-//    val report1=Report("MutualFunds1.pdf")
-//    report(report1)
-//  }
-
   def runNative(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()
     val report1=Report("MutualFunds2.pdf")

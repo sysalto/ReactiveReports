@@ -51,9 +51,9 @@ public class ExamplesJava {
 
     // Example 1 - Simple report - one line - PORTRAIT orientation
     private void example_1() throws Exception {
-        PdfFactory pdfITextFactory = new PdfNativeFactory();
+        PdfFactory pdfFactory = new PdfNativeFactory();
 
-        Report report1 = Report.create("PDF_portrait.pdf", ReportPageOrientation.PORTRAIT(), pdfITextFactory);
+        Report report1 = Report.create("PDF_portrait.pdf", ReportPageOrientation.PORTRAIT(), pdfFactory);
         report1.nextLine();
         report1.print(new RText("line1 portrait")).at(50);
         report1.render();
@@ -61,9 +61,9 @@ public class ExamplesJava {
 
     // Example 2 - Simple report - one line - LANDSCAPE orientation
     private void example_2() throws Exception {
-        PdfFactory pdfITextFactory = new PdfNativeFactory();
+        PdfFactory pdfFactory = new PdfNativeFactory();
 
-        Report report2 = Report.create("PDF_landscape.pdf", ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
+        Report report2 = Report.create("PDF_landscape.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
         report2.nextLine();
         report2.print(new RText("line2 landscape")).at(50);
         report2.render();
@@ -71,9 +71,9 @@ public class ExamplesJava {
 
     // Example 3 - report with summary, the summary has a link to the next page
     private void example_3() throws Exception {
-        PdfFactory pdfITextFactory = new PdfNativeFactory();
+        PdfFactory pdfFactory = new PdfNativeFactory();
 
-        Report reportSumamry = Report.create("PDF_reportSummary.pdf", ReportPageOrientation.PORTRAIT(), pdfITextFactory);
+        Report reportSumamry = Report.create("PDF_reportSummary.pdf", ReportPageOrientation.PORTRAIT(), pdfFactory);
         reportSumamry.nextLine();
 
         // boundRect is the rectangle boundary around the text
@@ -96,8 +96,8 @@ public class ExamplesJava {
      * header and footer, content on each page; Title on first page
      */
     private void example_4() throws Exception {
-        PdfFactory pdfITextFactory = new PdfNativeFactory();
-        Report report = Report.create("PDF_withGraphics.pdf", ReportPageOrientation.PORTRAIT(), pdfITextFactory);
+        PdfFactory pdfFactory = new PdfNativeFactory();
+        Report report = Report.create("PDF_withGraphics.pdf", ReportPageOrientation.PORTRAIT(), pdfFactory);
 
         report.headerSizeCallback(pg -> {
             Long pgNbr = new Long(pg.toString());

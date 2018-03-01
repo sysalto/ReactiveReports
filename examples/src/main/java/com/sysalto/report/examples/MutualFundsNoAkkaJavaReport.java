@@ -49,11 +49,11 @@ public class MutualFundsNoAkkaJavaReport {
 
     static private final SimpleDateFormat sd = new SimpleDateFormat("MMM dd yyyy");
 
-    PdfFactory pdfITextFactory = new PdfNativeFactory();
+    PdfFactory pdfFactory = new PdfNativeFactory();
 
     private void run() throws Exception {
 
-        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
+        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
         report.headerSizeCallback(pg -> {
             if (pg == 1) return 0f;
             else return 50f;

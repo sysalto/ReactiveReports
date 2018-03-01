@@ -72,7 +72,7 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 		//		implicit val system = ActorSystem("Sys", config)
 		//		implicit val materializer = ActorMaterializer()
 
-		implicit val pdfITextFactory = new PdfNativeFactory()
+		implicit val pdfFactory = new PdfNativeFactory()
 		val report = Report("Twitter.pdf")
 
 		val source1 = Source.queue[String](1000, OverflowStrategy.backpressure).take(100)

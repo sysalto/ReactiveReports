@@ -65,8 +65,8 @@ public class GroceryTableExample {
         foodList.add(new Food("Bread", 4, "3 loaves"));
         foodList.add(new Food("Rice", 4, "2 kg"));
 
-        PdfFactory pdfITextFactory = new PdfNativeFactory();
-        Report report = Report.create("GroceryReport.pdf", ReportPageOrientation.PORTRAIT(), pdfITextFactory);
+        PdfFactory pdfFactory = new PdfNativeFactory();
+        Report report = Report.create("GroceryReport.pdf", ReportPageOrientation.PORTRAIT(), pdfFactory);
         Row row = Row.apply(50, report.pgSize().width() - 50, Column.apply("name").flex(1),
                 Column.apply("price").flex(1), Column.apply("quantity").flex(1));
         RMargin name = row.getColumnBound("name");

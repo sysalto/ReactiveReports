@@ -52,11 +52,11 @@ public class MutualFundsNoAkkaJavaReport {
     static RColor headerFontColor = new RColor(255, 255, 255, 1f);
     static private final SimpleDateFormat sd = new SimpleDateFormat("MMM dd yyyy");
 
-    PdfFactory pdfITextFactory = new PdfNativeFactory();
+    PdfFactory pdfFactory = new PdfNativeFactory();
 
     public void run(String fileName) throws Exception {
 
-        Report report = Report.create(fileName, ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
+        Report report = Report.create(fileName, ReportPageOrientation.LANDSCAPE(), pdfFactory);
         report.getHeaderSize(pg -> {
             Long pgNbr = new Long(pg.toString());
             if (pgNbr == 1) return 0f;

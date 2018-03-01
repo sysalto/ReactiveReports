@@ -24,8 +24,7 @@ The core framework has a few dependencies:
  create table clnt (groupName varchar(255),name varchar(255),addr varchar(255)).
  Now we will focus on report itself (Example1Report class).
  
-* The pdfFactory variable represent the actual render - the previous version had ITextFactory.
- Now since the IText was removed the only factory is PdfNativeFactory.
+* The pdfFactory variable represent the actual render.
  Sometime in the future I will add another for HTML and maybe for docx.
 * The report has a static method create that return the actual Report object.
 * Before the report we need to know the header and footer size.Note that all sizes are in pdf units(1 ⁄ 72 inch).

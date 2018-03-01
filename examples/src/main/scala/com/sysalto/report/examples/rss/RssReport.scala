@@ -89,7 +89,7 @@ object RssReport extends ReportAppAkka with AkkaGroupUtil{
         SourceShape(merge.out)
     })
 
-    implicit val pdfITextFactory = new PdfNativeFactory()
+    implicit val pdfFactory = new PdfNativeFactory()
     val reportAmerica = Report("AmericaRss.pdf")
     val reportEuro = Report("EuropeRss.pdf")
 

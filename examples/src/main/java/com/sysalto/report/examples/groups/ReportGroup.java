@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportGroup {
-    private PdfFactory pdfITextFactory = new PdfNativeFactory();
+    private PdfFactory pdfFactory = new PdfNativeFactory();
 
     private void run() throws Exception {
-        Report report = Report.create("ReportGroupJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfITextFactory);
+        Report report = Report.create("ReportGroupJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
         List<Food> foodList = new ArrayList<Food>();
         for (int i = 1; i < 2; i++) {
             Food food = new Food("name" + i, i, i / 10);
