@@ -29,9 +29,7 @@ import com.sysalto.render.util.fonts.parsers.{AfmParser, FontParser, RFontParser
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 
-/**
-	* Created by marian on 11/05/17.
-	*/
+
 class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontParserFamily]) {
 
 	private[this] type Cost[T] = (Double, List[T])

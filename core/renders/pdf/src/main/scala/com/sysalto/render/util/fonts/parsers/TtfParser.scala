@@ -220,7 +220,7 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 
 object TtfParser {
 	def main(args: Array[String]): Unit = {
-		val ttfParser = new TtfParser("/home/marian/transfer/font/Roboto-Regular.ttf")
+		val ttfParser = new TtfParser("~/transfer/font/Roboto-Regular.ttf")
 	}
 
 }

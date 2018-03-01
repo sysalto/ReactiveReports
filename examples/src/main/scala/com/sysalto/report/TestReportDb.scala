@@ -13,7 +13,7 @@ object TestReportDb extends GroupUtilTrait {
 	implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 	Class.forName("org.hsqldb.jdbc.JDBCDriver")
-	private val conn = DriverManager.getConnection("jdbc:hsqldb:file:/home/marian/transfer/database/test", "SA", "")
+	private val conn = DriverManager.getConnection("jdbc:hsqldb:file:~/transfer/database/test", "SA", "")
 
 
 	def query(sql: String): ResultSet = {

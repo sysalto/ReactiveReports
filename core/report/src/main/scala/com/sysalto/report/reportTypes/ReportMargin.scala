@@ -20,10 +20,6 @@
  */
 
 
-
 package com.sysalto.report.reportTypes
 
-/**
- * Created by marian on 3/15/17.
- */
- case class ReportMargin(left: Float, right: Float)
+case class ReportMargin(left: Float, right: Float)

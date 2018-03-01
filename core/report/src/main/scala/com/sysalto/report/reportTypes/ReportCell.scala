@@ -25,9 +25,7 @@ package com.sysalto.report.reportTypes
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{Report, WrapAlign}
 
-/**
-	* Created by marian on 3/4/17.
-	*/
+
 /*
 class for wrapping text
  */

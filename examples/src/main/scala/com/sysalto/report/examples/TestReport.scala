@@ -28,9 +28,7 @@ import com.sysalto.report.Implicits._
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.reportTypes.{ReportCell, ReportPageOrientation}
 
-/**
-  * Created by marian on 4/1/17.
-  */
+
 object TestReport  {
 
 

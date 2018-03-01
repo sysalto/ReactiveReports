@@ -25,9 +25,7 @@ package com.sysalto.report.reportTypes
 
 import com.sysalto.report.function.RFunction1
 
-/**
-  * Created by marian on 3/4/17.
-  */
+
 case class Group[T,R](name: String, get: (T) => R)
 
 object Group {

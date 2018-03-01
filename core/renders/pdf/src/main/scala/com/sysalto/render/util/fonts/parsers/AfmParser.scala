@@ -26,9 +26,7 @@ import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
 
 import scala.collection.mutable
 
-/**
-	* Created by marian on 5/6/17.
-	*/
+
 class AfmParser(fontFile: String) extends FontParser(fontFile) {
 
 

@@ -43,9 +43,7 @@ import com.sysalto.render.util.wrapper.{RTextPos, WordWrap}
 
 import scala.collection.mutable.ListBuffer
 
-/**
-	* Created by marian on 4/1/17.
-	*/
+
 class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
 	implicit val wordSeparators = List(',', '.')
 	private[this] val db = RockDbUtil()
@@ -664,7 +662,7 @@ class PdfFontStream(id: Long, val fontName: String, val fontMetric: FontMetric, 
 	override def content: Array[Byte] = {
 		val byteArray = Files.readAllBytes(Paths.get(fontName))
 		val byteArray2 = {
-			val f = new SyncFileUtil("/home/marian/workspace/GenSNew/good2.pdf", 271, StandardOpenOption.READ)
+			val f = new SyncFileUtil("~/workspace/GenSNew/good2.pdf", 271, StandardOpenOption.READ)
 			val bytes = f.read(8712, None)
 			bytes.rewind()
 			val nr = bytes.remaining().toInt

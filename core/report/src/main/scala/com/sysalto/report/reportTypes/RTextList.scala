@@ -25,9 +25,7 @@ package com.sysalto.report.reportTypes
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  * Created by marian on 3/14/17.
-  */
+
 case class RTextList(list: ListBuffer[ReportTxt]) {
   def +(other: ReportTxt): RTextList = {
     list += other

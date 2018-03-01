@@ -26,9 +26,7 @@ import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{CellAlign, RFont, RFontFamily, ReportPageOrientation}
 
-/**
-	* Created by marian on 4/1/17.
-	*/
+/
 object Test1 {
 
 	def run(): Unit = {
@@ -39,10 +37,10 @@ object Test1 {
 
 	def runReport(implicit report: Report): Unit = {
 		val fontFamily = RFontFamily(name = "Roboto",
-			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
-			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
-			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
-			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
+			regular = "~/transfer/font/Roboto-Regular.ttf",
+			bold = Some("~/transfer/font/Roboto-Bold.ttf"),
+			italic = Some("~/transfer/font/Roboto-Italic.ttf"),
+			boldItalic = Some("~/transfer/font/Roboto-BoldItalic.ttf"))
 		report.setExternalFont(fontFamily)
 		report.nextLine(3)
 		val size = 10
@@ -50,9 +48,9 @@ object Test1 {
 		//		report.font = font
 		val str = "Cell String"
 		val txt1 = ReportTxt(str, font)
-		//  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("/home/marian/transfer/font/Roboto-Regular.ttf")))
-		//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("/home/marian/transfer/font/calibri/Calibri.ttf")))
-		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("/home/marian/transfer/font/lily/LilyoftheValley.ttf")))
+		//  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("~/transfer/font/Roboto-Regular.ttf")))
+		//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("~/transfer/font/calibri/Calibri.ttf")))
+		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("~/transfer/font/lily/LilyoftheValley.ttf")))
 		//		val txt2 = RText(str)
 
 //		val row = ReportRow(10, report.pgSize.width - 10, List(Column("column1", 130), Column("column2", 100),

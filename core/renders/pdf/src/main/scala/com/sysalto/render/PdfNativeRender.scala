@@ -29,9 +29,7 @@ import com.sysalto.report.reportTypes._
 import com.sysalto.report.{ReportTypes, WrapAlign}
 import com.sysalto.report.util.PdfUtil
 
-/**
-	* Created by marian on 4/1/17.
-	*/
+
 class PdfNativeRender extends PdfUtil {
 	private[this] var pdfNativeGenerator: PdfNativeGenerator = null
 	private[this] var orientation = ReportPageOrientation.PORTRAIT

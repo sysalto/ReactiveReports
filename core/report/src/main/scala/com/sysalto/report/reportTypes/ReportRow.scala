@@ -28,9 +28,7 @@ import com.sysalto.report.util.ColumnWidthType
 import scala.annotation.varargs
 import scala.collection.JavaConverters._
 
-/**
-  * Created by marian on 3/4/17.
-  */
+
 case class ReportRow(left: Float, right: Float, columns: List[Column]) {
   private def calculate(): Map[String, ReportMargin] = {
     val fixColumnList = columns.filter(column => column.columnWidthType == ColumnWidthType.Fixed)

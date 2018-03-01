@@ -26,9 +26,7 @@ package com.sysalto.report.reportTypes
 import com.sysalto.report.util.ColumnWidthType
 import com.sysalto.report.util.ReportColumnUtil.{Flex, RangeWidth}
 
-/**
-  * Created by marian on 3/4/17.
-  */
+
 case class Column(id: String, var columnWidthType: ColumnWidthType.Types, var fixedWidth: Option[Float],
                   var floatWidth: Option[RangeWidth] = None, var flexWidth: Option[Int] = None) {
   def flex(width: Int): Column = {
