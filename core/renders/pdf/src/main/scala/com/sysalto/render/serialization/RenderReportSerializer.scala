@@ -4,7 +4,8 @@ import scala.collection.JavaConverters._
 import RenderReportTypes._
 import com.sysalto.render.serialization.RenderProto._
 import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
-import com.sysalto.report.reportTypes.ReportColor
+import com.sysalto.report.RFontAttribute
+import com.sysalto.report.reportTypes.{RFont, RFontFamily, ReportColor, ReportTxt}
 
 import scala.collection.mutable.ListBuffer
 
@@ -418,7 +419,7 @@ object RenderReportSerializer {
 		}
 
 		def read(obj: FloatFloat_proto): (Float, Float) = {
-			 (obj.getValue1, obj.getValue2)
+			(obj.getValue1, obj.getValue2)
 		}
 	}
 
@@ -492,6 +493,193 @@ object RenderReportSerializer {
 				item.asInstanceOf[Short]
 			}).to[List]
 			)
+		}
+	}
+
+	object PdfAction_protoSerializer {
+		def write(obj: PdfAction): PdfAction_proto = {
+			val builder = PdfAction_proto.newBuilder()
+			builder.setId(obj.id)
+			builder.build()
+		}
+
+		def read(obj: PdfAction_proto): PdfAction = {
+			//			new PdfAction(obj.getId)
+			null
+		}
+	}
+
+	object PdfText_protoSerializer {
+		def write(obj: PdfText): PdfText_proto = {
+			val builder = PdfText_proto.newBuilder()
+			obj.txtList.foreach(item => {
+				builder.addTxtListItem(PdfTxtChuck_protoSerializer.write(item))
+			})
+			builder.build()
+		}
+
+		def read(obj: PdfText_proto): PdfText = {
+			new PdfText(obj.getTxtListItemList.asScala.map(item => {
+				PdfTxtChuck_protoSerializer.read(item)
+			}).to[List]
+			)
+		}
+	}
+
+	object PdfTxtChuck_protoSerializer {
+		def write(obj: PdfTxtChuck): PdfTxtChuck_proto = {
+			val builder = PdfTxtChuck_proto.newBuilder()
+			builder.setX(obj.x)
+			builder.setY(obj.y)
+			builder.setRtext(ReportTxt_protoSerializer.write(obj.rtext))
+			builder.setFontRefName(obj.fontRefName)
+			builder.setPattern(OptionPatternDraw_protoSerializer.write(obj.pattern))
+			builder.build()
+		}
+
+		def read(obj: PdfTxtChuck_proto): PdfTxtChuck = {
+			new PdfTxtChuck(obj.getX, obj.getY, ReportTxt_protoSerializer.read(obj.getRtext), obj.getFontRefName, OptionPatternDraw_protoSerializer.read(obj.getPattern))
+		}
+	}
+
+	object ReportTxt_protoSerializer {
+		def write(obj: ReportTxt): ReportTxt_proto = {
+			val builder = ReportTxt_proto.newBuilder()
+			builder.setTxt(obj.txt)
+			builder.setFont(RFont_protoSerializer.write(obj.font))
+			builder.build()
+		}
+
+		def read(obj: ReportTxt_proto): ReportTxt = {
+			new ReportTxt(obj.getTxt, RFont_protoSerializer.read(obj.getFont))
+		}
+	}
+
+	object OptionPatternDraw_protoSerializer {
+		def write(obj: Option[PatternDraw]): OptionPatternDraw_proto = {
+			val builder = OptionPatternDraw_proto.newBuilder()
+			builder.setNotNull(obj.isDefined)
+			if (obj.isDefined) {
+				builder.setValue(PatternDraw_protoSerializer.write(obj.get))
+			}
+			builder.build()
+		}
+
+		def read(obj: OptionPatternDraw_proto): Option[PatternDraw] = {
+			if (!obj.getNotNull) {
+				None
+			} else {
+				Some(PatternDraw_protoSerializer.read(obj.getValue))
+			}
+		}
+	}
+
+
+	object RFont_protoSerializer {
+		def write(obj: RFont): RFont_proto = {
+			val builder = RFont_proto.newBuilder()
+			builder.setSize(obj.size)
+			builder.setFontName(obj.fontName)
+			builder.setAttribute(RFontAttribute_protoSerializer.write(obj.attribute))
+			builder.setColor(ReportColor_protoSerializer.write(obj.color))
+			builder.setExternalFont(OptionRFontFamily_protoSerializer.write(obj.externalFont))
+			builder.build()
+		}
+
+		def read(obj: RFont_proto): RFont = {
+			new RFont(obj.getSize, obj.getFontName, RFontAttribute_protoSerializer.read(obj.getAttribute), ReportColor_protoSerializer.read(obj.getColor), OptionRFontFamily_protoSerializer.read(obj.getExternalFont))
+		}
+	}
+
+	object PatternDraw_protoSerializer {
+		def write(obj: PatternDraw): PatternDraw_proto = {
+			val builder = PatternDraw_proto.newBuilder()
+			builder.setX1(obj.x1)
+			builder.setY1(obj.y1)
+			builder.setX2(obj.x2)
+			builder.setY2(obj.y2)
+			builder.setPattern(PdfGPattern_protoSerializer.write(obj.pattern))
+			builder.build()
+		}
+
+		def read(obj: PatternDraw_proto): PatternDraw = {
+			new PatternDraw(obj.getX1, obj.getY1, obj.getX2, obj.getY2, PdfGPattern_protoSerializer.read(obj.getPattern))
+		}
+	}
+
+
+	object RFontAttribute_protoSerializer {
+		def write(obj: RFontAttribute.Value): RFontAttribute_proto = {
+			obj match {
+				case RFontAttribute.NORMAL => RFontAttribute_proto.NORMAL
+				case RFontAttribute.BOLD => RFontAttribute_proto.BOLD
+				case RFontAttribute.ITALIC => RFontAttribute_proto.ITALIC
+				case RFontAttribute.BOLD_ITALIC => RFontAttribute_proto.BOLD_ITALIC
+			}
+		}
+
+		def read(obj: RFontAttribute_proto): RFontAttribute.Value = {
+			obj match {
+				case RFontAttribute_proto.NORMAL => RFontAttribute.NORMAL
+				case RFontAttribute_proto.BOLD => RFontAttribute.BOLD
+				case RFontAttribute_proto.ITALIC => RFontAttribute.ITALIC
+				case RFontAttribute_proto.BOLD_ITALIC => RFontAttribute.BOLD_ITALIC
+			}
+		}
+	}
+
+	object OptionRFontFamily_protoSerializer {
+		def write(obj: Option[RFontFamily]): OptionRFontFamily_proto = {
+			val builder = OptionRFontFamily_proto.newBuilder()
+			builder.setNotNull(obj.isDefined)
+			if (obj.isDefined) {
+				builder.setValue(RFontFamily_protoSerializer.write(obj.get))
+			}
+			builder.build()
+		}
+
+		def read(obj: OptionRFontFamily_proto): Option[RFontFamily] = {
+			if (!obj.getNotNull) {
+				None
+			} else {
+				Some(RFontFamily_protoSerializer.read(obj.getValue))
+			}
+		}
+	}
+
+	object RFontFamily_protoSerializer {
+		def write(obj: RFontFamily): RFontFamily_proto = {
+			val builder = RFontFamily_proto.newBuilder()
+			builder.setName(obj.name)
+			builder.setRegular(obj.regular)
+			builder.setBold(OptionString_protoSerializer.write(obj.bold))
+			builder.setItalic(OptionString_protoSerializer.write(obj.italic))
+			builder.setBoldItalic(OptionString_protoSerializer.write(obj.boldItalic))
+			builder.build()
+		}
+
+		def read(obj: RFontFamily_proto): RFontFamily = {
+			new RFontFamily(obj.getName, obj.getRegular, OptionString_protoSerializer.read(obj.getBold), OptionString_protoSerializer.read(obj.getItalic), OptionString_protoSerializer.read(obj.getBoldItalic))
+		}
+	}
+
+
+	object OptionString_protoSerializer {
+		def write(obj: Option[String]): OptionString_proto = {
+			val builder = OptionString_proto.newBuilder()
+			builder.setNotNull(obj.isDefined)
+			if (obj.isDefined) {
+				builder.setValue(obj.get)
+			}
+			builder.build()
+		}
+
+		def read(obj: OptionString_proto): Option[String] = {
+			if (!obj.getNotNull) {
+				None
+			} else {
+				Some(obj.getValue)
+			}
 		}
 	}
 

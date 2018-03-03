@@ -1,18 +1,17 @@
 package com.sysalto.render.serialization
 
 import java.awt.image.BufferedImage
-import java.io.{ByteArrayOutputStream, File}
+import java.io.{ByteArrayOutputStream, File, FileOutputStream}
 import java.net.URL
 import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.util.zip.Deflater
 
-import com.sysalto.render.PdfWriter
 import com.sysalto.render.serialization.RenderProto.OptionFontEmbeddedDef_proto
 import com.sysalto.render.serialization.RenderReportSerializer.FontEmbeddedDef_protoSerializer
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.SyncFileUtil
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
-import com.sysalto.report.reportTypes.ReportColor
+import com.sysalto.report.reportTypes.{ReportColor, ReportTxt}
 import javax.imageio.ImageIO
 
 import scala.collection.mutable.ListBuffer
@@ -338,6 +337,97 @@ private[render] object RenderReportTypes {
 		}
 	}
 
+	private[render] case class PdfTxtChuck(x: Float, y: Float, rtext: ReportTxt, fontRefName: String,
+	                                       pattern: Option[PatternDraw] = None)
+
+	private[render] class PdfText(val txtList: List[PdfTxtChuck])
+		extends PdfPageItem {
+
+		private[this] def escapeText(input: String): String = {
+			val s1 = input.replace("\\", "\\\\")
+			val s2 = s1.replace("(", "\\(")
+			s2.replace(")", "\\)")
+		}
+
+		override def content: String = {
+			if (txtList.isEmpty) {
+				return ""
+			}
+			val txtListSimple = txtList.filter(txt => txt.pattern.isEmpty)
+			val txtListPattern = txtList.filter(txt => txt.pattern.isDefined)
+			val item = txtListSimple.head
+			val color = RenderReportTypes.convertColor(item.rtext.font.color)
+			val firstItemTxt =
+				s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
+					 				 |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
+					 				 |  ${color._1} ${color._2} ${color._3} rg
+					 				 |        (${escapeText(item.rtext.txt)}) Tj
+       """.stripMargin
+
+			val s2 = firstItemTxt + txtListSimple.tail.zipWithIndex.map {
+				case (item, i) => {
+					val color = RenderReportTypes.convertColor(item.rtext.font.color)
+					val xRel = txtListSimple(i + 1).x.toLong - txtListSimple(i).x.toLong
+					val yRel = txtListSimple(i + 1).y.toLong - txtListSimple(i).y.toLong
+					s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
+						 					 |  ${xRel} ${yRel} Td
+						 					 |  ${color._1} ${color._2} ${color._3} rg
+						 					 |  (${escapeText(item.rtext.txt)}) Tj
+       """.stripMargin
+				}
+			}.mkString("")
+
+			// pattern text
+			val s3 = if (txtListPattern.isEmpty) ""
+			else txtListPattern.map(txt => {
+				s""" q
+					 				 |/Pattern cs /${item.pattern.get.pattern.name} scn
+					 				 |/${item.fontRefName} ${item.rtext.font.size} Tf
+					 				 |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
+					 				 |  ${color._1} ${color._2} ${color._3} rg
+					 				 |        (${escapeText(item.rtext.txt)}) Tj
+					 				 |Q
+       """.mkString("")
+			})
+
+			s"""${s2}
+				 			 |${s3}
+				 			 |      ET
+       """.stripMargin
+		}
+
+	}
+
+	private[render] case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfGPattern)
+
+	abstract class PdfAction(id: Long) extends PdfBaseItem(id)
+
+
+	private[render] class PdfWriter(name: String) {
+		new File(name).delete()
+		private[this] val writer = new FileOutputStream(name)
+		private[render] var position: Long = 0
+
+		def <<(str: String): Unit = {
+			<<(str.getBytes(RenderReportTypes.ENCODING))
+		}
+
+		def <<<(str: String): Unit = {
+			val str1 = str + "\n"
+			<<(str1.getBytes(RenderReportTypes.ENCODING))
+		}
+
+		def <<(str: Array[Byte]): Unit = {
+			writer.write(str)
+			position += str.length
+		}
+
+		def close(): Unit = {
+			writer.flush()
+			writer.close()
+		}
+	}
+
 
 	def writeData(id: Long, input: Array[Byte], pdfCompression: Boolean, hasLength1: Boolean = false): Array[Byte] = {
 		val length1 = if (hasLength1) s"/Length1 ${input.size}" else ""
@@ -378,5 +468,6 @@ private[render] object RenderReportTypes {
 		val b = color.b / 255f
 		(r, g, b)
 	}
+
 
 }
