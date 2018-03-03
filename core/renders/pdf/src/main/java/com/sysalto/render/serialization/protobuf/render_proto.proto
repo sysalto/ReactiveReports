@@ -28,89 +28,48 @@ message PdfBaseItem_proto {
     }
 }
 
-message PdfAnnotation_proto {
-    int64 value1 = 1;
-}
-
-message PdfAction_proto {
-    int64 value1 = 1;
-}
-
 message StringString_proto {
     string value1 = 1;
     string value2 = 2;
 }
 
 message PdfDests_proto {
-    int64 value1 = 1;
-    repeated StringString_proto value2 = 2;
+    int64 id = 1;
+    repeated StringString_proto destsItem = 2;
 }
 
 message PdfNames_proto {
-    int64 value1 = 1;
-    PdfDests_proto value2 = 2;
+    int64 id = 1;
+    PdfDests_proto dests = 2;
 }
 
-
 message OptionPdfNames_proto {
-    bool value1 = 1;
-    PdfNames_proto value2 = 2;
+    bool notNull = 1;
+    PdfNames_proto value = 2;
 }
 
 message OptionLong_proto {
-    bool value1 = 1;
-    int64 value2 = 2;
+    bool notNull = 1;
+    int64 value = 2;
 }
 
 message PdfPageList_proto {
-    int64 value1 = 1;
-    OptionLong_proto value2 = 2;
-    repeated int64 value3 = 3;
+    int64 id = 1;
+    OptionLong_proto parentId = 2;
+    repeated int64 pageListItem = 3;
 }
 
 message OptionPdfPageList_proto {
-    bool value1 = 1;
-    PdfPageList_proto value2 = 2;
+    bool notNull = 1;
+    PdfPageList_proto value = 2;
 }
 
 message PdfCatalog_proto {
-    int64 value1 = 1;
-    OptionPdfPageList_proto value2 = 2;
-    OptionPdfNames_proto value3 = 3;
+    int64 id = 1;
+    OptionPdfPageList_proto pdfPageList = 2;
+    OptionPdfNames_proto pdfNames = 3;
 }
 
-message ReportColor_proto {
-    int32 value1 = 1;
-    int32 value2 = 2;
-    int32 value3 = 3;
-    float value4 = 4;
-}
-
-message PdfShaddingFctColor_proto {
-    int64 value1 = 1;
-    ReportColor_proto value2 = 2;
-    ReportColor_proto value3 = 3;
-}
-
-
-message PdfColorShadding_proto {
-    int64 value1 = 1;
-    float value2 = 2;
-    float value3 = 3;
-    float value4 = 4;
-    float value5 = 5;
-    PdfShaddingFctColor_proto value6 = 6;
-}
-
-message PdfGPattern_proto {
-    int64 value1 = 1;
-    PdfColorShadding_proto value2 = 2;
-}
-
-message PdfImage_proto {
-    int64 value1 = 1;
-    string value2 = 2;
-}
 
 message PdfPageItem_proto {
     string content = 1;
@@ -120,6 +79,201 @@ message PdfPageItem_proto {
     }
 }
 
+message PdfPageContent_proto {
+    int64 id = 1;
+    repeated PdfPageItem_proto pageItemListItem = 2;
+    bool pdfCompression = 3;
+}
+
+message OptionPdfPageContent_proto {
+    bool notNull = 1;
+    PdfPageContent_proto value = 2;
+}
+
+message PdfImage_proto {
+    int64 id = 1;
+    string fileName = 2;
+}
+
+message PdfAnnotation_proto {
+    int64 id = 1;
+}
+
+message ReportColor_proto {
+    int32 r = 1;
+    int32 g = 2;
+    int32 b = 3;
+    float opacity = 4;
+}
+
+message PdfShaddingFctColor_proto {
+    int64 id = 1;
+    ReportColor_proto color1 = 2;
+    ReportColor_proto color2 = 3;
+}
+
+message PdfColorShadding_proto {
+    int64 id = 1;
+    float x0 = 2;
+    float y0 = 3;
+    float x1 = 4;
+    float y1 = 5;
+    PdfShaddingFctColor_proto pdfShaddingFctColor = 6;
+}
+
+message PdfGPattern_proto {
+    int64 id = 1;
+    PdfColorShadding_proto pdfShadding = 2;
+}
+
+message GlyphWidth_proto {
+    int32 firstChar = 1;
+    int32 lastChar = 2;
+    repeated int32 widthListItem = 3;
+}
+
+message FontBBox_proto {
+    int32 lowerLeftX = 1;
+    int32 lowerLeftY = 2;
+    int32 upperRightX = 3;
+    int32 upperRightY = 4;
+}
+
+message EmbeddedFontDescriptor_proto {
+    int32 ascent = 1;
+    int32 capHeight = 2;
+    int32 descent = 3;
+    FontBBox_proto fontBBox = 4;
+    int32 italicAngle = 5;
+    int32 flags = 6;
+    GlyphWidth_proto glyphWidth = 7;
+}
+
+message OptionEmbeddedFontDescriptor_proto {
+    bool notNull = 1;
+    EmbeddedFontDescriptor_proto value = 2;
+}
+
+message FloatFloat_proto {
+    float value1 = 1;
+    float value2 = 2;
+}
+
+message FontMetric_proto {
+    string fontName = 1;
+    map<int32, float> fontMap = 2;
+    FloatFloat_proto fontHeight = 3;
+    OptionEmbeddedFontDescriptor_proto fontDescriptor = 4;
+}
+
+message PdfFontStream_proto {
+    int64 id = 1;
+    string fontName = 2;
+    FontMetric_proto fontMetric = 3;
+    bool pdfCompression = 4;
+}
+
+message PdfFontDescriptor_proto {
+    int64 id = 1;
+    PdfFontStream_proto pdfFontStream = 2;
+    string fontKeyName = 3;
+}
+
+message FontEmbeddedDef_proto {
+    PdfFontDescriptor_proto pdfFontDescriptor = 1;
+    PdfFontStream_proto pdfFontStream = 2;
+}
+
+message OptionFontEmbeddedDef_proto {
+    bool notNull = 1;
+    FontEmbeddedDef_proto value = 2;
+}
+
+message PdfFont_proto {
+    int64 id = 1;
+    string refName = 2;
+    string fontKeyName = 3;
+    OptionFontEmbeddedDef_proto embeddedDefOpt = 4;
+}
+
+message PdfPage_proto {
+    int64 id = 1;
+    int64 parentId = 2;
+    float pageWidth = 3;
+    float pageHeight = 4;
+    repeated PdfFont_proto fontListItem = 5;
+    repeated PdfGPattern_proto pdfPatternListItem = 6;
+    repeated PdfAnnotation_proto annotationItem = 7;
+    repeated PdfImage_proto imageListItem = 8;
+    OptionPdfPageContent_proto contentPage = 9;
+}
+
+message PdfAction_proto {
+    int64 id = 1;
+}
+
+
+message PatternDraw_proto {
+    float x1 = 1;
+    float y1 = 2;
+    float x2 = 3;
+    float y2 = 4;
+    PdfGPattern_proto pattern = 5;
+}
+
+message OptionPatternDraw_proto {
+    bool notNull = 1;
+    PatternDraw_proto value = 2;
+}
+
+message OptionString_proto {
+    bool notNull = 1;
+    string value = 2;
+}
+
+message RFontFamily_proto {
+    string name = 1;
+    string regular = 2;
+    OptionString_proto bold = 3;
+    OptionString_proto italic = 4;
+    OptionString_proto boldItalic = 5;
+}
+
+message OptionRFontFamily_proto {
+    bool notNull = 1;
+    RFontFamily_proto value = 2;
+}
+
+enum RFontAttribute_proto {
+    NORMAL = 0;
+    BOLD = 1;
+    ITALIC = 2;
+    BOLD_ITALIC = 3;
+}
+message RFont_proto {
+    int32 size = 1;
+    string fontName = 2;
+    RFontAttribute_proto attribute = 3;
+    ReportColor_proto color = 4;
+    OptionRFontFamily_proto externalFont = 5;
+}
+
+message ReportTxt_proto {
+    string txt = 1;
+    RFont_proto font = 2;
+}
+
+message PdfTxtChuck_proto {
+    float x = 1;
+    float y = 2;
+    ReportTxt_proto rtext = 3;
+    string fontRefName = 4;
+    OptionPatternDraw_proto pattern = 5;
+}
+
+message PdfText_proto {
+    repeated PdfTxtChuck_proto txtListItem = 1;
+}
 
 message PdfGraphicChuck_proto {
     string content = 1;
@@ -142,22 +296,27 @@ message PdfGraphicChuck_proto {
 }
 
 
+message PdfGraphic_proto {
+    repeated PdfGraphicChuck_proto itemsItem = 1;
+}
+
+
 message DrawPoint_proto {
-    float value1 = 1;
-    float value2 = 2;
+    float x = 1;
+    float y = 2;
 }
 
 message DrawArc_proto {
-    DrawPoint_proto value1 = 1;
-    float value2 = 2;
-    float value3 = 3;
-    float value4 = 4;
+    DrawPoint_proto center = 1;
+    float radius = 2;
+    float startAngle = 3;
+    float endAngle = 4;
 }
 
 
 message DrawCircle_proto {
-    DrawPoint_proto value1 = 1;
-    float value2 = 2;
+    DrawPoint_proto center = 1;
+    float radius = 2;
 }
 
 
@@ -174,93 +333,75 @@ message DrawFillStroke_proto {
 
 }
 
-
 message DrawMovePoint_proto {
-    float value1 = 1;
-    float value2 = 2;
+    float x = 1;
+    float y = 2;
 }
+
 
 message LineDashType_proto {
-    int32 value1 = 1;
-    int32 value2 = 2;
+    int32 unit = 1;
+    int32 phase = 2;
 }
-
 
 message OptionLineDashType_proto {
-    bool value1 = 1;
-    LineDashType_proto value2 = 2;
+    bool notNull = 1;
+    LineDashType_proto value = 2;
 }
+
 
 message DrawLine_proto {
-    float value1 = 1;
-    float value2 = 2;
-    float value3 = 3;
-    float value4 = 4;
-    float value5 = 5;
-    ReportColor_proto value6 = 6;
-    OptionLineDashType_proto value7 = 7;
+    float x1 = 1;
+    float y1 = 2;
+    float x2 = 3;
+    float y2 = 4;
+    float vlineWidth = 5;
+    ReportColor_proto color = 6;
+    OptionLineDashType_proto lineDashType = 7;
 }
-
 
 message DrawRectangle_proto {
-    float value1 = 1;
-    float value2 = 2;
-    float value3 = 3;
-    float value4 = 4;
+    float x = 1;
+    float y = 2;
+    float width = 3;
+    float height = 4;
 }
 
-message OptionFloat_proto {
-    bool value1 = 1;
-    float value2 = 2;
-}
-
-message PdfDrawImage_proto {
-    PdfImage_proto value1 = 1;
-    float value2 = 2;
-    float value3 = 3;
-    float value4 = 4;
-    OptionFloat_proto value5 = 5;
-}
 
 message DrawBorderColor_proto {
-    ReportColor_proto value1 = 1;
-}
-
-message PdfGraphic_proto {
-    repeated PdfGraphicChuck_proto value1 = 1;
-}
-
-message OptionReportColor_proto {
-    bool value1 = 1;
-    ReportColor_proto value2 = 2;
-}
-
-message OptionPdfGPattern_proto {
-    bool value1 = 1;
-    PdfGPattern_proto value2 = 2;
-}
-
-message PdfRectangle_proto {
-    int64 value1 = 1;
-    int64 value2 = 2;
-    int64 value3 = 3;
-    int64 value4 = 4;
-    float value5 = 5;
-    OptionReportColor_proto value6 = 6;
-    OptionReportColor_proto value7 = 7;
-    OptionPdfGPattern_proto value8 = 8;
+    ReportColor_proto borderColor = 1;
 }
 
 
 message DrawFillColor_proto {
-    ReportColor_proto value1 = 1;
+    ReportColor_proto borderColor = 1;
 }
 
-message PdfNativeGenerator_proto {
-    string value1 = 1;
-    float value2 = 2;
-    float value3 = 3;
-    bool value4 = 4;
+
+message DrawPattern_proto {
+    PdfGPattern_proto pdfPattern = 1;
+}
+
+
+message OptionPdfGPattern_proto {
+    bool notNull = 1;
+    PdfGPattern_proto value = 2;
+}
+
+message OptionReportColor_proto {
+    bool notNull = 1;
+    ReportColor_proto value = 2;
+}
+
+message PdfRectangle_proto {
+    int64 x1 = 1;
+    int64 y1 = 2;
+    int64 x2 = 3;
+    int64 y2 = 4;
+    float radius = 5;
+    OptionReportColor_proto borderColor = 6;
+    OptionReportColor_proto fillColor = 7;
+    OptionPdfGPattern_proto patternColor = 8;
 }
 
 message StringDouble_proto {
@@ -268,174 +409,36 @@ message StringDouble_proto {
     double value2 = 2;
 }
 
+
+message PdfNativeGenerator_proto {
+    string name = 1;
+    float PAGE_WIDTH = 2;
+    float PAGE_HEIGHT = 3;
+    bool pdfCompression = 4;
+}
+
 message DrawPieChart_proto {
-    PdfNativeGenerator_proto value1 = 1;
-    RFont_proto value2 = 2;
-    string value3 = 3;
-    repeated StringDouble_proto value4 = 4;
-    float value5 = 5;
-    float value6 = 6;
-    float value7 = 7;
-    float value8 = 8;
+    PdfNativeGenerator_proto pdfgenerator = 1;
+    RFont_proto font = 2;
+    string title = 3;
+    repeated StringDouble_proto dataItem = 4;
+    float x = 5;
+    float y = 6;
+    float width = 7;
+    float height = 8;
 }
 
 
-message OptionPdfPageContent_proto {
-    bool value1=1;
-    PdfPageContent_proto value2=2;
-}
-
-message DrawPattern_proto {
-    PdfGPattern_proto value1 = 1;
-}
-
-message PatternDraw_proto {
-    float value1 = 1;
-    float value2 = 2;
-    float value3 = 3;
-    float value4 = 4;
-    PdfGPattern_proto value5 = 5;
-}
-
-message OptionPatternDraw_proto {
-    bool value1 = 1;
-    PatternDraw_proto value2 = 2;
-}
-
-message OptionString_proto {
-    bool value1 = 1;
-    string value2 = 2;
-}
-
-message RFontFamily_proto {
-    string value1 = 1;
-    string value2 = 2;
-    OptionString_proto value3 = 3;
-    OptionString_proto value4 = 4;
-    OptionString_proto value5 = 5;
-}
-
-message OptionRFontFamily_proto {
-    bool value1 = 1;
-    RFontFamily_proto value2 = 2;
-}
-
-enum RFontAttribute_proto {
-    NORMAL = 0;
-    BOLD = 1;
-    ITALIC = 2;
-    BOLD_ITALIC = 3;
-}
-
-message RFont_proto {
-    int32 value1 = 1;
-    string value2 = 2;
-    RFontAttribute_proto value3 = 3;
-    ReportColor_proto value4 = 4;
-    OptionRFontFamily_proto value5 = 5;
-}
-
-message ReportTxt_proto {
-    string value1 = 1;
-    RFont_proto value2 = 2;
-}
-
-message PdfTxtChuck_proto {
-    float value1 = 1;
-    float value2 = 2;
-    ReportTxt_proto value3 = 3;
-    string value4 = 4;
-    OptionPatternDraw_proto value5 = 5;
-}
-
-message PdfText_proto {
-    repeated PdfTxtChuck_proto value1 = 1;
-}
-
-message PdfPageContent_proto {
-    int64 value1 = 1;
-    repeated PdfPageItem_proto value2 = 2;
-    bool value3 = 3;
-}
-
-message FontBBox_proto {
-    int32 value1 = 1;
-    int32 value2 = 2;
-    int32 value3 = 3;
-    int32 value4 = 4;
-}
-message GlyphWidth_proto {
-    int32 value1 = 1;
-    int32 value2 = 2;
-    repeated int32 value3 = 3;
-}
-
-message EmbeddedFontDescriptor_proto {
-    int32 value1 = 1;
-    int32 value2 = 2;
-    int32 value3 = 3;
-    FontBBox_proto value4 = 4;
-    int32 value5 = 5;
-    int32 value6 = 6;
-    GlyphWidth_proto value7 = 7;
-}
-
-message OptionEmbeddedFontDescriptor_proto {
-    bool value1 = 1;
-    EmbeddedFontDescriptor_proto value2 = 2;
-}
-
-message FloatFloat_proto {
-    float value1 = 1;
-    float value2 = 2;
-}
-
-message FontMetric_proto {
-    string value1 = 1;
-    map<int32, float> value2 = 2;
-    FloatFloat_proto value3 = 3;
-    OptionEmbeddedFontDescriptor_proto value4 = 4;
-}
-
-message PdfFontStream_proto {
-    int64 value1 = 1;
-    string value2 = 2;
-    FontMetric_proto value3 = 3;
-    bool value4 = 4;
-}
-
-message PdfFontDescriptor_proto {
-    int64 value1 = 1;
-    PdfFontStream_proto value2 = 2;
-    string value3 = 3;
-}
-
-message FontEmbeddedDef_proto {
-    PdfFontDescriptor_proto value1 = 1;
-    PdfFontStream_proto value2 = 2;
-}
-
-message OptionFontEmbeddedDef_proto {
-    bool value1 = 1;
-    FontEmbeddedDef_proto value2 = 2;
+message OptionFloat_proto {
+    bool notNull = 1;
+    float value = 2;
 }
 
 
-message PdfFont_proto {
-    int64 value1 = 1;
-    string value2 = 2;
-    string value3 = 3;
-    OptionFontEmbeddedDef_proto value4 = 4;
-}
-
-message PdfPage_proto {
-    int64 value1 = 1;
-    int64 value2 = 2;
-    float value3 = 3;
-    float value4 = 4;
-    repeated PdfFont_proto value5 = 5;
-    repeated PdfGPattern_proto value6 = 6;
-    repeated PdfAnnotation_proto value7 = 7;
-    repeated PdfImage_proto value8 = 8;
-    OptionPdfPageContent_proto value9 = 9;
+message PdfDrawImage_proto {
+    PdfImage_proto pdfImage = 1;
+    float x = 2;
+    float y = 3;
+    float scale = 4;
+    OptionFloat_proto opacity = 5;
 }

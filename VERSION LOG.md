@@ -1,4 +1,4 @@
-## SNAPSHOT
+## 1.0.0-RC.7 (2018-03-03)
 ### Changes:
 * change report.pgSize to report.pageLayout
 * change  Scala Enum CellAlign to Java enum 
