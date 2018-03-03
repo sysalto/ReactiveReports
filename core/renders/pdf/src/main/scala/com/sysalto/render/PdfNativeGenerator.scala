@@ -134,9 +134,9 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 		} else {
 			crtY -= lineHeight * (lines.size - 1)
 		}
-		val l1=lines.head.map(textPos=>wordWrap.getTextHeight(textPos.rtext))
-		val textHeight=if (l1.isEmpty) 0 else l1.max
-		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size,textHeight))
+		val l1 = lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
+		val textHeight = if (l1.isEmpty) 0 else l1.max
+		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size, textHeight))
 	}
 
 
@@ -145,8 +145,8 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	def getTextWidth(cell: ReportCell): List[Float] = {
 		val lines = wordWrap.wordWrap(cell.txt, cell.margin.right - cell.margin.left)
 		lines.map(line => {
-			val lastWord=line.last
-			line.map(word => word.textLength-(if (word==lastWord) wordWrap.getTextWidth(ReportTxt(" ",word.rtext.font)) else 0)).sum
+			val lastWord = line.last
+			line.map(word => word.textLength - (if (word == lastWord) wordWrap.getTextWidth(ReportTxt(" ", word.rtext.font)) else 0)).sum
 		})
 	}
 
@@ -368,8 +368,8 @@ abstract class PdfBaseItem(val id: Long)(implicit itemList: ListBuffer[PdfBaseIt
 }
 
 
-private[this] class PdfNames(id: Long, val dests: PdfDests)
-                            (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+private[render] class PdfNames(id: Long, val dests: PdfDests)
+                              (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		s"""${id} 0 obj
 			 |<</Dests ${dests.id} 0 R>>
@@ -378,7 +378,7 @@ private[this] class PdfNames(id: Long, val dests: PdfDests)
 	}
 }
 
-private[this] class PdfDests(id: Long, val dests: ListBuffer[(String, String)] = ListBuffer())
+private[render] class PdfDests(id: Long, val dests: ListBuffer[(String, String)] = ListBuffer())
                             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val head = dests.head
@@ -470,7 +470,7 @@ class PdfGPattern(id: Long, pdfShadding: PdfColorShadding)
 }
 
 class ImageMeta(fileName: String) {
-	val file=if (fileName.startsWith("http://") || fileName.startsWith("https://")) {
+	val file = if (fileName.startsWith("http://") || fileName.startsWith("https://")) {
 		val url = new URL(fileName)
 		val img1 = ImageIO.read(url)
 		val tempFile = File.createTempFile("rap", ".jpg")
