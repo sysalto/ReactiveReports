@@ -50,13 +50,102 @@ object RenderReportSerializer {
 		}
 
 		def read(obj: PdfNames_proto): PdfNames = {
-			//PdfNames(obj.getId,PdfDests_protoSerializer.read(obj.getDests))
-			null
+			new PdfNames(obj.getId,PdfDests_protoSerializer.read(obj.getDests))
+		}
+	}
+
+	object OptionLong_protoSerializer {
+		def write(obj: Option[Long]): OptionLong_proto = {
+			val builder = OptionLong_proto.newBuilder()
+			builder.setNotNull(obj.isDefined)
+			if (obj.isDefined) {
+				builder.setValue(obj.get)
+			}
+			builder.build()
+		}
+
+		def read(obj: OptionLong_proto): Option[Long] = {
+			if (!obj.getNotNull) {
+				None
+			} else {
+				Some(obj.getValue)
+			}
 		}
 	}
 
 
 
+	object PdfPageList_protoSerializer {
+		def write(obj: PdfPageList): PdfPageList_proto = {
+			val builder = PdfPageList_proto.newBuilder()
+			builder.setId(obj.id)
+			builder.setParentId(OptionLong_protoSerializer.write(obj.parentId))
+			obj.pageList.foreach(item => {
+				builder.addPageListItem(item)
+			})
+			builder.build()
+		}
+
+		def read(obj: PdfPageList_proto): PdfPageList = {
+			new PdfPageList(obj.getId,OptionLong_protoSerializer.read(obj.getParentId),obj.getPageListItemList.asScala.
+				map(item => item.asInstanceOf[Long]).to[ListBuffer]
+			)
+		}
+	}
+
+	object OptionPdfNames_protoSerializer {
+		def write(obj: Option[PdfNames]): OptionPdfNames_proto = {
+			val builder = OptionPdfNames_proto.newBuilder()
+			builder.setNotNull(obj.isDefined)
+			if (obj.isDefined) {
+				builder.setValue(PdfNames_protoSerializer.write(obj.get))
+			}
+			builder.build()
+		}
+
+		def read(obj: OptionPdfNames_proto): Option[PdfNames] = {
+			if (!obj.getNotNull) {
+				None
+			} else {
+				Some(PdfNames_protoSerializer.read(obj.getValue))
+			}
+		}
+	}
+
+
+	object OptionPdfPageList_protoSerializer {
+		def write(obj: Option[PdfPageList]): OptionPdfPageList_proto = {
+			val builder = OptionPdfPageList_proto.newBuilder()
+			builder.setNotNull(obj.isDefined)
+			if (obj.isDefined) {
+				builder.setValue(PdfPageList_protoSerializer.write(obj.get))
+			}
+			builder.build()
+		}
+
+		def read(obj: OptionPdfPageList_proto): Option[PdfPageList] = {
+			if (!obj.getNotNull) {
+				None
+			} else {
+				Some(PdfPageList_protoSerializer.read(obj.getValue))
+			}
+		}
+	}
+
+
+	object PdfCatalog_protoSerializer {
+		def write(obj: PdfCatalog): PdfCatalog_proto = {
+			val builder = PdfCatalog_proto.newBuilder()
+			builder.setId(obj.id)
+			builder.setPdfPageList(OptionPdfPageList_protoSerializer.write(obj.pdfPageList))
+			builder.setPdfNames(OptionPdfNames_protoSerializer.write(obj.pdfNames))
+			builder.build()
+		}
+
+		def read(obj: PdfCatalog_proto): PdfCatalog = {
+			new PdfCatalog(obj.getId, OptionPdfPageList_protoSerializer.read(obj.getPdfPageList), OptionPdfNames_protoSerializer.read(obj.getPdfNames))
+		}
+	}
 
 
 }
