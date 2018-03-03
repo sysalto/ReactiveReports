@@ -7,6 +7,8 @@ import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.util.zip.Deflater
 
 import com.sysalto.render.PdfWriter
+import com.sysalto.render.serialization.RenderProto.OptionFontEmbeddedDef_proto
+import com.sysalto.render.serialization.RenderReportSerializer.FontEmbeddedDef_protoSerializer
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.SyncFileUtil
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
@@ -54,7 +56,7 @@ private[render] object RenderReportTypes {
 	}
 
 
-	class PdfFontStream(id: Long, val fontName: String, val fontMetric: FontMetric, pdfCompression: Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+	class PdfFontStream(id: Long, val fontName: String, val fontMetric: FontMetric, val pdfCompression: Boolean) extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val byteArray = Files.readAllBytes(Paths.get(fontName))
 			val byteArray2 = {
@@ -77,7 +79,7 @@ private[render] object RenderReportTypes {
 	}
 
 
-	class PdfFontDescriptor(id: Long, pdfFontStream: PdfFontStream, fontKeyName: String)
+	class PdfFontDescriptor(id: Long, val pdfFontStream: PdfFontStream, val fontKeyName: String)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
@@ -99,9 +101,29 @@ private[render] object RenderReportTypes {
 
 	case class FontEmbeddedDef(pdfFontDescriptor: PdfFontDescriptor, pdfFontStream: PdfFontStream)
 
-	class PdfFont(id: Long, val refName: String, fontKeyName: String,
-	              embeddedDefOpt: Option[FontEmbeddedDef] = None)
-	             (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+
+	object OptionFontEmbeddedDef_protoSerializer {
+		def write(obj: Option[FontEmbeddedDef]): OptionFontEmbeddedDef_proto = {
+			val builder = OptionFontEmbeddedDef_proto.newBuilder()
+			builder.setNotNull(obj.isDefined)
+			if (obj.isDefined) {
+				builder.setValue(FontEmbeddedDef_protoSerializer.write(obj.get))
+			}
+			builder.build()
+		}
+
+		def read(obj: OptionFontEmbeddedDef_proto): Option[FontEmbeddedDef] = {
+			if (!obj.getNotNull) {
+				None
+			} else {
+				Some(FontEmbeddedDef_protoSerializer.read(obj.getValue))
+			}
+		}
+	}
+
+
+	class PdfFont(id: Long, val refName: String, val fontKeyName: String,
+	              val embeddedDefOpt: Option[FontEmbeddedDef] = None) extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			if (embeddedDefOpt.isEmpty) {
 				s"""${id} 0 obj
@@ -139,7 +161,7 @@ private[render] object RenderReportTypes {
 	}
 
 
-	private[this] class PdfShaddingFctColor(id: Long, color1: ReportColor, color2: ReportColor)
+	private[render] class PdfShaddingFctColor(id: Long, val color1: ReportColor, val color2: ReportColor)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val colorNbr1 = RenderReportTypes.convertColor(color1)
@@ -152,7 +174,7 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	private[this] class PdfColorShadding(id: Long, x0: Float, y0: Float, x1: Float, y1: Float, pdfShaddingFctColor: PdfShaddingFctColor)
+	private[render] class PdfColorShadding(id: Long, val x0: Float, val y0: Float, val x1: Float, val y1: Float, val pdfShaddingFctColor: PdfShaddingFctColor)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
@@ -162,7 +184,7 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	class PdfGPattern(id: Long, pdfShadding: PdfColorShadding) extends PdfBaseItem(id) {
+	class PdfGPattern(id: Long, val pdfShadding: PdfColorShadding) extends PdfBaseItem(id) {
 		val name = "P" + id
 
 		override def content: Array[Byte] = {
@@ -198,7 +220,7 @@ private[render] object RenderReportTypes {
 		val pixelSize: Int = bimg.getColorModel.getComponentSize(0)
 	}
 
-	class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+	class PdfImage(id: Long, val fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 		val name = "img" + id
 		val imageMeta = new ImageMeta(fileName)
 
@@ -221,11 +243,11 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	private abstract class PdfPageItem {
+	private[render] abstract class PdfPageItem {
 		def content: String
 	}
 
-	class PdfPageContent(id: Long, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
+	class PdfPageContent(id: Long, val pageItemList: List[PdfPageItem], val pdfCompression: Boolean)
 	                    (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
