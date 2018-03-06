@@ -86,11 +86,6 @@ object Test1 {
 
 		report.nextLine()
 
-//		report.drawImage("/mnt/data/Archive/poze/20170825/IMG_20170906_133733718_HDR.jpg", 5, 300, 100, 100)
-//		report.drawImage("/mnt/data/Archive/poze/20170825/IMG_20170906_133733718_HDR.jpg", 120, 300, 100, 100)
-		report.drawImage("https://upload.wikimedia.org/wikipedia/commons/d/dd/Matterhorn.jpg", 100, 500, 300, 300)
-		report.drawImage("https://upload.wikimedia.org/wikipedia/commons/d/dd/Matterhorn.jpg", 450, 500, 300, 300)
-
 		//		    report print txt2 at 100
 		//    report.nextLine()
 		//    report print txt5 at 100

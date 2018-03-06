@@ -29,7 +29,6 @@ import com.sysalto.render.basic.PdfBasic._
 
 object PdfChart {
 
-	//http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
 	private[this] val rnd = new scala.util.Random
 
 	private[this] def randomColor(): ReportColor = {

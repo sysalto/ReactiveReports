@@ -35,9 +35,6 @@ import scala.concurrent.Future
 import scala.language.postfixOps
 import scala.util.control.NonFatal
 
-// http://stackoverflow.com/questions/9636545/treating-an-sql-resultset-like-a-scala-stream
-
-
 trait ResultSetStreamUtil {
 
 
