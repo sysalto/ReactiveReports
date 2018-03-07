@@ -34,7 +34,6 @@ object PdfBasic {
 		val p1 = DrawPoint((p0.x - lg * Math.sin(startAngle)).toFloat, (p0.y + lg * Math.cos(startAngle)).toFloat)
 		val p3 = DrawPoint((center.x + radius * Math.cos(endAngle)).toFloat, (center.y + radius * Math.sin(endAngle)).toFloat)
 		val p2 = DrawPoint((p3.x + lg * Math.sin(endAngle)).toFloat, (p3.y - lg * Math.cos(endAngle)).toFloat)
-		//https://stackoverflow.com/questions/1734745/how-to-create-circle-with-b%C3%A9zier-curves
 		s"""${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y} c \n"""
 	}
 
