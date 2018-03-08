@@ -7,7 +7,6 @@ import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.util.zip.Deflater
 
 import com.sysalto.render.serialization.RenderProto.OptionFontEmbeddedDef_proto
-import com.sysalto.render.serialization.RenderReportSerializer.FontEmbeddedDef_protoSerializer
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.SyncFileUtil
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
@@ -45,10 +44,10 @@ private[render] object RenderReportTypes {
 	}
 
 
-	private[render] class PdfNames(id: Long, val dests: PdfDests) extends PdfBaseItem(id) {
+	private[render] class PdfNames(id: Long, val idDest: Long) extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
-				 |<</Dests ${dests.id} 0 R>>
+				 |<</Dests ${idDest} 0 R>>
 				 |endobj
 				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
 		}
@@ -78,9 +77,10 @@ private[render] object RenderReportTypes {
 	}
 
 
-	class PdfFontDescriptor(id: Long, val pdfFontStream: PdfFontStream, val fontKeyName: String)
+	class PdfFontDescriptor(id: Long, val idPdfFontStream: Long, val fontKeyName: String)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
+			val pdfFontStream: PdfFontStream = RenderReportTypes.getObject[PdfFontStream](idPdfFontStream)
 			s"""${id} 0 obj
 				 |    <</Type/FontDescriptor
 				 |    /FontName/${fontKeyName}
@@ -98,27 +98,7 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	case class FontEmbeddedDef(pdfFontDescriptor: PdfFontDescriptor, pdfFontStream: PdfFontStream)
-
-
-	object OptionFontEmbeddedDef_protoSerializer {
-		def write(obj: Option[FontEmbeddedDef]): OptionFontEmbeddedDef_proto = {
-			val builder = OptionFontEmbeddedDef_proto.newBuilder()
-			builder.setNotNull(obj.isDefined)
-			if (obj.isDefined) {
-				builder.setValue(FontEmbeddedDef_protoSerializer.write(obj.get))
-			}
-			builder.build()
-		}
-
-		def read(obj: OptionFontEmbeddedDef_proto): Option[FontEmbeddedDef] = {
-			if (!obj.getNotNull) {
-				None
-			} else {
-				Some(FontEmbeddedDef_protoSerializer.read(obj.getValue))
-			}
-		}
-	}
+	case class FontEmbeddedDef(idPdfFontDescriptor: Long, idPdfFontStream: Long)
 
 
 	class PdfFont(id: Long, val refName: String, val fontKeyName: String,
@@ -135,7 +115,9 @@ private[render] object RenderReportTypes {
 					 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
 			} else {
 				val fontEmbedeedDef = embeddedDefOpt.get
-				val withObj = fontEmbedeedDef.pdfFontStream.fontMetric.fontDescriptor.get.glyphWidth
+				val pdfFontStream = RenderReportTypes.getObject[PdfFontStream](fontEmbedeedDef.idPdfFontStream)
+				val pdfFontDescriptor = RenderReportTypes.getObject[PdfFontDescriptor](fontEmbedeedDef.idPdfFontDescriptor)
+				val withObj = pdfFontStream.fontMetric.fontDescriptor.get.glyphWidth
 				val firstChar = withObj.firstChar
 				val lastChar = withObj.lastChar
 				s"""${id} 0 obj
@@ -148,7 +130,7 @@ private[render] object RenderReportTypes {
 					 |    [
 					 |		 ${withObj.widthList.mkString(" ")}
 					 |    ]
-					 |   /FontDescriptor ${embeddedDefOpt.get.pdfFontDescriptor.id} 0 R
+					 |   /FontDescriptor ${pdfFontDescriptor.id} 0 R
 					 |   /Encoding/WinAnsiEncoding
 					 				 |   >>
 					 				 |endobj
@@ -173,9 +155,10 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	private[render] class PdfColorShadding(id: Long, val x0: Float, val y0: Float, val x1: Float, val y1: Float, val pdfShaddingFctColor: PdfShaddingFctColor)
+	private[render] class PdfColorShadding(id: Long, val x0: Float, val y0: Float, val x1: Float, val y1: Float, val idPdfShaddingFctColor: Long)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
+			val pdfShaddingFctColor = RenderReportTypes.this.getObject[PdfShaddingFctColor](idPdfShaddingFctColor)
 			s"""${id} 0 obj
 				 			 |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R>>
 				 			 |endobj
@@ -469,5 +452,8 @@ private[render] object RenderReportTypes {
 		(r, g, b)
 	}
 
+
+	//get object from RockDb
+	def getObject[T](id: Long): T = ???
 
 }
