@@ -6,6 +6,7 @@ import java.net.URL
 import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.util.zip.Deflater
 
+import com.sysalto.render.{PdfFont, PdfGPattern}
 import com.sysalto.render.serialization.RenderProto.OptionFontEmbeddedDef_proto
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.SyncFileUtil
@@ -158,7 +159,7 @@ private[render] object RenderReportTypes {
 	private[render] class PdfColorShadding(id: Long, val x0: Float, val y0: Float, val x1: Float, val y1: Float, val idPdfShaddingFctColor: Long)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
-			val pdfShaddingFctColor = RenderReportTypes.this.getObject[PdfShaddingFctColor](idPdfShaddingFctColor)
+			val pdfShaddingFctColor = RenderReportTypes.getObject[PdfShaddingFctColor](idPdfShaddingFctColor)
 			s"""${id} 0 obj
 				 			 |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R>>
 				 			 |endobj
@@ -166,12 +167,12 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	class PdfGPattern(id: Long, val pdfShadding: PdfColorShadding) extends PdfBaseItem(id) {
+	class PdfGPattern(id: Long, val idPdfShadding: Long) extends PdfBaseItem(id) {
 		val name = "P" + id
 
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
-				 			 |  <</PatternType 2/Shading ${pdfShadding.id} 0 R/Matrix[1 0 0 1 0 0]>>
+				 			 |  <</PatternType 2/Shading ${idPdfShadding} 0 R/Matrix[1 0 0 1 0 0]>>
 				 			 |endobj
 				 			 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
 		}
@@ -202,7 +203,7 @@ private[render] object RenderReportTypes {
 		val pixelSize: Int = bimg.getColorModel.getComponentSize(0)
 	}
 
-	class PdfImage(id: Long, val fileName: String)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+	class PdfImage(id: Long, val fileName: String) extends PdfBaseItem(id) {
 		val name = "img" + id
 		val imageMeta = new ImageMeta(fileName)
 
@@ -229,29 +230,44 @@ private[render] object RenderReportTypes {
 		def content: String
 	}
 
-	class PdfPageContent(id: Long, val pageItemList: List[PdfPageItem], val pdfCompression: Boolean)
-	                    (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
+	class PdfPageContent(id: Long, val idPageItemList: List[Long], val pdfCompression: Boolean)
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
-			val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
+			val itemsStr = idPageItemList.foldLeft("")((s1, idPg) => s1 + "\n" + RenderReportTypes.getObject[PdfShaddingFctColor](idPg).content)
 			RenderReportTypes.writeData(id, itemsStr.getBytes(RenderReportTypes.ENCODING), pdfCompression)
 		}
 	}
 
 
 	class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHeight: Float,
-	              var fontList: List[PdfFont] = List(), var pdfPatternList: List[PdfGPattern] = List(),
-	              var annotation: List[PdfAnnotation] = List(),
-	              var imageList: ListBuffer[PdfImage] = ListBuffer(), var contentPage: Option[PdfPageContent] = None)
+	              var idFontList: List[Long] = List(), var idPdfPatternList: List[Long] = List(),
+	              var idAnnotationList: List[Long] = List(),
+	              var idImageList: ListBuffer[Long] = ListBuffer(), var idContentPageOpt: Option[Long] = None)
 		extends PdfBaseItem(id) with PageNode {
 
 		override def addChild(child: PageNode): Unit = {}
 
 		override def content: Array[Byte] = {
-			val contentStr = if (contentPage.isDefined) s"/Contents ${contentPage.get.id} 0 R" else ""
-			val fontStr = "/Font<<" + fontList.map(font => s"/${font.refName} ${font.id} 0 R").mkString("") + ">>"
-			val patternStr = if (pdfPatternList.isEmpty) "" else "/Pattern <<" + pdfPatternList.map(item => s"/${item.name} ${item.id} 0 R").mkString(" ") + ">>"
-			val imageStr = if (imageList.isEmpty) "" else "/XObject <<" + imageList.map(item => s"/${item.name} ${item.id} 0 R").mkString(" ") + ">>"
-			val annotsStr = if (annotation.isEmpty) "" else "/Annots [" + annotation.map(item => s"${item.id} 0 R").mkString(" ") + "]"
+			val contentStr =  if (idContentPageOpt.isDefined) s"/Contents ${idContentPageOpt} 0 R" else ""
+			val fontStr = "/Font<<" + idFontList.map(idFont => {
+				val font=RenderReportTypes.getObject[PdfFont](idFont)
+				s"/${font.refName} ${font.id} 0 R"
+			}).mkString("") + ">>"
+			val patternStr = if (idPdfPatternList.isEmpty) "" else "/Pattern <<" +
+				idPdfPatternList.map(idItem => {
+					val item=RenderReportTypes.getObject[PdfGPattern](idItem)
+					s"/${item.name} ${item.id} 0 R"
+				}).mkString(" ") + ">>"
+			val imageStr = if (idImageList.isEmpty) "" else "/XObject <<" +
+				idImageList.map(idItem => {
+					val item=RenderReportTypes.getObject[PdfImage](idItem)
+					s"/${item.name} ${item.id} 0 R"
+				}).mkString(" ") + ">>"
+			val annotsStr = if (idAnnotationList.isEmpty) "" else "/Annots [" +
+				idAnnotationList.map(idItem => {
+					val item=RenderReportTypes.getObject[PdfAnnotation](idItem)
+					s"${item.id} 0 R"
+				}).mkString(" ") + "]"
 			val result =
 				s"""${id} 0 obj
 					 |<<  /Type /Page
