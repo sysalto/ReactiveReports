@@ -6,8 +6,6 @@ import java.net.URL
 import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.util.zip.Deflater
 
-import com.sysalto.render.{PdfFont, PdfGPattern}
-import com.sysalto.render.serialization.RenderProto.OptionFontEmbeddedDef_proto
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.SyncFileUtil
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
@@ -320,24 +318,21 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	private[render] class PdfCatalog(id: Long, var pdfPageList: Option[PdfPageList] = None, var pdfNames: Option[PdfNames] = None)
+	private[render] class PdfCatalog(id: Long, var idpdfPageListOpt: Option[Long] = None, var idPdfNamesOpt: Option[Long] = None)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
-			val namesStr = if (pdfNames.isEmpty) "" else s"/Names ${pdfNames.get.id} 0 R"
+			val namesStr = if (idPdfNamesOpt.isEmpty) "" else s"/Names ${idPdfNamesOpt.get} 0 R"
 			s"""${id} 0 obj
 				 |<<  /Type /Catalog
-				 |    /Pages ${pdfPageList.get.id} 0 R
+				 |    /Pages ${idpdfPageListOpt.get} 0 R
 				 |    ${namesStr}
-
-
-				 |
-
+				 |>>
 				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
 		}
 	}
 
 	private[render] case class PdfTxtChuck(x: Float, y: Float, rtext: ReportTxt, fontRefName: String,
-	                                       pattern: Option[PatternDraw] = None)
+	                                       patternOpt: Option[PatternDraw] = None)
 
 	private[render] class PdfText(val txtList: List[PdfTxtChuck])
 		extends PdfPageItem {
@@ -352,8 +347,8 @@ private[render] object RenderReportTypes {
 			if (txtList.isEmpty) {
 				return ""
 			}
-			val txtListSimple = txtList.filter(txt => txt.pattern.isEmpty)
-			val txtListPattern = txtList.filter(txt => txt.pattern.isDefined)
+			val txtListSimple = txtList.filter(txt => txt.patternOpt.isEmpty)
+			val txtListPattern = txtList.filter(txt => txt.patternOpt.isDefined)
 			val item = txtListSimple.head
 			val color = RenderReportTypes.convertColor(item.rtext.font.color)
 			val firstItemTxt =
@@ -379,8 +374,9 @@ private[render] object RenderReportTypes {
 			// pattern text
 			val s3 = if (txtListPattern.isEmpty) ""
 			else txtListPattern.map(txt => {
+				val pattern=RenderReportTypes.getObject[PdfGPattern](item.patternOpt.get.idPattern)
 				s""" q
-					 				 |/Pattern cs /${item.pattern.get.pattern.name} scn
+					 				 |/Pattern cs /${pattern.name} scn
 					 				 |/${item.fontRefName} ${item.rtext.font.size} Tf
 					 				 |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
 					 				 |  ${color._1} ${color._2} ${color._3} rg
@@ -397,7 +393,7 @@ private[render] object RenderReportTypes {
 
 	}
 
-	private[render] case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfGPattern)
+	private[render] case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, idPattern: Long)
 
 	abstract class PdfAction(id: Long) extends PdfBaseItem(id)
 
