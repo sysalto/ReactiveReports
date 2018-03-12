@@ -64,7 +64,9 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 
 	private[this] case class CMap(f: SyncFileUtil, tables: Tables) {
 		def getGlyphList(hMetrics: List[Short]): Map[Char, Short] = {
-			val f10 = cmapSubTables((1, 0))
+//			val f10 = cmapSubTables((1, 0))
+			val f10 = cmapSubTables.get(cmapSubTables.keys.head).get
+
 			val glyphWidth = f10.map {
 				case (char, id) =>
 					char -> hMetrics(id)
@@ -79,25 +81,25 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 			val ll =
 				for (i <- 1 to nameRecordsCount) yield {
 					val platformId = f.readShort()
-					val platformEncodeId = f.readShort()
+					val platformSpecificID = f.readShort()
 					val offset = f.readInt()
-					(platformId, platformEncodeId) -> offset
+					(platformId, platformSpecificID) -> offset
 				}
 			val ll1 =
-				ll.toMap.filter { case ((platformId, platformEncodeId), _) => {
-					(platformId == 1 && platformEncodeId == 0) || (platformId == 3 && (platformEncodeId == 0 || platformEncodeId == 1 || platformEncodeId == 10))
+				ll.toMap.filter { case ((platformId, platformSpecificID), _) => {
+					(platformId == 1 && platformSpecificID == 0) || (platformId == 3 && (platformSpecificID == 0 || platformSpecificID == 1 || platformSpecificID == 10))
 				}
 				}
 			ll1.map {
-				case ((platformId, platformEncodeId), offset) =>
-					(platformId, platformEncodeId) match {
+				case ((platformId, platformSpecificID), offset) =>
+					(platformId, platformSpecificID) match {
 						case (1, 0) => {
 							f.seek(tblOffset + offset)
 							val format = f.readShort()
-							(platformId, platformEncodeId) -> readCMapFormat(format)
+							(platformId, platformSpecificID) -> readCMapFormat(format)
 						}
 						case _ => {
-							(platformId, platformEncodeId) -> Map[Char, Short]()
+							(platformId, platformSpecificID) -> Map[Char, Short]()
 						}
 					}
 			}
@@ -189,8 +191,8 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 		def getWidths: GlyphWidth = {
 			val l1 = cmap.getGlyphList(hmtx.hMetrics)
 			val keyset = l1.keySet
-			val min = keyset.min.toShort
-			val max = keyset.max.toShort
+			val min =if (keyset.isEmpty) 0.toShort else keyset.min.toShort
+			val max =if (keyset.isEmpty) 0.toShort else keyset.max.toShort
 			val l3 = l1.map {
 				case (key, value) => (key.toInt, value)
 			}.toList.sortBy {

@@ -661,15 +661,6 @@ class PdfFont(id: Long, val refName: String, fontKeyName: String,
 class PdfFontStream(id: Long, val fontName: String, val fontMetric: FontMetric, pdfCompression: Boolean)(implicit itemList: ListBuffer[PdfBaseItem]) extends PdfBaseItem(id) {
 	override def content: Array[Byte] = {
 		val byteArray = Files.readAllBytes(Paths.get(fontName))
-		val byteArray2 = {
-			val f = new SyncFileUtil("~/workspace/GenSNew/good2.pdf", 271, StandardOpenOption.READ)
-			val bytes = f.read(8712, None)
-			bytes.rewind()
-			val nr = bytes.remaining().toInt
-			val b1 = new Array[Byte](nr)
-			bytes.get(b1)
-			b1
-		}
 		val lg = byteArray.length
 		s"""${id} 0 obj
 			 			 | <</Length ${lg}/Length1 ${lg}>>stream
@@ -747,11 +738,12 @@ private class PdfText(txtList: List[PdfTxtChuck])
 				val color = PdfNativeGenerator.convertColor(item.rtext.font.color)
 				val xRel = txtListSimple(i + 1).x.toLong - txtListSimple(i).x.toLong
 				val yRel = txtListSimple(i + 1).y.toLong - txtListSimple(i).y.toLong
-				s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
+				val v1=s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
 					 					 |  ${xRel} ${yRel} Td
 					 					 |  ${color._1} ${color._2} ${color._3} rg
 					 					 |  (${escapeText(item.rtext.txt)}) Tj
        """.stripMargin
+				v1
 			}
 		}.mkString("")
 

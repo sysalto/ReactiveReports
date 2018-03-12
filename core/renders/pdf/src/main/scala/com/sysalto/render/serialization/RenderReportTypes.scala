@@ -6,6 +6,7 @@ import java.net.URL
 import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.util.zip.Deflater
 
+import com.sysalto.render.PdfDraw.PdfGraphicChuck
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.SyncFileUtil
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
@@ -246,24 +247,24 @@ private[render] object RenderReportTypes {
 		override def addChild(child: PageNode): Unit = {}
 
 		override def content: Array[Byte] = {
-			val contentStr =  if (idContentPageOpt.isDefined) s"/Contents ${idContentPageOpt} 0 R" else ""
+			val contentStr = if (idContentPageOpt.isDefined) s"/Contents ${idContentPageOpt} 0 R" else ""
 			val fontStr = "/Font<<" + idFontList.map(idFont => {
-				val font=RenderReportTypes.getObject[PdfFont](idFont)
+				val font = RenderReportTypes.getObject[PdfFont](idFont)
 				s"/${font.refName} ${font.id} 0 R"
 			}).mkString("") + ">>"
 			val patternStr = if (idPdfPatternList.isEmpty) "" else "/Pattern <<" +
 				idPdfPatternList.map(idItem => {
-					val item=RenderReportTypes.getObject[PdfGPattern](idItem)
+					val item = RenderReportTypes.getObject[PdfGPattern](idItem)
 					s"/${item.name} ${item.id} 0 R"
 				}).mkString(" ") + ">>"
 			val imageStr = if (idImageList.isEmpty) "" else "/XObject <<" +
 				idImageList.map(idItem => {
-					val item=RenderReportTypes.getObject[PdfImage](idItem)
+					val item = RenderReportTypes.getObject[PdfImage](idItem)
 					s"/${item.name} ${item.id} 0 R"
 				}).mkString(" ") + ">>"
 			val annotsStr = if (idAnnotationList.isEmpty) "" else "/Annots [" +
 				idAnnotationList.map(idItem => {
-					val item=RenderReportTypes.getObject[PdfAnnotation](idItem)
+					val item = RenderReportTypes.getObject[PdfAnnotation](idItem)
 					s"${item.id} 0 R"
 				}).mkString(" ") + "]"
 			val result =
@@ -318,7 +319,7 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	private[render] class PdfCatalog(id: Long, var idpdfPageListOpt: Option[Long] = None, var idPdfNamesOpt: Option[Long] = None)
+	private[serialization] class PdfCatalog(id: Long, var idpdfPageListOpt: Option[Long] = None, var idPdfNamesOpt: Option[Long] = None)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val namesStr = if (idPdfNamesOpt.isEmpty) "" else s"/Names ${idPdfNamesOpt.get} 0 R"
@@ -334,7 +335,7 @@ private[render] object RenderReportTypes {
 	private[render] case class PdfTxtChuck(x: Float, y: Float, rtext: ReportTxt, fontRefName: String,
 	                                       patternOpt: Option[PatternDraw] = None)
 
-	private[render] class PdfText(val txtList: List[PdfTxtChuck])
+	private[serialization] class PdfText(val txtList: List[PdfTxtChuck])
 		extends PdfPageItem {
 
 		private[this] def escapeText(input: String): String = {
@@ -374,7 +375,7 @@ private[render] object RenderReportTypes {
 			// pattern text
 			val s3 = if (txtListPattern.isEmpty) ""
 			else txtListPattern.map(txt => {
-				val pattern=RenderReportTypes.getObject[PdfGPattern](item.patternOpt.get.idPattern)
+				val pattern = RenderReportTypes.getObject[PdfGPattern](item.patternOpt.get.idPattern)
 				s""" q
 					 				 |/Pattern cs /${pattern.name} scn
 					 				 |/${item.fontRefName} ${item.rtext.font.size} Tf
@@ -398,7 +399,24 @@ private[render] object RenderReportTypes {
 	abstract class PdfAction(id: Long) extends PdfBaseItem(id)
 
 
-	private[render] class PdfWriter(name: String) {
+	private[serialization] class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
+		override def content: String = {
+			val str = items.map(item => {
+				item.content
+			}).foldLeft("")((s1, s2) => s1 + "\n" + s2)
+
+			s"""q
+				 			 |0 0 0 RG
+				 			 |1 w
+				 			 |${str}
+				 			 |Q
+ """.stripMargin
+		}
+
+	}
+
+
+	private[serialization] class PdfWriter(name: String) {
 		new File(name).delete()
 		private[this] val writer = new FileOutputStream(name)
 		private[render] var position: Long = 0
@@ -463,6 +481,8 @@ private[render] object RenderReportTypes {
 		val b = color.b / 255f
 		(r, g, b)
 	}
+
+
 
 
 	//get object from RockDb

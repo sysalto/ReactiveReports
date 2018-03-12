@@ -36,18 +36,29 @@ object Test1 {
 	}
 
 	def runReport(implicit report: Report): Unit = {
-		val fontFamily = RFontFamily(name = "Roboto",
-			regular = "~/transfer/font/Roboto-Regular.ttf",
-			bold = Some("~/transfer/font/Roboto-Bold.ttf"),
-			italic = Some("~/transfer/font/Roboto-Italic.ttf"),
-			boldItalic = Some("~/transfer/font/Roboto-BoldItalic.ttf"))
-		report.setExternalFont(fontFamily)
+//		val fontFamily1 = RFontFamily(name = "Roboto",
+//			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
+//			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
+//			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
+//			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
+
+		val fontFamily2 = RFontFamily(name = "UNICODE",
+			regular = "/home/marian/Downloads/ARIALUNI.TTF")
+
+//		report.setExternalFont(fontFamily1)
+		report.setExternalFont(fontFamily2)
 		report.nextLine(3)
 		val size = 10
-		val font = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily))
+//		val font1 = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily1))
+		val font2 = RFont(size, fontName = "UNICODE", externalFont = Some(fontFamily2))
 		//		report.font = font
 		val str = "Cell String"
-		val txt1 = ReportTxt(str, font)
+		val txt1 = ReportTxt(str)
+//		report print ReportTxt("\u5bfc\u5165",font) at 100
+		report print ReportTxt(str) at 100
+		report.nextLine()
+		report print ReportTxt("<0577>",font2) at 100
+//		report print "\u0915 \u0915 \u093e" at 100
 		//  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("~/transfer/font/Roboto-Regular.ttf")))
 		//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("~/transfer/font/calibri/Calibri.ttf")))
 		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("~/transfer/font/lily/LilyoftheValley.ttf")))
@@ -102,6 +113,7 @@ object Test1 {
 
 
 	def main(args: Array[String]): Unit = {
+		println("\u5bfc\u5165")
 		run()
 	}
 
