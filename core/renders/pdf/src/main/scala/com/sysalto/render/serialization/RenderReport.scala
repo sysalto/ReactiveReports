@@ -1,7 +1,10 @@
 package com.sysalto.render.serialization
 
+import java.security.MessageDigest
+
 import com.sysalto.render.PdfDraw.PdfGraphicFragment
 import com.sysalto.render.serialization.RenderReportTypes._
+import com.sysalto.render.util.PageTree
 import com.sysalto.render.util.fonts.parsers.RFontParserFamily
 import com.sysalto.render.util.wrapper.WordWrap
 import com.sysalto.report.util.RockDbUtil
@@ -10,7 +13,7 @@ import scala.collection.mutable.ListBuffer
 
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
 	implicit val wordSeparators = List(',', '.')
-	private[this] val db = RockDbUtil()
+	private[serialization] val db = RockDbUtil()
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
 	private[this] val pdfWriter = new PdfWriter(name)
@@ -20,6 +23,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	private[this] var fontMap = scala.collection.mutable.HashMap.empty[String, PdfFont]
 	private[this] val txtList = ListBuffer[PdfTxtFragment]()
 	private[this] val graphicList = ListBuffer[PdfGraphicFragment]()
+	private[this] val pageList = ListBuffer[PdfPage]()
 
 	private[serialization] def nextId(): Long = {
 		id += 1
@@ -47,13 +51,75 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		RenderReportTypes.setObject(pdfPageContext)
 		currentPage.idContentPageOpt = Some(pdfPageContext.id)
 		currentPage.idFontList = fontMap.values.toList.sortBy(font => font.refName).map(font=>font.id)
+		pageList += currentPage
 		txtList.clear()
 		graphicList.clear()
 	}
+
+	def metaData(): (Long, Long) = {
+		val id = nextId()
+		val s =
+			s"""${id} 0 obj
+				 				 |  <<  /Producer (Reactive Reports - Copyright 2018 SysAlto Corporation)
+				 				 |  >>
+				 				 |endobj
+				 				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+		val offset = pdfWriter.position
+		pdfWriter << s
+		(id, offset)
+	}
+
+	def md5(s: String) = {
+		val result = MessageDigest.getInstance("MD5").digest(s.getBytes(RenderReportTypes.ENCODING))
+		javax.xml.bind.DatatypeConverter.printHexBinary(result)
+	}
+
+
+	def done(): Unit = {
+		saveCurrentPage()
+
+		val pageTreeList = PageTree.pageTree(pageList.toList) {
+			() => {
+				val pg=new PdfPageList(nextId())
+				RenderReportTypes.setObject(pg)
+				pg
+			}
+		}.asInstanceOf[PdfPageList]
+		RenderReportTypes.setObject(pageTreeList)
+		catalog.idPdfPageListOpt = Some(pageTreeList.id)
+//		allItems.foreach(item => item.write(pdfWriter))
+//		val metaDataObj = metaData()
+//		val metaDataId = metaDataObj._1
+//		val xrefOffset = pdfWriter.position
+//		pdfWriter <<< "xref"
+//		pdfWriter <<< s"0 ${allItems.length + 2}"
+//		pdfWriter <<< "0000000000 65535 f "
+//		allItems.foreach(item => {
+//			val offset = item.offset.toString
+//			val offsetFrmt = "0" * (10 - offset.length) + offset
+//			pdfWriter <<< s"${offsetFrmt} 00000 n "
+//		})
+//		val metaOffset = metaDataObj._2.toString
+//		val offsetFrmt = "0" * (10 - metaOffset.length) + metaOffset
+//		pdfWriter <<< s"${offsetFrmt} 00000 n "
+//		pdfWriter <<< "trailer"
+//		pdfWriter <<< s"<</Size ${allItems.length + 2}"
+//		pdfWriter <<< "   /Root 1 0 R"
+//		pdfWriter <<< s"   /Info ${metaDataId} 0 R"
+//		val fileId = md5(name + System.currentTimeMillis())
+//		pdfWriter <<< s"   /ID [<${fileId}><${fileId}>]"
+//		pdfWriter <<< ">>"
+//		pdfWriter <<< "startxref"
+//		pdfWriter <<< xrefOffset.toString
+//		pdfWriter <<< "%%EOF"
+	}
+
 
 
 	def close(): Unit = {
 		pdfWriter.close()
 		db.close()
 	}
+
+
 }

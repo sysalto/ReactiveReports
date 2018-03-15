@@ -57,15 +57,6 @@ private[render] object RenderReportTypes {
 	class PdfFontStream(id: Long, val fontName: String, val fontMetric: FontMetric, val pdfCompression: Boolean) extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val byteArray = Files.readAllBytes(Paths.get(fontName))
-			val byteArray2 = {
-				val f = new SyncFileUtil("~/workspace/GenSNew/good2.pdf", 271, StandardOpenOption.READ)
-				val bytes = f.read(8712, None)
-				bytes.rewind()
-				val nr = bytes.remaining().toInt
-				val b1 = new Array[Byte](nr)
-				bytes.get(b1)
-				b1
-			}
 			val lg = byteArray.length
 			s"""${id} 0 obj
 				 			 | <</Length ${lg}/Length1 ${lg}>>stream
@@ -319,13 +310,13 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	private[serialization] class PdfCatalog(id: Long, var idpdfPageListOpt: Option[Long] = None, var idPdfNamesOpt: Option[Long] = None)
+	private[serialization] class PdfCatalog(id: Long, var idPdfPageListOpt: Option[Long] = None, var idPdfNamesOpt: Option[Long] = None)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val namesStr = if (idPdfNamesOpt.isEmpty) "" else s"/Names ${idPdfNamesOpt.get} 0 R"
 			s"""${id} 0 obj
 				 |<<  /Type /Catalog
-				 |    /Pages ${idpdfPageListOpt.get} 0 R
+				 |    /Pages ${idPdfPageListOpt.get} 0 R
 				 |    ${namesStr}
 				 |>>
 				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
