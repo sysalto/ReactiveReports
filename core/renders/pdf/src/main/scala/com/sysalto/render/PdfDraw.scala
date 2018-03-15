@@ -28,7 +28,7 @@ import PdfChart._
 
 object PdfDraw {
 
-	abstract class PdfGraphicChuck {
+	abstract class PdfGraphicFragment {
 		def content: String
 	}
 
@@ -49,7 +49,7 @@ object PdfDraw {
 	}
 
 
-	case class DrawArc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float) extends PdfGraphicChuck {
+	case class DrawArc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float) extends PdfGraphicFragment {
 		override def content: String = {
 			val p0 = DrawPoint((center.x + radius * Math.cos(startAngle)).toFloat, (center.y + radius * Math.sin(startAngle)).toFloat)
 			val moveStr = movePoint(p0)
@@ -61,36 +61,36 @@ object PdfDraw {
 		}
 	}
 
-	case class DrawCircle(center: DrawPoint, radius: Float) extends PdfGraphicChuck {
+	case class DrawCircle(center: DrawPoint, radius: Float) extends PdfGraphicFragment {
 		override def content: String = circle(center, radius)
 	}
 
 
-	case class DrawStroke() extends PdfGraphicChuck {
+	case class DrawStroke() extends PdfGraphicFragment {
 		override def content: String = {
 			"S"
 		}
 	}
 
-	case class DrawFill() extends PdfGraphicChuck {
+	case class DrawFill() extends PdfGraphicFragment {
 		override def content: String = {
 			"f"
 		}
 	}
 
-	case class DrawFillStroke() extends PdfGraphicChuck {
+	case class DrawFillStroke() extends PdfGraphicFragment {
 		override def content: String = {
 			"B"
 		}
 	}
 
-	case class DrawMovePoint(x: Float, y: Float) extends PdfGraphicChuck {
+	case class DrawMovePoint(x: Float, y: Float) extends PdfGraphicFragment {
 		override def content: String = {
 			s"""${x} ${y} m"""
 		}
 	}
 
-	case class DrawLine(x1: Float, y1: Float, x2: Float, y2: Float, vlineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]) extends PdfGraphicChuck {
+	case class DrawLine(x1: Float, y1: Float, x2: Float, y2: Float, vlineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]) extends PdfGraphicFragment {
 		override def content: String = {
 			saveStatus+movePoint(x1, y1) + lineWidth(vlineWidth) +
 				(if (lineDashType.isDefined) lineDash(lineDashType.get) else "") +
@@ -98,27 +98,27 @@ object PdfDraw {
 		}
 	}
 
-	case class DrawRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicChuck {
+	case class DrawRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
 		override def content: String = {
 			s"""${x} ${y} ${width} ${height} re"""
 		}
 	}
 
-	case class DrawBorderColor(borderColor: ReportColor) extends PdfGraphicChuck {
+	case class DrawBorderColor(borderColor: ReportColor) extends PdfGraphicFragment {
 		override def content: String = {
 			val color = convertColor(borderColor)
 			s"${color._1} ${color._2} ${color._3} RG"
 		}
 	}
 
-	case class DrawFillColor(borderColor: ReportColor) extends PdfGraphicChuck {
+	case class DrawFillColor(borderColor: ReportColor) extends PdfGraphicFragment {
 		override def content: String = {
 			val color = convertColor(borderColor)
 			s"${color._1} ${color._2} ${color._3} rg"
 		}
 	}
 
-	case class DrawPattern(pdfPattern: PdfGPattern) extends PdfGraphicChuck {
+	case class DrawPattern(pdfPattern: PdfGPattern) extends PdfGraphicFragment {
 		override def content: String = {
 			s"/Pattern cs /${pdfPattern.name} scn"
 		}
@@ -126,7 +126,7 @@ object PdfDraw {
 
 
 	case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[ReportColor],
-	                        fillColor: Option[ReportColor], patternColor: Option[PdfGPattern] = None) extends PdfGraphicChuck {
+	                        fillColor: Option[ReportColor], patternColor: Option[PdfGPattern] = None) extends PdfGraphicFragment {
 		override def content: String = {
 			val paternStr = if (patternColor.isDefined) pattern(patternColor.get.name) else ""
 			val borderStr = if (borderColor.isDefined) border(borderColor.get) else ""
@@ -145,7 +145,7 @@ object PdfDraw {
 
 	}
 
-	case class DrawPieChart(pdfgenerator: PdfNativeGenerator, font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicChuck {
+	case class DrawPieChart(pdfgenerator: PdfNativeGenerator, font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
 		private[this] val s = pieChart(pdfgenerator, font, title, data.toList, x, y, width, height)
 
 		override def content: String = s

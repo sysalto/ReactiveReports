@@ -6,7 +6,7 @@ import java.net.URL
 import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.util.zip.Deflater
 
-import com.sysalto.render.PdfDraw.PdfGraphicChuck
+import com.sysalto.render.PdfDraw.PdfGraphicFragment
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.SyncFileUtil
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
@@ -229,10 +229,10 @@ private[render] object RenderReportTypes {
 		def content: String
 	}
 
-	class PdfPageContent(id: Long, val idPageItemList: List[Long], val pdfCompression: Boolean)
-		extends PdfBaseItem(id) {
+	class PdfPageContent(id: Long, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
+	                    extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
-			val itemsStr = idPageItemList.foldLeft("")((s1, idPg) => s1 + "\n" + RenderReportTypes.getObject[PdfShaddingFctColor](idPg).content)
+			val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
 			RenderReportTypes.writeData(id, itemsStr.getBytes(RenderReportTypes.ENCODING), pdfCompression)
 		}
 	}
@@ -332,10 +332,10 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	private[render] case class PdfTxtChuck(x: Float, y: Float, rtext: ReportTxt, fontRefName: String,
-	                                       patternOpt: Option[PatternDraw] = None)
+	private[render] case class PdfTxtFragment(x: Float, y: Float, rtext: ReportTxt, fontRefName: String,
+	                                          patternOpt: Option[PatternDraw] = None)
 
-	private[serialization] class PdfText(val txtList: List[PdfTxtChuck])
+	private[serialization] class PdfText(val txtList: List[PdfTxtFragment])
 		extends PdfPageItem {
 
 		private[this] def escapeText(input: String): String = {
@@ -399,7 +399,7 @@ private[render] object RenderReportTypes {
 	abstract class PdfAction(id: Long) extends PdfBaseItem(id)
 
 
-	private[serialization] class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
+	private[serialization] class PdfGraphic(items: List[PdfGraphicFragment]) extends PdfPageItem {
 		override def content: String = {
 			val str = items.map(item => {
 				item.content
@@ -488,4 +488,5 @@ private[render] object RenderReportTypes {
 	//get object from RockDb
 	def getObject[T](id: Long): T = ???
 
+	def setObject[T>:PdfBaseItem](obj:T): Unit = ???
 }

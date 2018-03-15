@@ -51,7 +51,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	private[this] implicit val pdfWriter = new PdfWriter(name)
 	private[this] implicit val allItems = ListBuffer[PdfBaseItem]()
 	private[this] val txtList = ListBuffer[PdfTxtChuck]()
-	private[this] val graphicList = ListBuffer[PdfGraphicChuck]()
+	private[this] val graphicList = ListBuffer[PdfGraphicFragment]()
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
 	private[this] var id: Long = 0
@@ -517,7 +517,7 @@ class PdfImage(id: Long, fileName: String)(implicit itemList: ListBuffer[PdfBase
 
 
 private case class PdfDrawImage(pdfImage: PdfImage, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
-                               (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfGraphicChuck {
+                               (implicit itemList: ListBuffer[PdfBaseItem]) extends PdfGraphicFragment {
 	private[this] val image = pdfImage.imageMeta
 	private[this] val width = image.width * scale
 	private[this] val height = image.height * scale
@@ -768,7 +768,7 @@ private class PdfText(txtList: List[PdfTxtChuck])
 
 }
 
-private class PdfGraphic(items: List[PdfGraphicChuck]) extends PdfPageItem {
+private class PdfGraphic(items: List[PdfGraphicFragment]) extends PdfPageItem {
 	override def content: String = {
 		val str = items.map(item => {
 			item.content

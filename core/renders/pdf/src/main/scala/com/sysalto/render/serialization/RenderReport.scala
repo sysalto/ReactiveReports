@@ -1,9 +1,12 @@
 package com.sysalto.render.serialization
 
+import com.sysalto.render.PdfDraw.PdfGraphicFragment
 import com.sysalto.render.serialization.RenderReportTypes._
 import com.sysalto.render.util.fonts.parsers.RFontParserFamily
 import com.sysalto.render.util.wrapper.WordWrap
 import com.sysalto.report.util.RockDbUtil
+
+import scala.collection.mutable.ListBuffer
 
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
 	implicit val wordSeparators = List(',', '.')
@@ -15,6 +18,8 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	private[this] var catalog: PdfCatalog = null
 	private[this] var currentPage: PdfPage = null
 	private[this] var fontMap = scala.collection.mutable.HashMap.empty[String, PdfFont]
+	private[this] val txtList = ListBuffer[PdfTxtFragment]()
+	private[this] val graphicList = ListBuffer[PdfGraphicFragment]()
 
 	private[serialization] def nextId(): Long = {
 		id += 1
@@ -34,13 +39,16 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 	private[this] def saveCurrentPage(): Unit = {
-//		val text = new PdfText(txtList.toList)
-//		val graphic = new PdfGraphic(graphicList.toList)
-//		currentPage.contentPage = Some(new PdfPageContent(nextId(), List(graphic, text), pdfCompression))
-//		currentPage.fontList = fontMap.values.toList.sortBy(font => font.refName)
-//		pageList += currentPage
-//		txtList.clear()
-//		graphicList.clear()
+		val text = new PdfText(txtList.toList)
+		RenderReportTypes.setObject(text)
+		val graphic = new PdfGraphic(graphicList.toList)
+		RenderReportTypes.setObject(graphic)
+		val pdfPageContext=new PdfPageContent(nextId(), List(graphic, text), pdfCompression)
+		RenderReportTypes.setObject(pdfPageContext)
+		currentPage.idContentPageOpt = Some(pdfPageContext.id)
+		currentPage.idFontList = fontMap.values.toList.sortBy(font => font.refName).map(font=>font.id)
+		txtList.clear()
+		graphicList.clear()
 	}
 
 
