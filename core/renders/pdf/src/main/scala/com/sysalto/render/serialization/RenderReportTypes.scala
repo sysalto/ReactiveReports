@@ -44,6 +44,24 @@ private[render] object RenderReportTypes {
 	}
 
 
+	private[render] class PdfDrawImage(idPdfImage: Long, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
+	                               extends PdfGraphicFragment {
+		private[this] val pdfImage=RenderReportTypes.getObject[PdfImage](idPdfImage)
+		private[this] val image =pdfImage.imageMeta
+		private[this] val width = image.width * scale
+		private[this] val height = image.height * scale
+		private[this] val opacityStr = ""
+
+		def content: String =
+			s"""q
+				 			 |$opacityStr
+				 			 |$width 0 0 $height ${x} ${y} cm
+				 			 |/${pdfImage.name} Do
+				 			 | Q
+    """.stripMargin
+
+	}
+
 	private[render] class PdfNames(id: Long, val idDest: Long) extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj

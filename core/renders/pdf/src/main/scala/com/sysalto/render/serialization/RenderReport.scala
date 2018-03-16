@@ -154,11 +154,11 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		graphicList += DrawLine(x1, y1, x2, y2, lineWidth, color, lineDashType)
 	}
 
-//	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
-//	              radius: Float, color: Option[ReportColor] = None,
-//	              fillColor: Option[ReportColor] = None, paternColor: Option[PdfGPattern] = None): Unit = {
-//		graphicList += PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, paternColor)
-//	}
+	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
+	              radius: Float, color: Option[ReportColor] = None,
+	              fillColor: Option[ReportColor] = None, paternColor: Option[PdfGPattern] = None): Unit = {
+		graphicList += PdfRectangle1(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, paternColor)
+	}
 
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {
 		graphicList += DrawArc(center, radius, startAngle, endAngle)
@@ -233,31 +233,31 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 //		txtList += PdfTxtChuck(x, y, txt, font.refName)
 //	}
 
-//	def getTextWidth(txt: ReportTxt): Float = wordWrap.getTextWidth(txt)
-//
-//	def getTextWidth(cell: ReportCell): List[Float] = {
-//		val lines = wordWrap.wordWrap(cell.txt, cell.margin.right - cell.margin.left)
-//		lines.map(line => {
-//			val lastWord = line.last
-//			line.map(word => word.textLength - (if (word == lastWord) wordWrap.getTextWidth(ReportTxt(" ", word.rtext.font)) else 0)).sum
-//		})
-//	}
+	def getTextWidth(txt: ReportTxt): Float = wordWrap.getTextWidth(txt)
 
-//	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
-//
-//		val colorFct = new PdfShaddingFctColor(nextId(), from, to)
-//		val pdfShadding = new PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct)
-//		val pattern = new PdfGPattern(nextId(), pdfShadding)
-//		currentPage.pdfPatternList ++= List(pattern)
-//		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
-//		this.stroke()
-//	}
+	def getTextWidth(cell: ReportCell): List[Float] = {
+		val lines = wordWrap.wordWrap(cell.txt, cell.margin.right - cell.margin.left)
+		lines.map(line => {
+			val lastWord = line.last
+			line.map(word => word.textLength - (if (word == lastWord) wordWrap.getTextWidth(ReportTxt(" ", word.rtext.font)) else 0)).sum
+		})
+	}
+
+	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
+
+		val colorFct = new PdfShaddingFctColor(nextId(), from, to)
+		val pdfShadding = new PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct.id)
+		val pattern = new PdfGPattern(nextId(), pdfShadding.id)
+		currentPage.idPdfPatternList ++= List(pattern.id)
+		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
+		this.stroke()
+	}
 
 
 //	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
 //		val pdfImage = new PdfImage(nextId(), file)
 //		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
-//		graphicList += PdfDrawImage(pdfImage, x, y, scale)
+//		graphicList += new PdfDrawImage(pdfImage, x, y, scale)
 //		currentPage.imageList += pdfImage
 //	}
 //

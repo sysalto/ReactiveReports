@@ -145,6 +145,27 @@ object PdfDraw {
 
 	}
 
+
+	case class PdfRectangle1(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[ReportColor],
+	                        fillColor: Option[ReportColor], patternColor: Option[com.sysalto.render.serialization.RenderReportTypes.PdfGPattern] = None) extends PdfGraphicFragment {
+		override def content: String = {
+			val paternStr = if (patternColor.isDefined) pattern(patternColor.get.name) else ""
+			val borderStr = if (borderColor.isDefined) border(borderColor.get) else ""
+			val fillStr = if (fillColor.isDefined) fill(fillColor.get) else ""
+			val operator = fillStroke(fillColor.isDefined || patternColor.isDefined, borderColor.isDefined)
+			val rectangleStr = if (radius == 0) rectangle(x1, y1, x2 - x1, y2 - y1) else roundRectangle(x1, y1, x2, y2, radius)
+			s"""${saveStatus}
+				 |${paternStr}
+				 |${borderStr}
+				 |${fillStr}
+				 |${rectangleStr}
+				 | ${operator}
+				 |${restoreStatus}
+       """.stripMargin.trim
+		}
+
+	}
+
 	case class DrawPieChart(pdfgenerator: PdfNativeGenerator, font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
 		private[this] val s = pieChart(pdfgenerator, font, title, data.toList, x, y, width, height)
 
