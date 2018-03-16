@@ -480,4 +480,6 @@ private[render] object RenderReportTypes {
 	def getObject[T](id: Long): T = ???
 
 	def setObject[T>:PdfBaseItem](obj:T): Unit = ???
+
+	def getAllItems():List[Long]=List[Long]()
 }
