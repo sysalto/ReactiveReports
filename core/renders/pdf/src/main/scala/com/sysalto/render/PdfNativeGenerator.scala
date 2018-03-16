@@ -50,7 +50,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 
 	private[this] implicit val pdfWriter = new PdfWriter(name)
 	private[this] implicit val allItems = ListBuffer[PdfBaseItem]()
-	private[this] val txtList = ListBuffer[PdfTxtChuck]()
+	private[this] val txtList = ListBuffer[PdfTxtFragment]()
 	private[this] val graphicList = ListBuffer[PdfGraphicFragment]()
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
@@ -199,7 +199,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 			}
 		}
 		else fontMap(txt.font.fontKeyName)
-		txtList += PdfTxtChuck(x, y, txt, font.refName)
+		txtList += PdfTxtFragment(x, y, txt, font.refName)
 	}
 
 
@@ -706,10 +706,10 @@ private abstract class PdfPageItem {
 
 private case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, pattern: PdfGPattern)
 
-private case class PdfTxtChuck(x: Float, y: Float, rtext: ReportTxt, fontRefName: String, pattern: Option[PatternDraw] = None)
+private case class PdfTxtFragment(x: Float, y: Float, rtext: ReportTxt, fontRefName: String, pattern: Option[PatternDraw] = None)
 
 
-private class PdfText(txtList: List[PdfTxtChuck])
+private class PdfText(txtList: List[PdfTxtFragment])
 	extends PdfPageItem {
 
 	private[this] def escapeText(input: String): String = {
