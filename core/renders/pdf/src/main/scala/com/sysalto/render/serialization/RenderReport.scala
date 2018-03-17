@@ -15,7 +15,7 @@ import com.sysalto.report.util.RockDbUtil
 import scala.collection.mutable.ListBuffer
 
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
-	implicit val wordSeparators:List[Char] = List(',', '.')
+	implicit val wordSeparators: List[Char] = List(',', '.')
 	private[serialization] val db = RockDbUtil()
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
@@ -44,11 +44,8 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 
 	private[this] def saveCurrentPage(): Unit = {
 		val text = new PdfText(txtList.toList)
-		RenderReportTypes.setObject(text)
 		val graphic = new PdfGraphic(graphicList.toList)
-		RenderReportTypes.setObject(graphic)
 		val pdfPageContext = new PdfPageContent(nextId(), List(graphic, text), pdfCompression)
-		RenderReportTypes.setObject(pdfPageContext)
 		currentPage.idContentPageOpt = Some(pdfPageContext.id)
 		currentPage.idFontList = fontMap.values.toList.sortBy(font => font.refName).map(font => font.id)
 		pageList += currentPage
@@ -80,12 +77,9 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 
 		val pageTreeList = PageTree.pageTree(pageList.toList) {
 			() => {
-				val pg = new PdfPageList(nextId())
-				RenderReportTypes.setObject(pg)
-				pg
+				new PdfPageList(nextId())
 			}
 		}.asInstanceOf[PdfPageList]
-		RenderReportTypes.setObject(pageTreeList)
 		catalog.idPdfPageListOpt = Some(pageTreeList.id)
 		val allItems = RenderReportTypes.getAllItems()
 		allItems.foreach(itemId => {
@@ -172,35 +166,35 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		graphicList += DrawStroke()
 	}
 
-//	def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
-//	         wrapAlign: WrapAlign.Value, simulate: Boolean, lineHeight: Float): Option[ReportTypes.WrapBox] = {
-//
-//		val lines = wordWrap.wordWrap(txtList, x1 - x0)
-//		var crtY = y0
-//		if (!simulate) {
-//			lines.foreach(line => {
-//				val l1: List[Float] = line.map(item => item.textLength)
-//				val length = l1.sum
-//				val newX = wrapAlign match {
-//					case WrapAlign.WRAP_CENTER => x0 + (x1 - x0 - length) * 0.5f
-//					case WrapAlign.WRAP_RIGHT => x1 - length
-//					case _ => x0
-//				}
-//				line.zipWithIndex.foreach {
-//					case (textPos, index) => {
-//						val offset = line.take(index).map(item => item.textLength).sum
-//						text(newX + offset, crtY, textPos.rtext)
-//					}
-//				}
-//				crtY -= lineHeight
-//			})
-//		} else {
-//			crtY -= lineHeight * (lines.size - 1)
-//		}
-//		val l1 = lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
-//		val textHeight = if (l1.isEmpty) 0 else l1.max
-//		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size, textHeight))
-//	}
+	//	def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
+	//	         wrapAlign: WrapAlign.Value, simulate: Boolean, lineHeight: Float): Option[ReportTypes.WrapBox] = {
+	//
+	//		val lines = wordWrap.wordWrap(txtList, x1 - x0)
+	//		var crtY = y0
+	//		if (!simulate) {
+	//			lines.foreach(line => {
+	//				val l1: List[Float] = line.map(item => item.textLength)
+	//				val length = l1.sum
+	//				val newX = wrapAlign match {
+	//					case WrapAlign.WRAP_CENTER => x0 + (x1 - x0 - length) * 0.5f
+	//					case WrapAlign.WRAP_RIGHT => x1 - length
+	//					case _ => x0
+	//				}
+	//				line.zipWithIndex.foreach {
+	//					case (textPos, index) => {
+	//						val offset = line.take(index).map(item => item.textLength).sum
+	//						text(newX + offset, crtY, textPos.rtext)
+	//					}
+	//				}
+	//				crtY -= lineHeight
+	//			})
+	//		} else {
+	//			crtY -= lineHeight * (lines.size - 1)
+	//		}
+	//		val l1 = lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
+	//		val textHeight = if (l1.isEmpty) 0 else l1.max
+	//		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size, textHeight))
+	//	}
 
 
 	private[this] def getFontParser(font: RFont): FontParser = {
@@ -213,25 +207,25 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		}
 	}
 
-//	def text(x: Float, y: Float, txt: ReportTxt): Unit = {
-//		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
-//			if (txt.font.externalFont.isDefined) {
-//				val fontParser = getFontParser(txt.font)
-//				val fontStream = new PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
-//				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
-//				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
-//					Some(FontEmbeddedDef(fontDescr, fontStream)))
-//				fontMap += (txt.font.fontKeyName -> font1)
-//				font1
-//			} else {
-//				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
-//				fontMap += (txt.font.fontKeyName -> font1)
-//				font1
-//			}
-//		}
-//		else fontMap(txt.font.fontKeyName)
-//		txtList += PdfTxtChuck(x, y, txt, font.refName)
-//	}
+	//	def text(x: Float, y: Float, txt: ReportTxt): Unit = {
+	//		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
+	//			if (txt.font.externalFont.isDefined) {
+	//				val fontParser = getFontParser(txt.font)
+	//				val fontStream = new PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
+	//				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
+	//				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
+	//					Some(FontEmbeddedDef(fontDescr, fontStream)))
+	//				fontMap += (txt.font.fontKeyName -> font1)
+	//				font1
+	//			} else {
+	//				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
+	//				fontMap += (txt.font.fontKeyName -> font1)
+	//				font1
+	//			}
+	//		}
+	//		else fontMap(txt.font.fontKeyName)
+	//		txtList += PdfTxtChuck(x, y, txt, font.refName)
+	//	}
 
 	def getTextWidth(txt: ReportTxt): Float = wordWrap.getTextWidth(txt)
 
@@ -254,61 +248,50 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 
-//	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
-//		val pdfImage = new PdfImage(nextId(), file)
-//		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
-//		graphicList += new PdfDrawImage(pdfImage, x, y, scale)
-//		currentPage.imageList += pdfImage
-//	}
-//
-//	def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
-//		graphicList += DrawPieChart(this, font, title, data, x, y, width, height)
-//	}
-//
-//	private[this] def getFontParser(font: RFont): FontParser = {
-//		val fontFamily = fontFamilyMap(font.fontName)
-//		font.attribute match {
-//			case RFontAttribute.NORMAL => fontFamily.regular
-//			case RFontAttribute.BOLD => fontFamily.bold.get
-//			case RFontAttribute.ITALIC => fontFamily.italic.get
-//			case RFontAttribute.BOLD_ITALIC => fontFamily.boldItalic.get
+	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
+		val pdfImage = new PdfImage(nextId(), file)
+		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
+		graphicList += new PdfDrawImage(pdfImage.id, x, y, scale)
+		currentPage.idImageList += pdfImage.id
+	}
+
+//		def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
+//			graphicList += new DrawPieChart(font, title, data, x, y, width, height)
 //		}
-//	}
-//
-//	def text(x: Float, y: Float, txt: ReportTxt): Unit = {
-//		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
-//			if (txt.font.externalFont.isDefined) {
-//				val fontParser = getFontParser(txt.font)
-//				val fontStream = new PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
-//				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
-//				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
-//					Some(FontEmbeddedDef(fontDescr, fontStream)))
-//				fontMap += (txt.font.fontKeyName -> font1)
-//				font1
-//			} else {
-//				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
-//				fontMap += (txt.font.fontKeyName -> font1)
-//				font1
-//			}
-//		}
-//		else fontMap(txt.font.fontKeyName)
-//		txtList += PdfTxtChuck(x, y, txt, font.refName)
-//	}
-//
-//
-//	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
-//		val goto = new PdfGoToPage(nextId(), pageNbr, left, top)
-//		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
-//		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
-//	}
-//
-//	def linkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
-//		val goto = new PdfGoToUrl(nextId(), url)
-//		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
-//		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
-//	}
 
 
+		def text(x: Float, y: Float, txt: ReportTxt): Unit = {
+			val font = if (!fontMap.contains(txt.font.fontKeyName)) {
+				if (txt.font.externalFont.isDefined) {
+					val fontParser = getFontParser(txt.font)
+					val fontStream = new PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
+					val fontDescr = new PdfFontDescriptor(nextId(), fontStream.id, txt.font.fontKeyName)
+					val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
+						Some(FontEmbeddedDef(fontDescr.id, fontStream.id)))
+					fontMap += (txt.font.fontKeyName -> font1)
+					font1
+				} else {
+					val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
+					fontMap += (txt.font.fontKeyName -> font1)
+					font1
+				}
+			}
+			else fontMap(txt.font.fontKeyName)
+			txtList += new PdfTxtFragment(x, y, txt, font.refName)
+		}
+	//
+	//
+	//	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
+	//		val goto = new PdfGoToPage(nextId(), pageNbr, left, top)
+	//		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
+	//		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
+	//	}
+	//
+	//	def linkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
+	//		val goto = new PdfGoToUrl(nextId(), url)
+	//		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
+	//		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
+	//	}
 
 
 	initEmbeddedFonts()

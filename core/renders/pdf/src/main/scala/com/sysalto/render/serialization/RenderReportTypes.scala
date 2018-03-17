@@ -31,6 +31,8 @@ private[render] object RenderReportTypes {
 		override def toString: String = {
 			s"[${this.getClass.getTypeName}]\n" + content
 		}
+
+		RenderReportTypes.setObject(this)
 	}
 
 	private[render] class PdfDests(id: Long, val dests: ListBuffer[(String, String)] = ListBuffer()) extends PdfBaseItem(id) {
@@ -45,9 +47,9 @@ private[render] object RenderReportTypes {
 
 
 	private[render] class PdfDrawImage(idPdfImage: Long, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
-	                               extends PdfGraphicFragment {
-		private[this] val pdfImage=RenderReportTypes.getObject[PdfImage](idPdfImage)
-		private[this] val image =pdfImage.imageMeta
+		extends PdfGraphicFragment {
+		private[this] val pdfImage = RenderReportTypes.getObject[PdfImage](idPdfImage)
+		private[this] val image = pdfImage.imageMeta
 		private[this] val width = image.width * scale
 		private[this] val height = image.height * scale
 		private[this] val opacityStr = ""
@@ -239,7 +241,7 @@ private[render] object RenderReportTypes {
 	}
 
 	class PdfPageContent(id: Long, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
-	                    extends PdfBaseItem(id) {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
 			RenderReportTypes.writeData(id, itemsStr.getBytes(RenderReportTypes.ENCODING), pdfCompression)
@@ -341,8 +343,8 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	private[render] case class PdfTxtFragment(x: Float, y: Float, rtext: ReportTxt, fontRefName: String,
-	                                          patternOpt: Option[PatternDraw] = None)
+	private[render] class PdfTxtFragment(val x: Float, val y: Float, val rtext: ReportTxt, val fontRefName: String,
+	                                     val patternOpt: Option[PatternDraw] = None)
 
 	private[serialization] class PdfText(val txtList: List[PdfTxtFragment])
 		extends PdfPageItem {
@@ -403,7 +405,8 @@ private[render] object RenderReportTypes {
 
 	}
 
-	private[render] case class PatternDraw(x1: Float, y1: Float, x2: Float, y2: Float, idPattern: Long)
+	private[render] class PatternDraw(val x1: Float, val y1: Float, val x2: Float, val y2: Float, val idPattern: Long)
+
 
 	abstract class PdfAction(id: Long) extends PdfBaseItem(id)
 
@@ -492,12 +495,10 @@ private[render] object RenderReportTypes {
 	}
 
 
-
-
 	//get object from RockDb
 	def getObject[T](id: Long): T = ???
 
-	def setObject[T>:PdfBaseItem](obj:T): Unit = ???
+	def setObject[T >: PdfBaseItem](obj: T): Unit = ???
 
-	def getAllItems():List[Long]=List[Long]()
+	def getAllItems(): List[Long] = List[Long]()
 }
