@@ -251,7 +251,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 					val fontStream = new PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
 					val fontDescr = new PdfFontDescriptor(nextId(), fontStream.id, txt.font.fontKeyName)
 					val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
-						Some(FontEmbeddedDef(fontDescr.id, fontStream.id)))
+						Some(new FontEmbeddedDef(fontDescr.id, fontStream.id)))
 					fontMap += (txt.font.fontKeyName -> font1)
 					font1
 				} else {

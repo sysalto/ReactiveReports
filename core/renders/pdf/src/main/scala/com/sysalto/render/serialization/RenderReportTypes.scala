@@ -3,13 +3,12 @@ package com.sysalto.render.serialization
 import java.awt.image.BufferedImage
 import java.io.{ByteArrayOutputStream, File, FileOutputStream}
 import java.net.URL
-import java.nio.file.{Files, Paths, StandardOpenOption}
+import java.nio.file.{Files, Paths}
 import java.util.zip.Deflater
 
 import com.sysalto.render.PdfChart
 import com.sysalto.render.PdfDraw.PdfGraphicFragment
 import com.sysalto.render.util.PageTree.PageNode
-import com.sysalto.render.util.SyncFileUtil
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
 import com.sysalto.report.ReportTypes.BoundaryRect
 import com.sysalto.report.reportTypes.{RFont, ReportColor, ReportTxt}
@@ -115,7 +114,7 @@ private[render] object RenderReportTypes {
 		}
 	}
 
-	case class FontEmbeddedDef(idPdfFontDescriptor: Long, idPdfFontStream: Long)
+	class FontEmbeddedDef(val idPdfFontDescriptor: Long, val idPdfFontStream: Long)
 
 
 	class PdfFont(id: Long, val refName: String, val fontKeyName: String, val embeddedDefOpt: Option[FontEmbeddedDef] = None)
