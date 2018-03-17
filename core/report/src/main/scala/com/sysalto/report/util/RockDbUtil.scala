@@ -22,7 +22,7 @@
 
 package com.sysalto.report.util
 
-import java.io.File
+import java.io._
 
 import com.sysalto.report.ReportTypes.ReportPage
 import com.sysalto.report.serialization.ReportPageSerializer
@@ -41,6 +41,28 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 			Some(ReportPageSerializer.read(bytes))
 		}
 	}
+
+	def writeObject(key: Long, obj: Serializable): Unit = {
+		val fs = new ByteArrayOutputStream()
+		val out = new ObjectOutputStream(fs)
+		out.writeObject(obj)
+		out.flush
+		out.close
+		fs.close
+		db.put(BigInt(key).toByteArray, fs.toByteArray)
+	}
+
+	def readObject[T](key: Long): T = {
+		val bytes = db.get(BigInt(key).toByteArray)
+
+		val fs = new ByteArrayInputStream(bytes)
+		val in = new ObjectInputStream(fs)
+		val result=in.readObject()
+		in.close
+		fs.close
+		result.asInstanceOf[T]
+	}
+
 
 
 	def close(): Unit = {

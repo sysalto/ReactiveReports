@@ -17,7 +17,7 @@ import scala.collection.mutable.ListBuffer
 
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
 	implicit val wordSeparators: List[Char] = List(',', '.')
-	private[serialization] val db = RockDbUtil()
+	private[this] implicit val db = RockDbUtil()
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
 	private[this] val pdfWriter = new PdfWriter(name)
