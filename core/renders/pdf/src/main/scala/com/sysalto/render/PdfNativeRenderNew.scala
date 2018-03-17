@@ -73,7 +73,7 @@ class PdfNativeRenderNew extends PdfUtil {
 	}
 
 	override def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-//		pdfNativeGenerator.drawPieChart(font, title, data, x0, convertY(y0), width, height)
+		pdfNativeGenerator.drawPieChart(font, title, data, x0, convertY(y0), width, height)
 	}
 
 	override def drawBarChart(title: String, xLabel: String, yLabel: String, data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float): Unit = ???

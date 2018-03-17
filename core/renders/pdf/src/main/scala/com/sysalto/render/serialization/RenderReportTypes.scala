@@ -6,12 +6,13 @@ import java.net.URL
 import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.util.zip.Deflater
 
+import com.sysalto.render.PdfChart
 import com.sysalto.render.PdfDraw.PdfGraphicFragment
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.SyncFileUtil
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
 import com.sysalto.report.ReportTypes.BoundaryRect
-import com.sysalto.report.reportTypes.{ReportColor, ReportTxt}
+import com.sysalto.report.reportTypes.{RFont, ReportColor, ReportTxt}
 import javax.imageio.ImageIO
 
 import scala.collection.mutable
@@ -479,6 +480,14 @@ private[render] object RenderReportTypes {
 
 	}
 
+
+	private[serialization] class DrawPieChart1(renderReport:RenderReport,font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
+		import PdfChart._
+
+		private[this] val s = pieChart1( renderReport,font, title, data.toList, x, y, width, height)
+
+		override def content: String = s
+	}
 
 	private[serialization] class PdfWriter(name: String) {
 		new File(name).delete()

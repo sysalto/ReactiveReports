@@ -239,9 +239,9 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		currentPage.idImageList += pdfImage.id
 	}
 
-//		def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
-//			graphicList += new DrawPieChart(font, title, data, x, y, width, height)
-//		}
+		def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
+			graphicList += new DrawPieChart1(this,font,title, data, x, y, width, height)
+		}
 
 
 		def text(x: Float, y: Float, txt: ReportTxt): Unit = {

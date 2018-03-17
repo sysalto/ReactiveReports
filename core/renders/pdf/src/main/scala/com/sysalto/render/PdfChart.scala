@@ -24,8 +24,9 @@
 package com.sysalto.render
 
 import com.sysalto.render.PdfDraw._
-import com.sysalto.report.reportTypes.{ReportColor, RFont, ReportTxt}
+import com.sysalto.report.reportTypes.{RFont, ReportColor, ReportTxt}
 import com.sysalto.render.basic.PdfBasic._
+import com.sysalto.render.serialization.RenderReport
 
 object PdfChart {
 
@@ -101,6 +102,53 @@ object PdfChart {
 		}.mkString("")
 		roundRectangle(x, y, x + width, y - height, 5) + fillStroke(false, true) + str1+str2
 	}
+
+
+	def pieChart1(renderReport:RenderReport, font:RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): String = {
+		def getPoint(center: DrawPoint, radius: Float, angle: Float): DrawPoint =
+			DrawPoint((center.x + radius * Math.cos(angle)).toFloat, (center.y + radius * Math.sin(angle)).toFloat)
+
+		val total = (data.map { case (key, value) => value }).sum
+		val twoPI = 2.0 * Math.PI
+		var initialAngle = (Math.PI * 0.5).toFloat
+		var i=0
+		val angleList = data.map {
+			case (key, value) => {
+				val angleDif = (value / total * twoPI).toFloat
+				val result = (key -> (initialAngle, initialAngle - angleDif, getColor(i,data.length)))
+				i += 1
+				initialAngle -= angleDif
+				result
+			}
+		}
+		val offset = 5.0f
+		val radius = (Math.min(width, height) * 0.5).toFloat - offset
+		val center = DrawPoint(x + radius + offset, y - radius - offset)
+		val str1 = angleList.map { case (label, (startAngle, endAngle, color)) => {
+			val p1 = getPoint(center, radius, startAngle)
+			val p2 = getPoint(center, radius, endAngle)
+			movePoint(center) +
+				lineTo(p1,1) +
+				arc(center, radius, startAngle, endAngle) +
+				lineTo(p2,1) +
+				closePath+
+				fill(color) +
+				fillStroke(true, false)
+		}
+		}.mkString("")
+
+		var ycrt=offset+10
+		val str2 = angleList.map {
+			case (label, (startAngle, endAngle, color)) => {
+				val s=rectangle(x+2.0f*(radius+offset),y-ycrt,10,10)+fill(color)+fillStroke(true,false)
+				renderReport.text(x+2.0f*(radius+offset)+20,y-ycrt+1,ReportTxt(label,font).size(10))
+				ycrt += 12
+				s
+			}
+		}.mkString("")
+		roundRectangle(x, y, x + width, y - height, 5) + fillStroke(false, true) + str1+str2
+	}
+
 
 	def main(args: Array[String]): Unit = {
 		for (i <- 1 to 10) {
