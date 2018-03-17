@@ -26,7 +26,9 @@ import java.io._
 
 import com.sysalto.report.ReportTypes.ReportPage
 import com.sysalto.report.serialization.ReportPageSerializer
-import org.rocksdb.{Options, RocksDB}
+import org.rocksdb.{Options, ReadOptions, RocksDB}
+
+import scala.collection.mutable.ListBuffer
 
 
 class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
@@ -46,9 +48,9 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 		val fs = new ByteArrayOutputStream()
 		val out = new ObjectOutputStream(fs)
 		out.writeObject(obj)
-		out.flush
-		out.close
-		fs.close
+		out.flush()
+		out.close()
+		fs.close()
 		db.put(BigInt(key).toByteArray, fs.toByteArray)
 	}
 
@@ -57,12 +59,23 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 
 		val fs = new ByteArrayInputStream(bytes)
 		val in = new ObjectInputStream(fs)
-		val result=in.readObject()
-		in.close
-		fs.close
+		val result = in.readObject()
+		in.close()
+		fs.close()
 		result.asInstanceOf[T]
 	}
 
+
+	def getAllKeys: List[Long] = {
+		val it = db.newIterator(new ReadOptions())
+		val result=ListBuffer[Long]()
+		it.seekToFirst()
+		while (it.isValid) {
+			result+=BigInt(it.key()).toLong
+			it.next()
+		}
+		result.toList.sortBy(item=>item)
+	}
 
 
 	def close(): Unit = {
