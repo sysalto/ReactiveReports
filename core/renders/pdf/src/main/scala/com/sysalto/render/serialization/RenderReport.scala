@@ -12,6 +12,7 @@ import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
 import com.sysalto.report.util.RockDbUtil
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
@@ -28,6 +29,8 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	private[this] val graphicList = ListBuffer[PdfGraphicFragment]()
 	private[this] val pageList = ListBuffer[PdfPage]()
 	private[this] var fontId: Long = 0
+
+	private[this] implicit val allItems=mutable.HashMap[Long,PdfBaseItem]()
 
 
 	def startPdf(): Unit = {
@@ -81,8 +84,8 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 			}
 		}.asInstanceOf[PdfPageList]
 		catalog.idPdfPageListOpt = Some(pageTreeList.id)
-		val allItems = RenderReportTypes.getAllItems()
-		allItems.foreach(itemId => {
+		val allItems1 = RenderReportTypes.getAllItems()
+		allItems1.foreach(itemId => {
 			val item = RenderReportTypes.getObject[PdfBaseItem](itemId)
 			item.write(pdfWriter)
 		})
@@ -91,9 +94,9 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		val xrefOffset = pdfWriter.position
 		pdfWriter <<< "xref"
 
-		pdfWriter <<< s"0 ${allItems.length + 2}"
+		pdfWriter <<< s"0 ${allItems1.length + 2}"
 		pdfWriter <<< "0000000000 65535 f "
-		allItems.foreach(itemId => {
+		allItems1.foreach(itemId => {
 			val item = RenderReportTypes.getObject[PdfBaseItem](itemId)
 			val offset = item.offset.toString
 			val offsetFrmt = "0" * (10 - offset.length) + offset
@@ -103,7 +106,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		val offsetFrmt = "0" * (10 - metaOffset.length) + metaOffset
 		pdfWriter <<< s"${offsetFrmt} 00000 n "
 		pdfWriter <<< "trailer"
-		pdfWriter <<< s"<</Size ${allItems.length + 2}"
+		pdfWriter <<< s"<</Size ${allItems1.length + 2}"
 		pdfWriter <<< "   /Root 1 0 R"
 		pdfWriter <<< s"   /Info ${metaDataId} 0 R"
 		val fileId = md5(name + System.currentTimeMillis())

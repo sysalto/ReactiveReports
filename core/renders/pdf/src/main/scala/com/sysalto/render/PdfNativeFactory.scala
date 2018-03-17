@@ -27,5 +27,6 @@ package com.sysalto.render
 import com.sysalto.report.util.{PdfFactory, PdfUtil}
 
 class PdfNativeFactory extends PdfFactory {
-  override def getPdf(): PdfUtil = new PdfNativeRender()
+  override def getPdf(): PdfUtil = new PdfNativeRenderNew()
+//  override def getPdf(): PdfUtil = new PdfNativeRender()
 }
