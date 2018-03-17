@@ -10,6 +10,7 @@ import com.sysalto.render.PdfDraw.PdfGraphicFragment
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.SyncFileUtil
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
+import com.sysalto.report.ReportTypes.BoundaryRect
 import com.sysalto.report.reportTypes.{ReportColor, ReportTxt}
 import javax.imageio.ImageIO
 
@@ -410,6 +411,50 @@ private[render] object RenderReportTypes {
 
 	abstract class PdfAction(id: Long) extends PdfBaseItem(id)
 
+
+
+	class PdfGoToUrl(id: Long, url: String) extends PdfAction(id) {
+		override def content: Array[Byte] = {
+			s"""${id} 0 obj
+				 |<<
+				 |  /Type /Action
+				 |  /S /URI
+				 |  /IsMap false
+				 |  /URI(${url})
+				 |>>
+				 |endobj
+				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+		}
+	}
+
+
+	private[render] class PdfLink(id: Long, boundaryRect: BoundaryRect, idAction: Long) extends PdfAnnotation(id) {
+		override def content: Array[Byte] = {
+			s"""${id} 0 obj
+				 |  << /Type /Annot
+				 |  /Subtype /Link
+				 |  /Rect [${boundaryRect}]
+				 |  /F 4
+				 |  /Border [ 0 0 0 ]
+				 |  /A ${idAction} 0 R
+				 |>>
+				 |endobj
+				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+		}
+	}
+
+	class PdfGoToPage(id: Long, pageNbr: Long, left: Int, top: Int) extends PdfAction(id) {
+		override def content: Array[Byte] = {
+			s"""${id} 0 obj
+				 |<<
+				 |  /Type /Action
+				 |  /S /GoTo
+				 |  /D [ ${pageNbr - 1} /Fit ]
+				 |>>
+				 |endobj
+				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+		}
+	}
 
 	private[serialization] class PdfGraphic(items: List[PdfGraphicFragment]) extends PdfPageItem {
 		override def content: String = {

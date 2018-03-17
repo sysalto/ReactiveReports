@@ -279,19 +279,19 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 			else fontMap(txt.font.fontKeyName)
 			txtList += new PdfTxtFragment(x, y, txt, font.refName)
 		}
-	//
-	//
-	//	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
-	//		val goto = new PdfGoToPage(nextId(), pageNbr, left, top)
-	//		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
-	//		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
-	//	}
-	//
-	//	def linkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
-	//		val goto = new PdfGoToUrl(nextId(), url)
-	//		val pdfLink = new PdfLink(nextId(), boundaryRect, goto)
-	//		currentPage.annotation = currentPage.annotation ::: List(pdfLink)
-	//	}
+
+
+		def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
+			val goto = new PdfGoToPage(nextId(), pageNbr, left, top)
+			val pdfLink = new PdfLink(nextId(), boundaryRect, goto.id)
+			currentPage.idAnnotationList = currentPage.idAnnotationList ::: List(pdfLink.id)
+		}
+
+		def linkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
+			val goto = new PdfGoToUrl(nextId(), url)
+			val pdfLink = new PdfLink(nextId(), boundaryRect, goto.id)
+			currentPage.idAnnotationList = currentPage.idAnnotationList ::: List(pdfLink.id)
+		}
 
 
 	initEmbeddedFonts()
