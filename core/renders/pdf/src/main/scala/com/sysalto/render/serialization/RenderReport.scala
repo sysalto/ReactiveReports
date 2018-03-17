@@ -166,35 +166,35 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		graphicList += DrawStroke()
 	}
 
-	//	def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
-	//	         wrapAlign: WrapAlign.Value, simulate: Boolean, lineHeight: Float): Option[ReportTypes.WrapBox] = {
-	//
-	//		val lines = wordWrap.wordWrap(txtList, x1 - x0)
-	//		var crtY = y0
-	//		if (!simulate) {
-	//			lines.foreach(line => {
-	//				val l1: List[Float] = line.map(item => item.textLength)
-	//				val length = l1.sum
-	//				val newX = wrapAlign match {
-	//					case WrapAlign.WRAP_CENTER => x0 + (x1 - x0 - length) * 0.5f
-	//					case WrapAlign.WRAP_RIGHT => x1 - length
-	//					case _ => x0
-	//				}
-	//				line.zipWithIndex.foreach {
-	//					case (textPos, index) => {
-	//						val offset = line.take(index).map(item => item.textLength).sum
-	//						text(newX + offset, crtY, textPos.rtext)
-	//					}
-	//				}
-	//				crtY -= lineHeight
-	//			})
-	//		} else {
-	//			crtY -= lineHeight * (lines.size - 1)
-	//		}
-	//		val l1 = lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
-	//		val textHeight = if (l1.isEmpty) 0 else l1.max
-	//		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size, textHeight))
-	//	}
+		def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
+		         wrapAlign: WrapAlign.Value, simulate: Boolean, lineHeight: Float): Option[ReportTypes.WrapBox] = {
+
+			val lines = wordWrap.wordWrap(txtList, x1 - x0)
+			var crtY = y0
+			if (!simulate) {
+				lines.foreach(line => {
+					val l1: List[Float] = line.map(item => item.textLength)
+					val length = l1.sum
+					val newX = wrapAlign match {
+						case WrapAlign.WRAP_CENTER => x0 + (x1 - x0 - length) * 0.5f
+						case WrapAlign.WRAP_RIGHT => x1 - length
+						case _ => x0
+					}
+					line.zipWithIndex.foreach {
+						case (textPos, index) => {
+							val offset = line.take(index).map(item => item.textLength).sum
+							text(newX + offset, crtY, textPos.rtext)
+						}
+					}
+					crtY -= lineHeight
+				})
+			} else {
+				crtY -= lineHeight * (lines.size - 1)
+			}
+			val l1 = lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
+			val textHeight = if (l1.isEmpty) 0 else l1.max
+			Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size, textHeight))
+		}
 
 
 	private[this] def getFontParser(font: RFont): FontParser = {
@@ -207,25 +207,6 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		}
 	}
 
-	//	def text(x: Float, y: Float, txt: ReportTxt): Unit = {
-	//		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
-	//			if (txt.font.externalFont.isDefined) {
-	//				val fontParser = getFontParser(txt.font)
-	//				val fontStream = new PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
-	//				val fontDescr = new PdfFontDescriptor(nextId(), fontStream, txt.font.fontKeyName)
-	//				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
-	//					Some(FontEmbeddedDef(fontDescr, fontStream)))
-	//				fontMap += (txt.font.fontKeyName -> font1)
-	//				font1
-	//			} else {
-	//				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
-	//				fontMap += (txt.font.fontKeyName -> font1)
-	//				font1
-	//			}
-	//		}
-	//		else fontMap(txt.font.fontKeyName)
-	//		txtList += PdfTxtChuck(x, y, txt, font.refName)
-	//	}
 
 	def getTextWidth(txt: ReportTxt): Float = wordWrap.getTextWidth(txt)
 
