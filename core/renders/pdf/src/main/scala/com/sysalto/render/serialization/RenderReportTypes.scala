@@ -23,7 +23,7 @@ private[render] object RenderReportTypes {
 
 	private[render] abstract class PdfBaseItem(val id: Long)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]) {
 		var offset: Long = 0
-
+		val className=this.getClass.getCanonicalName
 		def content: Array[Byte]
 
 		def write(pdfWriter: PdfWriter): Unit = {
