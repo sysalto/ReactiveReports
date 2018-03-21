@@ -24,6 +24,9 @@ package com.sysalto.report.util
 
 import java.io._
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
 import com.sysalto.report.ReportTypes.ReportPage
 import com.sysalto.report.serialization.ReportPageSerializer
 import org.rocksdb.{Options, ReadOptions, RocksDB}
@@ -32,6 +35,8 @@ import scala.collection.mutable.ListBuffer
 
 
 class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
+	val mapper = new ObjectMapper()
+	mapper.registerModule(DefaultScalaModule)
 
 	def write(key: String, page: ReportPage): Unit = db.put(key.getBytes, ReportPageSerializer.write(page))
 
@@ -44,37 +49,50 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 		}
 	}
 
-	def writeObject(key: Long, obj: Serializable): Unit = {
-		val fs = new ByteArrayOutputStream()
-		val out = new ObjectOutputStream(fs)
-		out.writeObject(obj)
-		out.flush()
-		out.close()
-		fs.close()
-		db.put(BigInt(key).toByteArray, fs.toByteArray)
+	def writeObject(key: Long, obj: AnyRef): Unit = {
+		val str=mapper.writeValueAsString(obj)
+		db.put(BigInt(key).toByteArray, str.getBytes())
 	}
 
 	def readObject[T](key: Long): T = {
 		val bytes = db.get(BigInt(key).toByteArray)
-
-		val fs = new ByteArrayInputStream(bytes)
-		val in = new ObjectInputStream(fs)
-		val result = in.readObject()
-		in.close()
-		fs.close()
-		result.asInstanceOf[T]
+		val mapper1 = new ObjectMapper() with ScalaObjectMapper
+		mapper1.registerModule(DefaultScalaModule)
+		mapper1.readValue(new String(bytes))
 	}
+
+	def writeObject1(key: Long, obj: Array[Byte]): Unit = {
+		val str=mapper.writeValueAsString(obj)
+		db.put(BigInt(key).toByteArray, obj)
+	}
+
+	def readObject1(key: Long): Array[Byte] = db.get(BigInt(key).toByteArray)
+
+
+	def convert[T](src: String)(implicit manT: Manifest[T]): T = {
+		val a1 = manT.runtimeClass
+		val mapper = new ObjectMapper()
+		mapper.registerModule(DefaultScalaModule)
+		val p2 = mapper.readValue(src, a1)
+		println("p2:" + p2)
+
+		// or
+		val mapper1 = new ObjectMapper() with ScalaObjectMapper
+		mapper1.registerModule(DefaultScalaModule)
+		mapper1.readValue[T](src)
+	}
+
 
 
 	def getAllKeys: List[Long] = {
 		val it = db.newIterator(new ReadOptions())
-		val result=ListBuffer[Long]()
+		val result = ListBuffer[Long]()
 		it.seekToFirst()
 		while (it.isValid) {
-			result+=BigInt(it.key()).toLong
+			result += BigInt(it.key()).toLong
 			it.next()
 		}
-		result.toList.sortBy(item=>item)
+		result.toList.sortBy(item => item)
 	}
 
 

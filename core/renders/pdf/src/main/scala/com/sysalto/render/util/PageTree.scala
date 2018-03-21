@@ -7,7 +7,7 @@ object PageTree {
 	private[this] val MAX_NBR = 25
 
 
-	trait PageNode {
+	trait PageNode extends Serializable{
 		var leafNbr = 0L
 
 		def addChild(child: PageNode): Unit

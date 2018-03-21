@@ -1,6 +1,6 @@
-import sbt.Keys.publishMavenStyle
+import sbt.Keys.{libraryDependencies, publishMavenStyle}
 
-val SCALA_VERSION = "2.12.4"
+val SCALA_VERSION = "2.12.5"
 
 val AKKA_VERSION = "latest.release" // "2.5.10"
 
@@ -67,7 +67,10 @@ lazy val coreSettings = Seq(
 		if (scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	},
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
-	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION
+	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION,
+	libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "latest.release",
+	libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "latest.release",
+	libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "latest.release"
 )
 
 lazy val renderPdfSettings = Seq(

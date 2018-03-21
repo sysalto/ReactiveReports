@@ -7,20 +7,24 @@ import java.nio.file.{Files, Paths}
 import java.util.zip.Deflater
 
 import com.sysalto.render.PdfChart
-import com.sysalto.render.PdfDraw.PdfGraphicFragment
+import com.sysalto.render.PdfDraw.{PdfGraphicFragment, roundRectangle}
+import com.sysalto.render.basic.PdfBasic._
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
 import com.sysalto.report.ReportTypes.BoundaryRect
 import com.sysalto.report.reportTypes.{RFont, ReportColor, ReportTxt}
+import com.sysalto.report.util.RockDbUtil
 import javax.imageio.ImageIO
 
-import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-private[render] object RenderReportTypes {
-	private[render] val ENCODING = "ISO-8859-1"
 
-	private[render] abstract class PdfBaseItem(val id: Long)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends Serializable {
+class RenderReportTypes {
+	private[render] val ENCODING = "ISO-8859-1"
+	private[this] val db = RockDbUtil()
+	private[this] val serializer = new RenderReportSerializer(this)
+
+	private[render] abstract class PdfBaseItem(val id: Long) {
 		var offset: Long = 0
 		val className = this.getClass.getCanonicalName
 
@@ -35,24 +39,33 @@ private[render] object RenderReportTypes {
 			s"[${this.getClass.getTypeName}]\n" + content
 		}
 
-		RenderReportTypes.setObject(this)
+		println(this.getClass)
+		this match {
+			case pdfCatalog: PdfCatalog => {
+				val cat1=pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]
+				val builder=serializer.PdfCatalogSerializer.write(cat1)
+				db.writeObject1(pdfCatalog.id, builder.toByteArray)
+			}
+			case _ => setObject(this)
+		}
+
 	}
 
 	private[render] class PdfDests(id: Long, val dests: ListBuffer[(String, String)] = ListBuffer())
-	                              (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val head = dests.head
 			s"""${id} 0 obj
 				 |<</Names[(${head._1}) 2 0 R]>>
 				 |endobj
-				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
 
 	private[render] class PdfDrawImage(idPdfImage: Long, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
-	                                  (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfGraphicFragment with Serializable {
-		private[this] val pdfImage = RenderReportTypes.getObject[PdfImage](idPdfImage)
+		extends PdfGraphicFragment {
+		private[this] val pdfImage = getObject[PdfImage](idPdfImage)
 		private[this] val image = pdfImage.imageMeta
 		private[this] val width = image.width * scale
 		private[this] val height = image.height * scale
@@ -69,35 +82,35 @@ private[render] object RenderReportTypes {
 	}
 
 	private[render] class PdfNames(id: Long, val idDest: Long)
-	                              (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
 				 |<</Dests ${idDest} 0 R>>
 				 |endobj
-				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
 
 	class PdfFontStream(id: Long, val fontName: String, val fontMetric: FontMetric, val pdfCompression: Boolean)
-	                   (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val byteArray = Files.readAllBytes(Paths.get(fontName))
 			val lg = byteArray.length
 			s"""${id} 0 obj
 				 			 | <</Length ${lg}/Length1 ${lg}>>stream
-				 			 |""".stripMargin.getBytes(RenderReportTypes.ENCODING) ++
+				 			 |""".stripMargin.getBytes(ENCODING) ++
 				byteArray ++
-				"\nendstream\nendobj\n".getBytes(RenderReportTypes.ENCODING)
-			RenderReportTypes.writeData(id, byteArray, pdfCompression, true)
+				"\nendstream\nendobj\n".getBytes(ENCODING)
+			writeData(id, byteArray, pdfCompression, true)
 		}
 	}
 
 
 	class PdfFontDescriptor(id: Long, val idPdfFontStream: Long, val fontKeyName: String)
-	                       (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
-			val pdfFontStream: PdfFontStream = RenderReportTypes.getObject[PdfFontStream](idPdfFontStream)
+			val pdfFontStream: PdfFontStream = getObject[PdfFontStream](idPdfFontStream)
 			s"""${id} 0 obj
 				 |    <</Type/FontDescriptor
 				 |    /FontName/${fontKeyName}
@@ -111,7 +124,7 @@ private[render] object RenderReportTypes {
 				 |    /FontFile2 ${pdfFontStream.id} 0 R
 				 |>>
 				 |endobj
-				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
@@ -119,7 +132,7 @@ private[render] object RenderReportTypes {
 
 
 	class PdfFont(id: Long, val refName: String, val fontKeyName: String, val embeddedDefOpt: Option[FontEmbeddedDef] = None)
-	             (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			if (embeddedDefOpt.isEmpty) {
 				s"""${id} 0 obj
@@ -129,11 +142,11 @@ private[render] object RenderReportTypes {
 					 |/Encoding /WinAnsiEncoding
 					 |>>
 					 |endobj
-					 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+					 |""".stripMargin.getBytes(ENCODING)
 			} else {
 				val fontEmbedeedDef = embeddedDefOpt.get
-				val pdfFontStream = RenderReportTypes.getObject[PdfFontStream](fontEmbedeedDef.idPdfFontStream)
-				val pdfFontDescriptor = RenderReportTypes.getObject[PdfFontDescriptor](fontEmbedeedDef.idPdfFontDescriptor)
+				val pdfFontStream = getObject[PdfFontStream](fontEmbedeedDef.idPdfFontStream)
+				val pdfFontDescriptor = getObject[PdfFontDescriptor](fontEmbedeedDef.idPdfFontDescriptor)
 				val withObj = pdfFontStream.fontMetric.fontDescriptor.get.glyphWidth
 				val firstChar = withObj.firstChar
 				val lastChar = withObj.lastChar
@@ -151,7 +164,7 @@ private[render] object RenderReportTypes {
 					 |   /Encoding/WinAnsiEncoding
 					 				 |   >>
 					 				 |endobj
-					 				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+					 				 |""".stripMargin.getBytes(ENCODING)
 			}
 
 
@@ -160,41 +173,61 @@ private[render] object RenderReportTypes {
 
 
 	private[render] class PdfShaddingFctColor(id: Long, val color1: ReportColor, val color2: ReportColor)
-	                                         (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
-			val colorNbr1 = RenderReportTypes.convertColor(color1)
-			val colorNbr2 = RenderReportTypes.convertColor(color2)
+			val colorNbr1 = convertColor(color1)
+			val colorNbr2 = convertColor(color2)
 
 			s"""${id} 0 obj
 				 			 |  <</FunctionType 2/Domain[0 1]/C0[${colorNbr1._1} ${colorNbr1._2} ${colorNbr1._3}]/C1[${colorNbr2._1} ${colorNbr2._2} ${colorNbr2._3}]/N 1>>
 				 			 |endobj
-				 			 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 			 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
 	private[render] class PdfColorShadding(id: Long, val x0: Float, val y0: Float, val x1: Float, val y1: Float, val idPdfShaddingFctColor: Long)
-	                                      (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
-			val pdfShaddingFctColor = RenderReportTypes.getObject[PdfShaddingFctColor](idPdfShaddingFctColor)
+			val pdfShaddingFctColor = getObject[PdfShaddingFctColor](idPdfShaddingFctColor)
 			s"""${id} 0 obj
 				 			 |  <</ShadingType 2/ColorSpace/DeviceRGB/Coords[$x0 $y0  $x1 $y1]/Function ${pdfShaddingFctColor.id} 0 R>>
 				 			 |endobj
-				 			 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 			 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
-	class PdfGPattern(id: Long, val idPdfShadding: Long)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+	class PdfGPattern(id: Long, val idPdfShadding: Long) extends PdfBaseItem(id) {
 		val name = "P" + id
 
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
 				 			 |  <</PatternType 2/Shading ${idPdfShadding} 0 R/Matrix[1 0 0 1 0 0]>>
 				 			 |endobj
-				 			 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 			 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
-	abstract class PdfAnnotation(id: Long)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable
+	class PdfRectangle1(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[ReportColor],
+	                    fillColor: Option[ReportColor], patternColor: Option[PdfGPattern] = None) extends PdfGraphicFragment {
+		override def content: String = {
+			val paternStr = if (patternColor.isDefined) pattern(patternColor.get.name) else ""
+			val borderStr = if (borderColor.isDefined) border(borderColor.get) else ""
+			val fillStr = if (fillColor.isDefined) fill(fillColor.get) else ""
+			val operator = fillStroke(fillColor.isDefined || patternColor.isDefined, borderColor.isDefined)
+			val rectangleStr = if (radius == 0) rectangle(x1, y1, x2 - x1, y2 - y1) else roundRectangle(x1, y1, x2, y2, radius)
+			s"""${saveStatus}
+				 |${paternStr}
+				 |${borderStr}
+				 |${fillStr}
+				 |${rectangleStr}
+				 | ${operator}
+				 |${restoreStatus}
+       """.stripMargin.trim
+		}
+
+	}
+
+	abstract class PdfAnnotation(id: Long) extends PdfBaseItem(id)
 
 	class ImageMeta(fileName: String) {
 		val file = if (fileName.startsWith("http://") || fileName.startsWith("https://")) {
@@ -219,9 +252,10 @@ private[render] object RenderReportTypes {
 		val pixelSize: Int = bimg.getColorModel.getComponentSize(0)
 	}
 
-	class PdfImage(id: Long, val fileName: String)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+	class PdfImage(id: Long, val fileName: String) extends PdfBaseItem(id) {
 		val name = "img" + id
 		val imageMeta = new ImageMeta(fileName)
+		setObject(this)
 
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
@@ -236,52 +270,52 @@ private[render] object RenderReportTypes {
 				 			 |  /Filter /DCTDecode
 				 			 |  >>
 				 			 |stream
-				 			 |""".stripMargin.getBytes(RenderReportTypes.ENCODING) ++
+				 			 |""".stripMargin.getBytes(ENCODING) ++
 				imageMeta.imageInByte ++
-				"\nendstream\nendobj\n".getBytes(RenderReportTypes.ENCODING)
+				"\nendstream\nendobj\n".getBytes(ENCODING)
 		}
+
 	}
 
-	private[render] abstract class PdfPageItem extends Serializable {
+	private[render] abstract class PdfPageItem {
 		def content: String
 	}
 
 	class PdfPageContent(id: Long, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
-	                    (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
-			RenderReportTypes.writeData(id, itemsStr.getBytes(RenderReportTypes.ENCODING), pdfCompression)
+			writeData(id, itemsStr.getBytes(ENCODING), pdfCompression)
 		}
 	}
-
 
 	class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHeight: Float,
 	              var idFontList: List[Long] = List(), var idPdfPatternList: List[Long] = List(),
 	              var idAnnotationList: List[Long] = List(),
 	              var idImageList: ListBuffer[Long] = ListBuffer(), var idContentPageOpt: Option[Long] = None)
-	             (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with PageNode with Serializable {
+		extends PdfBaseItem(id) with PageNode {
 
 		override def addChild(child: PageNode): Unit = {}
 
 		override def content: Array[Byte] = {
 			val contentStr = if (idContentPageOpt.isDefined) s"/Contents ${idContentPageOpt.get} 0 R" else ""
 			val fontStr = "/Font<<" + idFontList.map(idFont => {
-				val font = RenderReportTypes.getObject[PdfFont](idFont)
+				val font = getObject[PdfFont](idFont)
 				s"/${font.refName} ${font.id} 0 R"
 			}).mkString("") + ">>"
 			val patternStr = if (idPdfPatternList.isEmpty) "" else "/Pattern <<" +
 				idPdfPatternList.map(idItem => {
-					val item = RenderReportTypes.getObject[PdfGPattern](idItem)
+					val item = getObject[PdfGPattern](idItem)
 					s"/${item.name} ${item.id} 0 R"
 				}).mkString(" ") + ">>"
 			val imageStr = if (idImageList.isEmpty) "" else "/XObject <<" +
 				idImageList.map(idItem => {
-					val item = RenderReportTypes.getObject[PdfImage](idItem)
+					val item = getObject[PdfImage](idItem)
 					s"/${item.name} ${item.id} 0 R"
 				}).mkString(" ") + ">>"
 			val annotsStr = if (idAnnotationList.isEmpty) "" else "/Annots [" +
 				idAnnotationList.map(idItem => {
-					val item = RenderReportTypes.getObject[PdfAnnotation](idItem)
+					val item = getObject[PdfAnnotation](idItem)
 					s"${item.id} 0 R"
 				}).mkString(" ") + "]"
 			val result =
@@ -300,13 +334,13 @@ private[render] object RenderReportTypes {
 					 |>>
 					 |endobj
 					 |""".stripMargin
-			result.replaceAll("(?m)^\\s+\\n", "").getBytes(RenderReportTypes.ENCODING)
+			result.replaceAll("(?m)^\\s+\\n", "").getBytes(ENCODING)
 		}
 	}
 
 
 	private[render] class PdfPageList(id: Long, var parentId: Option[Long] = None, var pageList: ListBuffer[Long] = ListBuffer())
-	                                 (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with PageNode with Serializable {
+		extends PdfBaseItem(id) with PageNode {
 
 		override def addChild(child: PageNode): Unit = {
 			child match {
@@ -332,12 +366,12 @@ private[render] object RenderReportTypes {
 				 			 |      /Count ${leafNbr}
 				 			 |  >>
 				 			 |endobj
-				 			 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 			 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
 	private[serialization] class PdfCatalog(id: Long, var idPdfPageListOpt: Option[Long] = None, var idPdfNamesOpt: Option[Long] = None)
-	                                       (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable {
+		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val namesStr = if (idPdfNamesOpt.isEmpty) "" else s"/Names ${idPdfNamesOpt.get} 0 R"
 			s"""${id} 0 obj
@@ -346,15 +380,15 @@ private[render] object RenderReportTypes {
 				 |    ${namesStr}
 				 |>>
 				 |endobj
-				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
 	private[render] class PdfTxtFragment(val x: Float, val y: Float, val rtext: ReportTxt, val fontRefName: String,
-	                                     val patternOpt: Option[PatternDraw] = None)
+	                                     val patternOpt: Option[PatternDraw] = None) extends Serializable
 
 	private[serialization] class PdfText(val txtList: List[PdfTxtFragment])
-	                                    (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfPageItem with Serializable {
+		extends PdfPageItem {
 
 		private[this] def escapeText(input: String): String = {
 			val s1 = input.replace("\\", "\\\\")
@@ -369,7 +403,7 @@ private[render] object RenderReportTypes {
 			val txtListSimple = txtList.filter(txt => txt.patternOpt.isEmpty)
 			val txtListPattern = txtList.filter(txt => txt.patternOpt.isDefined)
 			val item = txtListSimple.head
-			val color = RenderReportTypes.convertColor(item.rtext.font.color)
+			val color = convertColor(item.rtext.font.color)
 			val firstItemTxt =
 				s""" BT /${item.fontRefName} ${item.rtext.font.size} Tf
 					 				 |  1 0 0 1 ${item.x.toLong} ${item.y.toLong} Tm
@@ -379,7 +413,7 @@ private[render] object RenderReportTypes {
 
 			val s2 = firstItemTxt + txtListSimple.tail.zipWithIndex.map {
 				case (item, i) => {
-					val color = RenderReportTypes.convertColor(item.rtext.font.color)
+					val color = convertColor(item.rtext.font.color)
 					val xRel = txtListSimple(i + 1).x.toLong - txtListSimple(i).x.toLong
 					val yRel = txtListSimple(i + 1).y.toLong - txtListSimple(i).y.toLong
 					s"""  /${item.fontRefName} ${item.rtext.font.size} Tf
@@ -393,7 +427,7 @@ private[render] object RenderReportTypes {
 			// pattern text
 			val s3 = if (txtListPattern.isEmpty) ""
 			else txtListPattern.map(txt => {
-				val pattern = RenderReportTypes.getObject[PdfGPattern](item.patternOpt.get.idPattern)
+				val pattern = getObject[PdfGPattern](item.patternOpt.get.idPattern)
 				s""" q
 					 				 |/Pattern cs /${pattern.name} scn
 					 				 |/${item.fontRefName} ${item.rtext.font.size} Tf
@@ -415,10 +449,10 @@ private[render] object RenderReportTypes {
 	private[render] class PatternDraw(val x1: Float, val y1: Float, val x2: Float, val y2: Float, val idPattern: Long)
 
 
-	abstract class PdfAction(id: Long)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfBaseItem(id) with Serializable
+	abstract class PdfAction(id: Long) extends PdfBaseItem(id)
 
 
-	class PdfGoToUrl(id: Long, url: String)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfAction(id) with Serializable {
+	class PdfGoToUrl(id: Long, url: String) extends PdfAction(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
 				 |<<
@@ -428,13 +462,13 @@ private[render] object RenderReportTypes {
 				 |  /URI(${url})
 				 |>>
 				 |endobj
-				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
 
 	private[render] class PdfLink(id: Long, boundaryRect: BoundaryRect, idAction: Long)
-	                             (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfAnnotation(id) with Serializable {
+		extends PdfAnnotation(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
 				 |  << /Type /Annot
@@ -445,12 +479,12 @@ private[render] object RenderReportTypes {
 				 |  /A ${idAction} 0 R
 				 |>>
 				 |endobj
-				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
 	class PdfGoToPage(id: Long, pageNbr: Long, left: Int, top: Int)
-	                 (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfAction(id) with Serializable {
+		extends PdfAction(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
 				 |<<
@@ -459,12 +493,12 @@ private[render] object RenderReportTypes {
 				 |  /D [ ${pageNbr - 1} /Fit ]
 				 |>>
 				 |endobj
-				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+				 |""".stripMargin.getBytes(ENCODING)
 		}
 	}
 
 	private[serialization] class PdfGraphic(items: List[PdfGraphicFragment])
-	                                       (implicit allItems: mutable.HashMap[Long, PdfBaseItem]) extends PdfPageItem with Serializable {
+		extends PdfPageItem {
 		override def content: String = {
 			val str = items.map(item => {
 				item.content
@@ -483,7 +517,7 @@ private[render] object RenderReportTypes {
 
 	private[serialization] class DrawPieChart1(renderReport: RenderReport, font: RFont, title: String,
 	                                           data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float)
-		extends PdfGraphicFragment with Serializable {
+		extends PdfGraphicFragment {
 
 		import PdfChart._
 
@@ -498,12 +532,12 @@ private[render] object RenderReportTypes {
 		private[render] var position: Long = 0
 
 		def <<(str: String): Unit = {
-			<<(str.getBytes(RenderReportTypes.ENCODING))
+			<<(str.getBytes(ENCODING))
 		}
 
 		def <<<(str: String): Unit = {
 			val str1 = str + "\n"
-			<<(str1.getBytes(RenderReportTypes.ENCODING))
+			<<(str1.getBytes(ENCODING))
 		}
 
 		def <<(str: Array[Byte]): Unit = {
@@ -524,12 +558,12 @@ private[render] object RenderReportTypes {
 			s"""${id} 0 obj
 				 |<</Length ${input.length} ${length1}>>
 				 |stream
-				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING) ++
+				 |""".stripMargin.getBytes(ENCODING) ++
 				input ++
 				s"""
 					 |endstream
 					 |endobj
-					 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+					 |""".stripMargin.getBytes(ENCODING)
 		} else {
 			val compresser = new Deflater(Deflater.BEST_COMPRESSION)
 			compresser.setInput(input)
@@ -541,12 +575,12 @@ private[render] object RenderReportTypes {
 			s"""${id} 0 obj
 				 |<</Filter/FlateDecode/Length ${compressTxt.length} ${length1}>>
 				 |stream
-				 |""".stripMargin.getBytes(RenderReportTypes.ENCODING) ++
+				 |""".stripMargin.getBytes(ENCODING) ++
 				compressTxt ++
 				s"""
 					 |endstream
 					 |endobj
-					 |""".stripMargin.getBytes(RenderReportTypes.ENCODING)
+					 |""".stripMargin.getBytes(ENCODING)
 		}
 		result
 	}
@@ -560,12 +594,27 @@ private[render] object RenderReportTypes {
 
 
 	//get object from RockDb
-	def getObject[T <: PdfBaseItem](id: Long)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]): T =
-		allItems.get(id).get.asInstanceOf[T]
+	//	def getObject[T <: PdfBaseItem](id: Long)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]): T =
+	//		allItems.get(id).get.asInstanceOf[T]
+	//
+	//	def setObject[T <: PdfBaseItem](obj: T)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]): Unit = {
+	//		allItems += (obj.id -> obj)
+	//	}
+	//
+	//	def getAllItems()(implicit allItems: mutable.HashMap[Long, PdfBaseItem]): List[Long] = allItems.keySet.toList.sortBy(id => id)
 
-	def setObject[T <: PdfBaseItem](obj: T)(implicit allItems: mutable.HashMap[Long, PdfBaseItem]): Unit = {
-		allItems += (obj.id -> obj)
+
+	def getObject[T <: PdfBaseItem](id: Long): T =
+		db.readObject[T](id)
+
+	def setObject[T <: PdfBaseItem](obj: T): Unit = {
+		db.writeObject(obj.id, obj)
 	}
 
-	def getAllItems()(implicit allItems: mutable.HashMap[Long, PdfBaseItem]): List[Long] = allItems.keySet.toList.sortBy(id => id)
+	def getAllItems(): List[Long] = db.getAllKeys
+
+	def close(): Unit = {
+		db.close()
+	}
+
 }
