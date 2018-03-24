@@ -2,6 +2,7 @@ package com.sysalto.render.serialization
 
 
 import com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase
+import com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase
 
 import scala.collection.JavaConverters._
 import com.sysalto.render.serialization.RenderProto._
@@ -113,5 +114,86 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			result
 		}
 	}
+
+
+	object PdfPageItemSerializer {
+		def write(input: renderReportTypes.PdfPageItem): PdfPageItem_proto = {
+			val builder = PdfPageItem_proto.newBuilder()
+			input match {
+				case pdfText: renderReportTypes.PdfText => {
+					builder.setPdfTextProto(PdfTextSerializer.write(pdfText))
+				}
+			}
+			builder.build()
+		}
+
+		def read(input: PdfPageItem_proto): renderReportTypes.PdfPageItem = {
+			input.getFieldItemCase match {
+				case FieldItemCase.PDFTEXT_PROTO => {
+					PdfTextSerializer.read(input.getPdfTextProto)
+				}
+			}
+		}
+	}
+
+	object ReportTxtSerializer {
+		def write(input: ReportTxt): ReportTxt_proto = {
+			val builder = ReportTxt_proto.newBuilder()
+			builder.setTxt(input.txt)
+			builder.build()
+		}
+
+		def read(input: ReportTxt_proto): ReportTxt = {
+			val result = new ReportTxt(input.getTxt)
+			result
+		}
+	}
+
+
+	object PdfTxtFragmentSerializer {
+		def write(input: renderReportTypes.PdfTxtFragment): PdfTxtFragment_proto = {
+			val builder = PdfTxtFragment_proto.newBuilder()
+			builder.setX(input.x)
+			builder.setY(input.y)
+			builder.setRtextProto(ReportTxtSerializer.write(input.rtext))
+			builder.setFonttRefName(input.fontRefName)
+			builder.build()
+		}
+
+		def read(input: PdfTxtFragment_proto): renderReportTypes.PdfTxtFragment = {
+			new renderReportTypes.PdfTxtFragment(input.getX,input.getY,ReportTxtSerializer.read(input.getRtextProto),input.getFonttRefName)
+		}
+	}
+
+
+	object PdfTextSerializer {
+		def write(input: renderReportTypes.PdfText): PdfText_proto = {
+			val builder = PdfText_proto.newBuilder()
+			input.txtList.foreach(item=>builder.addTxtList(PdfTxtFragmentSerializer.write(item)))
+			builder.build()
+		}
+
+		def read(input: PdfText_proto): renderReportTypes.PdfText = {
+			new renderReportTypes.PdfText(input.getTxtListList.asScala.map(item=>PdfTxtFragmentSerializer.read(item)).toList)
+		}
+	}
+
+
+	object PdfPageContentSerializer {
+		def write(input: renderReportTypes.PdfPageContent): PdfPageContent_proto = {
+			val builder = PdfPageContent_proto.newBuilder()
+			input.pageItemList.foreach(item=>builder.addPdfPageItemProto(PdfPageItemSerializer.write(item)))
+			builder.setPdfCompression(input.pdfCompression)
+			builder.build()
+		}
+
+		def read(id: Long, offset: Long, input: PdfPageContent_proto): renderReportTypes.PdfPageContent = {
+			val list=input.getPdfPageItemProtoList.asScala.map(item=>PdfPageItemSerializer.read(item)).toList
+			val result = new renderReportTypes.PdfPageContent(id,list,input.getPdfCompression)
+			result.offset = offset
+			result
+		}
+	}
+
 
 }

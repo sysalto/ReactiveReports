@@ -273,7 +273,7 @@ class RenderReportTypes {
 		def content: String
 	}
 
-	class PdfPageContent(id: Long, pageItemList: List[PdfPageItem], pdfCompression: Boolean)
+	class PdfPageContent(id: Long, val pageItemList: List[PdfPageItem], val pdfCompression: Boolean)
 		extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val itemsStr = pageItemList.foldLeft("")((s1, s2) => s1 + "\n" + s2.content)
@@ -292,7 +292,7 @@ class RenderReportTypes {
 		override def content: Array[Byte] = {
 			val contentStr = if (idContentPageOpt.isDefined) s"/Contents ${idContentPageOpt.get} 0 R" else ""
 			val fontStr = "/Font<<" + idFontList.map(idFont => {
-				val font = getObject[PdfFont](idFont)
+				val font = getObject1[PdfFont](idFont)
 				s"/${font.refName} ${font.id} 0 R"
 			}).mkString("") + ">>"
 			val patternStr = if (idPdfPatternList.isEmpty) "" else "/Pattern <<" +
@@ -611,17 +611,22 @@ class RenderReportTypes {
 				val builder=serializer.PdfBaseItemSerializer.write(page)
 				db.writeObject1(pdfPage.id, builder.toByteArray)
 			}
+			case pdfFont: PdfFont => {
+				val font=pdfFont.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfFont]
+				val builder=serializer.PdfBaseItemSerializer.write(font)
+				db.writeObject1(pdfFont.id, builder.toByteArray)
+			}
 			case _ => //setObject(obj)
 		}
 	}
 
-	def getObject1(id: Long): PdfBaseItem ={
+	def getObject1[T <: PdfBaseItem](id: Long): T ={
 //		T match {
 //			case PdfCatalog => {
 				val bytes=db.readObject1(id)
 				val proto=PdfBaseItem_proto.parseFrom(bytes)
 				val result=serializer.PdfBaseItemSerializer.read(proto)
-				result.asInstanceOf[PdfBaseItem]
+				result.asInstanceOf[T]
 //			}
 //			case _ => getObject(id)
 //		}

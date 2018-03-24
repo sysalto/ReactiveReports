@@ -88,7 +88,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		renderReportTypes.setObject1(catalog)
 		val allItems1 = renderReportTypes.getAllItems()
 		allItems1.foreach(itemId => {
-			val item = renderReportTypes.getObject1(itemId)
+			val item = renderReportTypes.getObject1[renderReportTypes.PdfBaseItem](itemId)
 			item.write(pdfWriter)
 		})
 		val metaDataObj = metaData()
@@ -258,6 +258,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 					font1
 				} else {
 					val font1 = new renderReportTypes.PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
+					renderReportTypes.setObject1(font1)
 					fontMap += (txt.font.fontKeyName -> font1)
 					font1
 				}

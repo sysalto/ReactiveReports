@@ -28,7 +28,7 @@ import com.sysalto.report.RFontAttribute
 import scala.collection.mutable.ListBuffer
 
 
-case class ReportTxt(txt: String, var font: RFont = RFont(10))  {
+case class ReportTxt(val txt: String, var font: RFont = RFont(10))  {
 
   def this(txt: String) = {
     this(txt, RFont(10))

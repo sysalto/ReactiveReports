@@ -4528,6 +4528,21 @@ public final class RenderProto {
   public interface PdfPageItem_protoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.PdfPageItem_proto)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+     */
+    boolean hasPdfTextProto();
+    /**
+     * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfText_proto getPdfTextProto();
+    /**
+     * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfText_protoOrBuilder getPdfTextProtoOrBuilder();
+
+    public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase getFieldItemCase();
   }
   /**
    * Protobuf type {@code com.sysalto.render.serialization.PdfPageItem_proto}
@@ -4557,6 +4572,7 @@ public final class RenderProto {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -4572,6 +4588,20 @@ public final class RenderProto {
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
+              break;
+            }
+            case 10: {
+              com.sysalto.render.serialization.RenderProto.PdfText_proto.Builder subBuilder = null;
+              if (fieldItemCase_ == 1) {
+                subBuilder = ((com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_).toBuilder();
+              }
+              fieldItem_ =
+                  input.readMessage(com.sysalto.render.serialization.RenderProto.PdfText_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_);
+                fieldItem_ = subBuilder.buildPartial();
+              }
+              fieldItemCase_ = 1;
               break;
             }
           }
@@ -4598,6 +4628,68 @@ public final class RenderProto {
               com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.class, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder.class);
     }
 
+    private int fieldItemCase_ = 0;
+    private java.lang.Object fieldItem_;
+    public enum FieldItemCase
+        implements com.google.protobuf.Internal.EnumLite {
+      PDFTEXT_PROTO(1),
+      FIELDITEM_NOT_SET(0);
+      private final int value;
+      private FieldItemCase(int value) {
+        this.value = value;
+      }
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static FieldItemCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static FieldItemCase forNumber(int value) {
+        switch (value) {
+          case 1: return PDFTEXT_PROTO;
+          case 0: return FIELDITEM_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public FieldItemCase
+    getFieldItemCase() {
+      return FieldItemCase.forNumber(
+          fieldItemCase_);
+    }
+
+    public static final int PDFTEXT_PROTO_FIELD_NUMBER = 1;
+    /**
+     * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+     */
+    public boolean hasPdfTextProto() {
+      return fieldItemCase_ == 1;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfText_proto getPdfTextProto() {
+      if (fieldItemCase_ == 1) {
+         return (com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_;
+      }
+      return com.sysalto.render.serialization.RenderProto.PdfText_proto.getDefaultInstance();
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfText_protoOrBuilder getPdfTextProtoOrBuilder() {
+      if (fieldItemCase_ == 1) {
+         return (com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_;
+      }
+      return com.sysalto.render.serialization.RenderProto.PdfText_proto.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -4610,6 +4702,9 @@ public final class RenderProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (fieldItemCase_ == 1) {
+        output.writeMessage(1, (com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -4618,6 +4713,10 @@ public final class RenderProto {
       if (size != -1) return size;
 
       size = 0;
+      if (fieldItemCase_ == 1) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, (com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -4634,6 +4733,17 @@ public final class RenderProto {
       com.sysalto.render.serialization.RenderProto.PdfPageItem_proto other = (com.sysalto.render.serialization.RenderProto.PdfPageItem_proto) obj;
 
       boolean result = true;
+      result = result && getFieldItemCase().equals(
+          other.getFieldItemCase());
+      if (!result) return false;
+      switch (fieldItemCase_) {
+        case 1:
+          result = result && getPdfTextProto()
+              .equals(other.getPdfTextProto());
+          break;
+        case 0:
+        default:
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -4645,6 +4755,14 @@ public final class RenderProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      switch (fieldItemCase_) {
+        case 1:
+          hash = (37 * hash) + PDFTEXT_PROTO_FIELD_NUMBER;
+          hash = (53 * hash) + getPdfTextProto().hashCode();
+          break;
+        case 0:
+        default:
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4774,6 +4892,8 @@ public final class RenderProto {
       }
       public Builder clear() {
         super.clear();
+        fieldItemCase_ = 0;
+        fieldItem_ = null;
         return this;
       }
 
@@ -4796,6 +4916,14 @@ public final class RenderProto {
 
       public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto buildPartial() {
         com.sysalto.render.serialization.RenderProto.PdfPageItem_proto result = new com.sysalto.render.serialization.RenderProto.PdfPageItem_proto(this);
+        if (fieldItemCase_ == 1) {
+          if (pdfTextProtoBuilder_ == null) {
+            result.fieldItem_ = fieldItem_;
+          } else {
+            result.fieldItem_ = pdfTextProtoBuilder_.build();
+          }
+        }
+        result.fieldItemCase_ = fieldItemCase_;
         onBuilt();
         return result;
       }
@@ -4837,6 +4965,15 @@ public final class RenderProto {
 
       public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfPageItem_proto other) {
         if (other == com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.getDefaultInstance()) return this;
+        switch (other.getFieldItemCase()) {
+          case PDFTEXT_PROTO: {
+            mergePdfTextProto(other.getPdfTextProto());
+            break;
+          }
+          case FIELDITEM_NOT_SET: {
+            break;
+          }
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -4862,6 +4999,157 @@ public final class RenderProto {
           }
         }
         return this;
+      }
+      private int fieldItemCase_ = 0;
+      private java.lang.Object fieldItem_;
+      public FieldItemCase
+          getFieldItemCase() {
+        return FieldItemCase.forNumber(
+            fieldItemCase_);
+      }
+
+      public Builder clearFieldItem() {
+        fieldItemCase_ = 0;
+        fieldItem_ = null;
+        onChanged();
+        return this;
+      }
+
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfText_proto, com.sysalto.render.serialization.RenderProto.PdfText_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfText_protoOrBuilder> pdfTextProtoBuilder_;
+      /**
+       * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+       */
+      public boolean hasPdfTextProto() {
+        return fieldItemCase_ == 1;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfText_proto getPdfTextProto() {
+        if (pdfTextProtoBuilder_ == null) {
+          if (fieldItemCase_ == 1) {
+            return (com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_;
+          }
+          return com.sysalto.render.serialization.RenderProto.PdfText_proto.getDefaultInstance();
+        } else {
+          if (fieldItemCase_ == 1) {
+            return pdfTextProtoBuilder_.getMessage();
+          }
+          return com.sysalto.render.serialization.RenderProto.PdfText_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+       */
+      public Builder setPdfTextProto(com.sysalto.render.serialization.RenderProto.PdfText_proto value) {
+        if (pdfTextProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          fieldItem_ = value;
+          onChanged();
+        } else {
+          pdfTextProtoBuilder_.setMessage(value);
+        }
+        fieldItemCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+       */
+      public Builder setPdfTextProto(
+          com.sysalto.render.serialization.RenderProto.PdfText_proto.Builder builderForValue) {
+        if (pdfTextProtoBuilder_ == null) {
+          fieldItem_ = builderForValue.build();
+          onChanged();
+        } else {
+          pdfTextProtoBuilder_.setMessage(builderForValue.build());
+        }
+        fieldItemCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+       */
+      public Builder mergePdfTextProto(com.sysalto.render.serialization.RenderProto.PdfText_proto value) {
+        if (pdfTextProtoBuilder_ == null) {
+          if (fieldItemCase_ == 1 &&
+              fieldItem_ != com.sysalto.render.serialization.RenderProto.PdfText_proto.getDefaultInstance()) {
+            fieldItem_ = com.sysalto.render.serialization.RenderProto.PdfText_proto.newBuilder((com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            fieldItem_ = value;
+          }
+          onChanged();
+        } else {
+          if (fieldItemCase_ == 1) {
+            pdfTextProtoBuilder_.mergeFrom(value);
+          }
+          pdfTextProtoBuilder_.setMessage(value);
+        }
+        fieldItemCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+       */
+      public Builder clearPdfTextProto() {
+        if (pdfTextProtoBuilder_ == null) {
+          if (fieldItemCase_ == 1) {
+            fieldItemCase_ = 0;
+            fieldItem_ = null;
+            onChanged();
+          }
+        } else {
+          if (fieldItemCase_ == 1) {
+            fieldItemCase_ = 0;
+            fieldItem_ = null;
+          }
+          pdfTextProtoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfText_proto.Builder getPdfTextProtoBuilder() {
+        return getPdfTextProtoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfText_protoOrBuilder getPdfTextProtoOrBuilder() {
+        if ((fieldItemCase_ == 1) && (pdfTextProtoBuilder_ != null)) {
+          return pdfTextProtoBuilder_.getMessageOrBuilder();
+        } else {
+          if (fieldItemCase_ == 1) {
+            return (com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_;
+          }
+          return com.sysalto.render.serialization.RenderProto.PdfText_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfText_proto pdfText_proto = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfText_proto, com.sysalto.render.serialization.RenderProto.PdfText_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfText_protoOrBuilder> 
+          getPdfTextProtoFieldBuilder() {
+        if (pdfTextProtoBuilder_ == null) {
+          if (!(fieldItemCase_ == 1)) {
+            fieldItem_ = com.sysalto.render.serialization.RenderProto.PdfText_proto.getDefaultInstance();
+          }
+          pdfTextProtoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.PdfText_proto, com.sysalto.render.serialization.RenderProto.PdfText_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfText_protoOrBuilder>(
+                  (com.sysalto.render.serialization.RenderProto.PdfText_proto) fieldItem_,
+                  getParentForChildren(),
+                  isClean());
+          fieldItem_ = null;
+        }
+        fieldItemCase_ = 1;
+        onChanged();;
+        return pdfTextProtoBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -4912,47 +5200,2165 @@ public final class RenderProto {
 
   }
 
+  public interface ReportTxt_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.ReportTxt_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string txt = 1;</code>
+     */
+    java.lang.String getTxt();
+    /**
+     * <code>string txt = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTxtBytes();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.ReportTxt_proto}
+   */
+  public  static final class ReportTxt_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.ReportTxt_proto)
+      ReportTxt_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ReportTxt_proto.newBuilder() to construct.
+    private ReportTxt_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ReportTxt_proto() {
+      txt_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ReportTxt_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              txt_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportTxt_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportTxt_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.ReportTxt_proto.class, com.sysalto.render.serialization.RenderProto.ReportTxt_proto.Builder.class);
+    }
+
+    public static final int TXT_FIELD_NUMBER = 1;
+    private volatile java.lang.Object txt_;
+    /**
+     * <code>string txt = 1;</code>
+     */
+    public java.lang.String getTxt() {
+      java.lang.Object ref = txt_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        txt_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string txt = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTxtBytes() {
+      java.lang.Object ref = txt_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        txt_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getTxtBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, txt_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getTxtBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, txt_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.ReportTxt_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.ReportTxt_proto other = (com.sysalto.render.serialization.RenderProto.ReportTxt_proto) obj;
+
+      boolean result = true;
+      result = result && getTxt()
+          .equals(other.getTxt());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TXT_FIELD_NUMBER;
+      hash = (53 * hash) + getTxt().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.ReportTxt_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.ReportTxt_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.ReportTxt_proto)
+        com.sysalto.render.serialization.RenderProto.ReportTxt_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportTxt_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportTxt_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.ReportTxt_proto.class, com.sysalto.render.serialization.RenderProto.ReportTxt_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.ReportTxt_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        txt_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportTxt_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.ReportTxt_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.ReportTxt_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.ReportTxt_proto build() {
+        com.sysalto.render.serialization.RenderProto.ReportTxt_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.ReportTxt_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.ReportTxt_proto result = new com.sysalto.render.serialization.RenderProto.ReportTxt_proto(this);
+        result.txt_ = txt_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.ReportTxt_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.ReportTxt_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.ReportTxt_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.ReportTxt_proto.getDefaultInstance()) return this;
+        if (!other.getTxt().isEmpty()) {
+          txt_ = other.txt_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.ReportTxt_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.ReportTxt_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object txt_ = "";
+      /**
+       * <code>string txt = 1;</code>
+       */
+      public java.lang.String getTxt() {
+        java.lang.Object ref = txt_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          txt_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string txt = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTxtBytes() {
+        java.lang.Object ref = txt_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          txt_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string txt = 1;</code>
+       */
+      public Builder setTxt(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        txt_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string txt = 1;</code>
+       */
+      public Builder clearTxt() {
+        
+        txt_ = getDefaultInstance().getTxt();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string txt = 1;</code>
+       */
+      public Builder setTxtBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        txt_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.ReportTxt_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.ReportTxt_proto)
+    private static final com.sysalto.render.serialization.RenderProto.ReportTxt_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.ReportTxt_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.ReportTxt_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ReportTxt_proto>
+        PARSER = new com.google.protobuf.AbstractParser<ReportTxt_proto>() {
+      public ReportTxt_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ReportTxt_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ReportTxt_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ReportTxt_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.ReportTxt_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PdfTxtFragment_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.PdfTxtFragment_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>float x = 1;</code>
+     */
+    float getX();
+
+    /**
+     * <code>float y = 2;</code>
+     */
+    float getY();
+
+    /**
+     * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+     */
+    boolean hasRtextProto();
+    /**
+     * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.ReportTxt_proto getRtextProto();
+    /**
+     * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.ReportTxt_protoOrBuilder getRtextProtoOrBuilder();
+
+    /**
+     * <code>string fonttRefName = 4;</code>
+     */
+    java.lang.String getFonttRefName();
+    /**
+     * <code>string fonttRefName = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getFonttRefNameBytes();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.PdfTxtFragment_proto}
+   */
+  public  static final class PdfTxtFragment_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.PdfTxtFragment_proto)
+      PdfTxtFragment_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use PdfTxtFragment_proto.newBuilder() to construct.
+    private PdfTxtFragment_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PdfTxtFragment_proto() {
+      x_ = 0F;
+      y_ = 0F;
+      fonttRefName_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PdfTxtFragment_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 13: {
+
+              x_ = input.readFloat();
+              break;
+            }
+            case 21: {
+
+              y_ = input.readFloat();
+              break;
+            }
+            case 26: {
+              com.sysalto.render.serialization.RenderProto.ReportTxt_proto.Builder subBuilder = null;
+              if (rtextProto_ != null) {
+                subBuilder = rtextProto_.toBuilder();
+              }
+              rtextProto_ = input.readMessage(com.sysalto.render.serialization.RenderProto.ReportTxt_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(rtextProto_);
+                rtextProto_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              fonttRefName_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.class, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder.class);
+    }
+
+    public static final int X_FIELD_NUMBER = 1;
+    private float x_;
+    /**
+     * <code>float x = 1;</code>
+     */
+    public float getX() {
+      return x_;
+    }
+
+    public static final int Y_FIELD_NUMBER = 2;
+    private float y_;
+    /**
+     * <code>float y = 2;</code>
+     */
+    public float getY() {
+      return y_;
+    }
+
+    public static final int RTEXT_PROTO_FIELD_NUMBER = 3;
+    private com.sysalto.render.serialization.RenderProto.ReportTxt_proto rtextProto_;
+    /**
+     * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+     */
+    public boolean hasRtextProto() {
+      return rtextProto_ != null;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.ReportTxt_proto getRtextProto() {
+      return rtextProto_ == null ? com.sysalto.render.serialization.RenderProto.ReportTxt_proto.getDefaultInstance() : rtextProto_;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.ReportTxt_protoOrBuilder getRtextProtoOrBuilder() {
+      return getRtextProto();
+    }
+
+    public static final int FONTTREFNAME_FIELD_NUMBER = 4;
+    private volatile java.lang.Object fonttRefName_;
+    /**
+     * <code>string fonttRefName = 4;</code>
+     */
+    public java.lang.String getFonttRefName() {
+      java.lang.Object ref = fonttRefName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fonttRefName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string fonttRefName = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFonttRefNameBytes() {
+      java.lang.Object ref = fonttRefName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fonttRefName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (x_ != 0F) {
+        output.writeFloat(1, x_);
+      }
+      if (y_ != 0F) {
+        output.writeFloat(2, y_);
+      }
+      if (rtextProto_ != null) {
+        output.writeMessage(3, getRtextProto());
+      }
+      if (!getFonttRefNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, fonttRefName_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (x_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(1, x_);
+      }
+      if (y_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(2, y_);
+      }
+      if (rtextProto_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getRtextProto());
+      }
+      if (!getFonttRefNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, fonttRefName_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto other = (com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto) obj;
+
+      boolean result = true;
+      result = result && (
+          java.lang.Float.floatToIntBits(getX())
+          == java.lang.Float.floatToIntBits(
+              other.getX()));
+      result = result && (
+          java.lang.Float.floatToIntBits(getY())
+          == java.lang.Float.floatToIntBits(
+              other.getY()));
+      result = result && (hasRtextProto() == other.hasRtextProto());
+      if (hasRtextProto()) {
+        result = result && getRtextProto()
+            .equals(other.getRtextProto());
+      }
+      result = result && getFonttRefName()
+          .equals(other.getFonttRefName());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + X_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getX());
+      hash = (37 * hash) + Y_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getY());
+      if (hasRtextProto()) {
+        hash = (37 * hash) + RTEXT_PROTO_FIELD_NUMBER;
+        hash = (53 * hash) + getRtextProto().hashCode();
+      }
+      hash = (37 * hash) + FONTTREFNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getFonttRefName().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.PdfTxtFragment_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.PdfTxtFragment_proto)
+        com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.class, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        x_ = 0F;
+
+        y_ = 0F;
+
+        if (rtextProtoBuilder_ == null) {
+          rtextProto_ = null;
+        } else {
+          rtextProto_ = null;
+          rtextProtoBuilder_ = null;
+        }
+        fonttRefName_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto build() {
+        com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto result = new com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto(this);
+        result.x_ = x_;
+        result.y_ = y_;
+        if (rtextProtoBuilder_ == null) {
+          result.rtextProto_ = rtextProto_;
+        } else {
+          result.rtextProto_ = rtextProtoBuilder_.build();
+        }
+        result.fonttRefName_ = fonttRefName_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.getDefaultInstance()) return this;
+        if (other.getX() != 0F) {
+          setX(other.getX());
+        }
+        if (other.getY() != 0F) {
+          setY(other.getY());
+        }
+        if (other.hasRtextProto()) {
+          mergeRtextProto(other.getRtextProto());
+        }
+        if (!other.getFonttRefName().isEmpty()) {
+          fonttRefName_ = other.fonttRefName_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private float x_ ;
+      /**
+       * <code>float x = 1;</code>
+       */
+      public float getX() {
+        return x_;
+      }
+      /**
+       * <code>float x = 1;</code>
+       */
+      public Builder setX(float value) {
+        
+        x_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float x = 1;</code>
+       */
+      public Builder clearX() {
+        
+        x_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float y_ ;
+      /**
+       * <code>float y = 2;</code>
+       */
+      public float getY() {
+        return y_;
+      }
+      /**
+       * <code>float y = 2;</code>
+       */
+      public Builder setY(float value) {
+        
+        y_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float y = 2;</code>
+       */
+      public Builder clearY() {
+        
+        y_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private com.sysalto.render.serialization.RenderProto.ReportTxt_proto rtextProto_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.ReportTxt_proto, com.sysalto.render.serialization.RenderProto.ReportTxt_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportTxt_protoOrBuilder> rtextProtoBuilder_;
+      /**
+       * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+       */
+      public boolean hasRtextProto() {
+        return rtextProtoBuilder_ != null || rtextProto_ != null;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportTxt_proto getRtextProto() {
+        if (rtextProtoBuilder_ == null) {
+          return rtextProto_ == null ? com.sysalto.render.serialization.RenderProto.ReportTxt_proto.getDefaultInstance() : rtextProto_;
+        } else {
+          return rtextProtoBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+       */
+      public Builder setRtextProto(com.sysalto.render.serialization.RenderProto.ReportTxt_proto value) {
+        if (rtextProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          rtextProto_ = value;
+          onChanged();
+        } else {
+          rtextProtoBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+       */
+      public Builder setRtextProto(
+          com.sysalto.render.serialization.RenderProto.ReportTxt_proto.Builder builderForValue) {
+        if (rtextProtoBuilder_ == null) {
+          rtextProto_ = builderForValue.build();
+          onChanged();
+        } else {
+          rtextProtoBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+       */
+      public Builder mergeRtextProto(com.sysalto.render.serialization.RenderProto.ReportTxt_proto value) {
+        if (rtextProtoBuilder_ == null) {
+          if (rtextProto_ != null) {
+            rtextProto_ =
+              com.sysalto.render.serialization.RenderProto.ReportTxt_proto.newBuilder(rtextProto_).mergeFrom(value).buildPartial();
+          } else {
+            rtextProto_ = value;
+          }
+          onChanged();
+        } else {
+          rtextProtoBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+       */
+      public Builder clearRtextProto() {
+        if (rtextProtoBuilder_ == null) {
+          rtextProto_ = null;
+          onChanged();
+        } else {
+          rtextProto_ = null;
+          rtextProtoBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportTxt_proto.Builder getRtextProtoBuilder() {
+        
+        onChanged();
+        return getRtextProtoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportTxt_protoOrBuilder getRtextProtoOrBuilder() {
+        if (rtextProtoBuilder_ != null) {
+          return rtextProtoBuilder_.getMessageOrBuilder();
+        } else {
+          return rtextProto_ == null ?
+              com.sysalto.render.serialization.RenderProto.ReportTxt_proto.getDefaultInstance() : rtextProto_;
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportTxt_proto rtext_proto = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.ReportTxt_proto, com.sysalto.render.serialization.RenderProto.ReportTxt_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportTxt_protoOrBuilder> 
+          getRtextProtoFieldBuilder() {
+        if (rtextProtoBuilder_ == null) {
+          rtextProtoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.ReportTxt_proto, com.sysalto.render.serialization.RenderProto.ReportTxt_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportTxt_protoOrBuilder>(
+                  getRtextProto(),
+                  getParentForChildren(),
+                  isClean());
+          rtextProto_ = null;
+        }
+        return rtextProtoBuilder_;
+      }
+
+      private java.lang.Object fonttRefName_ = "";
+      /**
+       * <code>string fonttRefName = 4;</code>
+       */
+      public java.lang.String getFonttRefName() {
+        java.lang.Object ref = fonttRefName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          fonttRefName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string fonttRefName = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFonttRefNameBytes() {
+        java.lang.Object ref = fonttRefName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fonttRefName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string fonttRefName = 4;</code>
+       */
+      public Builder setFonttRefName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        fonttRefName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string fonttRefName = 4;</code>
+       */
+      public Builder clearFonttRefName() {
+        
+        fonttRefName_ = getDefaultInstance().getFonttRefName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string fonttRefName = 4;</code>
+       */
+      public Builder setFonttRefNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        fonttRefName_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.PdfTxtFragment_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.PdfTxtFragment_proto)
+    private static final com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PdfTxtFragment_proto>
+        PARSER = new com.google.protobuf.AbstractParser<PdfTxtFragment_proto>() {
+      public PdfTxtFragment_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PdfTxtFragment_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PdfTxtFragment_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PdfTxtFragment_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PdfText_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.PdfText_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    java.util.List<com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto> 
+        getTxtListList();
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto getTxtList(int index);
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    int getTxtListCount();
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder> 
+        getTxtListOrBuilderList();
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder getTxtListOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.PdfText_proto}
+   */
+  public  static final class PdfText_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.PdfText_proto)
+      PdfText_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use PdfText_proto.newBuilder() to construct.
+    private PdfText_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PdfText_proto() {
+      txtList_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PdfText_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                txtList_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              txtList_.add(
+                  input.readMessage(com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          txtList_ = java.util.Collections.unmodifiableList(txtList_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfText_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfText_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.PdfText_proto.class, com.sysalto.render.serialization.RenderProto.PdfText_proto.Builder.class);
+    }
+
+    public static final int TXTLIST_FIELD_NUMBER = 1;
+    private java.util.List<com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto> txtList_;
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    public java.util.List<com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto> getTxtListList() {
+      return txtList_;
+    }
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    public java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder> 
+        getTxtListOrBuilderList() {
+      return txtList_;
+    }
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    public int getTxtListCount() {
+      return txtList_.size();
+    }
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto getTxtList(int index) {
+      return txtList_.get(index);
+    }
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder getTxtListOrBuilder(
+        int index) {
+      return txtList_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < txtList_.size(); i++) {
+        output.writeMessage(1, txtList_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < txtList_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, txtList_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.PdfText_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.PdfText_proto other = (com.sysalto.render.serialization.RenderProto.PdfText_proto) obj;
+
+      boolean result = true;
+      result = result && getTxtListList()
+          .equals(other.getTxtListList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getTxtListCount() > 0) {
+        hash = (37 * hash) + TXTLIST_FIELD_NUMBER;
+        hash = (53 * hash) + getTxtListList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.PdfText_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.PdfText_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.PdfText_proto)
+        com.sysalto.render.serialization.RenderProto.PdfText_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfText_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfText_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.PdfText_proto.class, com.sysalto.render.serialization.RenderProto.PdfText_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.PdfText_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getTxtListFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (txtListBuilder_ == null) {
+          txtList_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          txtListBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfText_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfText_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.PdfText_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfText_proto build() {
+        com.sysalto.render.serialization.RenderProto.PdfText_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfText_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.PdfText_proto result = new com.sysalto.render.serialization.RenderProto.PdfText_proto(this);
+        int from_bitField0_ = bitField0_;
+        if (txtListBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            txtList_ = java.util.Collections.unmodifiableList(txtList_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.txtList_ = txtList_;
+        } else {
+          result.txtList_ = txtListBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.PdfText_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.PdfText_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfText_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.PdfText_proto.getDefaultInstance()) return this;
+        if (txtListBuilder_ == null) {
+          if (!other.txtList_.isEmpty()) {
+            if (txtList_.isEmpty()) {
+              txtList_ = other.txtList_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureTxtListIsMutable();
+              txtList_.addAll(other.txtList_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.txtList_.isEmpty()) {
+            if (txtListBuilder_.isEmpty()) {
+              txtListBuilder_.dispose();
+              txtListBuilder_ = null;
+              txtList_ = other.txtList_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              txtListBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getTxtListFieldBuilder() : null;
+            } else {
+              txtListBuilder_.addAllMessages(other.txtList_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.PdfText_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.PdfText_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto> txtList_ =
+        java.util.Collections.emptyList();
+      private void ensureTxtListIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          txtList_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto>(txtList_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder> txtListBuilder_;
+
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public java.util.List<com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto> getTxtListList() {
+        if (txtListBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(txtList_);
+        } else {
+          return txtListBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public int getTxtListCount() {
+        if (txtListBuilder_ == null) {
+          return txtList_.size();
+        } else {
+          return txtListBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto getTxtList(int index) {
+        if (txtListBuilder_ == null) {
+          return txtList_.get(index);
+        } else {
+          return txtListBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public Builder setTxtList(
+          int index, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto value) {
+        if (txtListBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTxtListIsMutable();
+          txtList_.set(index, value);
+          onChanged();
+        } else {
+          txtListBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public Builder setTxtList(
+          int index, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder builderForValue) {
+        if (txtListBuilder_ == null) {
+          ensureTxtListIsMutable();
+          txtList_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          txtListBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public Builder addTxtList(com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto value) {
+        if (txtListBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTxtListIsMutable();
+          txtList_.add(value);
+          onChanged();
+        } else {
+          txtListBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public Builder addTxtList(
+          int index, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto value) {
+        if (txtListBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTxtListIsMutable();
+          txtList_.add(index, value);
+          onChanged();
+        } else {
+          txtListBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public Builder addTxtList(
+          com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder builderForValue) {
+        if (txtListBuilder_ == null) {
+          ensureTxtListIsMutable();
+          txtList_.add(builderForValue.build());
+          onChanged();
+        } else {
+          txtListBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public Builder addTxtList(
+          int index, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder builderForValue) {
+        if (txtListBuilder_ == null) {
+          ensureTxtListIsMutable();
+          txtList_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          txtListBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public Builder addAllTxtList(
+          java.lang.Iterable<? extends com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto> values) {
+        if (txtListBuilder_ == null) {
+          ensureTxtListIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, txtList_);
+          onChanged();
+        } else {
+          txtListBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public Builder clearTxtList() {
+        if (txtListBuilder_ == null) {
+          txtList_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          txtListBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public Builder removeTxtList(int index) {
+        if (txtListBuilder_ == null) {
+          ensureTxtListIsMutable();
+          txtList_.remove(index);
+          onChanged();
+        } else {
+          txtListBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder getTxtListBuilder(
+          int index) {
+        return getTxtListFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder getTxtListOrBuilder(
+          int index) {
+        if (txtListBuilder_ == null) {
+          return txtList_.get(index);  } else {
+          return txtListBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder> 
+           getTxtListOrBuilderList() {
+        if (txtListBuilder_ != null) {
+          return txtListBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(txtList_);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder addTxtListBuilder() {
+        return getTxtListFieldBuilder().addBuilder(
+            com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder addTxtListBuilder(
+          int index) {
+        return getTxtListFieldBuilder().addBuilder(
+            index, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfTxtFragment_proto txtList = 1;</code>
+       */
+      public java.util.List<com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder> 
+           getTxtListBuilderList() {
+        return getTxtListFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder> 
+          getTxtListFieldBuilder() {
+        if (txtListBuilder_ == null) {
+          txtListBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfTxtFragment_protoOrBuilder>(
+                  txtList_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          txtList_ = null;
+        }
+        return txtListBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.PdfText_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.PdfText_proto)
+    private static final com.sysalto.render.serialization.RenderProto.PdfText_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.PdfText_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfText_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PdfText_proto>
+        PARSER = new com.google.protobuf.AbstractParser<PdfText_proto>() {
+      public PdfText_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PdfText_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PdfText_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PdfText_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.PdfText_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface PdfPageContent_protoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.PdfPageContent_proto)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int64 id = 1;</code>
-     */
-    long getId();
-
-    /**
-     * <code>string className = 2;</code>
-     */
-    java.lang.String getClassName();
-    /**
-     * <code>string className = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getClassNameBytes();
-
-    /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
     java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> 
-        getPageItemListList();
+        getPdfPageItemProtoList();
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
-    com.sysalto.render.serialization.RenderProto.PdfPageItem_proto getPageItemList(int index);
+    com.sysalto.render.serialization.RenderProto.PdfPageItem_proto getPdfPageItemProto(int index);
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
-    int getPageItemListCount();
+    int getPdfPageItemProtoCount();
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
     java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder> 
-        getPageItemListOrBuilderList();
+        getPdfPageItemProtoOrBuilderList();
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
-    com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder getPageItemListOrBuilder(
+    com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder getPdfPageItemProtoOrBuilder(
         int index);
 
     /**
@@ -4973,9 +7379,7 @@ public final class RenderProto {
       super(builder);
     }
     private PdfPageContent_proto() {
-      id_ = 0L;
-      className_ = "";
-      pageItemList_ = java.util.Collections.emptyList();
+      pdfPageItemProto_ = java.util.Collections.emptyList();
       pdfCompression_ = false;
     }
 
@@ -5010,23 +7414,12 @@ public final class RenderProto {
               }
               break;
             }
-            case 8: {
-
-              id_ = input.readInt64();
-              break;
-            }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              className_ = s;
-              break;
-            }
             case 26: {
-              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                pageItemList_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto>();
-                mutable_bitField0_ |= 0x00000004;
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                pdfPageItemProto_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto>();
+                mutable_bitField0_ |= 0x00000001;
               }
-              pageItemList_.add(
+              pdfPageItemProto_.add(
                   input.readMessage(com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.parser(), extensionRegistry));
               break;
             }
@@ -5043,8 +7436,8 @@ public final class RenderProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          pageItemList_ = java.util.Collections.unmodifiableList(pageItemList_);
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          pdfPageItemProto_ = java.util.Collections.unmodifiableList(pdfPageItemProto_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -5063,82 +7456,39 @@ public final class RenderProto {
     }
 
     private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private long id_;
+    public static final int PDFPAGEITEM_PROTO_FIELD_NUMBER = 3;
+    private java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> pdfPageItemProto_;
     /**
-     * <code>int64 id = 1;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
-    public long getId() {
-      return id_;
-    }
-
-    public static final int CLASSNAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object className_;
-    /**
-     * <code>string className = 2;</code>
-     */
-    public java.lang.String getClassName() {
-      java.lang.Object ref = className_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        className_ = s;
-        return s;
-      }
+    public java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> getPdfPageItemProtoList() {
+      return pdfPageItemProto_;
     }
     /**
-     * <code>string className = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getClassNameBytes() {
-      java.lang.Object ref = className_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        className_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int PAGEITEMLIST_FIELD_NUMBER = 3;
-    private java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> pageItemList_;
-    /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
-     */
-    public java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> getPageItemListList() {
-      return pageItemList_;
-    }
-    /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
     public java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder> 
-        getPageItemListOrBuilderList() {
-      return pageItemList_;
+        getPdfPageItemProtoOrBuilderList() {
+      return pdfPageItemProto_;
     }
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
-    public int getPageItemListCount() {
-      return pageItemList_.size();
+    public int getPdfPageItemProtoCount() {
+      return pdfPageItemProto_.size();
     }
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
-    public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto getPageItemList(int index) {
-      return pageItemList_.get(index);
+    public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto getPdfPageItemProto(int index) {
+      return pdfPageItemProto_.get(index);
     }
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+     * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
      */
-    public com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder getPageItemListOrBuilder(
+    public com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder getPdfPageItemProtoOrBuilder(
         int index) {
-      return pageItemList_.get(index);
+      return pdfPageItemProto_.get(index);
     }
 
     public static final int PDFCOMPRESSION_FIELD_NUMBER = 4;
@@ -5162,14 +7512,8 @@ public final class RenderProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (id_ != 0L) {
-        output.writeInt64(1, id_);
-      }
-      if (!getClassNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, className_);
-      }
-      for (int i = 0; i < pageItemList_.size(); i++) {
-        output.writeMessage(3, pageItemList_.get(i));
+      for (int i = 0; i < pdfPageItemProto_.size(); i++) {
+        output.writeMessage(3, pdfPageItemProto_.get(i));
       }
       if (pdfCompression_ != false) {
         output.writeBool(4, pdfCompression_);
@@ -5182,16 +7526,9 @@ public final class RenderProto {
       if (size != -1) return size;
 
       size = 0;
-      if (id_ != 0L) {
+      for (int i = 0; i < pdfPageItemProto_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, id_);
-      }
-      if (!getClassNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, className_);
-      }
-      for (int i = 0; i < pageItemList_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, pageItemList_.get(i));
+          .computeMessageSize(3, pdfPageItemProto_.get(i));
       }
       if (pdfCompression_ != false) {
         size += com.google.protobuf.CodedOutputStream
@@ -5213,12 +7550,8 @@ public final class RenderProto {
       com.sysalto.render.serialization.RenderProto.PdfPageContent_proto other = (com.sysalto.render.serialization.RenderProto.PdfPageContent_proto) obj;
 
       boolean result = true;
-      result = result && (getId()
-          == other.getId());
-      result = result && getClassName()
-          .equals(other.getClassName());
-      result = result && getPageItemListList()
-          .equals(other.getPageItemListList());
+      result = result && getPdfPageItemProtoList()
+          .equals(other.getPdfPageItemProtoList());
       result = result && (getPdfCompression()
           == other.getPdfCompression());
       result = result && unknownFields.equals(other.unknownFields);
@@ -5232,14 +7565,9 @@ public final class RenderProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getId());
-      hash = (37 * hash) + CLASSNAME_FIELD_NUMBER;
-      hash = (53 * hash) + getClassName().hashCode();
-      if (getPageItemListCount() > 0) {
-        hash = (37 * hash) + PAGEITEMLIST_FIELD_NUMBER;
-        hash = (53 * hash) + getPageItemListList().hashCode();
+      if (getPdfPageItemProtoCount() > 0) {
+        hash = (37 * hash) + PDFPAGEITEM_PROTO_FIELD_NUMBER;
+        hash = (53 * hash) + getPdfPageItemProtoList().hashCode();
       }
       hash = (37 * hash) + PDFCOMPRESSION_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
@@ -5369,20 +7697,16 @@ public final class RenderProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getPageItemListFieldBuilder();
+          getPdfPageItemProtoFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
-        id_ = 0L;
-
-        className_ = "";
-
-        if (pageItemListBuilder_ == null) {
-          pageItemList_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
+        if (pdfPageItemProtoBuilder_ == null) {
+          pdfPageItemProto_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          pageItemListBuilder_.clear();
+          pdfPageItemProtoBuilder_.clear();
         }
         pdfCompression_ = false;
 
@@ -5410,16 +7734,14 @@ public final class RenderProto {
         com.sysalto.render.serialization.RenderProto.PdfPageContent_proto result = new com.sysalto.render.serialization.RenderProto.PdfPageContent_proto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        result.id_ = id_;
-        result.className_ = className_;
-        if (pageItemListBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            pageItemList_ = java.util.Collections.unmodifiableList(pageItemList_);
-            bitField0_ = (bitField0_ & ~0x00000004);
+        if (pdfPageItemProtoBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            pdfPageItemProto_ = java.util.Collections.unmodifiableList(pdfPageItemProto_);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
-          result.pageItemList_ = pageItemList_;
+          result.pdfPageItemProto_ = pdfPageItemProto_;
         } else {
-          result.pageItemList_ = pageItemListBuilder_.build();
+          result.pdfPageItemProto_ = pdfPageItemProtoBuilder_.build();
         }
         result.pdfCompression_ = pdfCompression_;
         result.bitField0_ = to_bitField0_;
@@ -5464,36 +7786,29 @@ public final class RenderProto {
 
       public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfPageContent_proto other) {
         if (other == com.sysalto.render.serialization.RenderProto.PdfPageContent_proto.getDefaultInstance()) return this;
-        if (other.getId() != 0L) {
-          setId(other.getId());
-        }
-        if (!other.getClassName().isEmpty()) {
-          className_ = other.className_;
-          onChanged();
-        }
-        if (pageItemListBuilder_ == null) {
-          if (!other.pageItemList_.isEmpty()) {
-            if (pageItemList_.isEmpty()) {
-              pageItemList_ = other.pageItemList_;
-              bitField0_ = (bitField0_ & ~0x00000004);
+        if (pdfPageItemProtoBuilder_ == null) {
+          if (!other.pdfPageItemProto_.isEmpty()) {
+            if (pdfPageItemProto_.isEmpty()) {
+              pdfPageItemProto_ = other.pdfPageItemProto_;
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
-              ensurePageItemListIsMutable();
-              pageItemList_.addAll(other.pageItemList_);
+              ensurePdfPageItemProtoIsMutable();
+              pdfPageItemProto_.addAll(other.pdfPageItemProto_);
             }
             onChanged();
           }
         } else {
-          if (!other.pageItemList_.isEmpty()) {
-            if (pageItemListBuilder_.isEmpty()) {
-              pageItemListBuilder_.dispose();
-              pageItemListBuilder_ = null;
-              pageItemList_ = other.pageItemList_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-              pageItemListBuilder_ = 
+          if (!other.pdfPageItemProto_.isEmpty()) {
+            if (pdfPageItemProtoBuilder_.isEmpty()) {
+              pdfPageItemProtoBuilder_.dispose();
+              pdfPageItemProtoBuilder_ = null;
+              pdfPageItemProto_ = other.pdfPageItemProto_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              pdfPageItemProtoBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getPageItemListFieldBuilder() : null;
+                   getPdfPageItemProtoFieldBuilder() : null;
             } else {
-              pageItemListBuilder_.addAllMessages(other.pageItemList_);
+              pdfPageItemProtoBuilder_.addAllMessages(other.pdfPageItemProto_);
             }
           }
         }
@@ -5528,339 +7843,244 @@ public final class RenderProto {
       }
       private int bitField0_;
 
-      private long id_ ;
-      /**
-       * <code>int64 id = 1;</code>
-       */
-      public long getId() {
-        return id_;
-      }
-      /**
-       * <code>int64 id = 1;</code>
-       */
-      public Builder setId(long value) {
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int64 id = 1;</code>
-       */
-      public Builder clearId() {
-        
-        id_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object className_ = "";
-      /**
-       * <code>string className = 2;</code>
-       */
-      public java.lang.String getClassName() {
-        java.lang.Object ref = className_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          className_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string className = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getClassNameBytes() {
-        java.lang.Object ref = className_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          className_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string className = 2;</code>
-       */
-      public Builder setClassName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        className_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string className = 2;</code>
-       */
-      public Builder clearClassName() {
-        
-        className_ = getDefaultInstance().getClassName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string className = 2;</code>
-       */
-      public Builder setClassNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        className_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> pageItemList_ =
+      private java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> pdfPageItemProto_ =
         java.util.Collections.emptyList();
-      private void ensurePageItemListIsMutable() {
-        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          pageItemList_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto>(pageItemList_);
-          bitField0_ |= 0x00000004;
+      private void ensurePdfPageItemProtoIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          pdfPageItemProto_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto>(pdfPageItemProto_);
+          bitField0_ |= 0x00000001;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.sysalto.render.serialization.RenderProto.PdfPageItem_proto, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder> pageItemListBuilder_;
+          com.sysalto.render.serialization.RenderProto.PdfPageItem_proto, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder> pdfPageItemProtoBuilder_;
 
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> getPageItemListList() {
-        if (pageItemListBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(pageItemList_);
+      public java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> getPdfPageItemProtoList() {
+        if (pdfPageItemProtoBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(pdfPageItemProto_);
         } else {
-          return pageItemListBuilder_.getMessageList();
+          return pdfPageItemProtoBuilder_.getMessageList();
         }
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public int getPageItemListCount() {
-        if (pageItemListBuilder_ == null) {
-          return pageItemList_.size();
+      public int getPdfPageItemProtoCount() {
+        if (pdfPageItemProtoBuilder_ == null) {
+          return pdfPageItemProto_.size();
         } else {
-          return pageItemListBuilder_.getCount();
+          return pdfPageItemProtoBuilder_.getCount();
         }
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto getPageItemList(int index) {
-        if (pageItemListBuilder_ == null) {
-          return pageItemList_.get(index);
+      public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto getPdfPageItemProto(int index) {
+        if (pdfPageItemProtoBuilder_ == null) {
+          return pdfPageItemProto_.get(index);
         } else {
-          return pageItemListBuilder_.getMessage(index);
+          return pdfPageItemProtoBuilder_.getMessage(index);
         }
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public Builder setPageItemList(
+      public Builder setPdfPageItemProto(
           int index, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto value) {
-        if (pageItemListBuilder_ == null) {
+        if (pdfPageItemProtoBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensurePageItemListIsMutable();
-          pageItemList_.set(index, value);
+          ensurePdfPageItemProtoIsMutable();
+          pdfPageItemProto_.set(index, value);
           onChanged();
         } else {
-          pageItemListBuilder_.setMessage(index, value);
+          pdfPageItemProtoBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public Builder setPageItemList(
+      public Builder setPdfPageItemProto(
           int index, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder builderForValue) {
-        if (pageItemListBuilder_ == null) {
-          ensurePageItemListIsMutable();
-          pageItemList_.set(index, builderForValue.build());
+        if (pdfPageItemProtoBuilder_ == null) {
+          ensurePdfPageItemProtoIsMutable();
+          pdfPageItemProto_.set(index, builderForValue.build());
           onChanged();
         } else {
-          pageItemListBuilder_.setMessage(index, builderForValue.build());
+          pdfPageItemProtoBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public Builder addPageItemList(com.sysalto.render.serialization.RenderProto.PdfPageItem_proto value) {
-        if (pageItemListBuilder_ == null) {
+      public Builder addPdfPageItemProto(com.sysalto.render.serialization.RenderProto.PdfPageItem_proto value) {
+        if (pdfPageItemProtoBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensurePageItemListIsMutable();
-          pageItemList_.add(value);
+          ensurePdfPageItemProtoIsMutable();
+          pdfPageItemProto_.add(value);
           onChanged();
         } else {
-          pageItemListBuilder_.addMessage(value);
+          pdfPageItemProtoBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public Builder addPageItemList(
+      public Builder addPdfPageItemProto(
           int index, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto value) {
-        if (pageItemListBuilder_ == null) {
+        if (pdfPageItemProtoBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensurePageItemListIsMutable();
-          pageItemList_.add(index, value);
+          ensurePdfPageItemProtoIsMutable();
+          pdfPageItemProto_.add(index, value);
           onChanged();
         } else {
-          pageItemListBuilder_.addMessage(index, value);
+          pdfPageItemProtoBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public Builder addPageItemList(
+      public Builder addPdfPageItemProto(
           com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder builderForValue) {
-        if (pageItemListBuilder_ == null) {
-          ensurePageItemListIsMutable();
-          pageItemList_.add(builderForValue.build());
+        if (pdfPageItemProtoBuilder_ == null) {
+          ensurePdfPageItemProtoIsMutable();
+          pdfPageItemProto_.add(builderForValue.build());
           onChanged();
         } else {
-          pageItemListBuilder_.addMessage(builderForValue.build());
+          pdfPageItemProtoBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public Builder addPageItemList(
+      public Builder addPdfPageItemProto(
           int index, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder builderForValue) {
-        if (pageItemListBuilder_ == null) {
-          ensurePageItemListIsMutable();
-          pageItemList_.add(index, builderForValue.build());
+        if (pdfPageItemProtoBuilder_ == null) {
+          ensurePdfPageItemProtoIsMutable();
+          pdfPageItemProto_.add(index, builderForValue.build());
           onChanged();
         } else {
-          pageItemListBuilder_.addMessage(index, builderForValue.build());
+          pdfPageItemProtoBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public Builder addAllPageItemList(
+      public Builder addAllPdfPageItemProto(
           java.lang.Iterable<? extends com.sysalto.render.serialization.RenderProto.PdfPageItem_proto> values) {
-        if (pageItemListBuilder_ == null) {
-          ensurePageItemListIsMutable();
+        if (pdfPageItemProtoBuilder_ == null) {
+          ensurePdfPageItemProtoIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, pageItemList_);
+              values, pdfPageItemProto_);
           onChanged();
         } else {
-          pageItemListBuilder_.addAllMessages(values);
+          pdfPageItemProtoBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public Builder clearPageItemList() {
-        if (pageItemListBuilder_ == null) {
-          pageItemList_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
+      public Builder clearPdfPageItemProto() {
+        if (pdfPageItemProtoBuilder_ == null) {
+          pdfPageItemProto_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
-          pageItemListBuilder_.clear();
+          pdfPageItemProtoBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public Builder removePageItemList(int index) {
-        if (pageItemListBuilder_ == null) {
-          ensurePageItemListIsMutable();
-          pageItemList_.remove(index);
+      public Builder removePdfPageItemProto(int index) {
+        if (pdfPageItemProtoBuilder_ == null) {
+          ensurePdfPageItemProtoIsMutable();
+          pdfPageItemProto_.remove(index);
           onChanged();
         } else {
-          pageItemListBuilder_.remove(index);
+          pdfPageItemProtoBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder getPageItemListBuilder(
+      public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder getPdfPageItemProtoBuilder(
           int index) {
-        return getPageItemListFieldBuilder().getBuilder(index);
+        return getPdfPageItemProtoFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder getPageItemListOrBuilder(
+      public com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder getPdfPageItemProtoOrBuilder(
           int index) {
-        if (pageItemListBuilder_ == null) {
-          return pageItemList_.get(index);  } else {
-          return pageItemListBuilder_.getMessageOrBuilder(index);
+        if (pdfPageItemProtoBuilder_ == null) {
+          return pdfPageItemProto_.get(index);  } else {
+          return pdfPageItemProtoBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
       public java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder> 
-           getPageItemListOrBuilderList() {
-        if (pageItemListBuilder_ != null) {
-          return pageItemListBuilder_.getMessageOrBuilderList();
+           getPdfPageItemProtoOrBuilderList() {
+        if (pdfPageItemProtoBuilder_ != null) {
+          return pdfPageItemProtoBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(pageItemList_);
+          return java.util.Collections.unmodifiableList(pdfPageItemProto_);
         }
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder addPageItemListBuilder() {
-        return getPageItemListFieldBuilder().addBuilder(
+      public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder addPdfPageItemProtoBuilder() {
+        return getPdfPageItemProtoFieldBuilder().addBuilder(
             com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
-      public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder addPageItemListBuilder(
+      public com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder addPdfPageItemProtoBuilder(
           int index) {
-        return getPageItemListFieldBuilder().addBuilder(
+        return getPdfPageItemProtoFieldBuilder().addBuilder(
             index, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pageItemList = 3;</code>
+       * <code>repeated .com.sysalto.render.serialization.PdfPageItem_proto pdfPageItem_proto = 3;</code>
        */
       public java.util.List<com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder> 
-           getPageItemListBuilderList() {
-        return getPageItemListFieldBuilder().getBuilderList();
+           getPdfPageItemProtoBuilderList() {
+        return getPdfPageItemProtoFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
           com.sysalto.render.serialization.RenderProto.PdfPageItem_proto, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder> 
-          getPageItemListFieldBuilder() {
-        if (pageItemListBuilder_ == null) {
-          pageItemListBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          getPdfPageItemProtoFieldBuilder() {
+        if (pdfPageItemProtoBuilder_ == null) {
+          pdfPageItemProtoBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.sysalto.render.serialization.RenderProto.PdfPageItem_proto, com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfPageItem_protoOrBuilder>(
-                  pageItemList_,
-                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  pdfPageItemProto_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
-          pageItemList_ = null;
+          pdfPageItemProto_ = null;
         }
-        return pageItemListBuilder_;
+        return pdfPageItemProtoBuilder_;
       }
 
       private boolean pdfCompression_ ;
@@ -6900,6 +9120,21 @@ public final class RenderProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_sysalto_render_serialization_PdfPageItem_proto_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_ReportTxt_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_ReportTxt_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_PdfText_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_PdfText_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sysalto_render_serialization_PdfPageContent_proto_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -6938,14 +9173,22 @@ public final class RenderProto {
       "atternList\030\005 \003(\003\022\030\n\020idAnnotationList\030\006 \003" +
       "(\003\022\023\n\013idImageList\030\007 \003(\003\022\030\n\020idContentPage" +
       "Opt\030\010 \003(\003\"5\n\rPdfFont_proto\022\017\n\007refName\030\001 " +
-      "\001(\t\022\023\n\013fontKeyName\030\002 \001(\t\"\023\n\021PdfPageItem_" +
-      "proto\"\230\001\n\024PdfPageContent_proto\022\n\n\002id\030\001 \001" +
-      "(\003\022\021\n\tclassName\030\002 \001(\t\022I\n\014pageItemList\030\003 " +
-      "\003(\01323.com.sysalto.render.serialization.P" +
-      "dfPageItem_proto\022\026\n\016pdfCompression\030\004 \001(\010" +
-      "\"V\n\021PdfPageList_proto\022\n\n\002id\030\001 \001(\003\022\021\n\tcla" +
-      "ssName\030\002 \001(\t\022\020\n\010parentId\030\003 \003(\003\022\020\n\010pageLi" +
-      "st\030\004 \003(\003B\002H\001b\006proto3"
+      "\001(\t\022\023\n\013fontKeyName\030\002 \001(\t\"j\n\021PdfPageItem_" +
+      "proto\022H\n\rpdfText_proto\030\001 \001(\0132/.com.sysal" +
+      "to.render.serialization.PdfText_protoH\000B" +
+      "\013\n\tfieldItem\"\036\n\017ReportTxt_proto\022\013\n\003txt\030\001" +
+      " \001(\t\"\212\001\n\024PdfTxtFragment_proto\022\t\n\001x\030\001 \001(\002" +
+      "\022\t\n\001y\030\002 \001(\002\022F\n\013rtext_proto\030\003 \001(\01321.com.s" +
+      "ysalto.render.serialization.ReportTxt_pr" +
+      "oto\022\024\n\014fonttRefName\030\004 \001(\t\"X\n\rPdfText_pro" +
+      "to\022G\n\007txtList\030\001 \003(\01326.com.sysalto.render" +
+      ".serialization.PdfTxtFragment_proto\"~\n\024P" +
+      "dfPageContent_proto\022N\n\021pdfPageItem_proto" +
+      "\030\003 \003(\01323.com.sysalto.render.serializatio" +
+      "n.PdfPageItem_proto\022\026\n\016pdfCompression\030\004 " +
+      "\001(\010\"V\n\021PdfPageList_proto\022\n\n\002id\030\001 \001(\003\022\021\n\t" +
+      "className\030\002 \001(\t\022\020\n\010parentId\030\003 \003(\003\022\020\n\010pag" +
+      "eList\030\004 \003(\003B\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6988,15 +9231,33 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfPageItem_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfPageItem_proto_descriptor,
-        new java.lang.String[] { });
-    internal_static_com_sysalto_render_serialization_PdfPageContent_proto_descriptor =
+        new java.lang.String[] { "PdfTextProto", "FieldItem", });
+    internal_static_com_sysalto_render_serialization_ReportTxt_proto_descriptor =
       getDescriptor().getMessageTypes().get(5);
+    internal_static_com_sysalto_render_serialization_ReportTxt_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_ReportTxt_proto_descriptor,
+        new java.lang.String[] { "Txt", });
+    internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_PdfTxtFragment_proto_descriptor,
+        new java.lang.String[] { "X", "Y", "RtextProto", "FonttRefName", });
+    internal_static_com_sysalto_render_serialization_PdfText_proto_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_com_sysalto_render_serialization_PdfText_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_PdfText_proto_descriptor,
+        new java.lang.String[] { "TxtList", });
+    internal_static_com_sysalto_render_serialization_PdfPageContent_proto_descriptor =
+      getDescriptor().getMessageTypes().get(8);
     internal_static_com_sysalto_render_serialization_PdfPageContent_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfPageContent_proto_descriptor,
-        new java.lang.String[] { "Id", "ClassName", "PageItemList", "PdfCompression", });
+        new java.lang.String[] { "PdfPageItemProto", "PdfCompression", });
     internal_static_com_sysalto_render_serialization_PdfPageList_proto_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_com_sysalto_render_serialization_PdfPageList_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfPageList_proto_descriptor,

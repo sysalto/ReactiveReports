@@ -38,13 +38,30 @@ message PdfFont_proto {
 }
 
 message PdfPageItem_proto {
+    oneof fieldItem {
+        PdfText_proto pdfText_proto = 1;
+    }
+}
 
+message ReportTxt_proto {
+    string txt = 1;
+}
+
+
+message PdfTxtFragment_proto {
+    float x = 1;
+    float y = 2;
+    ReportTxt_proto rtext_proto = 3;
+    string fonttRefName = 4;
+}
+
+
+message PdfText_proto {
+    repeated PdfTxtFragment_proto txtList = 1;
 }
 
 message PdfPageContent_proto {
-    int64 id = 1;
-    string className = 2;
-    repeated PdfPageItem_proto pageItemList = 3;
+    repeated PdfPageItem_proto pdfPageItem_proto = 3;
     bool pdfCompression = 4;
 }
 
