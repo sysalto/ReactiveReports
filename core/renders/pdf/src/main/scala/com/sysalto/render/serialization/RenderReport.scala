@@ -229,8 +229,11 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
 
 		val colorFct = new renderReportTypes.PdfShaddingFctColor(nextId(), from, to)
+		renderReportTypes.setObject1(colorFct)
 		val pdfShadding = new renderReportTypes.PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct.id)
+		renderReportTypes.setObject1(pdfShadding)
 		val pattern = new renderReportTypes.PdfGPattern(nextId(), pdfShadding.id)
+		renderReportTypes.setObject1(pattern)
 		currentPage.idPdfPatternList ++= List(pattern.id)
 		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
 		this.stroke()

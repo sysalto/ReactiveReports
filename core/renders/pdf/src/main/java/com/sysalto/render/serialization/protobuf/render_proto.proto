@@ -13,7 +13,8 @@ message PdfBaseItem_proto {
         PdfFont_proto pdfFontProto = 5;
         PdfPageContent_proto pdfPageContentProto = 6;
         PdfPageList_proto pdfPageListProto = 7;
-        PdfImage_proto pdfImageProto=8;
+        PdfImage_proto pdfImageProto = 8;
+        PdfShaddingFctColor_proto pdfShaddingFctColor_proto=9;
     }
 }
 message PdfCatalog_proto {
@@ -30,7 +31,7 @@ message PdfPage_proto {
     repeated int64 idAnnotationList = 6;
     repeated int64 idImageList = 7;
     repeated int64 idContentPageOpt = 8;
-    int64 leafNbr=9;
+    int64 leafNbr = 9;
 }
 
 
@@ -73,11 +74,24 @@ message PdfPageContent_proto {
 }
 
 message PdfPageList_proto {
-    int64 leafNbr=1;
+    int64 leafNbr = 1;
     repeated int64 parentId = 2;
     repeated int64 pageList = 3;
 }
 
 message PdfImage_proto {
-   string fileName=1;
+    string fileName = 1;
+}
+
+message ReportColor_proto {
+    int32 r = 1;
+    int32 g = 2;
+    int32 b = 3;
+    float opacity = 4;
+}
+
+message PdfShaddingFctColor_proto {
+    ReportColor_proto color1 = 1;
+    ReportColor_proto color2 = 2;
+
 }

@@ -106,6 +106,19 @@ public final class RenderProto {
      */
     com.sysalto.render.serialization.RenderProto.PdfImage_protoOrBuilder getPdfImageProtoOrBuilder();
 
+    /**
+     * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+     */
+    boolean hasPdfShaddingFctColorProto();
+    /**
+     * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto getPdfShaddingFctColorProto();
+    /**
+     * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_protoOrBuilder getPdfShaddingFctColorProtoOrBuilder();
+
     public com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase getFieldCase();
   }
   /**
@@ -250,6 +263,20 @@ public final class RenderProto {
               fieldCase_ = 8;
               break;
             }
+            case 74: {
+              com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.Builder subBuilder = null;
+              if (fieldCase_ == 9) {
+                subBuilder = ((com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_).toBuilder();
+              }
+              field_ =
+                  input.readMessage(com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_);
+                field_ = subBuilder.buildPartial();
+              }
+              fieldCase_ = 9;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -284,6 +311,7 @@ public final class RenderProto {
       PDFPAGECONTENTPROTO(6),
       PDFPAGELISTPROTO(7),
       PDFIMAGEPROTO(8),
+      PDFSHADDINGFCTCOLOR_PROTO(9),
       FIELD_NOT_SET(0);
       private final int value;
       private FieldCase(int value) {
@@ -305,6 +333,7 @@ public final class RenderProto {
           case 6: return PDFPAGECONTENTPROTO;
           case 7: return PDFPAGELISTPROTO;
           case 8: return PDFIMAGEPROTO;
+          case 9: return PDFSHADDINGFCTCOLOR_PROTO;
           case 0: return FIELD_NOT_SET;
           default: return null;
         }
@@ -494,6 +523,32 @@ public final class RenderProto {
       return com.sysalto.render.serialization.RenderProto.PdfImage_proto.getDefaultInstance();
     }
 
+    public static final int PDFSHADDINGFCTCOLOR_PROTO_FIELD_NUMBER = 9;
+    /**
+     * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+     */
+    public boolean hasPdfShaddingFctColorProto() {
+      return fieldCase_ == 9;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto getPdfShaddingFctColorProto() {
+      if (fieldCase_ == 9) {
+         return (com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_;
+      }
+      return com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.getDefaultInstance();
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_protoOrBuilder getPdfShaddingFctColorProtoOrBuilder() {
+      if (fieldCase_ == 9) {
+         return (com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_;
+      }
+      return com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -529,6 +584,9 @@ public final class RenderProto {
       }
       if (fieldCase_ == 8) {
         output.writeMessage(8, (com.sysalto.render.serialization.RenderProto.PdfImage_proto) field_);
+      }
+      if (fieldCase_ == 9) {
+        output.writeMessage(9, (com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_);
       }
       unknownFields.writeTo(output);
     }
@@ -569,6 +627,10 @@ public final class RenderProto {
       if (fieldCase_ == 8) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(8, (com.sysalto.render.serialization.RenderProto.PdfImage_proto) field_);
+      }
+      if (fieldCase_ == 9) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(9, (com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -618,6 +680,10 @@ public final class RenderProto {
           result = result && getPdfImageProto()
               .equals(other.getPdfImageProto());
           break;
+        case 9:
+          result = result && getPdfShaddingFctColorProto()
+              .equals(other.getPdfShaddingFctColorProto());
+          break;
         case 0:
         default:
       }
@@ -662,6 +728,10 @@ public final class RenderProto {
         case 8:
           hash = (37 * hash) + PDFIMAGEPROTO_FIELD_NUMBER;
           hash = (53 * hash) + getPdfImageProto().hashCode();
+          break;
+        case 9:
+          hash = (37 * hash) + PDFSHADDINGFCTCOLOR_PROTO_FIELD_NUMBER;
+          hash = (53 * hash) + getPdfShaddingFctColorProto().hashCode();
           break;
         case 0:
         default:
@@ -867,6 +937,13 @@ public final class RenderProto {
             result.field_ = pdfImageProtoBuilder_.build();
           }
         }
+        if (fieldCase_ == 9) {
+          if (pdfShaddingFctColorProtoBuilder_ == null) {
+            result.field_ = field_;
+          } else {
+            result.field_ = pdfShaddingFctColorProtoBuilder_.build();
+          }
+        }
         result.fieldCase_ = fieldCase_;
         onBuilt();
         return result;
@@ -938,6 +1015,10 @@ public final class RenderProto {
           }
           case PDFIMAGEPROTO: {
             mergePdfImageProto(other.getPdfImageProto());
+            break;
+          }
+          case PDFSHADDINGFCTCOLOR_PROTO: {
+            mergePdfShaddingFctColorProto(other.getPdfShaddingFctColorProto());
             break;
           }
           case FIELD_NOT_SET: {
@@ -1852,6 +1933,142 @@ public final class RenderProto {
         fieldCase_ = 8;
         onChanged();;
         return pdfImageProtoBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto, com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_protoOrBuilder> pdfShaddingFctColorProtoBuilder_;
+      /**
+       * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+       */
+      public boolean hasPdfShaddingFctColorProto() {
+        return fieldCase_ == 9;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto getPdfShaddingFctColorProto() {
+        if (pdfShaddingFctColorProtoBuilder_ == null) {
+          if (fieldCase_ == 9) {
+            return (com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_;
+          }
+          return com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.getDefaultInstance();
+        } else {
+          if (fieldCase_ == 9) {
+            return pdfShaddingFctColorProtoBuilder_.getMessage();
+          }
+          return com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+       */
+      public Builder setPdfShaddingFctColorProto(com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto value) {
+        if (pdfShaddingFctColorProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          field_ = value;
+          onChanged();
+        } else {
+          pdfShaddingFctColorProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+       */
+      public Builder setPdfShaddingFctColorProto(
+          com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.Builder builderForValue) {
+        if (pdfShaddingFctColorProtoBuilder_ == null) {
+          field_ = builderForValue.build();
+          onChanged();
+        } else {
+          pdfShaddingFctColorProtoBuilder_.setMessage(builderForValue.build());
+        }
+        fieldCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+       */
+      public Builder mergePdfShaddingFctColorProto(com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto value) {
+        if (pdfShaddingFctColorProtoBuilder_ == null) {
+          if (fieldCase_ == 9 &&
+              field_ != com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.getDefaultInstance()) {
+            field_ = com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.newBuilder((com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            field_ = value;
+          }
+          onChanged();
+        } else {
+          if (fieldCase_ == 9) {
+            pdfShaddingFctColorProtoBuilder_.mergeFrom(value);
+          }
+          pdfShaddingFctColorProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+       */
+      public Builder clearPdfShaddingFctColorProto() {
+        if (pdfShaddingFctColorProtoBuilder_ == null) {
+          if (fieldCase_ == 9) {
+            fieldCase_ = 0;
+            field_ = null;
+            onChanged();
+          }
+        } else {
+          if (fieldCase_ == 9) {
+            fieldCase_ = 0;
+            field_ = null;
+          }
+          pdfShaddingFctColorProtoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.Builder getPdfShaddingFctColorProtoBuilder() {
+        return getPdfShaddingFctColorProtoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_protoOrBuilder getPdfShaddingFctColorProtoOrBuilder() {
+        if ((fieldCase_ == 9) && (pdfShaddingFctColorProtoBuilder_ != null)) {
+          return pdfShaddingFctColorProtoBuilder_.getMessageOrBuilder();
+        } else {
+          if (fieldCase_ == 9) {
+            return (com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_;
+          }
+          return com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto, com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_protoOrBuilder> 
+          getPdfShaddingFctColorProtoFieldBuilder() {
+        if (pdfShaddingFctColorProtoBuilder_ == null) {
+          if (!(fieldCase_ == 9)) {
+            field_ = com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.getDefaultInstance();
+          }
+          pdfShaddingFctColorProtoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto, com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_protoOrBuilder>(
+                  (com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) field_,
+                  getParentForChildren(),
+                  isClean());
+          field_ = null;
+        }
+        fieldCase_ = 9;
+        onChanged();;
+        return pdfShaddingFctColorProtoBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -10367,6 +10584,1425 @@ public final class RenderProto {
 
   }
 
+  public interface ReportColor_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.ReportColor_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 r = 1;</code>
+     */
+    int getR();
+
+    /**
+     * <code>int32 g = 2;</code>
+     */
+    int getG();
+
+    /**
+     * <code>int32 b = 3;</code>
+     */
+    int getB();
+
+    /**
+     * <code>float opacity = 4;</code>
+     */
+    float getOpacity();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.ReportColor_proto}
+   */
+  public  static final class ReportColor_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.ReportColor_proto)
+      ReportColor_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ReportColor_proto.newBuilder() to construct.
+    private ReportColor_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ReportColor_proto() {
+      r_ = 0;
+      g_ = 0;
+      b_ = 0;
+      opacity_ = 0F;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ReportColor_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              r_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              g_ = input.readInt32();
+              break;
+            }
+            case 24: {
+
+              b_ = input.readInt32();
+              break;
+            }
+            case 37: {
+
+              opacity_ = input.readFloat();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportColor_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportColor_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.class, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder.class);
+    }
+
+    public static final int R_FIELD_NUMBER = 1;
+    private int r_;
+    /**
+     * <code>int32 r = 1;</code>
+     */
+    public int getR() {
+      return r_;
+    }
+
+    public static final int G_FIELD_NUMBER = 2;
+    private int g_;
+    /**
+     * <code>int32 g = 2;</code>
+     */
+    public int getG() {
+      return g_;
+    }
+
+    public static final int B_FIELD_NUMBER = 3;
+    private int b_;
+    /**
+     * <code>int32 b = 3;</code>
+     */
+    public int getB() {
+      return b_;
+    }
+
+    public static final int OPACITY_FIELD_NUMBER = 4;
+    private float opacity_;
+    /**
+     * <code>float opacity = 4;</code>
+     */
+    public float getOpacity() {
+      return opacity_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (r_ != 0) {
+        output.writeInt32(1, r_);
+      }
+      if (g_ != 0) {
+        output.writeInt32(2, g_);
+      }
+      if (b_ != 0) {
+        output.writeInt32(3, b_);
+      }
+      if (opacity_ != 0F) {
+        output.writeFloat(4, opacity_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (r_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, r_);
+      }
+      if (g_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, g_);
+      }
+      if (b_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, b_);
+      }
+      if (opacity_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(4, opacity_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.ReportColor_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.ReportColor_proto other = (com.sysalto.render.serialization.RenderProto.ReportColor_proto) obj;
+
+      boolean result = true;
+      result = result && (getR()
+          == other.getR());
+      result = result && (getG()
+          == other.getG());
+      result = result && (getB()
+          == other.getB());
+      result = result && (
+          java.lang.Float.floatToIntBits(getOpacity())
+          == java.lang.Float.floatToIntBits(
+              other.getOpacity()));
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + R_FIELD_NUMBER;
+      hash = (53 * hash) + getR();
+      hash = (37 * hash) + G_FIELD_NUMBER;
+      hash = (53 * hash) + getG();
+      hash = (37 * hash) + B_FIELD_NUMBER;
+      hash = (53 * hash) + getB();
+      hash = (37 * hash) + OPACITY_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getOpacity());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.ReportColor_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.ReportColor_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.ReportColor_proto)
+        com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportColor_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportColor_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.ReportColor_proto.class, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.ReportColor_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        r_ = 0;
+
+        g_ = 0;
+
+        b_ = 0;
+
+        opacity_ = 0F;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_ReportColor_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.ReportColor_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.ReportColor_proto build() {
+        com.sysalto.render.serialization.RenderProto.ReportColor_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.ReportColor_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.ReportColor_proto result = new com.sysalto.render.serialization.RenderProto.ReportColor_proto(this);
+        result.r_ = r_;
+        result.g_ = g_;
+        result.b_ = b_;
+        result.opacity_ = opacity_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.ReportColor_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.ReportColor_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.ReportColor_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance()) return this;
+        if (other.getR() != 0) {
+          setR(other.getR());
+        }
+        if (other.getG() != 0) {
+          setG(other.getG());
+        }
+        if (other.getB() != 0) {
+          setB(other.getB());
+        }
+        if (other.getOpacity() != 0F) {
+          setOpacity(other.getOpacity());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.ReportColor_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.ReportColor_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int r_ ;
+      /**
+       * <code>int32 r = 1;</code>
+       */
+      public int getR() {
+        return r_;
+      }
+      /**
+       * <code>int32 r = 1;</code>
+       */
+      public Builder setR(int value) {
+        
+        r_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 r = 1;</code>
+       */
+      public Builder clearR() {
+        
+        r_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int g_ ;
+      /**
+       * <code>int32 g = 2;</code>
+       */
+      public int getG() {
+        return g_;
+      }
+      /**
+       * <code>int32 g = 2;</code>
+       */
+      public Builder setG(int value) {
+        
+        g_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 g = 2;</code>
+       */
+      public Builder clearG() {
+        
+        g_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int b_ ;
+      /**
+       * <code>int32 b = 3;</code>
+       */
+      public int getB() {
+        return b_;
+      }
+      /**
+       * <code>int32 b = 3;</code>
+       */
+      public Builder setB(int value) {
+        
+        b_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 b = 3;</code>
+       */
+      public Builder clearB() {
+        
+        b_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private float opacity_ ;
+      /**
+       * <code>float opacity = 4;</code>
+       */
+      public float getOpacity() {
+        return opacity_;
+      }
+      /**
+       * <code>float opacity = 4;</code>
+       */
+      public Builder setOpacity(float value) {
+        
+        opacity_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float opacity = 4;</code>
+       */
+      public Builder clearOpacity() {
+        
+        opacity_ = 0F;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.ReportColor_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.ReportColor_proto)
+    private static final com.sysalto.render.serialization.RenderProto.ReportColor_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.ReportColor_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.ReportColor_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ReportColor_proto>
+        PARSER = new com.google.protobuf.AbstractParser<ReportColor_proto>() {
+      public ReportColor_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ReportColor_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ReportColor_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ReportColor_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.ReportColor_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PdfShaddingFctColor_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.PdfShaddingFctColor_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+     */
+    boolean hasColor1();
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.ReportColor_proto getColor1();
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder getColor1OrBuilder();
+
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+     */
+    boolean hasColor2();
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.ReportColor_proto getColor2();
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder getColor2OrBuilder();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.PdfShaddingFctColor_proto}
+   */
+  public  static final class PdfShaddingFctColor_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.PdfShaddingFctColor_proto)
+      PdfShaddingFctColor_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use PdfShaddingFctColor_proto.newBuilder() to construct.
+    private PdfShaddingFctColor_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PdfShaddingFctColor_proto() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PdfShaddingFctColor_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder subBuilder = null;
+              if (color1_ != null) {
+                subBuilder = color1_.toBuilder();
+              }
+              color1_ = input.readMessage(com.sysalto.render.serialization.RenderProto.ReportColor_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(color1_);
+                color1_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 18: {
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder subBuilder = null;
+              if (color2_ != null) {
+                subBuilder = color2_.toBuilder();
+              }
+              color2_ = input.readMessage(com.sysalto.render.serialization.RenderProto.ReportColor_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(color2_);
+                color2_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.class, com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.Builder.class);
+    }
+
+    public static final int COLOR1_FIELD_NUMBER = 1;
+    private com.sysalto.render.serialization.RenderProto.ReportColor_proto color1_;
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+     */
+    public boolean hasColor1() {
+      return color1_ != null;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.ReportColor_proto getColor1() {
+      return color1_ == null ? com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance() : color1_;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder getColor1OrBuilder() {
+      return getColor1();
+    }
+
+    public static final int COLOR2_FIELD_NUMBER = 2;
+    private com.sysalto.render.serialization.RenderProto.ReportColor_proto color2_;
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+     */
+    public boolean hasColor2() {
+      return color2_ != null;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.ReportColor_proto getColor2() {
+      return color2_ == null ? com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance() : color2_;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder getColor2OrBuilder() {
+      return getColor2();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (color1_ != null) {
+        output.writeMessage(1, getColor1());
+      }
+      if (color2_ != null) {
+        output.writeMessage(2, getColor2());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (color1_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getColor1());
+      }
+      if (color2_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getColor2());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto other = (com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) obj;
+
+      boolean result = true;
+      result = result && (hasColor1() == other.hasColor1());
+      if (hasColor1()) {
+        result = result && getColor1()
+            .equals(other.getColor1());
+      }
+      result = result && (hasColor2() == other.hasColor2());
+      if (hasColor2()) {
+        result = result && getColor2()
+            .equals(other.getColor2());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasColor1()) {
+        hash = (37 * hash) + COLOR1_FIELD_NUMBER;
+        hash = (53 * hash) + getColor1().hashCode();
+      }
+      if (hasColor2()) {
+        hash = (37 * hash) + COLOR2_FIELD_NUMBER;
+        hash = (53 * hash) + getColor2().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.PdfShaddingFctColor_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.PdfShaddingFctColor_proto)
+        com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.class, com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (color1Builder_ == null) {
+          color1_ = null;
+        } else {
+          color1_ = null;
+          color1Builder_ = null;
+        }
+        if (color2Builder_ == null) {
+          color2_ = null;
+        } else {
+          color2_ = null;
+          color2Builder_ = null;
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto build() {
+        com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto result = new com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto(this);
+        if (color1Builder_ == null) {
+          result.color1_ = color1_;
+        } else {
+          result.color1_ = color1Builder_.build();
+        }
+        if (color2Builder_ == null) {
+          result.color2_ = color2_;
+        } else {
+          result.color2_ = color2Builder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto.getDefaultInstance()) return this;
+        if (other.hasColor1()) {
+          mergeColor1(other.getColor1());
+        }
+        if (other.hasColor2()) {
+          mergeColor2(other.getColor2());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private com.sysalto.render.serialization.RenderProto.ReportColor_proto color1_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.ReportColor_proto, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder> color1Builder_;
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+       */
+      public boolean hasColor1() {
+        return color1Builder_ != null || color1_ != null;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportColor_proto getColor1() {
+        if (color1Builder_ == null) {
+          return color1_ == null ? com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance() : color1_;
+        } else {
+          return color1Builder_.getMessage();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+       */
+      public Builder setColor1(com.sysalto.render.serialization.RenderProto.ReportColor_proto value) {
+        if (color1Builder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          color1_ = value;
+          onChanged();
+        } else {
+          color1Builder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+       */
+      public Builder setColor1(
+          com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder builderForValue) {
+        if (color1Builder_ == null) {
+          color1_ = builderForValue.build();
+          onChanged();
+        } else {
+          color1Builder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+       */
+      public Builder mergeColor1(com.sysalto.render.serialization.RenderProto.ReportColor_proto value) {
+        if (color1Builder_ == null) {
+          if (color1_ != null) {
+            color1_ =
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.newBuilder(color1_).mergeFrom(value).buildPartial();
+          } else {
+            color1_ = value;
+          }
+          onChanged();
+        } else {
+          color1Builder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+       */
+      public Builder clearColor1() {
+        if (color1Builder_ == null) {
+          color1_ = null;
+          onChanged();
+        } else {
+          color1_ = null;
+          color1Builder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder getColor1Builder() {
+        
+        onChanged();
+        return getColor1FieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder getColor1OrBuilder() {
+        if (color1Builder_ != null) {
+          return color1Builder_.getMessageOrBuilder();
+        } else {
+          return color1_ == null ?
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance() : color1_;
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color1 = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.ReportColor_proto, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder> 
+          getColor1FieldBuilder() {
+        if (color1Builder_ == null) {
+          color1Builder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder>(
+                  getColor1(),
+                  getParentForChildren(),
+                  isClean());
+          color1_ = null;
+        }
+        return color1Builder_;
+      }
+
+      private com.sysalto.render.serialization.RenderProto.ReportColor_proto color2_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.ReportColor_proto, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder> color2Builder_;
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+       */
+      public boolean hasColor2() {
+        return color2Builder_ != null || color2_ != null;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportColor_proto getColor2() {
+        if (color2Builder_ == null) {
+          return color2_ == null ? com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance() : color2_;
+        } else {
+          return color2Builder_.getMessage();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+       */
+      public Builder setColor2(com.sysalto.render.serialization.RenderProto.ReportColor_proto value) {
+        if (color2Builder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          color2_ = value;
+          onChanged();
+        } else {
+          color2Builder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+       */
+      public Builder setColor2(
+          com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder builderForValue) {
+        if (color2Builder_ == null) {
+          color2_ = builderForValue.build();
+          onChanged();
+        } else {
+          color2Builder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+       */
+      public Builder mergeColor2(com.sysalto.render.serialization.RenderProto.ReportColor_proto value) {
+        if (color2Builder_ == null) {
+          if (color2_ != null) {
+            color2_ =
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.newBuilder(color2_).mergeFrom(value).buildPartial();
+          } else {
+            color2_ = value;
+          }
+          onChanged();
+        } else {
+          color2Builder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+       */
+      public Builder clearColor2() {
+        if (color2Builder_ == null) {
+          color2_ = null;
+          onChanged();
+        } else {
+          color2_ = null;
+          color2Builder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder getColor2Builder() {
+        
+        onChanged();
+        return getColor2FieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder getColor2OrBuilder() {
+        if (color2Builder_ != null) {
+          return color2Builder_.getMessageOrBuilder();
+        } else {
+          return color2_ == null ?
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance() : color2_;
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color2 = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.ReportColor_proto, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder> 
+          getColor2FieldBuilder() {
+        if (color2Builder_ == null) {
+          color2Builder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder>(
+                  getColor2(),
+                  getParentForChildren(),
+                  isClean());
+          color2_ = null;
+        }
+        return color2Builder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.PdfShaddingFctColor_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.PdfShaddingFctColor_proto)
+    private static final com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PdfShaddingFctColor_proto>
+        PARSER = new com.google.protobuf.AbstractParser<PdfShaddingFctColor_proto>() {
+      public PdfShaddingFctColor_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PdfShaddingFctColor_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PdfShaddingFctColor_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PdfShaddingFctColor_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.PdfShaddingFctColor_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sysalto_render_serialization_PdfBaseItem_proto_descriptor;
   private static final 
@@ -10427,6 +12063,16 @@ public final class RenderProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_sysalto_render_serialization_PdfImage_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_ReportColor_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_ReportColor_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -10437,7 +12083,7 @@ public final class RenderProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022render_proto.proto\022 com.sysalto.render" +
-      ".serialization\"\214\004\n\021PdfBaseItem_proto\022\n\n\002" +
+      ".serialization\"\356\004\n\021PdfBaseItem_proto\022\n\n\002" +
       "id\030\001 \001(\003\022\016\n\006offset\030\002 \001(\003\022M\n\017pdfCatalogPr" +
       "oto\030\003 \001(\01322.com.sysalto.render.serializa" +
       "tion.PdfCatalog_protoH\000\022G\n\014pdfPageProto\030" +
@@ -10450,33 +12096,42 @@ public final class RenderProto {
       "(\01323.com.sysalto.render.serialization.Pd" +
       "fPageList_protoH\000\022I\n\rpdfImageProto\030\010 \001(\013" +
       "20.com.sysalto.render.serialization.PdfI" +
-      "mage_protoH\000B\007\n\005field\"C\n\020PdfCatalog_prot" +
-      "o\022\030\n\020idPdfPageListOpt\030\001 \003(\003\022\025\n\ridPdfName" +
-      "sOpt\030\002 \003(\003\"\320\001\n\rPdfPage_proto\022\020\n\010parentId" +
-      "\030\001 \001(\003\022\021\n\tpageWidth\030\002 \001(\002\022\022\n\npageHeight\030" +
-      "\003 \001(\002\022\022\n\nidFontList\030\004 \003(\003\022\030\n\020idPdfPatter" +
-      "nList\030\005 \003(\003\022\030\n\020idAnnotationList\030\006 \003(\003\022\023\n" +
-      "\013idImageList\030\007 \003(\003\022\030\n\020idContentPageOpt\030\010" +
-      " \003(\003\022\017\n\007leafNbr\030\t \001(\003\"5\n\rPdfFont_proto\022\017" +
-      "\n\007refName\030\001 \001(\t\022\023\n\013fontKeyName\030\002 \001(\t\"\272\001\n" +
-      "\021PdfPageItem_proto\022H\n\rpdfText_proto\030\001 \001(" +
-      "\0132/.com.sysalto.render.serialization.Pdf" +
-      "Text_protoH\000\022N\n\020pdfGraphic_proto\030\002 \001(\01322" +
-      ".com.sysalto.render.serialization.PdfGra" +
-      "phic_protoH\000B\013\n\tfieldItem\"\022\n\020PdfGraphic_" +
-      "proto\"\036\n\017ReportTxt_proto\022\013\n\003txt\030\001 \001(\t\"\212\001" +
-      "\n\024PdfTxtFragment_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002" +
-      " \001(\002\022F\n\013rtext_proto\030\003 \001(\01321.com.sysalto." +
-      "render.serialization.ReportTxt_proto\022\024\n\014" +
-      "fonttRefName\030\004 \001(\t\"X\n\rPdfText_proto\022G\n\007t" +
-      "xtList\030\001 \003(\01326.com.sysalto.render.serial" +
-      "ization.PdfTxtFragment_proto\"~\n\024PdfPageC" +
-      "ontent_proto\022N\n\021pdfPageItem_proto\030\003 \003(\0132" +
-      "3.com.sysalto.render.serialization.PdfPa" +
-      "geItem_proto\022\026\n\016pdfCompression\030\004 \001(\010\"H\n\021" +
-      "PdfPageList_proto\022\017\n\007leafNbr\030\001 \001(\003\022\020\n\010pa" +
-      "rentId\030\002 \003(\003\022\020\n\010pageList\030\003 \003(\003\"\"\n\016PdfIma" +
-      "ge_proto\022\020\n\010fileName\030\001 \001(\tB\002H\001b\006proto3"
+      "mage_protoH\000\022`\n\031pdfShaddingFctColor_prot" +
+      "o\030\t \001(\0132;.com.sysalto.render.serializati" +
+      "on.PdfShaddingFctColor_protoH\000B\007\n\005field\"" +
+      "C\n\020PdfCatalog_proto\022\030\n\020idPdfPageListOpt\030" +
+      "\001 \003(\003\022\025\n\ridPdfNamesOpt\030\002 \003(\003\"\320\001\n\rPdfPage" +
+      "_proto\022\020\n\010parentId\030\001 \001(\003\022\021\n\tpageWidth\030\002 " +
+      "\001(\002\022\022\n\npageHeight\030\003 \001(\002\022\022\n\nidFontList\030\004 " +
+      "\003(\003\022\030\n\020idPdfPatternList\030\005 \003(\003\022\030\n\020idAnnot" +
+      "ationList\030\006 \003(\003\022\023\n\013idImageList\030\007 \003(\003\022\030\n\020" +
+      "idContentPageOpt\030\010 \003(\003\022\017\n\007leafNbr\030\t \001(\003\"" +
+      "5\n\rPdfFont_proto\022\017\n\007refName\030\001 \001(\t\022\023\n\013fon" +
+      "tKeyName\030\002 \001(\t\"\272\001\n\021PdfPageItem_proto\022H\n\r" +
+      "pdfText_proto\030\001 \001(\0132/.com.sysalto.render" +
+      ".serialization.PdfText_protoH\000\022N\n\020pdfGra" +
+      "phic_proto\030\002 \001(\01322.com.sysalto.render.se" +
+      "rialization.PdfGraphic_protoH\000B\013\n\tfieldI" +
+      "tem\"\022\n\020PdfGraphic_proto\"\036\n\017ReportTxt_pro" +
+      "to\022\013\n\003txt\030\001 \001(\t\"\212\001\n\024PdfTxtFragment_proto" +
+      "\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022F\n\013rtext_proto\030\003 " +
+      "\001(\01321.com.sysalto.render.serialization.R" +
+      "eportTxt_proto\022\024\n\014fonttRefName\030\004 \001(\t\"X\n\r" +
+      "PdfText_proto\022G\n\007txtList\030\001 \003(\01326.com.sys" +
+      "alto.render.serialization.PdfTxtFragment" +
+      "_proto\"~\n\024PdfPageContent_proto\022N\n\021pdfPag" +
+      "eItem_proto\030\003 \003(\01323.com.sysalto.render.s" +
+      "erialization.PdfPageItem_proto\022\026\n\016pdfCom" +
+      "pression\030\004 \001(\010\"H\n\021PdfPageList_proto\022\017\n\007l" +
+      "eafNbr\030\001 \001(\003\022\020\n\010parentId\030\002 \003(\003\022\020\n\010pageLi" +
+      "st\030\003 \003(\003\"\"\n\016PdfImage_proto\022\020\n\010fileName\030\001" +
+      " \001(\t\"E\n\021ReportColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001" +
+      "g\030\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"\245\001\n\031" +
+      "PdfShaddingFctColor_proto\022C\n\006color1\030\001 \001(" +
+      "\01323.com.sysalto.render.serialization.Rep" +
+      "ortColor_proto\022C\n\006color2\030\002 \001(\01323.com.sys" +
+      "alto.render.serialization.ReportColor_pr" +
+      "otoB\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -10495,7 +12150,7 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfBaseItem_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfBaseItem_proto_descriptor,
-        new java.lang.String[] { "Id", "Offset", "PdfCatalogProto", "PdfPageProto", "PdfFontProto", "PdfPageContentProto", "PdfPageListProto", "PdfImageProto", "Field", });
+        new java.lang.String[] { "Id", "Offset", "PdfCatalogProto", "PdfPageProto", "PdfFontProto", "PdfPageContentProto", "PdfPageListProto", "PdfImageProto", "PdfShaddingFctColorProto", "Field", });
     internal_static_com_sysalto_render_serialization_PdfCatalog_proto_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_sysalto_render_serialization_PdfCatalog_proto_fieldAccessorTable = new
@@ -10562,6 +12217,18 @@ public final class RenderProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfImage_proto_descriptor,
         new java.lang.String[] { "FileName", });
+    internal_static_com_sysalto_render_serialization_ReportColor_proto_descriptor =
+      getDescriptor().getMessageTypes().get(12);
+    internal_static_com_sysalto_render_serialization_ReportColor_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_ReportColor_proto_descriptor,
+        new java.lang.String[] { "R", "G", "B", "Opacity", });
+    internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_PdfShaddingFctColor_proto_descriptor,
+        new java.lang.String[] { "Color1", "Color2", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

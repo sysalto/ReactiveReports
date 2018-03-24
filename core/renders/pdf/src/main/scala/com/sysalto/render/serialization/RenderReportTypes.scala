@@ -40,7 +40,7 @@ class RenderReportTypes {
 			s"[${this.getClass.getTypeName}]\n" + content
 		}
 
-//		println(this.getClass)
+		println(this.getClass)
 
 	}
 
@@ -621,6 +621,16 @@ class RenderReportTypes {
 				val pdfImage1=pdfImage.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfImage]
 				val builder=serializer.PdfBaseItemSerializer.write(pdfImage1)
 				db.writeObject1(pdfImage.id, builder.toByteArray)
+			}
+			case item: PdfColorShadding => {
+				val item1=item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfColorShadding]
+				val builder=serializer.PdfBaseItemSerializer.write(item1)
+				db.writeObject1(item.id, builder.toByteArray)
+			}
+			case item: PdfShaddingFctColor => {
+				val item1=item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfShaddingFctColor]
+				val builder=serializer.PdfBaseItemSerializer.write(item1)
+				db.writeObject1(item.id, builder.toByteArray)
 			}
 			case _ => {
 				println("Unimplemented: "+obj)
