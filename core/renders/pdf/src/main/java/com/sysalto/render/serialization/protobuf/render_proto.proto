@@ -40,13 +40,18 @@ message PdfFont_proto {
 message PdfPageItem_proto {
     oneof fieldItem {
         PdfText_proto pdfText_proto = 1;
+        PdfGraphic_proto pdfGraphic_proto = 2;
     }
+}
+
+
+message PdfGraphic_proto {
+
 }
 
 message ReportTxt_proto {
     string txt = 1;
 }
-
 
 message PdfTxtFragment_proto {
     float x = 1;

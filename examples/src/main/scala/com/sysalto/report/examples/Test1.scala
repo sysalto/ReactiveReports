@@ -52,7 +52,7 @@ object Test1 {
 //		val font1 = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily1))
 //		val font2 = RFont(size, fontName = "UNICODE", externalFont = Some(fontFamily2))
 		//		report.font = font
-		val str = "Cell String"
+		val str = "ok1"
 		val txt1 = ReportTxt(str)
 //		report print ReportTxt("\u5bfc\u5165",font) at 100
 		report print ReportTxt(str) at 100

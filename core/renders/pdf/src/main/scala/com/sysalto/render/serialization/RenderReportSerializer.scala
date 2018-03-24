@@ -45,6 +45,12 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case FieldCase.PDFFONTPROTO => {
 					PdfFontSerializer.read(input.getId, input.getOffset, input.getPdfFontProto)
 				}
+				case FieldCase.PDFPAGECONTENTPROTO => {
+					PdfPageContentSerializer.read(input.getId, input.getOffset, input.getPdfPageContentProto)
+				}
+				case FieldCase.PDFPAGELISTPROTO => {
+					PdfPageListSerializer.read(input.getId, input.getOffset, input.getPdfPageListProto)
+				}
 			}
 		}
 	}
@@ -124,8 +130,11 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		def write(input: renderReportTypes.PdfPageItem): PdfPageItem_proto = {
 			val builder = PdfPageItem_proto.newBuilder()
 			input match {
-				case pdfText: renderReportTypes.PdfText => {
-					builder.setPdfTextProto(PdfTextSerializer.write(pdfText))
+				case item: renderReportTypes.PdfText => {
+					builder.setPdfTextProto(PdfTextSerializer.write(item))
+				}
+				case item: renderReportTypes.PdfGraphic => {
+					builder.setPdfGraphicProto(PdfGraphicSerializer.write(item))
 				}
 			}
 			builder.build()
@@ -136,7 +145,21 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case FieldItemCase.PDFTEXT_PROTO => {
 					PdfTextSerializer.read(input.getPdfTextProto)
 				}
+				case FieldItemCase.PDFGRAPHIC_PROTO => {
+					PdfGraphicSerializer.read(input.getPdfGraphicProto)
+				}
 			}
+		}
+	}
+
+	object PdfGraphicSerializer {
+		def write(input: renderReportTypes.PdfGraphic): PdfGraphic_proto = {
+			val builder = PdfGraphic_proto.newBuilder()
+			builder.build()
+		}
+
+		def read(input: PdfGraphic_proto): renderReportTypes.PdfGraphic = {
+			new renderReportTypes.PdfGraphic(List())
 		}
 	}
 
