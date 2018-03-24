@@ -82,7 +82,9 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 
 		val pageTreeList = PageTree.pageTree(pageList.toList) {
 			() => {
-				new renderReportTypes.PdfPageList(nextId())
+				val pg=new renderReportTypes.PdfPageList(nextId())
+				renderReportTypes.setObject1(pg)
+				pg
 			}
 		}.asInstanceOf[renderReportTypes.PdfPageList]
 		catalog.idPdfPageListOpt = Some(pageTreeList.id)

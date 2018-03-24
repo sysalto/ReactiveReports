@@ -93,6 +93,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			if (input.idContentPageOpt.isDefined) {
 				builder.addIdContentPageOpt(input.idContentPageOpt.get)
 			}
+			builder.setLeafNbr(input.leafNbr)
 			builder.build()
 		}
 
@@ -106,6 +107,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			if (input.getIdContentPageOptCount > 0) {
 				result.idContentPageOpt = Some(input.getIdContentPageOpt(0))
 			}
+			result.leafNbr=input.getLeafNbr
 			result
 		}
 	}
@@ -227,6 +229,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			val builder = PdfPageList_proto.newBuilder()
 			input.parentId.foreach(item => builder.addParentId(item))
 			input.pageList.foreach(item => builder.addPageList(item))
+			builder.setLeafNbr(input.leafNbr)
 			builder.build()
 		}
 
@@ -237,6 +240,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				result.parentId = Some(input.getParentId(0))
 			}
 			result.pageList ++= input.getPageListList.asScala.toList.map(id => id.asInstanceOf[Long])
+			result.leafNbr=input.getLeafNbr
 			result
 		}
 	}

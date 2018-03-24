@@ -2501,6 +2501,11 @@ public final class RenderProto {
      * <code>repeated int64 idContentPageOpt = 8;</code>
      */
     long getIdContentPageOpt(int index);
+
+    /**
+     * <code>int64 leafNbr = 9;</code>
+     */
+    long getLeafNbr();
   }
   /**
    * Protobuf type {@code com.sysalto.render.serialization.PdfPage_proto}
@@ -2523,6 +2528,7 @@ public final class RenderProto {
       idAnnotationList_ = java.util.Collections.emptyList();
       idImageList_ = java.util.Collections.emptyList();
       idContentPageOpt_ = java.util.Collections.emptyList();
+      leafNbr_ = 0L;
     }
 
     @java.lang.Override
@@ -2674,6 +2680,11 @@ public final class RenderProto {
                 idContentPageOpt_.add(input.readInt64());
               }
               input.popLimit(limit);
+              break;
+            }
+            case 72: {
+
+              leafNbr_ = input.readInt64();
               break;
             }
           }
@@ -2858,6 +2869,15 @@ public final class RenderProto {
     }
     private int idContentPageOptMemoizedSerializedSize = -1;
 
+    public static final int LEAFNBR_FIELD_NUMBER = 9;
+    private long leafNbr_;
+    /**
+     * <code>int64 leafNbr = 9;</code>
+     */
+    public long getLeafNbr() {
+      return leafNbr_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -2914,6 +2934,9 @@ public final class RenderProto {
       }
       for (int i = 0; i < idContentPageOpt_.size(); i++) {
         output.writeInt64NoTag(idContentPageOpt_.get(i));
+      }
+      if (leafNbr_ != 0L) {
+        output.writeInt64(9, leafNbr_);
       }
       unknownFields.writeTo(output);
     }
@@ -3005,6 +3028,10 @@ public final class RenderProto {
         }
         idContentPageOptMemoizedSerializedSize = dataSize;
       }
+      if (leafNbr_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(9, leafNbr_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -3041,6 +3068,8 @@ public final class RenderProto {
           .equals(other.getIdImageListList());
       result = result && getIdContentPageOptList()
           .equals(other.getIdContentPageOptList());
+      result = result && (getLeafNbr()
+          == other.getLeafNbr());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -3081,6 +3110,9 @@ public final class RenderProto {
         hash = (37 * hash) + IDCONTENTPAGEOPT_FIELD_NUMBER;
         hash = (53 * hash) + getIdContentPageOptList().hashCode();
       }
+      hash = (37 * hash) + LEAFNBR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getLeafNbr());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3226,6 +3258,8 @@ public final class RenderProto {
         bitField0_ = (bitField0_ & ~0x00000040);
         idContentPageOpt_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000080);
+        leafNbr_ = 0L;
+
         return this;
       }
 
@@ -3278,6 +3312,7 @@ public final class RenderProto {
           bitField0_ = (bitField0_ & ~0x00000080);
         }
         result.idContentPageOpt_ = idContentPageOpt_;
+        result.leafNbr_ = leafNbr_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3378,6 +3413,9 @@ public final class RenderProto {
             idContentPageOpt_.addAll(other.idContentPageOpt_);
           }
           onChanged();
+        }
+        if (other.getLeafNbr() != 0L) {
+          setLeafNbr(other.getLeafNbr());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3811,6 +3849,32 @@ public final class RenderProto {
       public Builder clearIdContentPageOpt() {
         idContentPageOpt_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000080);
+        onChanged();
+        return this;
+      }
+
+      private long leafNbr_ ;
+      /**
+       * <code>int64 leafNbr = 9;</code>
+       */
+      public long getLeafNbr() {
+        return leafNbr_;
+      }
+      /**
+       * <code>int64 leafNbr = 9;</code>
+       */
+      public Builder setLeafNbr(long value) {
+        
+        leafNbr_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 leafNbr = 9;</code>
+       */
+      public Builder clearLeafNbr() {
+        
+        leafNbr_ = 0L;
         onChanged();
         return this;
       }
@@ -8766,28 +8830,33 @@ public final class RenderProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated int64 parentId = 3;</code>
+     * <code>int64 leafNbr = 1;</code>
+     */
+    long getLeafNbr();
+
+    /**
+     * <code>repeated int64 parentId = 2;</code>
      */
     java.util.List<java.lang.Long> getParentIdList();
     /**
-     * <code>repeated int64 parentId = 3;</code>
+     * <code>repeated int64 parentId = 2;</code>
      */
     int getParentIdCount();
     /**
-     * <code>repeated int64 parentId = 3;</code>
+     * <code>repeated int64 parentId = 2;</code>
      */
     long getParentId(int index);
 
     /**
-     * <code>repeated int64 pageList = 4;</code>
+     * <code>repeated int64 pageList = 3;</code>
      */
     java.util.List<java.lang.Long> getPageListList();
     /**
-     * <code>repeated int64 pageList = 4;</code>
+     * <code>repeated int64 pageList = 3;</code>
      */
     int getPageListCount();
     /**
-     * <code>repeated int64 pageList = 4;</code>
+     * <code>repeated int64 pageList = 3;</code>
      */
     long getPageList(int index);
   }
@@ -8804,6 +8873,7 @@ public final class RenderProto {
       super(builder);
     }
     private PdfPageList_proto() {
+      leafNbr_ = 0L;
       parentId_ = java.util.Collections.emptyList();
       pageList_ = java.util.Collections.emptyList();
     }
@@ -8839,20 +8909,25 @@ public final class RenderProto {
               }
               break;
             }
-            case 24: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+            case 8: {
+
+              leafNbr_ = input.readInt64();
+              break;
+            }
+            case 16: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
                 parentId_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000001;
+                mutable_bitField0_ |= 0x00000002;
               }
               parentId_.add(input.readInt64());
               break;
             }
-            case 26: {
+            case 18: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001) && input.getBytesUntilLimit() > 0) {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
                 parentId_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000001;
+                mutable_bitField0_ |= 0x00000002;
               }
               while (input.getBytesUntilLimit() > 0) {
                 parentId_.add(input.readInt64());
@@ -8860,20 +8935,20 @@ public final class RenderProto {
               input.popLimit(limit);
               break;
             }
-            case 32: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+            case 24: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 pageList_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000004;
               }
               pageList_.add(input.readInt64());
               break;
             }
-            case 34: {
+            case 26: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004) && input.getBytesUntilLimit() > 0) {
                 pageList_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000004;
               }
               while (input.getBytesUntilLimit() > 0) {
                 pageList_.add(input.readInt64());
@@ -8889,10 +8964,10 @@ public final class RenderProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           parentId_ = java.util.Collections.unmodifiableList(parentId_);
         }
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
           pageList_ = java.util.Collections.unmodifiableList(pageList_);
         }
         this.unknownFields = unknownFields.build();
@@ -8911,46 +8986,56 @@ public final class RenderProto {
               com.sysalto.render.serialization.RenderProto.PdfPageList_proto.class, com.sysalto.render.serialization.RenderProto.PdfPageList_proto.Builder.class);
     }
 
-    public static final int PARENTID_FIELD_NUMBER = 3;
+    private int bitField0_;
+    public static final int LEAFNBR_FIELD_NUMBER = 1;
+    private long leafNbr_;
+    /**
+     * <code>int64 leafNbr = 1;</code>
+     */
+    public long getLeafNbr() {
+      return leafNbr_;
+    }
+
+    public static final int PARENTID_FIELD_NUMBER = 2;
     private java.util.List<java.lang.Long> parentId_;
     /**
-     * <code>repeated int64 parentId = 3;</code>
+     * <code>repeated int64 parentId = 2;</code>
      */
     public java.util.List<java.lang.Long>
         getParentIdList() {
       return parentId_;
     }
     /**
-     * <code>repeated int64 parentId = 3;</code>
+     * <code>repeated int64 parentId = 2;</code>
      */
     public int getParentIdCount() {
       return parentId_.size();
     }
     /**
-     * <code>repeated int64 parentId = 3;</code>
+     * <code>repeated int64 parentId = 2;</code>
      */
     public long getParentId(int index) {
       return parentId_.get(index);
     }
     private int parentIdMemoizedSerializedSize = -1;
 
-    public static final int PAGELIST_FIELD_NUMBER = 4;
+    public static final int PAGELIST_FIELD_NUMBER = 3;
     private java.util.List<java.lang.Long> pageList_;
     /**
-     * <code>repeated int64 pageList = 4;</code>
+     * <code>repeated int64 pageList = 3;</code>
      */
     public java.util.List<java.lang.Long>
         getPageListList() {
       return pageList_;
     }
     /**
-     * <code>repeated int64 pageList = 4;</code>
+     * <code>repeated int64 pageList = 3;</code>
      */
     public int getPageListCount() {
       return pageList_.size();
     }
     /**
-     * <code>repeated int64 pageList = 4;</code>
+     * <code>repeated int64 pageList = 3;</code>
      */
     public long getPageList(int index) {
       return pageList_.get(index);
@@ -8970,15 +9055,18 @@ public final class RenderProto {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
+      if (leafNbr_ != 0L) {
+        output.writeInt64(1, leafNbr_);
+      }
       if (getParentIdList().size() > 0) {
-        output.writeUInt32NoTag(26);
+        output.writeUInt32NoTag(18);
         output.writeUInt32NoTag(parentIdMemoizedSerializedSize);
       }
       for (int i = 0; i < parentId_.size(); i++) {
         output.writeInt64NoTag(parentId_.get(i));
       }
       if (getPageListList().size() > 0) {
-        output.writeUInt32NoTag(34);
+        output.writeUInt32NoTag(26);
         output.writeUInt32NoTag(pageListMemoizedSerializedSize);
       }
       for (int i = 0; i < pageList_.size(); i++) {
@@ -8992,6 +9080,10 @@ public final class RenderProto {
       if (size != -1) return size;
 
       size = 0;
+      if (leafNbr_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, leafNbr_);
+      }
       {
         int dataSize = 0;
         for (int i = 0; i < parentId_.size(); i++) {
@@ -9036,6 +9128,8 @@ public final class RenderProto {
       com.sysalto.render.serialization.RenderProto.PdfPageList_proto other = (com.sysalto.render.serialization.RenderProto.PdfPageList_proto) obj;
 
       boolean result = true;
+      result = result && (getLeafNbr()
+          == other.getLeafNbr());
       result = result && getParentIdList()
           .equals(other.getParentIdList());
       result = result && getPageListList()
@@ -9051,6 +9145,9 @@ public final class RenderProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + LEAFNBR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getLeafNbr());
       if (getParentIdCount() > 0) {
         hash = (37 * hash) + PARENTID_FIELD_NUMBER;
         hash = (53 * hash) + getParentIdList().hashCode();
@@ -9188,10 +9285,12 @@ public final class RenderProto {
       }
       public Builder clear() {
         super.clear();
+        leafNbr_ = 0L;
+
         parentId_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        pageList_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
+        pageList_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -9215,16 +9314,19 @@ public final class RenderProto {
       public com.sysalto.render.serialization.RenderProto.PdfPageList_proto buildPartial() {
         com.sysalto.render.serialization.RenderProto.PdfPageList_proto result = new com.sysalto.render.serialization.RenderProto.PdfPageList_proto(this);
         int from_bitField0_ = bitField0_;
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          parentId_ = java.util.Collections.unmodifiableList(parentId_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.parentId_ = parentId_;
+        int to_bitField0_ = 0;
+        result.leafNbr_ = leafNbr_;
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          pageList_ = java.util.Collections.unmodifiableList(pageList_);
+          parentId_ = java.util.Collections.unmodifiableList(parentId_);
           bitField0_ = (bitField0_ & ~0x00000002);
         }
+        result.parentId_ = parentId_;
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          pageList_ = java.util.Collections.unmodifiableList(pageList_);
+          bitField0_ = (bitField0_ & ~0x00000004);
+        }
         result.pageList_ = pageList_;
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -9266,10 +9368,13 @@ public final class RenderProto {
 
       public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfPageList_proto other) {
         if (other == com.sysalto.render.serialization.RenderProto.PdfPageList_proto.getDefaultInstance()) return this;
+        if (other.getLeafNbr() != 0L) {
+          setLeafNbr(other.getLeafNbr());
+        }
         if (!other.parentId_.isEmpty()) {
           if (parentId_.isEmpty()) {
             parentId_ = other.parentId_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensureParentIdIsMutable();
             parentId_.addAll(other.parentId_);
@@ -9279,7 +9384,7 @@ public final class RenderProto {
         if (!other.pageList_.isEmpty()) {
           if (pageList_.isEmpty()) {
             pageList_ = other.pageList_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensurePageListIsMutable();
             pageList_.addAll(other.pageList_);
@@ -9314,34 +9419,60 @@ public final class RenderProto {
       }
       private int bitField0_;
 
+      private long leafNbr_ ;
+      /**
+       * <code>int64 leafNbr = 1;</code>
+       */
+      public long getLeafNbr() {
+        return leafNbr_;
+      }
+      /**
+       * <code>int64 leafNbr = 1;</code>
+       */
+      public Builder setLeafNbr(long value) {
+        
+        leafNbr_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 leafNbr = 1;</code>
+       */
+      public Builder clearLeafNbr() {
+        
+        leafNbr_ = 0L;
+        onChanged();
+        return this;
+      }
+
       private java.util.List<java.lang.Long> parentId_ = java.util.Collections.emptyList();
       private void ensureParentIdIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           parentId_ = new java.util.ArrayList<java.lang.Long>(parentId_);
-          bitField0_ |= 0x00000001;
+          bitField0_ |= 0x00000002;
          }
       }
       /**
-       * <code>repeated int64 parentId = 3;</code>
+       * <code>repeated int64 parentId = 2;</code>
        */
       public java.util.List<java.lang.Long>
           getParentIdList() {
         return java.util.Collections.unmodifiableList(parentId_);
       }
       /**
-       * <code>repeated int64 parentId = 3;</code>
+       * <code>repeated int64 parentId = 2;</code>
        */
       public int getParentIdCount() {
         return parentId_.size();
       }
       /**
-       * <code>repeated int64 parentId = 3;</code>
+       * <code>repeated int64 parentId = 2;</code>
        */
       public long getParentId(int index) {
         return parentId_.get(index);
       }
       /**
-       * <code>repeated int64 parentId = 3;</code>
+       * <code>repeated int64 parentId = 2;</code>
        */
       public Builder setParentId(
           int index, long value) {
@@ -9351,7 +9482,7 @@ public final class RenderProto {
         return this;
       }
       /**
-       * <code>repeated int64 parentId = 3;</code>
+       * <code>repeated int64 parentId = 2;</code>
        */
       public Builder addParentId(long value) {
         ensureParentIdIsMutable();
@@ -9360,7 +9491,7 @@ public final class RenderProto {
         return this;
       }
       /**
-       * <code>repeated int64 parentId = 3;</code>
+       * <code>repeated int64 parentId = 2;</code>
        */
       public Builder addAllParentId(
           java.lang.Iterable<? extends java.lang.Long> values) {
@@ -9371,43 +9502,43 @@ public final class RenderProto {
         return this;
       }
       /**
-       * <code>repeated int64 parentId = 3;</code>
+       * <code>repeated int64 parentId = 2;</code>
        */
       public Builder clearParentId() {
         parentId_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
 
       private java.util.List<java.lang.Long> pageList_ = java.util.Collections.emptyList();
       private void ensurePageListIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
           pageList_ = new java.util.ArrayList<java.lang.Long>(pageList_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000004;
          }
       }
       /**
-       * <code>repeated int64 pageList = 4;</code>
+       * <code>repeated int64 pageList = 3;</code>
        */
       public java.util.List<java.lang.Long>
           getPageListList() {
         return java.util.Collections.unmodifiableList(pageList_);
       }
       /**
-       * <code>repeated int64 pageList = 4;</code>
+       * <code>repeated int64 pageList = 3;</code>
        */
       public int getPageListCount() {
         return pageList_.size();
       }
       /**
-       * <code>repeated int64 pageList = 4;</code>
+       * <code>repeated int64 pageList = 3;</code>
        */
       public long getPageList(int index) {
         return pageList_.get(index);
       }
       /**
-       * <code>repeated int64 pageList = 4;</code>
+       * <code>repeated int64 pageList = 3;</code>
        */
       public Builder setPageList(
           int index, long value) {
@@ -9417,7 +9548,7 @@ public final class RenderProto {
         return this;
       }
       /**
-       * <code>repeated int64 pageList = 4;</code>
+       * <code>repeated int64 pageList = 3;</code>
        */
       public Builder addPageList(long value) {
         ensurePageListIsMutable();
@@ -9426,7 +9557,7 @@ public final class RenderProto {
         return this;
       }
       /**
-       * <code>repeated int64 pageList = 4;</code>
+       * <code>repeated int64 pageList = 3;</code>
        */
       public Builder addAllPageList(
           java.lang.Iterable<? extends java.lang.Long> values) {
@@ -9437,11 +9568,11 @@ public final class RenderProto {
         return this;
       }
       /**
-       * <code>repeated int64 pageList = 4;</code>
+       * <code>repeated int64 pageList = 3;</code>
        */
       public Builder clearPageList() {
         pageList_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
         return this;
       }
@@ -9572,30 +9703,31 @@ public final class RenderProto {
       "(\01323.com.sysalto.render.serialization.Pd" +
       "fPageList_protoH\000B\007\n\005field\"C\n\020PdfCatalog" +
       "_proto\022\030\n\020idPdfPageListOpt\030\001 \003(\003\022\025\n\ridPd" +
-      "fNamesOpt\030\002 \003(\003\"\277\001\n\rPdfPage_proto\022\020\n\010par" +
+      "fNamesOpt\030\002 \003(\003\"\320\001\n\rPdfPage_proto\022\020\n\010par" +
       "entId\030\001 \001(\003\022\021\n\tpageWidth\030\002 \001(\002\022\022\n\npageHe" +
       "ight\030\003 \001(\002\022\022\n\nidFontList\030\004 \003(\003\022\030\n\020idPdfP" +
       "atternList\030\005 \003(\003\022\030\n\020idAnnotationList\030\006 \003" +
       "(\003\022\023\n\013idImageList\030\007 \003(\003\022\030\n\020idContentPage" +
-      "Opt\030\010 \003(\003\"5\n\rPdfFont_proto\022\017\n\007refName\030\001 " +
-      "\001(\t\022\023\n\013fontKeyName\030\002 \001(\t\"\272\001\n\021PdfPageItem" +
-      "_proto\022H\n\rpdfText_proto\030\001 \001(\0132/.com.sysa" +
-      "lto.render.serialization.PdfText_protoH\000" +
-      "\022N\n\020pdfGraphic_proto\030\002 \001(\01322.com.sysalto" +
-      ".render.serialization.PdfGraphic_protoH\000" +
-      "B\013\n\tfieldItem\"\022\n\020PdfGraphic_proto\"\036\n\017Rep" +
-      "ortTxt_proto\022\013\n\003txt\030\001 \001(\t\"\212\001\n\024PdfTxtFrag" +
-      "ment_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022F\n\013rtex" +
-      "t_proto\030\003 \001(\01321.com.sysalto.render.seria" +
-      "lization.ReportTxt_proto\022\024\n\014fonttRefName" +
-      "\030\004 \001(\t\"X\n\rPdfText_proto\022G\n\007txtList\030\001 \003(\013" +
-      "26.com.sysalto.render.serialization.PdfT" +
-      "xtFragment_proto\"~\n\024PdfPageContent_proto" +
-      "\022N\n\021pdfPageItem_proto\030\003 \003(\01323.com.sysalt" +
-      "o.render.serialization.PdfPageItem_proto" +
-      "\022\026\n\016pdfCompression\030\004 \001(\010\"7\n\021PdfPageList_" +
-      "proto\022\020\n\010parentId\030\003 \003(\003\022\020\n\010pageList\030\004 \003(" +
-      "\003B\002H\001b\006proto3"
+      "Opt\030\010 \003(\003\022\017\n\007leafNbr\030\t \001(\003\"5\n\rPdfFont_pr" +
+      "oto\022\017\n\007refName\030\001 \001(\t\022\023\n\013fontKeyName\030\002 \001(" +
+      "\t\"\272\001\n\021PdfPageItem_proto\022H\n\rpdfText_proto" +
+      "\030\001 \001(\0132/.com.sysalto.render.serializatio" +
+      "n.PdfText_protoH\000\022N\n\020pdfGraphic_proto\030\002 " +
+      "\001(\01322.com.sysalto.render.serialization.P" +
+      "dfGraphic_protoH\000B\013\n\tfieldItem\"\022\n\020PdfGra" +
+      "phic_proto\"\036\n\017ReportTxt_proto\022\013\n\003txt\030\001 \001" +
+      "(\t\"\212\001\n\024PdfTxtFragment_proto\022\t\n\001x\030\001 \001(\002\022\t" +
+      "\n\001y\030\002 \001(\002\022F\n\013rtext_proto\030\003 \001(\01321.com.sys" +
+      "alto.render.serialization.ReportTxt_prot" +
+      "o\022\024\n\014fonttRefName\030\004 \001(\t\"X\n\rPdfText_proto" +
+      "\022G\n\007txtList\030\001 \003(\01326.com.sysalto.render.s" +
+      "erialization.PdfTxtFragment_proto\"~\n\024Pdf" +
+      "PageContent_proto\022N\n\021pdfPageItem_proto\030\003" +
+      " \003(\01323.com.sysalto.render.serialization." +
+      "PdfPageItem_proto\022\026\n\016pdfCompression\030\004 \001(" +
+      "\010\"H\n\021PdfPageList_proto\022\017\n\007leafNbr\030\001 \001(\003\022" +
+      "\020\n\010parentId\030\002 \003(\003\022\020\n\010pageList\030\003 \003(\003B\002H\001b" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -9626,7 +9758,7 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfPage_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfPage_proto_descriptor,
-        new java.lang.String[] { "ParentId", "PageWidth", "PageHeight", "IdFontList", "IdPdfPatternList", "IdAnnotationList", "IdImageList", "IdContentPageOpt", });
+        new java.lang.String[] { "ParentId", "PageWidth", "PageHeight", "IdFontList", "IdPdfPatternList", "IdAnnotationList", "IdImageList", "IdContentPageOpt", "LeafNbr", });
     internal_static_com_sysalto_render_serialization_PdfFont_proto_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_com_sysalto_render_serialization_PdfFont_proto_fieldAccessorTable = new
@@ -9674,7 +9806,7 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfPageList_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfPageList_proto_descriptor,
-        new java.lang.String[] { "ParentId", "PageList", });
+        new java.lang.String[] { "LeafNbr", "ParentId", "PageList", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

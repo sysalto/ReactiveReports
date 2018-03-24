@@ -29,6 +29,7 @@ message PdfPage_proto {
     repeated int64 idAnnotationList = 6;
     repeated int64 idImageList = 7;
     repeated int64 idContentPageOpt = 8;
+    int64 leafNbr=9;
 }
 
 
@@ -71,6 +72,7 @@ message PdfPageContent_proto {
 }
 
 message PdfPageList_proto {
-    repeated int64 parentId = 3;
-    repeated int64 pageList = 4;
+    int64 leafNbr=1;
+    repeated int64 parentId = 2;
+    repeated int64 pageList = 3;
 }

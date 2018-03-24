@@ -340,13 +340,16 @@ class RenderReportTypes {
 					pdfPageList.parentId = Some(this.id)
 					pageList += pdfPageList.id
 					leafNbr += child.leafNbr
+					setObject1(pdfPageList)
 				}
 				case pdfPage: PdfPage => {
 					pageList += pdfPage.id
 					pdfPage.parentId = id
 					leafNbr += 1
+					setObject1(pdfPage)
 				}
 			}
+			setObject1(this)
 		}
 
 		override def content: Array[Byte] = {
