@@ -36,6 +36,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		pdfWriter <<< "%PDF-1.7"
 		pdfWriter <<< s"%${128.toChar}${129.toChar}${130.toChar}${131.toChar}"
 		catalog = new renderReportTypes.PdfCatalog(nextId())
+		renderReportTypes.setObject1(catalog)
 		currentPage = new renderReportTypes.PdfPage(nextId(), 0, PAGE_WIDTH, PAGE_HEIGHT)
 	}
 
@@ -50,7 +51,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		val pdfPageContext = new renderReportTypes.PdfPageContent(nextId(), List(graphic, text), pdfCompression)
 		currentPage.idContentPageOpt = Some(pdfPageContext.id)
 		currentPage.idFontList = fontMap.values.toList.sortBy(font => font.refName).map(font => font.id)
-		renderReportTypes.setObject(currentPage)
+		renderReportTypes.setObject1(currentPage)
 		pageList += currentPage
 		txtList.clear()
 		graphicList.clear()
@@ -84,10 +85,10 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 			}
 		}.asInstanceOf[renderReportTypes.PdfPageList]
 		catalog.idPdfPageListOpt = Some(pageTreeList.id)
-		renderReportTypes.setObject(catalog)
+		renderReportTypes.setObject1(catalog)
 		val allItems1 = renderReportTypes.getAllItems()
 		allItems1.foreach(itemId => {
-			val item = renderReportTypes.getObject[renderReportTypes.PdfBaseItem](itemId)
+			val item = renderReportTypes.getObject1(itemId)
 			item.write(pdfWriter)
 		})
 		val metaDataObj = metaData()

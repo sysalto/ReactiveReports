@@ -5,6 +5,7 @@ package com.sysalto.render.serialization;
 
 
 message PdfBaseItem_proto {
+    int64 id = 1;
     int64 offset = 2;
     oneof field {
         PdfCatalog_proto pdfCatalogProto = 3;
@@ -15,31 +16,25 @@ message PdfBaseItem_proto {
     }
 }
 message PdfCatalog_proto {
-    int64 id = 1;
-    string className = 2;
-    repeated int64 idPdfPageListOpt = 3;
-    repeated int64 idPdfNamesOpt = 4;
+    repeated int64 idPdfPageListOpt = 1;
+    repeated int64 idPdfNamesOpt = 2;
 }
 
 message PdfPage_proto {
-    int64 id = 1;
-    string className = 2;
-    int64 parentId = 3;
-    float pageWidth = 4;
-    float pageHeight = 5;
-    repeated int64 idFontList = 6;
-    repeated int64 idPdfPatternList = 7;
-    repeated int64 idAnnotationList = 8;
-    repeated int64 idImageList = 9;
-    repeated int64 idContentPageOpt = 10;
+    int64 parentId = 1;
+    float pageWidth = 2;
+    float pageHeight = 3;
+    repeated int64 idFontList = 4;
+    repeated int64 idPdfPatternList = 5;
+    repeated int64 idAnnotationList = 6;
+    repeated int64 idImageList = 7;
+    repeated int64 idContentPageOpt = 8;
 }
 
 
 message PdfFont_proto {
-    int64 id = 1;
-    string className = 2;
-    string refName = 3;
-    string fontKeyName = 4;
+    string refName = 1;
+    string fontKeyName = 2;
 }
 
 message PdfPageItem_proto {

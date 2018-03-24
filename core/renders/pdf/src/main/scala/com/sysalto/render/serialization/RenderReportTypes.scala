@@ -9,6 +9,7 @@ import java.util.zip.Deflater
 import com.sysalto.render.PdfChart
 import com.sysalto.render.PdfDraw.{PdfGraphicFragment, roundRectangle}
 import com.sysalto.render.basic.PdfBasic._
+import com.sysalto.render.serialization.RenderProto.{PdfBaseItem_proto, PdfCatalog_proto}
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
 import com.sysalto.report.ReportTypes.BoundaryRect
@@ -26,7 +27,6 @@ class RenderReportTypes {
 
 	private[render] abstract class PdfBaseItem(val id: Long) {
 		var offset: Long = 0
-		val className = this.getClass.getCanonicalName
 
 		def content: Array[Byte]
 
@@ -40,14 +40,6 @@ class RenderReportTypes {
 		}
 
 		println(this.getClass)
-		this match {
-			case pdfCatalog: PdfCatalog => {
-				val cat1=pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]
-				val builder=serializer.PdfCatalogSerializer.write(cat1)
-				db.writeObject1(pdfCatalog.id, builder.toByteArray)
-			}
-			case _ => setObject(this)
-		}
 
 	}
 
@@ -607,8 +599,38 @@ class RenderReportTypes {
 	def getObject[T <: PdfBaseItem](id: Long): T =
 		db.readObject[T](id)
 
+	def setObject1(obj: PdfBaseItem): Unit = {
+		obj match {
+			case pdfCatalog: PdfCatalog => {
+				val cat1=pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]
+				val builder=serializer.PdfBaseItemSerializer.write(cat1)
+				db.writeObject1(pdfCatalog.id, builder.toByteArray)
+			}
+			case pdfPage: PdfPage => {
+				val page=pdfPage.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPage]
+				val builder=serializer.PdfBaseItemSerializer.write(page)
+				db.writeObject1(pdfPage.id, builder.toByteArray)
+			}
+			case _ => //setObject(obj)
+		}
+	}
+
+	def getObject1(id: Long): PdfBaseItem ={
+//		T match {
+//			case PdfCatalog => {
+				val bytes=db.readObject1(id)
+				val proto=PdfBaseItem_proto.parseFrom(bytes)
+				val result=serializer.PdfBaseItemSerializer.read(proto)
+				result.asInstanceOf[PdfBaseItem]
+//			}
+//			case _ => getObject(id)
+//		}
+	}
+
+
 	def setObject[T <: PdfBaseItem](obj: T): Unit = {
-		db.writeObject(obj.id, obj)
+		println("")
+		//db.writeObject(obj.id, obj)
 	}
 
 	def getAllItems(): List[Long] = db.getAllKeys
