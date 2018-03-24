@@ -239,6 +239,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 
 	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
 		val pdfImage = new renderReportTypes.PdfImage(nextId(), file)
+		renderReportTypes.setObject1(pdfImage)
 		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
 		graphicList += new renderReportTypes.PdfDrawImage(pdfImage.id, x, y, scale)
 		currentPage.idImageList += pdfImage.id

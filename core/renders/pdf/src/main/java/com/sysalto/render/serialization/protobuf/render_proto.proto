@@ -13,6 +13,7 @@ message PdfBaseItem_proto {
         PdfFont_proto pdfFontProto = 5;
         PdfPageContent_proto pdfPageContentProto = 6;
         PdfPageList_proto pdfPageListProto = 7;
+        PdfImage_proto pdfImageProto=8;
     }
 }
 message PdfCatalog_proto {
@@ -75,4 +76,8 @@ message PdfPageList_proto {
     int64 leafNbr=1;
     repeated int64 parentId = 2;
     repeated int64 pageList = 3;
+}
+
+message PdfImage_proto {
+   string fileName=1;
 }

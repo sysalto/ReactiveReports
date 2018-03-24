@@ -19,6 +19,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			val builder = PdfBaseItem_proto.newBuilder()
 			builder.setId(input.id)
 			builder.setOffset(input.offset)
+			if (input.id==5) {
+				println("OK")
+			}
 			input match {
 				case item: renderReportTypes.PdfCatalog =>
 					builder.setPdfCatalogProto(PdfCatalogSerializer.write(item))
@@ -30,6 +33,8 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setPdfPageContentProto(PdfPageContentSerializer.write(item))
 				case item: renderReportTypes.PdfPageList =>
 					builder.setPdfPageListProto(PdfPageListSerializer.write(item))
+				case item: renderReportTypes.PdfImage =>
+					builder.setPdfImageProto(PdfImageSerializer.write(item))
 			}
 			builder.build()
 		}
@@ -51,6 +56,10 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case FieldCase.PDFPAGELISTPROTO => {
 					PdfPageListSerializer.read(input.getId, input.getOffset, input.getPdfPageListProto)
 				}
+				case FieldCase.PDFIMAGEPROTO => {
+					PdfImageSerializer.read(input.getId, input.getOffset, input.getPdfImageProto)
+				}
+
 			}
 		}
 	}
@@ -107,7 +116,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			if (input.getIdContentPageOptCount > 0) {
 				result.idContentPageOpt = Some(input.getIdContentPageOpt(0))
 			}
-			result.leafNbr=input.getLeafNbr
+			result.leafNbr = input.getLeafNbr
 			result
 		}
 	}
@@ -240,7 +249,21 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				result.parentId = Some(input.getParentId(0))
 			}
 			result.pageList ++= input.getPageListList.asScala.toList.map(id => id.asInstanceOf[Long])
-			result.leafNbr=input.getLeafNbr
+			result.leafNbr = input.getLeafNbr
+			result
+		}
+	}
+
+	object PdfImageSerializer {
+		def write(input: renderReportTypes.PdfImage): PdfImage_proto = {
+			val builder = PdfImage_proto.newBuilder()
+			builder.setFileName(input.fileName)
+			builder.build()
+		}
+
+		def read(id: Long, offset: Long, input: PdfImage_proto): renderReportTypes.PdfImage = {
+			val result = new renderReportTypes.PdfImage(id, input.getFileName)
+			result.offset = offset
 			result
 		}
 	}

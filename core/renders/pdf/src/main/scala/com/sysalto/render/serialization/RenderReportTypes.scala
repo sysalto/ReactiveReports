@@ -617,6 +617,11 @@ class RenderReportTypes {
 				val builder=serializer.PdfBaseItemSerializer.write(pdfPageList1)
 				db.writeObject1(pdfPageList1.id, builder.toByteArray)
 			}
+			case pdfImage: PdfImage => {
+				val pdfImage1=pdfImage.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfImage]
+				val builder=serializer.PdfBaseItemSerializer.write(pdfImage1)
+				db.writeObject1(pdfImage.id, builder.toByteArray)
+			}
 			case _ => {
 				println("Unimplemented: "+obj)
 			}
@@ -636,5 +641,6 @@ class RenderReportTypes {
 	def close(): Unit = {
 		db.close()
 	}
+
 
 }
