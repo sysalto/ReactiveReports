@@ -48,6 +48,23 @@ object Test1 {
 //		report.setExternalFont(fontFamily1)
 //		report.setExternalFont(fontFamily2)
 		report.nextLine(3)
+val t1=System.currentTimeMillis()
+		for (i<-1 to 1000) {
+			report print "ok"+i at 100
+			report.nextLine()
+			if (report.lineLeft<5) {
+				report.nextPage()
+				report.nextLine()
+			}
+		}
+
+		report.render()
+		if (true) {
+			val t2=System.currentTimeMillis()
+			println("Time:"+(t2-t1)*0.001)
+			return
+		}
+
 		val size = 10
 //		val font1 = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily1))
 //		val font2 = RFont(size, fontName = "UNICODE", externalFont = Some(fontFamily2))

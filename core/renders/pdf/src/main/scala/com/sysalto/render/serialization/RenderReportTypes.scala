@@ -40,7 +40,7 @@ class RenderReportTypes {
 			s"[${this.getClass.getTypeName}]\n" + content
 		}
 
-		println(this.getClass)
+//		println(this.getClass)
 
 	}
 
