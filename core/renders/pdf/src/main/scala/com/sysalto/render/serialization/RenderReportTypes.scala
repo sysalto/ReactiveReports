@@ -616,6 +616,16 @@ class RenderReportTypes {
 				val builder=serializer.PdfBaseItemSerializer.write(font)
 				db.writeObject1(pdfFont.id, builder.toByteArray)
 			}
+			case pdfPageContent: PdfPageContent => {
+				val pdfPageContent1=pdfPageContent.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPageContent]
+				val builder=serializer.PdfPageContentSerializer.write(pdfPageContent1)
+				db.writeObject1(pdfPageContent1.id, builder.toByteArray)
+			}
+			case pdfPageList: PdfPageList => {
+				val pdfPageList1=pdfPageList.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPageList]
+				val builder=serializer.PdfPageListSerializer.write(pdfPageList1)
+				db.writeObject1(pdfPageList1.id, builder.toByteArray)
+			}
 			case _ => //setObject(obj)
 		}
 	}

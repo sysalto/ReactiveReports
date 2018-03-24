@@ -8162,21 +8162,6 @@ public final class RenderProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int64 id = 1;</code>
-     */
-    long getId();
-
-    /**
-     * <code>string className = 2;</code>
-     */
-    java.lang.String getClassName();
-    /**
-     * <code>string className = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getClassNameBytes();
-
-    /**
      * <code>repeated int64 parentId = 3;</code>
      */
     java.util.List<java.lang.Long> getParentIdList();
@@ -8215,8 +8200,6 @@ public final class RenderProto {
       super(builder);
     }
     private PdfPageList_proto() {
-      id_ = 0L;
-      className_ = "";
       parentId_ = java.util.Collections.emptyList();
       pageList_ = java.util.Collections.emptyList();
     }
@@ -8252,21 +8235,10 @@ public final class RenderProto {
               }
               break;
             }
-            case 8: {
-
-              id_ = input.readInt64();
-              break;
-            }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              className_ = s;
-              break;
-            }
             case 24: {
-              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 parentId_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000004;
+                mutable_bitField0_ |= 0x00000001;
               }
               parentId_.add(input.readInt64());
               break;
@@ -8274,9 +8246,9 @@ public final class RenderProto {
             case 26: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004) && input.getBytesUntilLimit() > 0) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001) && input.getBytesUntilLimit() > 0) {
                 parentId_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000004;
+                mutable_bitField0_ |= 0x00000001;
               }
               while (input.getBytesUntilLimit() > 0) {
                 parentId_.add(input.readInt64());
@@ -8285,9 +8257,9 @@ public final class RenderProto {
               break;
             }
             case 32: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
                 pageList_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000002;
               }
               pageList_.add(input.readInt64());
               break;
@@ -8295,9 +8267,9 @@ public final class RenderProto {
             case 34: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008) && input.getBytesUntilLimit() > 0) {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
                 pageList_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000002;
               }
               while (input.getBytesUntilLimit() > 0) {
                 pageList_.add(input.readInt64());
@@ -8313,10 +8285,10 @@ public final class RenderProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           parentId_ = java.util.Collections.unmodifiableList(parentId_);
         }
-        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           pageList_ = java.util.Collections.unmodifiableList(pageList_);
         }
         this.unknownFields = unknownFields.build();
@@ -8333,50 +8305,6 @@ public final class RenderProto {
       return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfPageList_proto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.sysalto.render.serialization.RenderProto.PdfPageList_proto.class, com.sysalto.render.serialization.RenderProto.PdfPageList_proto.Builder.class);
-    }
-
-    private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private long id_;
-    /**
-     * <code>int64 id = 1;</code>
-     */
-    public long getId() {
-      return id_;
-    }
-
-    public static final int CLASSNAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object className_;
-    /**
-     * <code>string className = 2;</code>
-     */
-    public java.lang.String getClassName() {
-      java.lang.Object ref = className_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        className_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string className = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getClassNameBytes() {
-      java.lang.Object ref = className_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        className_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
     }
 
     public static final int PARENTID_FIELD_NUMBER = 3;
@@ -8438,12 +8366,6 @@ public final class RenderProto {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (id_ != 0L) {
-        output.writeInt64(1, id_);
-      }
-      if (!getClassNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, className_);
-      }
       if (getParentIdList().size() > 0) {
         output.writeUInt32NoTag(26);
         output.writeUInt32NoTag(parentIdMemoizedSerializedSize);
@@ -8466,13 +8388,6 @@ public final class RenderProto {
       if (size != -1) return size;
 
       size = 0;
-      if (id_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, id_);
-      }
-      if (!getClassNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, className_);
-      }
       {
         int dataSize = 0;
         for (int i = 0; i < parentId_.size(); i++) {
@@ -8517,10 +8432,6 @@ public final class RenderProto {
       com.sysalto.render.serialization.RenderProto.PdfPageList_proto other = (com.sysalto.render.serialization.RenderProto.PdfPageList_proto) obj;
 
       boolean result = true;
-      result = result && (getId()
-          == other.getId());
-      result = result && getClassName()
-          .equals(other.getClassName());
       result = result && getParentIdList()
           .equals(other.getParentIdList());
       result = result && getPageListList()
@@ -8536,11 +8447,6 @@ public final class RenderProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getId());
-      hash = (37 * hash) + CLASSNAME_FIELD_NUMBER;
-      hash = (53 * hash) + getClassName().hashCode();
       if (getParentIdCount() > 0) {
         hash = (37 * hash) + PARENTID_FIELD_NUMBER;
         hash = (53 * hash) + getParentIdList().hashCode();
@@ -8678,14 +8584,10 @@ public final class RenderProto {
       }
       public Builder clear() {
         super.clear();
-        id_ = 0L;
-
-        className_ = "";
-
         parentId_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000001);
         pageList_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -8709,20 +8611,16 @@ public final class RenderProto {
       public com.sysalto.render.serialization.RenderProto.PdfPageList_proto buildPartial() {
         com.sysalto.render.serialization.RenderProto.PdfPageList_proto result = new com.sysalto.render.serialization.RenderProto.PdfPageList_proto(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        result.id_ = id_;
-        result.className_ = className_;
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
           parentId_ = java.util.Collections.unmodifiableList(parentId_);
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.parentId_ = parentId_;
-        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
           pageList_ = java.util.Collections.unmodifiableList(pageList_);
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.pageList_ = pageList_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -8764,17 +8662,10 @@ public final class RenderProto {
 
       public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfPageList_proto other) {
         if (other == com.sysalto.render.serialization.RenderProto.PdfPageList_proto.getDefaultInstance()) return this;
-        if (other.getId() != 0L) {
-          setId(other.getId());
-        }
-        if (!other.getClassName().isEmpty()) {
-          className_ = other.className_;
-          onChanged();
-        }
         if (!other.parentId_.isEmpty()) {
           if (parentId_.isEmpty()) {
             parentId_ = other.parentId_;
-            bitField0_ = (bitField0_ & ~0x00000004);
+            bitField0_ = (bitField0_ & ~0x00000001);
           } else {
             ensureParentIdIsMutable();
             parentId_.addAll(other.parentId_);
@@ -8784,7 +8675,7 @@ public final class RenderProto {
         if (!other.pageList_.isEmpty()) {
           if (pageList_.isEmpty()) {
             pageList_ = other.pageList_;
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensurePageListIsMutable();
             pageList_.addAll(other.pageList_);
@@ -8819,106 +8710,11 @@ public final class RenderProto {
       }
       private int bitField0_;
 
-      private long id_ ;
-      /**
-       * <code>int64 id = 1;</code>
-       */
-      public long getId() {
-        return id_;
-      }
-      /**
-       * <code>int64 id = 1;</code>
-       */
-      public Builder setId(long value) {
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int64 id = 1;</code>
-       */
-      public Builder clearId() {
-        
-        id_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object className_ = "";
-      /**
-       * <code>string className = 2;</code>
-       */
-      public java.lang.String getClassName() {
-        java.lang.Object ref = className_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          className_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string className = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getClassNameBytes() {
-        java.lang.Object ref = className_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          className_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string className = 2;</code>
-       */
-      public Builder setClassName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        className_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string className = 2;</code>
-       */
-      public Builder clearClassName() {
-        
-        className_ = getDefaultInstance().getClassName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string className = 2;</code>
-       */
-      public Builder setClassNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        className_ = value;
-        onChanged();
-        return this;
-      }
-
       private java.util.List<java.lang.Long> parentId_ = java.util.Collections.emptyList();
       private void ensureParentIdIsMutable() {
-        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           parentId_ = new java.util.ArrayList<java.lang.Long>(parentId_);
-          bitField0_ |= 0x00000004;
+          bitField0_ |= 0x00000001;
          }
       }
       /**
@@ -8975,16 +8771,16 @@ public final class RenderProto {
        */
       public Builder clearParentId() {
         parentId_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
 
       private java.util.List<java.lang.Long> pageList_ = java.util.Collections.emptyList();
       private void ensurePageListIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           pageList_ = new java.util.ArrayList<java.lang.Long>(pageList_);
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000002;
          }
       }
       /**
@@ -9041,7 +8837,7 @@ public final class RenderProto {
        */
       public Builder clearPageList() {
         pageList_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
@@ -9186,9 +8982,8 @@ public final class RenderProto {
       "dfPageContent_proto\022N\n\021pdfPageItem_proto" +
       "\030\003 \003(\01323.com.sysalto.render.serializatio" +
       "n.PdfPageItem_proto\022\026\n\016pdfCompression\030\004 " +
-      "\001(\010\"V\n\021PdfPageList_proto\022\n\n\002id\030\001 \001(\003\022\021\n\t" +
-      "className\030\002 \001(\t\022\020\n\010parentId\030\003 \003(\003\022\020\n\010pag" +
-      "eList\030\004 \003(\003B\002H\001b\006proto3"
+      "\001(\010\"7\n\021PdfPageList_proto\022\020\n\010parentId\030\003 \003" +
+      "(\003\022\020\n\010pageList\030\004 \003(\003B\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -9261,7 +9056,7 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfPageList_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfPageList_proto_descriptor,
-        new java.lang.String[] { "Id", "ClassName", "ParentId", "PageList", });
+        new java.lang.String[] { "ParentId", "PageList", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

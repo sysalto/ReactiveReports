@@ -195,5 +195,22 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 	}
 
+	object PdfPageListSerializer {
+		def write(input: renderReportTypes.PdfPageList): PdfPageList_proto = {
+			val builder = PdfPageList_proto.newBuilder()
+			input.parentId.foreach(item=>builder.addParentId(item))
+			input.pageList.foreach(item=>builder.addPageList(item))
+			builder.build()
+		}
 
+		def read(id: Long, offset: Long, input: PdfPageList_proto): renderReportTypes.PdfPageList = {
+			val result = new renderReportTypes.PdfPageList(id)
+			result.offset = offset
+			if (input.getParentIdCount>0) {
+				result.parentId=Some(input.getParentId(0))
+			}
+			result.pageList++=input.getPageListList.asScala.toList.map(id=>id.asInstanceOf[Long])
+			result
+		}
+	}
 }

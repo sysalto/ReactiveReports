@@ -66,8 +66,6 @@ message PdfPageContent_proto {
 }
 
 message PdfPageList_proto {
-    int64 id = 1;
-    string className = 2;
     repeated int64 parentId = 3;
     repeated int64 pageList = 4;
 }
