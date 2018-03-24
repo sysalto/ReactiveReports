@@ -20,12 +20,16 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.setId(input.id)
 			builder.setOffset(input.offset)
 			input match {
-				case catalog: renderReportTypes.PdfCatalog =>
-					builder.setPdfCatalogProto(PdfCatalogSerializer.write(catalog))
-				case pdfPage: renderReportTypes.PdfPage =>
-					builder.setPdfPageProto(PdfPageSerializer.write(pdfPage))
-				case pdfPage: renderReportTypes.PdfFont =>
-					builder.setPdfFontProto(PdfFontSerializer.write(pdfPage))
+				case item: renderReportTypes.PdfCatalog =>
+					builder.setPdfCatalogProto(PdfCatalogSerializer.write(item))
+				case item: renderReportTypes.PdfPage =>
+					builder.setPdfPageProto(PdfPageSerializer.write(item))
+				case item: renderReportTypes.PdfFont =>
+					builder.setPdfFontProto(PdfFontSerializer.write(item))
+				case item: renderReportTypes.PdfPageContent =>
+					builder.setPdfPageContentProto(PdfPageContentSerializer.write(item))
+				case item: renderReportTypes.PdfPageList =>
+					builder.setPdfPageListProto(PdfPageListSerializer.write(item))
 			}
 			builder.build()
 		}
@@ -161,7 +165,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 
 		def read(input: PdfTxtFragment_proto): renderReportTypes.PdfTxtFragment = {
-			new renderReportTypes.PdfTxtFragment(input.getX,input.getY,ReportTxtSerializer.read(input.getRtextProto),input.getFonttRefName)
+			new renderReportTypes.PdfTxtFragment(input.getX, input.getY, ReportTxtSerializer.read(input.getRtextProto), input.getFonttRefName)
 		}
 	}
 
@@ -169,12 +173,12 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	object PdfTextSerializer {
 		def write(input: renderReportTypes.PdfText): PdfText_proto = {
 			val builder = PdfText_proto.newBuilder()
-			input.txtList.foreach(item=>builder.addTxtList(PdfTxtFragmentSerializer.write(item)))
+			input.txtList.foreach(item => builder.addTxtList(PdfTxtFragmentSerializer.write(item)))
 			builder.build()
 		}
 
 		def read(input: PdfText_proto): renderReportTypes.PdfText = {
-			new renderReportTypes.PdfText(input.getTxtListList.asScala.map(item=>PdfTxtFragmentSerializer.read(item)).toList)
+			new renderReportTypes.PdfText(input.getTxtListList.asScala.map(item => PdfTxtFragmentSerializer.read(item)).toList)
 		}
 	}
 
@@ -182,14 +186,14 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	object PdfPageContentSerializer {
 		def write(input: renderReportTypes.PdfPageContent): PdfPageContent_proto = {
 			val builder = PdfPageContent_proto.newBuilder()
-			input.pageItemList.foreach(item=>builder.addPdfPageItemProto(PdfPageItemSerializer.write(item)))
+			input.pageItemList.foreach(item => builder.addPdfPageItemProto(PdfPageItemSerializer.write(item)))
 			builder.setPdfCompression(input.pdfCompression)
 			builder.build()
 		}
 
 		def read(id: Long, offset: Long, input: PdfPageContent_proto): renderReportTypes.PdfPageContent = {
-			val list=input.getPdfPageItemProtoList.asScala.map(item=>PdfPageItemSerializer.read(item)).toList
-			val result = new renderReportTypes.PdfPageContent(id,list,input.getPdfCompression)
+			val list = input.getPdfPageItemProtoList.asScala.map(item => PdfPageItemSerializer.read(item)).toList
+			val result = new renderReportTypes.PdfPageContent(id, list, input.getPdfCompression)
 			result.offset = offset
 			result
 		}
@@ -198,19 +202,20 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	object PdfPageListSerializer {
 		def write(input: renderReportTypes.PdfPageList): PdfPageList_proto = {
 			val builder = PdfPageList_proto.newBuilder()
-			input.parentId.foreach(item=>builder.addParentId(item))
-			input.pageList.foreach(item=>builder.addPageList(item))
+			input.parentId.foreach(item => builder.addParentId(item))
+			input.pageList.foreach(item => builder.addPageList(item))
 			builder.build()
 		}
 
 		def read(id: Long, offset: Long, input: PdfPageList_proto): renderReportTypes.PdfPageList = {
 			val result = new renderReportTypes.PdfPageList(id)
 			result.offset = offset
-			if (input.getParentIdCount>0) {
-				result.parentId=Some(input.getParentId(0))
+			if (input.getParentIdCount > 0) {
+				result.parentId = Some(input.getParentId(0))
 			}
-			result.pageList++=input.getPageListList.asScala.toList.map(id=>id.asInstanceOf[Long])
+			result.pageList ++= input.getPageListList.asScala.toList.map(id => id.asInstanceOf[Long])
 			result
 		}
 	}
+
 }
