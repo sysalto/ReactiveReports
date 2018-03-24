@@ -32,6 +32,7 @@ class RenderReportTypes {
 
 		def write(pdfWriter: PdfWriter): Unit = {
 			offset = pdfWriter.position
+			setObject1(this)
 			pdfWriter << content
 		}
 
