@@ -109,3 +109,10 @@ message PdfColorShadding_proto {
 message PdfGPattern_proto {
     int64 idPdfShadding = 1;
 }
+
+
+message PdfGraphicFragment_proto {
+    oneof field {
+        PdfCatalog_proto pdfCatalogProto = 3;
+    }
+}

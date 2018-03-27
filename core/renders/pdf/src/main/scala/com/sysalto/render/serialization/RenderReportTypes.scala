@@ -590,6 +590,7 @@ class RenderReportTypes {
 
 
 	def setObject1(obj: PdfBaseItem): Unit = {
+		println("Setobject id:"+obj.id)
 		obj match {
 			case pdfCatalog: PdfCatalog => {
 				val cat1 = pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]
@@ -633,12 +634,12 @@ class RenderReportTypes {
 			}
 			case item: PdfColorShadding => {
 				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfColorShadding]
-				val builder = serializer.PdfColorShaddingSerializer.write(item1)
+				val builder = serializer.PdfBaseItemSerializer.write(item1)
 				db.writeObject1(item.id, builder.toByteArray)
 			}
 			case item: PdfGPattern => {
 				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfGPattern]
-				val builder = serializer.PdfGPatternSerializer.write(item1)
+				val builder = serializer.PdfBaseItemSerializer.write(item1)
 				db.writeObject1(item.id, builder.toByteArray)
 			}
 

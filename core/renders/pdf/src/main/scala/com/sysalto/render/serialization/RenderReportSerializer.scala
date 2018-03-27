@@ -317,6 +317,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.setY0(input.y0)
 			builder.setX1(input.x1)
 			builder.setY1(input.y1)
+			builder.setIdPdfShaddingFctColor(input.idPdfShaddingFctColor)
 			builder.build()
 		}
 
