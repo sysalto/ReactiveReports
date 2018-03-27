@@ -40,7 +40,7 @@ class RenderReportTypes {
 			s"[${this.getClass.getTypeName}]\n" + content
 		}
 
-		println(this.getClass)
+		println("ID:" + id + " " + this.getClass)
 
 	}
 
@@ -589,60 +589,71 @@ class RenderReportTypes {
 	}
 
 
-
 	def setObject1(obj: PdfBaseItem): Unit = {
 		obj match {
 			case pdfCatalog: PdfCatalog => {
-				val cat1=pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]
-				val builder=serializer.PdfBaseItemSerializer.write(cat1)
+				val cat1 = pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]
+				val builder = serializer.PdfBaseItemSerializer.write(cat1)
 				db.writeObject1(pdfCatalog.id, builder.toByteArray)
 			}
 			case pdfPage: PdfPage => {
-				val page=pdfPage.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPage]
-				val builder=serializer.PdfBaseItemSerializer.write(page)
+				val page = pdfPage.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPage]
+				val builder = serializer.PdfBaseItemSerializer.write(page)
 				db.writeObject1(pdfPage.id, builder.toByteArray)
 			}
 			case pdfFont: PdfFont => {
-				val font=pdfFont.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfFont]
-				val builder=serializer.PdfBaseItemSerializer.write(font)
+				val font = pdfFont.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfFont]
+				val builder = serializer.PdfBaseItemSerializer.write(font)
 				db.writeObject1(pdfFont.id, builder.toByteArray)
 			}
 			case pdfPageContent: PdfPageContent => {
-				val pdfPageContent1=pdfPageContent.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPageContent]
-				val builder=serializer.PdfBaseItemSerializer.write(pdfPageContent1)
+				val pdfPageContent1 = pdfPageContent.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPageContent]
+				val builder = serializer.PdfBaseItemSerializer.write(pdfPageContent1)
 				db.writeObject1(pdfPageContent1.id, builder.toByteArray)
 			}
 			case pdfPageList: PdfPageList => {
-				val pdfPageList1=pdfPageList.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPageList]
-				val builder=serializer.PdfBaseItemSerializer.write(pdfPageList1)
+				val pdfPageList1 = pdfPageList.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPageList]
+				val builder = serializer.PdfBaseItemSerializer.write(pdfPageList1)
 				db.writeObject1(pdfPageList1.id, builder.toByteArray)
 			}
 			case pdfImage: PdfImage => {
-				val pdfImage1=pdfImage.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfImage]
-				val builder=serializer.PdfBaseItemSerializer.write(pdfImage1)
+				val pdfImage1 = pdfImage.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfImage]
+				val builder = serializer.PdfBaseItemSerializer.write(pdfImage1)
 				db.writeObject1(pdfImage.id, builder.toByteArray)
 			}
 			case item: PdfColorShadding => {
-				val item1=item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfColorShadding]
-				val builder=serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfColorShadding]
+				val builder = serializer.PdfBaseItemSerializer.write(item1)
 				db.writeObject1(item.id, builder.toByteArray)
 			}
 			case item: PdfShaddingFctColor => {
-				val item1=item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfShaddingFctColor]
-				val builder=serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfShaddingFctColor]
+				val builder = serializer.PdfBaseItemSerializer.write(item1)
 				db.writeObject1(item.id, builder.toByteArray)
 			}
+			case item: PdfColorShadding => {
+				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfColorShadding]
+				val builder = serializer.PdfColorShaddingSerializer.write(item1)
+				db.writeObject1(item.id, builder.toByteArray)
+			}
+			case item: PdfGPattern => {
+				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfGPattern]
+				val builder = serializer.PdfGPatternSerializer.write(item1)
+				db.writeObject1(item.id, builder.toByteArray)
+			}
+
 			case _ => {
-				println("Unimplemented: "+obj)
+				println("Unimplemented: " + obj)
 			}
 		}
 	}
 
-	def getObject1[T <: PdfBaseItem](id: Long): T ={
-				val bytes=db.readObject1(id)
-				val proto=PdfBaseItem_proto.parseFrom(bytes)
-				val result=serializer.PdfBaseItemSerializer.read(proto)
-				result.asInstanceOf[T]
+	def getObject1[T <: PdfBaseItem](id: Long): T = {
+		println("getObject id:" + id)
+		val bytes = db.readObject1(id)
+		val proto = PdfBaseItem_proto.parseFrom(bytes)
+		val result = serializer.PdfBaseItemSerializer.read(proto)
+		result.asInstanceOf[T]
 	}
 
 

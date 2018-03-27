@@ -35,8 +35,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case item: renderReportTypes.PdfShaddingFctColor =>
 					builder.setPdfShaddingFctColorProto(PdfShaddingFctColorSerializer.write(item))
 				case item: renderReportTypes.PdfColorShadding =>
-					builder.setPdfShaddingFctColorProto(PdfShaddingFctColorSerializer.write(item))
-
+					builder.setPdfColorShaddingProto(PdfColorShaddingSerializer.write(item))
+				case item: renderReportTypes.PdfGPattern =>
+					builder.setPdfGPatternProto(PdfGPatternSerializer.write(item))
 			}
 			builder.build()
 		}
@@ -64,7 +65,12 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case FieldCase.PDFSHADDINGFCTCOLOR_PROTO => {
 					PdfShaddingFctColorSerializer.read(input.getId, input.getOffset, input.getPdfShaddingFctColorProto)
 				}
-
+				case FieldCase.PDFCOLORSHADDING_PROTO => {
+					PdfColorShaddingSerializer.read(input.getId, input.getOffset, input.getPdfColorShaddingProto)
+				}
+				case FieldCase.PDFGPATTERN_PROTO => {
+					PdfGPatternSerializer.read(input.getId, input.getOffset, input.getPdfGPatternProto)
+				}
 			}
 		}
 	}
@@ -297,7 +303,40 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 
 		def read(id: Long, offset: Long, input: PdfShaddingFctColor_proto): renderReportTypes.PdfShaddingFctColor = {
-			val result = new renderReportTypes.PdfShaddingFctColor(id, ReportColorSerializer.read(input.getColor1),ReportColorSerializer.read(input.getColor2))
+			val result = new renderReportTypes.PdfShaddingFctColor(id, ReportColorSerializer.read(input.getColor1),
+				ReportColorSerializer.read(input.getColor2))
+			result.offset = offset
+			result
+		}
+	}
+
+	object PdfColorShaddingSerializer {
+		def write(input: renderReportTypes.PdfColorShadding): PdfColorShadding_proto = {
+			val builder = PdfColorShadding_proto.newBuilder()
+			builder.setX0(input.x0)
+			builder.setY0(input.y0)
+			builder.setX1(input.x1)
+			builder.setY1(input.y1)
+			builder.build()
+		}
+
+		def read(id: Long, offset: Long, input: PdfColorShadding_proto): renderReportTypes.PdfColorShadding = {
+			val result = new renderReportTypes.PdfColorShadding(id, input.getX0, input.getY0, input.getX1,
+				input.getY1, input.getIdPdfShaddingFctColor)
+			result.offset = offset
+			result
+		}
+	}
+
+	object PdfGPatternSerializer {
+		def write(input: renderReportTypes.PdfGPattern): PdfGPattern_proto = {
+			val builder = PdfGPattern_proto.newBuilder()
+			builder.setIdPdfShadding(input.idPdfShadding)
+			builder.build()
+		}
+
+		def read(id: Long, offset: Long, input: PdfGPattern_proto): renderReportTypes.PdfGPattern = {
+			val result = new renderReportTypes.PdfGPattern(id, input.getIdPdfShadding)
 			result.offset = offset
 			result
 		}

@@ -14,7 +14,9 @@ message PdfBaseItem_proto {
         PdfPageContent_proto pdfPageContentProto = 6;
         PdfPageList_proto pdfPageListProto = 7;
         PdfImage_proto pdfImageProto = 8;
-        PdfShaddingFctColor_proto pdfShaddingFctColor_proto=9;
+        PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;
+        PdfColorShadding_proto pdfColorShadding_proto = 10;
+        PdfGPattern_proto pdfGPattern_proto = 11;
     }
 }
 message PdfCatalog_proto {
@@ -94,4 +96,16 @@ message PdfShaddingFctColor_proto {
     ReportColor_proto color1 = 1;
     ReportColor_proto color2 = 2;
 
+}
+
+message PdfColorShadding_proto {
+    float x0 = 1;
+    float y0 = 2;
+    float x1 = 3;
+    float y1 = 4;
+    int64 idPdfShaddingFctColor = 5;
+}
+
+message PdfGPattern_proto {
+    int64 idPdfShadding = 1;
 }
