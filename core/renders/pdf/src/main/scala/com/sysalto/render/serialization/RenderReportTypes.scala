@@ -493,7 +493,7 @@ class RenderReportTypes {
 		}
 	}
 
-	private[serialization] class PdfGraphic(items: List[PdfGraphicFragment])
+	private[serialization] class PdfGraphic(val items: List[PdfGraphicFragment])
 		extends PdfPageItem {
 		override def content: String = {
 			val str = items.map(item => {
@@ -590,7 +590,7 @@ class RenderReportTypes {
 
 
 	def setObject1(obj: PdfBaseItem): Unit = {
-		println("Setobject id:"+obj.id)
+		println("Setobject id:" + obj.id)
 		obj match {
 			case pdfCatalog: PdfCatalog => {
 				val cat1 = pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]

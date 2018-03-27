@@ -51,7 +51,7 @@ message PdfPageItem_proto {
 
 
 message PdfGraphic_proto {
-
+    repeated PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;
 }
 
 message ReportTxt_proto {
@@ -113,6 +113,20 @@ message PdfGPattern_proto {
 
 message PdfGraphicFragment_proto {
     oneof field {
-        PdfCatalog_proto pdfCatalogProto = 3;
+        DrawLine_proto drawLine_proto = 1;
     }
+}
+
+message LineDashType_proto {
+    int32 unit = 1;
+    int32 phase = 2;
+}
+
+message DrawLine_proto {
+    float x1 = 1;
+    float y1 = 2;
+    float x2 = 3;
+    float y2 = 4;
+    float vlineWidth = 5;
+    ReportColor_proto color = 6;
 }

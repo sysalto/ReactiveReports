@@ -90,11 +90,11 @@ object PdfDraw {
 		}
 	}
 
-	case class DrawLine(x1: Float, y1: Float, x2: Float, y2: Float, vlineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]) extends PdfGraphicFragment {
+	class DrawLine(val x1: Float, val y1: Float, val x2: Float, val y2: Float, val vlineWidth: Float, val color: ReportColor, lineDashType: Option[LineDashType]) extends PdfGraphicFragment {
 		override def content: String = {
-			saveStatus+movePoint(x1, y1) + lineWidth(vlineWidth) +
+			saveStatus + movePoint(x1, y1) + lineWidth(vlineWidth) +
 				(if (lineDashType.isDefined) lineDash(lineDashType.get) else "") +
-				lineTo(x2, y2) + border(color) + fillStroke(false, true)+restoreStatus
+				lineTo(x2, y2) + border(color) + fillStroke(false, true) + restoreStatus
 		}
 	}
 
@@ -144,8 +144,6 @@ object PdfDraw {
 		}
 
 	}
-
-
 
 
 	case class DrawPieChart(pdfgenerator: PdfNativeGenerator, font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {

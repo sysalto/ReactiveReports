@@ -1,6 +1,7 @@
 package com.sysalto.render.serialization
 
 
+import com.sysalto.render.PdfDraw.{DrawLine, PdfGraphicFragment}
 import com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase
 import com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase
 
@@ -177,11 +178,14 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	object PdfGraphicSerializer {
 		def write(input: renderReportTypes.PdfGraphic): PdfGraphic_proto = {
 			val builder = PdfGraphic_proto.newBuilder()
+			input.items.foreach(item=>
+			builder.addPdfGraphicFragmentProto(PdfGraphicFragmentSerializer.write(item)))
 			builder.build()
 		}
 
 		def read(input: PdfGraphic_proto): renderReportTypes.PdfGraphic = {
-			new renderReportTypes.PdfGraphic(List())
+			val list=input.getPdfGraphicFragmentProtoList.asScala.map(item => PdfGraphicFragmentSerializer.read(item)).toList
+			new renderReportTypes.PdfGraphic(list)
 		}
 	}
 
@@ -340,6 +344,43 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			val result = new renderReportTypes.PdfGPattern(id, input.getIdPdfShadding)
 			result.offset = offset
 			result
+		}
+	}
+
+
+	object DrawLineSerializer {
+		def write(input: DrawLine): DrawLine_proto = {
+			val builder = DrawLine_proto.newBuilder()
+			builder.setX1(input.x1)
+			builder.setY1(input.y1)
+			builder.setX2(input.x2)
+			builder.setY2(input.y2)
+			builder.setVlineWidth(input.vlineWidth)
+			builder.setColor(ReportColorSerializer.write(input.color))
+			builder.build()
+		}
+
+		def read(input: DrawLine_proto): DrawLine = {
+			new DrawLine(input.getX1, input.getY1, input.getX2, input.getY2, input.getVlineWidth, ReportColorSerializer.read(input.getColor), None)
+		}
+	}
+
+	object PdfGraphicFragmentSerializer {
+		def write(input: PdfGraphicFragment): PdfGraphicFragment_proto = {
+			val builder = PdfGraphicFragment_proto.newBuilder()
+			input match {
+				case item: DrawLine =>
+					builder.setDrawLineProto(DrawLineSerializer.write(item))
+			}
+			builder.build()
+		}
+
+		def read(input: PdfGraphicFragment_proto): PdfGraphicFragment = {
+			input.getFieldCase match {
+				case PdfGraphicFragment_proto.FieldCase.DRAWLINE_PROTO => {
+					DrawLineSerializer.read(input.getDrawLineProto)
+				}
+			}
 		}
 	}
 

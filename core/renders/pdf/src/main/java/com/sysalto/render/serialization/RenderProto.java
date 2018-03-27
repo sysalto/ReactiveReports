@@ -6352,6 +6352,30 @@ public final class RenderProto {
   public interface PdfGraphic_protoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.PdfGraphic_proto)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    java.util.List<com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto> 
+        getPdfGraphicFragmentProtoList();
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto getPdfGraphicFragmentProto(int index);
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    int getPdfGraphicFragmentProtoCount();
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder> 
+        getPdfGraphicFragmentProtoOrBuilderList();
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder getPdfGraphicFragmentProtoOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code com.sysalto.render.serialization.PdfGraphic_proto}
@@ -6366,6 +6390,7 @@ public final class RenderProto {
       super(builder);
     }
     private PdfGraphic_proto() {
+      pdfGraphicFragmentProto_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -6381,6 +6406,7 @@ public final class RenderProto {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -6398,6 +6424,15 @@ public final class RenderProto {
               }
               break;
             }
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                pdfGraphicFragmentProto_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              pdfGraphicFragmentProto_.add(
+                  input.readMessage(com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.parser(), extensionRegistry));
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -6406,6 +6441,9 @@ public final class RenderProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          pdfGraphicFragmentProto_ = java.util.Collections.unmodifiableList(pdfGraphicFragmentProto_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -6422,6 +6460,41 @@ public final class RenderProto {
               com.sysalto.render.serialization.RenderProto.PdfGraphic_proto.class, com.sysalto.render.serialization.RenderProto.PdfGraphic_proto.Builder.class);
     }
 
+    public static final int PDFGRAPHICFRAGMENT_PROTO_FIELD_NUMBER = 1;
+    private java.util.List<com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto> pdfGraphicFragmentProto_;
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    public java.util.List<com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto> getPdfGraphicFragmentProtoList() {
+      return pdfGraphicFragmentProto_;
+    }
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    public java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder> 
+        getPdfGraphicFragmentProtoOrBuilderList() {
+      return pdfGraphicFragmentProto_;
+    }
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    public int getPdfGraphicFragmentProtoCount() {
+      return pdfGraphicFragmentProto_.size();
+    }
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto getPdfGraphicFragmentProto(int index) {
+      return pdfGraphicFragmentProto_.get(index);
+    }
+    /**
+     * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder getPdfGraphicFragmentProtoOrBuilder(
+        int index) {
+      return pdfGraphicFragmentProto_.get(index);
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -6434,6 +6507,9 @@ public final class RenderProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      for (int i = 0; i < pdfGraphicFragmentProto_.size(); i++) {
+        output.writeMessage(1, pdfGraphicFragmentProto_.get(i));
+      }
       unknownFields.writeTo(output);
     }
 
@@ -6442,6 +6518,10 @@ public final class RenderProto {
       if (size != -1) return size;
 
       size = 0;
+      for (int i = 0; i < pdfGraphicFragmentProto_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, pdfGraphicFragmentProto_.get(i));
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -6458,6 +6538,8 @@ public final class RenderProto {
       com.sysalto.render.serialization.RenderProto.PdfGraphic_proto other = (com.sysalto.render.serialization.RenderProto.PdfGraphic_proto) obj;
 
       boolean result = true;
+      result = result && getPdfGraphicFragmentProtoList()
+          .equals(other.getPdfGraphicFragmentProtoList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -6469,6 +6551,10 @@ public final class RenderProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (getPdfGraphicFragmentProtoCount() > 0) {
+        hash = (37 * hash) + PDFGRAPHICFRAGMENT_PROTO_FIELD_NUMBER;
+        hash = (53 * hash) + getPdfGraphicFragmentProtoList().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6594,10 +6680,17 @@ public final class RenderProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getPdfGraphicFragmentProtoFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          pdfGraphicFragmentProto_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          pdfGraphicFragmentProtoBuilder_.clear();
+        }
         return this;
       }
 
@@ -6620,6 +6713,16 @@ public final class RenderProto {
 
       public com.sysalto.render.serialization.RenderProto.PdfGraphic_proto buildPartial() {
         com.sysalto.render.serialization.RenderProto.PdfGraphic_proto result = new com.sysalto.render.serialization.RenderProto.PdfGraphic_proto(this);
+        int from_bitField0_ = bitField0_;
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            pdfGraphicFragmentProto_ = java.util.Collections.unmodifiableList(pdfGraphicFragmentProto_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.pdfGraphicFragmentProto_ = pdfGraphicFragmentProto_;
+        } else {
+          result.pdfGraphicFragmentProto_ = pdfGraphicFragmentProtoBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -6661,6 +6764,32 @@ public final class RenderProto {
 
       public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfGraphic_proto other) {
         if (other == com.sysalto.render.serialization.RenderProto.PdfGraphic_proto.getDefaultInstance()) return this;
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          if (!other.pdfGraphicFragmentProto_.isEmpty()) {
+            if (pdfGraphicFragmentProto_.isEmpty()) {
+              pdfGraphicFragmentProto_ = other.pdfGraphicFragmentProto_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePdfGraphicFragmentProtoIsMutable();
+              pdfGraphicFragmentProto_.addAll(other.pdfGraphicFragmentProto_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.pdfGraphicFragmentProto_.isEmpty()) {
+            if (pdfGraphicFragmentProtoBuilder_.isEmpty()) {
+              pdfGraphicFragmentProtoBuilder_.dispose();
+              pdfGraphicFragmentProtoBuilder_ = null;
+              pdfGraphicFragmentProto_ = other.pdfGraphicFragmentProto_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              pdfGraphicFragmentProtoBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPdfGraphicFragmentProtoFieldBuilder() : null;
+            } else {
+              pdfGraphicFragmentProtoBuilder_.addAllMessages(other.pdfGraphicFragmentProto_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -6686,6 +6815,247 @@ public final class RenderProto {
           }
         }
         return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto> pdfGraphicFragmentProto_ =
+        java.util.Collections.emptyList();
+      private void ensurePdfGraphicFragmentProtoIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          pdfGraphicFragmentProto_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto>(pdfGraphicFragmentProto_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder> pdfGraphicFragmentProtoBuilder_;
+
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public java.util.List<com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto> getPdfGraphicFragmentProtoList() {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(pdfGraphicFragmentProto_);
+        } else {
+          return pdfGraphicFragmentProtoBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public int getPdfGraphicFragmentProtoCount() {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          return pdfGraphicFragmentProto_.size();
+        } else {
+          return pdfGraphicFragmentProtoBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto getPdfGraphicFragmentProto(int index) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          return pdfGraphicFragmentProto_.get(index);
+        } else {
+          return pdfGraphicFragmentProtoBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public Builder setPdfGraphicFragmentProto(
+          int index, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto value) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePdfGraphicFragmentProtoIsMutable();
+          pdfGraphicFragmentProto_.set(index, value);
+          onChanged();
+        } else {
+          pdfGraphicFragmentProtoBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public Builder setPdfGraphicFragmentProto(
+          int index, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder builderForValue) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          ensurePdfGraphicFragmentProtoIsMutable();
+          pdfGraphicFragmentProto_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          pdfGraphicFragmentProtoBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public Builder addPdfGraphicFragmentProto(com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto value) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePdfGraphicFragmentProtoIsMutable();
+          pdfGraphicFragmentProto_.add(value);
+          onChanged();
+        } else {
+          pdfGraphicFragmentProtoBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public Builder addPdfGraphicFragmentProto(
+          int index, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto value) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePdfGraphicFragmentProtoIsMutable();
+          pdfGraphicFragmentProto_.add(index, value);
+          onChanged();
+        } else {
+          pdfGraphicFragmentProtoBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public Builder addPdfGraphicFragmentProto(
+          com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder builderForValue) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          ensurePdfGraphicFragmentProtoIsMutable();
+          pdfGraphicFragmentProto_.add(builderForValue.build());
+          onChanged();
+        } else {
+          pdfGraphicFragmentProtoBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public Builder addPdfGraphicFragmentProto(
+          int index, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder builderForValue) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          ensurePdfGraphicFragmentProtoIsMutable();
+          pdfGraphicFragmentProto_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          pdfGraphicFragmentProtoBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public Builder addAllPdfGraphicFragmentProto(
+          java.lang.Iterable<? extends com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto> values) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          ensurePdfGraphicFragmentProtoIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, pdfGraphicFragmentProto_);
+          onChanged();
+        } else {
+          pdfGraphicFragmentProtoBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public Builder clearPdfGraphicFragmentProto() {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          pdfGraphicFragmentProto_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          pdfGraphicFragmentProtoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public Builder removePdfGraphicFragmentProto(int index) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          ensurePdfGraphicFragmentProtoIsMutable();
+          pdfGraphicFragmentProto_.remove(index);
+          onChanged();
+        } else {
+          pdfGraphicFragmentProtoBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder getPdfGraphicFragmentProtoBuilder(
+          int index) {
+        return getPdfGraphicFragmentProtoFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder getPdfGraphicFragmentProtoOrBuilder(
+          int index) {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          return pdfGraphicFragmentProto_.get(index);  } else {
+          return pdfGraphicFragmentProtoBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder> 
+           getPdfGraphicFragmentProtoOrBuilderList() {
+        if (pdfGraphicFragmentProtoBuilder_ != null) {
+          return pdfGraphicFragmentProtoBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(pdfGraphicFragmentProto_);
+        }
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder addPdfGraphicFragmentProtoBuilder() {
+        return getPdfGraphicFragmentProtoFieldBuilder().addBuilder(
+            com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder addPdfGraphicFragmentProtoBuilder(
+          int index) {
+        return getPdfGraphicFragmentProtoFieldBuilder().addBuilder(
+            index, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.sysalto.render.serialization.PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;</code>
+       */
+      public java.util.List<com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder> 
+           getPdfGraphicFragmentProtoBuilderList() {
+        return getPdfGraphicFragmentProtoFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder> 
+          getPdfGraphicFragmentProtoFieldBuilder() {
+        if (pdfGraphicFragmentProtoBuilder_ == null) {
+          pdfGraphicFragmentProtoBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder>(
+                  pdfGraphicFragmentProto_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          pdfGraphicFragmentProto_ = null;
+        }
+        return pdfGraphicFragmentProtoBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -13605,6 +13975,2107 @@ public final class RenderProto {
 
   }
 
+  public interface PdfGraphicFragment_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.PdfGraphicFragment_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+     */
+    boolean hasDrawLineProto();
+    /**
+     * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.DrawLine_proto getDrawLineProto();
+    /**
+     * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.DrawLine_protoOrBuilder getDrawLineProtoOrBuilder();
+
+    public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.FieldCase getFieldCase();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.PdfGraphicFragment_proto}
+   */
+  public  static final class PdfGraphicFragment_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.PdfGraphicFragment_proto)
+      PdfGraphicFragment_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use PdfGraphicFragment_proto.newBuilder() to construct.
+    private PdfGraphicFragment_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PdfGraphicFragment_proto() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PdfGraphicFragment_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.sysalto.render.serialization.RenderProto.DrawLine_proto.Builder subBuilder = null;
+              if (fieldCase_ == 1) {
+                subBuilder = ((com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_).toBuilder();
+              }
+              field_ =
+                  input.readMessage(com.sysalto.render.serialization.RenderProto.DrawLine_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_);
+                field_ = subBuilder.buildPartial();
+              }
+              fieldCase_ = 1;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.class, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder.class);
+    }
+
+    private int fieldCase_ = 0;
+    private java.lang.Object field_;
+    public enum FieldCase
+        implements com.google.protobuf.Internal.EnumLite {
+      DRAWLINE_PROTO(1),
+      FIELD_NOT_SET(0);
+      private final int value;
+      private FieldCase(int value) {
+        this.value = value;
+      }
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static FieldCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static FieldCase forNumber(int value) {
+        switch (value) {
+          case 1: return DRAWLINE_PROTO;
+          case 0: return FIELD_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public FieldCase
+    getFieldCase() {
+      return FieldCase.forNumber(
+          fieldCase_);
+    }
+
+    public static final int DRAWLINE_PROTO_FIELD_NUMBER = 1;
+    /**
+     * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+     */
+    public boolean hasDrawLineProto() {
+      return fieldCase_ == 1;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.DrawLine_proto getDrawLineProto() {
+      if (fieldCase_ == 1) {
+         return (com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_;
+      }
+      return com.sysalto.render.serialization.RenderProto.DrawLine_proto.getDefaultInstance();
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.DrawLine_protoOrBuilder getDrawLineProtoOrBuilder() {
+      if (fieldCase_ == 1) {
+         return (com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_;
+      }
+      return com.sysalto.render.serialization.RenderProto.DrawLine_proto.getDefaultInstance();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (fieldCase_ == 1) {
+        output.writeMessage(1, (com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (fieldCase_ == 1) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, (com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto other = (com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto) obj;
+
+      boolean result = true;
+      result = result && getFieldCase().equals(
+          other.getFieldCase());
+      if (!result) return false;
+      switch (fieldCase_) {
+        case 1:
+          result = result && getDrawLineProto()
+              .equals(other.getDrawLineProto());
+          break;
+        case 0:
+        default:
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      switch (fieldCase_) {
+        case 1:
+          hash = (37 * hash) + DRAWLINE_PROTO_FIELD_NUMBER;
+          hash = (53 * hash) + getDrawLineProto().hashCode();
+          break;
+        case 0:
+        default:
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.PdfGraphicFragment_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.PdfGraphicFragment_proto)
+        com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.class, com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        fieldCase_ = 0;
+        field_ = null;
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto build() {
+        com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto result = new com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto(this);
+        if (fieldCase_ == 1) {
+          if (drawLineProtoBuilder_ == null) {
+            result.field_ = field_;
+          } else {
+            result.field_ = drawLineProtoBuilder_.build();
+          }
+        }
+        result.fieldCase_ = fieldCase_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.getDefaultInstance()) return this;
+        switch (other.getFieldCase()) {
+          case DRAWLINE_PROTO: {
+            mergeDrawLineProto(other.getDrawLineProto());
+            break;
+          }
+          case FIELD_NOT_SET: {
+            break;
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int fieldCase_ = 0;
+      private java.lang.Object field_;
+      public FieldCase
+          getFieldCase() {
+        return FieldCase.forNumber(
+            fieldCase_);
+      }
+
+      public Builder clearField() {
+        fieldCase_ = 0;
+        field_ = null;
+        onChanged();
+        return this;
+      }
+
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.DrawLine_proto, com.sysalto.render.serialization.RenderProto.DrawLine_proto.Builder, com.sysalto.render.serialization.RenderProto.DrawLine_protoOrBuilder> drawLineProtoBuilder_;
+      /**
+       * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+       */
+      public boolean hasDrawLineProto() {
+        return fieldCase_ == 1;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.DrawLine_proto getDrawLineProto() {
+        if (drawLineProtoBuilder_ == null) {
+          if (fieldCase_ == 1) {
+            return (com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_;
+          }
+          return com.sysalto.render.serialization.RenderProto.DrawLine_proto.getDefaultInstance();
+        } else {
+          if (fieldCase_ == 1) {
+            return drawLineProtoBuilder_.getMessage();
+          }
+          return com.sysalto.render.serialization.RenderProto.DrawLine_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+       */
+      public Builder setDrawLineProto(com.sysalto.render.serialization.RenderProto.DrawLine_proto value) {
+        if (drawLineProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          field_ = value;
+          onChanged();
+        } else {
+          drawLineProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+       */
+      public Builder setDrawLineProto(
+          com.sysalto.render.serialization.RenderProto.DrawLine_proto.Builder builderForValue) {
+        if (drawLineProtoBuilder_ == null) {
+          field_ = builderForValue.build();
+          onChanged();
+        } else {
+          drawLineProtoBuilder_.setMessage(builderForValue.build());
+        }
+        fieldCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+       */
+      public Builder mergeDrawLineProto(com.sysalto.render.serialization.RenderProto.DrawLine_proto value) {
+        if (drawLineProtoBuilder_ == null) {
+          if (fieldCase_ == 1 &&
+              field_ != com.sysalto.render.serialization.RenderProto.DrawLine_proto.getDefaultInstance()) {
+            field_ = com.sysalto.render.serialization.RenderProto.DrawLine_proto.newBuilder((com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            field_ = value;
+          }
+          onChanged();
+        } else {
+          if (fieldCase_ == 1) {
+            drawLineProtoBuilder_.mergeFrom(value);
+          }
+          drawLineProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+       */
+      public Builder clearDrawLineProto() {
+        if (drawLineProtoBuilder_ == null) {
+          if (fieldCase_ == 1) {
+            fieldCase_ = 0;
+            field_ = null;
+            onChanged();
+          }
+        } else {
+          if (fieldCase_ == 1) {
+            fieldCase_ = 0;
+            field_ = null;
+          }
+          drawLineProtoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.DrawLine_proto.Builder getDrawLineProtoBuilder() {
+        return getDrawLineProtoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.DrawLine_protoOrBuilder getDrawLineProtoOrBuilder() {
+        if ((fieldCase_ == 1) && (drawLineProtoBuilder_ != null)) {
+          return drawLineProtoBuilder_.getMessageOrBuilder();
+        } else {
+          if (fieldCase_ == 1) {
+            return (com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_;
+          }
+          return com.sysalto.render.serialization.RenderProto.DrawLine_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawLine_proto drawLine_proto = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.DrawLine_proto, com.sysalto.render.serialization.RenderProto.DrawLine_proto.Builder, com.sysalto.render.serialization.RenderProto.DrawLine_protoOrBuilder> 
+          getDrawLineProtoFieldBuilder() {
+        if (drawLineProtoBuilder_ == null) {
+          if (!(fieldCase_ == 1)) {
+            field_ = com.sysalto.render.serialization.RenderProto.DrawLine_proto.getDefaultInstance();
+          }
+          drawLineProtoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.DrawLine_proto, com.sysalto.render.serialization.RenderProto.DrawLine_proto.Builder, com.sysalto.render.serialization.RenderProto.DrawLine_protoOrBuilder>(
+                  (com.sysalto.render.serialization.RenderProto.DrawLine_proto) field_,
+                  getParentForChildren(),
+                  isClean());
+          field_ = null;
+        }
+        fieldCase_ = 1;
+        onChanged();;
+        return drawLineProtoBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.PdfGraphicFragment_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.PdfGraphicFragment_proto)
+    private static final com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PdfGraphicFragment_proto>
+        PARSER = new com.google.protobuf.AbstractParser<PdfGraphicFragment_proto>() {
+      public PdfGraphicFragment_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PdfGraphicFragment_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PdfGraphicFragment_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PdfGraphicFragment_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface LineDashType_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.LineDashType_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 unit = 1;</code>
+     */
+    int getUnit();
+
+    /**
+     * <code>int32 phase = 2;</code>
+     */
+    int getPhase();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.LineDashType_proto}
+   */
+  public  static final class LineDashType_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.LineDashType_proto)
+      LineDashType_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use LineDashType_proto.newBuilder() to construct.
+    private LineDashType_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private LineDashType_proto() {
+      unit_ = 0;
+      phase_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private LineDashType_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              unit_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              phase_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_LineDashType_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_LineDashType_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.LineDashType_proto.class, com.sysalto.render.serialization.RenderProto.LineDashType_proto.Builder.class);
+    }
+
+    public static final int UNIT_FIELD_NUMBER = 1;
+    private int unit_;
+    /**
+     * <code>int32 unit = 1;</code>
+     */
+    public int getUnit() {
+      return unit_;
+    }
+
+    public static final int PHASE_FIELD_NUMBER = 2;
+    private int phase_;
+    /**
+     * <code>int32 phase = 2;</code>
+     */
+    public int getPhase() {
+      return phase_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (unit_ != 0) {
+        output.writeInt32(1, unit_);
+      }
+      if (phase_ != 0) {
+        output.writeInt32(2, phase_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (unit_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, unit_);
+      }
+      if (phase_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, phase_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.LineDashType_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.LineDashType_proto other = (com.sysalto.render.serialization.RenderProto.LineDashType_proto) obj;
+
+      boolean result = true;
+      result = result && (getUnit()
+          == other.getUnit());
+      result = result && (getPhase()
+          == other.getPhase());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + UNIT_FIELD_NUMBER;
+      hash = (53 * hash) + getUnit();
+      hash = (37 * hash) + PHASE_FIELD_NUMBER;
+      hash = (53 * hash) + getPhase();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.LineDashType_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.LineDashType_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.LineDashType_proto)
+        com.sysalto.render.serialization.RenderProto.LineDashType_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_LineDashType_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_LineDashType_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.LineDashType_proto.class, com.sysalto.render.serialization.RenderProto.LineDashType_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.LineDashType_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        unit_ = 0;
+
+        phase_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_LineDashType_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.LineDashType_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.LineDashType_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.LineDashType_proto build() {
+        com.sysalto.render.serialization.RenderProto.LineDashType_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.LineDashType_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.LineDashType_proto result = new com.sysalto.render.serialization.RenderProto.LineDashType_proto(this);
+        result.unit_ = unit_;
+        result.phase_ = phase_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.LineDashType_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.LineDashType_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.LineDashType_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.LineDashType_proto.getDefaultInstance()) return this;
+        if (other.getUnit() != 0) {
+          setUnit(other.getUnit());
+        }
+        if (other.getPhase() != 0) {
+          setPhase(other.getPhase());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.LineDashType_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.LineDashType_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int unit_ ;
+      /**
+       * <code>int32 unit = 1;</code>
+       */
+      public int getUnit() {
+        return unit_;
+      }
+      /**
+       * <code>int32 unit = 1;</code>
+       */
+      public Builder setUnit(int value) {
+        
+        unit_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 unit = 1;</code>
+       */
+      public Builder clearUnit() {
+        
+        unit_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int phase_ ;
+      /**
+       * <code>int32 phase = 2;</code>
+       */
+      public int getPhase() {
+        return phase_;
+      }
+      /**
+       * <code>int32 phase = 2;</code>
+       */
+      public Builder setPhase(int value) {
+        
+        phase_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 phase = 2;</code>
+       */
+      public Builder clearPhase() {
+        
+        phase_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.LineDashType_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.LineDashType_proto)
+    private static final com.sysalto.render.serialization.RenderProto.LineDashType_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.LineDashType_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.LineDashType_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<LineDashType_proto>
+        PARSER = new com.google.protobuf.AbstractParser<LineDashType_proto>() {
+      public LineDashType_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new LineDashType_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<LineDashType_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<LineDashType_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.LineDashType_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface DrawLine_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.DrawLine_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>float x1 = 1;</code>
+     */
+    float getX1();
+
+    /**
+     * <code>float y1 = 2;</code>
+     */
+    float getY1();
+
+    /**
+     * <code>float x2 = 3;</code>
+     */
+    float getX2();
+
+    /**
+     * <code>float y2 = 4;</code>
+     */
+    float getY2();
+
+    /**
+     * <code>float vlineWidth = 5;</code>
+     */
+    float getVlineWidth();
+
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+     */
+    boolean hasColor();
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.ReportColor_proto getColor();
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder getColorOrBuilder();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.DrawLine_proto}
+   */
+  public  static final class DrawLine_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.DrawLine_proto)
+      DrawLine_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DrawLine_proto.newBuilder() to construct.
+    private DrawLine_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DrawLine_proto() {
+      x1_ = 0F;
+      y1_ = 0F;
+      x2_ = 0F;
+      y2_ = 0F;
+      vlineWidth_ = 0F;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DrawLine_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 13: {
+
+              x1_ = input.readFloat();
+              break;
+            }
+            case 21: {
+
+              y1_ = input.readFloat();
+              break;
+            }
+            case 29: {
+
+              x2_ = input.readFloat();
+              break;
+            }
+            case 37: {
+
+              y2_ = input.readFloat();
+              break;
+            }
+            case 45: {
+
+              vlineWidth_ = input.readFloat();
+              break;
+            }
+            case 50: {
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder subBuilder = null;
+              if (color_ != null) {
+                subBuilder = color_.toBuilder();
+              }
+              color_ = input.readMessage(com.sysalto.render.serialization.RenderProto.ReportColor_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(color_);
+                color_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawLine_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawLine_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.DrawLine_proto.class, com.sysalto.render.serialization.RenderProto.DrawLine_proto.Builder.class);
+    }
+
+    public static final int X1_FIELD_NUMBER = 1;
+    private float x1_;
+    /**
+     * <code>float x1 = 1;</code>
+     */
+    public float getX1() {
+      return x1_;
+    }
+
+    public static final int Y1_FIELD_NUMBER = 2;
+    private float y1_;
+    /**
+     * <code>float y1 = 2;</code>
+     */
+    public float getY1() {
+      return y1_;
+    }
+
+    public static final int X2_FIELD_NUMBER = 3;
+    private float x2_;
+    /**
+     * <code>float x2 = 3;</code>
+     */
+    public float getX2() {
+      return x2_;
+    }
+
+    public static final int Y2_FIELD_NUMBER = 4;
+    private float y2_;
+    /**
+     * <code>float y2 = 4;</code>
+     */
+    public float getY2() {
+      return y2_;
+    }
+
+    public static final int VLINEWIDTH_FIELD_NUMBER = 5;
+    private float vlineWidth_;
+    /**
+     * <code>float vlineWidth = 5;</code>
+     */
+    public float getVlineWidth() {
+      return vlineWidth_;
+    }
+
+    public static final int COLOR_FIELD_NUMBER = 6;
+    private com.sysalto.render.serialization.RenderProto.ReportColor_proto color_;
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+     */
+    public boolean hasColor() {
+      return color_ != null;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.ReportColor_proto getColor() {
+      return color_ == null ? com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance() : color_;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder getColorOrBuilder() {
+      return getColor();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (x1_ != 0F) {
+        output.writeFloat(1, x1_);
+      }
+      if (y1_ != 0F) {
+        output.writeFloat(2, y1_);
+      }
+      if (x2_ != 0F) {
+        output.writeFloat(3, x2_);
+      }
+      if (y2_ != 0F) {
+        output.writeFloat(4, y2_);
+      }
+      if (vlineWidth_ != 0F) {
+        output.writeFloat(5, vlineWidth_);
+      }
+      if (color_ != null) {
+        output.writeMessage(6, getColor());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (x1_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(1, x1_);
+      }
+      if (y1_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(2, y1_);
+      }
+      if (x2_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(3, x2_);
+      }
+      if (y2_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(4, y2_);
+      }
+      if (vlineWidth_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(5, vlineWidth_);
+      }
+      if (color_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getColor());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.DrawLine_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.DrawLine_proto other = (com.sysalto.render.serialization.RenderProto.DrawLine_proto) obj;
+
+      boolean result = true;
+      result = result && (
+          java.lang.Float.floatToIntBits(getX1())
+          == java.lang.Float.floatToIntBits(
+              other.getX1()));
+      result = result && (
+          java.lang.Float.floatToIntBits(getY1())
+          == java.lang.Float.floatToIntBits(
+              other.getY1()));
+      result = result && (
+          java.lang.Float.floatToIntBits(getX2())
+          == java.lang.Float.floatToIntBits(
+              other.getX2()));
+      result = result && (
+          java.lang.Float.floatToIntBits(getY2())
+          == java.lang.Float.floatToIntBits(
+              other.getY2()));
+      result = result && (
+          java.lang.Float.floatToIntBits(getVlineWidth())
+          == java.lang.Float.floatToIntBits(
+              other.getVlineWidth()));
+      result = result && (hasColor() == other.hasColor());
+      if (hasColor()) {
+        result = result && getColor()
+            .equals(other.getColor());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + X1_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getX1());
+      hash = (37 * hash) + Y1_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getY1());
+      hash = (37 * hash) + X2_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getX2());
+      hash = (37 * hash) + Y2_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getY2());
+      hash = (37 * hash) + VLINEWIDTH_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getVlineWidth());
+      if (hasColor()) {
+        hash = (37 * hash) + COLOR_FIELD_NUMBER;
+        hash = (53 * hash) + getColor().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.DrawLine_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.DrawLine_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.DrawLine_proto)
+        com.sysalto.render.serialization.RenderProto.DrawLine_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawLine_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawLine_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.DrawLine_proto.class, com.sysalto.render.serialization.RenderProto.DrawLine_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.DrawLine_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        x1_ = 0F;
+
+        y1_ = 0F;
+
+        x2_ = 0F;
+
+        y2_ = 0F;
+
+        vlineWidth_ = 0F;
+
+        if (colorBuilder_ == null) {
+          color_ = null;
+        } else {
+          color_ = null;
+          colorBuilder_ = null;
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawLine_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.DrawLine_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.DrawLine_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.DrawLine_proto build() {
+        com.sysalto.render.serialization.RenderProto.DrawLine_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.DrawLine_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.DrawLine_proto result = new com.sysalto.render.serialization.RenderProto.DrawLine_proto(this);
+        result.x1_ = x1_;
+        result.y1_ = y1_;
+        result.x2_ = x2_;
+        result.y2_ = y2_;
+        result.vlineWidth_ = vlineWidth_;
+        if (colorBuilder_ == null) {
+          result.color_ = color_;
+        } else {
+          result.color_ = colorBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.DrawLine_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.DrawLine_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.DrawLine_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.DrawLine_proto.getDefaultInstance()) return this;
+        if (other.getX1() != 0F) {
+          setX1(other.getX1());
+        }
+        if (other.getY1() != 0F) {
+          setY1(other.getY1());
+        }
+        if (other.getX2() != 0F) {
+          setX2(other.getX2());
+        }
+        if (other.getY2() != 0F) {
+          setY2(other.getY2());
+        }
+        if (other.getVlineWidth() != 0F) {
+          setVlineWidth(other.getVlineWidth());
+        }
+        if (other.hasColor()) {
+          mergeColor(other.getColor());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.DrawLine_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.DrawLine_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private float x1_ ;
+      /**
+       * <code>float x1 = 1;</code>
+       */
+      public float getX1() {
+        return x1_;
+      }
+      /**
+       * <code>float x1 = 1;</code>
+       */
+      public Builder setX1(float value) {
+        
+        x1_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float x1 = 1;</code>
+       */
+      public Builder clearX1() {
+        
+        x1_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float y1_ ;
+      /**
+       * <code>float y1 = 2;</code>
+       */
+      public float getY1() {
+        return y1_;
+      }
+      /**
+       * <code>float y1 = 2;</code>
+       */
+      public Builder setY1(float value) {
+        
+        y1_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float y1 = 2;</code>
+       */
+      public Builder clearY1() {
+        
+        y1_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float x2_ ;
+      /**
+       * <code>float x2 = 3;</code>
+       */
+      public float getX2() {
+        return x2_;
+      }
+      /**
+       * <code>float x2 = 3;</code>
+       */
+      public Builder setX2(float value) {
+        
+        x2_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float x2 = 3;</code>
+       */
+      public Builder clearX2() {
+        
+        x2_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float y2_ ;
+      /**
+       * <code>float y2 = 4;</code>
+       */
+      public float getY2() {
+        return y2_;
+      }
+      /**
+       * <code>float y2 = 4;</code>
+       */
+      public Builder setY2(float value) {
+        
+        y2_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float y2 = 4;</code>
+       */
+      public Builder clearY2() {
+        
+        y2_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float vlineWidth_ ;
+      /**
+       * <code>float vlineWidth = 5;</code>
+       */
+      public float getVlineWidth() {
+        return vlineWidth_;
+      }
+      /**
+       * <code>float vlineWidth = 5;</code>
+       */
+      public Builder setVlineWidth(float value) {
+        
+        vlineWidth_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float vlineWidth = 5;</code>
+       */
+      public Builder clearVlineWidth() {
+        
+        vlineWidth_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private com.sysalto.render.serialization.RenderProto.ReportColor_proto color_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.ReportColor_proto, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder> colorBuilder_;
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+       */
+      public boolean hasColor() {
+        return colorBuilder_ != null || color_ != null;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportColor_proto getColor() {
+        if (colorBuilder_ == null) {
+          return color_ == null ? com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance() : color_;
+        } else {
+          return colorBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+       */
+      public Builder setColor(com.sysalto.render.serialization.RenderProto.ReportColor_proto value) {
+        if (colorBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          color_ = value;
+          onChanged();
+        } else {
+          colorBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+       */
+      public Builder setColor(
+          com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder builderForValue) {
+        if (colorBuilder_ == null) {
+          color_ = builderForValue.build();
+          onChanged();
+        } else {
+          colorBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+       */
+      public Builder mergeColor(com.sysalto.render.serialization.RenderProto.ReportColor_proto value) {
+        if (colorBuilder_ == null) {
+          if (color_ != null) {
+            color_ =
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.newBuilder(color_).mergeFrom(value).buildPartial();
+          } else {
+            color_ = value;
+          }
+          onChanged();
+        } else {
+          colorBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+       */
+      public Builder clearColor() {
+        if (colorBuilder_ == null) {
+          color_ = null;
+          onChanged();
+        } else {
+          color_ = null;
+          colorBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder getColorBuilder() {
+        
+        onChanged();
+        return getColorFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder getColorOrBuilder() {
+        if (colorBuilder_ != null) {
+          return colorBuilder_.getMessageOrBuilder();
+        } else {
+          return color_ == null ?
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto.getDefaultInstance() : color_;
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.ReportColor_proto color = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.ReportColor_proto, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder> 
+          getColorFieldBuilder() {
+        if (colorBuilder_ == null) {
+          colorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.ReportColor_proto, com.sysalto.render.serialization.RenderProto.ReportColor_proto.Builder, com.sysalto.render.serialization.RenderProto.ReportColor_protoOrBuilder>(
+                  getColor(),
+                  getParentForChildren(),
+                  isClean());
+          color_ = null;
+        }
+        return colorBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.DrawLine_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.DrawLine_proto)
+    private static final com.sysalto.render.serialization.RenderProto.DrawLine_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.DrawLine_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.DrawLine_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<DrawLine_proto>
+        PARSER = new com.google.protobuf.AbstractParser<DrawLine_proto>() {
+      public DrawLine_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DrawLine_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DrawLine_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DrawLine_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.DrawLine_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sysalto_render_serialization_PdfBaseItem_proto_descriptor;
   private static final 
@@ -13685,6 +16156,21 @@ public final class RenderProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_sysalto_render_serialization_PdfGPattern_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_LineDashType_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_LineDashType_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_DrawLine_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_DrawLine_proto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -13728,30 +16214,40 @@ public final class RenderProto {
       "sysalto.render.serialization.PdfText_pro" +
       "toH\000\022N\n\020pdfGraphic_proto\030\002 \001(\01322.com.sys" +
       "alto.render.serialization.PdfGraphic_pro" +
-      "toH\000B\013\n\tfieldItem\"\022\n\020PdfGraphic_proto\"\036\n" +
-      "\017ReportTxt_proto\022\013\n\003txt\030\001 \001(\t\"\212\001\n\024PdfTxt" +
-      "Fragment_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022F\n\013" +
-      "rtext_proto\030\003 \001(\01321.com.sysalto.render.s" +
-      "erialization.ReportTxt_proto\022\024\n\014fonttRef" +
-      "Name\030\004 \001(\t\"X\n\rPdfText_proto\022G\n\007txtList\030\001" +
-      " \003(\01326.com.sysalto.render.serialization." +
-      "PdfTxtFragment_proto\"~\n\024PdfPageContent_p" +
-      "roto\022N\n\021pdfPageItem_proto\030\003 \003(\01323.com.sy" +
-      "salto.render.serialization.PdfPageItem_p" +
-      "roto\022\026\n\016pdfCompression\030\004 \001(\010\"H\n\021PdfPageL" +
-      "ist_proto\022\017\n\007leafNbr\030\001 \001(\003\022\020\n\010parentId\030\002" +
-      " \003(\003\022\020\n\010pageList\030\003 \003(\003\"\"\n\016PdfImage_proto" +
-      "\022\020\n\010fileName\030\001 \001(\t\"E\n\021ReportColor_proto\022" +
-      "\t\n\001r\030\001 \001(\005\022\t\n\001g\030\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opac" +
-      "ity\030\004 \001(\002\"\245\001\n\031PdfShaddingFctColor_proto\022" +
-      "C\n\006color1\030\001 \001(\01323.com.sysalto.render.ser" +
-      "ialization.ReportColor_proto\022C\n\006color2\030\002" +
-      " \001(\01323.com.sysalto.render.serialization." +
-      "ReportColor_proto\"g\n\026PdfColorShadding_pr" +
-      "oto\022\n\n\002x0\030\001 \001(\002\022\n\n\002y0\030\002 \001(\002\022\n\n\002x1\030\003 \001(\002\022" +
-      "\n\n\002y1\030\004 \001(\002\022\035\n\025idPdfShaddingFctColor\030\005 \001" +
-      "(\003\"*\n\021PdfGPattern_proto\022\025\n\ridPdfShadding" +
-      "\030\001 \001(\003B\002H\001b\006proto3"
+      "toH\000B\013\n\tfieldItem\"p\n\020PdfGraphic_proto\022\\\n" +
+      "\030pdfGraphicFragment_proto\030\001 \003(\0132:.com.sy" +
+      "salto.render.serialization.PdfGraphicFra" +
+      "gment_proto\"\036\n\017ReportTxt_proto\022\013\n\003txt\030\001 " +
+      "\001(\t\"\212\001\n\024PdfTxtFragment_proto\022\t\n\001x\030\001 \001(\002\022" +
+      "\t\n\001y\030\002 \001(\002\022F\n\013rtext_proto\030\003 \001(\01321.com.sy" +
+      "salto.render.serialization.ReportTxt_pro" +
+      "to\022\024\n\014fonttRefName\030\004 \001(\t\"X\n\rPdfText_prot" +
+      "o\022G\n\007txtList\030\001 \003(\01326.com.sysalto.render." +
+      "serialization.PdfTxtFragment_proto\"~\n\024Pd" +
+      "fPageContent_proto\022N\n\021pdfPageItem_proto\030" +
+      "\003 \003(\01323.com.sysalto.render.serialization" +
+      ".PdfPageItem_proto\022\026\n\016pdfCompression\030\004 \001" +
+      "(\010\"H\n\021PdfPageList_proto\022\017\n\007leafNbr\030\001 \001(\003" +
+      "\022\020\n\010parentId\030\002 \003(\003\022\020\n\010pageList\030\003 \003(\003\"\"\n\016" +
+      "PdfImage_proto\022\020\n\010fileName\030\001 \001(\t\"E\n\021Repo" +
+      "rtColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001g\030\002 \001(\005\022\t\n\001b" +
+      "\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"\245\001\n\031PdfShaddingF" +
+      "ctColor_proto\022C\n\006color1\030\001 \001(\01323.com.sysa" +
+      "lto.render.serialization.ReportColor_pro" +
+      "to\022C\n\006color2\030\002 \001(\01323.com.sysalto.render." +
+      "serialization.ReportColor_proto\"g\n\026PdfCo" +
+      "lorShadding_proto\022\n\n\002x0\030\001 \001(\002\022\n\n\002y0\030\002 \001(" +
+      "\002\022\n\n\002x1\030\003 \001(\002\022\n\n\002y1\030\004 \001(\002\022\035\n\025idPdfShaddi" +
+      "ngFctColor\030\005 \001(\003\"*\n\021PdfGPattern_proto\022\025\n" +
+      "\ridPdfShadding\030\001 \001(\003\"o\n\030PdfGraphicFragme" +
+      "nt_proto\022J\n\016drawLine_proto\030\001 \001(\01320.com.s" +
+      "ysalto.render.serialization.DrawLine_pro" +
+      "toH\000B\007\n\005field\"1\n\022LineDashType_proto\022\014\n\004u" +
+      "nit\030\001 \001(\005\022\r\n\005phase\030\002 \001(\005\"\230\001\n\016DrawLine_pr" +
+      "oto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022" +
+      "\n\n\002y2\030\004 \001(\002\022\022\n\nvlineWidth\030\005 \001(\002\022B\n\005color" +
+      "\030\006 \001(\01323.com.sysalto.render.serializatio" +
+      "n.ReportColor_protoB\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -13800,7 +16296,7 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfGraphic_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfGraphic_proto_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "PdfGraphicFragmentProto", });
     internal_static_com_sysalto_render_serialization_ReportTxt_proto_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_com_sysalto_render_serialization_ReportTxt_proto_fieldAccessorTable = new
@@ -13861,6 +16357,24 @@ public final class RenderProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfGPattern_proto_descriptor,
         new java.lang.String[] { "IdPdfShadding", });
+    internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_descriptor =
+      getDescriptor().getMessageTypes().get(16);
+    internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_descriptor,
+        new java.lang.String[] { "DrawLineProto", "Field", });
+    internal_static_com_sysalto_render_serialization_LineDashType_proto_descriptor =
+      getDescriptor().getMessageTypes().get(17);
+    internal_static_com_sysalto_render_serialization_LineDashType_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_LineDashType_proto_descriptor,
+        new java.lang.String[] { "Unit", "Phase", });
+    internal_static_com_sysalto_render_serialization_DrawLine_proto_descriptor =
+      getDescriptor().getMessageTypes().get(18);
+    internal_static_com_sysalto_render_serialization_DrawLine_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_DrawLine_proto_descriptor,
+        new java.lang.String[] { "X1", "Y1", "X2", "Y2", "VlineWidth", "Color", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -88,7 +88,7 @@ class PdfNativeGenerator(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pd
 	}
 
 	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]): Unit = {
-		graphicList += DrawLine(x1, y1, x2, y2, lineWidth, color, lineDashType)
+		graphicList += new DrawLine(x1, y1, x2, y2, lineWidth, color, lineDashType)
 	}
 
 	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
