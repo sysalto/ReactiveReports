@@ -114,8 +114,28 @@ message PdfGPattern_proto {
 message PdfGraphicFragment_proto {
     oneof field {
         DrawLine_proto drawLine_proto = 1;
+        PdfRectangle_proto pdfRectangle_proto = 2;
+        DrawStroke_proto drawStroke_proto = 3;
+        PdfDrawImage_proto pdfDrawImage_proto = 4;
     }
 }
+
+
+message DrawStroke_proto {
+
+}
+
+message PdfRectangle_proto {
+    int64 x2 = 1;
+    float radius = 2;
+    repeated PdfGPattern_proto patternColor = 3;
+    int64 y1 = 4;
+    int64 y2 = 5;
+    int64 x1 = 6;
+    repeated ReportColor_proto borderColor = 7;
+    repeated ReportColor_proto fillColor = 8;
+}
+
 
 message LineDashType_proto {
     int32 unit = 1;
@@ -130,3 +150,13 @@ message DrawLine_proto {
     float vlineWidth = 5;
     ReportColor_proto color = 6;
 }
+
+message PdfDrawImage_proto {
+    float x = 1;
+    float y = 2;
+    float scale = 3;
+    int64 idPdfImage = 4;
+    repeated float opacity = 5;
+
+}
+

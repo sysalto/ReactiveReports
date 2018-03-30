@@ -154,7 +154,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			ReportCell(total2.toString bold()) rightAlign() inside value2, ReportCell(total3.toString bold()) rightAlign() inside change)
 		report.print(trow)
 		val chartHeight = report.getY - firstY
-		report.drawPieChart("", chartData.toList, graphic.left + 5, firstY, graphic.right - graphic.left - 10, chartHeight)
+//		report.drawPieChart("", chartData.toList, graphic.left + 5, firstY, graphic.right - graphic.left - 10, chartHeight)
 
 	}
 
@@ -358,14 +358,14 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	def runReport(): Unit = {
 		implicit val pdfFactory:PdfFactory = new PdfNativeFactory()
 		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
-		val fontFamily = RFontFamily(name = "Roboto",
-			regular = "~/transfer/font/Roboto-Regular.ttf",
-			bold = Some("~/transfer/font/Roboto-Bold.ttf"),
-			italic = Some("~/transfer/font/Roboto-Italic.ttf"),
-			boldItalic = Some("~/transfer/font/Roboto-BoldItalic.ttf"))
-		report1.setExternalFont(fontFamily)
-		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
-		report1.font = font
+//		val fontFamily = RFontFamily(name = "Roboto",
+//			regular = "~/transfer/font/Roboto-Regular.ttf",
+//			bold = Some("~/transfer/font/Roboto-Bold.ttf"),
+//			italic = Some("~/transfer/font/Roboto-Italic.ttf"),
+//			boldItalic = Some("~/transfer/font/Roboto-BoldItalic.ttf"))
+//		report1.setExternalFont(fontFamily)
+//		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
+//		report1.font = font
 
 		report(report1)
 	}

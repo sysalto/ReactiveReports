@@ -56,7 +56,7 @@ class RenderReportTypes {
 	}
 
 
-	private[render] class PdfDrawImage(idPdfImage: Long, x: Float, y: Float, scale: Float = 1, opacity: Option[Float] = None)
+	private[render] class PdfDrawImage(val idPdfImage: Long, val x: Float, val y: Float, val scale: Float = 1, val opacity: Option[Float] = None)
 		extends PdfGraphicFragment {
 		private[this] val pdfImage = getObject1[PdfImage](idPdfImage)
 		private[this] val image = pdfImage.imageMeta
@@ -200,8 +200,8 @@ class RenderReportTypes {
 		}
 	}
 
-	class PdfRectangle1(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[ReportColor],
-	                    fillColor: Option[ReportColor], patternColor: Option[PdfGPattern] = None) extends PdfGraphicFragment {
+	class PdfRectangle1(val x1: Long, val y1: Long, val x2: Long, val y2: Long, val radius: Float, val borderColor: Option[ReportColor],
+	                    val fillColor: Option[ReportColor], val patternColor: Option[PdfGPattern] = None) extends PdfGraphicFragment {
 		override def content: String = {
 			val paternStr = if (patternColor.isDefined) pattern(patternColor.get.name) else ""
 			val borderStr = if (borderColor.isDefined) border(borderColor.get) else ""

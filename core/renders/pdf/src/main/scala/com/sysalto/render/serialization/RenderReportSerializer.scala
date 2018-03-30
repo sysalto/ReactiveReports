@@ -1,7 +1,7 @@
 package com.sysalto.render.serialization
 
 
-import com.sysalto.render.PdfDraw.{DrawLine, PdfGraphicFragment}
+import com.sysalto.render.PdfDraw.{DrawLine, DrawStroke, PdfGraphicFragment}
 import com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase
 import com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase
 
@@ -178,13 +178,13 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	object PdfGraphicSerializer {
 		def write(input: renderReportTypes.PdfGraphic): PdfGraphic_proto = {
 			val builder = PdfGraphic_proto.newBuilder()
-			input.items.foreach(item=>
-			builder.addPdfGraphicFragmentProto(PdfGraphicFragmentSerializer.write(item)))
+			input.items.foreach(item =>
+				builder.addPdfGraphicFragmentProto(PdfGraphicFragmentSerializer.write(item)))
 			builder.build()
 		}
 
 		def read(input: PdfGraphic_proto): renderReportTypes.PdfGraphic = {
-			val list=input.getPdfGraphicFragmentProtoList.asScala.map(item => PdfGraphicFragmentSerializer.read(item)).toList
+			val list = input.getPdfGraphicFragmentProtoList.asScala.map(item => PdfGraphicFragmentSerializer.read(item)).toList
 			new renderReportTypes.PdfGraphic(list)
 		}
 	}
@@ -371,6 +371,12 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			input match {
 				case item: DrawLine =>
 					builder.setDrawLineProto(DrawLineSerializer.write(item))
+				case item: renderReportTypes.PdfRectangle1 =>
+					builder.setPdfRectangleProto(PdfRectangleSerializer.write(item))
+				case item: DrawStroke =>
+					builder.setDrawStrokeProto(DrawStrokeSerializer.write(item))
+				case item: renderReportTypes.PdfDrawImage =>
+					builder.setPdfDrawImageProto(PdfDrawImageSerializer.write(item))
 			}
 			builder.build()
 		}
@@ -380,9 +386,70 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case PdfGraphicFragment_proto.FieldCase.DRAWLINE_PROTO => {
 					DrawLineSerializer.read(input.getDrawLineProto)
 				}
+				case PdfGraphicFragment_proto.FieldCase.PDFRECTANGLE_PROTO => {
+					PdfRectangleSerializer.read(input.getPdfRectangleProto)
+				}
+				case PdfGraphicFragment_proto.FieldCase.DRAWSTROKE_PROTO => {
+					DrawStrokeSerializer.read(input.getDrawStrokeProto)
+				}
+				case PdfGraphicFragment_proto.FieldCase.PDFDRAWIMAGE_PROTO => {
+					PdfDrawImageSerializer.read(input.getPdfDrawImageProto)
+				}
 			}
 		}
 	}
 
+	object PdfRectangleSerializer {
+		def write(input: renderReportTypes.PdfRectangle1): PdfRectangle_proto = {
+			val builder = PdfRectangle_proto.newBuilder()
+			builder.setX1(input.x1)
+			builder.setY1(input.y1)
+			builder.setX2(input.x2)
+			builder.setY2(input.y2)
+			builder.setRadius(input.radius)
+			if (input.borderColor.isDefined) {
+				builder.addBorderColor(ReportColorSerializer.write(input.borderColor.get))
+				builder.addFillColor(ReportColorSerializer.write(input.fillColor.get))
+				builder.addPatternColor(PdfGPatternSerializer.write(input.patternColor.get))
+			}
+			builder.build()
+		}
+
+		def read(input: PdfRectangle_proto): renderReportTypes.PdfRectangle1 = {
+			val borderColor = if (input.getBorderColorCount == 0) None else Some(ReportColorSerializer.read(input.getBorderColor(0)))
+			val fillColor = if (input.getFillColorCount == 0) None else Some(ReportColorSerializer.read(input.getFillColor(0)))
+			//			val patternColor=if (input.getPatternColorCount==0) None else Some(PdfGPatternSerializer.read(input.getPatternColor(0)))
+			new renderReportTypes.PdfRectangle1(input.getX1, input.getY1, input.getX2, input.getY2,
+				input.getRadius, borderColor, fillColor, None)
+		}
+	}
+
+
+	object DrawStrokeSerializer {
+		def write(input: DrawStroke): DrawStroke_proto = {
+			val builder = DrawStroke_proto.newBuilder()
+			builder.build()
+		}
+
+		def read(input: DrawStroke_proto): DrawStroke = {
+			DrawStroke()
+		}
+	}
+
+
+	object PdfDrawImageSerializer {
+		def write(input: renderReportTypes.PdfDrawImage): PdfDrawImage_proto = {
+			val builder = PdfDrawImage_proto.newBuilder()
+			builder.setIdPdfImage(input.idPdfImage)
+			builder.setX(input.x)
+			builder.setY(input.y)
+			builder.setScale(input.scale)
+			builder.build()
+		}
+
+		def read(input: PdfDrawImage_proto): renderReportTypes.PdfDrawImage = {
+			new renderReportTypes.PdfDrawImage(input.getIdPdfImage,input.getX,input.getY,input.getScale,None)
+		}
+	}
 
 }
