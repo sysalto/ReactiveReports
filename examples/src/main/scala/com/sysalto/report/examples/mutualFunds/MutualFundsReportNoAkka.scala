@@ -346,11 +346,16 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
 		}
 
-		reportHeader(report)
-		summaryOfInvestment(report)
-		changeAccount(report)
-		accountPerformance(report)
-		disclaimer(report)
+		for (i<-1 to 1000) {
+			println("I:"+i)
+			reportHeader(report)
+			summaryOfInvestment(report)
+			report.nextPage()
+			changeAccount(report)
+			accountPerformance(report)
+			disclaimer(report)
+			report.nextPage()
+		}
 		report.render()
 	}
 

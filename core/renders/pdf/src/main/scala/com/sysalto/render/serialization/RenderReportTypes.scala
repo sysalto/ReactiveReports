@@ -40,8 +40,6 @@ class RenderReportTypes {
 			s"[${this.getClass.getTypeName}]\n" + content
 		}
 
-		println("ID:" + id + " " + this.getClass)
-
 	}
 
 	private[render] class PdfDests(id: Long, val dests: ListBuffer[(String, String)] = ListBuffer())
@@ -599,7 +597,6 @@ class RenderReportTypes {
 
 
 	def setObject1(obj: PdfBaseItem): Unit = {
-		println("Setobject id:" + obj.id)
 		obj match {
 			case pdfCatalog: PdfCatalog => {
 				val cat1 = pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]
@@ -659,7 +656,6 @@ class RenderReportTypes {
 	}
 
 	def getObject1[T <: PdfBaseItem](id: Long): T = {
-		println("getObject id:" + id)
 		val bytes = db.readObject1(id)
 		val proto = PdfBaseItem_proto.parseFrom(bytes)
 		val result = serializer.PdfBaseItemSerializer.read(proto)
