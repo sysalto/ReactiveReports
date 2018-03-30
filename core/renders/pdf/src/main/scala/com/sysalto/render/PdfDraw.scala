@@ -22,13 +22,17 @@
 
 package com.sysalto.render
 
-import com.sysalto.report.reportTypes.{LineDashType, ReportColor, RFont}
+import com.sysalto.report.reportTypes.{LineDashType, RFont, ReportColor}
 import com.sysalto.render.basic.PdfBasic._
 import PdfChart._
+import com.sysalto.render.serialization.RenderReport
 
 object PdfDraw {
 
 	abstract class PdfGraphicFragment {
+		def updateContent(renderReport:RenderReport): Unit = {
+
+		}
 		def content: String
 	}
 
@@ -54,7 +58,6 @@ object PdfDraw {
 			val p0 = DrawPoint((center.x + radius * Math.cos(startAngle)).toFloat, (center.y + radius * Math.sin(startAngle)).toFloat)
 			val moveStr = movePoint(p0)
 			val arcStr = arc(center, radius, startAngle, endAngle)
-			//https://stackoverflow.com/questions/1734745/how-to-create-circle-with-b%C3%A9zier-curves
 			s"""${moveStr}
 				 | ${arcStr}
      """.stripMargin

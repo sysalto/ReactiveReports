@@ -112,11 +112,13 @@ message PdfGPattern_proto {
 
 
 message PdfGraphicFragment_proto {
+    string content=1;
     oneof field {
-        DrawLine_proto drawLine_proto = 1;
-        PdfRectangle_proto pdfRectangle_proto = 2;
-        DrawStroke_proto drawStroke_proto = 3;
-        PdfDrawImage_proto pdfDrawImage_proto = 4;
+        DrawLine_proto drawLine_proto = 2;
+        PdfRectangle_proto pdfRectangle_proto = 3;
+        DrawStroke_proto drawStroke_proto = 4;
+        PdfDrawImage_proto pdfDrawImage_proto = 5;
+        DrawPieChart_proto drawPieChart_proto = 6;
     }
 }
 
@@ -160,3 +162,42 @@ message PdfDrawImage_proto {
 
 }
 
+enum RFontAttribute_proto {
+    NORMAL = 0;
+    BOLD = 1;
+    ITALIC = 2;
+    BOLD_ITALIC = 3;
+}
+
+message RColor_proto {
+    int32 r = 1;
+    int32 g = 2;
+    int32 b = 3;
+    float opacity = 4;
+}
+
+
+message RFont_proto {
+    int32 size = 1;
+    string fontName = 2;
+    RFontAttribute_proto attribute = 3;
+    RColor_proto color = 4;
+}
+
+
+message DrawPieChart_proto {
+    float x = 1;
+    float y = 2;
+    repeated StringDouble_proto data = 3;
+    float height = 4;
+    string title = 6;
+    float width = 7;
+    RFont_proto font = 8;
+}
+
+
+message StringDouble_proto {
+    string value1 = 1;
+    double value2 = 2;
+
+}

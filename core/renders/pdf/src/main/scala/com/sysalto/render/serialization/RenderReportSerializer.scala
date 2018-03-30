@@ -1,7 +1,7 @@
 package com.sysalto.render.serialization
 
 
-import com.sysalto.render.PdfDraw.{DrawLine, DrawStroke, PdfGraphicFragment}
+import com.sysalto.render.PdfDraw.{DrawLine, DrawPieChart, DrawStroke, PdfGraphicFragment}
 import com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase
 import com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase
 
@@ -368,6 +368,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	object PdfGraphicFragmentSerializer {
 		def write(input: PdfGraphicFragment): PdfGraphicFragment_proto = {
 			val builder = PdfGraphicFragment_proto.newBuilder()
+			builder.setContent(input.content)
 			input match {
 				case item: DrawLine =>
 					builder.setDrawLineProto(DrawLineSerializer.write(item))
@@ -377,6 +378,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setDrawStrokeProto(DrawStrokeSerializer.write(item))
 				case item: renderReportTypes.PdfDrawImage =>
 					builder.setPdfDrawImageProto(PdfDrawImageSerializer.write(item))
+				case item: renderReportTypes.DrawPieChart1 =>
+					builder.setDrawPieChartProto(DrawPieChartSerializer.write(item))
+
 			}
 			builder.build()
 		}
@@ -394,6 +398,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				}
 				case PdfGraphicFragment_proto.FieldCase.PDFDRAWIMAGE_PROTO => {
 					PdfDrawImageSerializer.read(input.getPdfDrawImageProto)
+				}
+				case PdfGraphicFragment_proto.FieldCase.DRAWPIECHART_PROTO => {
+					DrawPieChartSerializer.read(input.getContent,input.getDrawPieChartProto)
 				}
 			}
 		}
@@ -455,5 +462,90 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			new renderReportTypes.PdfDrawImage(input.getIdPdfImage, input.getX, input.getY, input.getScale, None)
 		}
 	}
+
+
+	object DrawPieChartSerializer {
+		def write(input: renderReportTypes.DrawPieChart1): DrawPieChart_proto = {
+			val builder = DrawPieChart_proto.newBuilder()
+			builder.setTitle(input.title)
+			input.data.foreach(item =>
+				builder.addData(StringDoubleSerializer.write(item)))
+			builder.setX(input.x)
+			builder.setY(input.y)
+			builder.setWidth(input.width)
+			builder.setHeight(input.height)
+			builder.setFont(RFontSerializer.write(input.font))
+			builder.build()
+		}
+
+		def read(content:String,input: DrawPieChart_proto): renderReportTypes.DrawPieChart1 = {
+			val dataList = input.getDataList.asScala.map(item => StringDoubleSerializer.read(item)).toList
+			val result=new renderReportTypes.DrawPieChart1(RFontSerializer.read(input.getFont), input.getTitle, dataList, input.getX, input.getY, input.getWidth, input.getHeight)
+			result.contentStr=content
+			result
+		}
+	}
+
+
+	object RFontAttributeSerializer {
+		def write(obj: RFontAttribute.Value): RFontAttribute_proto = {
+			obj match {
+				case RFontAttribute.NORMAL => RFontAttribute_proto.NORMAL
+				case RFontAttribute.BOLD => RFontAttribute_proto.BOLD
+				case RFontAttribute.ITALIC => RFontAttribute_proto.ITALIC
+				case RFontAttribute.BOLD_ITALIC => RFontAttribute_proto.BOLD_ITALIC
+			}
+		}
+
+		def read(input: RFontAttribute_proto): RFontAttribute.Value = input match {
+			case RFontAttribute_proto.NORMAL => RFontAttribute.NORMAL
+			case RFontAttribute_proto.BOLD => RFontAttribute.BOLD
+			case RFontAttribute_proto.ITALIC => RFontAttribute.ITALIC
+			case RFontAttribute_proto.BOLD_ITALIC => RFontAttribute.BOLD_ITALIC
+			case _ => RFontAttribute.NORMAL
+		}
+	}
+
+	object RColorSerializer {
+		def write(obj: ReportColor): RColor_proto = {
+			val builder = RColor_proto.newBuilder()
+			builder.setR(obj.r)
+			builder.setG(obj.g)
+			builder.setB(obj.b)
+			builder.setOpacity(obj.opacity)
+			builder.build()
+		}
+
+		def read(input: RColor_proto): ReportColor =
+			ReportColor(input.getR, input.getG, input.getB, input.getOpacity)
+	}
+
+	object RFontSerializer {
+		def write(obj: RFont): RFont_proto = {
+			val builder = RFont_proto.newBuilder()
+			builder.setSize(obj.size)
+			builder.setFontName(obj.fontName)
+			builder.setAttribute(RFontAttributeSerializer.write(obj.attribute))
+			builder.setColor(RColorSerializer.write(obj.color))
+			builder.build()
+		}
+
+		def read(input: RFont_proto): RFont =
+			RFont(input.getSize, input.getFontName, RFontAttributeSerializer.read(input.getAttribute), RColorSerializer.read(input.getColor))
+	}
+
+	object StringDoubleSerializer {
+		def write(input: (String, Double)): StringDouble_proto = {
+			val builder = StringDouble_proto.newBuilder()
+			builder.setValue1(input._1)
+			builder.setValue2(input._2)
+			builder.build()
+		}
+
+		def read(input: StringDouble_proto): (String, Double) = {
+			(input.getValue1, input.getValue2)
+		}
+	}
+
 
 }

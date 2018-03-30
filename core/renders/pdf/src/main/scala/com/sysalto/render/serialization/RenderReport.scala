@@ -46,6 +46,9 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 	private[this] def saveCurrentPage(): Unit = {
+		graphicList.foreach(item=>{
+			item.updateContent(this)
+		})
 		val text = new renderReportTypes.PdfText(txtList.toList)
 		val graphic = new renderReportTypes.PdfGraphic(graphicList.toList)
 		val pdfPageContent = new renderReportTypes.PdfPageContent(nextId(), List(graphic, text), pdfCompression)
@@ -250,7 +253,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 	def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
-		graphicList += new renderReportTypes.DrawPieChart1(this, font, title, data, x, y, width, height)
+		graphicList += new renderReportTypes.DrawPieChart1(font, title, data, x, y, width, height)
 	}
 
 

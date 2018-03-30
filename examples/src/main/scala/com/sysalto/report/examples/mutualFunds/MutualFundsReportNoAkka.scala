@@ -154,7 +154,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			ReportCell(total2.toString bold()) rightAlign() inside value2, ReportCell(total3.toString bold()) rightAlign() inside change)
 		report.print(trow)
 		val chartHeight = report.getY - firstY
-//		report.drawPieChart("", chartData.toList, graphic.left + 5, firstY, graphic.right - graphic.left - 10, chartHeight)
+		report.drawPieChart("", chartData.toList, graphic.left + 5, firstY, graphic.right - graphic.left - 10, chartHeight)
 
 	}
 

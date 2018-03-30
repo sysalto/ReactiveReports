@@ -514,15 +514,21 @@ class RenderReportTypes {
 	}
 
 
-	private[serialization] class DrawPieChart1(renderReport: RenderReport, font: RFont, title: String,
-	                                           data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float)
+	private[serialization] class DrawPieChart1(val font: RFont, val title: String,
+	                                           val data: List[(String, Double)],val x: Float, val y: Float, val width: Float,val  height: Float)
 		extends PdfGraphicFragment {
 
-		import PdfChart._
+		var contentStr=""
 
-		private[this] val s = pieChart1(renderReport, font, title, data.toList, x, y, width, height)
+		override def updateContent(renderReport: RenderReport): Unit = {
+			import PdfChart._
 
-		override def content: String = s
+			contentStr= pieChart1(renderReport, font, title, data.toList, x, y, width, height)
+
+		}
+
+
+		override def content: String = contentStr
 	}
 
 	private[serialization] class PdfWriter(name: String) {
