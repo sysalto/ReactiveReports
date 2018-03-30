@@ -15703,28 +15703,17 @@ public final class RenderProto {
     float getRadius();
 
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+     * <code>repeated int64 idPatternColor = 3;</code>
      */
-    java.util.List<com.sysalto.render.serialization.RenderProto.PdfGPattern_proto> 
-        getPatternColorList();
+    java.util.List<java.lang.Long> getIdPatternColorList();
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+     * <code>repeated int64 idPatternColor = 3;</code>
      */
-    com.sysalto.render.serialization.RenderProto.PdfGPattern_proto getPatternColor(int index);
+    int getIdPatternColorCount();
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+     * <code>repeated int64 idPatternColor = 3;</code>
      */
-    int getPatternColorCount();
-    /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-     */
-    java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfGPattern_protoOrBuilder> 
-        getPatternColorOrBuilderList();
-    /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-     */
-    com.sysalto.render.serialization.RenderProto.PdfGPattern_protoOrBuilder getPatternColorOrBuilder(
-        int index);
+    long getIdPatternColor(int index);
 
     /**
      * <code>int64 y1 = 4;</code>
@@ -15804,7 +15793,7 @@ public final class RenderProto {
     private PdfRectangle_proto() {
       x2_ = 0L;
       radius_ = 0F;
-      patternColor_ = java.util.Collections.emptyList();
+      idPatternColor_ = java.util.Collections.emptyList();
       y1_ = 0L;
       y2_ = 0L;
       x1_ = 0L;
@@ -15853,13 +15842,25 @@ public final class RenderProto {
               radius_ = input.readFloat();
               break;
             }
-            case 26: {
+            case 24: {
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                patternColor_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfGPattern_proto>();
+                idPatternColor_ = new java.util.ArrayList<java.lang.Long>();
                 mutable_bitField0_ |= 0x00000004;
               }
-              patternColor_.add(
-                  input.readMessage(com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.parser(), extensionRegistry));
+              idPatternColor_.add(input.readInt64());
+              break;
+            }
+            case 26: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004) && input.getBytesUntilLimit() > 0) {
+                idPatternColor_ = new java.util.ArrayList<java.lang.Long>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                idPatternColor_.add(input.readInt64());
+              }
+              input.popLimit(limit);
               break;
             }
             case 32: {
@@ -15904,7 +15905,7 @@ public final class RenderProto {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          patternColor_ = java.util.Collections.unmodifiableList(patternColor_);
+          idPatternColor_ = java.util.Collections.unmodifiableList(idPatternColor_);
         }
         if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
           borderColor_ = java.util.Collections.unmodifiableList(borderColor_);
@@ -15947,40 +15948,28 @@ public final class RenderProto {
       return radius_;
     }
 
-    public static final int PATTERNCOLOR_FIELD_NUMBER = 3;
-    private java.util.List<com.sysalto.render.serialization.RenderProto.PdfGPattern_proto> patternColor_;
+    public static final int IDPATTERNCOLOR_FIELD_NUMBER = 3;
+    private java.util.List<java.lang.Long> idPatternColor_;
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+     * <code>repeated int64 idPatternColor = 3;</code>
      */
-    public java.util.List<com.sysalto.render.serialization.RenderProto.PdfGPattern_proto> getPatternColorList() {
-      return patternColor_;
+    public java.util.List<java.lang.Long>
+        getIdPatternColorList() {
+      return idPatternColor_;
     }
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+     * <code>repeated int64 idPatternColor = 3;</code>
      */
-    public java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfGPattern_protoOrBuilder> 
-        getPatternColorOrBuilderList() {
-      return patternColor_;
+    public int getIdPatternColorCount() {
+      return idPatternColor_.size();
     }
     /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+     * <code>repeated int64 idPatternColor = 3;</code>
      */
-    public int getPatternColorCount() {
-      return patternColor_.size();
+    public long getIdPatternColor(int index) {
+      return idPatternColor_.get(index);
     }
-    /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-     */
-    public com.sysalto.render.serialization.RenderProto.PdfGPattern_proto getPatternColor(int index) {
-      return patternColor_.get(index);
-    }
-    /**
-     * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-     */
-    public com.sysalto.render.serialization.RenderProto.PdfGPattern_protoOrBuilder getPatternColorOrBuilder(
-        int index) {
-      return patternColor_.get(index);
-    }
+    private int idPatternColorMemoizedSerializedSize = -1;
 
     public static final int Y1_FIELD_NUMBER = 4;
     private long y1_;
@@ -16091,14 +16080,19 @@ public final class RenderProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       if (x2_ != 0L) {
         output.writeInt64(1, x2_);
       }
       if (radius_ != 0F) {
         output.writeFloat(2, radius_);
       }
-      for (int i = 0; i < patternColor_.size(); i++) {
-        output.writeMessage(3, patternColor_.get(i));
+      if (getIdPatternColorList().size() > 0) {
+        output.writeUInt32NoTag(26);
+        output.writeUInt32NoTag(idPatternColorMemoizedSerializedSize);
+      }
+      for (int i = 0; i < idPatternColor_.size(); i++) {
+        output.writeInt64NoTag(idPatternColor_.get(i));
       }
       if (y1_ != 0L) {
         output.writeInt64(4, y1_);
@@ -16131,9 +16125,19 @@ public final class RenderProto {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(2, radius_);
       }
-      for (int i = 0; i < patternColor_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, patternColor_.get(i));
+      {
+        int dataSize = 0;
+        for (int i = 0; i < idPatternColor_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt64SizeNoTag(idPatternColor_.get(i));
+        }
+        size += dataSize;
+        if (!getIdPatternColorList().isEmpty()) {
+          size += 1;
+          size += com.google.protobuf.CodedOutputStream
+              .computeInt32SizeNoTag(dataSize);
+        }
+        idPatternColorMemoizedSerializedSize = dataSize;
       }
       if (y1_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
@@ -16177,8 +16181,8 @@ public final class RenderProto {
           java.lang.Float.floatToIntBits(getRadius())
           == java.lang.Float.floatToIntBits(
               other.getRadius()));
-      result = result && getPatternColorList()
-          .equals(other.getPatternColorList());
+      result = result && getIdPatternColorList()
+          .equals(other.getIdPatternColorList());
       result = result && (getY1()
           == other.getY1());
       result = result && (getY2()
@@ -16206,9 +16210,9 @@ public final class RenderProto {
       hash = (37 * hash) + RADIUS_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getRadius());
-      if (getPatternColorCount() > 0) {
-        hash = (37 * hash) + PATTERNCOLOR_FIELD_NUMBER;
-        hash = (53 * hash) + getPatternColorList().hashCode();
+      if (getIdPatternColorCount() > 0) {
+        hash = (37 * hash) + IDPATTERNCOLOR_FIELD_NUMBER;
+        hash = (53 * hash) + getIdPatternColorList().hashCode();
       }
       hash = (37 * hash) + Y1_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
@@ -16352,7 +16356,6 @@ public final class RenderProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getPatternColorFieldBuilder();
           getBorderColorFieldBuilder();
           getFillColorFieldBuilder();
         }
@@ -16363,12 +16366,8 @@ public final class RenderProto {
 
         radius_ = 0F;
 
-        if (patternColorBuilder_ == null) {
-          patternColor_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
-        } else {
-          patternColorBuilder_.clear();
-        }
+        idPatternColor_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000004);
         y1_ = 0L;
 
         y2_ = 0L;
@@ -16413,15 +16412,11 @@ public final class RenderProto {
         int to_bitField0_ = 0;
         result.x2_ = x2_;
         result.radius_ = radius_;
-        if (patternColorBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            patternColor_ = java.util.Collections.unmodifiableList(patternColor_);
-            bitField0_ = (bitField0_ & ~0x00000004);
-          }
-          result.patternColor_ = patternColor_;
-        } else {
-          result.patternColor_ = patternColorBuilder_.build();
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          idPatternColor_ = java.util.Collections.unmodifiableList(idPatternColor_);
+          bitField0_ = (bitField0_ & ~0x00000004);
         }
+        result.idPatternColor_ = idPatternColor_;
         result.y1_ = y1_;
         result.y2_ = y2_;
         result.x1_ = x1_;
@@ -16491,31 +16486,15 @@ public final class RenderProto {
         if (other.getRadius() != 0F) {
           setRadius(other.getRadius());
         }
-        if (patternColorBuilder_ == null) {
-          if (!other.patternColor_.isEmpty()) {
-            if (patternColor_.isEmpty()) {
-              patternColor_ = other.patternColor_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-            } else {
-              ensurePatternColorIsMutable();
-              patternColor_.addAll(other.patternColor_);
-            }
-            onChanged();
+        if (!other.idPatternColor_.isEmpty()) {
+          if (idPatternColor_.isEmpty()) {
+            idPatternColor_ = other.idPatternColor_;
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            ensureIdPatternColorIsMutable();
+            idPatternColor_.addAll(other.idPatternColor_);
           }
-        } else {
-          if (!other.patternColor_.isEmpty()) {
-            if (patternColorBuilder_.isEmpty()) {
-              patternColorBuilder_.dispose();
-              patternColorBuilder_ = null;
-              patternColor_ = other.patternColor_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-              patternColorBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getPatternColorFieldBuilder() : null;
-            } else {
-              patternColorBuilder_.addAllMessages(other.patternColor_);
-            }
-          }
+          onChanged();
         }
         if (other.getY1() != 0L) {
           setY1(other.getY1());
@@ -16658,244 +16637,70 @@ public final class RenderProto {
         return this;
       }
 
-      private java.util.List<com.sysalto.render.serialization.RenderProto.PdfGPattern_proto> patternColor_ =
-        java.util.Collections.emptyList();
-      private void ensurePatternColorIsMutable() {
+      private java.util.List<java.lang.Long> idPatternColor_ = java.util.Collections.emptyList();
+      private void ensureIdPatternColorIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          patternColor_ = new java.util.ArrayList<com.sysalto.render.serialization.RenderProto.PdfGPattern_proto>(patternColor_);
+          idPatternColor_ = new java.util.ArrayList<java.lang.Long>(idPatternColor_);
           bitField0_ |= 0x00000004;
          }
       }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.sysalto.render.serialization.RenderProto.PdfGPattern_proto, com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfGPattern_protoOrBuilder> patternColorBuilder_;
-
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+       * <code>repeated int64 idPatternColor = 3;</code>
        */
-      public java.util.List<com.sysalto.render.serialization.RenderProto.PdfGPattern_proto> getPatternColorList() {
-        if (patternColorBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(patternColor_);
-        } else {
-          return patternColorBuilder_.getMessageList();
-        }
+      public java.util.List<java.lang.Long>
+          getIdPatternColorList() {
+        return java.util.Collections.unmodifiableList(idPatternColor_);
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+       * <code>repeated int64 idPatternColor = 3;</code>
        */
-      public int getPatternColorCount() {
-        if (patternColorBuilder_ == null) {
-          return patternColor_.size();
-        } else {
-          return patternColorBuilder_.getCount();
-        }
+      public int getIdPatternColorCount() {
+        return idPatternColor_.size();
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+       * <code>repeated int64 idPatternColor = 3;</code>
        */
-      public com.sysalto.render.serialization.RenderProto.PdfGPattern_proto getPatternColor(int index) {
-        if (patternColorBuilder_ == null) {
-          return patternColor_.get(index);
-        } else {
-          return patternColorBuilder_.getMessage(index);
-        }
+      public long getIdPatternColor(int index) {
+        return idPatternColor_.get(index);
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+       * <code>repeated int64 idPatternColor = 3;</code>
        */
-      public Builder setPatternColor(
-          int index, com.sysalto.render.serialization.RenderProto.PdfGPattern_proto value) {
-        if (patternColorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePatternColorIsMutable();
-          patternColor_.set(index, value);
-          onChanged();
-        } else {
-          patternColorBuilder_.setMessage(index, value);
-        }
+      public Builder setIdPatternColor(
+          int index, long value) {
+        ensureIdPatternColorIsMutable();
+        idPatternColor_.set(index, value);
+        onChanged();
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+       * <code>repeated int64 idPatternColor = 3;</code>
        */
-      public Builder setPatternColor(
-          int index, com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder builderForValue) {
-        if (patternColorBuilder_ == null) {
-          ensurePatternColorIsMutable();
-          patternColor_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          patternColorBuilder_.setMessage(index, builderForValue.build());
-        }
+      public Builder addIdPatternColor(long value) {
+        ensureIdPatternColorIsMutable();
+        idPatternColor_.add(value);
+        onChanged();
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+       * <code>repeated int64 idPatternColor = 3;</code>
        */
-      public Builder addPatternColor(com.sysalto.render.serialization.RenderProto.PdfGPattern_proto value) {
-        if (patternColorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePatternColorIsMutable();
-          patternColor_.add(value);
-          onChanged();
-        } else {
-          patternColorBuilder_.addMessage(value);
-        }
+      public Builder addAllIdPatternColor(
+          java.lang.Iterable<? extends java.lang.Long> values) {
+        ensureIdPatternColorIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, idPatternColor_);
+        onChanged();
         return this;
       }
       /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
+       * <code>repeated int64 idPatternColor = 3;</code>
        */
-      public Builder addPatternColor(
-          int index, com.sysalto.render.serialization.RenderProto.PdfGPattern_proto value) {
-        if (patternColorBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePatternColorIsMutable();
-          patternColor_.add(index, value);
-          onChanged();
-        } else {
-          patternColorBuilder_.addMessage(index, value);
-        }
+      public Builder clearIdPatternColor() {
+        idPatternColor_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
         return this;
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public Builder addPatternColor(
-          com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder builderForValue) {
-        if (patternColorBuilder_ == null) {
-          ensurePatternColorIsMutable();
-          patternColor_.add(builderForValue.build());
-          onChanged();
-        } else {
-          patternColorBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public Builder addPatternColor(
-          int index, com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder builderForValue) {
-        if (patternColorBuilder_ == null) {
-          ensurePatternColorIsMutable();
-          patternColor_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          patternColorBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public Builder addAllPatternColor(
-          java.lang.Iterable<? extends com.sysalto.render.serialization.RenderProto.PdfGPattern_proto> values) {
-        if (patternColorBuilder_ == null) {
-          ensurePatternColorIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, patternColor_);
-          onChanged();
-        } else {
-          patternColorBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public Builder clearPatternColor() {
-        if (patternColorBuilder_ == null) {
-          patternColor_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
-          onChanged();
-        } else {
-          patternColorBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public Builder removePatternColor(int index) {
-        if (patternColorBuilder_ == null) {
-          ensurePatternColorIsMutable();
-          patternColor_.remove(index);
-          onChanged();
-        } else {
-          patternColorBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder getPatternColorBuilder(
-          int index) {
-        return getPatternColorFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public com.sysalto.render.serialization.RenderProto.PdfGPattern_protoOrBuilder getPatternColorOrBuilder(
-          int index) {
-        if (patternColorBuilder_ == null) {
-          return patternColor_.get(index);  } else {
-          return patternColorBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public java.util.List<? extends com.sysalto.render.serialization.RenderProto.PdfGPattern_protoOrBuilder> 
-           getPatternColorOrBuilderList() {
-        if (patternColorBuilder_ != null) {
-          return patternColorBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(patternColor_);
-        }
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder addPatternColorBuilder() {
-        return getPatternColorFieldBuilder().addBuilder(
-            com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder addPatternColorBuilder(
-          int index) {
-        return getPatternColorFieldBuilder().addBuilder(
-            index, com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .com.sysalto.render.serialization.PdfGPattern_proto patternColor = 3;</code>
-       */
-      public java.util.List<com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder> 
-           getPatternColorBuilderList() {
-        return getPatternColorFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.sysalto.render.serialization.RenderProto.PdfGPattern_proto, com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfGPattern_protoOrBuilder> 
-          getPatternColorFieldBuilder() {
-        if (patternColorBuilder_ == null) {
-          patternColorBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              com.sysalto.render.serialization.RenderProto.PdfGPattern_proto, com.sysalto.render.serialization.RenderProto.PdfGPattern_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfGPattern_protoOrBuilder>(
-                  patternColor_,
-                  ((bitField0_ & 0x00000004) == 0x00000004),
-                  getParentForChildren(),
-                  isClean());
-          patternColor_ = null;
-        }
-        return patternColorBuilder_;
       }
 
       private long y1_ ;
@@ -19942,22 +19747,21 @@ public final class RenderProto {
       "e_protoH\000\022R\n\022pdfDrawImage_proto\030\004 \001(\01324." +
       "com.sysalto.render.serialization.PdfDraw" +
       "Image_protoH\000B\007\n\005field\"\022\n\020DrawStroke_pro" +
-      "to\"\261\002\n\022PdfRectangle_proto\022\n\n\002x2\030\001 \001(\003\022\016\n" +
-      "\006radius\030\002 \001(\002\022I\n\014patternColor\030\003 \003(\01323.co" +
-      "m.sysalto.render.serialization.PdfGPatte" +
-      "rn_proto\022\n\n\002y1\030\004 \001(\003\022\n\n\002y2\030\005 \001(\003\022\n\n\002x1\030\006" +
-      " \001(\003\022H\n\013borderColor\030\007 \003(\01323.com.sysalto." +
-      "render.serialization.ReportColor_proto\022F" +
-      "\n\tfillColor\030\010 \003(\01323.com.sysalto.render.s" +
-      "erialization.ReportColor_proto\"1\n\022LineDa" +
-      "shType_proto\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002 \001(" +
-      "\005\"\230\001\n\016DrawLine_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002" +
-      " \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\022\n\nvlineWid" +
-      "th\030\005 \001(\002\022B\n\005color\030\006 \001(\01323.com.sysalto.re" +
-      "nder.serialization.ReportColor_proto\"^\n\022" +
-      "PdfDrawImage_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002" +
-      "\022\r\n\005scale\030\003 \001(\002\022\022\n\nidPdfImage\030\004 \001(\003\022\017\n\007o" +
-      "pacity\030\005 \003(\002B\002H\001b\006proto3"
+      "to\"\376\001\n\022PdfRectangle_proto\022\n\n\002x2\030\001 \001(\003\022\016\n" +
+      "\006radius\030\002 \001(\002\022\026\n\016idPatternColor\030\003 \003(\003\022\n\n" +
+      "\002y1\030\004 \001(\003\022\n\n\002y2\030\005 \001(\003\022\n\n\002x1\030\006 \001(\003\022H\n\013bor" +
+      "derColor\030\007 \003(\01323.com.sysalto.render.seri" +
+      "alization.ReportColor_proto\022F\n\tfillColor" +
+      "\030\010 \003(\01323.com.sysalto.render.serializatio" +
+      "n.ReportColor_proto\"1\n\022LineDashType_prot" +
+      "o\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002 \001(\005\"\230\001\n\016DrawL" +
+      "ine_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030" +
+      "\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\022\n\nvlineWidth\030\005 \001(\002\022B\n" +
+      "\005color\030\006 \001(\01323.com.sysalto.render.serial" +
+      "ization.ReportColor_proto\"^\n\022PdfDrawImag" +
+      "e_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\r\n\005scale\030\003" +
+      " \001(\002\022\022\n\nidPdfImage\030\004 \001(\003\022\017\n\007opacity\030\005 \003(" +
+      "\002B\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -20084,7 +19888,7 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfRectangle_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfRectangle_proto_descriptor,
-        new java.lang.String[] { "X2", "Radius", "PatternColor", "Y1", "Y2", "X1", "BorderColor", "FillColor", });
+        new java.lang.String[] { "X2", "Radius", "IdPatternColor", "Y1", "Y2", "X1", "BorderColor", "FillColor", });
     internal_static_com_sysalto_render_serialization_LineDashType_proto_descriptor =
       getDescriptor().getMessageTypes().get(19);
     internal_static_com_sysalto_render_serialization_LineDashType_proto_fieldAccessorTable = new

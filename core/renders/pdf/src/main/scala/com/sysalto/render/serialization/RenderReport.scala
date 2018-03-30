@@ -158,8 +158,8 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 
 	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
 	              radius: Float, color: Option[ReportColor] = None,
-	              fillColor: Option[ReportColor] = None, paternColor: Option[renderReportTypes.PdfGPattern] = None): Unit = {
-		graphicList += new renderReportTypes.PdfRectangle1(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, paternColor)
+	              fillColor: Option[ReportColor] = None, idPaternColor: Option[Long] = None): Unit = {
+		graphicList += new renderReportTypes.PdfRectangle1(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, idPaternColor)
 	}
 
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {
@@ -235,7 +235,8 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		val pattern = new renderReportTypes.PdfGPattern(nextId(), pdfShadding.id)
 		renderReportTypes.setObject1(pattern)
 		currentPage.idPdfPatternList ++= List(pattern.id)
-		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern))
+		renderReportTypes.setObject1(currentPage)
+		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern.id))
 		this.stroke()
 	}
 

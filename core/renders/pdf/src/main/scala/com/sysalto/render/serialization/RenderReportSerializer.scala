@@ -409,8 +409,12 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.setRadius(input.radius)
 			if (input.borderColor.isDefined) {
 				builder.addBorderColor(ReportColorSerializer.write(input.borderColor.get))
+			}
+			if (input.fillColor.isDefined) {
 				builder.addFillColor(ReportColorSerializer.write(input.fillColor.get))
-				builder.addPatternColor(PdfGPatternSerializer.write(input.patternColor.get))
+			}
+			if (input.idPatternColor.isDefined) {
+				builder.addIdPatternColor(input.idPatternColor.get)
 			}
 			builder.build()
 		}
@@ -418,9 +422,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		def read(input: PdfRectangle_proto): renderReportTypes.PdfRectangle1 = {
 			val borderColor = if (input.getBorderColorCount == 0) None else Some(ReportColorSerializer.read(input.getBorderColor(0)))
 			val fillColor = if (input.getFillColorCount == 0) None else Some(ReportColorSerializer.read(input.getFillColor(0)))
-			//			val patternColor=if (input.getPatternColorCount==0) None else Some(PdfGPatternSerializer.read(input.getPatternColor(0)))
+			val idPatternColor = if (input.getIdPatternColorCount == 0) None else Some(input.getIdPatternColor(0))
 			new renderReportTypes.PdfRectangle1(input.getX1, input.getY1, input.getX2, input.getY2,
-				input.getRadius, borderColor, fillColor, None)
+				input.getRadius, borderColor, fillColor, idPatternColor)
 		}
 	}
 
@@ -448,7 +452,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 
 		def read(input: PdfDrawImage_proto): renderReportTypes.PdfDrawImage = {
-			new renderReportTypes.PdfDrawImage(input.getIdPdfImage,input.getX,input.getY,input.getScale,None)
+			new renderReportTypes.PdfDrawImage(input.getIdPdfImage, input.getX, input.getY, input.getScale, None)
 		}
 	}
 

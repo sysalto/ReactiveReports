@@ -201,9 +201,12 @@ class RenderReportTypes {
 	}
 
 	class PdfRectangle1(val x1: Long, val y1: Long, val x2: Long, val y2: Long, val radius: Float, val borderColor: Option[ReportColor],
-	                    val fillColor: Option[ReportColor], val patternColor: Option[PdfGPattern] = None) extends PdfGraphicFragment {
+	                    val fillColor: Option[ReportColor], val idPatternColor: Option[Long] = None) extends PdfGraphicFragment {
 		override def content: String = {
-			val paternStr = if (patternColor.isDefined) pattern(patternColor.get.name) else ""
+			val patternColor=if (idPatternColor.isDefined) Some(getObject1[PdfGPattern](idPatternColor.get)) else None
+			val paternStr = if (patternColor.isDefined) {
+				pattern(patternColor.get.name)
+			} else ""
 			val borderStr = if (borderColor.isDefined) border(borderColor.get) else ""
 			val fillStr = if (fillColor.isDefined) fill(fillColor.get) else ""
 			val operator = fillStroke(fillColor.isDefined || patternColor.isDefined, borderColor.isDefined)
