@@ -349,7 +349,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		}
 		val t1=System.currentTimeMillis()
 		report.start()
-		for (i<-1 to 100000) {
+		for (i<-1 to 40000) {
 			println("I:"+i)
 			if (i>1) {
 				report.nextPage()
