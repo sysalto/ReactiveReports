@@ -36,7 +36,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		pdfWriter <<< "%PDF-1.7"
 		pdfWriter <<< s"%${128.toChar}${129.toChar}${130.toChar}${131.toChar}"
 		catalog = new renderReportTypes.PdfCatalog(nextId())
-		renderReportTypes.setObject1(catalog)
+		renderReportTypes.setObject(catalog)
 		currentPage = new renderReportTypes.PdfPage(nextId(), 0, PAGE_WIDTH, PAGE_HEIGHT)
 	}
 
@@ -52,10 +52,10 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		val text = new renderReportTypes.PdfText(txtList.toList)
 		val graphic = new renderReportTypes.PdfGraphic(graphicList.toList)
 		val pdfPageContent = new renderReportTypes.PdfPageContent(nextId(), List(graphic, text), pdfCompression)
-		renderReportTypes.setObject1(pdfPageContent)
+		renderReportTypes.setObject(pdfPageContent)
 		currentPage.idContentPageOpt = Some(pdfPageContent.id)
 		currentPage.idFontList = fontMap.values.toList.sortBy(font => font.refName).map(font => font.id)
-		renderReportTypes.setObject1(currentPage)
+		renderReportTypes.setObject(currentPage)
 		pageList += currentPage
 		txtList.clear()
 		graphicList.clear()
@@ -86,15 +86,15 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		val pageTreeList = PageTree.pageTree(pageList.toList) {
 			() => {
 				val pg=new renderReportTypes.PdfPageList(nextId())
-				renderReportTypes.setObject1(pg)
+				renderReportTypes.setObject(pg)
 				pg
 			}
 		}.asInstanceOf[renderReportTypes.PdfPageList]
 		catalog.idPdfPageListOpt = Some(pageTreeList.id)
-		renderReportTypes.setObject1(catalog)
+		renderReportTypes.setObject(catalog)
 		val allItems1 = renderReportTypes.getAllItems()
 		allItems1.foreach(itemId => {
-			val item = renderReportTypes.getObject1[renderReportTypes.PdfBaseItem](itemId)
+			val item = renderReportTypes.getObject[renderReportTypes.PdfBaseItem](itemId)
 			item.write(pdfWriter)
 		})
 		val metaDataObj = metaData()
@@ -105,7 +105,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		pdfWriter <<< s"0 ${allItems1.length + 2}"
 		pdfWriter <<< "0000000000 65535 f "
 		allItems1.foreach(itemId => {
-			val item = renderReportTypes.getObject1[renderReportTypes.PdfBaseItem](itemId)
+			val item = renderReportTypes.getObject[renderReportTypes.PdfBaseItem](itemId)
 			val offset = item.offset.toString
 			val offsetFrmt = "0" * (10 - offset.length) + offset
 			pdfWriter <<< s"${offsetFrmt} 00000 n "
@@ -232,13 +232,13 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
 
 		val colorFct = new renderReportTypes.PdfShaddingFctColor(nextId(), from, to)
-		renderReportTypes.setObject1(colorFct)
+		renderReportTypes.setObject(colorFct)
 		val pdfShadding = new renderReportTypes.PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct.id)
-		renderReportTypes.setObject1(pdfShadding)
+		renderReportTypes.setObject(pdfShadding)
 		val pattern = new renderReportTypes.PdfGPattern(nextId(), pdfShadding.id)
-		renderReportTypes.setObject1(pattern)
+		renderReportTypes.setObject(pattern)
 		currentPage.idPdfPatternList ++= List(pattern.id)
-		renderReportTypes.setObject1(currentPage)
+		renderReportTypes.setObject(currentPage)
 		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern.id))
 		this.stroke()
 	}
@@ -246,7 +246,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 
 	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
 		val pdfImage = new renderReportTypes.PdfImage(nextId(), file)
-		renderReportTypes.setObject1(pdfImage)
+		renderReportTypes.setObject(pdfImage)
 		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
 		graphicList += new renderReportTypes.PdfDrawImage(pdfImage.id, x, y, scale)
 		currentPage.idImageList += pdfImage.id
@@ -262,17 +262,17 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 			if (txt.font.externalFont.isDefined) {
 				val fontParser = getFontParser(txt.font)
 				val fontStream = new renderReportTypes.PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
-				renderReportTypes.setObject1(fontStream)
+				renderReportTypes.setObject(fontStream)
 				val fontDescr = new renderReportTypes.PdfFontDescriptor(nextId(), fontStream.id, txt.font.fontKeyName)
-				renderReportTypes.setObject1(fontDescr)
+				renderReportTypes.setObject(fontDescr)
 				val font1 = new renderReportTypes.PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
 					Some(new renderReportTypes.FontEmbeddedDef(fontDescr.id, fontStream.id)))
-				renderReportTypes.setObject1(font1)
+				renderReportTypes.setObject(font1)
 				fontMap += (txt.font.fontKeyName -> font1)
 				font1
 			} else {
 				val font1 = new renderReportTypes.PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
-				renderReportTypes.setObject1(font1)
+				renderReportTypes.setObject(font1)
 				fontMap += (txt.font.fontKeyName -> font1)
 				font1
 			}
