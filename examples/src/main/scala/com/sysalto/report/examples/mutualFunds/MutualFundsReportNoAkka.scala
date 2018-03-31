@@ -338,7 +338,6 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				report.print(rrow)
 				report.nextLine(2)
 				report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
-//				drawbackgroundImage(report)
 		}
 
 		report.footerFct = {
@@ -358,7 +357,6 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				reportHeader(report)
 			}
 			summaryOfInvestment(report)
-//			report.nextPage()
 			changeAccount(report)
 			accountPerformance(report)
 			disclaimer(report)
