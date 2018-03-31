@@ -347,8 +347,9 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				report.nextLine()
 				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
 		}
+		val t1=System.currentTimeMillis()
 		report.start()
-		for (i<-1 to 1) {
+		for (i<-1 to 100000) {
 			println("I:"+i)
 			if (i>1) {
 				report.nextPage()
@@ -361,7 +362,11 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			accountPerformance(report)
 			disclaimer(report)
 		}
+		val t2=System.currentTimeMillis()
 		report.render()
+		val t3=System.currentTimeMillis()
+		println("Time1:"+(t2-t1)*0.001)
+		println("Time2:"+(t3-t2)*0.001)
 	}
 
 
