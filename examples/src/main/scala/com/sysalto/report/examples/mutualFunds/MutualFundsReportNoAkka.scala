@@ -348,8 +348,8 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				report.nextLine()
 				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
 		}
-		report.beginReport()
-		for (i<-1 to 10) {
+		report.start()
+		for (i<-1 to 1) {
 			println("I:"+i)
 			if (i>1) {
 				report.nextPage()
@@ -370,14 +370,14 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	def runReport(): Unit = {
 		implicit val pdfFactory:PdfFactory = new PdfNativeFactory()
 		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
-//		val fontFamily = RFontFamily(name = "Roboto",
-//			regular = "~/transfer/font/Roboto-Regular.ttf",
-//			bold = Some("~/transfer/font/Roboto-Bold.ttf"),
-//			italic = Some("~/transfer/font/Roboto-Italic.ttf"),
-//			boldItalic = Some("~/transfer/font/Roboto-BoldItalic.ttf"))
-//		report1.setExternalFont(fontFamily)
-//		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
-//		report1.font = font
+		val fontFamily = RFontFamily(name = "Roboto",
+			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
+			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
+			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
+			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
+		report1.setExternalFont(fontFamily)
+		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
+		report1.font = font
 
 		report(report1)
 	}

@@ -658,7 +658,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	def getTextWidthJ(cell: ReportCell): java.util.List[java.lang.Float] = pdfUtil.getTextWidth(cell).map(item => item.asInstanceOf[java.lang.Float]).asJava
 
-	def beginReport(): Unit = {
+	def start(): Unit = {
 		if (newPageFct != null) {
 			newPageFct(1)
 		}

@@ -133,16 +133,33 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 	}
 
+	object FontEmbeddedDefSerializer {
+		def write(input: renderReportTypes.FontEmbeddedDef): FontEmbeddedDef_proto = {
+			val builder = FontEmbeddedDef_proto.newBuilder()
+			builder.setIdPdfFontDescriptor(input.idPdfFontDescriptor)
+			builder.setIdPdfFontStream(input.idPdfFontStream)
+			builder.build()
+		}
+
+		def read(input: FontEmbeddedDef_proto): renderReportTypes.FontEmbeddedDef = {
+			new renderReportTypes.FontEmbeddedDef(input.getIdPdfFontDescriptor, input.getIdPdfFontStream)
+		}
+	}
+
 	object PdfFontSerializer {
 		def write(input: renderReportTypes.PdfFont): PdfFont_proto = {
 			val builder = PdfFont_proto.newBuilder()
 			builder.setRefName(input.refName)
 			builder.setFontKeyName(input.fontKeyName)
+			if (input.embeddedDefOpt.isDefined) {
+				builder.addFontEmbeddedDef(FontEmbeddedDefSerializer.write(input.embeddedDefOpt.get))
+			}
 			builder.build()
 		}
 
 		def read(id: Long, offset: Long, input: PdfFont_proto): renderReportTypes.PdfFont = {
-			val result = new renderReportTypes.PdfFont(id, input.getRefName, input.getFontKeyName)
+			val embeddedDefOpt = if (input.getFontEmbeddedDefCount == 0) None else Some(FontEmbeddedDefSerializer.read(input.getFontEmbeddedDef(0)))
+			val result = new renderReportTypes.PdfFont(id, input.getRefName, input.getFontKeyName, embeddedDefOpt)
 			result.offset = offset
 			result
 		}
@@ -400,7 +417,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					PdfDrawImageSerializer.read(input.getPdfDrawImageProto)
 				}
 				case PdfGraphicFragment_proto.FieldCase.DRAWPIECHART_PROTO => {
-					DrawPieChartSerializer.read(input.getContent,input.getDrawPieChartProto)
+					DrawPieChartSerializer.read(input.getContent, input.getDrawPieChartProto)
 				}
 			}
 		}
@@ -478,10 +495,10 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(content:String,input: DrawPieChart_proto): renderReportTypes.DrawPieChart1 = {
+		def read(content: String, input: DrawPieChart_proto): renderReportTypes.DrawPieChart1 = {
 			val dataList = input.getDataList.asScala.map(item => StringDoubleSerializer.read(item)).toList
-			val result=new renderReportTypes.DrawPieChart1(RFontSerializer.read(input.getFont), input.getTitle, dataList, input.getX, input.getY, input.getWidth, input.getHeight)
-			result.contentStr=content
+			val result = new renderReportTypes.DrawPieChart1(RFontSerializer.read(input.getFont), input.getTitle, dataList, input.getX, input.getY, input.getWidth, input.getHeight)
+			result.contentStr = content
 			result
 		}
 	}
@@ -544,6 +561,104 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 		def read(input: StringDouble_proto): (String, Double) = {
 			(input.getValue1, input.getValue2)
+		}
+	}
+
+
+	object PdfFontStreamSerializer {
+		def write(input: renderReportTypes.PdfFontStream): PdfFontStream_proto = {
+			val builder = PdfFontStream_proto.newBuilder()
+			builder.setFontName(input.fontName)
+			builder.setFontMetric(FontMetricSerializer.write(input.fontMetric))
+			builder.setPdfCompression(input.pdfCompression)
+			builder.build()
+		}
+
+		// def read(input:PdfFontStream_proto ): renderReportTypes.PdfFontStream = {
+		//}
+	}
+
+	object FontMetricSerializer {
+		def write(input: FontMetric): FontMetric_proto = {
+			val builder = FontMetric_proto.newBuilder()
+			builder.setFontName(input.fontName)
+			input.fontMap.keys.foreach(key => {
+				val value = input.fontMap(key)
+				builder.putFontMap(key, value)
+			})
+			builder.setFontHeight(FloatFloatSerializer.write(input.fontHeight))
+			if (input.fontDescriptor.isDefined) {
+				builder.addFontDescriptor(EmbeddedFontDescriptorSerializer.write(input.fontDescriptor.get))
+			}
+			builder.build()
+		}
+
+		// def read(input:FontMetric_proto ): FontMetric = {
+		//}
+	}
+
+
+	object FloatFloatSerializer {
+		def write(input: (Float, Float)): FloatFloat_proto = {
+			val builder = FloatFloat_proto.newBuilder()
+			builder.setValue1(input._1)
+			builder.setValue2(input._2)
+			builder.build()
+		}
+
+		def read(input: FloatFloat_proto): (Float, Float) = (input.getValue1, input.getValue2)
+	}
+
+
+	object EmbeddedFontDescriptorSerializer {
+		def write(input: EmbeddedFontDescriptor): EmbeddedFontDescriptor_proto = {
+			val builder = EmbeddedFontDescriptor_proto.newBuilder()
+			builder.setGlyphWidth(GlyphWidthSerializer.write(input.glyphWidth))
+			builder.setCapHeight(input.capHeight)
+			builder.setFontBBox(FontBBoxSerializer.write(input.fontBBox))
+			builder.setAscent(input.ascent)
+			builder.setFlags(input.flags)
+			builder.setItalicAngle(input.italicAngle)
+			builder.setDescent(input.descent)
+			builder.build()
+		}
+
+		def read(input: EmbeddedFontDescriptor_proto): EmbeddedFontDescriptor = {
+			new EmbeddedFontDescriptor(input.getAscent.toShort,input.getCapHeight.toShort,input.getDescent.toShort,
+				FontBBoxSerializer.read(input.getFontBBox),input.getItalicAngle.toShort,input.getFlags,
+				GlyphWidthSerializer.read(input.getGlyphWidth))
+		}
+	}
+
+
+	object GlyphWidthSerializer {
+		def write(input: GlyphWidth): GlyphWidth_proto = {
+			val builder = GlyphWidth_proto.newBuilder()
+			builder.setFirstChar(input.firstChar)
+			builder.setLastChar(input.lastChar)
+			input.widthList.foreach(item => builder.addWidthList(item))
+			builder.build()
+		}
+
+		def read(input: GlyphWidth_proto): GlyphWidth = {
+			val widthList = input.getWidthListList.asScala.map(item=>item.toShort).toList
+			new GlyphWidth(input.getFirstChar.toShort, input.getLastChar.toShort,widthList)
+		}
+	}
+
+
+	object FontBBoxSerializer {
+		def write(input: FontBBox): FontBBox_proto = {
+			val builder = FontBBox_proto.newBuilder()
+			builder.setLowerLeftX(input.lowerLeftX)
+			builder.setLowerLeftY(input.lowerLeftY)
+			builder.setUpperRightX(input.upperRightX)
+			builder.setUpperRightY(input.upperRightY)
+			builder.build()
+		}
+
+		def read(input: FontBBox_proto): FontBBox = {
+			new FontBBox(input.getLowerLeftX.toShort, input.getLowerLeftY.toShort, input.getUpperRightX.toShort, input.getUpperRightY.toShort)
 		}
 	}
 

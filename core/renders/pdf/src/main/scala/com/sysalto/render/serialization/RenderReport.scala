@@ -262,9 +262,12 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 			if (txt.font.externalFont.isDefined) {
 				val fontParser = getFontParser(txt.font)
 				val fontStream = new renderReportTypes.PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
+				renderReportTypes.setObject1(fontStream)
 				val fontDescr = new renderReportTypes.PdfFontDescriptor(nextId(), fontStream.id, txt.font.fontKeyName)
+				renderReportTypes.setObject1(fontDescr)
 				val font1 = new renderReportTypes.PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
 					Some(new renderReportTypes.FontEmbeddedDef(fontDescr.id, fontStream.id)))
+				renderReportTypes.setObject1(font1)
 				fontMap += (txt.font.fontKeyName -> font1)
 				font1
 			} else {

@@ -17,6 +17,7 @@ message PdfBaseItem_proto {
         PdfShaddingFctColor_proto pdfShaddingFctColor_proto = 9;
         PdfColorShadding_proto pdfColorShadding_proto = 10;
         PdfGPattern_proto pdfGPattern_proto = 11;
+        PdfFontStream_proto pdfFontStream_proto = 12;
     }
 }
 message PdfCatalog_proto {
@@ -40,6 +41,12 @@ message PdfPage_proto {
 message PdfFont_proto {
     string refName = 1;
     string fontKeyName = 2;
+    repeated FontEmbeddedDef_proto fontEmbeddedDef = 3;
+}
+
+message FontEmbeddedDef_proto {
+    int64 idPdfFontDescriptor = 1;
+    int64 idPdfFontStream = 2;
 }
 
 message PdfPageItem_proto {
@@ -112,7 +119,7 @@ message PdfGPattern_proto {
 
 
 message PdfGraphicFragment_proto {
-    string content=1;
+    string content = 1;
     oneof field {
         DrawLine_proto drawLine_proto = 2;
         PdfRectangle_proto pdfRectangle_proto = 3;
@@ -199,5 +206,54 @@ message DrawPieChart_proto {
 message StringDouble_proto {
     string value1 = 1;
     double value2 = 2;
+
+}
+
+message EmbeddedFontDescriptor_proto {
+    GlyphWidth_proto glyphWidth = 1;
+    int32 capHeight = 2;
+    FontBBox_proto fontBBox = 3;
+    int32 ascent = 4;
+    int32 flags = 5;
+    int32 italicAngle = 6;
+    int32 descent = 7;
+
+}
+
+
+message GlyphWidth_proto {
+    int32 firstChar = 1;
+    int32 lastChar = 2;
+    repeated int32 widthList = 3;
+
+}
+
+
+message FontBBox_proto {
+    int32 lowerLeftX = 1;
+    int32 lowerLeftY = 2;
+    int32 upperRightX = 3;
+    int32 upperRightY = 4;
+
+}
+
+message PdfFontStream_proto {
+    string fontName = 1;
+    FontMetric_proto fontMetric = 2;
+    bool pdfCompression = 3;
+}
+
+message FontMetric_proto {
+    string fontName = 1;
+    map<int32, float> fontMap = 2;
+    FloatFloat_proto fontHeight = 3;
+    repeated EmbeddedFontDescriptor_proto fontDescriptor = 4;
+
+}
+
+
+message FloatFloat_proto {
+    float value1 = 1;
+    float value2 = 2;
 
 }
