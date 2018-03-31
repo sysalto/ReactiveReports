@@ -351,6 +351,9 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.beginReport()
 		for (i<-1 to 10) {
 			println("I:"+i)
+			if (i>1) {
+				report.nextPage()
+			}
 			if (report.getCrtPageNbr()==1) {
 				reportHeader(report)
 			}
@@ -359,7 +362,6 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			changeAccount(report)
 			accountPerformance(report)
 			disclaimer(report)
-			report.nextPage()
 		}
 		report.render()
 	}
