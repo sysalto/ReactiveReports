@@ -367,6 +367,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val t3=System.currentTimeMillis()
 		println("Time1:"+(t2-t1)*0.001)
 		println("Time2:"+(t3-t2)*0.001)
+		println("Total time:"+(t3-t1)*0.001)
 	}
 
 
