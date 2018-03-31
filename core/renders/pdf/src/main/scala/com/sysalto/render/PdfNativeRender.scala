@@ -31,7 +31,7 @@ import com.sysalto.report.util.PdfUtil
 import com.sysalto.report.{ReportTypes, WrapAlign}
 
 
-class PdfNativeRenderNew extends PdfUtil {
+class PdfNativeRender extends PdfUtil {
 	private[this] var pdfNativeGenerator: RenderReport = null
 	private[this] var orientation = ReportPageOrientation.PORTRAIT
 	private[this] lazy val PAGE_WIDTH = if (orientation == ReportPageOrientation.PORTRAIT) 612 else 792
