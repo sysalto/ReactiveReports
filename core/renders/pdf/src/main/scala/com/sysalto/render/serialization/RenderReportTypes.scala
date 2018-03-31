@@ -597,9 +597,6 @@ class RenderReportTypes {
 
 
 	def setObject1(obj: PdfBaseItem): Unit = {
-		if (obj.id==11) {
-			println("ID:" + obj.id)
-		}
 		obj match {
 			case pdfCatalog: PdfCatalog => {
 				val cat1 = pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]
