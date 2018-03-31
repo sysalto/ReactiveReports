@@ -39,6 +39,12 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setPdfColorShaddingProto(PdfColorShaddingSerializer.write(item))
 				case item: renderReportTypes.PdfGPattern =>
 					builder.setPdfGPatternProto(PdfGPatternSerializer.write(item))
+				case item: renderReportTypes.PdfFontStream =>
+					builder.setPdfFontStreamProto(PdfFontStreamSerializer.write(item))
+				case item: renderReportTypes.PdfFontDescriptor =>
+					builder.setPdfFontDescriptorProto(PdfFontDescriptorSerializer.write(item))
+
+
 			}
 			builder.build()
 		}
@@ -71,6 +77,12 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				}
 				case FieldCase.PDFGPATTERN_PROTO => {
 					PdfGPatternSerializer.read(input.getId, input.getOffset, input.getPdfGPatternProto)
+				}
+				case FieldCase.PDFFONTSTREAM_PROTO => {
+					PdfFontStreamSerializer.read(input.getId, input.getOffset, input.getPdfFontStreamProto)
+				}
+				case FieldCase.PDFFONTDESCRIPTOR_PROTO => {
+					PdfFontDescriptorSerializer.read(input.getId, input.getOffset, input.getPdfFontDescriptorProto)
 				}
 			}
 		}
@@ -574,8 +586,11 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		// def read(input:PdfFontStream_proto ): renderReportTypes.PdfFontStream = {
-		//}
+		def read(id:Long,offset:Long,input: PdfFontStream_proto): renderReportTypes.PdfFontStream = {
+			val result=new renderReportTypes.PdfFontStream(id,input.getFontName,FontMetricSerializer.read(input.getFontMetric),input.getPdfCompression)
+			result.offset=offset
+			result
+		}
 	}
 
 	object FontMetricSerializer {
@@ -593,8 +608,11 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		// def read(input:FontMetric_proto ): FontMetric = {
-		//}
+		def read(input: FontMetric_proto): FontMetric = {
+			val fontMap=input.getFontMapMap.asScala.map(item=>(item._1.toInt,item._2.toFloat)).toMap
+			val fontDescription=if (input.getFontDescriptorCount==0) None else Some(EmbeddedFontDescriptorSerializer.read(input.getFontDescriptor(0)))
+			new FontMetric(input.getFontName,fontMap,FloatFloatSerializer.read(input.getFontHeight),fontDescription)
+		}
 	}
 
 
@@ -662,5 +680,21 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 	}
 
+
+
+	object PdfFontDescriptorSerializer {
+		def write(input: renderReportTypes.PdfFontDescriptor): PdfFontDescriptor_proto = {
+			val builder = PdfFontDescriptor_proto.newBuilder()
+			builder.setIdPdfFontStream(input.idPdfFontStream)
+			builder.setFontKeyName(input.fontKeyName)
+			builder.build()
+		}
+
+		def read(id:Long,offset:Long,input: PdfFontDescriptor_proto): renderReportTypes.PdfFontDescriptor = {
+			val result=new renderReportTypes.PdfFontDescriptor(id,input.getIdPdfFontStream,input.getFontKeyName)
+			result.offset=offset
+			result
+		}
+	}
 
 }

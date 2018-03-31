@@ -651,6 +651,17 @@ class RenderReportTypes {
 				val builder = serializer.PdfBaseItemSerializer.write(item1)
 				db.writeObject1(item.id, builder.toByteArray)
 			}
+			case item: PdfFontStream => {
+				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfFontStream]
+				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				db.writeObject1(item.id, builder.toByteArray)
+			}
+			case item: PdfFontDescriptor => {
+				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfFontDescriptor]
+				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				db.writeObject1(item.id, builder.toByteArray)
+			}
+
 
 			case _ => {
 				println("Unimplemented: " + obj)

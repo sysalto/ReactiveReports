@@ -274,6 +274,19 @@ public final class RenderProto {
      */
     com.sysalto.render.serialization.RenderProto.PdfFontStream_protoOrBuilder getPdfFontStreamProtoOrBuilder();
 
+    /**
+     * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+     */
+    boolean hasPdfFontDescriptorProto();
+    /**
+     * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto getPdfFontDescriptorProto();
+    /**
+     * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_protoOrBuilder getPdfFontDescriptorProtoOrBuilder();
+
     public com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase getFieldCase();
   }
   /**
@@ -474,6 +487,20 @@ public final class RenderProto {
               fieldCase_ = 12;
               break;
             }
+            case 106: {
+              com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.Builder subBuilder = null;
+              if (fieldCase_ == 13) {
+                subBuilder = ((com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_).toBuilder();
+              }
+              field_ =
+                  input.readMessage(com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_);
+                field_ = subBuilder.buildPartial();
+              }
+              fieldCase_ = 13;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -512,6 +539,7 @@ public final class RenderProto {
       PDFCOLORSHADDING_PROTO(10),
       PDFGPATTERN_PROTO(11),
       PDFFONTSTREAM_PROTO(12),
+      PDFFONTDESCRIPTOR_PROTO(13),
       FIELD_NOT_SET(0);
       private final int value;
       private FieldCase(int value) {
@@ -537,6 +565,7 @@ public final class RenderProto {
           case 10: return PDFCOLORSHADDING_PROTO;
           case 11: return PDFGPATTERN_PROTO;
           case 12: return PDFFONTSTREAM_PROTO;
+          case 13: return PDFFONTDESCRIPTOR_PROTO;
           case 0: return FIELD_NOT_SET;
           default: return null;
         }
@@ -830,6 +859,32 @@ public final class RenderProto {
       return com.sysalto.render.serialization.RenderProto.PdfFontStream_proto.getDefaultInstance();
     }
 
+    public static final int PDFFONTDESCRIPTOR_PROTO_FIELD_NUMBER = 13;
+    /**
+     * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+     */
+    public boolean hasPdfFontDescriptorProto() {
+      return fieldCase_ == 13;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto getPdfFontDescriptorProto() {
+      if (fieldCase_ == 13) {
+         return (com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_;
+      }
+      return com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.getDefaultInstance();
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_protoOrBuilder getPdfFontDescriptorProtoOrBuilder() {
+      if (fieldCase_ == 13) {
+         return (com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_;
+      }
+      return com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -877,6 +932,9 @@ public final class RenderProto {
       }
       if (fieldCase_ == 12) {
         output.writeMessage(12, (com.sysalto.render.serialization.RenderProto.PdfFontStream_proto) field_);
+      }
+      if (fieldCase_ == 13) {
+        output.writeMessage(13, (com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_);
       }
       unknownFields.writeTo(output);
     }
@@ -933,6 +991,10 @@ public final class RenderProto {
       if (fieldCase_ == 12) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(12, (com.sysalto.render.serialization.RenderProto.PdfFontStream_proto) field_);
+      }
+      if (fieldCase_ == 13) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(13, (com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -998,6 +1060,10 @@ public final class RenderProto {
           result = result && getPdfFontStreamProto()
               .equals(other.getPdfFontStreamProto());
           break;
+        case 13:
+          result = result && getPdfFontDescriptorProto()
+              .equals(other.getPdfFontDescriptorProto());
+          break;
         case 0:
         default:
       }
@@ -1058,6 +1124,10 @@ public final class RenderProto {
         case 12:
           hash = (37 * hash) + PDFFONTSTREAM_PROTO_FIELD_NUMBER;
           hash = (53 * hash) + getPdfFontStreamProto().hashCode();
+          break;
+        case 13:
+          hash = (37 * hash) + PDFFONTDESCRIPTOR_PROTO_FIELD_NUMBER;
+          hash = (53 * hash) + getPdfFontDescriptorProto().hashCode();
           break;
         case 0:
         default:
@@ -1291,6 +1361,13 @@ public final class RenderProto {
             result.field_ = pdfFontStreamProtoBuilder_.build();
           }
         }
+        if (fieldCase_ == 13) {
+          if (pdfFontDescriptorProtoBuilder_ == null) {
+            result.field_ = field_;
+          } else {
+            result.field_ = pdfFontDescriptorProtoBuilder_.build();
+          }
+        }
         result.fieldCase_ = fieldCase_;
         onBuilt();
         return result;
@@ -1378,6 +1455,10 @@ public final class RenderProto {
           }
           case PDFFONTSTREAM_PROTO: {
             mergePdfFontStreamProto(other.getPdfFontStreamProto());
+            break;
+          }
+          case PDFFONTDESCRIPTOR_PROTO: {
+            mergePdfFontDescriptorProto(other.getPdfFontDescriptorProto());
             break;
           }
           case FIELD_NOT_SET: {
@@ -2836,6 +2917,142 @@ public final class RenderProto {
         fieldCase_ = 12;
         onChanged();;
         return pdfFontStreamProtoBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto, com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_protoOrBuilder> pdfFontDescriptorProtoBuilder_;
+      /**
+       * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+       */
+      public boolean hasPdfFontDescriptorProto() {
+        return fieldCase_ == 13;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto getPdfFontDescriptorProto() {
+        if (pdfFontDescriptorProtoBuilder_ == null) {
+          if (fieldCase_ == 13) {
+            return (com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_;
+          }
+          return com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.getDefaultInstance();
+        } else {
+          if (fieldCase_ == 13) {
+            return pdfFontDescriptorProtoBuilder_.getMessage();
+          }
+          return com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+       */
+      public Builder setPdfFontDescriptorProto(com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto value) {
+        if (pdfFontDescriptorProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          field_ = value;
+          onChanged();
+        } else {
+          pdfFontDescriptorProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 13;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+       */
+      public Builder setPdfFontDescriptorProto(
+          com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.Builder builderForValue) {
+        if (pdfFontDescriptorProtoBuilder_ == null) {
+          field_ = builderForValue.build();
+          onChanged();
+        } else {
+          pdfFontDescriptorProtoBuilder_.setMessage(builderForValue.build());
+        }
+        fieldCase_ = 13;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+       */
+      public Builder mergePdfFontDescriptorProto(com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto value) {
+        if (pdfFontDescriptorProtoBuilder_ == null) {
+          if (fieldCase_ == 13 &&
+              field_ != com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.getDefaultInstance()) {
+            field_ = com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.newBuilder((com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            field_ = value;
+          }
+          onChanged();
+        } else {
+          if (fieldCase_ == 13) {
+            pdfFontDescriptorProtoBuilder_.mergeFrom(value);
+          }
+          pdfFontDescriptorProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 13;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+       */
+      public Builder clearPdfFontDescriptorProto() {
+        if (pdfFontDescriptorProtoBuilder_ == null) {
+          if (fieldCase_ == 13) {
+            fieldCase_ = 0;
+            field_ = null;
+            onChanged();
+          }
+        } else {
+          if (fieldCase_ == 13) {
+            fieldCase_ = 0;
+            field_ = null;
+          }
+          pdfFontDescriptorProtoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.Builder getPdfFontDescriptorProtoBuilder() {
+        return getPdfFontDescriptorProtoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_protoOrBuilder getPdfFontDescriptorProtoOrBuilder() {
+        if ((fieldCase_ == 13) && (pdfFontDescriptorProtoBuilder_ != null)) {
+          return pdfFontDescriptorProtoBuilder_.getMessageOrBuilder();
+        } else {
+          if (fieldCase_ == 13) {
+            return (com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_;
+          }
+          return com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto, com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_protoOrBuilder> 
+          getPdfFontDescriptorProtoFieldBuilder() {
+        if (pdfFontDescriptorProtoBuilder_ == null) {
+          if (!(fieldCase_ == 13)) {
+            field_ = com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.getDefaultInstance();
+          }
+          pdfFontDescriptorProtoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto, com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.Builder, com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_protoOrBuilder>(
+                  (com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) field_,
+                  getParentForChildren(),
+                  isClean());
+          field_ = null;
+        }
+        fieldCase_ = 13;
+        onChanged();;
+        return pdfFontDescriptorProtoBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -29719,6 +29936,595 @@ public final class RenderProto {
 
   }
 
+  public interface PdfFontDescriptor_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.PdfFontDescriptor_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 idPdfFontStream = 1;</code>
+     */
+    long getIdPdfFontStream();
+
+    /**
+     * <code>string fontKeyName = 2;</code>
+     */
+    java.lang.String getFontKeyName();
+    /**
+     * <code>string fontKeyName = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getFontKeyNameBytes();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.PdfFontDescriptor_proto}
+   */
+  public  static final class PdfFontDescriptor_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.PdfFontDescriptor_proto)
+      PdfFontDescriptor_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use PdfFontDescriptor_proto.newBuilder() to construct.
+    private PdfFontDescriptor_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PdfFontDescriptor_proto() {
+      idPdfFontStream_ = 0L;
+      fontKeyName_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PdfFontDescriptor_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              idPdfFontStream_ = input.readInt64();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              fontKeyName_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.class, com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.Builder.class);
+    }
+
+    public static final int IDPDFFONTSTREAM_FIELD_NUMBER = 1;
+    private long idPdfFontStream_;
+    /**
+     * <code>int64 idPdfFontStream = 1;</code>
+     */
+    public long getIdPdfFontStream() {
+      return idPdfFontStream_;
+    }
+
+    public static final int FONTKEYNAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object fontKeyName_;
+    /**
+     * <code>string fontKeyName = 2;</code>
+     */
+    public java.lang.String getFontKeyName() {
+      java.lang.Object ref = fontKeyName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fontKeyName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string fontKeyName = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFontKeyNameBytes() {
+      java.lang.Object ref = fontKeyName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fontKeyName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (idPdfFontStream_ != 0L) {
+        output.writeInt64(1, idPdfFontStream_);
+      }
+      if (!getFontKeyNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, fontKeyName_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (idPdfFontStream_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, idPdfFontStream_);
+      }
+      if (!getFontKeyNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, fontKeyName_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto other = (com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) obj;
+
+      boolean result = true;
+      result = result && (getIdPdfFontStream()
+          == other.getIdPdfFontStream());
+      result = result && getFontKeyName()
+          .equals(other.getFontKeyName());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + IDPDFFONTSTREAM_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getIdPdfFontStream());
+      hash = (37 * hash) + FONTKEYNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getFontKeyName().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.PdfFontDescriptor_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.PdfFontDescriptor_proto)
+        com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.class, com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        idPdfFontStream_ = 0L;
+
+        fontKeyName_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto build() {
+        com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto result = new com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto(this);
+        result.idPdfFontStream_ = idPdfFontStream_;
+        result.fontKeyName_ = fontKeyName_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto.getDefaultInstance()) return this;
+        if (other.getIdPdfFontStream() != 0L) {
+          setIdPdfFontStream(other.getIdPdfFontStream());
+        }
+        if (!other.getFontKeyName().isEmpty()) {
+          fontKeyName_ = other.fontKeyName_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private long idPdfFontStream_ ;
+      /**
+       * <code>int64 idPdfFontStream = 1;</code>
+       */
+      public long getIdPdfFontStream() {
+        return idPdfFontStream_;
+      }
+      /**
+       * <code>int64 idPdfFontStream = 1;</code>
+       */
+      public Builder setIdPdfFontStream(long value) {
+        
+        idPdfFontStream_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 idPdfFontStream = 1;</code>
+       */
+      public Builder clearIdPdfFontStream() {
+        
+        idPdfFontStream_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object fontKeyName_ = "";
+      /**
+       * <code>string fontKeyName = 2;</code>
+       */
+      public java.lang.String getFontKeyName() {
+        java.lang.Object ref = fontKeyName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          fontKeyName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string fontKeyName = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFontKeyNameBytes() {
+        java.lang.Object ref = fontKeyName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fontKeyName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string fontKeyName = 2;</code>
+       */
+      public Builder setFontKeyName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        fontKeyName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string fontKeyName = 2;</code>
+       */
+      public Builder clearFontKeyName() {
+        
+        fontKeyName_ = getDefaultInstance().getFontKeyName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string fontKeyName = 2;</code>
+       */
+      public Builder setFontKeyNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        fontKeyName_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.PdfFontDescriptor_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.PdfFontDescriptor_proto)
+    private static final com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PdfFontDescriptor_proto>
+        PARSER = new com.google.protobuf.AbstractParser<PdfFontDescriptor_proto>() {
+      public PdfFontDescriptor_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PdfFontDescriptor_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PdfFontDescriptor_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PdfFontDescriptor_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.PdfFontDescriptor_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sysalto_render_serialization_PdfBaseItem_proto_descriptor;
   private static final 
@@ -29889,6 +30695,11 @@ public final class RenderProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_sysalto_render_serialization_FloatFloat_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -29899,7 +30710,7 @@ public final class RenderProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022render_proto.proto\022 com.sysalto.render" +
-      ".serialization\"\362\006\n\021PdfBaseItem_proto\022\n\n\002" +
+      ".serialization\"\320\007\n\021PdfBaseItem_proto\022\n\n\002" +
       "id\030\001 \001(\003\022\016\n\006offset\030\002 \001(\003\022M\n\017pdfCatalogPr" +
       "oto\030\003 \001(\01322.com.sysalto.render.serializa" +
       "tion.PdfCatalog_protoH\000\022G\n\014pdfPageProto\030" +
@@ -29921,114 +30732,119 @@ public final class RenderProto {
       "lto.render.serialization.PdfGPattern_pro" +
       "toH\000\022T\n\023pdfFontStream_proto\030\014 \001(\01325.com." +
       "sysalto.render.serialization.PdfFontStre" +
-      "am_protoH\000B\007\n\005field\"C\n\020PdfCatalog_proto\022" +
-      "\030\n\020idPdfPageListOpt\030\001 \003(\003\022\025\n\ridPdfNamesO" +
-      "pt\030\002 \003(\003\"\320\001\n\rPdfPage_proto\022\020\n\010parentId\030\001" +
-      " \001(\003\022\021\n\tpageWidth\030\002 \001(\002\022\022\n\npageHeight\030\003 " +
-      "\001(\002\022\022\n\nidFontList\030\004 \003(\003\022\030\n\020idPdfPatternL" +
-      "ist\030\005 \003(\003\022\030\n\020idAnnotationList\030\006 \003(\003\022\023\n\013i" +
-      "dImageList\030\007 \003(\003\022\030\n\020idContentPageOpt\030\010 \003" +
-      "(\003\022\017\n\007leafNbr\030\t \001(\003\"\207\001\n\rPdfFont_proto\022\017\n" +
-      "\007refName\030\001 \001(\t\022\023\n\013fontKeyName\030\002 \001(\t\022P\n\017f" +
-      "ontEmbeddedDef\030\003 \003(\01327.com.sysalto.rende" +
-      "r.serialization.FontEmbeddedDef_proto\"M\n" +
-      "\025FontEmbeddedDef_proto\022\033\n\023idPdfFontDescr" +
-      "iptor\030\001 \001(\003\022\027\n\017idPdfFontStream\030\002 \001(\003\"\272\001\n" +
-      "\021PdfPageItem_proto\022H\n\rpdfText_proto\030\001 \001(" +
-      "\0132/.com.sysalto.render.serialization.Pdf" +
-      "Text_protoH\000\022N\n\020pdfGraphic_proto\030\002 \001(\01322" +
-      ".com.sysalto.render.serialization.PdfGra" +
-      "phic_protoH\000B\013\n\tfieldItem\"p\n\020PdfGraphic_" +
-      "proto\022\\\n\030pdfGraphicFragment_proto\030\001 \003(\0132" +
-      ":.com.sysalto.render.serialization.PdfGr" +
-      "aphicFragment_proto\"\036\n\017ReportTxt_proto\022\013" +
-      "\n\003txt\030\001 \001(\t\"\212\001\n\024PdfTxtFragment_proto\022\t\n\001" +
-      "x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022F\n\013rtext_proto\030\003 \001(\0132" +
-      "1.com.sysalto.render.serialization.Repor" +
-      "tTxt_proto\022\024\n\014fonttRefName\030\004 \001(\t\"X\n\rPdfT" +
-      "ext_proto\022G\n\007txtList\030\001 \003(\01326.com.sysalto" +
-      ".render.serialization.PdfTxtFragment_pro" +
-      "to\"~\n\024PdfPageContent_proto\022N\n\021pdfPageIte" +
-      "m_proto\030\003 \003(\01323.com.sysalto.render.seria" +
-      "lization.PdfPageItem_proto\022\026\n\016pdfCompres" +
-      "sion\030\004 \001(\010\"H\n\021PdfPageList_proto\022\017\n\007leafN" +
-      "br\030\001 \001(\003\022\020\n\010parentId\030\002 \003(\003\022\020\n\010pageList\030\003" +
-      " \003(\003\"\"\n\016PdfImage_proto\022\020\n\010fileName\030\001 \001(\t" +
-      "\"E\n\021ReportColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001g\030\002 " +
-      "\001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"\245\001\n\031PdfS" +
-      "haddingFctColor_proto\022C\n\006color1\030\001 \001(\01323." +
-      "com.sysalto.render.serialization.ReportC" +
-      "olor_proto\022C\n\006color2\030\002 \001(\01323.com.sysalto" +
-      ".render.serialization.ReportColor_proto\"" +
-      "g\n\026PdfColorShadding_proto\022\n\n\002x0\030\001 \001(\002\022\n\n" +
-      "\002y0\030\002 \001(\002\022\n\n\002x1\030\003 \001(\002\022\n\n\002y1\030\004 \001(\002\022\035\n\025idP" +
-      "dfShaddingFctColor\030\005 \001(\003\"*\n\021PdfGPattern_" +
-      "proto\022\025\n\ridPdfShadding\030\001 \001(\003\"\314\003\n\030PdfGrap" +
-      "hicFragment_proto\022\017\n\007content\030\001 \001(\t\022J\n\016dr" +
-      "awLine_proto\030\002 \001(\01320.com.sysalto.render." +
-      "serialization.DrawLine_protoH\000\022R\n\022pdfRec" +
-      "tangle_proto\030\003 \001(\01324.com.sysalto.render." +
-      "serialization.PdfRectangle_protoH\000\022N\n\020dr" +
-      "awStroke_proto\030\004 \001(\01322.com.sysalto.rende" +
-      "r.serialization.DrawStroke_protoH\000\022R\n\022pd" +
-      "fDrawImage_proto\030\005 \001(\01324.com.sysalto.ren" +
-      "der.serialization.PdfDrawImage_protoH\000\022R" +
-      "\n\022drawPieChart_proto\030\006 \001(\01324.com.sysalto" +
-      ".render.serialization.DrawPieChart_proto" +
-      "H\000B\007\n\005field\"\022\n\020DrawStroke_proto\"\376\001\n\022PdfR" +
-      "ectangle_proto\022\n\n\002x2\030\001 \001(\003\022\016\n\006radius\030\002 \001" +
-      "(\002\022\026\n\016idPatternColor\030\003 \003(\003\022\n\n\002y1\030\004 \001(\003\022\n" +
-      "\n\002y2\030\005 \001(\003\022\n\n\002x1\030\006 \001(\003\022H\n\013borderColor\030\007 " +
-      "\003(\01323.com.sysalto.render.serialization.R" +
-      "eportColor_proto\022F\n\tfillColor\030\010 \003(\01323.co" +
-      "m.sysalto.render.serialization.ReportCol" +
-      "or_proto\"1\n\022LineDashType_proto\022\014\n\004unit\030\001" +
-      " \001(\005\022\r\n\005phase\030\002 \001(\005\"\230\001\n\016DrawLine_proto\022\n" +
-      "\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2" +
-      "\030\004 \001(\002\022\022\n\nvlineWidth\030\005 \001(\002\022B\n\005color\030\006 \001(" +
-      "\01323.com.sysalto.render.serialization.Rep" +
-      "ortColor_proto\"^\n\022PdfDrawImage_proto\022\t\n\001" +
-      "x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\r\n\005scale\030\003 \001(\002\022\022\n\nidP" +
-      "dfImage\030\004 \001(\003\022\017\n\007opacity\030\005 \003(\002\"@\n\014RColor" +
-      "_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001g\030\002 \001(\005\022\t\n\001b\030\003 \001(\005\022" +
-      "\017\n\007opacity\030\004 \001(\002\"\267\001\n\013RFont_proto\022\014\n\004size" +
-      "\030\001 \001(\005\022\020\n\010fontName\030\002 \001(\t\022I\n\tattribute\030\003 " +
-      "\001(\01626.com.sysalto.render.serialization.R" +
-      "FontAttribute_proto\022=\n\005color\030\004 \001(\0132..com" +
-      ".sysalto.render.serialization.RColor_pro" +
-      "to\"\331\001\n\022DrawPieChart_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001" +
-      "y\030\002 \001(\002\022B\n\004data\030\003 \003(\01324.com.sysalto.rend" +
-      "er.serialization.StringDouble_proto\022\016\n\006h" +
-      "eight\030\004 \001(\002\022\r\n\005title\030\006 \001(\t\022\r\n\005width\030\007 \001(" +
-      "\002\022;\n\004font\030\010 \001(\0132-.com.sysalto.render.ser" +
-      "ialization.RFont_proto\"4\n\022StringDouble_p" +
-      "roto\022\016\n\006value1\030\001 \001(\t\022\016\n\006value2\030\002 \001(\001\"\202\002\n" +
-      "\034EmbeddedFontDescriptor_proto\022F\n\nglyphWi" +
-      "dth\030\001 \001(\01322.com.sysalto.render.serializa" +
-      "tion.GlyphWidth_proto\022\021\n\tcapHeight\030\002 \001(\005" +
-      "\022B\n\010fontBBox\030\003 \001(\01320.com.sysalto.render." +
-      "serialization.FontBBox_proto\022\016\n\006ascent\030\004" +
-      " \001(\005\022\r\n\005flags\030\005 \001(\005\022\023\n\013italicAngle\030\006 \001(\005" +
-      "\022\017\n\007descent\030\007 \001(\005\"J\n\020GlyphWidth_proto\022\021\n" +
-      "\tfirstChar\030\001 \001(\005\022\020\n\010lastChar\030\002 \001(\005\022\021\n\twi" +
-      "dthList\030\003 \003(\005\"b\n\016FontBBox_proto\022\022\n\nlower" +
-      "LeftX\030\001 \001(\005\022\022\n\nlowerLeftY\030\002 \001(\005\022\023\n\013upper" +
-      "RightX\030\003 \001(\005\022\023\n\013upperRightY\030\004 \001(\005\"\207\001\n\023Pd" +
-      "fFontStream_proto\022\020\n\010fontName\030\001 \001(\t\022F\n\nf" +
-      "ontMetric\030\002 \001(\01322.com.sysalto.render.ser" +
-      "ialization.FontMetric_proto\022\026\n\016pdfCompre" +
-      "ssion\030\003 \001(\010\"\306\002\n\020FontMetric_proto\022\020\n\010font" +
-      "Name\030\001 \001(\t\022P\n\007fontMap\030\002 \003(\0132?.com.sysalt" +
-      "o.render.serialization.FontMetric_proto." +
-      "FontMapEntry\022F\n\nfontHeight\030\003 \001(\01322.com.s" +
-      "ysalto.render.serialization.FloatFloat_p" +
-      "roto\022V\n\016fontDescriptor\030\004 \003(\0132>.com.sysal" +
-      "to.render.serialization.EmbeddedFontDesc" +
-      "riptor_proto\032.\n\014FontMapEntry\022\013\n\003key\030\001 \001(" +
-      "\005\022\r\n\005value\030\002 \001(\002:\0028\001\"2\n\020FloatFloat_proto" +
-      "\022\016\n\006value1\030\001 \001(\002\022\016\n\006value2\030\002 \001(\002*I\n\024RFon" +
-      "tAttribute_proto\022\n\n\006NORMAL\020\000\022\010\n\004BOLD\020\001\022\n" +
-      "\n\006ITALIC\020\002\022\017\n\013BOLD_ITALIC\020\003B\002H\001b\006proto3"
+      "am_protoH\000\022\\\n\027pdfFontDescriptor_proto\030\r " +
+      "\001(\01329.com.sysalto.render.serialization.P" +
+      "dfFontDescriptor_protoH\000B\007\n\005field\"C\n\020Pdf" +
+      "Catalog_proto\022\030\n\020idPdfPageListOpt\030\001 \003(\003\022" +
+      "\025\n\ridPdfNamesOpt\030\002 \003(\003\"\320\001\n\rPdfPage_proto" +
+      "\022\020\n\010parentId\030\001 \001(\003\022\021\n\tpageWidth\030\002 \001(\002\022\022\n" +
+      "\npageHeight\030\003 \001(\002\022\022\n\nidFontList\030\004 \003(\003\022\030\n" +
+      "\020idPdfPatternList\030\005 \003(\003\022\030\n\020idAnnotationL" +
+      "ist\030\006 \003(\003\022\023\n\013idImageList\030\007 \003(\003\022\030\n\020idCont" +
+      "entPageOpt\030\010 \003(\003\022\017\n\007leafNbr\030\t \001(\003\"\207\001\n\rPd" +
+      "fFont_proto\022\017\n\007refName\030\001 \001(\t\022\023\n\013fontKeyN" +
+      "ame\030\002 \001(\t\022P\n\017fontEmbeddedDef\030\003 \003(\01327.com" +
+      ".sysalto.render.serialization.FontEmbedd" +
+      "edDef_proto\"M\n\025FontEmbeddedDef_proto\022\033\n\023" +
+      "idPdfFontDescriptor\030\001 \001(\003\022\027\n\017idPdfFontSt" +
+      "ream\030\002 \001(\003\"\272\001\n\021PdfPageItem_proto\022H\n\rpdfT" +
+      "ext_proto\030\001 \001(\0132/.com.sysalto.render.ser" +
+      "ialization.PdfText_protoH\000\022N\n\020pdfGraphic" +
+      "_proto\030\002 \001(\01322.com.sysalto.render.serial" +
+      "ization.PdfGraphic_protoH\000B\013\n\tfieldItem\"" +
+      "p\n\020PdfGraphic_proto\022\\\n\030pdfGraphicFragmen" +
+      "t_proto\030\001 \003(\0132:.com.sysalto.render.seria" +
+      "lization.PdfGraphicFragment_proto\"\036\n\017Rep" +
+      "ortTxt_proto\022\013\n\003txt\030\001 \001(\t\"\212\001\n\024PdfTxtFrag" +
+      "ment_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022F\n\013rtex" +
+      "t_proto\030\003 \001(\01321.com.sysalto.render.seria" +
+      "lization.ReportTxt_proto\022\024\n\014fonttRefName" +
+      "\030\004 \001(\t\"X\n\rPdfText_proto\022G\n\007txtList\030\001 \003(\013" +
+      "26.com.sysalto.render.serialization.PdfT" +
+      "xtFragment_proto\"~\n\024PdfPageContent_proto" +
+      "\022N\n\021pdfPageItem_proto\030\003 \003(\01323.com.sysalt" +
+      "o.render.serialization.PdfPageItem_proto" +
+      "\022\026\n\016pdfCompression\030\004 \001(\010\"H\n\021PdfPageList_" +
+      "proto\022\017\n\007leafNbr\030\001 \001(\003\022\020\n\010parentId\030\002 \003(\003" +
+      "\022\020\n\010pageList\030\003 \003(\003\"\"\n\016PdfImage_proto\022\020\n\010" +
+      "fileName\030\001 \001(\t\"E\n\021ReportColor_proto\022\t\n\001r" +
+      "\030\001 \001(\005\022\t\n\001g\030\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030" +
+      "\004 \001(\002\"\245\001\n\031PdfShaddingFctColor_proto\022C\n\006c" +
+      "olor1\030\001 \001(\01323.com.sysalto.render.seriali" +
+      "zation.ReportColor_proto\022C\n\006color2\030\002 \001(\013" +
+      "23.com.sysalto.render.serialization.Repo" +
+      "rtColor_proto\"g\n\026PdfColorShadding_proto\022" +
+      "\n\n\002x0\030\001 \001(\002\022\n\n\002y0\030\002 \001(\002\022\n\n\002x1\030\003 \001(\002\022\n\n\002y" +
+      "1\030\004 \001(\002\022\035\n\025idPdfShaddingFctColor\030\005 \001(\003\"*" +
+      "\n\021PdfGPattern_proto\022\025\n\ridPdfShadding\030\001 \001" +
+      "(\003\"\314\003\n\030PdfGraphicFragment_proto\022\017\n\007conte" +
+      "nt\030\001 \001(\t\022J\n\016drawLine_proto\030\002 \001(\01320.com.s" +
+      "ysalto.render.serialization.DrawLine_pro" +
+      "toH\000\022R\n\022pdfRectangle_proto\030\003 \001(\01324.com.s" +
+      "ysalto.render.serialization.PdfRectangle" +
+      "_protoH\000\022N\n\020drawStroke_proto\030\004 \001(\01322.com" +
+      ".sysalto.render.serialization.DrawStroke" +
+      "_protoH\000\022R\n\022pdfDrawImage_proto\030\005 \001(\01324.c" +
+      "om.sysalto.render.serialization.PdfDrawI" +
+      "mage_protoH\000\022R\n\022drawPieChart_proto\030\006 \001(\013" +
+      "24.com.sysalto.render.serialization.Draw" +
+      "PieChart_protoH\000B\007\n\005field\"\022\n\020DrawStroke_" +
+      "proto\"\376\001\n\022PdfRectangle_proto\022\n\n\002x2\030\001 \001(\003" +
+      "\022\016\n\006radius\030\002 \001(\002\022\026\n\016idPatternColor\030\003 \003(\003" +
+      "\022\n\n\002y1\030\004 \001(\003\022\n\n\002y2\030\005 \001(\003\022\n\n\002x1\030\006 \001(\003\022H\n\013" +
+      "borderColor\030\007 \003(\01323.com.sysalto.render.s" +
+      "erialization.ReportColor_proto\022F\n\tfillCo" +
+      "lor\030\010 \003(\01323.com.sysalto.render.serializa" +
+      "tion.ReportColor_proto\"1\n\022LineDashType_p" +
+      "roto\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002 \001(\005\"\230\001\n\016Dr" +
+      "awLine_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002" +
+      "x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\022\n\nvlineWidth\030\005 \001(\002" +
+      "\022B\n\005color\030\006 \001(\01323.com.sysalto.render.ser" +
+      "ialization.ReportColor_proto\"^\n\022PdfDrawI" +
+      "mage_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\r\n\005scal" +
+      "e\030\003 \001(\002\022\022\n\nidPdfImage\030\004 \001(\003\022\017\n\007opacity\030\005" +
+      " \003(\002\"@\n\014RColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001g\030\002 \001" +
+      "(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"\267\001\n\013RFont" +
+      "_proto\022\014\n\004size\030\001 \001(\005\022\020\n\010fontName\030\002 \001(\t\022I" +
+      "\n\tattribute\030\003 \001(\01626.com.sysalto.render.s" +
+      "erialization.RFontAttribute_proto\022=\n\005col" +
+      "or\030\004 \001(\0132..com.sysalto.render.serializat" +
+      "ion.RColor_proto\"\331\001\n\022DrawPieChart_proto\022" +
+      "\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022B\n\004data\030\003 \003(\01324.co" +
+      "m.sysalto.render.serialization.StringDou" +
+      "ble_proto\022\016\n\006height\030\004 \001(\002\022\r\n\005title\030\006 \001(\t" +
+      "\022\r\n\005width\030\007 \001(\002\022;\n\004font\030\010 \001(\0132-.com.sysa" +
+      "lto.render.serialization.RFont_proto\"4\n\022" +
+      "StringDouble_proto\022\016\n\006value1\030\001 \001(\t\022\016\n\006va" +
+      "lue2\030\002 \001(\001\"\202\002\n\034EmbeddedFontDescriptor_pr" +
+      "oto\022F\n\nglyphWidth\030\001 \001(\01322.com.sysalto.re" +
+      "nder.serialization.GlyphWidth_proto\022\021\n\tc" +
+      "apHeight\030\002 \001(\005\022B\n\010fontBBox\030\003 \001(\01320.com.s" +
+      "ysalto.render.serialization.FontBBox_pro" +
+      "to\022\016\n\006ascent\030\004 \001(\005\022\r\n\005flags\030\005 \001(\005\022\023\n\013ita" +
+      "licAngle\030\006 \001(\005\022\017\n\007descent\030\007 \001(\005\"J\n\020Glyph" +
+      "Width_proto\022\021\n\tfirstChar\030\001 \001(\005\022\020\n\010lastCh" +
+      "ar\030\002 \001(\005\022\021\n\twidthList\030\003 \003(\005\"b\n\016FontBBox_" +
+      "proto\022\022\n\nlowerLeftX\030\001 \001(\005\022\022\n\nlowerLeftY\030" +
+      "\002 \001(\005\022\023\n\013upperRightX\030\003 \001(\005\022\023\n\013upperRight" +
+      "Y\030\004 \001(\005\"\207\001\n\023PdfFontStream_proto\022\020\n\010fontN" +
+      "ame\030\001 \001(\t\022F\n\nfontMetric\030\002 \001(\01322.com.sysa" +
+      "lto.render.serialization.FontMetric_prot" +
+      "o\022\026\n\016pdfCompression\030\003 \001(\010\"\306\002\n\020FontMetric" +
+      "_proto\022\020\n\010fontName\030\001 \001(\t\022P\n\007fontMap\030\002 \003(" +
+      "\0132?.com.sysalto.render.serialization.Fon" +
+      "tMetric_proto.FontMapEntry\022F\n\nfontHeight" +
+      "\030\003 \001(\01322.com.sysalto.render.serializatio" +
+      "n.FloatFloat_proto\022V\n\016fontDescriptor\030\004 \003" +
+      "(\0132>.com.sysalto.render.serialization.Em" +
+      "beddedFontDescriptor_proto\032.\n\014FontMapEnt" +
+      "ry\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030\002 \001(\002:\0028\001\"2\n\020Fl" +
+      "oatFloat_proto\022\016\n\006value1\030\001 \001(\002\022\016\n\006value2" +
+      "\030\002 \001(\002\"G\n\027PdfFontDescriptor_proto\022\027\n\017idP" +
+      "dfFontStream\030\001 \001(\003\022\023\n\013fontKeyName\030\002 \001(\t*" +
+      "I\n\024RFontAttribute_proto\022\n\n\006NORMAL\020\000\022\010\n\004B" +
+      "OLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD_ITALIC\020\003B\002H\001b\006" +
+      "proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -30047,7 +30863,7 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfBaseItem_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfBaseItem_proto_descriptor,
-        new java.lang.String[] { "Id", "Offset", "PdfCatalogProto", "PdfPageProto", "PdfFontProto", "PdfPageContentProto", "PdfPageListProto", "PdfImageProto", "PdfShaddingFctColorProto", "PdfColorShaddingProto", "PdfGPatternProto", "PdfFontStreamProto", "Field", });
+        new java.lang.String[] { "Id", "Offset", "PdfCatalogProto", "PdfPageProto", "PdfFontProto", "PdfPageContentProto", "PdfPageListProto", "PdfImageProto", "PdfShaddingFctColorProto", "PdfColorShaddingProto", "PdfGPatternProto", "PdfFontStreamProto", "PdfFontDescriptorProto", "Field", });
     internal_static_com_sysalto_render_serialization_PdfCatalog_proto_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_sysalto_render_serialization_PdfCatalog_proto_fieldAccessorTable = new
@@ -30246,6 +31062,12 @@ public final class RenderProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_FloatFloat_proto_descriptor,
         new java.lang.String[] { "Value1", "Value2", });
+    internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_descriptor =
+      getDescriptor().getMessageTypes().get(33);
+    internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_descriptor,
+        new java.lang.String[] { "IdPdfFontStream", "FontKeyName", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
