@@ -30,7 +30,7 @@ import ReportTypes._
 import com.sysalto.report.reportTypes._
 import _root_.java.util.function.{BiConsumer, Function}
 
-import com.sysalto.report.function.{RConsumer2, RFunction1}
+import com.sysalto.report.function.{RConsumer1, RConsumer2, RFunction1}
 
 import scala.annotation.varargs
 import scala.collection.JavaConverters._
@@ -68,6 +68,8 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	var headerFct: (java.lang.Long, java.lang.Long) => Unit = {
 		case (_, _) =>
 	}
+
+	var newPageFct: (java.lang.Long) => Unit = null
 
 	/** footer callback
 		* first param - current page
@@ -111,6 +113,10 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			val pageOpt = db.read(s"page$newPage")
 			if (pageOpt.isDefined) {
 				crtPage.items.appendAll(pageOpt.get.items)
+			} else {
+				if (newPageFct != null) {
+					newPageFct(newPage)
+				}
 			}
 		}
 		crtPageNbr = newPage
@@ -596,6 +602,13 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
+	def newPageFct(fct: RConsumer1[java.lang.Long]) {
+		newPageFct = {
+			case (pgNbr) =>
+				fct.apply(pgNbr)
+		}
+	}
+
 	def footerFct(fct: RConsumer2[java.lang.Long, java.lang.Long]) {
 		footerFct = {
 			case (pgNbr, pgMax) =>
@@ -634,14 +647,6 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtPage.items += reportLink
 	}
 
-	// class initialize
-
-	pdfUtil.open(name, orientation, pdfCompression)
-	crtYPosition = pdfUtil.pgSize.height
-	if (lastPosition < getCurrentPosition) {
-		lastPosition = getCurrentPosition
-	}
-
 	def getTextWidth(txt: ReportTxt): java.lang.Float = {
 		val txt1 = if (txt.font.fontName.isEmpty) {
 			ReportTxt(txt.txt, this.font)
@@ -652,6 +657,22 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def getTextWidth(cell: ReportCell): List[Float] = pdfUtil.getTextWidth(cell)
 
 	def getTextWidthJ(cell: ReportCell): java.util.List[java.lang.Float] = pdfUtil.getTextWidth(cell).map(item => item.asInstanceOf[java.lang.Float]).asJava
+
+	def beginReport(): Unit = {
+		if (newPageFct != null) {
+			newPageFct(1)
+		}
+	}
+
+	// class initialize
+
+	pdfUtil.open(name, orientation, pdfCompression)
+	crtYPosition = pdfUtil.pgSize.height
+	if (lastPosition < getCurrentPosition) {
+		lastPosition = getCurrentPosition
+	}
+
+
 }
 
 object Report {

@@ -47,9 +47,23 @@ object Test1 {
 
 //		report.setExternalFont(fontFamily1)
 //		report.setExternalFont(fontFamily2)
+		report.setHeaderSize = { _ =>
+			 50
+		}
+		report.headerFct = {
+			case (_, _) =>{
+//				report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
+			}
+		}
+
 		report.nextLine(3)
 val t1=System.currentTimeMillis()
-		for (i<-1 to 1000) {
+		for (i<-1 to 1) {
+//			report.nextPage()
+			report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
+			report rectangle() from(10,10 )  to(100,100) fillColor ReportColor(156, 76, 6) draw()
+
+			report.nextLine(5)
 			report print "ok"+i at 100
 			report.nextLine()
 			if (report.lineLeft<5) {

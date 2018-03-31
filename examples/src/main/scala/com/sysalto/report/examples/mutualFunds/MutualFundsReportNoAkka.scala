@@ -46,7 +46,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	}
 
 	private def reportHeader(report: Report): Unit = {
-		drawbackgroundImage(report)
+//		drawbackgroundImage(report)
 		val rs = MutualFundsInitData.query("select * from clnt")
 		rs.next()
 		val record = rs.toMap
@@ -311,6 +311,9 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.setFooterSize = { _ =>
 			30
 		}
+		report.newPageFct={
+			case _=> drawbackgroundImage(report)
+		}
 
 		report.headerFct = {
 			case ( _, _) =>
@@ -335,7 +338,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				report.print(rrow)
 				report.nextLine(2)
 				report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
-				drawbackgroundImage(report)
+//				drawbackgroundImage(report)
 		}
 
 		report.footerFct = {
@@ -345,12 +348,14 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				report.nextLine()
 				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
 		}
-
-		for (i<-1 to 100000) {
+		report.beginReport()
+		for (i<-1 to 10) {
 			println("I:"+i)
-			reportHeader(report)
+			if (report.getCrtPageNbr()==1) {
+				reportHeader(report)
+			}
 			summaryOfInvestment(report)
-			report.nextPage()
+//			report.nextPage()
 			changeAccount(report)
 			accountPerformance(report)
 			disclaimer(report)
