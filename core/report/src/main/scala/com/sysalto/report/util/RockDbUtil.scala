@@ -70,7 +70,8 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 	def close(): Unit = {
 		if (db != null) db.close()
 		options.close()
-		file.listFiles().foreach(file => file.delete())
+		file.listFiles().foreach(fileItem => fileItem.delete())
+		file.delete()
 	}
 
 	private[this] val options = new Options().setCreateIfMissing(true)
