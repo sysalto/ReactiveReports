@@ -30,9 +30,10 @@ import com.sysalto.render.serialization.RenderReport
 object PdfDraw {
 
 	abstract class PdfGraphicFragment {
-		def updateContent(renderReport:RenderReport): Unit = {
+		def updateContent(renderReport: RenderReport): Unit = {
 
 		}
+
 		def content: String
 	}
 
@@ -119,40 +120,6 @@ object PdfDraw {
 			val color = convertColor(borderColor)
 			s"${color._1} ${color._2} ${color._3} rg"
 		}
-	}
-
-	case class DrawPattern(pdfPattern: PdfGPattern) extends PdfGraphicFragment {
-		override def content: String = {
-			s"/Pattern cs /${pdfPattern.name} scn"
-		}
-	}
-
-
-	case class PdfRectangle(x1: Long, y1: Long, x2: Long, y2: Long, radius: Float, borderColor: Option[ReportColor],
-	                        fillColor: Option[ReportColor], patternColor: Option[PdfGPattern] = None) extends PdfGraphicFragment {
-		override def content: String = {
-			val paternStr = if (patternColor.isDefined) pattern(patternColor.get.name) else ""
-			val borderStr = if (borderColor.isDefined) border(borderColor.get) else ""
-			val fillStr = if (fillColor.isDefined) fill(fillColor.get) else ""
-			val operator = fillStroke(fillColor.isDefined || patternColor.isDefined, borderColor.isDefined)
-			val rectangleStr = if (radius == 0) rectangle(x1, y1, x2 - x1, y2 - y1) else roundRectangle(x1, y1, x2, y2, radius)
-			s"""${saveStatus}
-				 |${paternStr}
-				 |${borderStr}
-				 |${fillStr}
-				 |${rectangleStr}
-				 | ${operator}
-				 |${restoreStatus}
-       """.stripMargin.trim
-		}
-
-	}
-
-
-	case class DrawPieChart(pdfgenerator: PdfNativeGenerator, font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
-		private[this] val s = pieChart(pdfgenerator, font, title, data.toList, x, y, width, height)
-
-		override def content: String = s
 	}
 
 

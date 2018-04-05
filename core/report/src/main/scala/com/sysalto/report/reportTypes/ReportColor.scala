@@ -20,9 +20,17 @@
  */
 
 
-
 package com.sysalto.report.reportTypes
 
 import com.sysalto.report.ReportTypes.RColorBase
 
 case class ReportColor(r: Int, g: Int, b: Int, opacity: Float = 1) extends RColorBase
+
+object ReportColor {
+	def convertColor(color: ReportColor): (Float, Float, Float) = {
+		val r = color.r / 255f
+		val g = color.g / 255f
+		val b = color.b / 255f
+		(r, g, b)
+	}
+}

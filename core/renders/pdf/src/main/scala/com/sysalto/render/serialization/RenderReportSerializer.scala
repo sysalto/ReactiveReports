@@ -1,7 +1,7 @@
 package com.sysalto.render.serialization
 
 
-import com.sysalto.render.PdfDraw.{DrawLine, DrawPieChart, DrawStroke, PdfGraphicFragment}
+import com.sysalto.render.PdfDraw.{DrawLine, DrawStroke, PdfGraphicFragment}
 import com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase
 import com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase
 

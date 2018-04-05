@@ -588,12 +588,7 @@ class RenderReportTypes {
 		result
 	}
 
-	def convertColor(color: ReportColor): (Float, Float, Float) = {
-		val r = color.r / 255f
-		val g = color.g / 255f
-		val b = color.b / 255f
-		(r, g, b)
-	}
+
 
 
 	def setObject(obj: PdfBaseItem): Unit = {

@@ -24,7 +24,6 @@
 package com.sysalto.render.basic
 
 import com.sysalto.render.PdfDraw.DrawPoint
-import com.sysalto.render.PdfNativeGenerator
 import com.sysalto.report.reportTypes.{LineDashType, ReportColor}
 
 object PdfBasic {
@@ -69,13 +68,13 @@ object PdfBasic {
 	}
 
 	def border(borderColor: ReportColor): String = {
-		val color = PdfNativeGenerator.convertColor(borderColor)
+		val color = ReportColor.convertColor(borderColor)
 		s"${color._1} ${color._2} ${color._3} RG\n"
 	}
 
 
 	def fill(fillColor: ReportColor): String = {
-		val color = PdfNativeGenerator.convertColor(fillColor)
+		val color = ReportColor.convertColor(fillColor)
 		s"${color._1} ${color._2} ${color._3} rg\n"
 	}
 
