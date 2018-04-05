@@ -12,9 +12,9 @@ import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor,
 class TtfParser(fontFile: String) extends FontParser(fontFile) {
 	private[this] type Tables = Map[String, TtfTable]
 
-	private[this] case class TtfTable(offset: Int, length: Int)
+	private[this] class TtfTable(val offset: Int,val length: Int)
 
-	private[this] case class Head(f: SyncFileUtil, tables: Tables) {
+	private[this] class Head(f: SyncFileUtil, tables: Tables) {
 		private[this] val tbl = tables("head")
 		f.seek(tbl.offset + 18)
 		val unitsPerEm: Short = f.readShort()
@@ -25,7 +25,7 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 		val yMax: Short = f.readShort()
 	}
 
-	private[this] case class Hhea(f: SyncFileUtil, tables: Tables) {
+	private[this] class Hhea(f: SyncFileUtil, tables: Tables) {
 		private[this] val tbl = tables("hhea")
 		f.seek(tbl.offset + 4)
 		val ascent = f.readShort()
@@ -34,14 +34,14 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 	}
 
 
-	private[this] case class Post(f: SyncFileUtil, tables: Tables) {
+	private[this] class Post(f: SyncFileUtil, tables: Tables) {
 		private[this] val tbl = tables("post")
 		f.seek(tbl.offset + 4)
 		val italicAngle = f.readShort()
 	}
 
 
-	private[this] case class Os2(f: SyncFileUtil, tables: Tables) {
+	private[this] class Os2(f: SyncFileUtil, tables: Tables) {
 		private[this] val tbl = tables("OS/2")
 		f.seek(tbl.offset + 68)
 		val sTypoAscender = f.readShort()
@@ -51,7 +51,7 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 	}
 
 
-	private[this] case class Hmtx(f: SyncFileUtil, tables: Tables, head: Head, hhea: Hhea) {
+	private[this] class Hmtx(f: SyncFileUtil, tables: Tables, head: Head, hhea: Hhea) {
 		val size = hhea.numOfLongHorMetrics
 		private[this] val tbl = tables("hmtx")
 		f.seek(tbl.offset)
@@ -62,9 +62,8 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 		}).toList
 	}
 
-	private[this] case class CMap(f: SyncFileUtil, tables: Tables) {
+	private[this]  class CMap(f: SyncFileUtil, tables: Tables) {
 		def getGlyphList(hMetrics: List[Short]): Map[Char, Short] = {
-//			val f10 = cmapSubTables((1, 0))
 			val f10 = cmapSubTables.get(cmapSubTables.keys.head).get
 
 			val glyphWidth = f10.map {
@@ -129,7 +128,7 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 	}
 
 
-	private[this] case class Name(f: SyncFileUtil, tables: Tables) {
+	private[this]  class Name(f: SyncFileUtil, tables: Tables) {
 		private[this] val tbl = tables("name")
 		private[this] val nameOffset = tbl.offset.toLong
 		f.seek(nameOffset + 2)
@@ -162,7 +161,7 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 			f.skipBytes(4)
 			val offset = f.readInt()
 			val length = f.readInt()
-			tag -> TtfTable(offset, length)
+			tag -> new TtfTable(offset, length)
 		}
 		tables1.toMap
 	}
@@ -178,14 +177,14 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 		val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
 		f.skipBytes(4)
 		val tables = getTables(f)
-		val head = Head(f, tables)
-		val hhea = Hhea(f, tables)
-		val hmtx = Hmtx(f, tables, head, hhea) //, hhea.numOfLongHorMetrics, head.unitsPerEm)
-		val cmap = CMap(f, tables)
-		val name = Name(f, tables)
-		val os2 = Os2(f, tables)
-		val post = Post(f, tables)
-		val fontBBox = FontBBox(convertToPdfUnits(head.xMin, head), convertToPdfUnits(head.yMin, head),
+		val head = new Head(f, tables)
+		val hhea = new Hhea(f, tables)
+		val hmtx = new Hmtx(f, tables, head, hhea) //, hhea.numOfLongHorMetrics, head.unitsPerEm)
+		val cmap = new CMap(f, tables)
+		val name = new Name(f, tables)
+		val os2 = new Os2(f, tables)
+		val post = new Post(f, tables)
+		val fontBBox = new FontBBox(convertToPdfUnits(head.xMin, head), convertToPdfUnits(head.yMin, head),
 			convertToPdfUnits(head.xMax, head), convertToPdfUnits(head.yMax, head))
 
 		def getWidths: GlyphWidth = {
@@ -200,10 +199,10 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 			}.map {
 				case (key, value) => value.toShort
 			}
-			GlyphWidth(min, max, l3)
+			new GlyphWidth(min, max, l3)
 		}
 
-		val fontDescriptor = EmbeddedFontDescriptor(convertToPdfUnits(os2.sTypoAscender, head),
+		val fontDescriptor = new EmbeddedFontDescriptor(convertToPdfUnits(os2.sTypoAscender, head),
 			convertToPdfUnits(os2.sCapHeight, head),
 			convertToPdfUnits(os2.sTypoDescender, head), fontBBox, post.italicAngle, 1 << 5,getWidths)
 
@@ -213,7 +212,7 @@ class TtfParser(fontFile: String) extends FontParser(fontFile) {
 			val l1 = cmap.getGlyphList(hmtx.hMetrics).map {
 				case (char, lg) => char.toByte.toInt -> (lg.toFloat*0.001).toFloat
 			}
-			FontMetric(name.nameList(4), l1,(0,0), Some(fontDescriptor))
+			new FontMetric(name.nameList(4), l1,(0,0), Some(fontDescriptor))
 		}
 
 		getFontMetric()

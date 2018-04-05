@@ -51,20 +51,20 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 
 	}
 
-	case class CharF(char: Char, font: RFont)
+	 class CharF(val char: Char,val font: RFont)
 
-	case class Word(charList: List[CharF])
+	 class Word(val charList: List[CharF])
 
 	@tailrec
 	private[this] def stringToWord(ll: List[CharF], accum: ListBuffer[Word]): Unit = {
 		if (!ll.exists(item => item.char == ' ')) {
-			accum += Word(ll)
+			accum += new Word(ll)
 		} else {
 			val l1 = ll.dropWhile(item => item.char == ' ')
 			val ll1 = l1.splitAt(l1.indexWhere(item => item.char == ' ') + 1)
 			val newWordList = ll1._1
 			val newWord = newWordList.take(newWordList.length - 1)
-			accum += Word(newWord)
+			accum += new Word(newWord)
 			stringToWord(ll1._2, accum)
 		}
 	}
@@ -87,7 +87,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 		if (word.charList.isEmpty) {
 			0f
 		} else {
-			val space = CharF(' ', word.charList.head.font)
+			val space = new CharF(' ', word.charList.head.font)
 			(space :: word.charList).foldLeft(0.toFloat)((total, char) => {
 				total + getCharWidth(char)
 			})
@@ -95,7 +95,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 	}
 
 	def getTextWidth(text: ReportTxt): Float = {
-		val word = Word(text.txt.map(char => CharF(char, text.font)).toList)
+		val word = new Word(text.txt.map(char => new CharF(char, text.font)).toList)
 		word.charList.foldLeft(0.toFloat)((total, char) => {
 			total + getCharWidth(char)
 		})
@@ -103,7 +103,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 
 
 	def getTextHeight(text: ReportTxt): Float = {
-		val word = Word(text.txt.map(char => CharF(char, text.font)).toList)
+		val word = new Word(text.txt.map(char =>new  CharF(char, text.font)).toList)
 		word.charList.map(char => getCharWidth(char)).max
 	}
 
@@ -128,12 +128,12 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 				word
 			}
 			else {
-				getMaxStr(Word(word.charList.dropRight(1)))
+				getMaxStr(new Word(word.charList.dropRight(1)))
 			}
 		}
 
 		val maxStr = getMaxStr(item)
-		(maxStr, Word(item.charList.drop(maxStr.charList.size)))
+		(maxStr, new Word(item.charList.drop(maxStr.charList.size)))
 	}
 
 	@tailrec
@@ -157,14 +157,14 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 			// one font ->keep it together
 			val str = word.charList.map(char => char.char)
 			val rtext = ReportTxt(str.mkString, word.charList(0).font)
-			accum += RTextPos(offset, getWordSizeIncludingSpace(word), rtext)
+			accum += new RTextPos(offset, getWordSizeIncludingSpace(word), rtext)
 		} else {
 			val firstFont = word.charList(0).font
 			val i1 = word.charList.indexWhere(char => char.font != firstFont)
-			val word1 = Word(word.charList.take(i1))
-			accum += RTextPos(offset, getWordSizeIncludingSpace(word1), ReportTxt(word.charList.take(i1).map(char => char.char).mkString, firstFont))
+			val word1 = new Word(word.charList.take(i1))
+			accum += new RTextPos(offset, getWordSizeIncludingSpace(word1), ReportTxt(word.charList.take(i1).map(char => char.char).mkString, firstFont))
 
-			val word2 = Word(word.charList.drop(i1))
+			val word2 = new Word(word.charList.drop(i1))
 			wordToRTextPos(offset + getWordSizeIncludingSpace(word1), word2, accum)
 		}
 	}
@@ -205,7 +205,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 			}
 		}
 
-		val result1 = input.flatMap(item => item.txt.map(cc => CharF(cc, item.font)))
+		val result1 = input.flatMap(item => item.txt.map(cc => new CharF(cc, item.font)))
 		val result = ListBuffer[Word]()
 		stringToWord(result1, result)
 
@@ -275,4 +275,4 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 }
 
 
-case class RTextPos(x: Float, textLength: Float, rtext: ReportTxt)
+class RTextPos(val x: Float, val textLength: Float,val rtext: ReportTxt)

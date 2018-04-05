@@ -136,7 +136,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 	def setExternalFont(externalFont: RFontFamily): Unit = {
-		fontFamilyMap += externalFont.name -> RFontParserFamily(externalFont.name, externalFont, false)
+		fontFamilyMap += externalFont.name -> new RFontParserFamily(externalFont.name, externalFont, false)
 	}
 
 	private[this] def initEmbeddedFonts(): Unit = {
@@ -146,7 +146,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 	private[this] def initEmbeddedFont(rFontFamily: RFontFamily) {
-		fontFamilyMap += rFontFamily.name -> RFontParserFamily(rFontFamily.name, rFontFamily, true)
+		fontFamilyMap += rFontFamily.name -> new RFontParserFamily(rFontFamily.name, rFontFamily, true)
 	}
 
 	def close(): Unit = {

@@ -56,7 +56,7 @@ class AfmParser(fontFile: String) extends FontParser(fontFile) {
 			name -> (width.toFloat * 0.001).toFloat
 		})
 		val charList1 = charList.map { case (glyph, code) => AfmParser.glyphDef.glypMap(glyph) -> code }.toMap
-		FontMetric(fontFile, charList1,((lowerHeight*0.001).toFloat,(upperHeight*0.001).toFloat), None)
+		new FontMetric(fontFile, charList1,((lowerHeight*0.001).toFloat,(upperHeight*0.001).toFloat), None)
 	}
 
 	def getStringWidth(str: String, fontMetric: FontMetric): Float = {
@@ -67,7 +67,7 @@ class AfmParser(fontFile: String) extends FontParser(fontFile) {
 
 object AfmParser {
 
-	private[this] case class GlyphDef(glypMap: Map[String, Int])
+	private[this] class GlyphDef(val glypMap: Map[String, Int])
 
 	private def readFile(fileName: String): List[String] = {
 		val stream = getClass.getClassLoader.getResourceAsStream(fileName)
@@ -86,7 +86,7 @@ object AfmParser {
 		val result = list2.filter { case (name, list) =>
 			list.length == 1
 		}.map { case (name, list) => name -> list.head }
-		GlyphDef(result)
+		new GlyphDef(result)
 	}
 
 

@@ -32,17 +32,17 @@ abstract class FontParser(val fontName: String) {
 
 object FontParser {
 
-	case class GlyphWidth(firstChar: Short, lastChar: Short, widthList: List[Short])
+	class GlyphWidth(val firstChar: Short, val lastChar: Short, val widthList: List[Short])
 
-	case class FontBBox(lowerLeftX: Short, lowerLeftY: Short, upperRightX: Short, upperRightY: Short) {
+	class FontBBox(val lowerLeftX: Short,val  lowerLeftY: Short,val  upperRightX: Short,val upperRightY: Short) {
 		override def toString: String = {
 			lowerLeftX + " " + lowerLeftY + " " + upperRightX + " " + upperRightY
 		}
 	}
 
-	case class EmbeddedFontDescriptor(ascent: Short, capHeight: Short, descent: Short, fontBBox: FontBBox
-	                                  , italicAngle: Short, flags: Int, glyphWidth: GlyphWidth)
+	class EmbeddedFontDescriptor(val ascent: Short,val capHeight: Short,val descent: Short,val fontBBox: FontBBox
+	                                  , val italicAngle: Short,val flags: Int,val glyphWidth: GlyphWidth)
 
-	case class FontMetric(fontName: String, fontMap: Map[Int, Float], fontHeight: (Float, Float), fontDescriptor: Option[EmbeddedFontDescriptor])
+	class FontMetric(val fontName: String,val fontMap: Map[Int, Float],val fontHeight: (Float, Float),val fontDescriptor: Option[EmbeddedFontDescriptor])
 
 }
