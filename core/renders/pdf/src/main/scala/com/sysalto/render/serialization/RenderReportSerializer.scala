@@ -472,7 +472,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 
 		def read(input: DrawStroke_proto): DrawStroke = {
-			DrawStroke()
+			new DrawStroke()
 		}
 	}
 

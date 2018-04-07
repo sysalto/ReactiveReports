@@ -166,15 +166,15 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {
-		graphicList += DrawArc(center, radius, startAngle, endAngle)
+		graphicList +=new  DrawArc(center, radius, startAngle, endAngle)
 	}
 
 	def circle(center: DrawPoint, radius: Float): Unit = {
-		graphicList += DrawCircle(center, radius)
+		graphicList += new DrawCircle(center, radius)
 	}
 
 	def stroke() = {
-		graphicList += DrawStroke()
+		graphicList +=new  DrawStroke()
 	}
 
 	def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,

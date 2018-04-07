@@ -60,7 +60,7 @@ object PdfChart {
 
 	def pieChart1(renderReport: RenderReport, font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): String = {
 		def getPoint(center: DrawPoint, radius: Float, angle: Float): DrawPoint =
-			DrawPoint((center.x + radius * Math.cos(angle)).toFloat, (center.y + radius * Math.sin(angle)).toFloat)
+			new DrawPoint((center.x + radius * Math.cos(angle)).toFloat, (center.y + radius * Math.sin(angle)).toFloat)
 
 		val total = (data.map { case (key, value) => value }).sum
 		val twoPI = 2.0 * Math.PI
@@ -77,7 +77,7 @@ object PdfChart {
 		}
 		val offset = 5.0f
 		val radius = (Math.min(width, height) * 0.5).toFloat - offset
-		val center = DrawPoint(x + radius + offset, y - radius - offset)
+		val center = new DrawPoint(x + radius + offset, y - radius - offset)
 		val str1 = angleList.map { case (label, (startAngle, endAngle, color)) => {
 			val p1 = getPoint(center, radius, startAngle)
 			val p2 = getPoint(center, radius, endAngle)
