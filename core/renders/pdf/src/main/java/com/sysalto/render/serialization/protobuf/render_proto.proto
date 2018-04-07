@@ -127,6 +127,7 @@ message PdfGraphicFragment_proto {
         DrawStroke_proto drawStroke_proto = 4;
         PdfDrawImage_proto pdfDrawImage_proto = 5;
         DrawPieChart_proto drawPieChart_proto = 6;
+        DrawMovePoint_proto drawMovePoint_proto = 7;
     }
 }
 
@@ -203,6 +204,10 @@ message DrawPieChart_proto {
     RFont_proto font = 8;
 }
 
+message DrawMovePoint_proto {
+    float x = 1;
+    float y = 2;
+}
 
 message StringDouble_proto {
     string value1 = 1;

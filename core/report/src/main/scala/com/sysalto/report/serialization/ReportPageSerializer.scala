@@ -311,6 +311,18 @@ private[serialization] object ReportRectangleSerializer {
 		new ReportRectangle(input.getX1, input.getY1, input.getX2, input.getY2, input.getRadius, OptionRColorSerializer.read(input.getColor), OptionRColorSerializer.read(input.getFillColor))
 }
 
+private[serialization] object DrawMovePointSerializer {
+	def write(obj: DrawMovePoint): DrawMovePoint_proto = {
+		val builder = DrawMovePoint_proto.newBuilder()
+		builder.setX(obj.x)
+		builder.setY(obj.y)
+		builder.build()
+	}
+
+	def read(input: DrawMovePoint_proto): DrawMovePoint =
+		new DrawMovePoint(input.getX, input.getY)
+}
+
 
 private[serialization] object DRectangleSerializer {
 	def write(obj: DRectangle): DRectangle_proto = {
@@ -529,7 +541,11 @@ object ReportPageSerializer {
 					val result = ReportBarChartSerializer.write(obj)
 					builderItem.setReportBarChart(result)
 				}
-				case  _ => {
+				case obj: DrawMovePoint => {
+					val result = DrawMovePointSerializer.write(obj)
+					builderItem.setDrawMovePoint(result)
+				}
+				case _ => {
 					println("Unimplemented :" + item)
 				}
 			}
@@ -554,6 +570,7 @@ object ReportPageSerializer {
 				case FieldCase.REPORTTEXTWRAP => ReportTextWrapSerializer.read(item.getReportTextWrap)
 				case FieldCase.REPORTPIECHART => ReportPieChartSerializer.read(item.getReportPieChart)
 				case FieldCase.REPORTBARCHART => ReportBarChartSerializer.read(item.getReportBarChart)
+				case FieldCase.DRAWMOVEPOINT => DrawMovePointSerializer.read(item.getDrawMovePoint)
 				case _ => null
 			}
 			reportItem.deltaY = item.getDeltaY

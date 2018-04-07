@@ -22,6 +22,7 @@ message ReportItem_proto {
         ReportLine_proto reportLine = 10;
         ReportRectangle_proto reportRectangle = 11;
         ReportVerticalShade_proto reportVerticalShade = 12;
+        DrawMovePoint_proto drawMovePoint = 13;
     }
 }
 
@@ -195,6 +196,11 @@ message ReportRectangle_proto {
     float radius = 5;
     OptionRColor_proto color = 6;
     OptionRColor_proto fillColor = 7;
+}
+
+message DrawMovePoint_proto {
+    float x = 1;
+    float y = 2;
 }
 
 message OptionRColor_proto {

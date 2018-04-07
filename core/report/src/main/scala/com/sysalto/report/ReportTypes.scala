@@ -183,7 +183,7 @@ object ReportTypes {
 		}
 	}
 
-	class DrawMovePoint(x: Float, y: Float) extends ReportItem() {
+	class DrawMovePoint(val x: Float,val y: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawMovePoint(x, y - deltaY)
 		}

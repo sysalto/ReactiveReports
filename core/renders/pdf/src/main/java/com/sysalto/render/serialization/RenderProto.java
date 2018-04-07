@@ -15492,6 +15492,19 @@ public final class RenderProto {
      */
     com.sysalto.render.serialization.RenderProto.DrawPieChart_protoOrBuilder getDrawPieChartProtoOrBuilder();
 
+    /**
+     * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+     */
+    boolean hasDrawMovePointProto();
+    /**
+     * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto getDrawMovePointProto();
+    /**
+     * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+     */
+    com.sysalto.render.serialization.RenderProto.DrawMovePoint_protoOrBuilder getDrawMovePointProtoOrBuilder();
+
     public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.FieldCase getFieldCase();
   }
   /**
@@ -15617,6 +15630,20 @@ public final class RenderProto {
               fieldCase_ = 6;
               break;
             }
+            case 58: {
+              com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.Builder subBuilder = null;
+              if (fieldCase_ == 7) {
+                subBuilder = ((com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_).toBuilder();
+              }
+              field_ =
+                  input.readMessage(com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_);
+                field_ = subBuilder.buildPartial();
+              }
+              fieldCase_ = 7;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -15650,6 +15677,7 @@ public final class RenderProto {
       DRAWSTROKE_PROTO(4),
       PDFDRAWIMAGE_PROTO(5),
       DRAWPIECHART_PROTO(6),
+      DRAWMOVEPOINT_PROTO(7),
       FIELD_NOT_SET(0);
       private final int value;
       private FieldCase(int value) {
@@ -15670,6 +15698,7 @@ public final class RenderProto {
           case 4: return DRAWSTROKE_PROTO;
           case 5: return PDFDRAWIMAGE_PROTO;
           case 6: return DRAWPIECHART_PROTO;
+          case 7: return DRAWMOVEPOINT_PROTO;
           case 0: return FIELD_NOT_SET;
           default: return null;
         }
@@ -15849,6 +15878,32 @@ public final class RenderProto {
       return com.sysalto.render.serialization.RenderProto.DrawPieChart_proto.getDefaultInstance();
     }
 
+    public static final int DRAWMOVEPOINT_PROTO_FIELD_NUMBER = 7;
+    /**
+     * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+     */
+    public boolean hasDrawMovePointProto() {
+      return fieldCase_ == 7;
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto getDrawMovePointProto() {
+      if (fieldCase_ == 7) {
+         return (com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_;
+      }
+      return com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.getDefaultInstance();
+    }
+    /**
+     * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+     */
+    public com.sysalto.render.serialization.RenderProto.DrawMovePoint_protoOrBuilder getDrawMovePointProtoOrBuilder() {
+      if (fieldCase_ == 7) {
+         return (com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_;
+      }
+      return com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -15878,6 +15933,9 @@ public final class RenderProto {
       }
       if (fieldCase_ == 6) {
         output.writeMessage(6, (com.sysalto.render.serialization.RenderProto.DrawPieChart_proto) field_);
+      }
+      if (fieldCase_ == 7) {
+        output.writeMessage(7, (com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_);
       }
       unknownFields.writeTo(output);
     }
@@ -15909,6 +15967,10 @@ public final class RenderProto {
       if (fieldCase_ == 6) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(6, (com.sysalto.render.serialization.RenderProto.DrawPieChart_proto) field_);
+      }
+      if (fieldCase_ == 7) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, (com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -15952,6 +16014,10 @@ public final class RenderProto {
           result = result && getDrawPieChartProto()
               .equals(other.getDrawPieChartProto());
           break;
+        case 7:
+          result = result && getDrawMovePointProto()
+              .equals(other.getDrawMovePointProto());
+          break;
         case 0:
         default:
       }
@@ -15988,6 +16054,10 @@ public final class RenderProto {
         case 6:
           hash = (37 * hash) + DRAWPIECHART_PROTO_FIELD_NUMBER;
           hash = (53 * hash) + getDrawPieChartProto().hashCode();
+          break;
+        case 7:
+          hash = (37 * hash) + DRAWMOVEPOINT_PROTO_FIELD_NUMBER;
+          hash = (53 * hash) + getDrawMovePointProto().hashCode();
           break;
         case 0:
         default:
@@ -16183,6 +16253,13 @@ public final class RenderProto {
             result.field_ = drawPieChartProtoBuilder_.build();
           }
         }
+        if (fieldCase_ == 7) {
+          if (drawMovePointProtoBuilder_ == null) {
+            result.field_ = field_;
+          } else {
+            result.field_ = drawMovePointProtoBuilder_.build();
+          }
+        }
         result.fieldCase_ = fieldCase_;
         onBuilt();
         return result;
@@ -16248,6 +16325,10 @@ public final class RenderProto {
           }
           case DRAWPIECHART_PROTO: {
             mergeDrawPieChartProto(other.getDrawPieChartProto());
+            break;
+          }
+          case DRAWMOVEPOINT_PROTO: {
+            mergeDrawMovePointProto(other.getDrawMovePointProto());
             break;
           }
           case FIELD_NOT_SET: {
@@ -17043,6 +17124,142 @@ public final class RenderProto {
         fieldCase_ = 6;
         onChanged();;
         return drawPieChartProtoBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto, com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.Builder, com.sysalto.render.serialization.RenderProto.DrawMovePoint_protoOrBuilder> drawMovePointProtoBuilder_;
+      /**
+       * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+       */
+      public boolean hasDrawMovePointProto() {
+        return fieldCase_ == 7;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto getDrawMovePointProto() {
+        if (drawMovePointProtoBuilder_ == null) {
+          if (fieldCase_ == 7) {
+            return (com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_;
+          }
+          return com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.getDefaultInstance();
+        } else {
+          if (fieldCase_ == 7) {
+            return drawMovePointProtoBuilder_.getMessage();
+          }
+          return com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+       */
+      public Builder setDrawMovePointProto(com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto value) {
+        if (drawMovePointProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          field_ = value;
+          onChanged();
+        } else {
+          drawMovePointProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 7;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+       */
+      public Builder setDrawMovePointProto(
+          com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.Builder builderForValue) {
+        if (drawMovePointProtoBuilder_ == null) {
+          field_ = builderForValue.build();
+          onChanged();
+        } else {
+          drawMovePointProtoBuilder_.setMessage(builderForValue.build());
+        }
+        fieldCase_ = 7;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+       */
+      public Builder mergeDrawMovePointProto(com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto value) {
+        if (drawMovePointProtoBuilder_ == null) {
+          if (fieldCase_ == 7 &&
+              field_ != com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.getDefaultInstance()) {
+            field_ = com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.newBuilder((com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            field_ = value;
+          }
+          onChanged();
+        } else {
+          if (fieldCase_ == 7) {
+            drawMovePointProtoBuilder_.mergeFrom(value);
+          }
+          drawMovePointProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 7;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+       */
+      public Builder clearDrawMovePointProto() {
+        if (drawMovePointProtoBuilder_ == null) {
+          if (fieldCase_ == 7) {
+            fieldCase_ = 0;
+            field_ = null;
+            onChanged();
+          }
+        } else {
+          if (fieldCase_ == 7) {
+            fieldCase_ = 0;
+            field_ = null;
+          }
+          drawMovePointProtoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.Builder getDrawMovePointProtoBuilder() {
+        return getDrawMovePointProtoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+       */
+      public com.sysalto.render.serialization.RenderProto.DrawMovePoint_protoOrBuilder getDrawMovePointProtoOrBuilder() {
+        if ((fieldCase_ == 7) && (drawMovePointProtoBuilder_ != null)) {
+          return drawMovePointProtoBuilder_.getMessageOrBuilder();
+        } else {
+          if (fieldCase_ == 7) {
+            return (com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_;
+          }
+          return com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.render.serialization.DrawMovePoint_proto drawMovePoint_proto = 7;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto, com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.Builder, com.sysalto.render.serialization.RenderProto.DrawMovePoint_protoOrBuilder> 
+          getDrawMovePointProtoFieldBuilder() {
+        if (drawMovePointProtoBuilder_ == null) {
+          if (!(fieldCase_ == 7)) {
+            field_ = com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.getDefaultInstance();
+          }
+          drawMovePointProtoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto, com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.Builder, com.sysalto.render.serialization.RenderProto.DrawMovePoint_protoOrBuilder>(
+                  (com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) field_,
+                  getParentForChildren(),
+                  isClean());
+          field_ = null;
+        }
+        fieldCase_ = 7;
+        onChanged();;
+        return drawMovePointProtoBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -24223,6 +24440,526 @@ public final class RenderProto {
 
   }
 
+  public interface DrawMovePoint_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.DrawMovePoint_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>float x = 1;</code>
+     */
+    float getX();
+
+    /**
+     * <code>float y = 2;</code>
+     */
+    float getY();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.render.serialization.DrawMovePoint_proto}
+   */
+  public  static final class DrawMovePoint_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.render.serialization.DrawMovePoint_proto)
+      DrawMovePoint_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DrawMovePoint_proto.newBuilder() to construct.
+    private DrawMovePoint_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DrawMovePoint_proto() {
+      x_ = 0F;
+      y_ = 0F;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DrawMovePoint_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 13: {
+
+              x_ = input.readFloat();
+              break;
+            }
+            case 21: {
+
+              y_ = input.readFloat();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.class, com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.Builder.class);
+    }
+
+    public static final int X_FIELD_NUMBER = 1;
+    private float x_;
+    /**
+     * <code>float x = 1;</code>
+     */
+    public float getX() {
+      return x_;
+    }
+
+    public static final int Y_FIELD_NUMBER = 2;
+    private float y_;
+    /**
+     * <code>float y = 2;</code>
+     */
+    public float getY() {
+      return y_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (x_ != 0F) {
+        output.writeFloat(1, x_);
+      }
+      if (y_ != 0F) {
+        output.writeFloat(2, y_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (x_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(1, x_);
+      }
+      if (y_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(2, y_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto other = (com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) obj;
+
+      boolean result = true;
+      result = result && (
+          java.lang.Float.floatToIntBits(getX())
+          == java.lang.Float.floatToIntBits(
+              other.getX()));
+      result = result && (
+          java.lang.Float.floatToIntBits(getY())
+          == java.lang.Float.floatToIntBits(
+              other.getY()));
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + X_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getX());
+      hash = (37 * hash) + Y_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getY());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.render.serialization.DrawMovePoint_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.render.serialization.DrawMovePoint_proto)
+        com.sysalto.render.serialization.RenderProto.DrawMovePoint_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.class, com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        x_ = 0F;
+
+        y_ = 0F;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.render.serialization.RenderProto.internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_descriptor;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto getDefaultInstanceForType() {
+        return com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto build() {
+        com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto buildPartial() {
+        com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto result = new com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto(this);
+        result.x_ = x_;
+        result.y_ = y_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) {
+          return mergeFrom((com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto other) {
+        if (other == com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto.getDefaultInstance()) return this;
+        if (other.getX() != 0F) {
+          setX(other.getX());
+        }
+        if (other.getY() != 0F) {
+          setY(other.getY());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private float x_ ;
+      /**
+       * <code>float x = 1;</code>
+       */
+      public float getX() {
+        return x_;
+      }
+      /**
+       * <code>float x = 1;</code>
+       */
+      public Builder setX(float value) {
+        
+        x_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float x = 1;</code>
+       */
+      public Builder clearX() {
+        
+        x_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float y_ ;
+      /**
+       * <code>float y = 2;</code>
+       */
+      public float getY() {
+        return y_;
+      }
+      /**
+       * <code>float y = 2;</code>
+       */
+      public Builder setY(float value) {
+        
+        y_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float y = 2;</code>
+       */
+      public Builder clearY() {
+        
+        y_ = 0F;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.render.serialization.DrawMovePoint_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.render.serialization.DrawMovePoint_proto)
+    private static final com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto();
+    }
+
+    public static com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<DrawMovePoint_proto>
+        PARSER = new com.google.protobuf.AbstractParser<DrawMovePoint_proto>() {
+      public DrawMovePoint_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DrawMovePoint_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DrawMovePoint_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DrawMovePoint_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.render.serialization.RenderProto.DrawMovePoint_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface StringDouble_protoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.sysalto.render.serialization.StringDouble_proto)
       com.google.protobuf.MessageOrBuilder {
@@ -30656,6 +31393,11 @@ public final class RenderProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_sysalto_render_serialization_DrawPieChart_proto_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sysalto_render_serialization_StringDouble_proto_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -30777,7 +31519,7 @@ public final class RenderProto {
       "\n\n\002x0\030\001 \001(\002\022\n\n\002y0\030\002 \001(\002\022\n\n\002x1\030\003 \001(\002\022\n\n\002y" +
       "1\030\004 \001(\002\022\035\n\025idPdfShaddingFctColor\030\005 \001(\003\"*" +
       "\n\021PdfGPattern_proto\022\025\n\ridPdfShadding\030\001 \001" +
-      "(\003\"\314\003\n\030PdfGraphicFragment_proto\022\017\n\007conte" +
+      "(\003\"\242\004\n\030PdfGraphicFragment_proto\022\017\n\007conte" +
       "nt\030\001 \001(\t\022J\n\016drawLine_proto\030\002 \001(\01320.com.s" +
       "ysalto.render.serialization.DrawLine_pro" +
       "toH\000\022R\n\022pdfRectangle_proto\030\003 \001(\01324.com.s" +
@@ -30788,63 +31530,66 @@ public final class RenderProto {
       "om.sysalto.render.serialization.PdfDrawI" +
       "mage_protoH\000\022R\n\022drawPieChart_proto\030\006 \001(\013" +
       "24.com.sysalto.render.serialization.Draw" +
-      "PieChart_protoH\000B\007\n\005field\"\022\n\020DrawStroke_" +
-      "proto\"\376\001\n\022PdfRectangle_proto\022\n\n\002x2\030\001 \001(\003" +
-      "\022\016\n\006radius\030\002 \001(\002\022\026\n\016idPatternColor\030\003 \003(\003" +
-      "\022\n\n\002y1\030\004 \001(\003\022\n\n\002y2\030\005 \001(\003\022\n\n\002x1\030\006 \001(\003\022H\n\013" +
-      "borderColor\030\007 \003(\01323.com.sysalto.render.s" +
-      "erialization.ReportColor_proto\022F\n\tfillCo" +
-      "lor\030\010 \003(\01323.com.sysalto.render.serializa" +
-      "tion.ReportColor_proto\"1\n\022LineDashType_p" +
-      "roto\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002 \001(\005\"\230\001\n\016Dr" +
-      "awLine_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002" +
-      "x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\022\n\nvlineWidth\030\005 \001(\002" +
-      "\022B\n\005color\030\006 \001(\01323.com.sysalto.render.ser" +
-      "ialization.ReportColor_proto\"^\n\022PdfDrawI" +
-      "mage_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\r\n\005scal" +
-      "e\030\003 \001(\002\022\022\n\nidPdfImage\030\004 \001(\003\022\017\n\007opacity\030\005" +
-      " \003(\002\"@\n\014RColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001g\030\002 \001" +
-      "(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"\267\001\n\013RFont" +
-      "_proto\022\014\n\004size\030\001 \001(\005\022\020\n\010fontName\030\002 \001(\t\022I" +
-      "\n\tattribute\030\003 \001(\01626.com.sysalto.render.s" +
-      "erialization.RFontAttribute_proto\022=\n\005col" +
-      "or\030\004 \001(\0132..com.sysalto.render.serializat" +
-      "ion.RColor_proto\"\331\001\n\022DrawPieChart_proto\022" +
-      "\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022B\n\004data\030\003 \003(\01324.co" +
-      "m.sysalto.render.serialization.StringDou" +
-      "ble_proto\022\016\n\006height\030\004 \001(\002\022\r\n\005title\030\006 \001(\t" +
-      "\022\r\n\005width\030\007 \001(\002\022;\n\004font\030\010 \001(\0132-.com.sysa" +
-      "lto.render.serialization.RFont_proto\"4\n\022" +
-      "StringDouble_proto\022\016\n\006value1\030\001 \001(\t\022\016\n\006va" +
-      "lue2\030\002 \001(\001\"\202\002\n\034EmbeddedFontDescriptor_pr" +
-      "oto\022F\n\nglyphWidth\030\001 \001(\01322.com.sysalto.re" +
-      "nder.serialization.GlyphWidth_proto\022\021\n\tc" +
-      "apHeight\030\002 \001(\005\022B\n\010fontBBox\030\003 \001(\01320.com.s" +
-      "ysalto.render.serialization.FontBBox_pro" +
-      "to\022\016\n\006ascent\030\004 \001(\005\022\r\n\005flags\030\005 \001(\005\022\023\n\013ita" +
-      "licAngle\030\006 \001(\005\022\017\n\007descent\030\007 \001(\005\"J\n\020Glyph" +
-      "Width_proto\022\021\n\tfirstChar\030\001 \001(\005\022\020\n\010lastCh" +
-      "ar\030\002 \001(\005\022\021\n\twidthList\030\003 \003(\005\"b\n\016FontBBox_" +
-      "proto\022\022\n\nlowerLeftX\030\001 \001(\005\022\022\n\nlowerLeftY\030" +
-      "\002 \001(\005\022\023\n\013upperRightX\030\003 \001(\005\022\023\n\013upperRight" +
-      "Y\030\004 \001(\005\"\207\001\n\023PdfFontStream_proto\022\020\n\010fontN" +
-      "ame\030\001 \001(\t\022F\n\nfontMetric\030\002 \001(\01322.com.sysa" +
-      "lto.render.serialization.FontMetric_prot" +
-      "o\022\026\n\016pdfCompression\030\003 \001(\010\"\306\002\n\020FontMetric" +
-      "_proto\022\020\n\010fontName\030\001 \001(\t\022P\n\007fontMap\030\002 \003(" +
-      "\0132?.com.sysalto.render.serialization.Fon" +
-      "tMetric_proto.FontMapEntry\022F\n\nfontHeight" +
-      "\030\003 \001(\01322.com.sysalto.render.serializatio" +
-      "n.FloatFloat_proto\022V\n\016fontDescriptor\030\004 \003" +
-      "(\0132>.com.sysalto.render.serialization.Em" +
-      "beddedFontDescriptor_proto\032.\n\014FontMapEnt" +
-      "ry\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030\002 \001(\002:\0028\001\"2\n\020Fl" +
-      "oatFloat_proto\022\016\n\006value1\030\001 \001(\002\022\016\n\006value2" +
-      "\030\002 \001(\002\"G\n\027PdfFontDescriptor_proto\022\027\n\017idP" +
-      "dfFontStream\030\001 \001(\003\022\023\n\013fontKeyName\030\002 \001(\t*" +
-      "I\n\024RFontAttribute_proto\022\n\n\006NORMAL\020\000\022\010\n\004B" +
-      "OLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD_ITALIC\020\003B\002H\001b\006" +
-      "proto3"
+      "PieChart_protoH\000\022T\n\023drawMovePoint_proto\030" +
+      "\007 \001(\01325.com.sysalto.render.serialization" +
+      ".DrawMovePoint_protoH\000B\007\n\005field\"\022\n\020DrawS" +
+      "troke_proto\"\376\001\n\022PdfRectangle_proto\022\n\n\002x2" +
+      "\030\001 \001(\003\022\016\n\006radius\030\002 \001(\002\022\026\n\016idPatternColor" +
+      "\030\003 \003(\003\022\n\n\002y1\030\004 \001(\003\022\n\n\002y2\030\005 \001(\003\022\n\n\002x1\030\006 \001" +
+      "(\003\022H\n\013borderColor\030\007 \003(\01323.com.sysalto.re" +
+      "nder.serialization.ReportColor_proto\022F\n\t" +
+      "fillColor\030\010 \003(\01323.com.sysalto.render.ser" +
+      "ialization.ReportColor_proto\"1\n\022LineDash" +
+      "Type_proto\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002 \001(\005\"" +
+      "\230\001\n\016DrawLine_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001" +
+      "(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\022\n\nvlineWidth" +
+      "\030\005 \001(\002\022B\n\005color\030\006 \001(\01323.com.sysalto.rend" +
+      "er.serialization.ReportColor_proto\"^\n\022Pd" +
+      "fDrawImage_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\r" +
+      "\n\005scale\030\003 \001(\002\022\022\n\nidPdfImage\030\004 \001(\003\022\017\n\007opa" +
+      "city\030\005 \003(\002\"@\n\014RColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n" +
+      "\001g\030\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"\267\001\n" +
+      "\013RFont_proto\022\014\n\004size\030\001 \001(\005\022\020\n\010fontName\030\002" +
+      " \001(\t\022I\n\tattribute\030\003 \001(\01626.com.sysalto.re" +
+      "nder.serialization.RFontAttribute_proto\022" +
+      "=\n\005color\030\004 \001(\0132..com.sysalto.render.seri" +
+      "alization.RColor_proto\"\331\001\n\022DrawPieChart_" +
+      "proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022B\n\004data\030\003 \003(" +
+      "\01324.com.sysalto.render.serialization.Str" +
+      "ingDouble_proto\022\016\n\006height\030\004 \001(\002\022\r\n\005title" +
+      "\030\006 \001(\t\022\r\n\005width\030\007 \001(\002\022;\n\004font\030\010 \001(\0132-.co" +
+      "m.sysalto.render.serialization.RFont_pro" +
+      "to\"+\n\023DrawMovePoint_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001" +
+      "y\030\002 \001(\002\"4\n\022StringDouble_proto\022\016\n\006value1\030" +
+      "\001 \001(\t\022\016\n\006value2\030\002 \001(\001\"\202\002\n\034EmbeddedFontDe" +
+      "scriptor_proto\022F\n\nglyphWidth\030\001 \001(\01322.com" +
+      ".sysalto.render.serialization.GlyphWidth" +
+      "_proto\022\021\n\tcapHeight\030\002 \001(\005\022B\n\010fontBBox\030\003 " +
+      "\001(\01320.com.sysalto.render.serialization.F" +
+      "ontBBox_proto\022\016\n\006ascent\030\004 \001(\005\022\r\n\005flags\030\005" +
+      " \001(\005\022\023\n\013italicAngle\030\006 \001(\005\022\017\n\007descent\030\007 \001" +
+      "(\005\"J\n\020GlyphWidth_proto\022\021\n\tfirstChar\030\001 \001(" +
+      "\005\022\020\n\010lastChar\030\002 \001(\005\022\021\n\twidthList\030\003 \003(\005\"b" +
+      "\n\016FontBBox_proto\022\022\n\nlowerLeftX\030\001 \001(\005\022\022\n\n" +
+      "lowerLeftY\030\002 \001(\005\022\023\n\013upperRightX\030\003 \001(\005\022\023\n" +
+      "\013upperRightY\030\004 \001(\005\"\207\001\n\023PdfFontStream_pro" +
+      "to\022\020\n\010fontName\030\001 \001(\t\022F\n\nfontMetric\030\002 \001(\013" +
+      "22.com.sysalto.render.serialization.Font" +
+      "Metric_proto\022\026\n\016pdfCompression\030\003 \001(\010\"\306\002\n" +
+      "\020FontMetric_proto\022\020\n\010fontName\030\001 \001(\t\022P\n\007f" +
+      "ontMap\030\002 \003(\0132?.com.sysalto.render.serial" +
+      "ization.FontMetric_proto.FontMapEntry\022F\n" +
+      "\nfontHeight\030\003 \001(\01322.com.sysalto.render.s" +
+      "erialization.FloatFloat_proto\022V\n\016fontDes" +
+      "criptor\030\004 \003(\0132>.com.sysalto.render.seria" +
+      "lization.EmbeddedFontDescriptor_proto\032.\n" +
+      "\014FontMapEntry\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030\002 \001(" +
+      "\002:\0028\001\"2\n\020FloatFloat_proto\022\016\n\006value1\030\001 \001(" +
+      "\002\022\016\n\006value2\030\002 \001(\002\"G\n\027PdfFontDescriptor_p" +
+      "roto\022\027\n\017idPdfFontStream\030\001 \001(\003\022\023\n\013fontKey" +
+      "Name\030\002 \001(\t*I\n\024RFontAttribute_proto\022\n\n\006NO" +
+      "RMAL\020\000\022\010\n\004BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD_ITA" +
+      "LIC\020\003B\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -30965,7 +31710,7 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_descriptor,
-        new java.lang.String[] { "Content", "DrawLineProto", "PdfRectangleProto", "DrawStrokeProto", "PdfDrawImageProto", "DrawPieChartProto", "Field", });
+        new java.lang.String[] { "Content", "DrawLineProto", "PdfRectangleProto", "DrawStrokeProto", "PdfDrawImageProto", "DrawPieChartProto", "DrawMovePointProto", "Field", });
     internal_static_com_sysalto_render_serialization_DrawStroke_proto_descriptor =
       getDescriptor().getMessageTypes().get(18);
     internal_static_com_sysalto_render_serialization_DrawStroke_proto_fieldAccessorTable = new
@@ -31014,38 +31759,44 @@ public final class RenderProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_DrawPieChart_proto_descriptor,
         new java.lang.String[] { "X", "Y", "Data", "Height", "Title", "Width", "Font", });
-    internal_static_com_sysalto_render_serialization_StringDouble_proto_descriptor =
+    internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_descriptor =
       getDescriptor().getMessageTypes().get(26);
+    internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_render_serialization_DrawMovePoint_proto_descriptor,
+        new java.lang.String[] { "X", "Y", });
+    internal_static_com_sysalto_render_serialization_StringDouble_proto_descriptor =
+      getDescriptor().getMessageTypes().get(27);
     internal_static_com_sysalto_render_serialization_StringDouble_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_StringDouble_proto_descriptor,
         new java.lang.String[] { "Value1", "Value2", });
     internal_static_com_sysalto_render_serialization_EmbeddedFontDescriptor_proto_descriptor =
-      getDescriptor().getMessageTypes().get(27);
+      getDescriptor().getMessageTypes().get(28);
     internal_static_com_sysalto_render_serialization_EmbeddedFontDescriptor_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_EmbeddedFontDescriptor_proto_descriptor,
         new java.lang.String[] { "GlyphWidth", "CapHeight", "FontBBox", "Ascent", "Flags", "ItalicAngle", "Descent", });
     internal_static_com_sysalto_render_serialization_GlyphWidth_proto_descriptor =
-      getDescriptor().getMessageTypes().get(28);
+      getDescriptor().getMessageTypes().get(29);
     internal_static_com_sysalto_render_serialization_GlyphWidth_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_GlyphWidth_proto_descriptor,
         new java.lang.String[] { "FirstChar", "LastChar", "WidthList", });
     internal_static_com_sysalto_render_serialization_FontBBox_proto_descriptor =
-      getDescriptor().getMessageTypes().get(29);
+      getDescriptor().getMessageTypes().get(30);
     internal_static_com_sysalto_render_serialization_FontBBox_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_FontBBox_proto_descriptor,
         new java.lang.String[] { "LowerLeftX", "LowerLeftY", "UpperRightX", "UpperRightY", });
     internal_static_com_sysalto_render_serialization_PdfFontStream_proto_descriptor =
-      getDescriptor().getMessageTypes().get(30);
+      getDescriptor().getMessageTypes().get(31);
     internal_static_com_sysalto_render_serialization_PdfFontStream_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfFontStream_proto_descriptor,
         new java.lang.String[] { "FontName", "FontMetric", "PdfCompression", });
     internal_static_com_sysalto_render_serialization_FontMetric_proto_descriptor =
-      getDescriptor().getMessageTypes().get(31);
+      getDescriptor().getMessageTypes().get(32);
     internal_static_com_sysalto_render_serialization_FontMetric_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_FontMetric_proto_descriptor,
@@ -31057,13 +31808,13 @@ public final class RenderProto {
         internal_static_com_sysalto_render_serialization_FontMetric_proto_FontMapEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
     internal_static_com_sysalto_render_serialization_FloatFloat_proto_descriptor =
-      getDescriptor().getMessageTypes().get(32);
+      getDescriptor().getMessageTypes().get(33);
     internal_static_com_sysalto_render_serialization_FloatFloat_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_FloatFloat_proto_descriptor,
         new java.lang.String[] { "Value1", "Value2", });
     internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_descriptor =
-      getDescriptor().getMessageTypes().get(33);
+      getDescriptor().getMessageTypes().get(34);
     internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfFontDescriptor_proto_descriptor,

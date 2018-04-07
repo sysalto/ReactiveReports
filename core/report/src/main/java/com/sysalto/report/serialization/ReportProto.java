@@ -1164,6 +1164,19 @@ public final class ReportProto {
      */
     com.sysalto.report.serialization.ReportProto.ReportVerticalShade_protoOrBuilder getReportVerticalShadeOrBuilder();
 
+    /**
+     * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+     */
+    boolean hasDrawMovePoint();
+    /**
+     * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+     */
+    com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto getDrawMovePoint();
+    /**
+     * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+     */
+    com.sysalto.report.serialization.ReportProto.DrawMovePoint_protoOrBuilder getDrawMovePointOrBuilder();
+
     public com.sysalto.report.serialization.ReportProto.ReportItem_proto.FieldCase getFieldCase();
   }
   /**
@@ -1372,6 +1385,20 @@ public final class ReportProto {
               fieldCase_ = 12;
               break;
             }
+            case 106: {
+              com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.Builder subBuilder = null;
+              if (fieldCase_ == 13) {
+                subBuilder = ((com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_).toBuilder();
+              }
+              field_ =
+                  input.readMessage(com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_);
+                field_ = subBuilder.buildPartial();
+              }
+              fieldCase_ = 13;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -1411,6 +1438,7 @@ public final class ReportProto {
       REPORTLINE(10),
       REPORTRECTANGLE(11),
       REPORTVERTICALSHADE(12),
+      DRAWMOVEPOINT(13),
       FIELD_NOT_SET(0);
       private final int value;
       private FieldCase(int value) {
@@ -1437,6 +1465,7 @@ public final class ReportProto {
           case 10: return REPORTLINE;
           case 11: return REPORTRECTANGLE;
           case 12: return REPORTVERTICALSHADE;
+          case 13: return DRAWMOVEPOINT;
           case 0: return FIELD_NOT_SET;
           default: return null;
         }
@@ -1747,6 +1776,32 @@ public final class ReportProto {
       return com.sysalto.report.serialization.ReportProto.ReportVerticalShade_proto.getDefaultInstance();
     }
 
+    public static final int DRAWMOVEPOINT_FIELD_NUMBER = 13;
+    /**
+     * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+     */
+    public boolean hasDrawMovePoint() {
+      return fieldCase_ == 13;
+    }
+    /**
+     * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+     */
+    public com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto getDrawMovePoint() {
+      if (fieldCase_ == 13) {
+         return (com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_;
+      }
+      return com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.getDefaultInstance();
+    }
+    /**
+     * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+     */
+    public com.sysalto.report.serialization.ReportProto.DrawMovePoint_protoOrBuilder getDrawMovePointOrBuilder() {
+      if (fieldCase_ == 13) {
+         return (com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_;
+      }
+      return com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -1794,6 +1849,9 @@ public final class ReportProto {
       }
       if (fieldCase_ == 12) {
         output.writeMessage(12, (com.sysalto.report.serialization.ReportProto.ReportVerticalShade_proto) field_);
+      }
+      if (fieldCase_ == 13) {
+        output.writeMessage(13, (com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_);
       }
       unknownFields.writeTo(output);
     }
@@ -1850,6 +1908,10 @@ public final class ReportProto {
       if (fieldCase_ == 12) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(12, (com.sysalto.report.serialization.ReportProto.ReportVerticalShade_proto) field_);
+      }
+      if (fieldCase_ == 13) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(13, (com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1919,6 +1981,10 @@ public final class ReportProto {
           result = result && getReportVerticalShade()
               .equals(other.getReportVerticalShade());
           break;
+        case 13:
+          result = result && getDrawMovePoint()
+              .equals(other.getDrawMovePoint());
+          break;
         case 0:
         default:
       }
@@ -1980,6 +2046,10 @@ public final class ReportProto {
         case 12:
           hash = (37 * hash) + REPORTVERTICALSHADE_FIELD_NUMBER;
           hash = (53 * hash) + getReportVerticalShade().hashCode();
+          break;
+        case 13:
+          hash = (37 * hash) + DRAWMOVEPOINT_FIELD_NUMBER;
+          hash = (53 * hash) + getDrawMovePoint().hashCode();
           break;
         case 0:
         default:
@@ -2217,6 +2287,13 @@ public final class ReportProto {
             result.field_ = reportVerticalShadeBuilder_.build();
           }
         }
+        if (fieldCase_ == 13) {
+          if (drawMovePointBuilder_ == null) {
+            result.field_ = field_;
+          } else {
+            result.field_ = drawMovePointBuilder_.build();
+          }
+        }
         result.fieldCase_ = fieldCase_;
         onBuilt();
         return result;
@@ -2305,6 +2382,10 @@ public final class ReportProto {
           }
           case REPORTVERTICALSHADE: {
             mergeReportVerticalShade(other.getReportVerticalShade());
+            break;
+          }
+          case DRAWMOVEPOINT: {
+            mergeDrawMovePoint(other.getDrawMovePoint());
             break;
           }
           case FIELD_NOT_SET: {
@@ -3873,6 +3954,142 @@ public final class ReportProto {
         fieldCase_ = 12;
         onChanged();;
         return reportVerticalShadeBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto, com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.Builder, com.sysalto.report.serialization.ReportProto.DrawMovePoint_protoOrBuilder> drawMovePointBuilder_;
+      /**
+       * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+       */
+      public boolean hasDrawMovePoint() {
+        return fieldCase_ == 13;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto getDrawMovePoint() {
+        if (drawMovePointBuilder_ == null) {
+          if (fieldCase_ == 13) {
+            return (com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_;
+          }
+          return com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.getDefaultInstance();
+        } else {
+          if (fieldCase_ == 13) {
+            return drawMovePointBuilder_.getMessage();
+          }
+          return com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+       */
+      public Builder setDrawMovePoint(com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto value) {
+        if (drawMovePointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          field_ = value;
+          onChanged();
+        } else {
+          drawMovePointBuilder_.setMessage(value);
+        }
+        fieldCase_ = 13;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+       */
+      public Builder setDrawMovePoint(
+          com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.Builder builderForValue) {
+        if (drawMovePointBuilder_ == null) {
+          field_ = builderForValue.build();
+          onChanged();
+        } else {
+          drawMovePointBuilder_.setMessage(builderForValue.build());
+        }
+        fieldCase_ = 13;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+       */
+      public Builder mergeDrawMovePoint(com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto value) {
+        if (drawMovePointBuilder_ == null) {
+          if (fieldCase_ == 13 &&
+              field_ != com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.getDefaultInstance()) {
+            field_ = com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.newBuilder((com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            field_ = value;
+          }
+          onChanged();
+        } else {
+          if (fieldCase_ == 13) {
+            drawMovePointBuilder_.mergeFrom(value);
+          }
+          drawMovePointBuilder_.setMessage(value);
+        }
+        fieldCase_ = 13;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+       */
+      public Builder clearDrawMovePoint() {
+        if (drawMovePointBuilder_ == null) {
+          if (fieldCase_ == 13) {
+            fieldCase_ = 0;
+            field_ = null;
+            onChanged();
+          }
+        } else {
+          if (fieldCase_ == 13) {
+            fieldCase_ = 0;
+            field_ = null;
+          }
+          drawMovePointBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.Builder getDrawMovePointBuilder() {
+        return getDrawMovePointFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+       */
+      public com.sysalto.report.serialization.ReportProto.DrawMovePoint_protoOrBuilder getDrawMovePointOrBuilder() {
+        if ((fieldCase_ == 13) && (drawMovePointBuilder_ != null)) {
+          return drawMovePointBuilder_.getMessageOrBuilder();
+        } else {
+          if (fieldCase_ == 13) {
+            return (com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_;
+          }
+          return com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.DrawMovePoint_proto drawMovePoint = 13;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto, com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.Builder, com.sysalto.report.serialization.ReportProto.DrawMovePoint_protoOrBuilder> 
+          getDrawMovePointFieldBuilder() {
+        if (drawMovePointBuilder_ == null) {
+          if (!(fieldCase_ == 13)) {
+            field_ = com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.getDefaultInstance();
+          }
+          drawMovePointBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto, com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.Builder, com.sysalto.report.serialization.ReportProto.DrawMovePoint_protoOrBuilder>(
+                  (com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) field_,
+                  getParentForChildren(),
+                  isClean());
+          field_ = null;
+        }
+        fieldCase_ = 13;
+        onChanged();;
+        return drawMovePointBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -22436,6 +22653,526 @@ public final class ReportProto {
 
   }
 
+  public interface DrawMovePoint_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.report.serialization.DrawMovePoint_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>float x = 1;</code>
+     */
+    float getX();
+
+    /**
+     * <code>float y = 2;</code>
+     */
+    float getY();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.report.serialization.DrawMovePoint_proto}
+   */
+  public  static final class DrawMovePoint_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.report.serialization.DrawMovePoint_proto)
+      DrawMovePoint_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DrawMovePoint_proto.newBuilder() to construct.
+    private DrawMovePoint_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DrawMovePoint_proto() {
+      x_ = 0F;
+      y_ = 0F;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DrawMovePoint_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 13: {
+
+              x_ = input.readFloat();
+              break;
+            }
+            case 21: {
+
+              y_ = input.readFloat();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.class, com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.Builder.class);
+    }
+
+    public static final int X_FIELD_NUMBER = 1;
+    private float x_;
+    /**
+     * <code>float x = 1;</code>
+     */
+    public float getX() {
+      return x_;
+    }
+
+    public static final int Y_FIELD_NUMBER = 2;
+    private float y_;
+    /**
+     * <code>float y = 2;</code>
+     */
+    public float getY() {
+      return y_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (x_ != 0F) {
+        output.writeFloat(1, x_);
+      }
+      if (y_ != 0F) {
+        output.writeFloat(2, y_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (x_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(1, x_);
+      }
+      if (y_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(2, y_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto other = (com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) obj;
+
+      boolean result = true;
+      result = result && (
+          java.lang.Float.floatToIntBits(getX())
+          == java.lang.Float.floatToIntBits(
+              other.getX()));
+      result = result && (
+          java.lang.Float.floatToIntBits(getY())
+          == java.lang.Float.floatToIntBits(
+              other.getY()));
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + X_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getX());
+      hash = (37 * hash) + Y_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getY());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.report.serialization.DrawMovePoint_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.report.serialization.DrawMovePoint_proto)
+        com.sysalto.report.serialization.ReportProto.DrawMovePoint_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.class, com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        x_ = 0F;
+
+        y_ = 0F;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_descriptor;
+      }
+
+      public com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto getDefaultInstanceForType() {
+        return com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto build() {
+        com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto buildPartial() {
+        com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto result = new com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto(this);
+        result.x_ = x_;
+        result.y_ = y_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) {
+          return mergeFrom((com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto other) {
+        if (other == com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto.getDefaultInstance()) return this;
+        if (other.getX() != 0F) {
+          setX(other.getX());
+        }
+        if (other.getY() != 0F) {
+          setY(other.getY());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private float x_ ;
+      /**
+       * <code>float x = 1;</code>
+       */
+      public float getX() {
+        return x_;
+      }
+      /**
+       * <code>float x = 1;</code>
+       */
+      public Builder setX(float value) {
+        
+        x_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float x = 1;</code>
+       */
+      public Builder clearX() {
+        
+        x_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float y_ ;
+      /**
+       * <code>float y = 2;</code>
+       */
+      public float getY() {
+        return y_;
+      }
+      /**
+       * <code>float y = 2;</code>
+       */
+      public Builder setY(float value) {
+        
+        y_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float y = 2;</code>
+       */
+      public Builder clearY() {
+        
+        y_ = 0F;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.report.serialization.DrawMovePoint_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.report.serialization.DrawMovePoint_proto)
+    private static final com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto();
+    }
+
+    public static com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<DrawMovePoint_proto>
+        PARSER = new com.google.protobuf.AbstractParser<DrawMovePoint_proto>() {
+      public DrawMovePoint_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DrawMovePoint_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DrawMovePoint_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DrawMovePoint_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.report.serialization.ReportProto.DrawMovePoint_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface OptionRColor_protoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.sysalto.report.serialization.OptionRColor_proto)
       com.google.protobuf.MessageOrBuilder {
@@ -24891,6 +25628,11 @@ public final class ReportProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_sysalto_report_serialization_ReportRectangle_proto_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sysalto_report_serialization_OptionRColor_proto_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -24917,7 +25659,7 @@ public final class ReportProto {
       "\n\022report_proto.proto\022 com.sysalto.report" +
       ".serialization\"T\n\020ReportPage_proto\022@\n\004it" +
       "em\030\001 \003(\01322.com.sysalto.report.serializat" +
-      "ion.ReportItem_proto\"\263\007\n\020ReportItem_prot" +
+      "ion.ReportItem_proto\"\203\010\n\020ReportItem_prot" +
       "o\022\016\n\006deltaY\030\001 \001(\002\022T\n\020reportLinkToPage\030\002 " +
       "\001(\01328.com.sysalto.report.serialization.R" +
       "eportLinkToPage_protoH\000\022R\n\017reportLinkToU" +
@@ -24941,6 +25683,8 @@ public final class ReportProto {
       "ation.ReportRectangle_protoH\000\022Z\n\023reportV" +
       "erticalShade\030\014 \001(\0132;.com.sysalto.report." +
       "serialization.ReportVerticalShade_protoH" +
+      "\000\022N\n\rdrawMovePoint\030\r \001(\01325.com.sysalto.r" +
+      "eport.serialization.DrawMovePoint_protoH" +
       "\000B\007\n\005field\"\220\001\n\026ReportLinkToPage_proto\022J\n" +
       "\014boundaryRect\030\001 \001(\01324.com.sysalto.report" +
       ".serialization.BoundaryRect_proto\022\017\n\007pag" +
@@ -25015,22 +25759,23 @@ public final class ReportProto {
       "C\n\005color\030\006 \001(\01324.com.sysalto.report.seri" +
       "alization.OptionRColor_proto\022G\n\tfillColo" +
       "r\030\007 \001(\01324.com.sysalto.report.serializati" +
-      "on.OptionRColor_proto\"b\n\022OptionRColor_pr" +
-      "oto\022\014\n\004null\030\001 \001(\010\022>\n\006rColor\030\002 \001(\0132..com." +
-      "sysalto.report.serialization.RColor_prot" +
-      "o\"\334\001\n\031ReportVerticalShade_proto\022E\n\trecta" +
-      "ngle\030\001 \001(\01322.com.sysalto.report.serializ" +
-      "ation.DRectangle_proto\022<\n\004from\030\002 \001(\0132..c" +
-      "om.sysalto.report.serialization.RColor_p" +
-      "roto\022:\n\002to\030\003 \001(\0132..com.sysalto.report.se" +
-      "rialization.RColor_proto\"R\n\020DRectangle_p" +
-      "roto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002" +
-      "\022\n\n\002y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002*I\n\024RFontAtt" +
-      "ribute_proto\022\n\n\006NORMAL\020\000\022\010\n\004BOLD\020\001\022\n\n\006IT" +
-      "ALIC\020\002\022\017\n\013BOLD_ITALIC\020\003*b\n\017WrapAlign_pro" +
-      "to\022\013\n\007NO_WRAP\020\000\022\r\n\tWRAP_LEFT\020\001\022\016\n\nWRAP_R" +
-      "IGHT\020\002\022\017\n\013WRAP_CENTER\020\003\022\022\n\016WRAP_JUSTIFIE" +
-      "D\020\004B\002H\001b\006proto3"
+      "on.OptionRColor_proto\"+\n\023DrawMovePoint_p" +
+      "roto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\"b\n\022OptionRCol" +
+      "or_proto\022\014\n\004null\030\001 \001(\010\022>\n\006rColor\030\002 \001(\0132." +
+      ".com.sysalto.report.serialization.RColor" +
+      "_proto\"\334\001\n\031ReportVerticalShade_proto\022E\n\t" +
+      "rectangle\030\001 \001(\01322.com.sysalto.report.ser" +
+      "ialization.DRectangle_proto\022<\n\004from\030\002 \001(" +
+      "\0132..com.sysalto.report.serialization.RCo" +
+      "lor_proto\022:\n\002to\030\003 \001(\0132..com.sysalto.repo" +
+      "rt.serialization.RColor_proto\"R\n\020DRectan" +
+      "gle_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030" +
+      "\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002*I\n\024RFo" +
+      "ntAttribute_proto\022\n\n\006NORMAL\020\000\022\010\n\004BOLD\020\001\022" +
+      "\n\n\006ITALIC\020\002\022\017\n\013BOLD_ITALIC\020\003*b\n\017WrapAlig" +
+      "n_proto\022\013\n\007NO_WRAP\020\000\022\r\n\tWRAP_LEFT\020\001\022\016\n\nW" +
+      "RAP_RIGHT\020\002\022\017\n\013WRAP_CENTER\020\003\022\022\n\016WRAP_JUS" +
+      "TIFIED\020\004B\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -25055,7 +25800,7 @@ public final class ReportProto {
     internal_static_com_sysalto_report_serialization_ReportItem_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportItem_proto_descriptor,
-        new java.lang.String[] { "DeltaY", "ReportLinkToPage", "ReportLinkToUrl", "ReportText", "ReportTextAligned", "ReportTextWrap", "ReportPieChart", "ReportBarChart", "ReportImage", "ReportLine", "ReportRectangle", "ReportVerticalShade", "Field", });
+        new java.lang.String[] { "DeltaY", "ReportLinkToPage", "ReportLinkToUrl", "ReportText", "ReportTextAligned", "ReportTextWrap", "ReportPieChart", "ReportBarChart", "ReportImage", "ReportLine", "ReportRectangle", "ReportVerticalShade", "DrawMovePoint", "Field", });
     internal_static_com_sysalto_report_serialization_ReportLinkToPage_proto_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_com_sysalto_report_serialization_ReportLinkToPage_proto_fieldAccessorTable = new
@@ -25188,20 +25933,26 @@ public final class ReportProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportRectangle_proto_descriptor,
         new java.lang.String[] { "X1", "Y1", "X2", "Y2", "Radius", "Color", "FillColor", });
-    internal_static_com_sysalto_report_serialization_OptionRColor_proto_descriptor =
+    internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_descriptor =
       getDescriptor().getMessageTypes().get(24);
+    internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_report_serialization_DrawMovePoint_proto_descriptor,
+        new java.lang.String[] { "X", "Y", });
+    internal_static_com_sysalto_report_serialization_OptionRColor_proto_descriptor =
+      getDescriptor().getMessageTypes().get(25);
     internal_static_com_sysalto_report_serialization_OptionRColor_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_OptionRColor_proto_descriptor,
         new java.lang.String[] { "Null", "RColor", });
     internal_static_com_sysalto_report_serialization_ReportVerticalShade_proto_descriptor =
-      getDescriptor().getMessageTypes().get(25);
+      getDescriptor().getMessageTypes().get(26);
     internal_static_com_sysalto_report_serialization_ReportVerticalShade_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportVerticalShade_proto_descriptor,
         new java.lang.String[] { "Rectangle", "From", "To", });
     internal_static_com_sysalto_report_serialization_DRectangle_proto_descriptor =
-      getDescriptor().getMessageTypes().get(26);
+      getDescriptor().getMessageTypes().get(27);
     internal_static_com_sysalto_report_serialization_DRectangle_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_DRectangle_proto_descriptor,

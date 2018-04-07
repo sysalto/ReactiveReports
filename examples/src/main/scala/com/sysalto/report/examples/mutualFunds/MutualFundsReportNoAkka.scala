@@ -349,6 +349,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		}
 		val t1=System.currentTimeMillis()
 		report.start()
+		report.drawMovePoint(10,10)
 		for (i<-1 to 1) {
 			println("I:"+i)
 			if (i>1) {
