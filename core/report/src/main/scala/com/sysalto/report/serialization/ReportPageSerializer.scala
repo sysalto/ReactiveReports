@@ -227,7 +227,7 @@ private[serialization] object ReportImageSerializer {
 	}
 
 	def read(input: ReportImage_proto): ReportImage =
-		ReportImage(input.getFile, input.getX, input.getY, input.getWidth, input.getHeight, input.getOpacity)
+		new ReportImage(input.getFile, input.getX, input.getY, input.getWidth, input.getHeight, input.getOpacity)
 }
 
 private[serialization] object LineDashTypeSerializer {
@@ -273,7 +273,7 @@ private[serialization] object ReportLineSerializer {
 	}
 
 	def read(input: ReportLine_proto): ReportLine =
-		ReportLine(input.getX1, input.getY1, input.getX2, input.getY2, input.getLineWidth, RColorSerializer.read(input.getColor), OptionLineDashTypeSerializer.read(input.getLineDashType))
+		new ReportLine(input.getX1, input.getY1, input.getX2, input.getY2, input.getLineWidth, RColorSerializer.read(input.getColor), OptionLineDashTypeSerializer.read(input.getLineDashType))
 }
 
 
@@ -337,7 +337,7 @@ private[serialization] object ReportVerticalShadeSerializer {
 	}
 
 	def read(input: ReportVerticalShade_proto): ReportVerticalShade =
-		ReportVerticalShade(DRectangleSerializer.read(input.getRectangle), RColorSerializer.read(input.getFrom), RColorSerializer.read(input.getTo))
+		new ReportVerticalShade(DRectangleSerializer.read(input.getRectangle), RColorSerializer.read(input.getFrom), RColorSerializer.read(input.getTo))
 }
 
 private[serialization] object WrapAlignSerializer {
@@ -396,7 +396,7 @@ private[serialization] object ReportTextWrapSerializer {
 	}
 
 	def read(input: ReportTextWrap_proto): ReportTextWrap =
-		ReportTextWrap(input.getTextList.asScala.map(item => {
+		new ReportTextWrap(input.getTextList.asScala.map(item => {
 			RTextSerializer.read(item)
 		}).toList, input.getX0, input.getY0, input.getX1, input.getY1, WrapAlignSerializer.read(input.getWrapAlign))
 }
@@ -445,7 +445,7 @@ private[serialization] object ReportPieChartSerializer {
 	}
 
 	def read(input: ReportPieChart_proto): ReportPieChart =
-		ReportPieChart(RFontSerializer.read(input.getFont), input.getTitle, input.getDataList.asScala.map(item => {
+		new ReportPieChart(RFontSerializer.read(input.getFont), input.getTitle, input.getDataList.asScala.map(item => {
 			StringDoubleSerializer.read(item)
 		}).toList, input.getX0, input.getY0, input.getWidth, input.getHeight)
 }
@@ -471,7 +471,7 @@ private[serialization] object ReportBarChartSerializer {
 	}
 
 	def read(input: ReportBarChart_proto): ReportBarChart =
-		ReportBarChart(input.getTitle, input.getXLabel, input.getYLabel, input.getDataList.asScala.map(item => {
+		new ReportBarChart(input.getTitle, input.getXLabel, input.getYLabel, input.getDataList.asScala.map(item => {
 			DoubleStringStringSerializer.read(item)
 		}).toList, input.getX0, input.getY0, input.getWidth, input.getHeight)
 }
@@ -529,6 +529,9 @@ object ReportPageSerializer {
 					val result = ReportBarChartSerializer.write(obj)
 					builderItem.setReportBarChart(result)
 				}
+				case  _ => {
+					println("Unimplemented :" + item)
+				}
 			}
 			builder.addItem(builderItem.build())
 		})
@@ -556,7 +559,7 @@ object ReportPageSerializer {
 			reportItem.deltaY = item.getDeltaY
 			reportItem
 		})
-		ReportPage(ListBuffer(result.toList: _*))
+		new ReportPage(ListBuffer(result.toList: _*))
 	}
 
 }

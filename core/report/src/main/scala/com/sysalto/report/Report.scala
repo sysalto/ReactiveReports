@@ -45,7 +45,7 @@ import scala.runtime.{AbstractFunction1, AbstractFunction2}
 case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, pdfCompression: Boolean = true)(implicit pdfFactory: PdfFactory) {
 	private[this] var pageNbrs = 1L
 	private[this] var crtPageNbr = 1L
-	private[this] val crtPage = ReportPage(new ListBuffer[ReportItem]())
+	private[this] val crtPage = new ReportPage(new ListBuffer[ReportItem]())
 	private[this] val db = RockDbUtil()
 	var font = RFont(10, "Helvetica")
 	private[this] var simulation = false
@@ -264,7 +264,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def line(x1: Float = 0, y1: Float = getY, x2: Float = -1, y2: Float = -1, lineWidth: Float = 1, color: ReportColor = ReportColor(0, 0, 0),
 	         lineDashType: Option[LineDashType] = None) {
-		val reportItem = ReportLine(x1, y1, x2, y2, lineWidth, color, lineDashType)
+		val reportItem = new ReportLine(x1, y1, x2, y2, lineWidth, color, lineDashType)
 		crtPage.items += reportItem
 	}
 
@@ -311,11 +311,11 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	Draw a pie chart with title, data from (x0,y0) with width and height dimensions.
 	 */
 	def drawPieChart(title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += ReportPieChart(font, title, data, x0, y0, width, height)
+		crtPage.items += new ReportPieChart(font, title, data, x0, y0, width, height)
 	}
 
 	def drawPieChart1(title: String, data: _root_.java.util.List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += ReportPieChart(font, title, data.asScala.toList, x0, y0, width, height)
+		crtPage.items += new ReportPieChart(font, title, data.asScala.toList, x0, y0, width, height)
 	}
 
 	/*
@@ -323,7 +323,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	See jfreechart for details.
  */
 	def drawBarChart(title: String, xLabel: String, yLabel: String, data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += ReportBarChart(title, xLabel, yLabel, data, x0, y0, width, height)
+		crtPage.items += new ReportBarChart(title, xLabel, yLabel, data, x0, y0, width, height)
 	}
 
 	/*
@@ -331,7 +331,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	opacity is betwwen 0 (full transparent) and 1 (full opaque)
  */
 	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
-		crtPage.items += ReportImage(file, x, y, width, height, opacity)
+		crtPage.items += new ReportImage(file, x, y, width, height, opacity)
 	}
 
 	/*
@@ -358,7 +358,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		if (simulate) {
 			reportWrap(text1, x0, y0, x1, y1, wrapAlign, simulate)
 		} else {
-			val reportItem = ReportTextWrap(text1, x0, y0, x1, y1, wrapAlign)
+			val reportItem = new ReportTextWrap(text1, x0, y0, x1, y1, wrapAlign)
 			crtPage.items += reportItem
 			None
 		}
@@ -376,7 +376,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		draw a rectangle with vertical shade between 'from' and 'to' colors.
 	 */
 	def verticalShade(rectangle: DRectangle, from: ReportColor, to: ReportColor): Unit = {
-		crtPage.items += ReportVerticalShade(rectangle, from, to)
+		crtPage.items += new ReportVerticalShade(rectangle, from, to)
 	}
 
 
@@ -533,7 +533,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	get a checkpoint for further cut and paste.
 	 */
-	def checkpoint(): ReportCheckpoint = ReportCheckpoint(crtPage.items.length, getY)
+	def checkpoint(): ReportCheckpoint = new ReportCheckpoint(crtPage.items.length, getY)
 
 	/*
 	cut all the items from the reportCheckpoint to the current
@@ -544,7 +544,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		val newList = crtPage.items.take(nbr)
 		crtPage.items.clear()
 		crtPage.items ++= newList
-		ReportCut(getY, result)
+		new ReportCut(getY, result)
 	}
 
 	/*
@@ -575,7 +575,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		pageNbrs += number
 		crtPageNbr = pageNbr
 		for (i <- pageNbr to pageNbr + number - 1) {
-			val emptyPage = ReportPage(ListBuffer[ReportItem]())
+			val emptyPage = new ReportPage(ListBuffer[ReportItem]())
 			db.write(s"page${i}", emptyPage)
 		}
 		crtYPosition = pdfUtil.pgSize.height - setHeaderSize(pageNbr)

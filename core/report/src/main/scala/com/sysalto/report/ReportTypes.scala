@@ -81,7 +81,7 @@ object ReportTypes {
 		private[report] def render(report: Report)
 	}
 
-	private[report] case class ReportPage(items: ListBuffer[ReportItem])
+	private[report]  class ReportPage(val items: ListBuffer[ReportItem])
 
 	/*
 		link to page
@@ -126,9 +126,9 @@ object ReportTypes {
 	/*
 	text wrap class
 	 */
-	case class ReportTextWrap(text: List[ReportTxt],
-	                          x0: Float, y0: Float, x1: Float, y1: Float,
-	                          wrapAlign: WrapAlign.Value) extends ReportItem() {
+	class ReportTextWrap(val text: List[ReportTxt],
+	                     val x0: Float,val y0: Float,val x1: Float,val y1: Float,
+	                     val wrapAlign: WrapAlign.Value) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY, wrapAlign, simulate = false)
 
@@ -138,8 +138,8 @@ object ReportTypes {
 	/*
 	pie chart class
 	 */
-	case class ReportPieChart(font: RFont, title: String, data: List[(String, Double)],
-	                          x0: Float, y0: Float, width: Float, height: Float) extends ReportItem() {
+	class ReportPieChart(val font: RFont,val title: String,val data: List[(String, Double)],
+	                     val x0: Float,val y0: Float,val width: Float,val height: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawPieChart(font, title, data, x0, y0 - deltaY, width, height)
 		}
@@ -148,8 +148,8 @@ object ReportTypes {
 	/*
 	bar chart class
 	 */
-	case class ReportBarChart(title: String, xLabel: String, yLabel: String, data: List[(Double, String, String)],
-	                          x0: Float, y0: Float, width: Float, height: Float) extends ReportItem() {
+	class ReportBarChart(val title: String,val xLabel: String,val yLabel: String,val data: List[(Double, String, String)],
+	                     val x0: Float,val y0: Float,val width: Float,val height: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawBarChart(title, xLabel, yLabel, data, x0, y0 - deltaY, width, height)
 		}
@@ -158,7 +158,7 @@ object ReportTypes {
 	/*
 	image class
 	 */
-	case class ReportImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float) extends ReportItem() {
+	class ReportImage(val file: String,val x: Float,val y: Float,val width: Float,val height: Float,val opacity: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawImage(file, x, y - deltaY, width, height, opacity)
 		}
@@ -167,7 +167,7 @@ object ReportTypes {
 	/*
 	line class
 	 */
-	case class ReportLine(x1: Float = 0, y1: Float = -1, x2: Float = -1, y2: Float = -1, lineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]) extends ReportItem() {
+	class ReportLine(val x1: Float = 0,val y1: Float = -1,val x2: Float = -1,val y2: Float = -1,val lineWidth: Float,val  color: ReportColor,val lineDashType: Option[LineDashType]) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.line(x1, y1 - deltaY, x2, y2 - deltaY, lineWidth, color, lineDashType)
 		}
@@ -192,7 +192,7 @@ object ReportTypes {
 	/*
 	vertical shade rectangle
 	 */
-	case class ReportVerticalShade(rectangle: DRectangle, from: ReportColor, to: ReportColor) extends ReportItem() {
+	class ReportVerticalShade(val rectangle: DRectangle,val from: ReportColor,val to: ReportColor) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.verticalShade(rectangle, from, to)
 		}
@@ -200,9 +200,9 @@ object ReportTypes {
 
 
 	// two classes for cut and paste (for keep band together)
-	case class ReportCheckpoint(itemPos: Int, yCrt: Float)
+	case class ReportCheckpoint(val itemPos: Int,val yCrt: Float)
 
-	case class ReportCut(yCrt: Float, list: Seq[ReportItem])
+	case class ReportCut(val yCrt: Float,val list: Seq[ReportItem])
 
 }
 
