@@ -581,6 +581,13 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	// java compatibility
 
+
+	def newPageFctCallback(fct: RConsumer1[java.lang.Long]) {
+		newPageFct = { pgNbr =>
+			fct.apply(pgNbr)
+		}
+	}
+
 	def headerSizeCallback(fct: RFunction1[java.lang.Long, java.lang.Float]) {
 		setHeaderSize = { pgNbr =>
 			fct.apply(pgNbr)

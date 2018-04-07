@@ -54,6 +54,11 @@ public class MutualFundsNoAkkaJavaReport {
     private void run() throws Exception {
 
         Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
+
+        report.newPageFctCallback(pg->{
+            drawbackgroundImage(report);
+        });
+
         report.headerSizeCallback(pg -> {
             if (pg == 1) return 0f;
             else return 50f;
@@ -91,6 +96,7 @@ public class MutualFundsNoAkkaJavaReport {
             ReportCell cell = new ReportCell(new ReportTxt("Page " + pg + " of " + pgMax).bold()).rightAlign().inside(0, report.pageLayout().width() - 10);
             report.print(cell);
         });
+        report.start();
         reportHeader(report);
         summaryOfInvestment(report);
         changeAccount(report);
@@ -101,7 +107,7 @@ public class MutualFundsNoAkkaJavaReport {
 
 
     private void reportHeader(Report report) throws Exception {
-        drawbackgroundImage(report);
+
         ResultSet rs = MutualFundsInitData.query("select * from clnt");
         rs.next();
 
@@ -360,7 +366,6 @@ public class MutualFundsNoAkkaJavaReport {
 
     private void disclaimer(Report report) throws Exception {
         report.nextPage();
-        drawbackgroundImage(report);
         report.nextLine(3);
         report.print(new ReportCell(new ReportTxt("Disclaimer").bold().size(20)).at(50));
         report.nextLine(2);
