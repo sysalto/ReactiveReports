@@ -53,7 +53,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 
 	private[this] var crtYPosition = 0f
-	private[this] var lastPosition: ReportPosition = ReportPosition(0, 0)
+	private[this] var lastPosition: ReportPosition = new ReportPosition(0, 0)
 
 
 	def setSimulation(value: Boolean): Unit = {
@@ -158,7 +158,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	Returns report's current position (page number and vertical position on page)
 	 */
-	def getCurrentPosition: ReportPosition = ReportPosition(crtPageNbr, crtYPosition)
+	def getCurrentPosition: ReportPosition = new ReportPosition(crtPageNbr, crtYPosition)
 
 	/*
 		GoTo the last known position in the report
@@ -249,7 +249,12 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	y1,y2 - vertical coordinates  with 0 starting from the top
 	 */
 	def drawRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[ReportColor] = None, fillColor: Option[ReportColor] = None) {
-		val reportItem = ReportRectangle(x1, y1, x2, y2, radius, color, fillColor)
+		val reportItem = new ReportRectangle(x1, y1, x2, y2, radius, color, fillColor)
+		crtPage.items += reportItem
+	}
+
+	def drawMovePoint(x: Float, y: Float): Unit = {
+		val reportItem = new DrawMovePoint(x, y)
 		crtPage.items += reportItem
 	}
 
@@ -276,7 +281,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			txt.font.fontName = this.font.fontName
 			txt.font.externalFont = this.font.externalFont
 		}
-		val reportItem = ReportText(txt, x, y1)
+		val reportItem = new ReportText(txt, x, y1)
 		crtPage.items += reportItem
 	}
 
@@ -290,7 +295,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			txt.font.fontName = this.font.fontName
 			txt.font.externalFont = this.font.externalFont
 		}
-		val reportItem = ReportTextAligned(txt, x, y1, index)
+		val reportItem = new ReportTextAligned(txt, x, y1, index)
 		crtPage.items += reportItem
 	}
 
@@ -645,12 +650,12 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	def setLinkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int = 0, top: Int = 0): Unit = {
-		val reportLink = ReportLinkToPage(boundaryRect, pageNbr, left, top)
+		val reportLink = new ReportLinkToPage(boundaryRect, pageNbr, left, top)
 		crtPage.items += reportLink
 	}
 
 	def setLinkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
-		val reportLink = ReportLinkToUrl(boundaryRect, url)
+		val reportLink = new ReportLinkToUrl(boundaryRect, url)
 		crtPage.items += reportLink
 	}
 

@@ -94,7 +94,7 @@ case class ReportCell(txt: List[ReportTxt], var margin: ReportMargin = ReportMar
 
 	def getBoundaryRect(report: Report): BoundaryRect = {
 		val box = calculate(report)
-		BoundaryRect(margin.left, report.getYPosition(box.currentY)+report.lineHeight, margin.right, report.getYPosition(box.initialY))
+		new BoundaryRect(margin.left, report.getYPosition(box.currentY)+report.lineHeight, margin.right, report.getYPosition(box.initialY))
 	}
 }
 

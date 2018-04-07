@@ -201,7 +201,7 @@ class RenderReportTypes {
 	class PdfRectangle1(val x1: Long, val y1: Long, val x2: Long, val y2: Long, val radius: Float, val borderColor: Option[ReportColor],
 	                    val fillColor: Option[ReportColor], val idPatternColor: Option[Long] = None) extends PdfGraphicFragment {
 		override def content: String = {
-			val patternColor=if (idPatternColor.isDefined) Some(getObject[PdfGPattern](idPatternColor.get)) else None
+			val patternColor = if (idPatternColor.isDefined) Some(getObject[PdfGPattern](idPatternColor.get)) else None
 			val paternStr = if (patternColor.isDefined) {
 				pattern(patternColor.get.name)
 			} else ""
@@ -219,6 +219,13 @@ class RenderReportTypes {
        """.stripMargin.trim
 		}
 
+	}
+
+
+	class DrawMovePoint(val x: Float, val y: Float) extends PdfGraphicFragment {
+		override def content: String = {
+			s"""${x} ${y} m \n"""
+		}
 	}
 
 	abstract class PdfAnnotation(id: Long) extends PdfBaseItem(id)
@@ -513,15 +520,15 @@ class RenderReportTypes {
 
 
 	private[serialization] class DrawPieChart1(val font: RFont, val title: String,
-	                                           val data: List[(String, Double)],val x: Float, val y: Float, val width: Float,val  height: Float)
+	                                           val data: List[(String, Double)], val x: Float, val y: Float, val width: Float, val height: Float)
 		extends PdfGraphicFragment {
 
-		var contentStr=""
+		var contentStr = ""
 
 		override def updateContent(renderReport: RenderReport): Unit = {
 			import PdfChart._
 
-			contentStr= pieChart1(renderReport, font, title, data.toList, x, y, width, height)
+			contentStr = pieChart1(renderReport, font, title, data.toList, x, y, width, height)
 
 		}
 
@@ -587,8 +594,6 @@ class RenderReportTypes {
 		}
 		result
 	}
-
-
 
 
 	def setObject(obj: PdfBaseItem): Unit = {

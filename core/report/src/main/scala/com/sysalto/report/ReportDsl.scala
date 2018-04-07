@@ -93,7 +93,7 @@ set fillColor color
 	draw rectangle
 	 */
 	def draw(): Unit = {
-		val vrectangle = DRectangle(x1, y1, x2, y2, dradius)
+		val vrectangle =new DRectangle(x1, y1, x2, y2, dradius)
 		if (fromColor != null) {
 			report.verticalShade(vrectangle, fromColor, toColor)
 		} else {
@@ -110,7 +110,7 @@ class TextDsl(report: Report, var rText: ReportTxt) {
 		report.text(this.rText, x)
 		val txt=rText
 		this.rText = null
-		BoundaryRect(x-1,report.getYPosition-2,x+txt.txt.size*0.5f*report.lineHeight,report.getYPosition+report.lineHeight-4)
+		new BoundaryRect(x-1,report.getYPosition-2,x+txt.txt.size*0.5f*report.lineHeight,report.getYPosition+report.lineHeight-4)
 	}
 }
 

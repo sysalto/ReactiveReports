@@ -83,7 +83,7 @@ class PdfNativeRender extends PdfUtil {
 	}
 
 	override def pgSize: ReportTypes.Rectangle = {
-		if (orientation == ReportPageOrientation.PORTRAIT) Rectangle(612, 792) else Rectangle(792, 612)
+		if (orientation == ReportPageOrientation.PORTRAIT) new Rectangle(612, 792) else new  Rectangle(792, 612)
 	}
 
 	override def close(): Unit = {
@@ -98,7 +98,7 @@ class PdfNativeRender extends PdfUtil {
 	}
 
 	override def verticalShade(rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
-		val rectangle1 = DRectangle(rectangle.x1, convertY(rectangle.y1), rectangle.x2, convertY(rectangle.y2))
+		val rectangle1 = new DRectangle(rectangle.x1, convertY(rectangle.y1), rectangle.x2, convertY(rectangle.y2))
 		pdfNativeGenerator.axialShade(rectangle.x1, convertY(rectangle.y1), rectangle.x1, convertY(rectangle.y2), rectangle1, from, to)
 	}
 
@@ -115,5 +115,8 @@ class PdfNativeRender extends PdfUtil {
 	}
 
 	override def getTextWidth(txt: ReportTxt): Float = pdfNativeGenerator.getTextWidth(txt)
-	override def getTextWidth(cell: ReportCell): List[Float]=pdfNativeGenerator.getTextWidth(cell)
+
+	override def getTextWidth(cell: ReportCell): List[Float] = pdfNativeGenerator.getTextWidth(cell)
+
+	override def drawMovePoint(x: Float, y: Float): Unit = pdfNativeGenerator.drawMovePoint(x, y)
 }

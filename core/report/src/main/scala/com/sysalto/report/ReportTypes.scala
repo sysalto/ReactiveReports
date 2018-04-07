@@ -35,14 +35,14 @@ object ReportTypes {
  currentY - current coordinate  - the Y of the last line of text
  linesWritten - number of lines that will be written
  */
-	case class WrapBox(initialY: Float, currentY: Float, linesWritten: Int,textHeight:Float)
+	class WrapBox(val initialY: Float, val currentY: Float, val linesWritten: Int, val textHeight: Float)
 
 	/*
 	class to keep the size of a page
 	 */
-	case class Rectangle(width: Float, height: Float)
+	class Rectangle(val width: Float, val height: Float)
 
-	case class BoundaryRect(left: Float, bottom: Float, right: Float, top: Float) {
+	class BoundaryRect(val left: Float, val bottom: Float, val right: Float, val top: Float) {
 		override def toString: String = {
 			"" + left + " " + bottom + " " + right + " " + top
 		}
@@ -52,15 +52,14 @@ object ReportTypes {
 	class RColorBase()
 
 
-	case class RGradientColor(x0: Float, y0: Float, x1: Float, y1: Float, startColor: ReportColor, endColor: ReportColor) extends RColorBase
+	class RGradientColor(val x0: Float, val y0: Float, val x1: Float, val y1: Float, val startColor: ReportColor, val endColor: ReportColor) extends RColorBase
 
-	case class DRectangle(x1: Float, y1: Float, x2: Float, y2: Float,
-	                      radius: Float = 0)
+	class DRectangle(val x1: Float, val y1: Float, val x2: Float, val y2: Float, val radius: Float = 0)
 
 	/*
 	holds current position (page number and vertical coordinate y)
 	 */
-	case class ReportPosition(pageNbr: Long, y: Float) {
+	class ReportPosition(val pageNbr: Long,val y: Float) {
 		def <(pos1: ReportPosition): Boolean = {
 			if (this.pageNbr < pos1.pageNbr) {
 				return true
@@ -87,7 +86,7 @@ object ReportTypes {
 	/*
 		link to page
  */
-	case class ReportLinkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int) extends ReportItem() {
+	class ReportLinkToPage(val boundaryRect: BoundaryRect,val pageNbr: Long,val left: Int,val top: Int) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.linkToPage(boundaryRect, pageNbr, left, top)
@@ -97,7 +96,7 @@ object ReportTypes {
 	/*
 	link to url
 */
-	case class ReportLinkToUrl(boundaryRect: BoundaryRect, url: String) extends ReportItem() {
+	class ReportLinkToUrl(val boundaryRect: BoundaryRect,val url: String) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.linkToUrl(boundaryRect, url)
@@ -107,7 +106,7 @@ object ReportTypes {
 	/*
 	draws a text at (x,y)
 	 */
-	case class ReportText(txt: ReportTxt, x: Float, y: Float) extends ReportItem() {
+	class ReportText(val txt: ReportTxt,val x: Float,val y: Float) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.text(txt, x, y - deltaY)
@@ -117,7 +116,7 @@ object ReportTypes {
 	/*
 	draws a text align at index at the point(x,y)
 	 */
-	case class ReportTextAligned(rText: ReportTxt, x: Float, y: Float, index: Int) extends ReportItem() {
+	class ReportTextAligned(val rText: ReportTxt,val  x: Float,val y: Float,val index: Int) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.textAlignedAtPosition(rText, x, y - deltaY, index)
 
@@ -177,10 +176,16 @@ object ReportTypes {
 	/*
 	rectangle class
 	 */
-	case class ReportRectangle(x1: Float, y1: Float, x2: Float, y2: Float,
-	                           radius: Float = 0, color: Option[ReportColor], fillColor: Option[ReportColor]) extends ReportItem() {
+	class ReportRectangle(val x1: Float, val y1: Float, val x2: Float, val y2: Float,
+	                      val radius: Float = 0, val color: Option[ReportColor], val fillColor: Option[ReportColor]) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.rectangle(x1, y1 - deltaY, x2, y2 - deltaY, radius, color, fillColor)
+		}
+	}
+
+	class DrawMovePoint(x: Float, y: Float) extends ReportItem() {
+		override def render(report: Report): Unit = {
+			report.pdfUtil.drawMovePoint(x, y - deltaY)
 		}
 	}
 

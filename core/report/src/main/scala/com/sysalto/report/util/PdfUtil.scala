@@ -72,5 +72,7 @@ abstract class PdfUtil() {
 	def getTextWidth(txt: ReportTxt): Float
 
 	def getTextWidth(cell: ReportCell): List[Float]
+
+	def drawMovePoint(x:Float,y:Float)
 }
 

@@ -46,7 +46,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 	private[this] def saveCurrentPage(): Unit = {
-		graphicList.foreach(item=>{
+		graphicList.foreach(item => {
 			item.updateContent(this)
 		})
 		val text = new renderReportTypes.PdfText(txtList.toList)
@@ -85,7 +85,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 
 		val pageTreeList = PageTree.pageTree(pageList.toList) {
 			() => {
-				val pg=new renderReportTypes.PdfPageList(nextId())
+				val pg = new renderReportTypes.PdfPageList(nextId())
 				renderReportTypes.setObject(pg)
 				pg
 			}
@@ -165,8 +165,12 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		graphicList += new renderReportTypes.PdfRectangle1(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, idPaternColor)
 	}
 
+	def drawMovePoint(x: Float, y: Float): Unit = {
+		graphicList += new renderReportTypes.DrawMovePoint(x, y)
+	}
+
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {
-		graphicList +=new  DrawArc(center, radius, startAngle, endAngle)
+		graphicList += new DrawArc(center, radius, startAngle, endAngle)
 	}
 
 	def circle(center: DrawPoint, radius: Float): Unit = {
@@ -174,7 +178,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 	def stroke() = {
-		graphicList +=new  DrawStroke()
+		graphicList += new DrawStroke()
 	}
 
 	def wrap(txtList: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
@@ -204,7 +208,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		}
 		val l1 = lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
 		val textHeight = if (l1.isEmpty) 0 else l1.max
-		Some(WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size, textHeight))
+		Some(new WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size, textHeight))
 	}
 
 

@@ -43,7 +43,7 @@ private[serialization] object BoundaryRectSerializer {
 	}
 
 	def read(input: BoundaryRect_proto): BoundaryRect =
-		BoundaryRect(input.getLeft, input.getBottom, input.getRight, input.getTop)
+		new BoundaryRect(input.getLeft, input.getBottom, input.getRight, input.getTop)
 }
 
 private[serialization] object ReportLinkToPageSerializer {
@@ -57,7 +57,7 @@ private[serialization] object ReportLinkToPageSerializer {
 	}
 
 	def read(input: ReportLinkToPage_proto): ReportLinkToPage =
-		ReportLinkToPage(BoundaryRectSerializer.read(input.getBoundaryRect), input.getPageNbr, input.getLeft, input.getTop)
+		new ReportLinkToPage(BoundaryRectSerializer.read(input.getBoundaryRect), input.getPageNbr, input.getLeft, input.getTop)
 }
 
 private[serialization] object ReportLinkToUrlSerializer {
@@ -69,7 +69,7 @@ private[serialization] object ReportLinkToUrlSerializer {
 	}
 
 	def read(input: ReportLinkToUrl_proto): ReportLinkToUrl =
-		ReportLinkToUrl(BoundaryRectSerializer.read(input.getBoundaryRect), input.getUrl)
+		new ReportLinkToUrl(BoundaryRectSerializer.read(input.getBoundaryRect), input.getUrl)
 }
 
 private[serialization] object RFontAttributeSerializer {
@@ -195,7 +195,7 @@ private[serialization] object ReportTextSerializer {
 	}
 
 	def read(input: ReportText_proto): ReportText =
-		ReportText(RTextSerializer.read(input.getTxt), input.getX, input.getY)
+		new ReportText(RTextSerializer.read(input.getTxt), input.getX, input.getY)
 }
 
 
@@ -210,7 +210,7 @@ private[serialization] object ReportTextAlignedSerializer {
 	}
 
 	def read(input: ReportTextAligned_proto): ReportTextAligned =
-		ReportTextAligned(RTextSerializer.read(input.getRText), input.getX, input.getY, input.getIndex)
+		new ReportTextAligned(RTextSerializer.read(input.getRText), input.getX, input.getY, input.getIndex)
 }
 
 
@@ -308,7 +308,7 @@ private[serialization] object ReportRectangleSerializer {
 	}
 
 	def read(input: ReportRectangle_proto): ReportRectangle =
-		ReportRectangle(input.getX1, input.getY1, input.getX2, input.getY2, input.getRadius, OptionRColorSerializer.read(input.getColor), OptionRColorSerializer.read(input.getFillColor))
+		new ReportRectangle(input.getX1, input.getY1, input.getX2, input.getY2, input.getRadius, OptionRColorSerializer.read(input.getColor), OptionRColorSerializer.read(input.getFillColor))
 }
 
 
@@ -324,7 +324,7 @@ private[serialization] object DRectangleSerializer {
 	}
 
 	def read(input: DRectangle_proto): DRectangle =
-		DRectangle(input.getX1, input.getY1, input.getX2, input.getY2, input.getRadius)
+		new DRectangle(input.getX1, input.getY1, input.getX2, input.getY2, input.getRadius)
 }
 
 private[serialization] object ReportVerticalShadeSerializer {
