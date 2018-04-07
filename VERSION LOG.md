@@ -1,3 +1,11 @@
+## 1.0.0 (2018-04-)
+### Changes:
+* add newPageFct event where to add things before drawing the page (like background image)
+* add start() method to report - this method should be call before any drawing images or text
+
+### Bugs fixed:
+* optimize render memory - It can render tens of milions of pages/records without extra memory
+
 ## 1.0.0-RC.7 (2018-03-03)
 ### Changes:
 * change report.pgSize to report.pageLayout
