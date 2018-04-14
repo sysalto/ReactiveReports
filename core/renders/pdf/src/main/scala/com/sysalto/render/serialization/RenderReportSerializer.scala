@@ -403,7 +403,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			input match {
 				case item: DrawLine =>
 					builder.setDrawLineProto(DrawLineSerializer.write(item))
-				case item: renderReportTypes.PdfRectangle1 =>
+				case item: renderReportTypes.PdfRectangle =>
 					builder.setPdfRectangleProto(PdfRectangleSerializer.write(item))
 				case item: DrawStroke =>
 					builder.setDrawStrokeProto(DrawStrokeSerializer.write(item))
@@ -452,7 +452,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 	object PdfRectangleSerializer {
-		def write(input: renderReportTypes.PdfRectangle1): PdfRectangle_proto = {
+		def write(input: renderReportTypes.PdfRectangle): PdfRectangle_proto = {
 			val builder = PdfRectangle_proto.newBuilder()
 			builder.setX1(input.x1)
 			builder.setY1(input.y1)
@@ -471,11 +471,11 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(input: PdfRectangle_proto): renderReportTypes.PdfRectangle1 = {
+		def read(input: PdfRectangle_proto): renderReportTypes.PdfRectangle = {
 			val borderColor = if (input.getBorderColorCount == 0) None else Some(ReportColorSerializer.read(input.getBorderColor(0)))
 			val fillColor = if (input.getFillColorCount == 0) None else Some(ReportColorSerializer.read(input.getFillColor(0)))
 			val idPatternColor = if (input.getIdPatternColorCount == 0) None else Some(input.getIdPatternColor(0))
-			new renderReportTypes.PdfRectangle1(input.getX1, input.getY1, input.getX2, input.getY2,
+			new renderReportTypes.PdfRectangle(input.getX1, input.getY1, input.getX2, input.getY2,
 				input.getRadius, borderColor, fillColor, idPatternColor)
 		}
 	}
