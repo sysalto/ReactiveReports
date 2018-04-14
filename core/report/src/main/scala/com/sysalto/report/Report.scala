@@ -269,6 +269,11 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtPage.items += reportItem
 	}
 
+	def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = {
+		val reportItem = new DirectDrawRectangle(x, y, width, height)
+		crtPage.items += reportItem
+	}
+
 	/*
 		Draws a line between (x1,y1) and (x2,y2) with thickness lineWidth and color
 		x are horizontal coordinates and y vertical starting with 0 from the top

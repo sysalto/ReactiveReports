@@ -28,7 +28,7 @@ import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes._
 import com.sysalto.report.serialization.ReportProto.ReportItem_proto.FieldCase
 import com.sysalto.report.serialization.ReportProto._
-import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectFillStroke_proto}
+import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectDrawRectangle_proto, DirectFillStroke_proto}
 
 import scala.collection.mutable.ListBuffer
 
@@ -351,6 +351,21 @@ private[serialization] object DirectFillStrokeSerializer {
 }
 
 
+private[serialization] object DirectDrawRectangleSerializer {
+	def write(obj: DirectDrawRectangle): DirectDrawRectangle_proto = {
+		val builder = DirectDrawRectangle_proto.newBuilder()
+		builder.setX(obj.x)
+		builder.setY(obj.y)
+		builder.setWidth(obj.width)
+		builder.setHeight(obj.height)
+		builder.build()
+	}
+
+	def read(input: DirectDrawRectangle_proto): DirectDrawRectangle =
+		new DirectDrawRectangle(input.getX,input.getY,input.getWidth,input.getHeight)
+}
+
+
 private[serialization] object DRectangleSerializer {
 	def write(obj: DRectangle): DRectangle_proto = {
 		val builder = DRectangle_proto.newBuilder()
@@ -579,6 +594,10 @@ object ReportPageSerializer {
 				case obj: DirectFillStroke => {
 					val result = DirectFillStrokeSerializer.write(obj)
 					builderItem.setDirectFillStrokeProto(result)
+				}
+				case obj: DirectDrawRectangle => {
+					val result = DirectDrawRectangleSerializer.write(obj)
+					builderItem.setDirectDrawRectangleProto(result)
 				}
 				case _ => {
 					println("Unimplemented :" + item)

@@ -73,8 +73,12 @@ abstract class PdfUtil() {
 
 	def getTextWidth(cell: ReportCell): List[Float]
 
-	def directDrawMovePoint(x:Float, y:Float)
-	def directDrawLine(x:Float, y:Float)
+	def directDrawMovePoint(x: Float, y: Float)
+
+	def directDrawLine(x: Float, y: Float)
+
 	def directFillStroke(fill: Boolean, stroke: Boolean)
+
+	def directDrawRectangle(x: Float, y: Float, width: Float, height: Float)
 }
 

@@ -177,6 +177,10 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		graphicList += new renderReportTypes.DirectFillStroke(fill, stroke)
 	}
 
+	def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = {
+		graphicList += new renderReportTypes.DirectDrawRectangle(x,y,width,height)
+	}
+
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {
 		graphicList += new DrawArc(center, radius, startAngle, endAngle)
 	}

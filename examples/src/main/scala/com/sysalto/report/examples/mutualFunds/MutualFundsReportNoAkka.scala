@@ -352,6 +352,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.directDrawMovePoint(10,10)
 		report.directDrawLine(200,200)
 		report.directFillStroke(false,true)
+//		report.directDrawRectangle(100,100,200,200)
 
 		for (i<-1 to 1) {
 			println("I:"+i)

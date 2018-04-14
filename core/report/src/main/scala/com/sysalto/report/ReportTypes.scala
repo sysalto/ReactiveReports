@@ -195,12 +195,18 @@ object ReportTypes {
 		}
 	}
 
-	class DirectFillStroke(val fill: Boolean,val stroke: Boolean) extends ReportItem() {
+	class DirectFillStroke(val fill: Boolean, val stroke: Boolean) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directFillStroke(fill, stroke)
 		}
 	}
 
+
+	class DirectDrawRectangle(val x: Float,val y: Float,val width: Float,val height: Float) extends ReportItem() {
+		override def render(report: Report): Unit = {
+			report.pdfUtil.directDrawRectangle(x,y,width,height)
+		}
+	}
 
 	/*
 	vertical shade rectangle

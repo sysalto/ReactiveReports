@@ -122,4 +122,6 @@ class PdfNativeRender extends PdfUtil {
 	override def directDrawLine(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawLine(x, y)
 
 	override def directFillStroke(fill: Boolean, stroke: Boolean): Unit = pdfNativeGenerator.directFillStroke(fill,stroke)
+
+	override def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = pdfNativeGenerator.directDrawRectangle(x,y,width,height)
 }
