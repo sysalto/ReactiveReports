@@ -166,7 +166,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 	}
 
 	def drawMovePoint(x: Float, y: Float): Unit = {
-		graphicList += new renderReportTypes.DrawMovePoint(x, y)
+		graphicList += new renderReportTypes.DirectDrawMovePoint(x, y)
 	}
 
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {

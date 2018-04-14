@@ -88,7 +88,7 @@ object PdfDraw {
 		}
 	}
 
-	class DrawMovePoint(x: Float, y: Float) extends PdfGraphicFragment {
+	class DirectDrawMovePoint(x: Float, y: Float) extends PdfGraphicFragment {
 		override def content: String = {
 			s"""${x} ${y} m"""
 		}

@@ -28,6 +28,7 @@ import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes._
 import com.sysalto.report.serialization.ReportProto.ReportItem_proto.FieldCase
 import com.sysalto.report.serialization.ReportProto._
+import com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawMovePoint_proto
 
 import scala.collection.mutable.ListBuffer
 
@@ -311,16 +312,16 @@ private[serialization] object ReportRectangleSerializer {
 		new ReportRectangle(input.getX1, input.getY1, input.getX2, input.getY2, input.getRadius, OptionRColorSerializer.read(input.getColor), OptionRColorSerializer.read(input.getFillColor))
 }
 
-private[serialization] object DrawMovePointSerializer {
-	def write(obj: DrawMovePoint): DrawMovePoint_proto = {
-		val builder = DrawMovePoint_proto.newBuilder()
+private[serialization] object DirectDrawMovePointSerializer {
+	def write(obj: DirectDrawMovePoint): DirectDrawMovePoint_proto = {
+		val builder = DirectDrawMovePoint_proto.newBuilder()
 		builder.setX(obj.x)
 		builder.setY(obj.y)
 		builder.build()
 	}
 
-	def read(input: DrawMovePoint_proto): DrawMovePoint =
-		new DrawMovePoint(input.getX, input.getY)
+	def read(input: DirectDrawMovePoint_proto): DirectDrawMovePoint =
+		new DirectDrawMovePoint(input.getX, input.getY)
 }
 
 
@@ -541,9 +542,9 @@ object ReportPageSerializer {
 					val result = ReportBarChartSerializer.write(obj)
 					builderItem.setReportBarChart(result)
 				}
-				case obj: DrawMovePoint => {
-					val result = DrawMovePointSerializer.write(obj)
-					builderItem.setDrawMovePoint(result)
+				case obj: DirectDrawMovePoint => {
+					val result = DirectDrawMovePointSerializer.write(obj)
+					builderItem.setDirectDrawMovePoint(result)
 				}
 				case _ => {
 					println("Unimplemented :" + item)
@@ -570,7 +571,7 @@ object ReportPageSerializer {
 				case FieldCase.REPORTTEXTWRAP => ReportTextWrapSerializer.read(item.getReportTextWrap)
 				case FieldCase.REPORTPIECHART => ReportPieChartSerializer.read(item.getReportPieChart)
 				case FieldCase.REPORTBARCHART => ReportBarChartSerializer.read(item.getReportBarChart)
-				case FieldCase.DRAWMOVEPOINT => DrawMovePointSerializer.read(item.getDrawMovePoint)
+				case FieldCase.DIRECTDRAWMOVEPOINT => DirectDrawMovePointSerializer.read(item.getDirectDrawMovePoint)
 				case _ => null
 			}
 			reportItem.deltaY = item.getDeltaY

@@ -3,6 +3,7 @@ option optimize_for = SPEED;
 
 package com.sysalto.render.serialization;
 
+import "com/sysalto/report/serialization/common/report_common_proto.proto";
 
 message PdfBaseItem_proto {
     int64 id = 1;
@@ -127,7 +128,7 @@ message PdfGraphicFragment_proto {
         DrawStroke_proto drawStroke_proto = 4;
         PdfDrawImage_proto pdfDrawImage_proto = 5;
         DrawPieChart_proto drawPieChart_proto = 6;
-        DrawMovePoint_proto drawMovePoint_proto = 7;
+        com.sysalto.report.serialization.common.DirectDrawMovePoint_proto directDrawMovePoint_proto = 7;
     }
 }
 
@@ -204,10 +205,6 @@ message DrawPieChart_proto {
     RFont_proto font = 8;
 }
 
-message DrawMovePoint_proto {
-    float x = 1;
-    float y = 2;
-}
 
 message StringDouble_proto {
     string value1 = 1;

@@ -254,7 +254,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	def drawMovePoint(x: Float, y: Float): Unit = {
-		val reportItem = new DrawMovePoint(x, y)
+		val reportItem = new DirectDrawMovePoint(x, y)
 		crtPage.items += reportItem
 	}
 

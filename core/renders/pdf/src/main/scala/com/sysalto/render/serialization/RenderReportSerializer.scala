@@ -10,6 +10,7 @@ import com.sysalto.render.serialization.RenderProto._
 import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
 import com.sysalto.report.RFontAttribute
 import com.sysalto.report.reportTypes.{RFont, RFontFamily, ReportColor, ReportTxt}
+import com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawMovePoint_proto
 
 import scala.collection.mutable.ListBuffer
 
@@ -409,8 +410,8 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setPdfDrawImageProto(PdfDrawImageSerializer.write(item))
 				case item: renderReportTypes.DrawPieChart1 =>
 					builder.setDrawPieChartProto(DrawPieChartSerializer.write(item))
-				case item: renderReportTypes.DrawMovePoint =>
-					builder.setDrawMovePointProto(DrawMovePointSerializer.write(item))
+				case item: renderReportTypes.DirectDrawMovePoint =>
+					builder.setDirectDrawMovePointProto(DirectDrawMovePointSerializer.write(item))
 
 			}
 			builder.build()
@@ -433,8 +434,8 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case PdfGraphicFragment_proto.FieldCase.DRAWPIECHART_PROTO => {
 					DrawPieChartSerializer.read(input.getContent, input.getDrawPieChartProto)
 				}
-				case PdfGraphicFragment_proto.FieldCase.DRAWMOVEPOINT_PROTO=> {
-					DrawMovePointSerializer.read(input.getDrawMovePointProto)
+				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAWMOVEPOINT_PROTO=> {
+					DirectDrawMovePointSerializer.read(input.getDirectDrawMovePointProto)
 				}
 			}
 		}
@@ -521,16 +522,16 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 
-	private[serialization] object DrawMovePointSerializer {
-		def write(obj: renderReportTypes.DrawMovePoint): DrawMovePoint_proto = {
-			val builder = DrawMovePoint_proto.newBuilder()
+	private[serialization] object DirectDrawMovePointSerializer {
+		def write(obj: renderReportTypes.DirectDrawMovePoint): DirectDrawMovePoint_proto = {
+			val builder = DirectDrawMovePoint_proto.newBuilder()
 			builder.setX(obj.x)
 			builder.setY(obj.y)
 			builder.build()
 		}
 
-		def read( input: DrawMovePoint_proto): renderReportTypes.DrawMovePoint = {
-			val result = new renderReportTypes.DrawMovePoint(input.getX, input.getY)
+		def read( input: DirectDrawMovePoint_proto): renderReportTypes.DirectDrawMovePoint = {
+			val result = new renderReportTypes.DirectDrawMovePoint(input.getX, input.getY)
 			result
 		}
 	}

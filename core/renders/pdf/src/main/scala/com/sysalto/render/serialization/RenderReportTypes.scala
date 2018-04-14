@@ -222,7 +222,7 @@ class RenderReportTypes {
 	}
 
 
-	class DrawMovePoint(val x: Float, val y: Float) extends PdfGraphicFragment {
+	class DirectDrawMovePoint(val x: Float, val y: Float) extends PdfGraphicFragment {
 		override def content: String = {
 			s"""${x} ${y} m \n"""
 		}

@@ -183,7 +183,7 @@ object ReportTypes {
 		}
 	}
 
-	class DrawMovePoint(val x: Float,val y: Float) extends ReportItem() {
+	class DirectDrawMovePoint(val x: Float, val y: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawMovePoint(x, y - deltaY)
 		}

@@ -3,6 +3,7 @@ option optimize_for = SPEED;
 
 package com.sysalto.report.serialization;
 
+import "com/sysalto/report/serialization/common/report_common_proto.proto";
 
 message ReportPage_proto {
     repeated ReportItem_proto item = 1;
@@ -22,7 +23,7 @@ message ReportItem_proto {
         ReportLine_proto reportLine = 10;
         ReportRectangle_proto reportRectangle = 11;
         ReportVerticalShade_proto reportVerticalShade = 12;
-        DrawMovePoint_proto drawMovePoint = 13;
+        com.sysalto.report.serialization.common.DirectDrawMovePoint_proto directDrawMovePoint = 13;
     }
 }
 
@@ -196,11 +197,6 @@ message ReportRectangle_proto {
     float radius = 5;
     OptionRColor_proto color = 6;
     OptionRColor_proto fillColor = 7;
-}
-
-message DrawMovePoint_proto {
-    float x = 1;
-    float y = 2;
 }
 
 message OptionRColor_proto {
