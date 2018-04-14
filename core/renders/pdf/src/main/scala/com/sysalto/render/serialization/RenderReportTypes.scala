@@ -7,7 +7,7 @@ import java.nio.file.{Files, Paths}
 import java.util.zip.Deflater
 
 import com.sysalto.render.PdfChart
-import com.sysalto.render.PdfDraw.{PdfGraphicFragment, roundRectangle}
+import com.sysalto.render.PdfDraw.{DrawPoint, PdfGraphicFragment, roundRectangle}
 import com.sysalto.render.basic.PdfBasic._
 import com.sysalto.render.serialization.RenderProto.{PdfBaseItem_proto, PdfCatalog_proto}
 import com.sysalto.render.util.PageTree.PageNode
@@ -221,29 +221,6 @@ class RenderReportTypes {
 
 	}
 
-
-	class DirectDrawMovePoint(val x: Float, val y: Float) extends PdfGraphicFragment {
-		override def content: String = {
-			s"""${x} ${y} m \n"""
-		}
-	}
-
-	class DirectDrawLine(val x: Float, val y: Float) extends PdfGraphicFragment {
-		override def content: String = {
-			s"""${x} ${y} l \n"""
-		}
-	}
-
-	class DirectFillStroke(val fill: Boolean,val stroke: Boolean) extends PdfGraphicFragment {
-		override def content: String = {
-			(fill, stroke) match {
-				case (true, true) => "B\n"
-				case (true, false) => "f\n"
-				case (false, true) => "S\n"
-				case _ => ""
-			}
-		}
-	}
 
 	abstract class PdfAnnotation(id: Long) extends PdfBaseItem(id)
 
@@ -552,6 +529,88 @@ class RenderReportTypes {
 
 		override def content: String = contentStr
 	}
+
+
+	class DirectDrawMovePoint(val x: Float, val y: Float) extends PdfGraphicFragment {
+		override def content: String = {
+			s"""${x} ${y} m \n"""
+		}
+	}
+
+	class DirectDrawLine(val x: Float, val y: Float) extends PdfGraphicFragment {
+		override def content: String = {
+			s"""${x} ${y} l \n"""
+		}
+	}
+
+
+	class DirectFillStroke(val fill: Boolean, val stroke: Boolean) extends PdfGraphicFragment {
+		override def content: String = {
+			(fill, stroke) match {
+				case (true, true) => "B\n"
+				case (true, false) => "f\n"
+				case (false, true) => "S\n"
+				case _ => ""
+			}
+		}
+	}
+
+	class DirectSaveStatus() extends PdfGraphicFragment {
+		override def content: String = {
+			"q\n"
+		}
+	}
+
+	class DirectRestoreStatus() extends PdfGraphicFragment {
+		override def content: String = {
+			"Q\n"
+		}
+	}
+
+
+	class DirectColorBorder(borderColor: ReportColor) extends PdfGraphicFragment {
+		override def content: String = {
+			val color = ReportColor.convertColor(borderColor)
+			s"${color._1} ${color._2} ${color._3} RG\n"
+		}
+	}
+
+	class DirectColorFill(fillColor: ReportColor) extends PdfGraphicFragment {
+		override def content: String = {
+			val color = ReportColor.convertColor(fillColor)
+			s"${color._1} ${color._2} ${color._3} rg\n"
+		}
+	}
+
+	class DirectRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
+		override def content: String = {
+			s"""${x} ${y} ${width} ${height} re \n"""
+		}
+	}
+
+	class DirectClosePath() extends PdfGraphicFragment {
+		override def content: String = {
+			"h\n"
+		}
+	}
+
+	class DirectPattern(patternName: String) extends PdfGraphicFragment {
+		override def content: String = {
+			s"/Pattern cs /${patternName} scn"
+		}
+	}
+
+	class DirectDrawArc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float) extends PdfGraphicFragment {
+		override def content: String = {
+			val p0 = new DrawPoint((center.x + radius * Math.cos(startAngle)).toFloat, (center.y + radius * Math.sin(startAngle)).toFloat)
+			val lg = radius * 4 / 3.0 * Math.tan((endAngle - startAngle) * 0.25)
+			val p1 = new DrawPoint((p0.x - lg * Math.sin(startAngle)).toFloat, (p0.y + lg * Math.cos(startAngle)).toFloat)
+			val p3 = new DrawPoint((center.x + radius * Math.cos(endAngle)).toFloat, (center.y + radius * Math.sin(endAngle)).toFloat)
+			val p2 = new DrawPoint((p3.x + lg * Math.sin(endAngle)).toFloat, (p3.y - lg * Math.cos(endAngle)).toFloat)
+			s"""${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y} c \n"""
+		}
+	}
+
 
 	private[serialization] class PdfWriter(name: String) {
 		new File(name).delete()
