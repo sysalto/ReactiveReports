@@ -611,6 +611,12 @@ class RenderReportTypes {
 		}
 	}
 
+	class DirectDrawRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
+		override def content: String = {
+			s"""${x} ${y} ${width} ${height} re \n"""
+		}
+	}
+
 
 	private[serialization] class PdfWriter(name: String) {
 		new File(name).delete()
