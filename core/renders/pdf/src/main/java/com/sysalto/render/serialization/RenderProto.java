@@ -15505,6 +15505,32 @@ public final class RenderProto {
      */
     com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawMovePoint_protoOrBuilder getDirectDrawMovePointProtoOrBuilder();
 
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+     */
+    boolean hasDirectDrawLineProto();
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+     */
+    com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto getDirectDrawLineProto();
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+     */
+    com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_protoOrBuilder getDirectDrawLineProtoOrBuilder();
+
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+     */
+    boolean hasDirectFillStrokeProto();
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+     */
+    com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto getDirectFillStrokeProto();
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+     */
+    com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_protoOrBuilder getDirectFillStrokeProtoOrBuilder();
+
     public com.sysalto.render.serialization.RenderProto.PdfGraphicFragment_proto.FieldCase getFieldCase();
   }
   /**
@@ -15644,6 +15670,34 @@ public final class RenderProto {
               fieldCase_ = 7;
               break;
             }
+            case 66: {
+              com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.Builder subBuilder = null;
+              if (fieldCase_ == 8) {
+                subBuilder = ((com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_).toBuilder();
+              }
+              field_ =
+                  input.readMessage(com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_);
+                field_ = subBuilder.buildPartial();
+              }
+              fieldCase_ = 8;
+              break;
+            }
+            case 74: {
+              com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.Builder subBuilder = null;
+              if (fieldCase_ == 9) {
+                subBuilder = ((com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_).toBuilder();
+              }
+              field_ =
+                  input.readMessage(com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_);
+                field_ = subBuilder.buildPartial();
+              }
+              fieldCase_ = 9;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -15678,6 +15732,8 @@ public final class RenderProto {
       PDFDRAWIMAGE_PROTO(5),
       DRAWPIECHART_PROTO(6),
       DIRECTDRAWMOVEPOINT_PROTO(7),
+      DIRECTDRAWLINE_PROTO(8),
+      DIRECTFILLSTROKE_PROTO(9),
       FIELD_NOT_SET(0);
       private final int value;
       private FieldCase(int value) {
@@ -15699,6 +15755,8 @@ public final class RenderProto {
           case 5: return PDFDRAWIMAGE_PROTO;
           case 6: return DRAWPIECHART_PROTO;
           case 7: return DIRECTDRAWMOVEPOINT_PROTO;
+          case 8: return DIRECTDRAWLINE_PROTO;
+          case 9: return DIRECTFILLSTROKE_PROTO;
           case 0: return FIELD_NOT_SET;
           default: return null;
         }
@@ -15904,6 +15962,58 @@ public final class RenderProto {
       return com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawMovePoint_proto.getDefaultInstance();
     }
 
+    public static final int DIRECTDRAWLINE_PROTO_FIELD_NUMBER = 8;
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+     */
+    public boolean hasDirectDrawLineProto() {
+      return fieldCase_ == 8;
+    }
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+     */
+    public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto getDirectDrawLineProto() {
+      if (fieldCase_ == 8) {
+         return (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_;
+      }
+      return com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.getDefaultInstance();
+    }
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+     */
+    public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_protoOrBuilder getDirectDrawLineProtoOrBuilder() {
+      if (fieldCase_ == 8) {
+         return (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_;
+      }
+      return com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.getDefaultInstance();
+    }
+
+    public static final int DIRECTFILLSTROKE_PROTO_FIELD_NUMBER = 9;
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+     */
+    public boolean hasDirectFillStrokeProto() {
+      return fieldCase_ == 9;
+    }
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+     */
+    public com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto getDirectFillStrokeProto() {
+      if (fieldCase_ == 9) {
+         return (com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_;
+      }
+      return com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.getDefaultInstance();
+    }
+    /**
+     * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+     */
+    public com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_protoOrBuilder getDirectFillStrokeProtoOrBuilder() {
+      if (fieldCase_ == 9) {
+         return (com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_;
+      }
+      return com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -15936,6 +16046,12 @@ public final class RenderProto {
       }
       if (fieldCase_ == 7) {
         output.writeMessage(7, (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawMovePoint_proto) field_);
+      }
+      if (fieldCase_ == 8) {
+        output.writeMessage(8, (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_);
+      }
+      if (fieldCase_ == 9) {
+        output.writeMessage(9, (com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_);
       }
       unknownFields.writeTo(output);
     }
@@ -15971,6 +16087,14 @@ public final class RenderProto {
       if (fieldCase_ == 7) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(7, (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawMovePoint_proto) field_);
+      }
+      if (fieldCase_ == 8) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(8, (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_);
+      }
+      if (fieldCase_ == 9) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(9, (com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -16018,6 +16142,14 @@ public final class RenderProto {
           result = result && getDirectDrawMovePointProto()
               .equals(other.getDirectDrawMovePointProto());
           break;
+        case 8:
+          result = result && getDirectDrawLineProto()
+              .equals(other.getDirectDrawLineProto());
+          break;
+        case 9:
+          result = result && getDirectFillStrokeProto()
+              .equals(other.getDirectFillStrokeProto());
+          break;
         case 0:
         default:
       }
@@ -16058,6 +16190,14 @@ public final class RenderProto {
         case 7:
           hash = (37 * hash) + DIRECTDRAWMOVEPOINT_PROTO_FIELD_NUMBER;
           hash = (53 * hash) + getDirectDrawMovePointProto().hashCode();
+          break;
+        case 8:
+          hash = (37 * hash) + DIRECTDRAWLINE_PROTO_FIELD_NUMBER;
+          hash = (53 * hash) + getDirectDrawLineProto().hashCode();
+          break;
+        case 9:
+          hash = (37 * hash) + DIRECTFILLSTROKE_PROTO_FIELD_NUMBER;
+          hash = (53 * hash) + getDirectFillStrokeProto().hashCode();
           break;
         case 0:
         default:
@@ -16260,6 +16400,20 @@ public final class RenderProto {
             result.field_ = directDrawMovePointProtoBuilder_.build();
           }
         }
+        if (fieldCase_ == 8) {
+          if (directDrawLineProtoBuilder_ == null) {
+            result.field_ = field_;
+          } else {
+            result.field_ = directDrawLineProtoBuilder_.build();
+          }
+        }
+        if (fieldCase_ == 9) {
+          if (directFillStrokeProtoBuilder_ == null) {
+            result.field_ = field_;
+          } else {
+            result.field_ = directFillStrokeProtoBuilder_.build();
+          }
+        }
         result.fieldCase_ = fieldCase_;
         onBuilt();
         return result;
@@ -16329,6 +16483,14 @@ public final class RenderProto {
           }
           case DIRECTDRAWMOVEPOINT_PROTO: {
             mergeDirectDrawMovePointProto(other.getDirectDrawMovePointProto());
+            break;
+          }
+          case DIRECTDRAWLINE_PROTO: {
+            mergeDirectDrawLineProto(other.getDirectDrawLineProto());
+            break;
+          }
+          case DIRECTFILLSTROKE_PROTO: {
+            mergeDirectFillStrokeProto(other.getDirectFillStrokeProto());
             break;
           }
           case FIELD_NOT_SET: {
@@ -17260,6 +17422,278 @@ public final class RenderProto {
         fieldCase_ = 7;
         onChanged();;
         return directDrawMovePointProtoBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto, com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_protoOrBuilder> directDrawLineProtoBuilder_;
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+       */
+      public boolean hasDirectDrawLineProto() {
+        return fieldCase_ == 8;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+       */
+      public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto getDirectDrawLineProto() {
+        if (directDrawLineProtoBuilder_ == null) {
+          if (fieldCase_ == 8) {
+            return (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_;
+          }
+          return com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.getDefaultInstance();
+        } else {
+          if (fieldCase_ == 8) {
+            return directDrawLineProtoBuilder_.getMessage();
+          }
+          return com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+       */
+      public Builder setDirectDrawLineProto(com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto value) {
+        if (directDrawLineProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          field_ = value;
+          onChanged();
+        } else {
+          directDrawLineProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 8;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+       */
+      public Builder setDirectDrawLineProto(
+          com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.Builder builderForValue) {
+        if (directDrawLineProtoBuilder_ == null) {
+          field_ = builderForValue.build();
+          onChanged();
+        } else {
+          directDrawLineProtoBuilder_.setMessage(builderForValue.build());
+        }
+        fieldCase_ = 8;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+       */
+      public Builder mergeDirectDrawLineProto(com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto value) {
+        if (directDrawLineProtoBuilder_ == null) {
+          if (fieldCase_ == 8 &&
+              field_ != com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.getDefaultInstance()) {
+            field_ = com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.newBuilder((com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            field_ = value;
+          }
+          onChanged();
+        } else {
+          if (fieldCase_ == 8) {
+            directDrawLineProtoBuilder_.mergeFrom(value);
+          }
+          directDrawLineProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 8;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+       */
+      public Builder clearDirectDrawLineProto() {
+        if (directDrawLineProtoBuilder_ == null) {
+          if (fieldCase_ == 8) {
+            fieldCase_ = 0;
+            field_ = null;
+            onChanged();
+          }
+        } else {
+          if (fieldCase_ == 8) {
+            fieldCase_ = 0;
+            field_ = null;
+          }
+          directDrawLineProtoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+       */
+      public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.Builder getDirectDrawLineProtoBuilder() {
+        return getDirectDrawLineProtoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+       */
+      public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_protoOrBuilder getDirectDrawLineProtoOrBuilder() {
+        if ((fieldCase_ == 8) && (directDrawLineProtoBuilder_ != null)) {
+          return directDrawLineProtoBuilder_.getMessageOrBuilder();
+        } else {
+          if (fieldCase_ == 8) {
+            return (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_;
+          }
+          return com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto, com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_protoOrBuilder> 
+          getDirectDrawLineProtoFieldBuilder() {
+        if (directDrawLineProtoBuilder_ == null) {
+          if (!(fieldCase_ == 8)) {
+            field_ = com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.getDefaultInstance();
+          }
+          directDrawLineProtoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto, com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_protoOrBuilder>(
+                  (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawLine_proto) field_,
+                  getParentForChildren(),
+                  isClean());
+          field_ = null;
+        }
+        fieldCase_ = 8;
+        onChanged();;
+        return directDrawLineProtoBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto, com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_protoOrBuilder> directFillStrokeProtoBuilder_;
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+       */
+      public boolean hasDirectFillStrokeProto() {
+        return fieldCase_ == 9;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+       */
+      public com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto getDirectFillStrokeProto() {
+        if (directFillStrokeProtoBuilder_ == null) {
+          if (fieldCase_ == 9) {
+            return (com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_;
+          }
+          return com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.getDefaultInstance();
+        } else {
+          if (fieldCase_ == 9) {
+            return directFillStrokeProtoBuilder_.getMessage();
+          }
+          return com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+       */
+      public Builder setDirectFillStrokeProto(com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto value) {
+        if (directFillStrokeProtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          field_ = value;
+          onChanged();
+        } else {
+          directFillStrokeProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+       */
+      public Builder setDirectFillStrokeProto(
+          com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.Builder builderForValue) {
+        if (directFillStrokeProtoBuilder_ == null) {
+          field_ = builderForValue.build();
+          onChanged();
+        } else {
+          directFillStrokeProtoBuilder_.setMessage(builderForValue.build());
+        }
+        fieldCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+       */
+      public Builder mergeDirectFillStrokeProto(com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto value) {
+        if (directFillStrokeProtoBuilder_ == null) {
+          if (fieldCase_ == 9 &&
+              field_ != com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.getDefaultInstance()) {
+            field_ = com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.newBuilder((com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            field_ = value;
+          }
+          onChanged();
+        } else {
+          if (fieldCase_ == 9) {
+            directFillStrokeProtoBuilder_.mergeFrom(value);
+          }
+          directFillStrokeProtoBuilder_.setMessage(value);
+        }
+        fieldCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+       */
+      public Builder clearDirectFillStrokeProto() {
+        if (directFillStrokeProtoBuilder_ == null) {
+          if (fieldCase_ == 9) {
+            fieldCase_ = 0;
+            field_ = null;
+            onChanged();
+          }
+        } else {
+          if (fieldCase_ == 9) {
+            fieldCase_ = 0;
+            field_ = null;
+          }
+          directFillStrokeProtoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+       */
+      public com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.Builder getDirectFillStrokeProtoBuilder() {
+        return getDirectFillStrokeProtoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+       */
+      public com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_protoOrBuilder getDirectFillStrokeProtoOrBuilder() {
+        if ((fieldCase_ == 9) && (directFillStrokeProtoBuilder_ != null)) {
+          return directFillStrokeProtoBuilder_.getMessageOrBuilder();
+        } else {
+          if (fieldCase_ == 9) {
+            return (com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_;
+          }
+          return com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto, com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_protoOrBuilder> 
+          getDirectFillStrokeProtoFieldBuilder() {
+        if (directFillStrokeProtoBuilder_ == null) {
+          if (!(fieldCase_ == 9)) {
+            field_ = com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.getDefaultInstance();
+          }
+          directFillStrokeProtoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto, com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_protoOrBuilder>(
+                  (com.sysalto.report.serialization.common.ReportCommonProto.DirectFillStroke_proto) field_,
+                  getParentForChildren(),
+                  isClean());
+          field_ = null;
+        }
+        fieldCase_ = 9;
+        onChanged();;
+        return directFillStrokeProtoBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -30996,7 +31430,7 @@ public final class RenderProto {
       "ColorShadding_proto\022\n\n\002x0\030\001 \001(\002\022\n\n\002y0\030\002 " +
       "\001(\002\022\n\n\002x1\030\003 \001(\002\022\n\n\002y1\030\004 \001(\002\022\035\n\025idPdfShad" +
       "dingFctColor\030\005 \001(\003\"*\n\021PdfGPattern_proto\022" +
-      "\025\n\ridPdfShadding\030\001 \001(\003\"\265\004\n\030PdfGraphicFra" +
+      "\025\n\ridPdfShadding\030\001 \001(\003\"\367\005\n\030PdfGraphicFra" +
       "gment_proto\022\017\n\007content\030\001 \001(\t\022J\n\016drawLine" +
       "_proto\030\002 \001(\01320.com.sysalto.render.serial" +
       "ization.DrawLine_protoH\000\022R\n\022pdfRectangle" +
@@ -31010,63 +31444,68 @@ public final class RenderProto {
       "r.serialization.DrawPieChart_protoH\000\022g\n\031" +
       "directDrawMovePoint_proto\030\007 \001(\0132B.com.sy" +
       "salto.report.serialization.common.Direct" +
-      "DrawMovePoint_protoH\000B\007\n\005field\"\022\n\020DrawSt" +
-      "roke_proto\"\376\001\n\022PdfRectangle_proto\022\n\n\002x2\030" +
-      "\001 \001(\003\022\016\n\006radius\030\002 \001(\002\022\026\n\016idPatternColor\030" +
-      "\003 \003(\003\022\n\n\002y1\030\004 \001(\003\022\n\n\002y2\030\005 \001(\003\022\n\n\002x1\030\006 \001(" +
-      "\003\022H\n\013borderColor\030\007 \003(\01323.com.sysalto.ren" +
-      "der.serialization.ReportColor_proto\022F\n\tf" +
-      "illColor\030\010 \003(\01323.com.sysalto.render.seri" +
-      "alization.ReportColor_proto\"1\n\022LineDashT" +
-      "ype_proto\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002 \001(\005\"\230" +
-      "\001\n\016DrawLine_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(" +
-      "\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\022\n\nvlineWidth\030" +
-      "\005 \001(\002\022B\n\005color\030\006 \001(\01323.com.sysalto.rende" +
-      "r.serialization.ReportColor_proto\"^\n\022Pdf" +
-      "DrawImage_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\r\n" +
-      "\005scale\030\003 \001(\002\022\022\n\nidPdfImage\030\004 \001(\003\022\017\n\007opac" +
-      "ity\030\005 \003(\002\"@\n\014RColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001" +
-      "g\030\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"\267\001\n\013" +
-      "RFont_proto\022\014\n\004size\030\001 \001(\005\022\020\n\010fontName\030\002 " +
-      "\001(\t\022I\n\tattribute\030\003 \001(\01626.com.sysalto.ren" +
-      "der.serialization.RFontAttribute_proto\022=" +
-      "\n\005color\030\004 \001(\0132..com.sysalto.render.seria" +
-      "lization.RColor_proto\"\331\001\n\022DrawPieChart_p" +
-      "roto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022B\n\004data\030\003 \003(\013" +
-      "24.com.sysalto.render.serialization.Stri" +
-      "ngDouble_proto\022\016\n\006height\030\004 \001(\002\022\r\n\005title\030" +
-      "\006 \001(\t\022\r\n\005width\030\007 \001(\002\022;\n\004font\030\010 \001(\0132-.com" +
-      ".sysalto.render.serialization.RFont_prot" +
-      "o\"4\n\022StringDouble_proto\022\016\n\006value1\030\001 \001(\t\022" +
-      "\016\n\006value2\030\002 \001(\001\"\202\002\n\034EmbeddedFontDescript" +
-      "or_proto\022F\n\nglyphWidth\030\001 \001(\01322.com.sysal" +
-      "to.render.serialization.GlyphWidth_proto" +
-      "\022\021\n\tcapHeight\030\002 \001(\005\022B\n\010fontBBox\030\003 \001(\01320." +
-      "com.sysalto.render.serialization.FontBBo" +
-      "x_proto\022\016\n\006ascent\030\004 \001(\005\022\r\n\005flags\030\005 \001(\005\022\023" +
-      "\n\013italicAngle\030\006 \001(\005\022\017\n\007descent\030\007 \001(\005\"J\n\020" +
-      "GlyphWidth_proto\022\021\n\tfirstChar\030\001 \001(\005\022\020\n\010l" +
-      "astChar\030\002 \001(\005\022\021\n\twidthList\030\003 \003(\005\"b\n\016Font" +
-      "BBox_proto\022\022\n\nlowerLeftX\030\001 \001(\005\022\022\n\nlowerL" +
-      "eftY\030\002 \001(\005\022\023\n\013upperRightX\030\003 \001(\005\022\023\n\013upper" +
-      "RightY\030\004 \001(\005\"\207\001\n\023PdfFontStream_proto\022\020\n\010" +
-      "fontName\030\001 \001(\t\022F\n\nfontMetric\030\002 \001(\01322.com" +
-      ".sysalto.render.serialization.FontMetric" +
-      "_proto\022\026\n\016pdfCompression\030\003 \001(\010\"\306\002\n\020FontM" +
-      "etric_proto\022\020\n\010fontName\030\001 \001(\t\022P\n\007fontMap" +
-      "\030\002 \003(\0132?.com.sysalto.render.serializatio" +
-      "n.FontMetric_proto.FontMapEntry\022F\n\nfontH" +
-      "eight\030\003 \001(\01322.com.sysalto.render.seriali" +
-      "zation.FloatFloat_proto\022V\n\016fontDescripto" +
-      "r\030\004 \003(\0132>.com.sysalto.render.serializati" +
-      "on.EmbeddedFontDescriptor_proto\032.\n\014FontM" +
-      "apEntry\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030\002 \001(\002:\0028\001\"" +
-      "2\n\020FloatFloat_proto\022\016\n\006value1\030\001 \001(\002\022\016\n\006v" +
-      "alue2\030\002 \001(\002\"G\n\027PdfFontDescriptor_proto\022\027" +
-      "\n\017idPdfFontStream\030\001 \001(\003\022\023\n\013fontKeyName\030\002" +
-      " \001(\t*I\n\024RFontAttribute_proto\022\n\n\006NORMAL\020\000" +
-      "\022\010\n\004BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD_ITALIC\020\003B" +
-      "\002H\001b\006proto3"
+      "DrawMovePoint_protoH\000\022]\n\024directDrawLine_" +
+      "proto\030\010 \001(\0132=.com.sysalto.report.seriali" +
+      "zation.common.DirectDrawLine_protoH\000\022a\n\026" +
+      "directFillStroke_proto\030\t \001(\0132?.com.sysal" +
+      "to.report.serialization.common.DirectFil" +
+      "lStroke_protoH\000B\007\n\005field\"\022\n\020DrawStroke_p" +
+      "roto\"\376\001\n\022PdfRectangle_proto\022\n\n\002x2\030\001 \001(\003\022" +
+      "\016\n\006radius\030\002 \001(\002\022\026\n\016idPatternColor\030\003 \003(\003\022" +
+      "\n\n\002y1\030\004 \001(\003\022\n\n\002y2\030\005 \001(\003\022\n\n\002x1\030\006 \001(\003\022H\n\013b" +
+      "orderColor\030\007 \003(\01323.com.sysalto.render.se" +
+      "rialization.ReportColor_proto\022F\n\tfillCol" +
+      "or\030\010 \003(\01323.com.sysalto.render.serializat" +
+      "ion.ReportColor_proto\"1\n\022LineDashType_pr" +
+      "oto\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002 \001(\005\"\230\001\n\016Dra" +
+      "wLine_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x" +
+      "2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\022\n\nvlineWidth\030\005 \001(\002\022" +
+      "B\n\005color\030\006 \001(\01323.com.sysalto.render.seri" +
+      "alization.ReportColor_proto\"^\n\022PdfDrawIm" +
+      "age_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\r\n\005scale" +
+      "\030\003 \001(\002\022\022\n\nidPdfImage\030\004 \001(\003\022\017\n\007opacity\030\005 " +
+      "\003(\002\"@\n\014RColor_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001g\030\002 \001(" +
+      "\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacity\030\004 \001(\002\"\267\001\n\013RFont_" +
+      "proto\022\014\n\004size\030\001 \001(\005\022\020\n\010fontName\030\002 \001(\t\022I\n" +
+      "\tattribute\030\003 \001(\01626.com.sysalto.render.se" +
+      "rialization.RFontAttribute_proto\022=\n\005colo" +
+      "r\030\004 \001(\0132..com.sysalto.render.serializati" +
+      "on.RColor_proto\"\331\001\n\022DrawPieChart_proto\022\t" +
+      "\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022B\n\004data\030\003 \003(\01324.com" +
+      ".sysalto.render.serialization.StringDoub" +
+      "le_proto\022\016\n\006height\030\004 \001(\002\022\r\n\005title\030\006 \001(\t\022" +
+      "\r\n\005width\030\007 \001(\002\022;\n\004font\030\010 \001(\0132-.com.sysal" +
+      "to.render.serialization.RFont_proto\"4\n\022S" +
+      "tringDouble_proto\022\016\n\006value1\030\001 \001(\t\022\016\n\006val" +
+      "ue2\030\002 \001(\001\"\202\002\n\034EmbeddedFontDescriptor_pro" +
+      "to\022F\n\nglyphWidth\030\001 \001(\01322.com.sysalto.ren" +
+      "der.serialization.GlyphWidth_proto\022\021\n\tca" +
+      "pHeight\030\002 \001(\005\022B\n\010fontBBox\030\003 \001(\01320.com.sy" +
+      "salto.render.serialization.FontBBox_prot" +
+      "o\022\016\n\006ascent\030\004 \001(\005\022\r\n\005flags\030\005 \001(\005\022\023\n\013ital" +
+      "icAngle\030\006 \001(\005\022\017\n\007descent\030\007 \001(\005\"J\n\020GlyphW" +
+      "idth_proto\022\021\n\tfirstChar\030\001 \001(\005\022\020\n\010lastCha" +
+      "r\030\002 \001(\005\022\021\n\twidthList\030\003 \003(\005\"b\n\016FontBBox_p" +
+      "roto\022\022\n\nlowerLeftX\030\001 \001(\005\022\022\n\nlowerLeftY\030\002" +
+      " \001(\005\022\023\n\013upperRightX\030\003 \001(\005\022\023\n\013upperRightY" +
+      "\030\004 \001(\005\"\207\001\n\023PdfFontStream_proto\022\020\n\010fontNa" +
+      "me\030\001 \001(\t\022F\n\nfontMetric\030\002 \001(\01322.com.sysal" +
+      "to.render.serialization.FontMetric_proto" +
+      "\022\026\n\016pdfCompression\030\003 \001(\010\"\306\002\n\020FontMetric_" +
+      "proto\022\020\n\010fontName\030\001 \001(\t\022P\n\007fontMap\030\002 \003(\013" +
+      "2?.com.sysalto.render.serialization.Font" +
+      "Metric_proto.FontMapEntry\022F\n\nfontHeight\030" +
+      "\003 \001(\01322.com.sysalto.render.serialization" +
+      ".FloatFloat_proto\022V\n\016fontDescriptor\030\004 \003(" +
+      "\0132>.com.sysalto.render.serialization.Emb" +
+      "eddedFontDescriptor_proto\032.\n\014FontMapEntr" +
+      "y\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030\002 \001(\002:\0028\001\"2\n\020Flo" +
+      "atFloat_proto\022\016\n\006value1\030\001 \001(\002\022\016\n\006value2\030" +
+      "\002 \001(\002\"G\n\027PdfFontDescriptor_proto\022\027\n\017idPd" +
+      "fFontStream\030\001 \001(\003\022\023\n\013fontKeyName\030\002 \001(\t*I" +
+      "\n\024RFontAttribute_proto\022\n\n\006NORMAL\020\000\022\010\n\004BO" +
+      "LD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD_ITALIC\020\003B\002H\001b\006p" +
+      "roto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -31188,7 +31627,7 @@ public final class RenderProto {
     internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_render_serialization_PdfGraphicFragment_proto_descriptor,
-        new java.lang.String[] { "Content", "DrawLineProto", "PdfRectangleProto", "DrawStrokeProto", "PdfDrawImageProto", "DrawPieChartProto", "DirectDrawMovePointProto", "Field", });
+        new java.lang.String[] { "Content", "DrawLineProto", "PdfRectangleProto", "DrawStrokeProto", "PdfDrawImageProto", "DrawPieChartProto", "DirectDrawMovePointProto", "DirectDrawLineProto", "DirectFillStrokeProto", "Field", });
     internal_static_com_sysalto_render_serialization_DrawStroke_proto_descriptor =
       getDescriptor().getMessageTypes().get(18);
     internal_static_com_sysalto_render_serialization_DrawStroke_proto_fieldAccessorTable = new

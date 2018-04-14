@@ -129,6 +129,8 @@ message PdfGraphicFragment_proto {
         PdfDrawImage_proto pdfDrawImage_proto = 5;
         DrawPieChart_proto drawPieChart_proto = 6;
         com.sysalto.report.serialization.common.DirectDrawMovePoint_proto directDrawMovePoint_proto = 7;
+        com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;
+        com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;
     }
 }
 

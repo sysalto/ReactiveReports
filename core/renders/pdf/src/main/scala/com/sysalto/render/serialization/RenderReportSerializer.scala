@@ -9,8 +9,9 @@ import scala.collection.JavaConverters._
 import com.sysalto.render.serialization.RenderProto._
 import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
 import com.sysalto.report.RFontAttribute
+import com.sysalto.report.ReportTypes.DirectFillStroke
 import com.sysalto.report.reportTypes.{RFont, RFontFamily, ReportColor, ReportTxt}
-import com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawMovePoint_proto
+import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectFillStroke_proto}
 
 import scala.collection.mutable.ListBuffer
 
@@ -412,7 +413,10 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setDrawPieChartProto(DrawPieChartSerializer.write(item))
 				case item: renderReportTypes.DirectDrawMovePoint =>
 					builder.setDirectDrawMovePointProto(DirectDrawMovePointSerializer.write(item))
-
+				case item: renderReportTypes.DirectDrawLine =>
+					builder.setDirectDrawLineProto(DirectDrawLineSerializer.write(item))
+				case item: renderReportTypes.DirectFillStroke =>
+					builder.setDirectFillStrokeProto(DirectFillStrokeSerializer.write(item))
 			}
 			builder.build()
 		}
@@ -434,8 +438,14 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case PdfGraphicFragment_proto.FieldCase.DRAWPIECHART_PROTO => {
 					DrawPieChartSerializer.read(input.getContent, input.getDrawPieChartProto)
 				}
-				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAWMOVEPOINT_PROTO=> {
+				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAWMOVEPOINT_PROTO => {
 					DirectDrawMovePointSerializer.read(input.getDirectDrawMovePointProto)
+				}
+				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAWLINE_PROTO => {
+					DirectDrawLineSerializer.read(input.getDirectDrawLineProto)
+				}
+				case PdfGraphicFragment_proto.FieldCase.DIRECTFILLSTROKE_PROTO => {
+					DirectFillStrokeSerializer.read(input.getDirectFillStrokeProto)
 				}
 			}
 		}
@@ -530,10 +540,36 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read( input: DirectDrawMovePoint_proto): renderReportTypes.DirectDrawMovePoint = {
+		def read(input: DirectDrawMovePoint_proto): renderReportTypes.DirectDrawMovePoint = {
 			val result = new renderReportTypes.DirectDrawMovePoint(input.getX, input.getY)
 			result
 		}
+	}
+
+	private[serialization] object DirectDrawLineSerializer {
+		def write(obj: renderReportTypes.DirectDrawLine): DirectDrawLine_proto = {
+			val builder = DirectDrawLine_proto.newBuilder()
+			builder.setX(obj.x)
+			builder.setY(obj.y)
+			builder.build()
+		}
+
+		def read(input: DirectDrawLine_proto): renderReportTypes.DirectDrawLine = {
+			val result = new renderReportTypes.DirectDrawLine(input.getX, input.getY)
+			result
+		}
+	}
+
+	private[serialization] object DirectFillStrokeSerializer {
+		def write(obj: renderReportTypes.DirectFillStroke): DirectFillStroke_proto = {
+			val builder = DirectFillStroke_proto.newBuilder()
+			builder.setFill(obj.fill)
+			builder.setStroke(obj.stroke)
+			builder.build()
+		}
+
+		def read(input: DirectFillStroke_proto): renderReportTypes.DirectFillStroke =
+			new renderReportTypes.DirectFillStroke(input.getFill, input.getStroke)
 	}
 
 	object RFontAttributeSerializer {

@@ -28,7 +28,7 @@ import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes._
 import com.sysalto.report.serialization.ReportProto.ReportItem_proto.FieldCase
 import com.sysalto.report.serialization.ReportProto._
-import com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawMovePoint_proto
+import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectFillStroke_proto}
 
 import scala.collection.mutable.ListBuffer
 
@@ -325,6 +325,32 @@ private[serialization] object DirectDrawMovePointSerializer {
 }
 
 
+private[serialization] object DirectDrawLineSerializer {
+	def write(obj: DirectDrawLine): DirectDrawLine_proto = {
+		val builder = DirectDrawLine_proto.newBuilder()
+		builder.setX(obj.x)
+		builder.setY(obj.y)
+		builder.build()
+	}
+
+	def read(input: DirectDrawLine_proto): DirectDrawLine =
+		new DirectDrawLine(input.getX, input.getY)
+}
+
+
+private[serialization] object DirectFillStrokeSerializer {
+	def write(obj: DirectFillStroke): DirectFillStroke_proto = {
+		val builder = DirectFillStroke_proto.newBuilder()
+		builder.setFill(obj.fill)
+		builder.setStroke(obj.stroke)
+		builder.build()
+	}
+
+	def read(input: DirectFillStroke_proto): DirectFillStroke =
+		new DirectFillStroke(input.getFill, input.getStroke)
+}
+
+
 private[serialization] object DRectangleSerializer {
 	def write(obj: DRectangle): DRectangle_proto = {
 		val builder = DRectangle_proto.newBuilder()
@@ -546,6 +572,14 @@ object ReportPageSerializer {
 					val result = DirectDrawMovePointSerializer.write(obj)
 					builderItem.setDirectDrawMovePoint(result)
 				}
+				case obj: DirectDrawLine => {
+					val result = DirectDrawLineSerializer.write(obj)
+					builderItem.setDirectDrawLine(result)
+				}
+				case obj: DirectFillStroke => {
+					val result = DirectFillStrokeSerializer.write(obj)
+					builderItem.setDirectFillStrokeProto(result)
+				}
 				case _ => {
 					println("Unimplemented :" + item)
 				}
@@ -572,6 +606,8 @@ object ReportPageSerializer {
 				case FieldCase.REPORTPIECHART => ReportPieChartSerializer.read(item.getReportPieChart)
 				case FieldCase.REPORTBARCHART => ReportBarChartSerializer.read(item.getReportBarChart)
 				case FieldCase.DIRECTDRAWMOVEPOINT => DirectDrawMovePointSerializer.read(item.getDirectDrawMovePoint)
+				case FieldCase.DIRECTDRAWLINE => DirectDrawLineSerializer.read(item.getDirectDrawLine)
+				case FieldCase.DIRECTFILLSTROKE_PROTO => DirectFillStrokeSerializer.read(item.getDirectFillStrokeProto)
 				case _ => null
 			}
 			reportItem.deltaY = item.getDeltaY

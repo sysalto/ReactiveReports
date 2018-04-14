@@ -253,8 +253,19 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtPage.items += reportItem
 	}
 
-	def drawMovePoint(x: Float, y: Float): Unit = {
+	def directDrawMovePoint(x: Float, y: Float): Unit = {
 		val reportItem = new DirectDrawMovePoint(x, y)
+		crtPage.items += reportItem
+	}
+
+	def directDrawLine(x: Float, y: Float): Unit = {
+		val reportItem = new DirectDrawLine(x, y)
+		crtPage.items += reportItem
+	}
+
+
+	def directFillStroke(fill: Boolean, stroke: Boolean): Unit = {
+		val reportItem = new DirectFillStroke(fill, stroke)
 		crtPage.items += reportItem
 	}
 

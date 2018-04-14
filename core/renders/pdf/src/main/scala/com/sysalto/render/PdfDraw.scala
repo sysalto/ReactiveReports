@@ -88,11 +88,7 @@ object PdfDraw {
 		}
 	}
 
-	class DirectDrawMovePoint(x: Float, y: Float) extends PdfGraphicFragment {
-		override def content: String = {
-			s"""${x} ${y} m"""
-		}
-	}
+
 
 	class DrawLine(val x1: Float, val y1: Float, val x2: Float, val y2: Float, val vlineWidth: Float, val color: ReportColor, lineDashType: Option[LineDashType]) extends PdfGraphicFragment {
 		override def content: String = {

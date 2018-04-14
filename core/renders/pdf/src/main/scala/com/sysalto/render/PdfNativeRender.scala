@@ -118,5 +118,8 @@ class PdfNativeRender extends PdfUtil {
 
 	override def getTextWidth(cell: ReportCell): List[Float] = pdfNativeGenerator.getTextWidth(cell)
 
-	override def drawMovePoint(x: Float, y: Float): Unit = pdfNativeGenerator.drawMovePoint(x, y)
+	override def directDrawMovePoint(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawMovePoint(x, y)
+	override def directDrawLine(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawLine(x, y)
+
+	override def directFillStroke(fill: Boolean, stroke: Boolean): Unit = pdfNativeGenerator.directFillStroke(fill,stroke)
 }

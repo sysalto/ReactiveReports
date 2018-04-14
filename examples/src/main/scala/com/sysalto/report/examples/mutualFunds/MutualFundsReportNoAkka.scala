@@ -349,7 +349,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		}
 		val t1=System.currentTimeMillis()
 		report.start()
-		report.drawMovePoint(10,10)
+		report.directDrawMovePoint(10,10)
+		report.directDrawLine(200,200)
+		report.directFillStroke(false,true)
+		
 		for (i<-1 to 1) {
 			println("I:"+i)
 			if (i>1) {
@@ -374,7 +377,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 	def runReport(): Unit = {
 		implicit val pdfFactory:PdfFactory = new PdfNativeFactory()
-		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
+		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE,false)
 		val fontFamily = RFontFamily(name = "Roboto",
 			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
 			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),

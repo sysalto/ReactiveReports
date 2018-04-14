@@ -59,7 +59,7 @@ object ReportTypes {
 	/*
 	holds current position (page number and vertical coordinate y)
 	 */
-	class ReportPosition(val pageNbr: Long,val y: Float) {
+	class ReportPosition(val pageNbr: Long, val y: Float) {
 		def <(pos1: ReportPosition): Boolean = {
 			if (this.pageNbr < pos1.pageNbr) {
 				return true
@@ -81,12 +81,12 @@ object ReportTypes {
 		private[report] def render(report: Report)
 	}
 
-	private[report]  class ReportPage(val items: ListBuffer[ReportItem])
+	private[report] class ReportPage(val items: ListBuffer[ReportItem])
 
 	/*
 		link to page
  */
-	class ReportLinkToPage(val boundaryRect: BoundaryRect,val pageNbr: Long,val left: Int,val top: Int) extends ReportItem() {
+	class ReportLinkToPage(val boundaryRect: BoundaryRect, val pageNbr: Long, val left: Int, val top: Int) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.linkToPage(boundaryRect, pageNbr, left, top)
@@ -96,7 +96,7 @@ object ReportTypes {
 	/*
 	link to url
 */
-	class ReportLinkToUrl(val boundaryRect: BoundaryRect,val url: String) extends ReportItem() {
+	class ReportLinkToUrl(val boundaryRect: BoundaryRect, val url: String) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.linkToUrl(boundaryRect, url)
@@ -106,7 +106,7 @@ object ReportTypes {
 	/*
 	draws a text at (x,y)
 	 */
-	class ReportText(val txt: ReportTxt,val x: Float,val y: Float) extends ReportItem() {
+	class ReportText(val txt: ReportTxt, val x: Float, val y: Float) extends ReportItem() {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.text(txt, x, y - deltaY)
@@ -116,7 +116,7 @@ object ReportTypes {
 	/*
 	draws a text align at index at the point(x,y)
 	 */
-	class ReportTextAligned(val rText: ReportTxt,val  x: Float,val y: Float,val index: Int) extends ReportItem() {
+	class ReportTextAligned(val rText: ReportTxt, val x: Float, val y: Float, val index: Int) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.textAlignedAtPosition(rText, x, y - deltaY, index)
 
@@ -127,7 +127,7 @@ object ReportTypes {
 	text wrap class
 	 */
 	class ReportTextWrap(val text: List[ReportTxt],
-	                     val x0: Float,val y0: Float,val x1: Float,val y1: Float,
+	                     val x0: Float, val y0: Float, val x1: Float, val y1: Float,
 	                     val wrapAlign: WrapAlign.Value) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY, wrapAlign, simulate = false)
@@ -138,8 +138,8 @@ object ReportTypes {
 	/*
 	pie chart class
 	 */
-	class ReportPieChart(val font: RFont,val title: String,val data: List[(String, Double)],
-	                     val x0: Float,val y0: Float,val width: Float,val height: Float) extends ReportItem() {
+	class ReportPieChart(val font: RFont, val title: String, val data: List[(String, Double)],
+	                     val x0: Float, val y0: Float, val width: Float, val height: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawPieChart(font, title, data, x0, y0 - deltaY, width, height)
 		}
@@ -148,8 +148,8 @@ object ReportTypes {
 	/*
 	bar chart class
 	 */
-	class ReportBarChart(val title: String,val xLabel: String,val yLabel: String,val data: List[(Double, String, String)],
-	                     val x0: Float,val y0: Float,val width: Float,val height: Float) extends ReportItem() {
+	class ReportBarChart(val title: String, val xLabel: String, val yLabel: String, val data: List[(Double, String, String)],
+	                     val x0: Float, val y0: Float, val width: Float, val height: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawBarChart(title, xLabel, yLabel, data, x0, y0 - deltaY, width, height)
 		}
@@ -158,7 +158,7 @@ object ReportTypes {
 	/*
 	image class
 	 */
-	class ReportImage(val file: String,val x: Float,val y: Float,val width: Float,val height: Float,val opacity: Float) extends ReportItem() {
+	class ReportImage(val file: String, val x: Float, val y: Float, val width: Float, val height: Float, val opacity: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawImage(file, x, y - deltaY, width, height, opacity)
 		}
@@ -167,7 +167,7 @@ object ReportTypes {
 	/*
 	line class
 	 */
-	class ReportLine(val x1: Float = 0,val y1: Float = -1,val x2: Float = -1,val y2: Float = -1,val lineWidth: Float,val  color: ReportColor,val lineDashType: Option[LineDashType]) extends ReportItem() {
+	class ReportLine(val x1: Float = 0, val y1: Float = -1, val x2: Float = -1, val y2: Float = -1, val lineWidth: Float, val color: ReportColor, val lineDashType: Option[LineDashType]) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.line(x1, y1 - deltaY, x2, y2 - deltaY, lineWidth, color, lineDashType)
 		}
@@ -185,14 +185,27 @@ object ReportTypes {
 
 	class DirectDrawMovePoint(val x: Float, val y: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
-			report.pdfUtil.drawMovePoint(x, y - deltaY)
+			report.pdfUtil.directDrawMovePoint(x, y - deltaY)
 		}
 	}
+
+	class DirectDrawLine(val x: Float, val y: Float) extends ReportItem() {
+		override def render(report: Report): Unit = {
+			report.pdfUtil.directDrawLine(x, y - deltaY)
+		}
+	}
+
+	class DirectFillStroke(val fill: Boolean,val stroke: Boolean) extends ReportItem() {
+		override def render(report: Report): Unit = {
+			report.pdfUtil.directFillStroke(fill, stroke)
+		}
+	}
+
 
 	/*
 	vertical shade rectangle
 	 */
-	class ReportVerticalShade(val rectangle: DRectangle,val from: ReportColor,val to: ReportColor) extends ReportItem() {
+	class ReportVerticalShade(val rectangle: DRectangle, val from: ReportColor, val to: ReportColor) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.verticalShade(rectangle, from, to)
 		}
@@ -200,9 +213,9 @@ object ReportTypes {
 
 
 	// two classes for cut and paste (for keep band together)
-	case class ReportCheckpoint(val itemPos: Int,val yCrt: Float)
+	case class ReportCheckpoint(val itemPos: Int, val yCrt: Float)
 
-	case class ReportCut(val yCrt: Float,val list: Seq[ReportItem])
+	case class ReportCut(val yCrt: Float, val list: Seq[ReportItem])
 
 }
 

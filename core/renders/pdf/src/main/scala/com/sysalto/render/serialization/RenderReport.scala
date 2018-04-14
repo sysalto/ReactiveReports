@@ -165,8 +165,16 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompr
 		graphicList += new renderReportTypes.PdfRectangle1(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, idPaternColor)
 	}
 
-	def drawMovePoint(x: Float, y: Float): Unit = {
+	def directDrawMovePoint(x: Float, y: Float): Unit = {
 		graphicList += new renderReportTypes.DirectDrawMovePoint(x, y)
+	}
+
+	def directDrawLine(x: Float, y: Float): Unit = {
+		graphicList += new renderReportTypes.DirectDrawLine(x, y)
+	}
+
+	def directFillStroke(fill: Boolean, stroke: Boolean): Unit = {
+		graphicList += new renderReportTypes.DirectFillStroke(fill, stroke)
 	}
 
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {

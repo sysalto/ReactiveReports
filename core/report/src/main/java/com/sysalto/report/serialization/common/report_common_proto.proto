@@ -8,3 +8,13 @@ message DirectDrawMovePoint_proto {
     float x = 1;
     float y = 2;
 }
+
+message DirectDrawLine_proto {
+    float x = 1;
+    float y = 2;
+}
+
+message DirectFillStroke_proto {
+    bool fill = 1;
+    bool stroke = 2;
+}

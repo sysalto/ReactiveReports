@@ -24,6 +24,8 @@ message ReportItem_proto {
         ReportRectangle_proto reportRectangle = 11;
         ReportVerticalShade_proto reportVerticalShade = 12;
         com.sysalto.report.serialization.common.DirectDrawMovePoint_proto directDrawMovePoint = 13;
+        com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine = 14;
+        com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 15;
     }
 }
 

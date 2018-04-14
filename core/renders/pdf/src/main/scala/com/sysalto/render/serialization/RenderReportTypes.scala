@@ -228,6 +228,23 @@ class RenderReportTypes {
 		}
 	}
 
+	class DirectDrawLine(val x: Float, val y: Float) extends PdfGraphicFragment {
+		override def content: String = {
+			s"""${x} ${y} l \n"""
+		}
+	}
+
+	class DirectFillStroke(val fill: Boolean,val stroke: Boolean) extends PdfGraphicFragment {
+		override def content: String = {
+			(fill, stroke) match {
+				case (true, true) => "B\n"
+				case (true, false) => "f\n"
+				case (false, true) => "S\n"
+				case _ => ""
+			}
+		}
+	}
+
 	abstract class PdfAnnotation(id: Long) extends PdfBaseItem(id)
 
 	class ImageMeta(fileName: String) {
@@ -635,11 +652,6 @@ class RenderReportTypes {
 			}
 			case item: PdfShaddingFctColor => {
 				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfShaddingFctColor]
-				val builder = serializer.PdfBaseItemSerializer.write(item1)
-				db.writeObject1(item.id, builder.toByteArray)
-			}
-			case item: PdfColorShadding => {
-				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfColorShadding]
 				val builder = serializer.PdfBaseItemSerializer.write(item1)
 				db.writeObject1(item.id, builder.toByteArray)
 			}
