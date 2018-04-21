@@ -31,17 +31,19 @@ import org.rocksdb.{Options, ReadOptions, RocksDB}
 import scala.collection.mutable.ListBuffer
 
 
-class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
+class RockDbUtil(prefix: String, extension: String, dbFolder: String) extends PersistenceUtil {
+	private[this] val options = new Options().setCreateIfMissing(true)
+	private[this] val file = File.createTempFile(prefix, extension, new File(dbFolder))
+	private[this] var db: RocksDB = null
 
-
-	def writeObject(key: Long, obj: Array[Byte]): Unit = {
+	override def writeObject(key: Long, obj: Array[Byte]): Unit = {
 		db.put(BigInt(key).toByteArray, obj)
 	}
 
-	def readObject(key: Long): Array[Byte] = db.get(BigInt(key).toByteArray)
+	override def readObject(key: Long): Array[Byte] = db.get(BigInt(key).toByteArray)
 
 
-	def getAllKeys: List[Long] = {
+	override def getAllKeys: List[Long] = {
 		val it = db.newIterator(new ReadOptions())
 		val result = ListBuffer[Long]()
 		it.seekToFirst()
@@ -53,19 +55,20 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 	}
 
 
-	def close(): Unit = {
+	override def close(): Unit = {
 		if (db != null) db.close()
 		options.close()
 		file.listFiles().foreach(fileItem => fileItem.delete())
 		file.delete()
 	}
 
-	private[this] val options = new Options().setCreateIfMissing(true)
-	private[this] val file = File.createTempFile(prefix, extension, new File(dbFolder))
+	override def open(): Unit = {
+		RocksDB.loadLibrary()
+		file.delete
+		db = RocksDB.open(options, file.getAbsolutePath)
+	}
 
-	RocksDB.loadLibrary()
-	file.delete
-	private[this] val db = RocksDB.open(options, file.getAbsolutePath)
+
 }
 
 object RockDbUtil {
@@ -74,7 +77,11 @@ object RockDbUtil {
 	private[this] val prefix = "persistence"
 	private[this] val extension = ".db"
 
-	def apply(): RockDbUtil = new RockDbUtil(prefix, extension, dbFolder)
+	def apply(): RockDbUtil = {
+		val db = new RockDbUtil(prefix, extension, dbFolder)
+		db.open()
+		db
+	}
 
 
 }
