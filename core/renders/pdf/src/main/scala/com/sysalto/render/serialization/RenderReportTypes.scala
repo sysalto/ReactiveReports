@@ -16,6 +16,7 @@ import com.sysalto.report.ReportTypes.BoundaryRect
 import com.sysalto.report.reportTypes.{RFont, ReportColor, ReportTxt}
 import com.sysalto.report.util.{PersistenceFactory, PersistenceUtil, RockDbUtil}
 import javax.imageio.ImageIO
+import scala.collection.JavaConverters._
 
 import scala.collection.mutable.ListBuffer
 
@@ -752,7 +753,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 
-	def getAllItems(): List[Long] = persistenceUtil.getAllKeys
+	def getAllItems(): List[java.lang.Long] = persistenceUtil.getAllKeys.asScala.toList
 
 	def close(): Unit = {
 		persistenceUtil.close()

@@ -5,18 +5,15 @@ import com.sysalto.report.Report;
 import com.sysalto.report.ReportTypes;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
-import com.sysalto.report.util.GroupUtilDefs;
-import com.sysalto.report.util.PdfFactory;
-import com.sysalto.report.util.ResultSetGroup;
+import com.sysalto.report.util.*;
 import scala.collection.immutable.Map;
 
+import java.io.File;
 import java.math.BigDecimal;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.*;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /*
@@ -53,9 +50,18 @@ public class MutualFundsNoAkkaJavaReport {
 
     private void run() throws Exception {
 
-        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
 
-        report.newPageFctCallback(pg->{
+        final PersistenceFactory persistenceFactory = new PersistenceFactory() {
+            @Override
+            public PersistenceUtil getPersistence() {
+                return new DerbyPersistenceUtil();
+            }
+        };
+
+//        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
+        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory, persistenceFactory);
+
+        report.newPageFctCallback(pg -> {
             drawbackgroundImage(report);
         });
 
@@ -96,6 +102,7 @@ public class MutualFundsNoAkkaJavaReport {
             ReportCell cell = new ReportCell(new ReportTxt("Page " + pg + " of " + pgMax).bold()).rightAlign().inside(0, report.pageLayout().width() - 10);
             report.print(cell);
         });
+        report.start();
         reportHeader(report);
         summaryOfInvestment(report);
         changeAccount(report);
@@ -166,7 +173,7 @@ public class MutualFundsNoAkkaJavaReport {
         report.rectangle().from(9, top).radius(3).to(report.pageLayout().width() - 9, bottom).fillColor(headerColor).draw();
 
 
-        report.print(CellAlign.CENTER,top,bottom,rrow);
+        report.print(CellAlign.CENTER, top, bottom, rrow);
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from sum_investment");
@@ -250,10 +257,10 @@ public class MutualFundsNoAkkaJavaReport {
                 color(headerFontColor)).rightAlign().inside(value3);
         ReportCell[] rrow = new ReportCell[]{accountHdr, value1Hdr, value2Hdr, value3Hdr};
         float y2 = report.calculate(rrow);
-        Float top=report.getY() - report.lineHeight();
-        Float bottom=y2 + 2;
-        report.rectangle().from(9,top ).radius(3).to(report.pageLayout().width() - 9,bottom ).fillColor(headerColor).draw();
-        report.print(CellAlign.CENTER,top,bottom,rrow);
+        Float top = report.getY() - report.lineHeight();
+        Float bottom = y2 + 2;
+        report.rectangle().from(9, top).radius(3).to(report.pageLayout().width() - 9, bottom).fillColor(headerColor).draw();
+        report.print(CellAlign.CENTER, top, bottom, rrow);
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from tran_account");
@@ -335,10 +342,10 @@ public class MutualFundsNoAkkaJavaReport {
                 color(headerFontColor)).rightAlign().inside(annualized);
         ReportCell[] hrow = new ReportCell[]{h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized};
         Float y1 = report.calculate(hrow);
-        Float top=report.getY() - report.lineHeight();
-        Float bottom=y1+2;
+        Float top = report.getY() - report.lineHeight();
+        Float bottom = y1 + 2;
         report.rectangle().from(9, top).to(report.pageLayout().width() - 9, bottom).fillColor(headerColor).draw();
-        report.print(CellAlign.CENTER,top,bottom,hrow);
+        report.print(CellAlign.CENTER, top, bottom, hrow);
         report.setYPosition(y1);
         report.nextLine();
 
@@ -394,5 +401,196 @@ public class MutualFundsNoAkkaJavaReport {
     public static void main(String[] args) throws Exception {
         MutualFundsInitData.initDb();
         new MutualFundsNoAkkaJavaReport().run();
+    }
+}
+
+
+class DerbyPersistenceUtil implements PersistenceUtil {
+    private final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
+    private final String dbFolder = System.getProperty("java.io.tmpdir");
+    private final String prefix = "persistence";
+    private final String extension = ".db";
+    private String dbPath = "";
+    private Connection conn = null;
+    private File file = null;
+
+    public DerbyPersistenceUtil() {
+        try {
+            Class.forName(driver).newInstance();
+            file = File.createTempFile(prefix, extension, new File(dbFolder));
+            file.delete();
+            dbPath = file.getAbsolutePath();
+            conn = DriverManager.getConnection("jdbc:derby:" + dbPath + ";create=true");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean exists(Long key) {
+        PreparedStatement stmnt = null;
+        ResultSet rs = null;
+        try {
+            stmnt = conn.prepareStatement("select count(*) from persist where id=" + key);
+            rs = stmnt.executeQuery();
+            boolean result = false;
+            if (rs.next()) {
+                result = rs.getLong(1) > 0;
+            }
+            rs.close();
+            stmnt.close();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmnt != null) {
+                try {
+                    stmnt.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void writeObject(long key, byte[] obj) {
+        PreparedStatement ps = null;
+        try {
+            boolean keyExists = exists(key);
+            int keyPos = 0;
+            int blobPos = 0;
+            if (keyExists) {
+                ps = conn.prepareStatement("update persist set content=? where id=?");
+                keyPos = 2;
+                blobPos = 1;
+            } else {
+                ps = conn.prepareStatement("insert into persist(id,content)  values(?,?)");
+                keyPos = 1;
+                blobPos = 2;
+            }
+            Blob blob = conn.createBlob();
+            blob.setBytes(1, obj);
+            ps.setLong(keyPos, key);
+            ps.setBlob(blobPos, blob);
+            ps.execute();
+            blob.free();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public byte[] readObject(long key) {
+        PreparedStatement stmnt = null;
+        ResultSet rs = null;
+        byte[] result = null;
+        try {
+            stmnt = conn.prepareStatement("select content from persist where id=" + key);
+            rs = stmnt.executeQuery();
+            if (rs.next()) {
+                Blob aBlob = rs.getBlob(1);
+                result = aBlob.getBytes(1, (int) aBlob.length());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmnt != null) {
+                try {
+                    stmnt.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Long> getAllKeys() {
+        PreparedStatement stmnt = null;
+        ResultSet rs = null;
+        List<Long> result = new ArrayList<Long>();
+        try {
+            stmnt = conn.prepareStatement("select id from persist order by id");
+            rs = stmnt.executeQuery();
+            while (rs.next()) {
+                result.add(rs.getLong(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmnt != null) {
+                try {
+                    stmnt.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void open() {
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate("create table persist (id BIGINT primary key, content blob(2G))");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void close() {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        for (File fileItem : file.listFiles()) {
+            fileItem.delete();
+        }
+        file.delete();
     }
 }

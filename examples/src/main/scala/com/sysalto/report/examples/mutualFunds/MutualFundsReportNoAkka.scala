@@ -31,6 +31,7 @@ import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util._
+import scala.collection.JavaConverters._
 
 import scala.collection.mutable.ListBuffer
 
@@ -432,14 +433,14 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 						result
 					}
 
-					override def getAllKeys: List[Long] = {
+					override def getAllKeys: java.util.List[java.lang.Long] = {
 						val result = new ListBuffer[Long]()
 						val stmnt = conn.prepareStatement(s"select id from persist order by id")
 						val rs = stmnt.executeQuery
 						while (rs.next()) {
 							result += rs.getLong(1)
 						}
-						result.toList
+						result.toList.map(item=>item.asInstanceOf[java.lang.Long]).asJava
 					}
 
 					override def open(): Unit = {
