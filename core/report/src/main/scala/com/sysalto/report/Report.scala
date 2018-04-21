@@ -23,19 +23,17 @@
 package com.sysalto.report
 
 
-import com.sysalto.report.util.{PdfFactory, RockDbUtil}
+import com.sysalto.report.util.{PdfFactory, PersistenceFactory, PersistenceUtil, RockDbUtil}
 
 import scala.collection.mutable.ListBuffer
 import ReportTypes._
 import com.sysalto.report.reportTypes._
-import _root_.java.util.function.{BiConsumer, Function}
 
 import com.sysalto.report.function.{RConsumer1, RConsumer2, RFunction1}
 import com.sysalto.report.serialization.ReportPageSerializer
 
 import scala.annotation.varargs
 import scala.collection.JavaConverters._
-import scala.runtime.{AbstractFunction1, AbstractFunction2}
 
 /** Report class- for Scala
 	*
@@ -43,16 +41,18 @@ import scala.runtime.{AbstractFunction1, AbstractFunction2}
 	* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
 	* @param pdfFactory  - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 	*/
-case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, pdfCompression: Boolean = true)(implicit pdfFactory: PdfFactory) {
+case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, persistence: PersistenceFactory = null, pdfCompression: Boolean = true)(implicit pdfFactory: PdfFactory) {
 	private[this] var pageNbrs = 1L
 	private[this] var crtPageNbr = 1L
 	private[this] val crtPage = new ReportPage(new ListBuffer[ReportItem]())
-	private[this] val db = RockDbUtil()
+	//private[this] val db = RockDbUtil()
 	var font = RFont(10, "Helvetica")
 	private[this] var simulation = false
 	private[report] val pdfUtil = pdfFactory.getPdf
 
 
+	private[this] var persistenceFactory: PersistenceFactory = persistence
+	private[this] var persistenceUtil: PersistenceUtil = null
 	private[this] var crtYPosition = 0f
 	private[this] var lastPosition: ReportPosition = new ReportPosition(0, 0)
 
@@ -321,7 +321,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	private[this] def close(): Unit = {
 		pdfUtil.close()
-		db.close()
+		persistenceUtil.close()
 	}
 
 	/*
@@ -693,10 +693,10 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 	}
 
-	def writePage(pageNbr: Long, page: ReportPage): Unit = db.writeObject(pageNbr, ReportPageSerializer.write(page))
+	def writePage(pageNbr: Long, page: ReportPage): Unit = persistenceUtil.writeObject(pageNbr, ReportPageSerializer.write(page))
 
 	def readPage(pageNbr: Long): Option[ReportPage] = {
-		val bytes = db.readObject(pageNbr)
+		val bytes = persistenceUtil.readObject(pageNbr)
 		if (bytes == null) {
 			None
 		} else {
@@ -705,13 +705,23 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 	// class initialize
-
-	pdfUtil.open(name, orientation, pdfCompression)
+	if (persistenceFactory == null) {
+		persistenceFactory = new PersistenceFactory() {
+			override def getPersistence(): PersistenceUtil = {
+				val dbFolder = System.getProperty("java.io.tmpdir")
+				val prefix = "persistence"
+				val extension = ".db"
+				new RockDbUtil(prefix, extension, dbFolder)
+			}
+		}
+	}
+	pdfUtil.open(name, orientation, persistenceFactory,pdfCompression)
 	crtYPosition = pdfUtil.pgSize.height
 	if (lastPosition < getCurrentPosition) {
 		lastPosition = getCurrentPosition
 	}
 
+	persistenceUtil = persistenceFactory.open()
 
 }
 

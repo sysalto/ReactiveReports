@@ -119,7 +119,7 @@ object ReportSummary extends GroupUtilTrait {
 
 	def runReport(): Unit = {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
-		val report1 = Report("Summary.pdf", ReportPageOrientation.LANDSCAPE,false)
+		val report1 = Report("Summary.pdf", ReportPageOrientation.LANDSCAPE)
 		report(report1)
 	}
 

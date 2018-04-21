@@ -9,15 +9,16 @@ import com.sysalto.render.util.wrapper.WordWrap
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
+import com.sysalto.report.util.{PersistenceFactory, PersistenceUtil}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, pdfCompression: Boolean) {
+class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float,persistenceFactory: PersistenceFactory, pdfCompression: Boolean) {
 	implicit val wordSeparators: List[Char] = List(',', '.')
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
-	val renderReportTypes = new RenderReportTypes()
+	val renderReportTypes = new RenderReportTypes(persistenceFactory)
 	private[this] val pdfWriter = new renderReportTypes.PdfWriter(name)
 	private[this] var id: Long = 0
 	private[this] var catalog: renderReportTypes.PdfCatalog = null

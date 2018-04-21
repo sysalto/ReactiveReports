@@ -96,7 +96,6 @@ public class MutualFundsNoAkkaJavaReport {
             ReportCell cell = new ReportCell(new ReportTxt("Page " + pg + " of " + pgMax).bold()).rightAlign().inside(0, report.pageLayout().width() - 10);
             report.print(cell);
         });
-        report.start();
         reportHeader(report);
         summaryOfInvestment(report);
         changeAccount(report);

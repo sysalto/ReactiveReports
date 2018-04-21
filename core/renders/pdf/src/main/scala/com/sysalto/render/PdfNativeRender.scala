@@ -27,7 +27,7 @@ import java.io.File
 import com.sysalto.render.serialization.RenderReport
 import com.sysalto.report.ReportTypes.{BoundaryRect, DRectangle, Rectangle}
 import com.sysalto.report.reportTypes._
-import com.sysalto.report.util.PdfUtil
+import com.sysalto.report.util.{PdfUtil, PersistenceFactory, PersistenceUtil}
 import com.sysalto.report.{ReportTypes, WrapAlign}
 
 
@@ -37,10 +37,10 @@ class PdfNativeRender extends PdfUtil {
 	private[this] lazy val PAGE_WIDTH = if (orientation == ReportPageOrientation.PORTRAIT) 612 else 792
 	private[this] lazy val PAGE_HEIGHT = if (orientation == ReportPageOrientation.PORTRAIT) 792 else 612
 
-	override def open(name: String, orientation: ReportPageOrientation.Value, pdfCompression: Boolean): Unit = {
+	override def open(name: String, orientation: ReportPageOrientation.Value,persistenceFactory: PersistenceFactory, pdfCompression: Boolean): Unit = {
 		new File(name).delete()
 		this.orientation = orientation
-		pdfNativeGenerator = new RenderReport(name, PAGE_WIDTH, PAGE_HEIGHT, pdfCompression)
+		pdfNativeGenerator = new RenderReport(name, PAGE_WIDTH, PAGE_HEIGHT, persistenceFactory,pdfCompression)
 		pdfNativeGenerator.startPdf()
 
 	}

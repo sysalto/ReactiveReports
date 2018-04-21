@@ -378,7 +378,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 	def runReport(): Unit = {
 		implicit val pdfFactory:PdfFactory = new PdfNativeFactory()
-		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE,false)
+		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
 		val fontFamily = RFontFamily(name = "Roboto",
 			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
 			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
