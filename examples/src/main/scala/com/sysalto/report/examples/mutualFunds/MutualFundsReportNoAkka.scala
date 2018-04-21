@@ -20,17 +20,17 @@
  */
 
 
-
-
 package com.sysalto.report.examples.mutualFunds
 
+import java.io.{File, ObjectOutputStream}
+import java.sql.DriverManager
 import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
-import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
+import com.sysalto.report.util._
 
 import scala.collection.mutable.ListBuffer
 
@@ -46,7 +46,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	}
 
 	private def reportHeader(report: Report): Unit = {
-//		drawbackgroundImage(report)
+		//		drawbackgroundImage(report)
 		val rs = MutualFundsInitData.query("select * from clnt")
 		rs.next()
 		val record = rs.toMap
@@ -98,10 +98,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val c_graphic = ReportCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAlign() inside graphic
 		val rrow = List(c_fundName, c_value1, c_value2, c_change, c_graphic)
 		val y2 = report.calculate(rrow)
-		val top=report.getY - report.lineHeight
-		val bottom= y2 + 2
-		report rectangle() from(9,top ) radius (3) to(report.pageLayout.width - 9,bottom) fillColor headerColor draw()
-		report.print(rrow,CellAlign.CENTER,top,bottom)
+		val top = report.getY - report.lineHeight
+		val bottom = y2 + 2
+		report rectangle() from(9, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerColor draw()
+		report.print(rrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine()
 
@@ -172,10 +172,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val value3Hdr = ReportCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() inside value3
 		val rrow = List(accountHdr, value1Hdr, value2Hdr, value3Hdr)
 		val y2 = report.calculate(rrow)
-		val top=report.getY - report.lineHeight
-		val bottom=y2 + 2
-		report rectangle() from(9, top) radius (3) to(report.pageLayout.width - 9,bottom ) fillColor headerColor draw()
-		report.print(rrow,CellAlign.CENTER,top,bottom)
+		val top = report.getY - report.lineHeight
+		val bottom = y2 + 2
+		report rectangle() from(9, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerColor draw()
+		report.print(rrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine()
 		val rs = MutualFundsInitData.query("select * from tran_account")
@@ -217,7 +217,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val y3 = report.calculate(frow)
 		report.print(frow)
 		report.setYPosition(y3)
-		report line() from(10, report.getY + report.lineHeight * 0.5f) to value3.right  draw()
+		report line() from(10, report.getY + report.lineHeight * 0.5f) to value3.right draw()
 		report.nextLine()
 
 	}
@@ -249,10 +249,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val h_annualized = ReportCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAlign() inside annualized
 		val hrow = List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized)
 		val y1 = report.calculate(hrow)
-		val top=report.getY - report.lineHeight
-		val bottom=y1 + 2
-		report rectangle() from(9,top ) radius (3) to(report.pageLayout.width - 9,bottom ) fillColor headerColor draw()
-		report.print(hrow,CellAlign.CENTER,top,bottom)
+		val top = report.getY - report.lineHeight
+		val bottom = y1 + 2
+		report rectangle() from(9, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerColor draw()
+		report.print(hrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y1)
 		report.nextLine()
 
@@ -311,12 +311,12 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.setFooterSize = { _ =>
 			30
 		}
-		report.newPageFct={
-			case _=> drawbackgroundImage(report)
+		report.newPageFct = {
+			case _ => drawbackgroundImage(report)
 		}
 
 		report.headerFct = {
-			case ( _, _) =>
+			case (_, _) =>
 				report.setYPosition(10)
 				val row = ReportRow(10, report.pageLayout.width - 10, List(Column("column1", Flex(1)), Column("column2", Flex(1)),
 					Column("column3", Flex(1))))
@@ -347,19 +347,19 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				report.nextLine()
 				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
 		}
-		val t1=System.currentTimeMillis()
+		val t1 = System.currentTimeMillis()
 		report.start()
-		report.directDrawMovePoint(10,10)
-		report.directDrawLine(200,200)
-		report.directFillStroke(false,true)
-//		report.directDrawRectangle(100,100,200,200)
+//		report.directDrawMovePoint(10, 10)
+//		report.directDrawLine(200, 200)
+//		report.directFillStroke(false, true)
+		//		report.directDrawRectangle(100,100,200,200)
 
-		for (i<-1 to 1) {
-			println("I:"+i)
-			if (i>1) {
+		for (i <- 1 to 10) {
+			println("I:" + i)
+			if (i > 1) {
 				report.nextPage()
 			}
-			if (report.getCrtPageNbr()==1) {
+			if (report.getCrtPageNbr() == 1) {
 				reportHeader(report)
 			}
 			summaryOfInvestment(report)
@@ -367,18 +367,101 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			accountPerformance(report)
 			disclaimer(report)
 		}
-		val t2=System.currentTimeMillis()
+		val t2 = System.currentTimeMillis()
 		report.render()
-		val t3=System.currentTimeMillis()
-		println("Time1:"+(t2-t1)*0.001)
-		println("Time2:"+(t3-t2)*0.001)
-		println("Total time:"+(t3-t1)*0.001)
+		val t3 = System.currentTimeMillis()
+		println("Time1:" + (t2 - t1) * 0.001)
+		println("Time2:" + (t3 - t2) * 0.001)
+		println("Total time:" + (t3 - t1) * 0.001)
 	}
 
 
 	def runReport(): Unit = {
-		implicit val pdfFactory:PdfFactory = new PdfNativeFactory()
-		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
+		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
+
+		val derbyPersistanceFactory = new PersistenceFactory() {
+			override def getPersistence(): PersistenceUtil = {
+				new PersistenceUtil() {
+					val driver = "org.apache.derby.jdbc.EmbeddedDriver"
+					Class.forName(driver).newInstance()
+					val dbFolder = System.getProperty("java.io.tmpdir")
+					val prefix = "persistence"
+					val extension = ".db"
+					val file = File.createTempFile(prefix, extension, new File(dbFolder))
+					file.delete
+					val dbPath = file.getAbsolutePath
+					val conn = DriverManager.getConnection(s"jdbc:derby:${dbPath};create=true")
+
+					override def writeObject(key: Long, obj: Array[Byte]): Unit = {
+						val keyExists = exists(key)
+						val ps = if (keyExists) conn.prepareStatement("update persist set content=? where id=? ") else
+							conn.prepareStatement("insert into persist(id,content)  values(?,?)")
+						val keyPos = if (keyExists) 2 else 1
+						val blobPos = if (keyExists) 1 else 2
+						ps.setLong(keyPos, key)
+						val blob = conn.createBlob
+						blob.setBytes(1, obj)
+						ps.setBlob(blobPos, blob)
+						ps.execute
+						blob.free()
+						ps.close()
+					}
+
+					private def exists(key: Long): Boolean = {
+						val stmnt = conn.prepareStatement(s"select count(*) from persist where id=${key}")
+						val rs = stmnt.executeQuery
+						var result = false
+						if (rs.next()) {
+							result = rs.getLong(1) > 0
+						}
+						rs.close()
+						stmnt.close()
+						result
+					}
+
+					override def readObject(key: Long): Array[Byte] = {
+						var result: Array[Byte] = null
+						val stmnt = conn.prepareStatement(s"select content from persist where id=${key}")
+						val rs = stmnt.executeQuery
+						if (rs.next()) {
+							val aBlob = rs.getBlob(1)
+							result = aBlob.getBytes(1, aBlob.length.toInt)
+						}
+						rs.close()
+						stmnt.close()
+						result
+					}
+
+					override def getAllKeys: List[Long] = {
+						val result = new ListBuffer[Long]()
+						val stmnt = conn.prepareStatement(s"select id from persist order by id")
+						val rs = stmnt.executeQuery
+						while (rs.next()) {
+							result += rs.getLong(1)
+						}
+						result.toList
+					}
+
+					override def open(): Unit = {
+						val stmt = conn.createStatement()
+						stmt.executeUpdate("Create table persist (id BIGINT primary key, content blob(2G))")
+						stmt.close()
+					}
+
+					override def close(): Unit = {
+						if (conn != null) {
+							conn.close()
+						}
+						//						DriverManager.getConnection(s"jdbc:derby:${dbPath};shutdown=true")
+						file.listFiles().foreach(fileItem => fileItem.delete())
+						file.delete()
+					}
+				}
+			}
+		}
+
+		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE, derbyPersistanceFactory)
+//		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
 		val fontFamily = RFontFamily(name = "Roboto",
 			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
 			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),

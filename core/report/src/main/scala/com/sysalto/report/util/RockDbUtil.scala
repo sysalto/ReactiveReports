@@ -71,17 +71,3 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) extends Pe
 
 }
 
-object RockDbUtil {
-
-	private[this] val dbFolder = System.getProperty("java.io.tmpdir")
-	private[this] val prefix = "persistence"
-	private[this] val extension = ".db"
-
-	def apply(): RockDbUtil = {
-		val db = new RockDbUtil(prefix, extension, dbFolder)
-		db.open()
-		db
-	}
-
-
-}
