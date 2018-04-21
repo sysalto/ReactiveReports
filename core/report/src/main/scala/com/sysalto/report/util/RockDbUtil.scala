@@ -33,26 +33,12 @@ import scala.collection.mutable.ListBuffer
 
 class RockDbUtil(prefix: String, extension: String, dbFolder: String) {
 
-	def write(key: String, page: ReportPage): Unit = db.put(key.getBytes, ReportPageSerializer.write(page))
 
-	def read(key: String): Option[ReportPage] = {
-		val bytes = db.get(key.getBytes)
-		if (bytes == null) {
-			None
-		} else {
-			Some(ReportPageSerializer.read(bytes))
-		}
-	}
-
-
-	def writeObject1(key: Long, obj: Array[Byte]): Unit = {
+	def writeObject(key: Long, obj: Array[Byte]): Unit = {
 		db.put(BigInt(key).toByteArray, obj)
 	}
 
-	def readObject1(key: Long): Array[Byte] = db.get(BigInt(key).toByteArray)
-
-
-
+	def readObject(key: Long): Array[Byte] = db.get(BigInt(key).toByteArray)
 
 
 	def getAllKeys: List[Long] = {

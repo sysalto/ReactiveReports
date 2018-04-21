@@ -86,6 +86,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case FieldCase.PDFFONTDESCRIPTOR_PROTO => {
 					PdfFontDescriptorSerializer.read(input.getId, input.getOffset, input.getPdfFontDescriptorProto)
 				}
+				case _ => throw new Exception("ERROR - Unknown " + input.getFieldCase)
 			}
 		}
 	}
@@ -190,6 +191,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case item: renderReportTypes.PdfGraphic => {
 					builder.setPdfGraphicProto(PdfGraphicSerializer.write(item))
 				}
+				case _ => println("ERROR PdfPageItemSerializer.write unknown " + input)
 			}
 			builder.build()
 		}
@@ -202,6 +204,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case FieldItemCase.PDFGRAPHIC_PROTO => {
 					PdfGraphicSerializer.read(input.getPdfGraphicProto)
 				}
+				case _ => throw new Exception("ERROR PdfPageItemSerializer.read unknown " + input)
 			}
 		}
 	}
@@ -417,6 +420,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setDirectDrawLineProto(DirectDrawLineSerializer.write(item))
 				case item: renderReportTypes.DirectFillStroke =>
 					builder.setDirectFillStrokeProto(DirectFillStrokeSerializer.write(item))
+				case _ => println("ERROR PdfGraphicFragmentSerializer.write unknown " + input)
 			}
 			builder.build()
 		}
@@ -447,6 +451,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case PdfGraphicFragment_proto.FieldCase.DIRECTFILLSTROKE_PROTO => {
 					DirectFillStrokeSerializer.read(input.getDirectFillStrokeProto)
 				}
+				case _ => throw new Exception("ERROR PdfGraphicFragmentSerializer.read unknown " + input)
 			}
 		}
 	}

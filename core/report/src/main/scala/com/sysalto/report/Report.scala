@@ -31,6 +31,7 @@ import com.sysalto.report.reportTypes._
 import _root_.java.util.function.{BiConsumer, Function}
 
 import com.sysalto.report.function.{RConsumer1, RConsumer2, RFunction1}
+import com.sysalto.report.serialization.ReportPageSerializer
 
 import scala.annotation.varargs
 import scala.collection.JavaConverters._
@@ -97,7 +98,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def getCrtPageNbr() = crtPageNbr
 
 	private[this] def saveCrtPage() {
-		db.write(s"page$crtPageNbr", crtPage)
+		writePage(crtPageNbr, crtPage)
 		crtPage.items.clear()
 	}
 
@@ -110,7 +111,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		}
 		saveCrtPage()
 		if (newPage <= pageNbrs) {
-			val pageOpt = db.read(s"page$newPage")
+			val pageOpt = readPage(newPage)
 			if (pageOpt.isDefined) {
 				crtPage.items.appendAll(pageOpt.get.items)
 			} else {
@@ -405,7 +406,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		// pageNbrs=1
 		for (i <- 1L to pageNbrs) {
 			if (setHeaderSize(i) > 0 || setFooterSize(i) > 0) {
-				val page = db.read(s"page$i").get
+				val page = readPage(i).get
 				crtPage.items.clear()
 				crtPage.items.appendAll(page.items)
 				if (setHeaderSize(i) > 0) {
@@ -414,12 +415,12 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 				if (setFooterSize(i) > 0) {
 					footerFct(i, pageNbrs)
 				}
-				db.write(s"page$i", crtPage)
+				writePage(i, crtPage)
 			}
 		}
 		pdfUtil.setPagesNumber(pageNbrs)
 		for (i <- 1L to pageNbrs) {
-			val page = db.read(s"page$i")
+			val page = readPage(i)
 			if (page.isDefined) {
 				val last = i == pageNbrs
 				page.get.items.foreach(item => item.render(this))
@@ -583,16 +584,16 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def insertPages(number: Long, pageNbr: Long): Unit = {
 		saveCrtPage()
 		for (i <- pageNbrs to pageNbr by -1) {
-			val page = db.read(s"page$i")
+			val page = readPage(i)
 			if (page.isDefined) {
-				db.write(s"page${i + number}", page.get)
+				writePage(i + number, page.get)
 			}
 		}
 		pageNbrs += number
 		crtPageNbr = pageNbr
 		for (i <- pageNbr to pageNbr + number - 1) {
 			val emptyPage = new ReportPage(ListBuffer[ReportItem]())
-			db.write(s"page${i}", emptyPage)
+			writePage(i, emptyPage)
 		}
 		crtYPosition = pdfUtil.pgSize.height - setHeaderSize(pageNbr)
 
@@ -689,6 +690,17 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def start(): Unit = {
 		if (newPageFct != null) {
 			newPageFct(1)
+		}
+	}
+
+	def writePage(pageNbr: Long, page: ReportPage): Unit = db.writeObject(pageNbr, ReportPageSerializer.write(page))
+
+	def readPage(pageNbr: Long): Option[ReportPage] = {
+		val bytes = db.readObject(pageNbr)
+		if (bytes == null) {
+			None
+		} else {
+			Some(ReportPageSerializer.read(bytes))
 		}
 	}
 

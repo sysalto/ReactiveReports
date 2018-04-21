@@ -2,18 +2,18 @@ import sbt.Keys.{libraryDependencies, publishMavenStyle}
 
 val SCALA_VERSION = "2.12.5"
 
-val AKKA_VERSION = "latest.release" // "2.5.10"
+val AKKA_VERSION = "2.5.10" // "latest.release"
 
-val ROCKSDB_VERSION = "latest.release" // "5.9.2"
+val ROCKSDB_VERSION = "5.11.3" // "latest.release"
 
-val PROTOBUF_VERSION = "latest.release" // "3.5.1"
+val PROTOBUF_VERSION = "3.5.1" // "latest.release"
 
-val projectVersion = "1.0.0-RC.7"
-//val projectVersion = "1.0.0-SNAPSHOT"
+//val projectVersion = "1.0.0-RC.8"
+val projectVersion = "1.0.0-SNAPSHOT"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",
-	isSnapshot := false,
+	isSnapshot := true,
 	version := projectVersion,
 	cancelable in Global := true,
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
@@ -118,6 +118,7 @@ lazy val exampleSettings = Seq(
 	resolvers += Resolver.mavenLocal,
 	libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
 	libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release"),
+	libraryDependencies += ("org.apache.derby" % "derby" % "latest.release"),
 	libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release"
 )
 
