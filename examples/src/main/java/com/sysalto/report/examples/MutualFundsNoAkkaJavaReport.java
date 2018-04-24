@@ -6,6 +6,7 @@ import com.sysalto.report.ReportTypes;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
 import com.sysalto.report.util.*;
+import org.apache.derby.iapi.util.ByteArray;
 import scala.collection.immutable.Map;
 
 import java.io.File;
@@ -51,15 +52,24 @@ public class MutualFundsNoAkkaJavaReport {
     private void run() throws Exception {
 
 
-        final PersistenceFactory persistenceFactory = new PersistenceFactory() {
+        final PersistenceFactory persistenceDerbyFactory = new PersistenceFactory() {
             @Override
             public PersistenceUtil getPersistence() {
                 return new DerbyPersistenceUtil();
             }
         };
 
+
+        final PersistenceFactory persistenceMemoryFactory = new PersistenceFactory() {
+            @Override
+            public PersistenceUtil getPersistence() {
+                return new MemoryPersistenceUtil();
+            }
+        };
+
+
 //        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
-        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory, persistenceFactory);
+        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory, persistenceMemoryFactory);
 
         report.newPageFctCallback(pg -> {
             drawbackgroundImage(report);
@@ -404,6 +414,37 @@ public class MutualFundsNoAkkaJavaReport {
     }
 }
 
+class MemoryPersistenceUtil implements PersistenceUtil {
+    private HashMap<Long, byte[]> map = new HashMap<Long, byte[]>();
+
+    @Override
+    public void writeObject(long key, byte[] obj) {
+        map.put(key, obj);
+    }
+
+    @Override
+    public byte[] readObject(long key) {
+        return map.get(key);
+    }
+
+    @Override
+    public List<Long> getAllKeys() {
+        List<Long> result = new ArrayList<Long>();
+        result.addAll(map.keySet());
+        Collections.sort(result);
+        return result;
+    }
+
+    @Override
+    public void open() {
+
+    }
+
+    @Override
+    public void close() {
+        map.clear();
+    }
+}
 
 class DerbyPersistenceUtil implements PersistenceUtil {
     private final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
