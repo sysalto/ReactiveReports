@@ -4,6 +4,14 @@ option optimize_for = SPEED;
 package com.sysalto.report.serialization.common;
 
 
+message BoundaryRect_proto {
+    float left = 1;
+    float bottom = 2;
+    float right = 3;
+    float top = 4;
+}
+
+
 message DirectDrawMovePoint_proto {
     float x = 1;
     float y = 2;

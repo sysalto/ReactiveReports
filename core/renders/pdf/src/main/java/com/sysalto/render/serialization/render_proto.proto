@@ -20,6 +20,9 @@ message PdfBaseItem_proto {
         PdfGPattern_proto pdfGPattern_proto = 11;
         PdfFontStream_proto pdfFontStream_proto = 12;
         PdfFontDescriptor_proto pdfFontDescriptor_proto = 13;
+        PdfGoToPage_proto pdfGoToPage_proto = 14;
+        PdfLink_proto pdfLink_proto = 15;
+        PdfGoToUrl_proto pdfGoToUrl_proto = 16;
     }
 }
 message PdfCatalog_proto {
@@ -267,4 +270,21 @@ message FloatFloat_proto {
 message PdfFontDescriptor_proto {
     int64 idPdfFontStream = 1;
     string fontKeyName = 2;
+}
+
+message PdfGoToPage_proto {
+    int64 pageNbr = 1;
+    int32 left = 2;
+    int32 top = 3;
+}
+
+
+message PdfLink_proto {
+    com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect_proto = 1;
+    int64 idAction = 2;
+
+}
+
+message PdfGoToUrl_proto {
+    string url = 1;
 }

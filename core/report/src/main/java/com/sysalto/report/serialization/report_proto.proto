@@ -31,21 +31,16 @@ message ReportItem_proto {
 }
 
 message ReportLinkToPage_proto {
-    BoundaryRect_proto boundaryRect = 1;
+    com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;
     int64 pageNbr = 2;
     int32 left = 3;
     int32 top = 4;
 }
 
-message BoundaryRect_proto {
-    float left = 1;
-    float bottom = 2;
-    float right = 3;
-    float top = 4;
-}
+
 
 message ReportLinkToUrl_proto {
-    BoundaryRect_proto boundaryRect = 1;
+    com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;
     string url = 2;
 }
 

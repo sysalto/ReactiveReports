@@ -28,12 +28,12 @@ import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes._
 import com.sysalto.report.serialization.ReportProto.ReportItem_proto.FieldCase
 import com.sysalto.report.serialization.ReportProto._
-import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectDrawRectangle_proto, DirectFillStroke_proto}
+import com.sysalto.report.serialization.common.ReportCommonProto._
 
 import scala.collection.mutable.ListBuffer
 
 
-private[serialization] object BoundaryRectSerializer {
+object BoundaryRectSerializer {
 	def write(obj: BoundaryRect): BoundaryRect_proto = {
 		val builder = BoundaryRect_proto.newBuilder()
 		builder.setLeft(obj.left)

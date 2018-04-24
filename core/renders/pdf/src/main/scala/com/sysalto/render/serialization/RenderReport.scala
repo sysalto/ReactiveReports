@@ -14,7 +14,7 @@ import com.sysalto.report.util.{PersistenceFactory, PersistenceUtil}
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float,persistenceFactory: PersistenceFactory, pdfCompression: Boolean) {
+class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persistenceFactory: PersistenceFactory, pdfCompression: Boolean) {
 	implicit val wordSeparators: List[Char] = List(',', '.')
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
@@ -179,7 +179,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float,persisten
 	}
 
 	def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = {
-		graphicList += new renderReportTypes.DirectDrawRectangle(x,y,width,height)
+		graphicList += new renderReportTypes.DirectDrawRectangle(x, y, width, height)
 	}
 
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {
@@ -301,13 +301,17 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float,persisten
 
 	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
 		val goto = new renderReportTypes.PdfGoToPage(nextId(), pageNbr, left, top)
+		renderReportTypes.setObject(goto)
 		val pdfLink = new renderReportTypes.PdfLink(nextId(), boundaryRect, goto.id)
+		renderReportTypes.setObject(pdfLink)
 		currentPage.idAnnotationList = currentPage.idAnnotationList ::: List(pdfLink.id)
 	}
 
 	def linkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
 		val goto = new renderReportTypes.PdfGoToUrl(nextId(), url)
+		renderReportTypes.setObject(goto)
 		val pdfLink = new renderReportTypes.PdfLink(nextId(), boundaryRect, goto.id)
+		renderReportTypes.setObject(pdfLink)
 		currentPage.idAnnotationList = currentPage.idAnnotationList ::: List(pdfLink.id)
 	}
 

@@ -11,6 +11,7 @@ import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor,
 import com.sysalto.report.RFontAttribute
 import com.sysalto.report.ReportTypes.DirectFillStroke
 import com.sysalto.report.reportTypes.{RFont, RFontFamily, ReportColor, ReportTxt}
+import com.sysalto.report.serialization.BoundaryRectSerializer
 import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectFillStroke_proto}
 
 import scala.collection.mutable.ListBuffer
@@ -45,8 +46,12 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setPdfFontStreamProto(PdfFontStreamSerializer.write(item))
 				case item: renderReportTypes.PdfFontDescriptor =>
 					builder.setPdfFontDescriptorProto(PdfFontDescriptorSerializer.write(item))
-
-
+				case item: renderReportTypes.PdfGoToPage =>
+					builder.setPdfGoToPageProto(PdfGoToPageSerializer.write(item))
+				case item: renderReportTypes.PdfLink =>
+					builder.setPdfLinkProto(PdfLinkSerializer.write(item))
+				case item: renderReportTypes.PdfGoToUrl =>
+					builder.setPdfGoToUrlProto(PdfGoToUrlSerializer.write(item))
 			}
 			builder.build()
 		}
@@ -85,6 +90,15 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				}
 				case FieldCase.PDFFONTDESCRIPTOR_PROTO => {
 					PdfFontDescriptorSerializer.read(input.getId, input.getOffset, input.getPdfFontDescriptorProto)
+				}
+				case FieldCase.PDFLINK_PROTO => {
+					PdfLinkSerializer.read(input.getId, input.getOffset, input.getPdfLinkProto)
+				}
+				case FieldCase.PDFGOTOPAGE_PROTO => {
+					PdfGoToPageSerializer.read(input.getId, input.getOffset, input.getPdfGoToPageProto)
+				}
+				case FieldCase.PDFGOTOURL_PROTO => {
+					PdfGoToUrlSerializer.read(input.getId, input.getOffset, input.getPdfGoToUrlProto)
 				}
 				case _ => throw new Exception("ERROR - Unknown " + input.getFieldCase)
 			}
@@ -752,6 +766,51 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 		def read(id: Long, offset: Long, input: PdfFontDescriptor_proto): renderReportTypes.PdfFontDescriptor = {
 			val result = new renderReportTypes.PdfFontDescriptor(id, input.getIdPdfFontStream, input.getFontKeyName)
+			result.offset = offset
+			result
+		}
+	}
+
+	object PdfGoToPageSerializer {
+		def write(input: renderReportTypes.PdfGoToPage): PdfGoToPage_proto = {
+			val builder = PdfGoToPage_proto.newBuilder()
+			builder.setPageNbr(input.pageNbr)
+			builder.setLeft(input.left)
+			builder.setTop(input.top)
+			builder.build()
+		}
+
+		def read(id: Long, offset: Long, input: PdfGoToPage_proto): renderReportTypes.PdfGoToPage = {
+			val result = new renderReportTypes.PdfGoToPage(id, input.getPageNbr, input.getLeft,input.getTop)
+			result.offset = offset
+			result
+		}
+	}
+
+	object PdfLinkSerializer {
+		def write(input: renderReportTypes.PdfLink): PdfLink_proto = {
+			val builder = PdfLink_proto.newBuilder()
+			builder.setBoundaryRectProto(BoundaryRectSerializer.write(input.boundaryRect))
+			builder.setIdAction(input.idAction)
+			builder.build()
+		}
+
+		def read(id: Long, offset: Long, input: PdfLink_proto): renderReportTypes.PdfLink = {
+			val result = new renderReportTypes.PdfLink(id,BoundaryRectSerializer.read(input.getBoundaryRectProto),input.getIdAction)
+			result.offset = offset
+			result
+		}
+	}
+
+	object PdfGoToUrlSerializer {
+		def write(input: renderReportTypes.PdfGoToUrl): PdfGoToUrl_proto = {
+			val builder = PdfGoToUrl_proto.newBuilder()
+			builder.setUrl(input.url)
+			builder.build()
+		}
+
+		def read(id: Long, offset: Long, input: PdfGoToUrl_proto): renderReportTypes.PdfGoToUrl = {
+			val result = new renderReportTypes.PdfGoToUrl(id,input.getUrl)
 			result.offset = offset
 			result
 		}

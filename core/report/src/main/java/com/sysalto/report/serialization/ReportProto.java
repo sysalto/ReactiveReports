@@ -4796,17 +4796,17 @@ public final class ReportProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
     boolean hasBoundaryRect();
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
-    com.sysalto.report.serialization.ReportProto.BoundaryRect_proto getBoundaryRect();
+    com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto getBoundaryRect();
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
-    com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder();
+    com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder();
 
     /**
      * <code>int64 pageNbr = 2;</code>
@@ -4873,11 +4873,11 @@ public final class ReportProto {
               break;
             }
             case 10: {
-              com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder subBuilder = null;
+              com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder subBuilder = null;
               if (boundaryRect_ != null) {
                 subBuilder = boundaryRect_.toBuilder();
               }
-              boundaryRect_ = input.readMessage(com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.parser(), extensionRegistry);
+              boundaryRect_ = input.readMessage(com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(boundaryRect_);
                 boundaryRect_ = subBuilder.buildPartial();
@@ -4925,23 +4925,23 @@ public final class ReportProto {
     }
 
     public static final int BOUNDARYRECT_FIELD_NUMBER = 1;
-    private com.sysalto.report.serialization.ReportProto.BoundaryRect_proto boundaryRect_;
+    private com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto boundaryRect_;
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
     public boolean hasBoundaryRect() {
       return boundaryRect_ != null;
     }
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto getBoundaryRect() {
-      return boundaryRect_ == null ? com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
+    public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto getBoundaryRect() {
+      return boundaryRect_ == null ? com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
     }
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder() {
+    public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder() {
       return getBoundaryRect();
     }
 
@@ -5320,29 +5320,29 @@ public final class ReportProto {
         return this;
       }
 
-      private com.sysalto.report.serialization.ReportProto.BoundaryRect_proto boundaryRect_ = null;
+      private com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto boundaryRect_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.BoundaryRect_proto, com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder> boundaryRectBuilder_;
+          com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder> boundaryRectBuilder_;
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
       public boolean hasBoundaryRect() {
         return boundaryRectBuilder_ != null || boundaryRect_ != null;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto getBoundaryRect() {
+      public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto getBoundaryRect() {
         if (boundaryRectBuilder_ == null) {
-          return boundaryRect_ == null ? com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
+          return boundaryRect_ == null ? com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
         } else {
           return boundaryRectBuilder_.getMessage();
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public Builder setBoundaryRect(com.sysalto.report.serialization.ReportProto.BoundaryRect_proto value) {
+      public Builder setBoundaryRect(com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto value) {
         if (boundaryRectBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5356,10 +5356,10 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
       public Builder setBoundaryRect(
-          com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder builderForValue) {
+          com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder builderForValue) {
         if (boundaryRectBuilder_ == null) {
           boundaryRect_ = builderForValue.build();
           onChanged();
@@ -5370,13 +5370,13 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public Builder mergeBoundaryRect(com.sysalto.report.serialization.ReportProto.BoundaryRect_proto value) {
+      public Builder mergeBoundaryRect(com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto value) {
         if (boundaryRectBuilder_ == null) {
           if (boundaryRect_ != null) {
             boundaryRect_ =
-              com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.newBuilder(boundaryRect_).mergeFrom(value).buildPartial();
+              com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.newBuilder(boundaryRect_).mergeFrom(value).buildPartial();
           } else {
             boundaryRect_ = value;
           }
@@ -5388,7 +5388,7 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
       public Builder clearBoundaryRect() {
         if (boundaryRectBuilder_ == null) {
@@ -5402,33 +5402,33 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder getBoundaryRectBuilder() {
+      public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder getBoundaryRectBuilder() {
         
         onChanged();
         return getBoundaryRectFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder() {
+      public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder() {
         if (boundaryRectBuilder_ != null) {
           return boundaryRectBuilder_.getMessageOrBuilder();
         } else {
           return boundaryRect_ == null ?
-              com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
+              com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.BoundaryRect_proto, com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder> 
+          com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder> 
           getBoundaryRectFieldBuilder() {
         if (boundaryRectBuilder_ == null) {
           boundaryRectBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.sysalto.report.serialization.ReportProto.BoundaryRect_proto, com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder>(
+              com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder>(
                   getBoundaryRect(),
                   getParentForChildren(),
                   isClean());
@@ -5563,674 +5563,22 @@ public final class ReportProto {
 
   }
 
-  public interface BoundaryRect_protoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.sysalto.report.serialization.BoundaryRect_proto)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>float left = 1;</code>
-     */
-    float getLeft();
-
-    /**
-     * <code>float bottom = 2;</code>
-     */
-    float getBottom();
-
-    /**
-     * <code>float right = 3;</code>
-     */
-    float getRight();
-
-    /**
-     * <code>float top = 4;</code>
-     */
-    float getTop();
-  }
-  /**
-   * Protobuf type {@code com.sysalto.report.serialization.BoundaryRect_proto}
-   */
-  public  static final class BoundaryRect_proto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.sysalto.report.serialization.BoundaryRect_proto)
-      BoundaryRect_protoOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use BoundaryRect_proto.newBuilder() to construct.
-    private BoundaryRect_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private BoundaryRect_proto() {
-      left_ = 0F;
-      bottom_ = 0F;
-      right_ = 0F;
-      top_ = 0F;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private BoundaryRect_proto(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 13: {
-
-              left_ = input.readFloat();
-              break;
-            }
-            case 21: {
-
-              bottom_ = input.readFloat();
-              break;
-            }
-            case 29: {
-
-              right_ = input.readFloat();
-              break;
-            }
-            case 37: {
-
-              top_ = input.readFloat();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_BoundaryRect_proto_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_BoundaryRect_proto_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.class, com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder.class);
-    }
-
-    public static final int LEFT_FIELD_NUMBER = 1;
-    private float left_;
-    /**
-     * <code>float left = 1;</code>
-     */
-    public float getLeft() {
-      return left_;
-    }
-
-    public static final int BOTTOM_FIELD_NUMBER = 2;
-    private float bottom_;
-    /**
-     * <code>float bottom = 2;</code>
-     */
-    public float getBottom() {
-      return bottom_;
-    }
-
-    public static final int RIGHT_FIELD_NUMBER = 3;
-    private float right_;
-    /**
-     * <code>float right = 3;</code>
-     */
-    public float getRight() {
-      return right_;
-    }
-
-    public static final int TOP_FIELD_NUMBER = 4;
-    private float top_;
-    /**
-     * <code>float top = 4;</code>
-     */
-    public float getTop() {
-      return top_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (left_ != 0F) {
-        output.writeFloat(1, left_);
-      }
-      if (bottom_ != 0F) {
-        output.writeFloat(2, bottom_);
-      }
-      if (right_ != 0F) {
-        output.writeFloat(3, right_);
-      }
-      if (top_ != 0F) {
-        output.writeFloat(4, top_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (left_ != 0F) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(1, left_);
-      }
-      if (bottom_ != 0F) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(2, bottom_);
-      }
-      if (right_ != 0F) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(3, right_);
-      }
-      if (top_ != 0F) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(4, top_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.sysalto.report.serialization.ReportProto.BoundaryRect_proto)) {
-        return super.equals(obj);
-      }
-      com.sysalto.report.serialization.ReportProto.BoundaryRect_proto other = (com.sysalto.report.serialization.ReportProto.BoundaryRect_proto) obj;
-
-      boolean result = true;
-      result = result && (
-          java.lang.Float.floatToIntBits(getLeft())
-          == java.lang.Float.floatToIntBits(
-              other.getLeft()));
-      result = result && (
-          java.lang.Float.floatToIntBits(getBottom())
-          == java.lang.Float.floatToIntBits(
-              other.getBottom()));
-      result = result && (
-          java.lang.Float.floatToIntBits(getRight())
-          == java.lang.Float.floatToIntBits(
-              other.getRight()));
-      result = result && (
-          java.lang.Float.floatToIntBits(getTop())
-          == java.lang.Float.floatToIntBits(
-              other.getTop()));
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + LEFT_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getLeft());
-      hash = (37 * hash) + BOTTOM_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getBottom());
-      hash = (37 * hash) + RIGHT_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getRight());
-      hash = (37 * hash) + TOP_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getTop());
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.sysalto.report.serialization.ReportProto.BoundaryRect_proto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code com.sysalto.report.serialization.BoundaryRect_proto}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.sysalto.report.serialization.BoundaryRect_proto)
-        com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_BoundaryRect_proto_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_BoundaryRect_proto_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.class, com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder.class);
-      }
-
-      // Construct using com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        left_ = 0F;
-
-        bottom_ = 0F;
-
-        right_ = 0F;
-
-        top_ = 0F;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_BoundaryRect_proto_descriptor;
-      }
-
-      public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto getDefaultInstanceForType() {
-        return com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.getDefaultInstance();
-      }
-
-      public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto build() {
-        com.sysalto.report.serialization.ReportProto.BoundaryRect_proto result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto buildPartial() {
-        com.sysalto.report.serialization.ReportProto.BoundaryRect_proto result = new com.sysalto.report.serialization.ReportProto.BoundaryRect_proto(this);
-        result.left_ = left_;
-        result.bottom_ = bottom_;
-        result.right_ = right_;
-        result.top_ = top_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.sysalto.report.serialization.ReportProto.BoundaryRect_proto) {
-          return mergeFrom((com.sysalto.report.serialization.ReportProto.BoundaryRect_proto)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.sysalto.report.serialization.ReportProto.BoundaryRect_proto other) {
-        if (other == com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.getDefaultInstance()) return this;
-        if (other.getLeft() != 0F) {
-          setLeft(other.getLeft());
-        }
-        if (other.getBottom() != 0F) {
-          setBottom(other.getBottom());
-        }
-        if (other.getRight() != 0F) {
-          setRight(other.getRight());
-        }
-        if (other.getTop() != 0F) {
-          setTop(other.getTop());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.sysalto.report.serialization.ReportProto.BoundaryRect_proto parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.sysalto.report.serialization.ReportProto.BoundaryRect_proto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private float left_ ;
-      /**
-       * <code>float left = 1;</code>
-       */
-      public float getLeft() {
-        return left_;
-      }
-      /**
-       * <code>float left = 1;</code>
-       */
-      public Builder setLeft(float value) {
-        
-        left_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float left = 1;</code>
-       */
-      public Builder clearLeft() {
-        
-        left_ = 0F;
-        onChanged();
-        return this;
-      }
-
-      private float bottom_ ;
-      /**
-       * <code>float bottom = 2;</code>
-       */
-      public float getBottom() {
-        return bottom_;
-      }
-      /**
-       * <code>float bottom = 2;</code>
-       */
-      public Builder setBottom(float value) {
-        
-        bottom_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float bottom = 2;</code>
-       */
-      public Builder clearBottom() {
-        
-        bottom_ = 0F;
-        onChanged();
-        return this;
-      }
-
-      private float right_ ;
-      /**
-       * <code>float right = 3;</code>
-       */
-      public float getRight() {
-        return right_;
-      }
-      /**
-       * <code>float right = 3;</code>
-       */
-      public Builder setRight(float value) {
-        
-        right_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float right = 3;</code>
-       */
-      public Builder clearRight() {
-        
-        right_ = 0F;
-        onChanged();
-        return this;
-      }
-
-      private float top_ ;
-      /**
-       * <code>float top = 4;</code>
-       */
-      public float getTop() {
-        return top_;
-      }
-      /**
-       * <code>float top = 4;</code>
-       */
-      public Builder setTop(float value) {
-        
-        top_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float top = 4;</code>
-       */
-      public Builder clearTop() {
-        
-        top_ = 0F;
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.sysalto.report.serialization.BoundaryRect_proto)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.sysalto.report.serialization.BoundaryRect_proto)
-    private static final com.sysalto.report.serialization.ReportProto.BoundaryRect_proto DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.sysalto.report.serialization.ReportProto.BoundaryRect_proto();
-    }
-
-    public static com.sysalto.report.serialization.ReportProto.BoundaryRect_proto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<BoundaryRect_proto>
-        PARSER = new com.google.protobuf.AbstractParser<BoundaryRect_proto>() {
-      public BoundaryRect_proto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new BoundaryRect_proto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<BoundaryRect_proto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<BoundaryRect_proto> getParserForType() {
-      return PARSER;
-    }
-
-    public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   public interface ReportLinkToUrl_protoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.sysalto.report.serialization.ReportLinkToUrl_proto)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
     boolean hasBoundaryRect();
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
-    com.sysalto.report.serialization.ReportProto.BoundaryRect_proto getBoundaryRect();
+    com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto getBoundaryRect();
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
-    com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder();
+    com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder();
 
     /**
      * <code>string url = 2;</code>
@@ -6290,11 +5638,11 @@ public final class ReportProto {
               break;
             }
             case 10: {
-              com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder subBuilder = null;
+              com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder subBuilder = null;
               if (boundaryRect_ != null) {
                 subBuilder = boundaryRect_.toBuilder();
               }
-              boundaryRect_ = input.readMessage(com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.parser(), extensionRegistry);
+              boundaryRect_ = input.readMessage(com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(boundaryRect_);
                 boundaryRect_ = subBuilder.buildPartial();
@@ -6333,23 +5681,23 @@ public final class ReportProto {
     }
 
     public static final int BOUNDARYRECT_FIELD_NUMBER = 1;
-    private com.sysalto.report.serialization.ReportProto.BoundaryRect_proto boundaryRect_;
+    private com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto boundaryRect_;
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
     public boolean hasBoundaryRect() {
       return boundaryRect_ != null;
     }
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto getBoundaryRect() {
-      return boundaryRect_ == null ? com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
+    public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto getBoundaryRect() {
+      return boundaryRect_ == null ? com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
     }
     /**
-     * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+     * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder() {
+    public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder() {
       return getBoundaryRect();
     }
 
@@ -6700,29 +6048,29 @@ public final class ReportProto {
         return this;
       }
 
-      private com.sysalto.report.serialization.ReportProto.BoundaryRect_proto boundaryRect_ = null;
+      private com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto boundaryRect_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.BoundaryRect_proto, com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder> boundaryRectBuilder_;
+          com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder> boundaryRectBuilder_;
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
       public boolean hasBoundaryRect() {
         return boundaryRectBuilder_ != null || boundaryRect_ != null;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto getBoundaryRect() {
+      public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto getBoundaryRect() {
         if (boundaryRectBuilder_ == null) {
-          return boundaryRect_ == null ? com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
+          return boundaryRect_ == null ? com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
         } else {
           return boundaryRectBuilder_.getMessage();
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public Builder setBoundaryRect(com.sysalto.report.serialization.ReportProto.BoundaryRect_proto value) {
+      public Builder setBoundaryRect(com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto value) {
         if (boundaryRectBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -6736,10 +6084,10 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
       public Builder setBoundaryRect(
-          com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder builderForValue) {
+          com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder builderForValue) {
         if (boundaryRectBuilder_ == null) {
           boundaryRect_ = builderForValue.build();
           onChanged();
@@ -6750,13 +6098,13 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public Builder mergeBoundaryRect(com.sysalto.report.serialization.ReportProto.BoundaryRect_proto value) {
+      public Builder mergeBoundaryRect(com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto value) {
         if (boundaryRectBuilder_ == null) {
           if (boundaryRect_ != null) {
             boundaryRect_ =
-              com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.newBuilder(boundaryRect_).mergeFrom(value).buildPartial();
+              com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.newBuilder(boundaryRect_).mergeFrom(value).buildPartial();
           } else {
             boundaryRect_ = value;
           }
@@ -6768,7 +6116,7 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
       public Builder clearBoundaryRect() {
         if (boundaryRectBuilder_ == null) {
@@ -6782,33 +6130,33 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder getBoundaryRectBuilder() {
+      public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder getBoundaryRectBuilder() {
         
         onChanged();
         return getBoundaryRectFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder() {
+      public com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder getBoundaryRectOrBuilder() {
         if (boundaryRectBuilder_ != null) {
           return boundaryRectBuilder_.getMessageOrBuilder();
         } else {
           return boundaryRect_ == null ?
-              com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
+              com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.getDefaultInstance() : boundaryRect_;
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.BoundaryRect_proto boundaryRect = 1;</code>
+       * <code>.com.sysalto.report.serialization.common.BoundaryRect_proto boundaryRect = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.BoundaryRect_proto, com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder> 
+          com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder> 
           getBoundaryRectFieldBuilder() {
         if (boundaryRectBuilder_ == null) {
           boundaryRectBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.sysalto.report.serialization.ReportProto.BoundaryRect_proto, com.sysalto.report.serialization.ReportProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.ReportProto.BoundaryRect_protoOrBuilder>(
+              com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.BoundaryRect_protoOrBuilder>(
                   getBoundaryRect(),
                   getParentForChildren(),
                   isClean());
@@ -25654,11 +25002,6 @@ public final class ReportProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_sysalto_report_serialization_ReportLinkToPage_proto_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_sysalto_report_serialization_BoundaryRect_proto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_sysalto_report_serialization_BoundaryRect_proto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sysalto_report_serialization_ReportLinkToUrl_proto_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -25821,96 +25164,95 @@ public final class ReportProto {
       "mon.DirectFillStroke_protoH\000\022g\n\031directDr" +
       "awRectangle_proto\030\020 \001(\0132B.com.sysalto.re" +
       "port.serialization.common.DirectDrawRect" +
-      "angle_protoH\000B\007\n\005field\"\220\001\n\026ReportLinkToP" +
-      "age_proto\022J\n\014boundaryRect\030\001 \001(\01324.com.sy" +
-      "salto.report.serialization.BoundaryRect_" +
-      "proto\022\017\n\007pageNbr\030\002 \001(\003\022\014\n\004left\030\003 \001(\005\022\013\n\003" +
-      "top\030\004 \001(\005\"N\n\022BoundaryRect_proto\022\014\n\004left\030" +
-      "\001 \001(\002\022\016\n\006bottom\030\002 \001(\002\022\r\n\005right\030\003 \001(\002\022\013\n\003" +
-      "top\030\004 \001(\002\"p\n\025ReportLinkToUrl_proto\022J\n\014bo" +
-      "undaryRect\030\001 \001(\01324.com.sysalto.report.se" +
-      "rialization.BoundaryRect_proto\022\013\n\003url\030\002 " +
-      "\001(\t\"d\n\020ReportText_proto\022:\n\003txt\030\001 \001(\0132-.c" +
-      "om.sysalto.report.serialization.RText_pr" +
-      "oto\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\"W\n\013RText_proto" +
-      "\022\013\n\003txt\030\001 \001(\t\022;\n\004font\030\002 \001(\0132-.com.sysalt" +
-      "o.report.serialization.RFont_proto\"\210\002\n\013R" +
-      "Font_proto\022\014\n\004size\030\001 \001(\005\022\020\n\010fontName\030\002 \001" +
-      "(\t\022I\n\tattribute\030\003 \001(\01626.com.sysalto.repo" +
-      "rt.serialization.RFontAttribute_proto\022=\n" +
-      "\005color\030\004 \001(\0132..com.sysalto.report.serial" +
-      "ization.RColor_proto\022O\n\014externalFont\030\005 \001" +
-      "(\01329.com.sysalto.report.serialization.Op" +
-      "tionRFontFamily_proto\"@\n\014RColor_proto\022\t\n" +
-      "\001r\030\001 \001(\005\022\t\n\001g\030\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007opacit" +
-      "y\030\004 \001(\002\"q\n\027OptionRFontFamily_proto\022\014\n\004nu" +
-      "ll\030\001 \001(\010\022H\n\013rFontFamily\030\002 \001(\01323.com.sysa" +
-      "lto.report.serialization.RFontFamily_pro" +
-      "to\"\206\002\n\021RFontFamily_proto\022\014\n\004name\030\001 \001(\t\022\017" +
-      "\n\007regular\030\002 \001(\t\022B\n\004bold\030\003 \001(\01324.com.sysa" +
-      "lto.report.serialization.OptionString_pr" +
-      "oto\022D\n\006italic\030\004 \001(\01324.com.sysalto.report" +
-      ".serialization.OptionString_proto\022H\n\nbol" +
-      "dItalic\030\005 \001(\01324.com.sysalto.report.seria" +
-      "lization.OptionString_proto\"2\n\022OptionStr" +
-      "ing_proto\022\014\n\004null\030\001 \001(\010\022\016\n\006string\030\002 \001(\t\"" +
-      "|\n\027ReportTextAligned_proto\022<\n\005rText\030\001 \001(" +
-      "\0132-.com.sysalto.report.serialization.RTe" +
-      "xt_proto\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\r\n\005index\030" +
-      "\004 \001(\005\"\311\001\n\024ReportTextWrap_proto\022;\n\004text\030\001" +
-      " \003(\0132-.com.sysalto.report.serialization." +
-      "RText_proto\022\n\n\002x0\030\002 \001(\002\022\n\n\002y0\030\003 \001(\002\022\n\n\002x" +
-      "1\030\004 \001(\002\022\n\n\002y1\030\005 \001(\002\022D\n\twrapAlign\030\006 \001(\01621" +
-      ".com.sysalto.report.serialization.WrapAl" +
-      "ign_proto\"0\n\021OptionFloat_proto\022\014\n\004null\030\001" +
-      " \001(\010\022\r\n\005float\030\002 \001(\002\"4\n\022StringDouble_prot" +
-      "o\022\016\n\006value1\030\001 \001(\t\022\016\n\006value2\030\002 \001(\001\"J\n\030Dou" +
-      "bleStringString_proto\022\016\n\006value1\030\001 \001(\001\022\016\n" +
-      "\006value2\030\002 \001(\t\022\016\n\006value3\030\003 \001(\t\"\335\001\n\024Report" +
-      "PieChart_proto\022;\n\004font\030\001 \001(\0132-.com.sysal" +
-      "to.report.serialization.RFont_proto\022\r\n\005t" +
-      "itle\030\002 \001(\t\022B\n\004data\030\003 \003(\01324.com.sysalto.r" +
-      "eport.serialization.StringDouble_proto\022\n" +
-      "\n\002x0\030\004 \001(\002\022\n\n\002y0\030\005 \001(\002\022\r\n\005width\030\006 \001(\002\022\016\n" +
-      "\006height\030\007 \001(\002\"\306\001\n\024ReportBarChart_proto\022\r" +
-      "\n\005title\030\001 \001(\t\022\016\n\006xLabel\030\002 \001(\t\022\016\n\006yLabel\030" +
-      "\003 \001(\t\022H\n\004data\030\004 \003(\0132:.com.sysalto.report" +
-      ".serialization.DoubleStringString_proto\022" +
-      "\n\n\002x0\030\005 \001(\002\022\n\n\002y0\030\006 \001(\002\022\r\n\005width\030\007 \001(\002\022\016" +
-      "\n\006height\030\010 \001(\002\"g\n\021ReportImage_proto\022\014\n\004f" +
-      "ile\030\001 \001(\t\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\r\n\005width" +
-      "\030\004 \001(\002\022\016\n\006height\030\005 \001(\002\022\017\n\007opacity\030\006 \001(\002\"" +
-      "\346\001\n\020ReportLine_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002" +
-      " \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\021\n\tlineWidt" +
-      "h\030\005 \001(\002\022=\n\005color\030\006 \001(\0132..com.sysalto.rep" +
-      "ort.serialization.RColor_proto\022P\n\014lineDa" +
-      "shType\030\007 \001(\0132:.com.sysalto.report.serial" +
-      "ization.OptionLineDashType_proto\"t\n\030Opti" +
-      "onLineDashType_proto\022\014\n\004null\030\001 \001(\010\022J\n\014li" +
-      "neDashType\030\002 \001(\01324.com.sysalto.report.se" +
-      "rialization.LineDashType_proto\"1\n\022LineDa" +
-      "shType_proto\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002 \001(" +
-      "\005\"\345\001\n\025ReportRectangle_proto\022\n\n\002x1\030\001 \001(\002\022" +
-      "\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\016\n\006r" +
-      "adius\030\005 \001(\002\022C\n\005color\030\006 \001(\01324.com.sysalto" +
-      ".report.serialization.OptionRColor_proto" +
-      "\022G\n\tfillColor\030\007 \001(\01324.com.sysalto.report" +
-      ".serialization.OptionRColor_proto\"b\n\022Opt" +
-      "ionRColor_proto\022\014\n\004null\030\001 \001(\010\022>\n\006rColor\030" +
-      "\002 \001(\0132..com.sysalto.report.serialization" +
-      ".RColor_proto\"\334\001\n\031ReportVerticalShade_pr" +
-      "oto\022E\n\trectangle\030\001 \001(\01322.com.sysalto.rep" +
-      "ort.serialization.DRectangle_proto\022<\n\004fr" +
-      "om\030\002 \001(\0132..com.sysalto.report.serializat" +
-      "ion.RColor_proto\022:\n\002to\030\003 \001(\0132..com.sysal" +
-      "to.report.serialization.RColor_proto\"R\n\020" +
-      "DRectangle_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002" +
-      "\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002" +
-      "*I\n\024RFontAttribute_proto\022\n\n\006NORMAL\020\000\022\010\n\004" +
-      "BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD_ITALIC\020\003*b\n\017W" +
-      "rapAlign_proto\022\013\n\007NO_WRAP\020\000\022\r\n\tWRAP_LEFT" +
-      "\020\001\022\016\n\nWRAP_RIGHT\020\002\022\017\n\013WRAP_CENTER\020\003\022\022\n\016W" +
-      "RAP_JUSTIFIED\020\004B\002H\001b\006proto3"
+      "angle_protoH\000B\007\n\005field\"\227\001\n\026ReportLinkToP" +
+      "age_proto\022Q\n\014boundaryRect\030\001 \001(\0132;.com.sy" +
+      "salto.report.serialization.common.Bounda" +
+      "ryRect_proto\022\017\n\007pageNbr\030\002 \001(\003\022\014\n\004left\030\003 " +
+      "\001(\005\022\013\n\003top\030\004 \001(\005\"w\n\025ReportLinkToUrl_prot" +
+      "o\022Q\n\014boundaryRect\030\001 \001(\0132;.com.sysalto.re" +
+      "port.serialization.common.BoundaryRect_p" +
+      "roto\022\013\n\003url\030\002 \001(\t\"d\n\020ReportText_proto\022:\n" +
+      "\003txt\030\001 \001(\0132-.com.sysalto.report.serializ" +
+      "ation.RText_proto\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\"" +
+      "W\n\013RText_proto\022\013\n\003txt\030\001 \001(\t\022;\n\004font\030\002 \001(" +
+      "\0132-.com.sysalto.report.serialization.RFo" +
+      "nt_proto\"\210\002\n\013RFont_proto\022\014\n\004size\030\001 \001(\005\022\020" +
+      "\n\010fontName\030\002 \001(\t\022I\n\tattribute\030\003 \001(\01626.co" +
+      "m.sysalto.report.serialization.RFontAttr" +
+      "ibute_proto\022=\n\005color\030\004 \001(\0132..com.sysalto" +
+      ".report.serialization.RColor_proto\022O\n\014ex" +
+      "ternalFont\030\005 \001(\01329.com.sysalto.report.se" +
+      "rialization.OptionRFontFamily_proto\"@\n\014R" +
+      "Color_proto\022\t\n\001r\030\001 \001(\005\022\t\n\001g\030\002 \001(\005\022\t\n\001b\030\003" +
+      " \001(\005\022\017\n\007opacity\030\004 \001(\002\"q\n\027OptionRFontFami" +
+      "ly_proto\022\014\n\004null\030\001 \001(\010\022H\n\013rFontFamily\030\002 " +
+      "\001(\01323.com.sysalto.report.serialization.R" +
+      "FontFamily_proto\"\206\002\n\021RFontFamily_proto\022\014" +
+      "\n\004name\030\001 \001(\t\022\017\n\007regular\030\002 \001(\t\022B\n\004bold\030\003 " +
+      "\001(\01324.com.sysalto.report.serialization.O" +
+      "ptionString_proto\022D\n\006italic\030\004 \001(\01324.com." +
+      "sysalto.report.serialization.OptionStrin" +
+      "g_proto\022H\n\nboldItalic\030\005 \001(\01324.com.sysalt" +
+      "o.report.serialization.OptionString_prot" +
+      "o\"2\n\022OptionString_proto\022\014\n\004null\030\001 \001(\010\022\016\n" +
+      "\006string\030\002 \001(\t\"|\n\027ReportTextAligned_proto" +
+      "\022<\n\005rText\030\001 \001(\0132-.com.sysalto.report.ser" +
+      "ialization.RText_proto\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003" +
+      " \001(\002\022\r\n\005index\030\004 \001(\005\"\311\001\n\024ReportTextWrap_p" +
+      "roto\022;\n\004text\030\001 \003(\0132-.com.sysalto.report." +
+      "serialization.RText_proto\022\n\n\002x0\030\002 \001(\002\022\n\n" +
+      "\002y0\030\003 \001(\002\022\n\n\002x1\030\004 \001(\002\022\n\n\002y1\030\005 \001(\002\022D\n\twra" +
+      "pAlign\030\006 \001(\01621.com.sysalto.report.serial" +
+      "ization.WrapAlign_proto\"0\n\021OptionFloat_p" +
+      "roto\022\014\n\004null\030\001 \001(\010\022\r\n\005float\030\002 \001(\002\"4\n\022Str" +
+      "ingDouble_proto\022\016\n\006value1\030\001 \001(\t\022\016\n\006value" +
+      "2\030\002 \001(\001\"J\n\030DoubleStringString_proto\022\016\n\006v" +
+      "alue1\030\001 \001(\001\022\016\n\006value2\030\002 \001(\t\022\016\n\006value3\030\003 " +
+      "\001(\t\"\335\001\n\024ReportPieChart_proto\022;\n\004font\030\001 \001" +
+      "(\0132-.com.sysalto.report.serialization.RF" +
+      "ont_proto\022\r\n\005title\030\002 \001(\t\022B\n\004data\030\003 \003(\01324" +
+      ".com.sysalto.report.serialization.String" +
+      "Double_proto\022\n\n\002x0\030\004 \001(\002\022\n\n\002y0\030\005 \001(\002\022\r\n\005" +
+      "width\030\006 \001(\002\022\016\n\006height\030\007 \001(\002\"\306\001\n\024ReportBa" +
+      "rChart_proto\022\r\n\005title\030\001 \001(\t\022\016\n\006xLabel\030\002 " +
+      "\001(\t\022\016\n\006yLabel\030\003 \001(\t\022H\n\004data\030\004 \003(\0132:.com." +
+      "sysalto.report.serialization.DoubleStrin" +
+      "gString_proto\022\n\n\002x0\030\005 \001(\002\022\n\n\002y0\030\006 \001(\002\022\r\n" +
+      "\005width\030\007 \001(\002\022\016\n\006height\030\010 \001(\002\"g\n\021ReportIm" +
+      "age_proto\022\014\n\004file\030\001 \001(\t\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030" +
+      "\003 \001(\002\022\r\n\005width\030\004 \001(\002\022\016\n\006height\030\005 \001(\002\022\017\n\007" +
+      "opacity\030\006 \001(\002\"\346\001\n\020ReportLine_proto\022\n\n\002x1" +
+      "\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001" +
+      "(\002\022\021\n\tlineWidth\030\005 \001(\002\022=\n\005color\030\006 \001(\0132..c" +
+      "om.sysalto.report.serialization.RColor_p" +
+      "roto\022P\n\014lineDashType\030\007 \001(\0132:.com.sysalto" +
+      ".report.serialization.OptionLineDashType" +
+      "_proto\"t\n\030OptionLineDashType_proto\022\014\n\004nu" +
+      "ll\030\001 \001(\010\022J\n\014lineDashType\030\002 \001(\01324.com.sys" +
+      "alto.report.serialization.LineDashType_p" +
+      "roto\"1\n\022LineDashType_proto\022\014\n\004unit\030\001 \001(\005" +
+      "\022\r\n\005phase\030\002 \001(\005\"\345\001\n\025ReportRectangle_prot" +
+      "o\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n" +
+      "\002y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002\022C\n\005color\030\006 \001(\013" +
+      "24.com.sysalto.report.serialization.Opti" +
+      "onRColor_proto\022G\n\tfillColor\030\007 \001(\01324.com." +
+      "sysalto.report.serialization.OptionRColo" +
+      "r_proto\"b\n\022OptionRColor_proto\022\014\n\004null\030\001 " +
+      "\001(\010\022>\n\006rColor\030\002 \001(\0132..com.sysalto.report" +
+      ".serialization.RColor_proto\"\334\001\n\031ReportVe" +
+      "rticalShade_proto\022E\n\trectangle\030\001 \001(\01322.c" +
+      "om.sysalto.report.serialization.DRectang" +
+      "le_proto\022<\n\004from\030\002 \001(\0132..com.sysalto.rep" +
+      "ort.serialization.RColor_proto\022:\n\002to\030\003 \001" +
+      "(\0132..com.sysalto.report.serialization.RC" +
+      "olor_proto\"R\n\020DRectangle_proto\022\n\n\002x1\030\001 \001" +
+      "(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\016" +
+      "\n\006radius\030\005 \001(\002*I\n\024RFontAttribute_proto\022\n" +
+      "\n\006NORMAL\020\000\022\010\n\004BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD" +
+      "_ITALIC\020\003*b\n\017WrapAlign_proto\022\013\n\007NO_WRAP\020" +
+      "\000\022\r\n\tWRAP_LEFT\020\001\022\016\n\nWRAP_RIGHT\020\002\022\017\n\013WRAP" +
+      "_CENTER\020\003\022\022\n\016WRAP_JUSTIFIED\020\004B\002H\001b\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -25943,146 +25285,140 @@ public final class ReportProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportLinkToPage_proto_descriptor,
         new java.lang.String[] { "BoundaryRect", "PageNbr", "Left", "Top", });
-    internal_static_com_sysalto_report_serialization_BoundaryRect_proto_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_com_sysalto_report_serialization_BoundaryRect_proto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_sysalto_report_serialization_BoundaryRect_proto_descriptor,
-        new java.lang.String[] { "Left", "Bottom", "Right", "Top", });
     internal_static_com_sysalto_report_serialization_ReportLinkToUrl_proto_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_com_sysalto_report_serialization_ReportLinkToUrl_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportLinkToUrl_proto_descriptor,
         new java.lang.String[] { "BoundaryRect", "Url", });
     internal_static_com_sysalto_report_serialization_ReportText_proto_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_com_sysalto_report_serialization_ReportText_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportText_proto_descriptor,
         new java.lang.String[] { "Txt", "X", "Y", });
     internal_static_com_sysalto_report_serialization_RText_proto_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_com_sysalto_report_serialization_RText_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_RText_proto_descriptor,
         new java.lang.String[] { "Txt", "Font", });
     internal_static_com_sysalto_report_serialization_RFont_proto_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_com_sysalto_report_serialization_RFont_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_RFont_proto_descriptor,
         new java.lang.String[] { "Size", "FontName", "Attribute", "Color", "ExternalFont", });
     internal_static_com_sysalto_report_serialization_RColor_proto_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_com_sysalto_report_serialization_RColor_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_RColor_proto_descriptor,
         new java.lang.String[] { "R", "G", "B", "Opacity", });
     internal_static_com_sysalto_report_serialization_OptionRFontFamily_proto_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_com_sysalto_report_serialization_OptionRFontFamily_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_OptionRFontFamily_proto_descriptor,
         new java.lang.String[] { "Null", "RFontFamily", });
     internal_static_com_sysalto_report_serialization_RFontFamily_proto_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_com_sysalto_report_serialization_RFontFamily_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_RFontFamily_proto_descriptor,
         new java.lang.String[] { "Name", "Regular", "Bold", "Italic", "BoldItalic", });
     internal_static_com_sysalto_report_serialization_OptionString_proto_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_com_sysalto_report_serialization_OptionString_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_OptionString_proto_descriptor,
         new java.lang.String[] { "Null", "String", });
     internal_static_com_sysalto_report_serialization_ReportTextAligned_proto_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_com_sysalto_report_serialization_ReportTextAligned_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportTextAligned_proto_descriptor,
         new java.lang.String[] { "RText", "X", "Y", "Index", });
     internal_static_com_sysalto_report_serialization_ReportTextWrap_proto_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_com_sysalto_report_serialization_ReportTextWrap_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportTextWrap_proto_descriptor,
         new java.lang.String[] { "Text", "X0", "Y0", "X1", "Y1", "WrapAlign", });
     internal_static_com_sysalto_report_serialization_OptionFloat_proto_descriptor =
-      getDescriptor().getMessageTypes().get(14);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_com_sysalto_report_serialization_OptionFloat_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_OptionFloat_proto_descriptor,
         new java.lang.String[] { "Null", "Float", });
     internal_static_com_sysalto_report_serialization_StringDouble_proto_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_com_sysalto_report_serialization_StringDouble_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_StringDouble_proto_descriptor,
         new java.lang.String[] { "Value1", "Value2", });
     internal_static_com_sysalto_report_serialization_DoubleStringString_proto_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_com_sysalto_report_serialization_DoubleStringString_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_DoubleStringString_proto_descriptor,
         new java.lang.String[] { "Value1", "Value2", "Value3", });
     internal_static_com_sysalto_report_serialization_ReportPieChart_proto_descriptor =
-      getDescriptor().getMessageTypes().get(17);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_com_sysalto_report_serialization_ReportPieChart_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportPieChart_proto_descriptor,
         new java.lang.String[] { "Font", "Title", "Data", "X0", "Y0", "Width", "Height", });
     internal_static_com_sysalto_report_serialization_ReportBarChart_proto_descriptor =
-      getDescriptor().getMessageTypes().get(18);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_com_sysalto_report_serialization_ReportBarChart_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportBarChart_proto_descriptor,
         new java.lang.String[] { "Title", "XLabel", "YLabel", "Data", "X0", "Y0", "Width", "Height", });
     internal_static_com_sysalto_report_serialization_ReportImage_proto_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(18);
     internal_static_com_sysalto_report_serialization_ReportImage_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportImage_proto_descriptor,
         new java.lang.String[] { "File", "X", "Y", "Width", "Height", "Opacity", });
     internal_static_com_sysalto_report_serialization_ReportLine_proto_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(19);
     internal_static_com_sysalto_report_serialization_ReportLine_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportLine_proto_descriptor,
         new java.lang.String[] { "X1", "Y1", "X2", "Y2", "LineWidth", "Color", "LineDashType", });
     internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_descriptor =
-      getDescriptor().getMessageTypes().get(21);
+      getDescriptor().getMessageTypes().get(20);
     internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_descriptor,
         new java.lang.String[] { "Null", "LineDashType", });
     internal_static_com_sysalto_report_serialization_LineDashType_proto_descriptor =
-      getDescriptor().getMessageTypes().get(22);
+      getDescriptor().getMessageTypes().get(21);
     internal_static_com_sysalto_report_serialization_LineDashType_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_LineDashType_proto_descriptor,
         new java.lang.String[] { "Unit", "Phase", });
     internal_static_com_sysalto_report_serialization_ReportRectangle_proto_descriptor =
-      getDescriptor().getMessageTypes().get(23);
+      getDescriptor().getMessageTypes().get(22);
     internal_static_com_sysalto_report_serialization_ReportRectangle_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportRectangle_proto_descriptor,
         new java.lang.String[] { "X1", "Y1", "X2", "Y2", "Radius", "Color", "FillColor", });
     internal_static_com_sysalto_report_serialization_OptionRColor_proto_descriptor =
-      getDescriptor().getMessageTypes().get(24);
+      getDescriptor().getMessageTypes().get(23);
     internal_static_com_sysalto_report_serialization_OptionRColor_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_OptionRColor_proto_descriptor,
         new java.lang.String[] { "Null", "RColor", });
     internal_static_com_sysalto_report_serialization_ReportVerticalShade_proto_descriptor =
-      getDescriptor().getMessageTypes().get(25);
+      getDescriptor().getMessageTypes().get(24);
     internal_static_com_sysalto_report_serialization_ReportVerticalShade_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportVerticalShade_proto_descriptor,
         new java.lang.String[] { "Rectangle", "From", "To", });
     internal_static_com_sysalto_report_serialization_DRectangle_proto_descriptor =
-      getDescriptor().getMessageTypes().get(26);
+      getDescriptor().getMessageTypes().get(25);
     internal_static_com_sysalto_report_serialization_DRectangle_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_DRectangle_proto_descriptor,

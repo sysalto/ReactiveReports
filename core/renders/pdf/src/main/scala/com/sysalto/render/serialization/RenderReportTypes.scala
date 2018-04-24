@@ -23,8 +23,8 @@ import scala.collection.mutable.ListBuffer
 
 class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	private[render] val ENCODING = "ISO-8859-1"
-//	private[this] val db = RockDbUtil()
-	val persistenceUtil=persistenceFactory.open()
+	//	private[this] val db = RockDbUtil()
+	val persistenceUtil = persistenceFactory.open()
 	private[this] val serializer = new RenderReportSerializer(this)
 
 	private[render] abstract class PdfBaseItem(val id: Long) {
@@ -452,7 +452,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	abstract class PdfAction(id: Long) extends PdfBaseItem(id)
 
 
-	class PdfGoToUrl(id: Long, url: String) extends PdfAction(id) {
+	class PdfGoToUrl(id: Long, val url: String) extends PdfAction(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
 				 |<<
@@ -467,7 +467,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 
-	private[render] class PdfLink(id: Long, boundaryRect: BoundaryRect, idAction: Long)
+	private[render] class PdfLink(id: Long, val boundaryRect: BoundaryRect, val idAction: Long)
 		extends PdfAnnotation(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
@@ -483,7 +483,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 		}
 	}
 
-	class PdfGoToPage(id: Long, pageNbr: Long, left: Int, top: Int)
+	class PdfGoToPage(id: Long, val pageNbr: Long, val left: Int, val top: Int)
 		extends PdfAction(id) {
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
@@ -734,6 +734,22 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 			}
 			case item: PdfFontDescriptor => {
 				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfFontDescriptor]
+				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				persistenceUtil.writeObject(item.id, builder.toByteArray)
+			}
+			case item: PdfGoToPage => {
+				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfGoToPage]
+				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				persistenceUtil.writeObject(item.id, builder.toByteArray)
+			}
+
+			case item: PdfLink => {
+				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfLink]
+				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				persistenceUtil.writeObject(item.id, builder.toByteArray)
+			}
+			case item: PdfGoToUrl => {
+				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfGoToUrl]
 				val builder = serializer.PdfBaseItemSerializer.write(item1)
 				persistenceUtil.writeObject(item.id, builder.toByteArray)
 			}
