@@ -355,7 +355,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 //		report.directFillStroke(false, true)
 		//		report.directDrawRectangle(100,100,200,200)
 
-		for (i <- 1 to 10) {
+		for (i <- 1 to 1) {
 			println("I:" + i)
 			if (i > 1) {
 				report.nextPage()
@@ -461,7 +461,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			}
 		}
 
-		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE, derbyPersistanceFactory)
+		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
 //		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
 		val fontFamily = RFontFamily(name = "Roboto",
 			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",

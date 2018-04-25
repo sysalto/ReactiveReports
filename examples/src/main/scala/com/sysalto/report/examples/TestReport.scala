@@ -35,13 +35,13 @@ object TestReport  {
 
   def run2(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()
-    val report = Report("Test2.pdf" ,ReportPageOrientation.LANDSCAPE)
+    val report = Report("Test2.pdf" ,ReportPageOrientation.LANDSCAPE,null,false)
     runReport(report)
   }
 
   def runReport(report: Report): Unit = {
     report.nextLine(3)
-    report print "line1".bold() at 100
+//    report print "line1".bold() at 100
 //    report.nextLine(3)
 //    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
 //    report.nextLine()
@@ -70,9 +70,9 @@ object TestReport  {
 //    report rectangle() from(100, 100) to(200,200) verticalShade(RColor(0, 0, 255), RColor(255, 255, 255)) draw()
    // report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 100, 100, 100)
 //    report rectangle() from(0, 0) to(report.pgSize.width, report.pgSize.height) verticalShade(RColor(255, 255, 255), RColor(255, 255, 180)) draw()
-    val chartData=Map("A"->20.0,"B"->30.0,"C"->50.0,"D"->30.0,"E"->10.0,"F"->15.0)
-    report.drawPieChart("", chartData.toList, 100,100,100,300)
-
+//    val chartData=Map("A"->20.0,"B"->30.0,"C"->50.0,"D"->30.0,"E"->10.0,"F"->15.0)
+//    report.drawPieChart("", chartData.toList, 100,100,100,300)
+    report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 45, 100, 40)
     report.render()
   }
 

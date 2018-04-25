@@ -252,7 +252,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	class PdfImage(id: Long, val fileName: String) extends PdfBaseItem(id) {
 		val name = "img" + id
 		val imageMeta = new ImageMeta(fileName)
-		setObject(this)
+
 
 		override def content: Array[Byte] = {
 			s"""${id} 0 obj
