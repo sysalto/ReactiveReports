@@ -46,58 +46,58 @@ message ReportLinkToUrl_proto {
 
 
 message ReportText_proto {
-    RText_proto txt = 1;
+    com.sysalto.report.serialization.common.ReportTxt_proto txt = 1;
     float x = 2;
     float y = 3;
 }
 
-message RText_proto {
-    string txt = 1;
-    RFont_proto font = 2;
-}
+//message RText_proto {
+//    string txt = 1;
+//    RFont_proto font = 2;
+//}
 
-enum RFontAttribute_proto {
-    NORMAL = 0;
-    BOLD = 1;
-    ITALIC = 2;
-    BOLD_ITALIC = 3;
-}
+//enum RFontAttribute_proto {
+//    NORMAL = 0;
+//    BOLD = 1;
+//    ITALIC = 2;
+//    BOLD_ITALIC = 3;
+//}
 
-message RFont_proto {
-    int32 size = 1;
-    string fontName = 2;
-    RFontAttribute_proto attribute = 3;
-    RColor_proto color = 4;
-    OptionRFontFamily_proto externalFont = 5;
-}
+//message RFont_proto {
+//    int32 size = 1;
+//    string fontName = 2;
+//    RFontAttribute_proto attribute = 3;
+//    RColor_proto color = 4;
+//    OptionRFontFamily_proto externalFont = 5;
+//}
 
-message RColor_proto {
-    int32 r = 1;
-    int32 g = 2;
-    int32 b = 3;
-    float opacity = 4;
-}
+//message RColor_proto {
+//    int32 r = 1;
+//    int32 g = 2;
+//    int32 b = 3;
+//    float opacity = 4;
+//}
 
-message OptionRFontFamily_proto {
-    bool null = 1;
-    RFontFamily_proto rFontFamily = 2;
-}
+//message OptionRFontFamily_proto {
+//    bool null = 1;
+//    RFontFamily_proto rFontFamily = 2;
+//}
+//
+//message RFontFamily_proto {
+//    string name = 1;
+//    string regular = 2;
+//    OptionString_proto bold = 3;
+//    OptionString_proto italic = 4;
+//    OptionString_proto boldItalic = 5;
+//}
 
-message RFontFamily_proto {
-    string name = 1;
-    string regular = 2;
-    OptionString_proto bold = 3;
-    OptionString_proto italic = 4;
-    OptionString_proto boldItalic = 5;
-}
-
-message OptionString_proto {
-    bool null = 1;
-    string string = 2;
-}
+//message OptionString_proto {
+//    bool null = 1;
+//    string string = 2;
+//}
 
 message ReportTextAligned_proto {
-    RText_proto rText = 1;
+    com.sysalto.report.serialization.common.ReportTxt_proto rText = 1;
     float x = 2;
     float y = 3;
     int32 index = 4;
@@ -112,7 +112,7 @@ enum WrapAlign_proto {
 }
 
 message ReportTextWrap_proto {
-    repeated RText_proto text = 1;
+    repeated com.sysalto.report.serialization.common.ReportTxt_proto text = 1;
     float x0 = 2;
     float y0 = 3;
     float x1 = 4;
@@ -137,7 +137,7 @@ message DoubleStringString_proto {
 }
 
 message ReportPieChart_proto {
-    RFont_proto font = 1;
+    com.sysalto.report.serialization.common.RFont_proto font = 1;
     string title = 2;
     repeated StringDouble_proto data = 3;
     float x0 = 4;
@@ -173,7 +173,7 @@ message ReportLine_proto {
     float x2 = 3;
     float y2 = 4;
     float lineWidth = 5;
-    RColor_proto color = 6;
+    com.sysalto.report.serialization.common.RColor_proto color = 6;
     OptionLineDashType_proto lineDashType = 7;
 }
 
@@ -199,13 +199,13 @@ message ReportRectangle_proto {
 
 message OptionRColor_proto {
     bool null = 1;
-    RColor_proto rColor = 2;
+    com.sysalto.report.serialization.common.RColor_proto rColor = 2;
 }
 
 message ReportVerticalShade_proto {
     DRectangle_proto rectangle = 1;
-    RColor_proto from = 2;
-    RColor_proto to = 3;
+    com.sysalto.report.serialization.common.RColor_proto from = 2;
+    com.sysalto.report.serialization.common.RColor_proto to = 3;
 }
 
 message DRectangle_proto {

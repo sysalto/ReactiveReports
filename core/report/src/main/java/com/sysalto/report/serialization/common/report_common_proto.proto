@@ -4,6 +4,56 @@ option optimize_for = SPEED;
 package com.sysalto.report.serialization.common;
 
 
+message ReportTxt_proto {
+    string txt = 1;
+    RFont_proto font = 2;
+}
+
+message RFont_proto {
+    int32 size = 1;
+    string fontName = 2;
+    RFontAttribute_proto attribute = 3;
+    RColor_proto color = 4;
+    OptionRFontFamily_proto externalFont = 5;
+}
+
+
+message OptionRFontFamily_proto {
+    bool null = 1;
+    RFontFamily_proto rFontFamily = 2;
+}
+
+message RFontFamily_proto {
+    string name = 1;
+    string regular = 2;
+    OptionString_proto bold = 3;
+    OptionString_proto italic = 4;
+    OptionString_proto boldItalic = 5;
+}
+
+
+message OptionString_proto {
+    bool null = 1;
+    string string = 2;
+}
+
+
+enum RFontAttribute_proto {
+    NORMAL = 0;
+    BOLD = 1;
+    ITALIC = 2;
+    BOLD_ITALIC = 3;
+}
+
+
+message RColor_proto {
+    int32 r = 1;
+    int32 g = 2;
+    int32 b = 3;
+    float opacity = 4;
+}
+
+
 message BoundaryRect_proto {
     float left = 1;
     float bottom = 2;

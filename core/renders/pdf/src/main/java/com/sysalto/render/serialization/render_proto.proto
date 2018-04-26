@@ -66,14 +66,11 @@ message PdfGraphic_proto {
     repeated PdfGraphicFragment_proto pdfGraphicFragment_proto = 1;
 }
 
-message ReportTxt_proto {
-    string txt = 1;
-}
 
 message PdfTxtFragment_proto {
     float x = 1;
     float y = 2;
-    ReportTxt_proto rtext_proto = 3;
+    com.sysalto.report.serialization.common.ReportTxt_proto rtext_proto = 3;
     string fonttRefName = 4;
 }
 

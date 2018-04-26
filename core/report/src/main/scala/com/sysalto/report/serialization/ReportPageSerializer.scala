@@ -173,15 +173,15 @@ private[serialization] object RFontSerializer {
 			OptionRFontFamilySerializer.read(input.getExternalFont))
 }
 
-private[serialization] object RTextSerializer {
-	def write(obj: ReportTxt): RText_proto = {
-		val builder = RText_proto.newBuilder()
+object ReportTxtSerializer {
+	def write(obj: ReportTxt): ReportTxt_proto = {
+		val builder = ReportTxt_proto.newBuilder()
 		builder.setTxt(obj.txt)
 		builder.setFont(RFontSerializer.write(obj.font))
 		builder.build()
 	}
 
-	def read(input: RText_proto): ReportTxt =
+	def read(input: ReportTxt_proto): ReportTxt =
 		ReportTxt(input.getTxt, RFontSerializer.read(input.getFont))
 }
 
@@ -189,21 +189,21 @@ private[serialization] object RTextSerializer {
 private[serialization] object ReportTextSerializer {
 	def write(obj: ReportText): ReportText_proto = {
 		val builder = ReportText_proto.newBuilder()
-		builder.setTxt(RTextSerializer.write(obj.txt))
+		builder.setTxt(ReportTxtSerializer.write(obj.txt))
 		builder.setX(obj.x)
 		builder.setY(obj.y)
 		builder.build()
 	}
 
 	def read(input: ReportText_proto): ReportText =
-		new ReportText(RTextSerializer.read(input.getTxt), input.getX, input.getY)
+		new ReportText(ReportTxtSerializer.read(input.getTxt), input.getX, input.getY)
 }
 
 
 private[serialization] object ReportTextAlignedSerializer {
 	def write(obj: ReportTextAligned): ReportTextAligned_proto = {
 		val builder = ReportTextAligned_proto.newBuilder()
-		builder.setRText(RTextSerializer.write(obj.rText))
+		builder.setRText(ReportTxtSerializer.write(obj.rText))
 		builder.setX(obj.x)
 		builder.setY(obj.y)
 		builder.setIndex(obj.index)
@@ -211,7 +211,7 @@ private[serialization] object ReportTextAlignedSerializer {
 	}
 
 	def read(input: ReportTextAligned_proto): ReportTextAligned =
-		new ReportTextAligned(RTextSerializer.read(input.getRText), input.getX, input.getY, input.getIndex)
+		new ReportTextAligned(ReportTxtSerializer.read(input.getRText), input.getX, input.getY, input.getIndex)
 }
 
 
@@ -362,7 +362,7 @@ private[serialization] object DirectDrawRectangleSerializer {
 	}
 
 	def read(input: DirectDrawRectangle_proto): DirectDrawRectangle =
-		new DirectDrawRectangle(input.getX,input.getY,input.getWidth,input.getHeight)
+		new DirectDrawRectangle(input.getX, input.getY, input.getWidth, input.getHeight)
 }
 
 
@@ -437,7 +437,7 @@ private[serialization] object ReportTextWrapSerializer {
 		val builder = ReportTextWrap_proto.newBuilder()
 
 		obj.text.foreach(item => {
-			val result = RTextSerializer.write(item)
+			val result = ReportTxtSerializer.write(item)
 			builder.addText(result)
 		})
 
@@ -451,7 +451,7 @@ private[serialization] object ReportTextWrapSerializer {
 
 	def read(input: ReportTextWrap_proto): ReportTextWrap =
 		new ReportTextWrap(input.getTextList.asScala.map(item => {
-			RTextSerializer.read(item)
+			ReportTxtSerializer.read(item)
 		}).toList, input.getX0, input.getY0, input.getX1, input.getY1, WrapAlignSerializer.read(input.getWrapAlign))
 }
 

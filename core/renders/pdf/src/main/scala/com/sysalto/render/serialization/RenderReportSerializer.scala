@@ -11,7 +11,7 @@ import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor,
 import com.sysalto.report.RFontAttribute
 import com.sysalto.report.ReportTypes.DirectFillStroke
 import com.sysalto.report.reportTypes.{RFont, RFontFamily, ReportColor, ReportTxt}
-import com.sysalto.report.serialization.BoundaryRectSerializer
+import com.sysalto.report.serialization.{BoundaryRectSerializer, ReportTxtSerializer}
 import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectFillStroke_proto}
 
 import scala.collection.mutable.ListBuffer
@@ -234,19 +234,6 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		def read(input: PdfGraphic_proto): renderReportTypes.PdfGraphic = {
 			val list = input.getPdfGraphicFragmentProtoList.asScala.map(item => PdfGraphicFragmentSerializer.read(item)).toList
 			new renderReportTypes.PdfGraphic(list)
-		}
-	}
-
-	object ReportTxtSerializer {
-		def write(input: ReportTxt): ReportTxt_proto = {
-			val builder = ReportTxt_proto.newBuilder()
-			builder.setTxt(input.txt)
-			builder.build()
-		}
-
-		def read(input: ReportTxt_proto): ReportTxt = {
-			val result = new ReportTxt(input.getTxt)
-			result
 		}
 	}
 
@@ -781,7 +768,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 
 		def read(id: Long, offset: Long, input: PdfGoToPage_proto): renderReportTypes.PdfGoToPage = {
-			val result = new renderReportTypes.PdfGoToPage(id, input.getPageNbr, input.getLeft,input.getTop)
+			val result = new renderReportTypes.PdfGoToPage(id, input.getPageNbr, input.getLeft, input.getTop)
 			result.offset = offset
 			result
 		}
@@ -796,7 +783,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 
 		def read(id: Long, offset: Long, input: PdfLink_proto): renderReportTypes.PdfLink = {
-			val result = new renderReportTypes.PdfLink(id,BoundaryRectSerializer.read(input.getBoundaryRectProto),input.getIdAction)
+			val result = new renderReportTypes.PdfLink(id, BoundaryRectSerializer.read(input.getBoundaryRectProto), input.getIdAction)
 			result.offset = offset
 			result
 		}
@@ -810,7 +797,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 
 		def read(id: Long, offset: Long, input: PdfGoToUrl_proto): renderReportTypes.PdfGoToUrl = {
-			val result = new renderReportTypes.PdfGoToUrl(id,input.getUrl)
+			val result = new renderReportTypes.PdfGoToUrl(id, input.getUrl)
 			result.offset = offset
 			result
 		}
