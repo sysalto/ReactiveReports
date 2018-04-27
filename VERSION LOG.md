@@ -1,11 +1,9 @@
-## 1.0.0 (2018-04-21)
+## 1.0.0 (2018-04-26)
 ### Changes:
-* add newPageFct event where to add things before drawing the page (like background image)
-* add start() method to report - this method should be call before any drawing images or text
-* decouple Rockdb from the reports - it's possible to use a custom PersistenceFactory implementation - updated examples Scala/Java with Derby custom implementation.
-
-### Bugs fixed:
-* optimize render memory - It can render tens of milions of pages/records without extra memory
+* added `newPageFct` event, where users add code to be executed before drawing the page (like background image)
+* added `start()` method to report - this method should be called at the beginning, before drawing images or text
+* allowed reports to run with or without RocksDB - it's possible to use a custom PersistenceFactory implementation - updated the Scala/Java examples with Derby custom implementation.
+* optimized render memory - It can render tens of millions of pages/records without extra memory
 
 ## 1.0.0-RC.7 (2018-03-03)
 ### Changes:
