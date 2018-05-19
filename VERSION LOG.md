@@ -1,3 +1,10 @@
+
+## 1.0.1-beta.1
+### Changes:
+* added pdf page formats:A5,A4,A3 and custom format
+
+
+
 ## 1.0.0 (2018-04-26)
 ### Changes:
 * added `newPageFct` event, where users add code to be executed before drawing the page (like background image)
