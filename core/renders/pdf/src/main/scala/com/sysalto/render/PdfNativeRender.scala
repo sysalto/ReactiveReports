@@ -34,13 +34,16 @@ import com.sysalto.report.{ReportTypes, WrapAlign}
 class PdfNativeRender extends PdfUtil {
 	private[this] var pdfNativeGenerator: RenderReport = null
 	private[this] var orientation = ReportPageOrientation.PORTRAIT
-	private[this] lazy val PAGE_WIDTH = if (orientation == ReportPageOrientation.PORTRAIT) 612 else 792
-	private[this] lazy val PAGE_HEIGHT = if (orientation == ReportPageOrientation.PORTRAIT) 792 else 612
+	private[this] var  PAGE_WIDTH: Float=0f
+	private[this] var PAGE_HEIGHT: Float=0f
 
-	override def open(name: String, orientation: ReportPageOrientation.Value,persistenceFactory: PersistenceFactory, pdfCompression: Boolean): Unit = {
+	override def open(name: String, orientation: ReportPageOrientation.Value, pageFormat: ReportPageFormat, persistenceFactory: PersistenceFactory, pdfCompression: Boolean): Unit = {
 		new File(name).delete()
 		this.orientation = orientation
-		pdfNativeGenerator = new RenderReport(name, PAGE_WIDTH, PAGE_HEIGHT, persistenceFactory,pdfCompression)
+		PAGE_WIDTH = if (orientation == ReportPageOrientation.PORTRAIT) pageFormat.width else pageFormat.height
+		PAGE_HEIGHT = if (orientation == ReportPageOrientation.PORTRAIT) pageFormat.height else pageFormat.width
+
+		pdfNativeGenerator = new RenderReport(name, PAGE_WIDTH, PAGE_HEIGHT, persistenceFactory, pdfCompression)
 		pdfNativeGenerator.startPdf()
 
 	}
@@ -83,7 +86,7 @@ class PdfNativeRender extends PdfUtil {
 	}
 
 	override def pgSize: ReportTypes.Rectangle = {
-		if (orientation == ReportPageOrientation.PORTRAIT) new Rectangle(612, 792) else new  Rectangle(792, 612)
+		if (orientation == ReportPageOrientation.PORTRAIT) new Rectangle(612, 792) else new Rectangle(792, 612)
 	}
 
 	override def close(): Unit = {
@@ -119,9 +122,10 @@ class PdfNativeRender extends PdfUtil {
 	override def getTextWidth(cell: ReportCell): List[Float] = pdfNativeGenerator.getTextWidth(cell)
 
 	override def directDrawMovePoint(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawMovePoint(x, y)
+
 	override def directDrawLine(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawLine(x, y)
 
-	override def directFillStroke(fill: Boolean, stroke: Boolean): Unit = pdfNativeGenerator.directFillStroke(fill,stroke)
+	override def directFillStroke(fill: Boolean, stroke: Boolean): Unit = pdfNativeGenerator.directFillStroke(fill, stroke)
 
-	override def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = pdfNativeGenerator.directDrawRectangle(x,y,width,height)
+	override def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = pdfNativeGenerator.directDrawRectangle(x, y, width, height)
 }

@@ -26,7 +26,7 @@ package com.sysalto.report.examples
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.akka.template.ReportAppAkka
-import com.sysalto.report.reportTypes.{ReportCell, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{LetterFormat, ReportCell, ReportPageOrientation}
 
 
 object TestReport  {
@@ -35,7 +35,7 @@ object TestReport  {
 
   def run2(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()
-    val report = Report("Test2.pdf" ,ReportPageOrientation.LANDSCAPE,null,false)
+    val report = Report("Test2.pdf" ,ReportPageOrientation.LANDSCAPE,LetterFormat,null,false)
     runReport(report)
   }
 

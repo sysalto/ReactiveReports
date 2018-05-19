@@ -1,15 +1,15 @@
 import sbt.Keys.{libraryDependencies, publishMavenStyle}
 
-val SCALA_VERSION = "2.12.5"
+val SCALA_VERSION = "2.12.6"
 
-val AKKA_VERSION = "2.5.10" // "latest.release"
+val AKKA_VERSION = "latest.release" // "2.5.10"
 
-val ROCKSDB_VERSION = "5.11.3" // "latest.release"
+val ROCKSDB_VERSION =   "latest.release" // "5.11.3"
 
-val PROTOBUF_VERSION = "3.5.1" // "latest.release"
+val PROTOBUF_VERSION =  "latest.release" // "3.5.1"
 
-val projectVersion = "1.0.0"
-//val projectVersion = "1.0.0-SNAPSHOT"
+val projectVersion = "1.0.1-RC1"
+//val projectVersion = "1.0.1-SNAPSHOT"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",

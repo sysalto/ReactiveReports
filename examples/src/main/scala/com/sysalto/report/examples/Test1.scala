@@ -24,127 +24,41 @@ package com.sysalto.report.examples
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.{CellAlign, RFont, RFontFamily, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{ReportTxt => _, _}
 
 
 object Test1 {
 
 	def run(): Unit = {
 		implicit val pdfFactory = new PdfNativeFactory()
-		val report = Report("test2.pdf", ReportPageOrientation.LANDSCAPE)
+		val report = Report("test2.pdf", ReportPageOrientation.LANDSCAPE,A5Format,null,false)
 		runReport(report)
 	}
 
 	def runReport(implicit report: Report): Unit = {
-//		val fontFamily1 = RFontFamily(name = "Roboto",
-//			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
-//			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
-//			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
-//			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
+		val fontFamily1 = RFontFamily(name = "Roboto",
+			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
+			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
+			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
+			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
 
-//		val fontFamily2 = RFontFamily(name = "UNICODE",
-//			regular = "/home/marian/Downloads/ARIALUNI.TTF")
+		report.setExternalFont(fontFamily1)
+		val font = RFont(20, fontName = "Roboto", externalFont = Some(fontFamily1))
+		val font1 = RFont(20, fontName = "Helvetica")
+		report.font = font
 
-//		report.setExternalFont(fontFamily1)
-//		report.setExternalFont(fontFamily2)
-		report.setHeaderSize = { _ =>
-			 50
-		}
-		report.headerFct = {
-			case (_, _) =>{
-//				report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
-			}
-		}
-
-		report.nextLine(3)
-val t1=System.currentTimeMillis()
-		for (i<-1 to 1) {
-//			report.nextPage()
-			report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
-			report rectangle() from(10,10 )  to(100,100) fillColor ReportColor(156, 76, 6) draw()
-
-			report.nextLine(5)
-			report print "ok"+i at 100
-			report.nextLine()
-			if (report.lineLeft<5) {
-				report.nextPage()
-				report.nextLine()
-			}
-		}
+		report.nextLine(5)
+		val str="test"
+		report print (str size(20))  at 100
+		report.nextLine()
+		report print ReportTxt(str,font1) at 100
 
 		report.render()
-		if (true) {
-			val t2=System.currentTimeMillis()
-			println("Time:"+(t2-t1)*0.001)
-			return
-		}
 
-		val size = 10
-//		val font1 = RFont(size, fontName = "Roboto", externalFont = Some(fontFamily1))
-//		val font2 = RFont(size, fontName = "UNICODE", externalFont = Some(fontFamily2))
-		//		report.font = font
-		val str = "ok1"
-		val txt1 = ReportTxt(str)
-//		report print ReportTxt("\u5bfc\u5165",font) at 100
-		report print ReportTxt(str) at 100
-		report.nextLine()
-//		report print ReportTxt("<0577>",font2) at 100
-//		report print "\u0915 \u0915 \u093e" at 100
-		//  val txt5=RText(str,RFont(size,fontName = "Roboto",fontFile = Some("~/transfer/font/Roboto-Regular.ttf")))
-		//    val txt3=RText(str,RFont(size,fontName = "Calibri",fontFile = Some("~/transfer/font/calibri/Calibri.ttf")))
-		//    val txt4=RText(str,RFont(size,fontName = "Lily",fontFile = Some("~/transfer/font/lily/LilyoftheValley.ttf")))
-		//		val txt2 = RText(str)
-
-//		val row = ReportRow(10, report.pgSize.width - 10, List(Column("column1", 130), Column("column2", 100),
-//			Column("c3",83),Column("c4",83),Column("c5",Flex(1))))
-//		val bound1 = row.getColumnBound("column2")
-//		val bound2 = row.getColumnBound("column2")
-//		val cell1 = ReportCell(" asaSD  \n  ASAS AaS    table des \nmatières").centerAlign() inside bound1
-//		val cell2 = ReportCell(txt1).leftAlign() inside bound2
-//		val rrow1 = ReportCellList(List(cell1)) //,cell2))
-//		//			cell2))
-//		report.print(rrow1)
-//		report.nextLine(5)
-		val row1 = ReportRow(10, report.pageLayout.width - 10, List(Column("c1", 130), Column("c2", Flex(1))))
-		val b1 = row1.getColumnBound("c1")
-		val b2 = row1.getColumnBound("c2")
-		report.nextLine()
-		val c1b = ReportCell(" Test1 asdsadsaads  asdas asdaS D").leftAlign() inside b1
-		val c2b = ReportCell(" ").rightAlign() inside b2
-		val rrow=List(c1b,c2b)
-
-		val top=report.getY-15
-		val bottom=report.getY+15
-//		report rectangle() from(2, top) radius (3) to(report.pageLayout.width - 9, bottom)  draw()
-
-
-//		report.print(rrow,CellAlign.CENTER,top,bottom)
-		val m1b=b1.left+report.getTextWidth(c1b).last
-		val m2b=b2.right-report.getTextWidth(c2b.txt.head)
-		val y2 = report.calculate(rrow)
-//		report line() from(m1b, y2 ) to (m2b) color(200, 200, 200) draw()
-
-		report.nextLine(10)
-
-		report.nextLine()
-
-		//		    report print txt2 at 100
-		//    report.nextLine()
-		//    report print txt5 at 100
-		//    report.nextLine()
-		//    report print txt4 at 100
-
-		//		report line() from(10, report.getY + 2) to 400 width 1f color(200,200,200) lineType(LineDashType(2,1))  draw()
-		//		report line() from(10, report.getY + 20) to 400 width 1f lineType(LineDashType(1,1))  draw()
-		//		report line() from(10, report.getY + 40) to 400 width 1f lineType(LineDashType(3,1))  draw()
-		//		report line() from(10, report.getY + 60) to 400 width 1f draw()
-
-		report.render()
 	}
 
 
 	def main(args: Array[String]): Unit = {
-//		println("\u5bfc\u5165")
 		run()
 	}
 

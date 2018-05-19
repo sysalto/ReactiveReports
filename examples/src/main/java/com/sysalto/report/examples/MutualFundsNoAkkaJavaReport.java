@@ -69,7 +69,7 @@ public class MutualFundsNoAkkaJavaReport {
 
 
 //        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
-        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory, persistenceMemoryFactory);
+        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory,new LetterFormat(), persistenceMemoryFactory);
 
         report.newPageFctCallback(pg -> {
             drawbackgroundImage(report);

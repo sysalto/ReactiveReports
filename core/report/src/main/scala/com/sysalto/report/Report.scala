@@ -41,7 +41,8 @@ import scala.collection.JavaConverters._
 	* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
 	* @param pdfFactory  - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 	*/
-case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, persistence: PersistenceFactory = null, pdfCompression: Boolean = true)(implicit pdfFactory: PdfFactory) {
+case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, pageFormat: ReportPageFormat=LetterFormat,
+                  persistence: PersistenceFactory = null, pdfCompression: Boolean = true)(implicit pdfFactory: PdfFactory) {
 	private[this] var pageNbrs = 1L
 	private[this] var crtPageNbr = 1L
 	private[this] val crtPage = new ReportPage(new ListBuffer[ReportItem]())
@@ -715,7 +716,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			}
 		}
 	}
-	pdfUtil.open(name, orientation, persistenceFactory, pdfCompression)
+	pdfUtil.open(name, orientation, pageFormat, persistenceFactory, pdfCompression)
 	crtYPosition = pdfUtil.pgSize.height
 	if (lastPosition < getCurrentPosition) {
 		lastPosition = getCurrentPosition
@@ -733,8 +734,9 @@ object Report {
 		* @param pdfFactory  - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 		* @return the new report
 		*/
-	def create(name: String, orientation: ReportPageOrientation.Value, pdfFactory: PdfFactory, persistence: PersistenceFactory): Report = {
-		new Report(name, orientation, persistence)(pdfFactory)
+	def create(name: String, orientation: ReportPageOrientation.Value, pdfFactory: PdfFactory,
+	           pageFormat: ReportPageFormat, persistence: PersistenceFactory): Report = {
+		new Report(name, orientation, pageFormat,persistence)(pdfFactory)
 	}
 
 	def create(name: String, orientation: ReportPageOrientation.Value, pdfFactory: PdfFactory): Report = {

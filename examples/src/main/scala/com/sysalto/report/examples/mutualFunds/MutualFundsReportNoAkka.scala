@@ -380,86 +380,86 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	def runReport(): Unit = {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
-		val derbyPersistanceFactory = new PersistenceFactory() {
-			override def getPersistence(): PersistenceUtil = {
-				new PersistenceUtil() {
-					val driver = "org.apache.derby.jdbc.EmbeddedDriver"
-					Class.forName(driver).newInstance()
-					val dbFolder = System.getProperty("java.io.tmpdir")
-					val prefix = "persistence"
-					val extension = ".db"
-					val file = File.createTempFile(prefix, extension, new File(dbFolder))
-					file.delete
-					val dbPath = file.getAbsolutePath
-					val conn = DriverManager.getConnection(s"jdbc:derby:${dbPath};create=true")
-
-					override def writeObject(key: Long, obj: Array[Byte]): Unit = {
-						val keyExists = exists(key)
-						val ps = if (keyExists) conn.prepareStatement("update persist set content=? where id=? ") else
-							conn.prepareStatement("insert into persist(id,content)  values(?,?)")
-						val keyPos = if (keyExists) 2 else 1
-						val blobPos = if (keyExists) 1 else 2
-						ps.setLong(keyPos, key)
-						val blob = conn.createBlob
-						blob.setBytes(1, obj)
-						ps.setBlob(blobPos, blob)
-						ps.execute
-						blob.free()
-						ps.close()
-					}
-
-					private def exists(key: Long): Boolean = {
-						val stmnt = conn.prepareStatement(s"select count(*) from persist where id=${key}")
-						val rs = stmnt.executeQuery
-						var result = false
-						if (rs.next()) {
-							result = rs.getLong(1) > 0
-						}
-						rs.close()
-						stmnt.close()
-						result
-					}
-
-					override def readObject(key: Long): Array[Byte] = {
-						var result: Array[Byte] = null
-						val stmnt = conn.prepareStatement(s"select content from persist where id=${key}")
-						val rs = stmnt.executeQuery
-						if (rs.next()) {
-							val aBlob = rs.getBlob(1)
-							result = aBlob.getBytes(1, aBlob.length.toInt)
-						}
-						rs.close()
-						stmnt.close()
-						result
-					}
-
-					override def getAllKeys: java.util.List[java.lang.Long] = {
-						val result = new ListBuffer[Long]()
-						val stmnt = conn.prepareStatement(s"select id from persist order by id")
-						val rs = stmnt.executeQuery
-						while (rs.next()) {
-							result += rs.getLong(1)
-						}
-						result.toList.map(item=>item.asInstanceOf[java.lang.Long]).asJava
-					}
-
-					override def open(): Unit = {
-						val stmt = conn.createStatement()
-						stmt.executeUpdate("Create table persist (id BIGINT primary key, content blob(2G))")
-						stmt.close()
-					}
-
-					override def close(): Unit = {
-						if (conn != null) {
-							conn.close()
-						}
-						//						DriverManager.getConnection(s"jdbc:derby:${dbPath};shutdown=true")
-						file.listFiles().foreach(fileItem => fileItem.delete())
-						file.delete()
-					}
-				}
-			}
-		}
+//		val derbyPersistanceFactory = new PersistenceFactory() {
+//			override def getPersistence(): PersistenceUtil = {
+//				new PersistenceUtil() {
+//					val driver = "org.apache.derby.jdbc.EmbeddedDriver"
+//					Class.forName(driver).newInstance()
+//					val dbFolder = System.getProperty("java.io.tmpdir")
+//					val prefix = "persistence"
+//					val extension = ".db"
+//					val file = File.createTempFile(prefix, extension, new File(dbFolder))
+//					file.delete
+//					val dbPath = file.getAbsolutePath
+//					val conn = DriverManager.getConnection(s"jdbc:derby:${dbPath};create=true")
+//
+//					override def writeObject(key: Long, obj: Array[Byte]): Unit = {
+//						val keyExists = exists(key)
+//						val ps = if (keyExists) conn.prepareStatement("update persist set content=? where id=? ") else
+//							conn.prepareStatement("insert into persist(id,content)  values(?,?)")
+//						val keyPos = if (keyExists) 2 else 1
+//						val blobPos = if (keyExists) 1 else 2
+//						ps.setLong(keyPos, key)
+//						val blob = conn.createBlob
+//						blob.setBytes(1, obj)
+//						ps.setBlob(blobPos, blob)
+//						ps.execute
+//						blob.free()
+//						ps.close()
+//					}
+//
+//					private def exists(key: Long): Boolean = {
+//						val stmnt = conn.prepareStatement(s"select count(*) from persist where id=${key}")
+//						val rs = stmnt.executeQuery
+//						var result = false
+//						if (rs.next()) {
+//							result = rs.getLong(1) > 0
+//						}
+//						rs.close()
+//						stmnt.close()
+//						result
+//					}
+//
+//					override def readObject(key: Long): Array[Byte] = {
+//						var result: Array[Byte] = null
+//						val stmnt = conn.prepareStatement(s"select content from persist where id=${key}")
+//						val rs = stmnt.executeQuery
+//						if (rs.next()) {
+//							val aBlob = rs.getBlob(1)
+//							result = aBlob.getBytes(1, aBlob.length.toInt)
+//						}
+//						rs.close()
+//						stmnt.close()
+//						result
+//					}
+//
+//					override def getAllKeys: java.util.List[java.lang.Long] = {
+//						val result = new ListBuffer[Long]()
+//						val stmnt = conn.prepareStatement(s"select id from persist order by id")
+//						val rs = stmnt.executeQuery
+//						while (rs.next()) {
+//							result += rs.getLong(1)
+//						}
+//						result.toList.map(item=>item.asInstanceOf[java.lang.Long]).asJava
+//					}
+//
+//					override def open(): Unit = {
+//						val stmt = conn.createStatement()
+//						stmt.executeUpdate("Create table persist (id BIGINT primary key, content blob(2G))")
+//						stmt.close()
+//					}
+//
+//					override def close(): Unit = {
+//						if (conn != null) {
+//							conn.close()
+//						}
+//						//						DriverManager.getConnection(s"jdbc:derby:${dbPath};shutdown=true")
+//						file.listFiles().foreach(fileItem => fileItem.delete())
+//						file.delete()
+//					}
+//				}
+//			}
+//		}
 
 		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
 //		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
