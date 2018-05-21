@@ -174,6 +174,14 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		graphicList += new renderReportTypes.DirectDrawLine(x, y)
 	}
 
+	def directDraw(code:String): Unit = {
+		graphicList += new renderReportTypes.DirectDraw(code)
+	}
+
+	def directDrawStroke(reportColor: ReportColor): Unit = {
+		graphicList += new renderReportTypes.DirectDrawStroke(reportColor)
+	}
+
 	def directFillStroke(fill: Boolean, stroke: Boolean): Unit = {
 		graphicList += new renderReportTypes.DirectFillStroke(fill, stroke)
 	}

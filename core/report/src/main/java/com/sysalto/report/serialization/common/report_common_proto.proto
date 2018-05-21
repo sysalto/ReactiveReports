@@ -4,6 +4,13 @@ option optimize_for = SPEED;
 package com.sysalto.report.serialization.common;
 
 
+message ReportColor_proto {
+    int32 r = 1;
+    int32 g = 2;
+    int32 b = 3;
+    float opacity = 4;
+}
+
 message ReportTxt_proto {
     string txt = 1;
     RFont_proto font = 2;
@@ -71,6 +78,11 @@ message DirectDrawLine_proto {
     float x = 1;
     float y = 2;
 }
+
+message DirectDraw_proto {
+    string code=1;
+}
+
 
 message DirectFillStroke_proto {
     bool fill = 1;

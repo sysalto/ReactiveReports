@@ -22,7 +22,9 @@
 
 package com.sysalto.report.examples
 
+import com.sysalto.render.PdfDraw.DrawPoint
 import com.sysalto.render.PdfNativeFactory
+import com.sysalto.render.basic.PdfBasic
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{ReportTxt => _, _}
 
@@ -42,16 +44,23 @@ object Test1 {
 			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
 			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
 
-		report.setExternalFont(fontFamily1)
-		val font = RFont(20, fontName = "Roboto", externalFont = Some(fontFamily1))
-		val font1 = RFont(20, fontName = "Helvetica")
-		report.font = font
+//		report.setExternalFont(fontFamily1)
+//		val font = RFont(20, fontName = "Roboto", externalFont = Some(fontFamily1))
+//		val font1 = RFont(20, fontName = "Helvetica")
+//		report.font = font
 
-		report.nextLine(5)
-		val str="test"
-		report print (str size(20))  at 100
-		report.nextLine()
-		report print ReportTxt(str,font1) at 100
+//		report.nextLine(5)
+//		val str="test"
+//		report print (str size(20))  at 100
+//		report.nextLine()
+//		report print ReportTxt(str,font1) at 100
+		report.line(100,100,200,200)
+		report.directDrawMovePoint(100,200)
+		report.directDrawLine(150,100)
+		val code=PdfBasic.circle(new DrawPoint(200,200),100)+PdfBasic.fill(new ReportColor(200,255,255))+
+		PdfBasic.rectangle(300,300,100,100)
+		report.directDraw(code)
+		report.directFillStroke(true,true)
 
 		report.render()
 

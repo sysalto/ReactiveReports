@@ -189,11 +189,19 @@ object ReportTypes {
 		}
 	}
 
+
 	class DirectDrawLine(val x: Float, val y: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawLine(x, y - deltaY)
 		}
 	}
+
+	class DirectDraw(val code: String) extends ReportItem() {
+		override def render(report: Report): Unit = {
+			report.pdfUtil.directDraw(code)
+		}
+	}
+
 
 	class DirectFillStroke(val fill: Boolean, val stroke: Boolean) extends ReportItem() {
 		override def render(report: Report): Unit = {
@@ -202,9 +210,9 @@ object ReportTypes {
 	}
 
 
-	class DirectDrawRectangle(val x: Float,val y: Float,val width: Float,val height: Float) extends ReportItem() {
+	class DirectDrawRectangle(val x: Float, val y: Float, val width: Float, val height: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
-			report.pdfUtil.directDrawRectangle(x,y,width,height)
+			report.pdfUtil.directDrawRectangle(x, y, width, height)
 		}
 	}
 

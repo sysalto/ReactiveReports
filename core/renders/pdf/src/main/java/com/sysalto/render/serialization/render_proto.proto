@@ -94,16 +94,10 @@ message PdfImage_proto {
     string fileName = 1;
 }
 
-message ReportColor_proto {
-    int32 r = 1;
-    int32 g = 2;
-    int32 b = 3;
-    float opacity = 4;
-}
 
 message PdfShaddingFctColor_proto {
-    ReportColor_proto color1 = 1;
-    ReportColor_proto color2 = 2;
+    com.sysalto.report.serialization.common.ReportColor_proto color1 = 1;
+    com.sysalto.report.serialization.common.ReportColor_proto color2 = 2;
 
 }
 
@@ -132,6 +126,7 @@ message PdfGraphicFragment_proto {
         com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;
         com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;
         com.sysalto.report.serialization.common.DirectDrawRectangle_proto directDrawRectangle_proto = 10;
+        com.sysalto.report.serialization.common.DirectDraw_proto directDraw_proto = 11;
     }
 }
 
@@ -147,8 +142,8 @@ message PdfRectangle_proto {
     int64 y1 = 4;
     int64 y2 = 5;
     int64 x1 = 6;
-    repeated ReportColor_proto borderColor = 7;
-    repeated ReportColor_proto fillColor = 8;
+    repeated com.sysalto.report.serialization.common.ReportColor_proto borderColor = 7;
+    repeated com.sysalto.report.serialization.common.ReportColor_proto fillColor = 8;
 }
 
 
@@ -163,7 +158,7 @@ message DrawLine_proto {
     float x2 = 3;
     float y2 = 4;
     float vlineWidth = 5;
-    ReportColor_proto color = 6;
+    com.sysalto.report.serialization.common.ReportColor_proto color = 6;
 }
 
 message PdfDrawImage_proto {
@@ -190,14 +185,6 @@ message RColor_proto {
 }
 
 
-message RFont_proto {
-    int32 size = 1;
-    string fontName = 2;
-    RFontAttribute_proto attribute = 3;
-    RColor_proto color = 4;
-}
-
-
 message DrawPieChart_proto {
     float x = 1;
     float y = 2;
@@ -205,7 +192,7 @@ message DrawPieChart_proto {
     float height = 4;
     string title = 6;
     float width = 7;
-    RFont_proto font = 8;
+    com.sysalto.report.serialization.common.RFont_proto font = 8;
 }
 
 

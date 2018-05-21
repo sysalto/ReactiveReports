@@ -6,7 +6,7 @@ import java.net.URL
 import java.nio.file.{Files, Paths}
 import java.util.zip.Deflater
 
-import com.sysalto.render.PdfChart
+import com.sysalto.render.{PdfChart, PdfDraw}
 import com.sysalto.render.PdfDraw.{DrawPoint, PdfGraphicFragment, roundRectangle}
 import com.sysalto.render.basic.PdfBasic._
 import com.sysalto.render.serialization.RenderProto.{PdfBaseItem_proto, PdfCatalog_proto}
@@ -16,8 +16,8 @@ import com.sysalto.report.ReportTypes.BoundaryRect
 import com.sysalto.report.reportTypes.{RFont, ReportColor, ReportTxt}
 import com.sysalto.report.util.{PersistenceFactory, PersistenceUtil, RockDbUtil}
 import javax.imageio.ImageIO
-import scala.collection.JavaConverters._
 
+import scala.collection.JavaConverters._
 import scala.collection.mutable.ListBuffer
 
 
@@ -543,6 +543,18 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 		override def content: String = {
 			s"""${x} ${y} l \n"""
 		}
+	}
+
+
+	class DirectDrawStroke(val reportColor: ReportColor) extends PdfGraphicFragment {
+		override def content: String = {
+			val color = ReportColor.convertColor(reportColor)
+			s"${color._1} ${color._2} ${color._3} RG\n"
+		}
+	}
+
+	class DirectDraw(val code:String) extends PdfGraphicFragment {
+		override def content: String = code
 	}
 
 

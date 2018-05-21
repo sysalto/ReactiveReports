@@ -4,17 +4,12 @@ package com.sysalto.render.serialization
 import com.sysalto.render.PdfDraw.{DrawLine, DrawStroke, PdfGraphicFragment}
 import com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase
 import com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase
-
-import scala.collection.JavaConverters._
 import com.sysalto.render.serialization.RenderProto._
 import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
-import com.sysalto.report.RFontAttribute
-import com.sysalto.report.ReportTypes.DirectFillStroke
-import com.sysalto.report.reportTypes.{RFont, RFontFamily, ReportColor, ReportTxt}
-import com.sysalto.report.serialization.{BoundaryRectSerializer, ReportTxtSerializer}
-import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectFillStroke_proto}
+import com.sysalto.report.serialization.common.CommonReportSerializer.{BoundaryRectSerializer, RFontSerializer, ReportColorSerializer, ReportTxtSerializer}
+import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectDraw_proto, DirectFillStroke_proto}
 
-import scala.collection.mutable.ListBuffer
+import scala.collection.JavaConverters._
 
 class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
@@ -318,20 +313,6 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 	}
 
-	object ReportColorSerializer {
-		def write(input: ReportColor): ReportColor_proto = {
-			val builder = ReportColor_proto.newBuilder()
-			builder.setR(input.r)
-			builder.setG(input.g)
-			builder.setB(input.b)
-			builder.setOpacity(input.opacity)
-			builder.build()
-		}
-
-		def read(input: ReportColor_proto): ReportColor = {
-			new ReportColor(input.getR, input.getG, input.getB, input.getOpacity)
-		}
-	}
 
 	object PdfShaddingFctColorSerializer {
 		def write(input: renderReportTypes.PdfShaddingFctColor): PdfShaddingFctColor_proto = {
@@ -419,6 +400,8 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setDirectDrawMovePointProto(DirectDrawMovePointSerializer.write(item))
 				case item: renderReportTypes.DirectDrawLine =>
 					builder.setDirectDrawLineProto(DirectDrawLineSerializer.write(item))
+				case item: renderReportTypes.DirectDraw =>
+					builder.setDirectDrawProto(DirectDrawSerializer.write(item))
 				case item: renderReportTypes.DirectFillStroke =>
 					builder.setDirectFillStrokeProto(DirectFillStrokeSerializer.write(item))
 				case _ => println("ERROR PdfGraphicFragmentSerializer.write unknown " + input)
@@ -448,6 +431,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				}
 				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAWLINE_PROTO => {
 					DirectDrawLineSerializer.read(input.getDirectDrawLineProto)
+				}
+				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAW_PROTO => {
+					DirectDrawSerializer.read(input.getDirectDrawProto)
 				}
 				case PdfGraphicFragment_proto.FieldCase.DIRECTFILLSTROKE_PROTO => {
 					DirectFillStrokeSerializer.read(input.getDirectFillStrokeProto)
@@ -566,6 +552,20 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 	}
 
+	private[serialization] object DirectDrawSerializer {
+		def write(obj: renderReportTypes.DirectDraw): DirectDraw_proto = {
+			val builder = DirectDraw_proto.newBuilder()
+			builder.setCode(obj.code)
+			builder.build()
+		}
+
+		def read(input: DirectDraw_proto): renderReportTypes.DirectDraw = {
+			val result = new renderReportTypes.DirectDraw(input.getCode)
+			result
+		}
+	}
+
+
 	private[serialization] object DirectFillStrokeSerializer {
 		def write(obj: renderReportTypes.DirectFillStroke): DirectFillStroke_proto = {
 			val builder = DirectFillStroke_proto.newBuilder()
@@ -578,52 +578,6 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			new renderReportTypes.DirectFillStroke(input.getFill, input.getStroke)
 	}
 
-	object RFontAttributeSerializer {
-		def write(obj: RFontAttribute.Value): RFontAttribute_proto = {
-			obj match {
-				case RFontAttribute.NORMAL => RFontAttribute_proto.NORMAL
-				case RFontAttribute.BOLD => RFontAttribute_proto.BOLD
-				case RFontAttribute.ITALIC => RFontAttribute_proto.ITALIC
-				case RFontAttribute.BOLD_ITALIC => RFontAttribute_proto.BOLD_ITALIC
-			}
-		}
-
-		def read(input: RFontAttribute_proto): RFontAttribute.Value = input match {
-			case RFontAttribute_proto.NORMAL => RFontAttribute.NORMAL
-			case RFontAttribute_proto.BOLD => RFontAttribute.BOLD
-			case RFontAttribute_proto.ITALIC => RFontAttribute.ITALIC
-			case RFontAttribute_proto.BOLD_ITALIC => RFontAttribute.BOLD_ITALIC
-			case _ => RFontAttribute.NORMAL
-		}
-	}
-
-	object RColorSerializer {
-		def write(obj: ReportColor): RColor_proto = {
-			val builder = RColor_proto.newBuilder()
-			builder.setR(obj.r)
-			builder.setG(obj.g)
-			builder.setB(obj.b)
-			builder.setOpacity(obj.opacity)
-			builder.build()
-		}
-
-		def read(input: RColor_proto): ReportColor =
-			ReportColor(input.getR, input.getG, input.getB, input.getOpacity)
-	}
-
-	object RFontSerializer {
-		def write(obj: RFont): RFont_proto = {
-			val builder = RFont_proto.newBuilder()
-			builder.setSize(obj.size)
-			builder.setFontName(obj.fontName)
-			builder.setAttribute(RFontAttributeSerializer.write(obj.attribute))
-			builder.setColor(RColorSerializer.write(obj.color))
-			builder.build()
-		}
-
-		def read(input: RFont_proto): RFont =
-			RFont(input.getSize, input.getFontName, RFontAttributeSerializer.read(input.getAttribute), RColorSerializer.read(input.getColor))
-	}
 
 	object StringDoubleSerializer {
 		def write(input: (String, Double)): StringDouble_proto = {

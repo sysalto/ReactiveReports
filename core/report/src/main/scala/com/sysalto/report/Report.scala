@@ -41,7 +41,7 @@ import scala.collection.JavaConverters._
 	* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
 	* @param pdfFactory  - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 	*/
-case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, pageFormat: ReportPageFormat=LetterFormat,
+case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, pageFormat: ReportPageFormat = LetterFormat,
                   persistence: PersistenceFactory = null, pdfCompression: Boolean = true)(implicit pdfFactory: PdfFactory) {
 	private[this] var pageNbrs = 1L
 	private[this] var crtPageNbr = 1L
@@ -264,6 +264,13 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		val reportItem = new DirectDrawLine(x, y)
 		crtPage.items += reportItem
 	}
+
+	def directDraw(code:String): Unit = {
+		val reportItem = new DirectDraw(code)
+		crtPage.items += reportItem
+	}
+
+
 
 
 	def directFillStroke(fill: Boolean, stroke: Boolean): Unit = {
@@ -736,7 +743,7 @@ object Report {
 		*/
 	def create(name: String, orientation: ReportPageOrientation.Value, pdfFactory: PdfFactory,
 	           pageFormat: ReportPageFormat, persistence: PersistenceFactory): Report = {
-		new Report(name, orientation, pageFormat,persistence)(pdfFactory)
+		new Report(name, orientation, pageFormat, persistence)(pdfFactory)
 	}
 
 	def create(name: String, orientation: ReportPageOrientation.Value, pdfFactory: PdfFactory): Report = {

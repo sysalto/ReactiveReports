@@ -28,24 +28,11 @@ import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes._
 import com.sysalto.report.serialization.ReportProto.ReportItem_proto.FieldCase
 import com.sysalto.report.serialization.ReportProto._
+import com.sysalto.report.serialization.common.CommonReportSerializer._
 import com.sysalto.report.serialization.common.ReportCommonProto._
 
 import scala.collection.mutable.ListBuffer
 
-
-object BoundaryRectSerializer {
-	def write(obj: BoundaryRect): BoundaryRect_proto = {
-		val builder = BoundaryRect_proto.newBuilder()
-		builder.setLeft(obj.left)
-		builder.setBottom(obj.bottom)
-		builder.setRight(obj.right)
-		builder.setTop(obj.top)
-		builder.build()
-	}
-
-	def read(input: BoundaryRect_proto): BoundaryRect =
-		new BoundaryRect(input.getLeft, input.getBottom, input.getRight, input.getTop)
-}
 
 private[serialization] object ReportLinkToPageSerializer {
 	def write(obj: ReportLinkToPage): ReportLinkToPage_proto = {
@@ -71,118 +58,6 @@ private[serialization] object ReportLinkToUrlSerializer {
 
 	def read(input: ReportLinkToUrl_proto): ReportLinkToUrl =
 		new ReportLinkToUrl(BoundaryRectSerializer.read(input.getBoundaryRect), input.getUrl)
-}
-
-private[serialization] object RFontAttributeSerializer {
-	def write(obj: RFontAttribute.Value): RFontAttribute_proto = {
-		obj match {
-			case RFontAttribute.NORMAL => RFontAttribute_proto.NORMAL
-			case RFontAttribute.BOLD => RFontAttribute_proto.BOLD
-			case RFontAttribute.ITALIC => RFontAttribute_proto.ITALIC
-			case RFontAttribute.BOLD_ITALIC => RFontAttribute_proto.BOLD_ITALIC
-		}
-	}
-
-	def read(input: RFontAttribute_proto): RFontAttribute.Value = input match {
-		case RFontAttribute_proto.NORMAL => RFontAttribute.NORMAL
-		case RFontAttribute_proto.BOLD => RFontAttribute.BOLD
-		case RFontAttribute_proto.ITALIC => RFontAttribute.ITALIC
-		case RFontAttribute_proto.BOLD_ITALIC => RFontAttribute.BOLD_ITALIC
-		case _ => RFontAttribute.NORMAL
-	}
-}
-
-
-private[serialization] object RColorSerializer {
-	def write(obj: ReportColor): RColor_proto = {
-		val builder = RColor_proto.newBuilder()
-		builder.setR(obj.r)
-		builder.setG(obj.g)
-		builder.setB(obj.b)
-		builder.setOpacity(obj.opacity)
-		builder.build()
-	}
-
-	def read(input: RColor_proto): ReportColor =
-		ReportColor(input.getR, input.getG, input.getB, input.getOpacity)
-}
-
-private[serialization] object OptionStringSerializer {
-	def write(obj: Option[String]): OptionString_proto = {
-		val builder = OptionString_proto.newBuilder()
-		if (obj.isEmpty) {
-			builder.setNull(true)
-		} else {
-			builder.setNull(false)
-			builder.setString(obj.get)
-		}
-		builder.build()
-	}
-
-	def read(input: OptionString_proto): Option[String] =
-		if (input.getNull) None else Some(input.getString)
-
-}
-
-private[serialization] object RFontFamilySerializer {
-	def write(obj: RFontFamily): RFontFamily_proto = {
-		val builder = RFontFamily_proto.newBuilder()
-		builder.setName(obj.name)
-		builder.setRegular(obj.regular)
-		builder.setBold(OptionStringSerializer.write(obj.bold))
-		builder.setItalic(OptionStringSerializer.write(obj.italic))
-		builder.setBoldItalic(OptionStringSerializer.write(obj.boldItalic))
-		builder.build()
-	}
-
-	def read(input: RFontFamily_proto): RFontFamily =
-		RFontFamily(input.getName, input.getRegular, OptionStringSerializer.read(input.getBold), OptionStringSerializer.read(input.getItalic), OptionStringSerializer.read(input.getBoldItalic))
-}
-
-private[serialization] object OptionRFontFamilySerializer {
-	def write(obj: Option[RFontFamily]): OptionRFontFamily_proto = {
-		val builder = OptionRFontFamily_proto.newBuilder()
-		if (obj.isEmpty) {
-			builder.setNull(true)
-		} else {
-			builder.setNull(false)
-			builder.setRFontFamily(RFontFamilySerializer.write(obj.get))
-		}
-		builder.build()
-	}
-
-	def read(input: OptionRFontFamily_proto): Option[RFontFamily] =
-		if (input.getNull) None else Some(RFontFamilySerializer.read(input.getRFontFamily))
-
-}
-
-
-private[serialization] object RFontSerializer {
-	def write(obj: RFont): RFont_proto = {
-		val builder = RFont_proto.newBuilder()
-		builder.setSize(obj.size)
-		builder.setFontName(obj.fontName)
-		builder.setAttribute(RFontAttributeSerializer.write(obj.attribute))
-		builder.setColor(RColorSerializer.write(obj.color))
-		builder.setExternalFont(OptionRFontFamilySerializer.write(obj.externalFont))
-		builder.build()
-	}
-
-	def read(input: RFont_proto): RFont =
-		RFont(input.getSize, input.getFontName, RFontAttributeSerializer.read(input.getAttribute), RColorSerializer.read(input.getColor),
-			OptionRFontFamilySerializer.read(input.getExternalFont))
-}
-
-object ReportTxtSerializer {
-	def write(obj: ReportTxt): ReportTxt_proto = {
-		val builder = ReportTxt_proto.newBuilder()
-		builder.setTxt(obj.txt)
-		builder.setFont(RFontSerializer.write(obj.font))
-		builder.build()
-	}
-
-	def read(input: ReportTxt_proto): ReportTxt =
-		ReportTxt(input.getTxt, RFontSerializer.read(input.getFont))
 }
 
 
@@ -310,59 +185,6 @@ private[serialization] object ReportRectangleSerializer {
 
 	def read(input: ReportRectangle_proto): ReportRectangle =
 		new ReportRectangle(input.getX1, input.getY1, input.getX2, input.getY2, input.getRadius, OptionRColorSerializer.read(input.getColor), OptionRColorSerializer.read(input.getFillColor))
-}
-
-private[serialization] object DirectDrawMovePointSerializer {
-	def write(obj: DirectDrawMovePoint): DirectDrawMovePoint_proto = {
-		val builder = DirectDrawMovePoint_proto.newBuilder()
-		builder.setX(obj.x)
-		builder.setY(obj.y)
-		builder.build()
-	}
-
-	def read(input: DirectDrawMovePoint_proto): DirectDrawMovePoint =
-		new DirectDrawMovePoint(input.getX, input.getY)
-}
-
-
-private[serialization] object DirectDrawLineSerializer {
-	def write(obj: DirectDrawLine): DirectDrawLine_proto = {
-		val builder = DirectDrawLine_proto.newBuilder()
-		builder.setX(obj.x)
-		builder.setY(obj.y)
-		builder.build()
-	}
-
-	def read(input: DirectDrawLine_proto): DirectDrawLine =
-		new DirectDrawLine(input.getX, input.getY)
-}
-
-
-private[serialization] object DirectFillStrokeSerializer {
-	def write(obj: DirectFillStroke): DirectFillStroke_proto = {
-		val builder = DirectFillStroke_proto.newBuilder()
-		builder.setFill(obj.fill)
-		builder.setStroke(obj.stroke)
-		builder.build()
-	}
-
-	def read(input: DirectFillStroke_proto): DirectFillStroke =
-		new DirectFillStroke(input.getFill, input.getStroke)
-}
-
-
-private[serialization] object DirectDrawRectangleSerializer {
-	def write(obj: DirectDrawRectangle): DirectDrawRectangle_proto = {
-		val builder = DirectDrawRectangle_proto.newBuilder()
-		builder.setX(obj.x)
-		builder.setY(obj.y)
-		builder.setWidth(obj.width)
-		builder.setHeight(obj.height)
-		builder.build()
-	}
-
-	def read(input: DirectDrawRectangle_proto): DirectDrawRectangle =
-		new DirectDrawRectangle(input.getX, input.getY, input.getWidth, input.getHeight)
 }
 
 
@@ -531,6 +353,71 @@ private[serialization] object ReportBarChartSerializer {
 }
 
 
+object DirectDrawMovePointSerializer {
+	def write(obj: DirectDrawMovePoint): DirectDrawMovePoint_proto = {
+		val builder = DirectDrawMovePoint_proto.newBuilder()
+		builder.setX(obj.x)
+		builder.setY(obj.y)
+		builder.build()
+	}
+
+	def read(input: DirectDrawMovePoint_proto): DirectDrawMovePoint =
+		new DirectDrawMovePoint(input.getX, input.getY)
+
+}
+
+
+object DirectDrawLineSerializer {
+	def write(obj: DirectDrawLine): DirectDrawLine_proto = {
+		val builder = DirectDrawLine_proto.newBuilder()
+		builder.setX(obj.x)
+		builder.setY(obj.y)
+		builder.build()
+	}
+
+	def read(input: DirectDrawLine_proto): DirectDrawLine =
+		new DirectDrawLine(input.getX, input.getY)
+}
+
+
+object DirectDrawSerializer {
+	def write(obj: DirectDraw): DirectDraw_proto = {
+		val builder = DirectDraw_proto.newBuilder()
+		builder.setCode(obj.code)
+		builder.build()
+	}
+
+	def read(input: DirectDraw_proto): DirectDraw =
+		new DirectDraw(input.getCode)
+}
+
+private[serialization] object DirectFillStrokeSerializer {
+	def write(obj: DirectFillStroke): DirectFillStroke_proto = {
+		val builder = DirectFillStroke_proto.newBuilder()
+		builder.setFill(obj.fill)
+		builder.setStroke(obj.stroke)
+		builder.build()
+	}
+
+	def read(input: DirectFillStroke_proto): DirectFillStroke =
+		new DirectFillStroke(input.getFill, input.getStroke)
+}
+
+private[serialization] object DirectDrawRectangleSerializer {
+	def write(obj: DirectDrawRectangle): DirectDrawRectangle_proto = {
+		val builder = DirectDrawRectangle_proto.newBuilder()
+		builder.setX(obj.x)
+		builder.setY(obj.y)
+		builder.setWidth(obj.width)
+		builder.setHeight(obj.height)
+		builder.build()
+	}
+
+	def read(input: DirectDrawRectangle_proto): DirectDrawRectangle =
+		new DirectDrawRectangle(input.getX, input.getY, input.getWidth, input.getHeight)
+}
+
+
 object ReportPageSerializer {
 
 	def write(page: ReportPage): Array[Byte] = {
@@ -591,6 +478,10 @@ object ReportPageSerializer {
 					val result = DirectDrawLineSerializer.write(obj)
 					builderItem.setDirectDrawLine(result)
 				}
+				case obj: DirectDraw => {
+					val result = DirectDrawSerializer.write(obj)
+					builderItem.setDirectDraw(result)
+				}
 				case obj: DirectFillStroke => {
 					val result = DirectFillStrokeSerializer.write(obj)
 					builderItem.setDirectFillStrokeProto(result)
@@ -626,6 +517,7 @@ object ReportPageSerializer {
 				case FieldCase.REPORTBARCHART => ReportBarChartSerializer.read(item.getReportBarChart)
 				case FieldCase.DIRECTDRAWMOVEPOINT => DirectDrawMovePointSerializer.read(item.getDirectDrawMovePoint)
 				case FieldCase.DIRECTDRAWLINE => DirectDrawLineSerializer.read(item.getDirectDrawLine)
+				case FieldCase.DIRECTDRAW => DirectDrawSerializer.read(item.getDirectDraw)
 				case FieldCase.DIRECTFILLSTROKE_PROTO => DirectFillStrokeSerializer.read(item.getDirectFillStrokeProto)
 				case _ => null
 			}

@@ -32,7 +32,7 @@ import scala.collection.mutable.ListBuffer
 abstract class PdfUtil() {
 	var name = ""
 
-	def open(name: String, orientation: ReportPageOrientation.Value, pageFormat:ReportPageFormat,persistenceFactory: PersistenceFactory,pdfCompression: Boolean)
+	def open(name: String, orientation: ReportPageOrientation.Value, pageFormat: ReportPageFormat, persistenceFactory: PersistenceFactory, pdfCompression: Boolean)
 
 
 	def setPagesNumber(pgNbr: Long)
@@ -76,6 +76,10 @@ abstract class PdfUtil() {
 	def directDrawMovePoint(x: Float, y: Float)
 
 	def directDrawLine(x: Float, y: Float)
+
+	def directDraw(code: String)
+
+	def directDrawStroke(reportColor: ReportColor)
 
 	def directFillStroke(fill: Boolean, stroke: Boolean)
 
