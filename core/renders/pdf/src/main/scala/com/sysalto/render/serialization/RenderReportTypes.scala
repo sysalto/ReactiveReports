@@ -8,6 +8,7 @@ import java.util.zip.Deflater
 
 import com.sysalto.render.{PdfChart, PdfDraw}
 import com.sysalto.render.PdfDraw.{DrawPoint, PdfGraphicFragment, roundRectangle}
+import com.sysalto.render.basic.PdfBasic
 import com.sysalto.render.basic.PdfBasic._
 import com.sysalto.render.serialization.RenderProto.{PdfBaseItem_proto, PdfCatalog_proto}
 import com.sysalto.render.util.PageTree.PageNode
@@ -546,6 +547,22 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 
+	class DirectDrawCircle(val x: Float, val y: Float, val radius: Float) extends PdfGraphicFragment {
+		override def content: String = PdfBasic.circle(new DrawPoint(x, y), radius)
+	}
+
+	class DirectDrawArc(val x: Float, val y: Float, val radius: Float, val startAngle: Float, val endAngle: Float) extends PdfGraphicFragment {
+		override def content: String = {
+			val p0 = new DrawPoint((x + radius * Math.cos(startAngle)).toFloat, (y + radius * Math.sin(startAngle)).toFloat)
+			val lg = radius * 4 / 3.0 * Math.tan((endAngle - startAngle) * 0.25)
+			val p1 = new DrawPoint((p0.x - lg * Math.sin(startAngle)).toFloat, (p0.y + lg * Math.cos(startAngle)).toFloat)
+			val p3 = new DrawPoint((x + radius * Math.cos(endAngle)).toFloat, (y + radius * Math.sin(endAngle)).toFloat)
+			val p2 = new DrawPoint((p3.x + lg * Math.sin(endAngle)).toFloat, (p3.y - lg * Math.cos(endAngle)).toFloat)
+			s"""${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y} c \n"""
+		}
+	}
+
+
 	class DirectDrawStroke(val reportColor: ReportColor) extends PdfGraphicFragment {
 		override def content: String = {
 			val color = ReportColor.convertColor(reportColor)
@@ -553,7 +570,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 		}
 	}
 
-	class DirectDraw(val code:String) extends PdfGraphicFragment {
+	class DirectDraw(val code: String) extends PdfGraphicFragment {
 		override def content: String = code
 	}
 
@@ -614,16 +631,6 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 		}
 	}
 
-	class DirectDrawArc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float) extends PdfGraphicFragment {
-		override def content: String = {
-			val p0 = new DrawPoint((center.x + radius * Math.cos(startAngle)).toFloat, (center.y + radius * Math.sin(startAngle)).toFloat)
-			val lg = radius * 4 / 3.0 * Math.tan((endAngle - startAngle) * 0.25)
-			val p1 = new DrawPoint((p0.x - lg * Math.sin(startAngle)).toFloat, (p0.y + lg * Math.cos(startAngle)).toFloat)
-			val p3 = new DrawPoint((center.x + radius * Math.cos(endAngle)).toFloat, (center.y + radius * Math.sin(endAngle)).toFloat)
-			val p2 = new DrawPoint((p3.x + lg * Math.sin(endAngle)).toFloat, (p3.y - lg * Math.cos(endAngle)).toFloat)
-			s"""${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y} c \n"""
-		}
-	}
 
 	class DirectDrawRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
 		override def content: String = {

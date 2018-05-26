@@ -57,10 +57,12 @@ object Test1 {
 		report.line(100,100,200,200)
 		report.directDrawMovePoint(100,200)
 		report.directDrawLine(150,100)
-		val code=PdfBasic.circle(new DrawPoint(200,200),100)+PdfBasic.fill(new ReportColor(200,255,255))+
-		PdfBasic.rectangle(300,300,100,100)
-		report.directDraw(code)
-		report.directFillStroke(true,true)
+		val code=PdfBasic.circle(new DrawPoint(200,200),100) //+PdfBasic.fill(new ReportColor(200,255,255))+
+		//PdfBasic.rectangle(300,300,100,100)
+		//report.directDraw(code)
+		report.directDrawCircle(200,200,50)
+		report.directDrawArc(300,300,100,20,90)
+		report.directFillStroke(false,true)
 
 		report.render()
 

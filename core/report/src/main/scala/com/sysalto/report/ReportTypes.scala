@@ -202,6 +202,18 @@ object ReportTypes {
 		}
 	}
 
+	class DirectDrawCircle(val x: Float, val y: Float, val radius: Float) extends ReportItem() {
+		override def render(report: Report): Unit = {
+			report.pdfUtil.directDrawCircle(x, y - deltaY, radius)
+		}
+	}
+
+	class DirectDrawArc(val x: Float, val y: Float, val radius: Float, val startAngle: Float, val endAngle: Float) extends ReportItem() {
+		override def render(report: Report): Unit = {
+			report.pdfUtil.directDrawArc(x, y - deltaY, radius, startAngle, endAngle)
+		}
+	}
+
 
 	class DirectFillStroke(val fill: Boolean, val stroke: Boolean) extends ReportItem() {
 		override def render(report: Report): Unit = {

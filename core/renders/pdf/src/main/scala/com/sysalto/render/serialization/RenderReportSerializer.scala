@@ -7,7 +7,7 @@ import com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemC
 import com.sysalto.render.serialization.RenderProto._
 import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
 import com.sysalto.report.serialization.common.CommonReportSerializer.{BoundaryRectSerializer, RFontSerializer, ReportColorSerializer, ReportTxtSerializer}
-import com.sysalto.report.serialization.common.ReportCommonProto.{DirectDrawLine_proto, DirectDrawMovePoint_proto, DirectDraw_proto, DirectFillStroke_proto}
+import com.sysalto.report.serialization.common.ReportCommonProto._
 
 import scala.collection.JavaConverters._
 
@@ -404,7 +404,11 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setDirectDrawProto(DirectDrawSerializer.write(item))
 				case item: renderReportTypes.DirectFillStroke =>
 					builder.setDirectFillStrokeProto(DirectFillStrokeSerializer.write(item))
-				case _ => println("ERROR PdfGraphicFragmentSerializer.write unknown " + input)
+				case item: renderReportTypes.DirectDrawCircle =>
+					builder.setDirectDrawCircleProto(DirectDrawCircleSerializer.write(item))
+				case item: renderReportTypes.DirectDrawArc =>
+					builder.setDirectDrawArcProto(DirectDrawArcSerializer.write(item))
+				case _ => throw new Exception("Unimplemented "+input)
 			}
 			builder.build()
 		}
@@ -438,7 +442,13 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case PdfGraphicFragment_proto.FieldCase.DIRECTFILLSTROKE_PROTO => {
 					DirectFillStrokeSerializer.read(input.getDirectFillStrokeProto)
 				}
-				case _ => throw new Exception("ERROR PdfGraphicFragmentSerializer.read unknown " + input)
+				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAWCIRCLE_PROTO => {
+					DirectDrawCircleSerializer.read(input.getDirectDrawCircleProto)
+				}
+				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAWARC_PROTO=> {
+					DirectDrawArcSerializer.read(input.getDirectDrawArcProto)
+				}
+				case _ => throw new Exception("Unimplemented:"+input.getFieldCase)
 			}
 		}
 	}
@@ -548,6 +558,40 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 		def read(input: DirectDrawLine_proto): renderReportTypes.DirectDrawLine = {
 			val result = new renderReportTypes.DirectDrawLine(input.getX, input.getY)
+			result
+		}
+	}
+
+
+	private[serialization] object DirectDrawCircleSerializer {
+		def write(obj: renderReportTypes.DirectDrawCircle): DirectDrawCircle_proto = {
+			val builder = DirectDrawCircle_proto.newBuilder()
+			builder.setX(obj.x)
+			builder.setY(obj.y)
+			builder.setRadius(obj.radius)
+			builder.build()
+		}
+
+		def read(input: DirectDrawCircle_proto): renderReportTypes.DirectDrawCircle = {
+			val result = new renderReportTypes.DirectDrawCircle(input.getX, input.getY,input.getRadius)
+			result
+		}
+	}
+
+	private[serialization] object DirectDrawArcSerializer {
+		def write(obj: renderReportTypes.DirectDrawArc): DirectDrawArc_proto = {
+			val builder = DirectDrawArc_proto.newBuilder()
+			builder.setX(obj.x)
+			builder.setY(obj.y)
+			builder.setRadius(obj.radius)
+			builder.setStartAngle(obj.startAngle)
+			builder.setEndAngle(obj.endAngle)
+			builder.build()
+		}
+
+		def read(input: DirectDrawArc_proto): renderReportTypes.DirectDrawArc = {
+			val result = new renderReportTypes.DirectDrawArc(input.getX, input.getY,input.getRadius,
+				input.getStartAngle,input.getEndAngle)
 			result
 		}
 	}

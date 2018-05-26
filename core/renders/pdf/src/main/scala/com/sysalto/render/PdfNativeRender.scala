@@ -34,8 +34,8 @@ import com.sysalto.report.{ReportTypes, WrapAlign}
 class PdfNativeRender extends PdfUtil {
 	private[this] var pdfNativeGenerator: RenderReport = null
 	private[this] var orientation = ReportPageOrientation.PORTRAIT
-	private[this] var  PAGE_WIDTH: Float=0f
-	private[this] var PAGE_HEIGHT: Float=0f
+	private[this] var PAGE_WIDTH: Float = 0f
+	private[this] var PAGE_HEIGHT: Float = 0f
 
 	override def open(name: String, orientation: ReportPageOrientation.Value, pageFormat: ReportPageFormat, persistenceFactory: PersistenceFactory, pdfCompression: Boolean): Unit = {
 		new File(name).delete()
@@ -124,7 +124,13 @@ class PdfNativeRender extends PdfUtil {
 	override def directDrawMovePoint(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawMovePoint(x, y)
 
 	override def directDrawLine(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawLine(x, y)
-	override def directDraw(code:String): Unit = pdfNativeGenerator.directDraw(code)
+
+	override def directDraw(code: String): Unit = pdfNativeGenerator.directDraw(code)
+
+	def directDrawCircle(x: Float, y: Float, radius: Float) = pdfNativeGenerator.directDrawCircle(x, y, radius)
+
+	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float) = pdfNativeGenerator.directDrawArc(x, y, radius, startAngle, endAngle)
+
 	override def directDrawStroke(reportColor: ReportColor): Unit = pdfNativeGenerator.directDrawStroke(reportColor)
 
 

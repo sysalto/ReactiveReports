@@ -270,7 +270,15 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtPage.items += reportItem
 	}
 
+	def directDrawCircle(x: Float, y: Float,radius:Float): Unit = {
+		val reportItem = new DirectDrawCircle(x, y,radius)
+		crtPage.items += reportItem
+	}
 
+	def directDrawArc(x: Float, y: Float,radius:Float,startAngle:Float,endAngle:Float): Unit = {
+		val reportItem = new DirectDrawArc(x, y,radius,startAngle,endAngle)
+		crtPage.items += reportItem
+	}
 
 
 	def directFillStroke(fill: Boolean, stroke: Boolean): Unit = {

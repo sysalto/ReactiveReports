@@ -127,6 +127,8 @@ message PdfGraphicFragment_proto {
         com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;
         com.sysalto.report.serialization.common.DirectDrawRectangle_proto directDrawRectangle_proto = 10;
         com.sysalto.report.serialization.common.DirectDraw_proto directDraw_proto = 11;
+        com.sysalto.report.serialization.common.DirectDrawCircle_proto directDrawCircle_proto = 12;
+        com.sysalto.report.serialization.common.DirectDrawArc_proto directDrawArc_proto = 13;
     }
 }
 

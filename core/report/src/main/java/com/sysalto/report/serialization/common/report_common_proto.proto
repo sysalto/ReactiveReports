@@ -79,8 +79,24 @@ message DirectDrawLine_proto {
     float y = 2;
 }
 
+message DirectDrawCircle_proto {
+    float x = 1;
+    float y = 2;
+    float radius = 3;
+}
+
+
+message DirectDrawArc_proto {
+    float x = 1;
+    float y = 2;
+    float radius = 3;
+    float start_angle = 4;
+    float end_angle = 5;
+}
+
+
 message DirectDraw_proto {
-    string code=1;
+    string code = 1;
 }
 
 

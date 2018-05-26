@@ -391,6 +391,34 @@ object DirectDrawSerializer {
 		new DirectDraw(input.getCode)
 }
 
+object DirectDrawCircleSerializer {
+	def write(obj: DirectDrawCircle): DirectDrawCircle_proto = {
+		val builder = DirectDrawCircle_proto.newBuilder()
+		builder.setX(obj.x)
+		builder.setY(obj.y)
+		builder.setRadius(obj.radius)
+		builder.build()
+	}
+
+	def read(input: DirectDrawCircle_proto): DirectDrawCircle =
+		new DirectDrawCircle(input.getX, input.getY, input.getRadius)
+}
+
+object DirectDrawArcSerializer {
+	def write(obj: DirectDrawArc): DirectDrawArc_proto = {
+		val builder = DirectDrawArc_proto.newBuilder()
+		builder.setX(obj.x)
+		builder.setY(obj.y)
+		builder.setRadius(obj.radius)
+		builder.setStartAngle(obj.startAngle)
+		builder.setStartAngle(obj.endAngle)
+		builder.build()
+	}
+
+	def read(input: DirectDrawArc_proto): DirectDrawArc =
+		new DirectDrawArc(input.getX, input.getY, input.getRadius, input.getStartAngle, input.getEndAngle)
+}
+
 private[serialization] object DirectFillStrokeSerializer {
 	def write(obj: DirectFillStroke): DirectFillStroke_proto = {
 		val builder = DirectFillStroke_proto.newBuilder()
@@ -482,6 +510,14 @@ object ReportPageSerializer {
 					val result = DirectDrawSerializer.write(obj)
 					builderItem.setDirectDraw(result)
 				}
+				case obj: DirectDrawCircle => {
+					val result = DirectDrawCircleSerializer.write(obj)
+					builderItem.setDirectDrawCircle(result)
+				}
+				case obj: DirectDrawArc => {
+					val result = DirectDrawArcSerializer.write(obj)
+					builderItem.setDirectDrawArc(result)
+				}
 				case obj: DirectFillStroke => {
 					val result = DirectFillStrokeSerializer.write(obj)
 					builderItem.setDirectFillStrokeProto(result)
@@ -491,7 +527,7 @@ object ReportPageSerializer {
 					builderItem.setDirectDrawRectangleProto(result)
 				}
 				case _ => {
-					println("Unimplemented :" + item)
+					throw  new Exception("Unimplemented :" + item)
 				}
 			}
 			builder.addItem(builderItem.build())
@@ -519,7 +555,12 @@ object ReportPageSerializer {
 				case FieldCase.DIRECTDRAWLINE => DirectDrawLineSerializer.read(item.getDirectDrawLine)
 				case FieldCase.DIRECTDRAW => DirectDrawSerializer.read(item.getDirectDraw)
 				case FieldCase.DIRECTFILLSTROKE_PROTO => DirectFillStrokeSerializer.read(item.getDirectFillStrokeProto)
-				case _ => null
+				case FieldCase.DIRECTDRAWCIRCLE => DirectDrawCircleSerializer.read(item.getDirectDrawCircle)
+				case FieldCase.DIRECTDRAWARC => DirectDrawArcSerializer.read(item.getDirectDrawArc)
+				case _ => {
+					throw new Exception("Unimplemented :" + item.getFieldCase)
+					null
+				}
 			}
 			reportItem.deltaY = item.getDeltaY
 			reportItem

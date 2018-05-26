@@ -36,7 +36,7 @@ object Implicits extends ScalaReportUtil {
 	val ReportCell: com.sysalto.report.reportTypes.ReportCell.type = com.sysalto.report.reportTypes.ReportCell
 	val Report: com.sysalto.report.Report.type = com.sysalto.report.Report
 	type Report = com.sysalto.report.Report
-	val ReportCheckpoint: ReportTypes.ReportCheckpoint.type = com.sysalto.report.ReportTypes.ReportCheckpoint
+	val scalaReportCheckpoint: ReportTypes.ReportCheckpoint.type = com.sysalto.report.ReportTypes.ReportCheckpoint
 	type ReportCheckpoint = com.sysalto.report.ReportTypes.ReportCheckpoint
 	val ReportCut: ReportTypes.ReportCut.type = com.sysalto.report.ReportTypes.ReportCut
 	type ReportItem = com.sysalto.report.ReportTypes.ReportItem

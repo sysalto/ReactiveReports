@@ -79,6 +79,10 @@ abstract class PdfUtil() {
 
 	def directDraw(code: String)
 
+	def directDrawCircle(x: Float, y: Float, radius: Float)
+
+	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float)
+
 	def directDrawStroke(reportColor: ReportColor)
 
 	def directFillStroke(fill: Boolean, stroke: Boolean)
