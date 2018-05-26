@@ -139,4 +139,5 @@ class PdfNativeRender extends PdfUtil {
 	override def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = pdfNativeGenerator.directDrawRectangle(x, y, width, height)
 
 	override def directDrawFill(reportColor: ReportColor) = pdfNativeGenerator.directDrawFill(reportColor)
+
 }

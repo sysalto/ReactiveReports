@@ -62,7 +62,8 @@ object Test1 {
 		//report.directDraw(code)
 		report.directDrawCircle(200,200,50)
 		report.directDrawFill(new ReportColor(200,255,200))
-		report.directFillStroke(true,false)
+		report.directDrawStroke(new ReportColor(255,50,255))
+		report.directFillStroke(true,true)
 		report.directDrawArc(300,300,100,20,90)
 		report.directFillStroke(true,false)
 

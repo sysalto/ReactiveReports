@@ -104,6 +104,9 @@ message DirectDrawFill_proto {
     ReportColor_proto color=1;
 }
 
+message DirectDrawStroke_proto {
+    ReportColor_proto color=1;
+}
 
 message DirectFillStroke_proto {
     bool fill = 1;

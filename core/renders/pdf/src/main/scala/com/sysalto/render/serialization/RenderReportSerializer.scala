@@ -410,6 +410,8 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setDirectDrawArcProto(DirectDrawArcSerializer.write(item))
 				case item: renderReportTypes.DirectDrawFill =>
 					builder.setDirectDrawFillProto(DirectDrawFillSerializer.write(item))
+				case item: renderReportTypes.DirectDrawStroke =>
+					builder.setDirectDrawStrokeProto(DirectDrawStrokeSerializer.write(item))
 				case _ => throw new Exception("Unimplemented "+input)
 			}
 			builder.build()
@@ -452,6 +454,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				}
 				case PdfGraphicFragment_proto.FieldCase.DIRECT_DRAW_FILL_PROTO=> {
 					DirectDrawFillSerializer.read(input.getDirectDrawFillProto)
+				}
+				case PdfGraphicFragment_proto.FieldCase.DIRECT_DRAW_STROKE_PROTO=> {
+					DirectDrawStrokeSerializer.read(input.getDirectDrawStrokeProto)
 				}
 				case _ => throw new Exception("Unimplemented:"+input.getFieldCase)
 			}
@@ -624,6 +629,19 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 		def read(input: DirectDrawFill_proto): renderReportTypes.DirectDrawFill = {
 			val result = new renderReportTypes.DirectDrawFill(ReportColorSerializer.read(input.getColor))
+			result
+		}
+	}
+
+	private[serialization] object DirectDrawStrokeSerializer {
+		def write(obj: renderReportTypes.DirectDrawStroke): DirectDrawStroke_proto = {
+			val builder = DirectDrawStroke_proto.newBuilder()
+			builder.setColor(ReportColorSerializer.write(obj.reportColor))
+			builder.build()
+		}
+
+		def read(input: DirectDrawStroke_proto): renderReportTypes.DirectDrawStroke = {
+			val result = new renderReportTypes.DirectDrawStroke(ReportColorSerializer.read(input.getColor))
 			result
 		}
 	}

@@ -9785,6 +9785,588 @@ public final class ReportCommonProto {
 
   }
 
+  public interface DirectDrawStroke_protoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.sysalto.report.serialization.common.DirectDrawStroke_proto)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+     */
+    boolean hasColor();
+    /**
+     * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+     */
+    com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto getColor();
+    /**
+     * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+     */
+    com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_protoOrBuilder getColorOrBuilder();
+  }
+  /**
+   * Protobuf type {@code com.sysalto.report.serialization.common.DirectDrawStroke_proto}
+   */
+  public  static final class DirectDrawStroke_proto extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.sysalto.report.serialization.common.DirectDrawStroke_proto)
+      DirectDrawStroke_protoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DirectDrawStroke_proto.newBuilder() to construct.
+    private DirectDrawStroke_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DirectDrawStroke_proto() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DirectDrawStroke_proto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.Builder subBuilder = null;
+              if (color_ != null) {
+                subBuilder = color_.toBuilder();
+              }
+              color_ = input.readMessage(com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(color_);
+                color_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.sysalto.report.serialization.common.ReportCommonProto.internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.sysalto.report.serialization.common.ReportCommonProto.internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto.class, com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto.Builder.class);
+    }
+
+    public static final int COLOR_FIELD_NUMBER = 1;
+    private com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto color_;
+    /**
+     * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+     */
+    public boolean hasColor() {
+      return color_ != null;
+    }
+    /**
+     * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+     */
+    public com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto getColor() {
+      return color_ == null ? com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.getDefaultInstance() : color_;
+    }
+    /**
+     * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+     */
+    public com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_protoOrBuilder getColorOrBuilder() {
+      return getColor();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (color_ != null) {
+        output.writeMessage(1, getColor());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (color_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getColor());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto)) {
+        return super.equals(obj);
+      }
+      com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto other = (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto) obj;
+
+      boolean result = true;
+      result = result && (hasColor() == other.hasColor());
+      if (hasColor()) {
+        result = result && getColor()
+            .equals(other.getColor());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasColor()) {
+        hash = (37 * hash) + COLOR_FIELD_NUMBER;
+        hash = (53 * hash) + getColor().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.sysalto.report.serialization.common.DirectDrawStroke_proto}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.sysalto.report.serialization.common.DirectDrawStroke_proto)
+        com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_protoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.sysalto.report.serialization.common.ReportCommonProto.internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.sysalto.report.serialization.common.ReportCommonProto.internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto.class, com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto.Builder.class);
+      }
+
+      // Construct using com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (colorBuilder_ == null) {
+          color_ = null;
+        } else {
+          color_ = null;
+          colorBuilder_ = null;
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.sysalto.report.serialization.common.ReportCommonProto.internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_descriptor;
+      }
+
+      public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto getDefaultInstanceForType() {
+        return com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto.getDefaultInstance();
+      }
+
+      public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto build() {
+        com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto buildPartial() {
+        com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto result = new com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto(this);
+        if (colorBuilder_ == null) {
+          result.color_ = color_;
+        } else {
+          result.color_ = colorBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto) {
+          return mergeFrom((com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto other) {
+        if (other == com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto.getDefaultInstance()) return this;
+        if (other.hasColor()) {
+          mergeColor(other.getColor());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto color_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto, com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_protoOrBuilder> colorBuilder_;
+      /**
+       * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+       */
+      public boolean hasColor() {
+        return colorBuilder_ != null || color_ != null;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+       */
+      public com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto getColor() {
+        if (colorBuilder_ == null) {
+          return color_ == null ? com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.getDefaultInstance() : color_;
+        } else {
+          return colorBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+       */
+      public Builder setColor(com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto value) {
+        if (colorBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          color_ = value;
+          onChanged();
+        } else {
+          colorBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+       */
+      public Builder setColor(
+          com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.Builder builderForValue) {
+        if (colorBuilder_ == null) {
+          color_ = builderForValue.build();
+          onChanged();
+        } else {
+          colorBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+       */
+      public Builder mergeColor(com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto value) {
+        if (colorBuilder_ == null) {
+          if (color_ != null) {
+            color_ =
+              com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.newBuilder(color_).mergeFrom(value).buildPartial();
+          } else {
+            color_ = value;
+          }
+          onChanged();
+        } else {
+          colorBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+       */
+      public Builder clearColor() {
+        if (colorBuilder_ == null) {
+          color_ = null;
+          onChanged();
+        } else {
+          color_ = null;
+          colorBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+       */
+      public com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.Builder getColorBuilder() {
+        
+        onChanged();
+        return getColorFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+       */
+      public com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_protoOrBuilder getColorOrBuilder() {
+        if (colorBuilder_ != null) {
+          return colorBuilder_.getMessageOrBuilder();
+        } else {
+          return color_ == null ?
+              com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.getDefaultInstance() : color_;
+        }
+      }
+      /**
+       * <code>.com.sysalto.report.serialization.common.ReportColor_proto color = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto, com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_protoOrBuilder> 
+          getColorFieldBuilder() {
+        if (colorBuilder_ == null) {
+          colorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto, com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.ReportColor_protoOrBuilder>(
+                  getColor(),
+                  getParentForChildren(),
+                  isClean());
+          color_ = null;
+        }
+        return colorBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.sysalto.report.serialization.common.DirectDrawStroke_proto)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.sysalto.report.serialization.common.DirectDrawStroke_proto)
+    private static final com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto();
+    }
+
+    public static com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<DirectDrawStroke_proto>
+        PARSER = new com.google.protobuf.AbstractParser<DirectDrawStroke_proto>() {
+      public DirectDrawStroke_proto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DirectDrawStroke_proto(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DirectDrawStroke_proto> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DirectDrawStroke_proto> getParserForType() {
+      return PARSER;
+    }
+
+    public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawStroke_proto getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface DirectFillStroke_protoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.sysalto.report.serialization.common.DirectFillStroke_proto)
       com.google.protobuf.MessageOrBuilder {
@@ -11024,6 +11606,11 @@ public final class ReportCommonProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_sysalto_report_serialization_common_DirectDrawFill_proto_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sysalto_report_serialization_common_DirectFillStroke_proto_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -11081,12 +11668,15 @@ public final class ReportCommonProto {
       "irectDraw_proto\022\014\n\004code\030\001 \001(\t\"a\n\024DirectD" +
       "rawFill_proto\022I\n\005color\030\001 \001(\0132:.com.sysal" +
       "to.report.serialization.common.ReportCol" +
-      "or_proto\"6\n\026DirectFillStroke_proto\022\014\n\004fi" +
-      "ll\030\001 \001(\010\022\016\n\006stroke\030\002 \001(\010\"P\n\031DirectDrawRe" +
-      "ctangle_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\r\n\005w" +
-      "idth\030\003 \001(\002\022\016\n\006height\030\004 \001(\002*I\n\024RFontAttri" +
-      "bute_proto\022\n\n\006NORMAL\020\000\022\010\n\004BOLD\020\001\022\n\n\006ITAL" +
-      "IC\020\002\022\017\n\013BOLD_ITALIC\020\003B\002H\001b\006proto3"
+      "or_proto\"c\n\026DirectDrawStroke_proto\022I\n\005co" +
+      "lor\030\001 \001(\0132:.com.sysalto.report.serializa" +
+      "tion.common.ReportColor_proto\"6\n\026DirectF" +
+      "illStroke_proto\022\014\n\004fill\030\001 \001(\010\022\016\n\006stroke\030" +
+      "\002 \001(\010\"P\n\031DirectDrawRectangle_proto\022\t\n\001x\030" +
+      "\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\r\n\005width\030\003 \001(\002\022\016\n\006heigh" +
+      "t\030\004 \001(\002*I\n\024RFontAttribute_proto\022\n\n\006NORMA" +
+      "L\020\000\022\010\n\004BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD_ITALIC" +
+      "\020\003B\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -11184,14 +11774,20 @@ public final class ReportCommonProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_common_DirectDrawFill_proto_descriptor,
         new java.lang.String[] { "Color", });
-    internal_static_com_sysalto_report_serialization_common_DirectFillStroke_proto_descriptor =
+    internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_descriptor =
       getDescriptor().getMessageTypes().get(14);
+    internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_sysalto_report_serialization_common_DirectDrawStroke_proto_descriptor,
+        new java.lang.String[] { "Color", });
+    internal_static_com_sysalto_report_serialization_common_DirectFillStroke_proto_descriptor =
+      getDescriptor().getMessageTypes().get(15);
     internal_static_com_sysalto_report_serialization_common_DirectFillStroke_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_common_DirectFillStroke_proto_descriptor,
         new java.lang.String[] { "Fill", "Stroke", });
     internal_static_com_sysalto_report_serialization_common_DirectDrawRectangle_proto_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_com_sysalto_report_serialization_common_DirectDrawRectangle_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_common_DirectDrawRectangle_proto_descriptor,

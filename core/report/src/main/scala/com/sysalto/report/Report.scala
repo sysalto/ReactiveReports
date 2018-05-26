@@ -291,6 +291,11 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtPage.items += reportItem
 	}
 
+	def directDrawStroke(reportColor: ReportColor): Unit = {
+		val reportItem = new DirectDrawStroke(reportColor)
+		crtPage.items += reportItem
+	}
+
 	def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = {
 		val reportItem = new DirectDrawRectangle(x, y, width, height)
 		crtPage.items += reportItem
