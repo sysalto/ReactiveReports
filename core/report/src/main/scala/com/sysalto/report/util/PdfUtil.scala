@@ -81,6 +81,8 @@ abstract class PdfUtil() {
 
 	def directDrawFill(reportColor: ReportColor)
 
+	def directDrawClosePath()
+
 	def directDrawCircle(x: Float, y: Float, radius: Float)
 
 	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float)

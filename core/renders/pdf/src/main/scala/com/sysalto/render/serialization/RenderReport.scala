@@ -203,6 +203,11 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		graphicList += new renderReportTypes.DirectDrawFill(reportColor)
 	}
 
+	def directDrawClosePath(): Unit = {
+		graphicList += new renderReportTypes.DirectDrawClosePath()
+	}
+
+
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {
 		graphicList += new DrawArc(center, radius, startAngle, endAngle)
 	}

@@ -32,6 +32,7 @@ message ReportItem_proto {
         com.sysalto.report.serialization.common.DirectDrawArc_proto directDrawArc = 19;
         com.sysalto.report.serialization.common.DirectDrawFill_proto direct_draw_fill = 20;
         com.sysalto.report.serialization.common.DirectDrawStroke_proto direct_draw_stroke = 21;
+        com.sysalto.report.serialization.common.DirectDrawClosePath_proto direct_draw_close_path_proto = 22;
     }
 }
 

@@ -140,4 +140,6 @@ class PdfNativeRender extends PdfUtil {
 
 	override def directDrawFill(reportColor: ReportColor) = pdfNativeGenerator.directDrawFill(reportColor)
 
+	override def directDrawClosePath() = pdfNativeGenerator.directDrawClosePath()
+
 }

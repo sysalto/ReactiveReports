@@ -209,11 +209,18 @@ object ReportTypes {
 	}
 
 
+	class DirectDrawClosePath() extends ReportItem() {
+		override def render(report: Report): Unit = {
+			report.pdfUtil.directDrawClosePath()
+		}
+	}
+
 	class DirectDrawStroke(val reportColor: ReportColor) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawStroke(reportColor)
 		}
 	}
+
 	class DirectDrawCircle(val x: Float, val y: Float, val radius: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawCircle(x, y - deltaY, radius)

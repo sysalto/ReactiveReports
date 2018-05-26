@@ -404,6 +404,18 @@ object DirectDrawFillSerializer {
 	}
 }
 
+object DirectDrawClosePathSerializer {
+	def write(obj: DirectDrawClosePath): DirectDrawClosePath_proto = {
+		val builder = DirectDrawClosePath_proto.newBuilder()
+		builder.build()
+	}
+
+	def read(input: DirectDrawClosePath_proto): DirectDrawClosePath = {
+		val result = new DirectDrawClosePath()
+		result
+	}
+}
+
 object DirectDrawStrokeSerializer {
 	def write(obj: DirectDrawStroke): DirectDrawStroke_proto = {
 		val builder = DirectDrawStroke_proto.newBuilder()
@@ -556,6 +568,10 @@ object ReportPageSerializer {
 					val result = DirectDrawFillSerializer.write(obj)
 					builderItem.setDirectDrawFill(result)
 				}
+				case obj: DirectDrawClosePath => {
+					val result = DirectDrawClosePathSerializer.write(obj)
+					builderItem.setDirectDrawClosePathProto(result)
+				}
 				case obj: DirectDrawStroke => {
 					val result = DirectDrawStrokeSerializer.write(obj)
 					builderItem.setDirectDrawStroke(result)
@@ -592,7 +608,9 @@ object ReportPageSerializer {
 				case FieldCase.DIRECTDRAWCIRCLE => DirectDrawCircleSerializer.read(item.getDirectDrawCircle)
 				case FieldCase.DIRECTDRAWARC => DirectDrawArcSerializer.read(item.getDirectDrawArc)
 				case FieldCase.DIRECT_DRAW_FILL => DirectDrawFillSerializer.read(item.getDirectDrawFill)
+				case FieldCase.DIRECT_DRAW_CLOSE_PATH_PROTO => DirectDrawClosePathSerializer.read(item.getDirectDrawClosePathProto)
 				case FieldCase.DIRECT_DRAW_STROKE => DirectDrawStrokeSerializer.read(item.getDirectDrawStroke)
+				case FieldCase.DIRECTDRAWRECTANGLE_PROTO => DirectDrawRectangleSerializer.read(item.getDirectDrawRectangleProto)
 				case _ => {
 					throw new Exception("Unimplemented :" + item.getFieldCase)
 					null

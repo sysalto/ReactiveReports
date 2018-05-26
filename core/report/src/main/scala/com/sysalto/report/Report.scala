@@ -255,6 +255,31 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtPage.items += reportItem
 	}
 
+	def roundRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float) = {
+		directDrawMovePoint(x1 + radius, y1)
+		directDrawLine(x2 - radius, y1)
+		directDrawArc(x2 - radius, y1 - radius,radius, (Math.PI * 0.5).toFloat, 0f)
+		directDrawLine(x2, y2 + radius)
+		directDrawArc(x2 - radius, y2 + radius,radius,  2 * Math.PI.toFloat, (3.0 * Math.PI * 0.5).toFloat)
+		directDrawLine(x1 + radius, y2)
+		directDrawArc(x1 + radius, y2 + radius,radius, (3.0 * Math.PI * 0.5).toFloat, Math.PI.toFloat)
+		directDrawLine(x1, y1 - radius)
+		directDrawArc(x1 + radius, y1 - radius,radius, Math.PI.toFloat, (Math.PI * 0.5).toFloat)
+		directDrawClosePath()
+		/*
+		--movePoint(new DrawPoint(x1 + radius, y1)) +
+		--	lineTo(new DrawPoint(x2 - radius, y1), 1) +
+		--	arc(new DrawPoint(x2 - radius, y1 - radius), radius, (Math.PI * 0.5).toFloat, 0f) +
+		--	lineTo(new DrawPoint(x2, y2 + radius), 1) +
+		--	arc(new DrawPoint(x2 - radius, y2 + radius), radius, 2 * Math.PI.toFloat, (3.0 * Math.PI * 0.5).toFloat) +
+		--	lineTo(new DrawPoint(x1 + radius, y2), 1) +
+		--	arc(new DrawPoint(x1 + radius, y2 + radius), radius, (3.0 * Math.PI * 0.5).toFloat, Math.PI.toFloat) +
+		--	lineTo(new DrawPoint(x1, y1 - radius), 1) +
+			arc(new DrawPoint(x1 + radius, y1 - radius), radius, Math.PI.toFloat, (Math.PI * 0.5).toFloat) +
+			closePath
+			*/
+	}
+
 	def directDrawMovePoint(x: Float, y: Float): Unit = {
 		val reportItem = new DirectDrawMovePoint(x, y)
 		crtPage.items += reportItem
@@ -265,18 +290,18 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtPage.items += reportItem
 	}
 
-	def directDraw(code:String): Unit = {
+	def directDraw(code: String): Unit = {
 		val reportItem = new DirectDraw(code)
 		crtPage.items += reportItem
 	}
 
-	def directDrawCircle(x: Float, y: Float,radius:Float): Unit = {
-		val reportItem = new DirectDrawCircle(x, y,radius)
+	def directDrawCircle(x: Float, y: Float, radius: Float): Unit = {
+		val reportItem = new DirectDrawCircle(x, y, radius)
 		crtPage.items += reportItem
 	}
 
-	def directDrawArc(x: Float, y: Float,radius:Float,startAngle:Float,endAngle:Float): Unit = {
-		val reportItem = new DirectDrawArc(x, y,radius,startAngle,endAngle)
+	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float): Unit = {
+		val reportItem = new DirectDrawArc(x, y, radius, startAngle, endAngle)
 		crtPage.items += reportItem
 	}
 
@@ -288,6 +313,11 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 
 	def directDrawFill(reportColor: ReportColor): Unit = {
 		val reportItem = new DirectDrawFill(reportColor)
+		crtPage.items += reportItem
+	}
+
+	def directDrawClosePath(): Unit = {
+		val reportItem = new DirectDrawClosePath()
 		crtPage.items += reportItem
 	}
 

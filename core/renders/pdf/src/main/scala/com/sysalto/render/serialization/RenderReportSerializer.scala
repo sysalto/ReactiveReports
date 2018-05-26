@@ -410,8 +410,12 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setDirectDrawArcProto(DirectDrawArcSerializer.write(item))
 				case item: renderReportTypes.DirectDrawFill =>
 					builder.setDirectDrawFillProto(DirectDrawFillSerializer.write(item))
+				case item: renderReportTypes.DirectDrawClosePath =>
+					builder.setDirectDrawClosePathProto(DirectDrawClosePathSerializer.write(item))
 				case item: renderReportTypes.DirectDrawStroke =>
 					builder.setDirectDrawStrokeProto(DirectDrawStrokeSerializer.write(item))
+				case item: renderReportTypes.DirectDrawRectangle =>
+					builder.setDirectDrawRectangleProto(DirectDrawRectangleSerializer.write(item))
 				case _ => throw new Exception("Unimplemented "+input)
 			}
 			builder.build()
@@ -455,8 +459,14 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				case PdfGraphicFragment_proto.FieldCase.DIRECT_DRAW_FILL_PROTO=> {
 					DirectDrawFillSerializer.read(input.getDirectDrawFillProto)
 				}
+				case PdfGraphicFragment_proto.FieldCase.DIRECT_DRAW_CLOSE_PATH_PROTO=> {
+					DirectDrawClosePathSerializer.read(input.getDirectDrawClosePathProto)
+				}
 				case PdfGraphicFragment_proto.FieldCase.DIRECT_DRAW_STROKE_PROTO=> {
 					DirectDrawStrokeSerializer.read(input.getDirectDrawStrokeProto)
+				}
+				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAWRECTANGLE_PROTO=> {
+					DirectDrawRectangleSerializer.read(input.getDirectDrawRectangleProto)
 				}
 				case _ => throw new Exception("Unimplemented:"+input.getFieldCase)
 			}
@@ -633,6 +643,18 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 		}
 	}
 
+	private[serialization] object DirectDrawClosePathSerializer {
+		def write(obj: renderReportTypes.DirectDrawClosePath): DirectDrawClosePath_proto = {
+			val builder = DirectDrawClosePath_proto.newBuilder()
+			builder.build()
+		}
+
+		def read(input: DirectDrawClosePath_proto): renderReportTypes.DirectDrawClosePath = {
+			val result = new renderReportTypes.DirectDrawClosePath()
+			result
+		}
+	}
+
 	private[serialization] object DirectDrawStrokeSerializer {
 		def write(obj: renderReportTypes.DirectDrawStroke): DirectDrawStroke_proto = {
 			val builder = DirectDrawStroke_proto.newBuilder()
@@ -645,6 +667,21 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			result
 		}
 	}
+
+	private[serialization] object DirectDrawRectangleSerializer {
+		def write(obj:renderReportTypes.DirectDrawRectangle): DirectDrawRectangle_proto = {
+			val builder = DirectDrawRectangle_proto.newBuilder()
+			builder.setX(obj.x)
+			builder.setY(obj.y)
+			builder.setWidth(obj.width)
+			builder.setHeight(obj.height)
+			builder.build()
+		}
+
+		def read(input: DirectDrawRectangle_proto): renderReportTypes.DirectDrawRectangle =
+			new renderReportTypes.DirectDrawRectangle(input.getX, input.getY, input.getWidth, input.getHeight)
+	}
+
 
 
 	private[serialization] object DirectFillStrokeSerializer {

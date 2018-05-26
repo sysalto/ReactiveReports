@@ -101,11 +101,15 @@ message DirectDraw_proto {
 
 
 message DirectDrawFill_proto {
-    ReportColor_proto color=1;
+    ReportColor_proto color = 1;
+}
+
+message DirectDrawClosePath_proto {
+
 }
 
 message DirectDrawStroke_proto {
-    ReportColor_proto color=1;
+    ReportColor_proto color = 1;
 }
 
 message DirectFillStroke_proto {

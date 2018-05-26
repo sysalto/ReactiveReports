@@ -64,8 +64,14 @@ object Test1 {
 		report.directDrawFill(new ReportColor(200,255,200))
 		report.directDrawStroke(new ReportColor(255,50,255))
 		report.directFillStroke(true,true)
+		report.directDrawMovePoint(250,300)
 		report.directDrawArc(300,300,100,20,90)
-		report.directFillStroke(true,false)
+		report.directDrawClosePath()
+		report.directFillStroke(false,true)
+
+//		report.roundRectangle(50,50,250,350,2)
+		report.directDrawRectangle(50,50,250,350)
+		report.directFillStroke(false,true)
 
 		report.render()
 
