@@ -391,6 +391,19 @@ object DirectDrawSerializer {
 		new DirectDraw(input.getCode)
 }
 
+object DirectDrawFillSerializer {
+	def write(obj: DirectDrawFill): DirectDrawFill_proto = {
+		val builder = DirectDrawFill_proto.newBuilder()
+		builder.setColor(ReportColorSerializer.write(obj.reportColor))
+		builder.build()
+	}
+
+	def read(input: DirectDrawFill_proto): DirectDrawFill = {
+		val result = new DirectDrawFill(ReportColorSerializer.read(input.getColor))
+		result
+	}
+}
+
 object DirectDrawCircleSerializer {
 	def write(obj: DirectDrawCircle): DirectDrawCircle_proto = {
 		val builder = DirectDrawCircle_proto.newBuilder()
@@ -526,6 +539,10 @@ object ReportPageSerializer {
 					val result = DirectDrawRectangleSerializer.write(obj)
 					builderItem.setDirectDrawRectangleProto(result)
 				}
+				case obj: DirectDrawFill => {
+					val result = DirectDrawFillSerializer.write(obj)
+					builderItem.setDirectDrawFill(result)
+				}
 				case _ => {
 					throw  new Exception("Unimplemented :" + item)
 				}
@@ -557,6 +574,7 @@ object ReportPageSerializer {
 				case FieldCase.DIRECTFILLSTROKE_PROTO => DirectFillStrokeSerializer.read(item.getDirectFillStrokeProto)
 				case FieldCase.DIRECTDRAWCIRCLE => DirectDrawCircleSerializer.read(item.getDirectDrawCircle)
 				case FieldCase.DIRECTDRAWARC => DirectDrawArcSerializer.read(item.getDirectDrawArc)
+				case FieldCase.DIRECT_DRAW_FILL => DirectDrawFillSerializer.read(item.getDirectDrawFill)
 				case _ => {
 					throw new Exception("Unimplemented :" + item.getFieldCase)
 					null

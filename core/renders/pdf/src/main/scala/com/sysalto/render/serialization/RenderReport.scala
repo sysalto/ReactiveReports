@@ -174,16 +174,16 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		graphicList += new renderReportTypes.DirectDrawLine(x, y)
 	}
 
-	def directDraw(code:String): Unit = {
+	def directDraw(code: String): Unit = {
 		graphicList += new renderReportTypes.DirectDraw(code)
 	}
 
-	def directDrawCircle(x: Float, y: Float,radius:Float): Unit = {
-		graphicList += new renderReportTypes.DirectDrawCircle(x, y,radius)
+	def directDrawCircle(x: Float, y: Float, radius: Float): Unit = {
+		graphicList += new renderReportTypes.DirectDrawCircle(x, y, radius)
 	}
 
-	def directDrawArc(x: Float, y: Float,radius:Float,startAngle:Float,endAngle:Float): Unit = {
-		graphicList += new renderReportTypes.DirectDrawArc(x, y,radius,startAngle,endAngle)
+	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float): Unit = {
+		graphicList += new renderReportTypes.DirectDrawArc(x, y, radius, startAngle, endAngle)
 	}
 
 	def directDrawStroke(reportColor: ReportColor): Unit = {
@@ -196,6 +196,11 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 
 	def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = {
 		graphicList += new renderReportTypes.DirectDrawRectangle(x, y, width, height)
+	}
+
+
+	def directDrawFill(reportColor: ReportColor): Unit = {
+		graphicList += new renderReportTypes.DirectDrawFill(reportColor)
 	}
 
 	def arc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float): Unit = {

@@ -61,8 +61,10 @@ object Test1 {
 		//PdfBasic.rectangle(300,300,100,100)
 		//report.directDraw(code)
 		report.directDrawCircle(200,200,50)
+		report.directDrawFill(new ReportColor(200,255,200))
+		report.directFillStroke(true,false)
 		report.directDrawArc(300,300,100,20,90)
-		report.directFillStroke(false,true)
+		report.directFillStroke(true,false)
 
 		report.render()
 

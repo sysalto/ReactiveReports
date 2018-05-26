@@ -570,6 +570,13 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 		}
 	}
 
+	class DirectDrawFill(val reportColor: ReportColor) extends PdfGraphicFragment {
+		override def content: String = {
+			val color = ReportColor.convertColor(reportColor)
+			s"${color._1} ${color._2} ${color._3} rg\n"
+		}
+	}
+
 	class DirectDraw(val code: String) extends PdfGraphicFragment {
 		override def content: String = code
 	}
