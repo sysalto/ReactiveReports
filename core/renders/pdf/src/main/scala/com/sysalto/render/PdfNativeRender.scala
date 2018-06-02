@@ -121,15 +121,15 @@ class PdfNativeRender extends PdfUtil {
 
 	override def getTextWidth(cell: ReportCell): List[Float] = pdfNativeGenerator.getTextWidth(cell)
 
-	override def directDrawMovePoint(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawMovePoint(x, y)
+	override def directDrawMovePoint(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawMovePoint(x, convertY(y))
 
-	override def directDrawLine(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawLine(x, y)
+	override def directDrawLine(x: Float, y: Float): Unit = pdfNativeGenerator.directDrawLine(x, convertY(y))
 
 	override def directDraw(code: String): Unit = pdfNativeGenerator.directDraw(code)
 
-	def directDrawCircle(x: Float, y: Float, radius: Float) = pdfNativeGenerator.directDrawCircle(x, y, radius)
+	def directDrawCircle(x: Float, y: Float, radius: Float) = pdfNativeGenerator.directDrawCircle(x, convertY(y), radius)
 
-	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float) = pdfNativeGenerator.directDrawArc(x, y, radius, startAngle, endAngle)
+	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float) = pdfNativeGenerator.directDrawArc(x, convertY(y), radius, startAngle, endAngle)
 
 	override def directDrawStroke(reportColor: ReportColor): Unit = pdfNativeGenerator.directDrawStroke(reportColor)
 

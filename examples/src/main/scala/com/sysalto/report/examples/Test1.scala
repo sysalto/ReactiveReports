@@ -22,18 +22,18 @@
 
 package com.sysalto.report.examples
 
+import com.sysalto.report.Implicits._
 import com.sysalto.render.PdfDraw.DrawPoint
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.render.basic.PdfBasic
-import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.{ReportTxt => _, _}
+import com.sysalto.report.reportTypes.{A5Format, RFontFamily, ReportPageOrientation}
 
 
 object Test1 {
 
 	def run(): Unit = {
 		implicit val pdfFactory = new PdfNativeFactory()
-		val report = Report("test2.pdf", ReportPageOrientation.LANDSCAPE,A5Format,null,false)
+		val report = Report("test2.pdf", ReportPageOrientation.LANDSCAPE, A5Format, null, false)
 		runReport(report)
 	}
 
@@ -44,34 +44,43 @@ object Test1 {
 			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
 			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
 
-//		report.setExternalFont(fontFamily1)
-//		val font = RFont(20, fontName = "Roboto", externalFont = Some(fontFamily1))
-//		val font1 = RFont(20, fontName = "Helvetica")
-//		report.font = font
+		//		report.setExternalFont(fontFamily1)
+		//		val font = RFont(20, fontName = "Roboto", externalFont = Some(fontFamily1))
+		//		val font1 = RFont(20, fontName = "Helvetica")
+		//		report.font = font
 
-//		report.nextLine(5)
-//		val str="test"
-//		report print (str size(20))  at 100
-//		report.nextLine()
-//		report print ReportTxt(str,font1) at 100
-		report.line(100,100,200,200)
-		report.directDrawMovePoint(100,200)
-		report.directDrawLine(150,100)
-		val code=PdfBasic.circle(new DrawPoint(200,200),100) //+PdfBasic.fill(new ReportColor(200,255,255))+
-		//PdfBasic.rectangle(300,300,100,100)
-		//report.directDraw(code)
-		report.directDrawCircle(200,200,50)
-		report.directDrawFill(new ReportColor(200,255,200))
-		report.directDrawStroke(new ReportColor(255,50,255))
-		report.directFillStroke(true,true)
-		report.directDrawMovePoint(250,300)
-		report.directDrawArc(300,300,100,20,90)
-		report.directDrawClosePath()
-		report.directFillStroke(false,true)
+		//		report.nextLine(5)
+		//		val str="test"
+		//		report print (str size(20))  at 100
+		//		report.nextLine()
+		//		report print ReportTxt(str,font1) at 100
 
-//		report.roundRectangle(50,50,250,350,2)
-		report.directDrawRectangle(50,50,250,350)
-		report.directFillStroke(false,true)
+//				report rectangle() from(100, 100) radius (10) to(200, 200)  color(ReportColor(156, 76, 6)) draw()
+
+		//		report.line(100,100,200,200)
+		//		report.directDrawMovePoint(100,200)
+		//		report.directDrawLine(150,100)
+		//		val code=PdfBasic.circle(new DrawPoint(200,200),100) //+PdfBasic.fill(new ReportColor(200,255,255))+
+		//		//PdfBasic.rectangle(300,300,100,100)
+		//		//report.directDraw(code)
+		//		report.directDrawCircle(200,200,50)
+		//		report.directDrawFill(new ReportColor(200,255,200))
+		//		report.directDrawStroke(new ReportColor(255,50,255))
+		//		report.directFillStroke(true,true)
+
+		//		report.directDrawClosePath()
+		//		report.directFillStroke(true,true)
+		//
+		//		report.roundRectangle(100,100,200,200,10)
+		////		report.directDrawRectangle(50,50,250,350)
+
+
+		report.directDrawMovePoint(100, 100)
+		report.directDrawLine(100, 200)
+		report.directDrawArc(110, 200, 10, Math.PI.toFloat, (Math.PI*3/2).toFloat)
+		report.directFillStroke(false, true)
+
+//		report rectangle() from(100, 100) radius (10) to(200, 200)  color(ReportColor(0, 0, 0)) draw()
 
 		report.render()
 

@@ -449,7 +449,7 @@ object DirectDrawArcSerializer {
 		builder.setY(obj.y)
 		builder.setRadius(obj.radius)
 		builder.setStartAngle(obj.startAngle)
-		builder.setStartAngle(obj.endAngle)
+		builder.setEndAngle(obj.endAngle)
 		builder.build()
 	}
 

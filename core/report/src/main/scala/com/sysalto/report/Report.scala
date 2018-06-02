@@ -258,7 +258,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	def roundRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float) = {
 		directDrawMovePoint(x1 + radius, y1)
 		directDrawLine(x2 - radius, y1)
-		directDrawArc(x2 - radius, y1 - radius,radius, (Math.PI * 0.5).toFloat, 0f)
+		directDrawArc(x2 - radius, y1 + radius,radius, -(Math.PI * 0.5).toFloat, 0f)
 		directDrawLine(x2, y2 + radius)
 		directDrawArc(x2 - radius, y2 + radius,radius,  2 * Math.PI.toFloat, (3.0 * Math.PI * 0.5).toFloat)
 		directDrawLine(x1 + radius, y2)
