@@ -8,8 +8,8 @@ val ROCKSDB_VERSION =   "latest.release" // "5.11.3"
 
 val PROTOBUF_VERSION =  "latest.release" // "3.5.1"
 
-val projectVersion = "1.0.1-RC1"
-//val projectVersion = "1.0.1-SNAPSHOT"
+//val projectVersion = "1.0.1-RC1"
+val projectVersion = "1.0.1-SNAPSHOT"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",
@@ -67,7 +67,7 @@ lazy val coreSettings = Seq(
 		if (scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	},
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
-	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION
+	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION,
 )
 
 lazy val renderPdfSettings = Seq(

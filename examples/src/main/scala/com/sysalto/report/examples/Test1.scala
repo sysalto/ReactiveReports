@@ -55,7 +55,7 @@ object Test1 {
 		//		report.nextLine()
 		//		report print ReportTxt(str,font1) at 100
 
-//				report rectangle() from(100, 100) radius (10) to(200, 200)  color(ReportColor(156, 76, 6)) draw()
+		//				report rectangle() from(100, 100) radius (10) to(200, 200)  color(ReportColor(156, 76, 6)) draw()
 
 		//		report.line(100,100,200,200)
 		//		report.directDrawMovePoint(100,200)
@@ -71,16 +71,18 @@ object Test1 {
 		//		report.directDrawClosePath()
 		//		report.directFillStroke(true,true)
 		//
-		//		report.roundRectangle(100,100,200,200,10)
+		report.roundRectangle(100, 100, 200, 200, 10)
 		////		report.directDrawRectangle(50,50,250,350)
 
 
-		report.directDrawMovePoint(100, 100)
-		report.directDrawLine(100, 200)
-		report.directDrawArc(110, 200, 10, Math.PI.toFloat, (Math.PI*3/2).toFloat)
-		report.directFillStroke(false, true)
+		//		report.directDrawMovePoint(100, 100)
+		//		report.directDrawLine(100, 200)
+		//		report.directDrawArc(110, 200, 10, Math.PI.toFloat, (Math.PI*3/2).toFloat)
+		//		report.directFillStroke(false, true)
 
-//		report rectangle() from(100, 100) radius (10) to(200, 200)  color(ReportColor(0, 0, 0)) draw()
+		//		report rectangle() from(100, 100) radius (10) to(200, 200)  color(ReportColor(0, 0, 0)) draw()
+
+		//		report rectangle() from(100, 100) to(300, 300)  verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180))  draw()
 
 		report.render()
 
