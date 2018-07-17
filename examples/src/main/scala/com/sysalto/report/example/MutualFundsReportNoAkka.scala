@@ -20,18 +20,15 @@
  */
 
 
-package com.sysalto.report.examples.mutualFunds
+package com.sysalto.report.example
 
-import java.io.{File, ObjectOutputStream}
-import java.sql.DriverManager
 import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, ReportPageOrientation}
 import com.sysalto.report.util._
-import scala.collection.JavaConverters._
 
 import scala.collection.mutable.ListBuffer
 
@@ -42,14 +39,16 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	val headerColor = ReportColor(156, 76, 6)
 	val headerFontColor = ReportColor(255, 255, 255)
 
+	// draw background image as gradient
 	private def drawbackgroundImage(report: Report): Unit = {
 		report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
 	}
 
 	private def reportHeader(report: Report): Unit = {
-		//		drawbackgroundImage(report)
-		val rs = MutualFundsInitData.query("select * from clnt")
+		val rs = data.MutualFundsInitData.query("select * from clnt")
 		rs.next()
+
+		// toMap - helper function that transform sql.ResultSet to Map[String, AnyRef] where the key is the field name
 		val record = rs.toMap
 		rs.close()
 		report.nextLine()
@@ -108,7 +107,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 
 		//    report line() from(10, report.getY - report.lineHeight * 0.5f) to (report.pgSize.width - 10) color(200, 200, 200) draw()
-		val rs = MutualFundsInitData.query("select * from sum_investment")
+		val rs = data.MutualFundsInitData.query("select * from sum_investment")
 		val rsGroup = rs.toGroup
 		var firstChar = 'A'.asInstanceOf[Int]
 		var total1 = 0f
@@ -179,7 +178,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.print(rrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine()
-		val rs = MutualFundsInitData.query("select * from tran_account")
+		val rs = data.MutualFundsInitData.query("select * from tran_account")
 		val rsGroup = rs.toGroup
 		var total1, total2, total3 = 0f
 		rsGroup.foreach(
@@ -225,7 +224,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 
 	private def accountPerformance(report: Report): Unit = {
-		val rs = MutualFundsInitData.query("select * from account_perf")
+		val rs = data.MutualFundsInitData.query("select * from account_perf")
 		rs.next()
 		val record = rs.toMap
 		rs.close()
@@ -271,47 +270,20 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.setYPosition(y2)
 	}
 
-	private def disclaimer(report: Report): Unit = {
-		report.nextPage()
-		report.nextLine()
-		report print (ReportCell("Disclaimer" bold() size 20) at 50)
-		report.nextLine(2)
-		val txtList =
-			List("Lorem ipsum dolor sit amet, quo consul dolores te, et modo timeam assentior mei. Eos et sonet soleat copiosae. Malis labitur constituam cu cum. Qui unum probo an. Ne verear dolorem quo, sed mediocrem hendrerit id. In alia persecuti nam, cum te equidem elaboraret.",
-				"Sint definiebas eos ea, et pri erroribus consectetuer. Te duo veniam iracundia. Utinam diceret efficiendi ad has. Ad mei saepe aliquam electram, sit ne nostro mediocrem neglegentur. Probo adhuc hendrerit nam at, te eam exerci denique appareat.",
-				"Eu quem patrioque his. Brute audire equidem sit te, accusam philosophia at vix. Ea invenire inimicus prodesset his, has sint dicunt quaerendum id. Mei reque volutpat quaerendum an, an numquam graecis fierent mel, vim nisl soleat vivendum ut. Est odio legere saperet ad. Dolor invidunt in est.",
-				"Porro accumsan lobortis no mea, an harum impetus invenire mei. Sed scaevola insolens voluptatibus ad. Eu aeque dicunt lucilius sit, no nam nullam graecis. Ad detracto deserunt cum, qui nonumy delenit invidunt ne. Per eu nulla soluta verear, in purto homero phaedrum vel, usu ut quas deserunt. Sed abhorreant neglegentur ea, tantas dicunt aliquam mei eu.",
-				"Dico fabulas ea est, oporteat scribentur cum ea, usu at nominati reprimique. His omnes saperet eu, nec ei mutat facete vituperatoribus. Ius in erant eirmod fierent, nec ex melius tincidunt. Assueverit interesset vel cu, dicam offendit cu pro, natum atomorum omittantur vim ea. Alii eleifend pri at, an autem nonumy est. Alterum suavitate ea has, dicam reformidans sed no.",
-				"Per iriure latine regione ei, libris maiorum sensibus ne qui, te iisque deseruisse nam. Cu mel doming ocurreret, quot rebum volumus an per. Nec laudem partem recusabo in, ei animal luptatum mea. Atqui possim deterruisset qui at, cu dolore intellegebat vim. Sit ad intellegebat vituperatoribus, eu dolores salutatus qui, mei at suas option suscipit. Veniam quodsi patrioque cu qui, ornatus voluptua neglegentur cum eu.",
-				"Ea sit brute atqui soluta, qui et mollis eleifend elaboraret. Nec ex tritani repudiare. Ne ornatus salutandi disputationi eos. Sed possit omnesque disputationi et, nominavi recusabo vix in, tota recusabo sententiae et cum. Mei cu ipsum euripidis philosophia, vel homero verterem instructior ex.",
-				"Ea affert tation nemore mea. Eum oratio invenire accommodare in, at his lorem atqui iriure, ei alii feugait interesset vel. No per tollit detraxit forensibus. Duo ad nonumy officiis argumentum, sea persius moderatius et.",
-				"Pro stet oratio exerci in. Per no nullam salutatus scriptorem. Stet alterum nam ei, congue tamquam sed ea. Eam ut virtute disputationi, ea labitur voluptua has. Est ea graecis definitiones, pro ea mutat oportere adipiscing.",
-				"Suscipit ponderum verterem et mel, vim semper facilisi ex, mel aliquid constituam ut. Summo denique complectitur ius at, in quo nobis deterruisset. Ut viris convenire eam. Quo id suscipit quaerendum, magna veniam et vix, duis liber disputando et has. Aliquando democritum id usu, falli diceret invidunt in per, in falli essent quo.",
-				"Dico fabulas ea est, oporteat scribentur cum ea, usu at nominati reprimique. His omnes saperet eu, nec ei mutat facete vituperatoribus. Ius in erant eirmod fierent, nec ex melius tincidunt. Assueverit interesset vel cu, dicam offendit cu pro, natum atomorum omittantur vim ea. Alii eleifend pri at, an autem nonumy est. Alterum suavitate ea has, dicam reformidans sed no.",
-				"Per iriure latine regione ei, libris maiorum sensibus ne qui, te iisque deseruisse nam. Cu mel doming ocurreret, quot rebum volumus an per. Nec laudem partem recusabo in, ei animal luptatum mea. Atqui possim deterruisset qui at, cu dolore intellegebat vim. Sit ad intellegebat vituperatoribus, eu dolores salutatus qui, mei at suas option suscipit. Veniam quodsi patrioque cu qui, ornatus voluptua neglegentur cum eu.",
-				"Ea sit brute atqui soluta, qui et mollis eleifend elaboraret. Nec ex tritani repudiare. Ne ornatus salutandi disputationi eos. Sed possit omnesque disputationi et, nominavi recusabo vix in, tota recusabo sententiae et cum. Mei cu ipsum euripidis philosophia, vel homero verterem instructior ex.")
-		txtList.foreach(txt => {
-			val cell = ReportCell(txt) inside ReportMargin(10, report.pageLayout.width - 10)
-			val box = cell.calculate(report)
-			report print cell
-			report.setYPosition(box.currentY + report.lineHeight)
-			if (report.lineLeft < 10) {
-				report.nextPage()
-			}
-			//          report.nextLine()
-		})
-
-	}
-
 
 	private def report(report: Report): Unit = {
+
+		// set page header size(height) at 50 and 0 (no page header) for the first page.
 		report.setHeaderSize = { pgNbr =>
-			if (pgNbr == 1) 0 else 50
+			if (pgNbr == 1) 0f else 50f
 		}
 
+		// set footer size(hight) at 30 for all pages.
 		report.setFooterSize = { _ =>
-			30
+			30f
 		}
+
+		// draw background image before rendering anything
 		report.newPageFct = {
 			case _ => drawbackgroundImage(report)
 		}
@@ -350,133 +322,27 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		}
 		val t1 = System.currentTimeMillis()
 		report.start()
-//		report.directDrawMovePoint(10, 10)
-//		report.directDrawLine(200, 200)
-//		report.directFillStroke(false, true)
-		//		report.directDrawRectangle(100,100,200,200)
 
-		for (i <- 1 to 1) {
-			println("I:" + i)
-			if (i > 1) {
-				report.nextPage()
-			}
-			if (report.getCrtPageNbr() == 1) {
-				reportHeader(report)
-			}
-			summaryOfInvestment(report)
-			changeAccount(report)
-			accountPerformance(report)
-			disclaimer(report)
-		}
-		val t2 = System.currentTimeMillis()
+		reportHeader(report)
+		summaryOfInvestment(report)
+		changeAccount(report)
+		accountPerformance(report)
 		report.render()
-		val t3 = System.currentTimeMillis()
-		println("Time1:" + (t2 - t1) * 0.001)
-		println("Time2:" + (t3 - t2) * 0.001)
-		println("Total time:" + (t3 - t1) * 0.001)
+
 	}
 
 
 	def runReport(): Unit = {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
-//		val derbyPersistanceFactory = new PersistenceFactory() {
-//			override def getPersistence(): PersistenceUtil = {
-//				new PersistenceUtil() {
-//					val driver = "org.apache.derby.jdbc.EmbeddedDriver"
-//					Class.forName(driver).newInstance()
-//					val dbFolder = System.getProperty("java.io.tmpdir")
-//					val prefix = "persistence"
-//					val extension = ".db"
-//					val file = File.createTempFile(prefix, extension, new File(dbFolder))
-//					file.delete
-//					val dbPath = file.getAbsolutePath
-//					val conn = DriverManager.getConnection(s"jdbc:derby:${dbPath};create=true")
-//
-//					override def writeObject(key: Long, obj: Array[Byte]): Unit = {
-//						val keyExists = exists(key)
-//						val ps = if (keyExists) conn.prepareStatement("update persist set content=? where id=? ") else
-//							conn.prepareStatement("insert into persist(id,content)  values(?,?)")
-//						val keyPos = if (keyExists) 2 else 1
-//						val blobPos = if (keyExists) 1 else 2
-//						ps.setLong(keyPos, key)
-//						val blob = conn.createBlob
-//						blob.setBytes(1, obj)
-//						ps.setBlob(blobPos, blob)
-//						ps.execute
-//						blob.free()
-//						ps.close()
-//					}
-//
-//					private def exists(key: Long): Boolean = {
-//						val stmnt = conn.prepareStatement(s"select count(*) from persist where id=${key}")
-//						val rs = stmnt.executeQuery
-//						var result = false
-//						if (rs.next()) {
-//							result = rs.getLong(1) > 0
-//						}
-//						rs.close()
-//						stmnt.close()
-//						result
-//					}
-//
-//					override def readObject(key: Long): Array[Byte] = {
-//						var result: Array[Byte] = null
-//						val stmnt = conn.prepareStatement(s"select content from persist where id=${key}")
-//						val rs = stmnt.executeQuery
-//						if (rs.next()) {
-//							val aBlob = rs.getBlob(1)
-//							result = aBlob.getBytes(1, aBlob.length.toInt)
-//						}
-//						rs.close()
-//						stmnt.close()
-//						result
-//					}
-//
-//					override def getAllKeys: java.util.List[java.lang.Long] = {
-//						val result = new ListBuffer[Long]()
-//						val stmnt = conn.prepareStatement(s"select id from persist order by id")
-//						val rs = stmnt.executeQuery
-//						while (rs.next()) {
-//							result += rs.getLong(1)
-//						}
-//						result.toList.map(item=>item.asInstanceOf[java.lang.Long]).asJava
-//					}
-//
-//					override def open(): Unit = {
-//						val stmt = conn.createStatement()
-//						stmt.executeUpdate("Create table persist (id BIGINT primary key, content blob(2G))")
-//						stmt.close()
-//					}
-//
-//					override def close(): Unit = {
-//						if (conn != null) {
-//							conn.close()
-//						}
-//						//						DriverManager.getConnection(s"jdbc:derby:${dbPath};shutdown=true")
-//						file.listFiles().foreach(fileItem => fileItem.delete())
-//						file.delete()
-//					}
-//				}
-//			}
-//		}
-
-		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
-//		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
-//		val fontFamily = RFontFamily(name = "Roboto",
-//			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
-//			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
-//			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
-//			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
-//		report1.setExternalFont(fontFamily)
-//		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
-//		report1.font = font
-
+		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
+		val report1 = Report("MutualFundsReportNoAkka.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
 		report(report1)
 	}
 
 	def main(args: Array[String]): Unit = {
-		MutualFundsInitData.initDb()
+		// create tables and load data using hsqldb
+		data.MutualFundsInitData.initDb()
 		runReport()
 	}
 }
