@@ -23,13 +23,13 @@ object CustomFormat {
 needed for java
  */
 class LetterFormat extends ReportPageFormat {
-	val width = 612
-	val height = 792
+	val width = 612f
+	val height = 792f
 }
 
 object LetterFormat extends ReportPageFormat {
-	val width = 612
-	val height = 792
+	val width = 612f
+	val height = 792f
 }
 
 object A3Format extends ReportPageFormat {

@@ -42,7 +42,10 @@ or 2.12 for JDK>=8.
 
 #Scala using
   
-
+For using with Scala just add the following lines to build.sbt:
+* libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % "1.0.0",
+* libraryDependencies += "com.github.sysalto" %% "reactivereports-core-akka" % "1.0.0",
+* libraryDependencies += "com.github.sysalto" %% "reactivereports-pdf-render" % "1.0.0"
 
 
 

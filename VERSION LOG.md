@@ -1,5 +1,5 @@
 
-## 1.0.1-beta.1
+## 1.0.1 (2018-07-23)
 ### Changes:
 * added pdf page formats:A5,A4,A3 and custom format
 
