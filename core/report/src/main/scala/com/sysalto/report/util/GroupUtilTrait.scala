@@ -49,6 +49,9 @@ trait GroupUtilTrait {
 		def toGroup: IteratorGroup[T] = GroupUtilDefs.toGroup[T](iterator)
 	}
 
+	implicit class SeqToGroup[T](seq: Seq[T]) {
+		def toGroup: IteratorGroup[T] = GroupUtilDefs.toGroup[T](seq.iterator)
+	}
 }
 
 case class ResultSetGroup(rs: ResultSet) {

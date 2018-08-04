@@ -27,7 +27,7 @@ import java.util.GregorianCalendar
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
-import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util._
 
 import scala.collection.mutable.ListBuffer
@@ -337,6 +337,15 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
 		val report1 = Report("MutualFundsReportNoAkka.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
+		val path="examples/src/main/scala/com/sysalto/report/example/fonts/roboto/"
+		val fontFamily = RFontFamily(name = "Roboto",
+			regular = path+"Roboto-Regular.ttf",
+			bold = Some(path+"Roboto-Bold.ttf"),
+			italic = Some(path+"Roboto-Italic.ttf"),
+			boldItalic = Some(path+"Roboto-BoldItalic.ttf"))
+		report1.setExternalFont(fontFamily)
+		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
+		report1.font = font
 		report(report1)
 	}
 

@@ -22,6 +22,7 @@
 
 package com.sysalto.report.reportTypes
 
+import com.sysalto.report.Implicits.ReportRow
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{Report, WrapAlign}
 
@@ -70,6 +71,12 @@ case class ReportCell(txt: List[ReportTxt], var margin: ReportMargin = ReportMar
 	/*
 	define boundaries
 	 */
+
+	def inside(row:ReportRow,name:String): ReportCell = {
+		this.margin = row.getColumnBound(name)
+		this
+	}
+
 	def inside(margin: ReportMargin): ReportCell = {
 		this.margin = margin
 		this
