@@ -463,14 +463,14 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
 //		val report1 = Report("MutualFunds2.pdf", ReportPageOrientation.LANDSCAPE)
-//		val fontFamily = RFontFamily(name = "Roboto",
-//			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
-//			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
-//			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
-//			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
-//		report1.setExternalFont(fontFamily)
-//		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
-//		report1.font = font
+		val fontFamily = RFontFamily(name = "Roboto",
+			regular = "/home/marian/transfer/font/Roboto-Regular.ttf",
+			bold = Some("/home/marian/transfer/font/Roboto-Bold.ttf"),
+			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
+			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
+		report1.setExternalFont(fontFamily)
+		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
+		report1.font = font
 
 		report(report1)
 	}

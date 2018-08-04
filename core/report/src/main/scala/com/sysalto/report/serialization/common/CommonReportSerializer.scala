@@ -42,11 +42,13 @@ object CommonReportSerializer {
 			builder.setFontName(obj.fontName)
 			builder.setAttribute(RFontAttributeSerializer.write(obj.attribute))
 			builder.setColor(RColorSerializer.write(obj.color))
+			builder.setExternalFont(OptionRFontFamilySerializer.write(obj.externalFont))
 			builder.build()
 		}
 
 		def read(input: RFont_proto): RFont =
-			RFont(input.getSize, input.getFontName, RFontAttributeSerializer.read(input.getAttribute), RColorSerializer.read(input.getColor))
+			RFont(input.getSize, input.getFontName, RFontAttributeSerializer.read(input.getAttribute), RColorSerializer.read(input.getColor),
+				OptionRFontFamilySerializer.read(input.getExternalFont))
 	}
 
 	object OptionRFontFamilySerializer {

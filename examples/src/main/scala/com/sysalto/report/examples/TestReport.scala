@@ -26,7 +26,7 @@ package com.sysalto.report.examples
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.akka.template.ReportAppAkka
-import com.sysalto.report.reportTypes.{LetterFormat, ReportCell, ReportPageOrientation}
+import com.sysalto.report.reportTypes._
 
 
 object TestReport  {
@@ -36,12 +36,21 @@ object TestReport  {
   def run2(): Unit = {
     implicit val pdfFactory = new PdfNativeFactory()
     val report = Report("Test2.pdf" ,ReportPageOrientation.LANDSCAPE,LetterFormat,null,false)
+    val fontFamily = RFontFamily(name = "Micr",
+      regular = "/home/marian/Documents/fonts/prec/PrecisionID MICR DEMO/Additional Fonts/TrueType/PrecisionID MICR N Demo.ttf")
+    report.setExternalFont(fontFamily)
+    val font = RFont(14,fontName="Micr",  externalFont = Some(fontFamily))
+    report.font = font
+    val txt=new ReportTxt("123456A",font)
+    report.nextLine(2)
+    report print txt at 100
     runReport(report)
   }
 
   def runReport(report: Report): Unit = {
     report.nextLine(3)
-    report print "line1".size(30) at 100
+
+  //  report print "0123456" at 100
 //    report.nextLine
 //    report print "line1".bold() at 100
 //    report.nextLine
