@@ -1,6 +1,9 @@
 ##1.0.2-SNAPSHOT
+### Changes:
 * added ReportRow.setCellSpacing
 
+### Bugs fixed:
+* lineDashType ignored
 
 ## 1.0.1 (2018-07-23)
 ### Changes:
