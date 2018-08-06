@@ -15,6 +15,13 @@ object DailyTradingBlotterData {
 
 	val riskList=List("Low","Medium","High")
 
+	val accountNameList=List("John Doe","Richard Roe","John Smith")
+
+	val accountType=List("AWT","OQV","PWZ","RZQ")
+
+	val occupationList=List("dev","qa","manager")
+
+
 
 	case class Transaction(invCode: Int, invDescription: String,
 	                       tradeType: String, th: String, grossAmount: BigDecimal, netAmmount: BigDecimal,
@@ -53,6 +60,21 @@ object DailyTradingBlotterData {
 		riskList(i)
 	}
 
+	private def getAccountType(): String = {
+		val i = rand.nextInt(accountType.length)
+		accountType(i)
+	}
+
+	private def getOccupation(): String = {
+		val i = rand.nextInt(occupationList.length)
+		occupationList(i)
+	}
+
+	private def getAccountName(): String = {
+		val i = rand.nextInt(accountNameList.length)
+		accountNameList(i)
+	}
+
 	def getData: Seq[Agent] = {
 
 		val today = new Date()
@@ -62,7 +84,7 @@ object DailyTradingBlotterData {
 					s"agent${j}", s"lta${j}", s"exchg${j}",getRisk)
 			}
 			val accntList = for (j <- 1 to rand.nextInt(30)) yield {
-				Account(j, s"name${j}", s"plan${j}", j, today, s"occup${j}", s"empl${j}", s"bussType${j}", s"inv know${j}", s"${j * 10000}", s"${j * 7000}",
+				Account(j, getAccountName, getAccountType, j, today,getOccupation, s"empl${j}", s"bussType${j}", s"inv know${j}", s"${j * 10000}", s"${j * 7000}",
 					s"time${j}", s"risk${j}", s"obj${j}")
 			}
 			val tradeList = for (j <- 1 to rand.nextInt(80)) yield {

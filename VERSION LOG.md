@@ -1,3 +1,6 @@
+##1.0.2-SNAPSHOT
+* added ReportRow.setCellSpacing
+
 
 ## 1.0.1 (2018-07-23)
 ### Changes:

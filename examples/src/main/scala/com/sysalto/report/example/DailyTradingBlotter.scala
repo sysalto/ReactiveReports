@@ -10,10 +10,12 @@ import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 object DailyTradingBlotter extends GroupUtilTrait {
 	val headerFontColor = ReportColor(255, 255, 255)
 	val headerColor = ReportColor(50, 50, 150)
+	val headerTradeColor = ReportColor(50, 150, 150)
+	val headerAccountColor = ReportColor(230, 230, 255)
 
 	// draw background image as gradient
 	private def drawbackgroundImage(report: Report): Unit = {
-		report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
+		report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(230, 255, 200)) draw()
 	}
 
 	private def setupReport(report: Report): Unit = {
@@ -31,6 +33,15 @@ object DailyTradingBlotter extends GroupUtilTrait {
 		report.newPageFct = {
 			case _ => drawbackgroundImage(report)
 		}
+
+		report.footerFct = {
+			case (pgNbr, pgMax) =>
+				report.setYPosition(report.pageLayout.height - report.lineHeight * 3)
+				report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
+				report.nextLine()
+				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+		}
+
 	}
 
 	private def reportHeader(report: Report): Unit = {
@@ -68,36 +79,47 @@ object DailyTradingBlotter extends GroupUtilTrait {
 			}
 			report.setYPosition(crtY)
 			report print "Account".toString at(crtX, crtY)
-			report print account.name at(crtX + 100, crtY)
+			report print account.name at(crtX + 90, crtY)
 
 			report.nextLine()
 			report print "Type".toString at (crtX)
-			report print account.planType at (crtX + 100)
+			report print account.planType at (crtX + 90)
 
 			report.nextLine()
 			report print "Occupation".toString at (crtX)
-			report print account.occupation at (crtX + 100)
+			report print account.occupation at (crtX + 90)
+
+			report rectangle() from(crtX-2, crtY-report.lineHeight+5) radius (5) to(crtX +deltaX + 4,crtY+deltaY-report.lineHeight-2 ) fillColor headerAccountColor draw()
 
 			crtX += (deltaX + 10)
 
 		})
 	}
 
+	private def printTradeHeader(report: Report, hrow: List[com.sysalto.report.reportTypes.ReportCell]): Unit = {
+		val y2 = report.calculate(hrow)
+		val top = report.getY - report.lineHeight
+		val bottom = y2 + 2
+		report rectangle() from(report.pageLayout.width * 0.6f+100, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerTradeColor draw()
+		report.print(hrow, CellAlign.CENTER, top, bottom)
+		report.setYPosition(y2)
+		report.nextLine
+	}
 
 	private def printTrades(report: Report, accountList: Seq[Trade]): Unit = {
 		val row = ReportRow(report.pageLayout.width * 0.6f,report.pageLayout.width - 10,
 			List(Column("lta", Flex(1)), Column("poa", Flex(1))))
-		val h_lta = ReportCell("Amount" bold()) rightAlign() inside(row, "lta")
-		val h_poa = ReportCell("Fee" bold()) rightAlign() inside(row, "poa")
+		val h_lta = ReportCell("Amount" bold() color headerFontColor) rightAlign() inside(row, "lta")
+		val h_poa = ReportCell("Fee" bold() color headerFontColor) rightAlign() inside(row, "poa")
 		val hrow = List(h_lta, h_poa)
-		report print (ReportCell("TRADES"  bold())  centerAlign() inside ReportMargin(report.pageLayout.width * 0.6f+20, report.pageLayout.width - 10))
-		report.nextLine
-		report.print(hrow)
-		report.nextLine
+		report print (ReportCell("TRADES"  bold())  centerAlign() inside ReportMargin(report.pageLayout.width * 0.6f+100, report.pageLayout.width - 9))
+		report.nextLine(2)
+		printTradeHeader(report,hrow)
 		accountList.foreach(trade=>{
 			if (report.lineLeft < 5) {
 				report.nextPage()
 				report.nextLine
+				printTradeHeader(report,hrow)
 			}
 			val v_lta = ReportCell(""+trade.amount) rightAlign() inside(row, "lta")
 			val v_poa = ReportCell(""+trade.fee) rightAlign() inside(row, "poa")
@@ -146,7 +168,7 @@ object DailyTradingBlotter extends GroupUtilTrait {
 				report.nextLine()
 				report print ("Agent:" + crtRec.name bold()) at 10
 				report.nextLine(2)
-				crtRec.tranList.foreach(tran => {
+				crtRec.tranList.zipWithIndex.foreach{case (tran,index) => {
 					val v_invCode = ReportCell(""+tran.invCode) leftAlign() inside(row, "invCode")
 					val v_invDescription = ReportCell(tran.invDescription) leftAlign() inside(row, "invDescription")
 					val v_tradeType = ReportCell(tran.tradeType) leftAlign() inside(row, "tradeType")
@@ -159,9 +181,14 @@ object DailyTradingBlotter extends GroupUtilTrait {
 					val v_risk = ReportCell(tran.risk) rightAlign() inside(row, "risk")
 					val v_row = List(v_invCode, v_invDescription, v_tradeType, v_grossAmount, v_netAmmount, v_price, v_quantity,
 						v_commision, v_orderStatus, v_risk)
-					val y2 = report.calculate(v_row)
+					var y2 = report.calculate(v_row)
 					report.print(v_row)
-					report line() from(10, y2 + 2) to report.pageLayout.width - 10 width 0.5f color(200, 200, 200) draw() //lineType LineDashType(2, 1) draw()
+					if (index==crtRec.tranList.length-1) {
+						y2+= 5
+						report line() from(10, y2 + 2) to report.pageLayout.width - 10 width 1f color(50, 50, 50) draw()
+					}  else {
+						report line() from(10, y2 + 2) to report.pageLayout.width - 10 width 0.5f color(200, 200, 200) draw()
+					}
 					report.setYPosition(y2)
 					report.nextLine()
 					if (report.lineLeft < 10) {
@@ -169,7 +196,7 @@ object DailyTradingBlotter extends GroupUtilTrait {
 						report.nextLine
 						printTranHeader(report, hrow)
 					}
-				})
+				}}
 				val position1 = report.getCurrentPosition
 				printAccounts(report, crtRec.accntList)
 				val position2 = report.getCurrentPosition
