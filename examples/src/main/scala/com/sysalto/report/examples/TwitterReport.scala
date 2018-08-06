@@ -17,15 +17,15 @@ import com.sysalto.report.util.PdfFactory
 
 
 object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
-	val consumerToken = ConsumerToken(key = "", secret = "")
-	val accessToken = AccessToken(key = "", secret = "")
+	val consumerToken = ConsumerToken(key = "R7Cym5Vd9d0WcoWKqV2NQwKKL", secret = "JCSjtKsqpdUDU5yDBvu0I4BCGuvIMR9oQ9Z8SFdLXu2IH5ePjs")
+	val accessToken = AccessToken(key = "790679832128544769-fOdevJTxdsufyMCCjxBYYnaJTzYtsoi", secret = "cl5gmg4Dm7MNpFLUHwKy50lye0QB7zsxO4gaVZ19k9NeB")
 
 	val client = TwitterStreamingClient(consumerToken, accessToken)
 
 	def printTweetText: PartialFunction[StreamingMessage, Unit] = {
 		case tweet: Tweet => {
 			if (tweet.text.toLowerCase().contains("")) {
-				println(tweet.user.get.name + " " + tweet.text)
+				println("Name:"+tweet.user.get.name +" "+tweet.geo+ " text:" + tweet.text)
 			}
 		}
 	}
@@ -79,7 +79,7 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 
 		val queue = source1.to(Sink foreach (
 			txt => {
-				if (report.lineLeft<5) {
+				if (report.lineLeft < 5) {
 					report.nextPage()
 					report.nextLine()
 				}
@@ -90,7 +90,7 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 			)).run()
 
 
-//		val stream = client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("canada")) {
+		//		val stream = client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("canada")) {
 		val stream = client.sampleStatuses(languages = List(Language.English), stall_warnings = true) {
 			case tweet: Tweet => {
 				queue offer tweet.text
@@ -106,7 +106,12 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 		println("Report was generated in Twitter.pdf")
 	}
 
+	def test10(): Unit = {
+		client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("travel"))(printTweetText)
+	}
+
 	def main(args: Array[String]): Unit = {
-		test3()
+		//		test3()
+		test10
 	}
 }
