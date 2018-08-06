@@ -90,6 +90,8 @@ object DailyTradingBlotter extends GroupUtilTrait {
 		val h_lta = ReportCell("LTA" bold()) leftAlign() inside(row, "lta")
 		val h_poa = ReportCell("POA" bold()) leftAlign() inside(row, "poa")
 		val hrow = List(h_lta, h_poa)
+		report print (ReportCell("TRADES"  bold())  inside ReportMargin(report.pageLayout.width * 0.6f+20, report.pageLayout.width - 10))
+		report.nextLine
 		report.print(hrow)
 		report.nextLine
 		accountList.foreach(trade=>{
