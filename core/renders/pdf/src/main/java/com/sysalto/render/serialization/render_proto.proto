@@ -164,6 +164,7 @@ message DrawLine_proto {
     float y2 = 4;
     float vlineWidth = 5;
     com.sysalto.report.serialization.common.ReportColor_proto color = 6;
+    com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;
 }
 
 message PdfDrawImage_proto {

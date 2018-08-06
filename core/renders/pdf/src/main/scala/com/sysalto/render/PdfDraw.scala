@@ -90,7 +90,7 @@ object PdfDraw {
 
 
 
-	class DrawLine(val x1: Float, val y1: Float, val x2: Float, val y2: Float, val vlineWidth: Float, val color: ReportColor, lineDashType: Option[LineDashType]) extends PdfGraphicFragment {
+	class DrawLine(val x1: Float, val y1: Float, val x2: Float, val y2: Float, val vlineWidth: Float, val color: ReportColor,val lineDashType: Option[LineDashType]) extends PdfGraphicFragment {
 		override def content: String = {
 			saveStatus + movePoint(x1, y1) + lineWidth(vlineWidth) +
 				(if (lineDashType.isDefined) lineDash(lineDashType.get) else "") +

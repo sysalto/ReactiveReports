@@ -124,3 +124,13 @@ message DirectDrawRectangle_proto {
     float width = 3;
     float height = 4;
 }
+
+message OptionLineDashType_proto {
+    bool null = 1;
+    LineDashType_proto lineDashType = 2;
+}
+
+message LineDashType_proto {
+    int32 unit = 1;
+    int32 phase = 2;
+}

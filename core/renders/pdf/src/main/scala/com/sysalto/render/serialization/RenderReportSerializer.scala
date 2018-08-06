@@ -6,7 +6,7 @@ import com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase
 import com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase
 import com.sysalto.render.serialization.RenderProto._
 import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
-import com.sysalto.report.serialization.common.CommonReportSerializer.{BoundaryRectSerializer, RFontSerializer, ReportColorSerializer, ReportTxtSerializer}
+import com.sysalto.report.serialization.common.CommonReportSerializer._
 import com.sysalto.report.serialization.common.ReportCommonProto._
 
 import scala.collection.JavaConverters._
@@ -373,11 +373,13 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.setY2(input.y2)
 			builder.setVlineWidth(input.vlineWidth)
 			builder.setColor(ReportColorSerializer.write(input.color))
+			builder.setLineDashType(OptionLineDashTypeSerializer.write(input.lineDashType))
 			builder.build()
 		}
 
 		def read(input: DrawLine_proto): DrawLine = {
-			new DrawLine(input.getX1, input.getY1, input.getX2, input.getY2, input.getVlineWidth, ReportColorSerializer.read(input.getColor), None)
+			new DrawLine(input.getX1, input.getY1, input.getX2, input.getY2, input.getVlineWidth, ReportColorSerializer.read(input.getColor),
+				OptionLineDashTypeSerializer.read(input.getLineDashType))
 		}
 	}
 

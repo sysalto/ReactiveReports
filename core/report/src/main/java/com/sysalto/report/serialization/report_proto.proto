@@ -135,18 +135,12 @@ message ReportLine_proto {
     float y2 = 4;
     float lineWidth = 5;
     com.sysalto.report.serialization.common.RColor_proto color = 6;
-    OptionLineDashType_proto lineDashType = 7;
+    com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;
 }
 
-message OptionLineDashType_proto {
-    bool null = 1;
-    LineDashType_proto lineDashType = 2;
-}
 
-message LineDashType_proto {
-    int32 unit = 1;
-    int32 phase = 2;
-}
+
+
 
 message ReportRectangle_proto {
     float x1 = 1;

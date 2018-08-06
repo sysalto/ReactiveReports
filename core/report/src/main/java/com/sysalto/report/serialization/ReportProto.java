@@ -15600,17 +15600,17 @@ public final class ReportProto {
     com.sysalto.report.serialization.common.ReportCommonProto.RColor_protoOrBuilder getColorOrBuilder();
 
     /**
-     * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+     * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
      */
     boolean hasLineDashType();
     /**
-     * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+     * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
      */
-    com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto getLineDashType();
+    com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto getLineDashType();
     /**
-     * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+     * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
      */
-    com.sysalto.report.serialization.ReportProto.OptionLineDashType_protoOrBuilder getLineDashTypeOrBuilder();
+    com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_protoOrBuilder getLineDashTypeOrBuilder();
   }
   /**
    * Protobuf type {@code com.sysalto.report.serialization.ReportLine_proto}
@@ -15702,11 +15702,11 @@ public final class ReportProto {
               break;
             }
             case 58: {
-              com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.Builder subBuilder = null;
+              com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.Builder subBuilder = null;
               if (lineDashType_ != null) {
                 subBuilder = lineDashType_.toBuilder();
               }
-              lineDashType_ = input.readMessage(com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.parser(), extensionRegistry);
+              lineDashType_ = input.readMessage(com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(lineDashType_);
                 lineDashType_ = subBuilder.buildPartial();
@@ -15805,23 +15805,23 @@ public final class ReportProto {
     }
 
     public static final int LINEDASHTYPE_FIELD_NUMBER = 7;
-    private com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto lineDashType_;
+    private com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto lineDashType_;
     /**
-     * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+     * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
      */
     public boolean hasLineDashType() {
       return lineDashType_ != null;
     }
     /**
-     * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+     * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto getLineDashType() {
-      return lineDashType_ == null ? com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.getDefaultInstance() : lineDashType_;
+    public com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto getLineDashType() {
+      return lineDashType_ == null ? com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.getDefaultInstance() : lineDashType_;
     }
     /**
-     * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+     * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
      */
-    public com.sysalto.report.serialization.ReportProto.OptionLineDashType_protoOrBuilder getLineDashTypeOrBuilder() {
+    public com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_protoOrBuilder getLineDashTypeOrBuilder() {
       return getLineDashType();
     }
 
@@ -16498,29 +16498,29 @@ public final class ReportProto {
         return colorBuilder_;
       }
 
-      private com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto lineDashType_ = null;
+      private com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto lineDashType_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto, com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.Builder, com.sysalto.report.serialization.ReportProto.OptionLineDashType_protoOrBuilder> lineDashTypeBuilder_;
+          com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto, com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_protoOrBuilder> lineDashTypeBuilder_;
       /**
-       * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+       * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
        */
       public boolean hasLineDashType() {
         return lineDashTypeBuilder_ != null || lineDashType_ != null;
       }
       /**
-       * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+       * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto getLineDashType() {
+      public com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto getLineDashType() {
         if (lineDashTypeBuilder_ == null) {
-          return lineDashType_ == null ? com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.getDefaultInstance() : lineDashType_;
+          return lineDashType_ == null ? com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.getDefaultInstance() : lineDashType_;
         } else {
           return lineDashTypeBuilder_.getMessage();
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+       * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
        */
-      public Builder setLineDashType(com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto value) {
+      public Builder setLineDashType(com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto value) {
         if (lineDashTypeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -16534,10 +16534,10 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+       * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
        */
       public Builder setLineDashType(
-          com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.Builder builderForValue) {
+          com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.Builder builderForValue) {
         if (lineDashTypeBuilder_ == null) {
           lineDashType_ = builderForValue.build();
           onChanged();
@@ -16548,13 +16548,13 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+       * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
        */
-      public Builder mergeLineDashType(com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto value) {
+      public Builder mergeLineDashType(com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto value) {
         if (lineDashTypeBuilder_ == null) {
           if (lineDashType_ != null) {
             lineDashType_ =
-              com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.newBuilder(lineDashType_).mergeFrom(value).buildPartial();
+              com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.newBuilder(lineDashType_).mergeFrom(value).buildPartial();
           } else {
             lineDashType_ = value;
           }
@@ -16566,7 +16566,7 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+       * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
        */
       public Builder clearLineDashType() {
         if (lineDashTypeBuilder_ == null) {
@@ -16580,33 +16580,33 @@ public final class ReportProto {
         return this;
       }
       /**
-       * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+       * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.Builder getLineDashTypeBuilder() {
+      public com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.Builder getLineDashTypeBuilder() {
         
         onChanged();
         return getLineDashTypeFieldBuilder().getBuilder();
       }
       /**
-       * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+       * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
        */
-      public com.sysalto.report.serialization.ReportProto.OptionLineDashType_protoOrBuilder getLineDashTypeOrBuilder() {
+      public com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_protoOrBuilder getLineDashTypeOrBuilder() {
         if (lineDashTypeBuilder_ != null) {
           return lineDashTypeBuilder_.getMessageOrBuilder();
         } else {
           return lineDashType_ == null ?
-              com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.getDefaultInstance() : lineDashType_;
+              com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.getDefaultInstance() : lineDashType_;
         }
       }
       /**
-       * <code>.com.sysalto.report.serialization.OptionLineDashType_proto lineDashType = 7;</code>
+       * <code>.com.sysalto.report.serialization.common.OptionLineDashType_proto lineDashType = 7;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto, com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.Builder, com.sysalto.report.serialization.ReportProto.OptionLineDashType_protoOrBuilder> 
+          com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto, com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_protoOrBuilder> 
           getLineDashTypeFieldBuilder() {
         if (lineDashTypeBuilder_ == null) {
           lineDashTypeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto, com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.Builder, com.sysalto.report.serialization.ReportProto.OptionLineDashType_protoOrBuilder>(
+              com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto, com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_proto.Builder, com.sysalto.report.serialization.common.ReportCommonProto.OptionLineDashType_protoOrBuilder>(
                   getLineDashType(),
                   getParentForChildren(),
                   isClean());
@@ -16658,1166 +16658,6 @@ public final class ReportProto {
     }
 
     public com.sysalto.report.serialization.ReportProto.ReportLine_proto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface OptionLineDashType_protoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.sysalto.report.serialization.OptionLineDashType_proto)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>bool null = 1;</code>
-     */
-    boolean getNull();
-
-    /**
-     * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-     */
-    boolean hasLineDashType();
-    /**
-     * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-     */
-    com.sysalto.report.serialization.ReportProto.LineDashType_proto getLineDashType();
-    /**
-     * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-     */
-    com.sysalto.report.serialization.ReportProto.LineDashType_protoOrBuilder getLineDashTypeOrBuilder();
-  }
-  /**
-   * Protobuf type {@code com.sysalto.report.serialization.OptionLineDashType_proto}
-   */
-  public  static final class OptionLineDashType_proto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.sysalto.report.serialization.OptionLineDashType_proto)
-      OptionLineDashType_protoOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use OptionLineDashType_proto.newBuilder() to construct.
-    private OptionLineDashType_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private OptionLineDashType_proto() {
-      null_ = false;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private OptionLineDashType_proto(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              null_ = input.readBool();
-              break;
-            }
-            case 18: {
-              com.sysalto.report.serialization.ReportProto.LineDashType_proto.Builder subBuilder = null;
-              if (lineDashType_ != null) {
-                subBuilder = lineDashType_.toBuilder();
-              }
-              lineDashType_ = input.readMessage(com.sysalto.report.serialization.ReportProto.LineDashType_proto.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(lineDashType_);
-                lineDashType_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.class, com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.Builder.class);
-    }
-
-    public static final int NULL_FIELD_NUMBER = 1;
-    private boolean null_;
-    /**
-     * <code>bool null = 1;</code>
-     */
-    public boolean getNull() {
-      return null_;
-    }
-
-    public static final int LINEDASHTYPE_FIELD_NUMBER = 2;
-    private com.sysalto.report.serialization.ReportProto.LineDashType_proto lineDashType_;
-    /**
-     * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-     */
-    public boolean hasLineDashType() {
-      return lineDashType_ != null;
-    }
-    /**
-     * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-     */
-    public com.sysalto.report.serialization.ReportProto.LineDashType_proto getLineDashType() {
-      return lineDashType_ == null ? com.sysalto.report.serialization.ReportProto.LineDashType_proto.getDefaultInstance() : lineDashType_;
-    }
-    /**
-     * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-     */
-    public com.sysalto.report.serialization.ReportProto.LineDashType_protoOrBuilder getLineDashTypeOrBuilder() {
-      return getLineDashType();
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (null_ != false) {
-        output.writeBool(1, null_);
-      }
-      if (lineDashType_ != null) {
-        output.writeMessage(2, getLineDashType());
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (null_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, null_);
-      }
-      if (lineDashType_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getLineDashType());
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto)) {
-        return super.equals(obj);
-      }
-      com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto other = (com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto) obj;
-
-      boolean result = true;
-      result = result && (getNull()
-          == other.getNull());
-      result = result && (hasLineDashType() == other.hasLineDashType());
-      if (hasLineDashType()) {
-        result = result && getLineDashType()
-            .equals(other.getLineDashType());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + NULL_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getNull());
-      if (hasLineDashType()) {
-        hash = (37 * hash) + LINEDASHTYPE_FIELD_NUMBER;
-        hash = (53 * hash) + getLineDashType().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code com.sysalto.report.serialization.OptionLineDashType_proto}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.sysalto.report.serialization.OptionLineDashType_proto)
-        com.sysalto.report.serialization.ReportProto.OptionLineDashType_protoOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.class, com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.Builder.class);
-      }
-
-      // Construct using com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        null_ = false;
-
-        if (lineDashTypeBuilder_ == null) {
-          lineDashType_ = null;
-        } else {
-          lineDashType_ = null;
-          lineDashTypeBuilder_ = null;
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_descriptor;
-      }
-
-      public com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto getDefaultInstanceForType() {
-        return com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.getDefaultInstance();
-      }
-
-      public com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto build() {
-        com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto buildPartial() {
-        com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto result = new com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto(this);
-        result.null_ = null_;
-        if (lineDashTypeBuilder_ == null) {
-          result.lineDashType_ = lineDashType_;
-        } else {
-          result.lineDashType_ = lineDashTypeBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto) {
-          return mergeFrom((com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto other) {
-        if (other == com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto.getDefaultInstance()) return this;
-        if (other.getNull() != false) {
-          setNull(other.getNull());
-        }
-        if (other.hasLineDashType()) {
-          mergeLineDashType(other.getLineDashType());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private boolean null_ ;
-      /**
-       * <code>bool null = 1;</code>
-       */
-      public boolean getNull() {
-        return null_;
-      }
-      /**
-       * <code>bool null = 1;</code>
-       */
-      public Builder setNull(boolean value) {
-        
-        null_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool null = 1;</code>
-       */
-      public Builder clearNull() {
-        
-        null_ = false;
-        onChanged();
-        return this;
-      }
-
-      private com.sysalto.report.serialization.ReportProto.LineDashType_proto lineDashType_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.LineDashType_proto, com.sysalto.report.serialization.ReportProto.LineDashType_proto.Builder, com.sysalto.report.serialization.ReportProto.LineDashType_protoOrBuilder> lineDashTypeBuilder_;
-      /**
-       * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-       */
-      public boolean hasLineDashType() {
-        return lineDashTypeBuilder_ != null || lineDashType_ != null;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-       */
-      public com.sysalto.report.serialization.ReportProto.LineDashType_proto getLineDashType() {
-        if (lineDashTypeBuilder_ == null) {
-          return lineDashType_ == null ? com.sysalto.report.serialization.ReportProto.LineDashType_proto.getDefaultInstance() : lineDashType_;
-        } else {
-          return lineDashTypeBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-       */
-      public Builder setLineDashType(com.sysalto.report.serialization.ReportProto.LineDashType_proto value) {
-        if (lineDashTypeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          lineDashType_ = value;
-          onChanged();
-        } else {
-          lineDashTypeBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-       */
-      public Builder setLineDashType(
-          com.sysalto.report.serialization.ReportProto.LineDashType_proto.Builder builderForValue) {
-        if (lineDashTypeBuilder_ == null) {
-          lineDashType_ = builderForValue.build();
-          onChanged();
-        } else {
-          lineDashTypeBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-       */
-      public Builder mergeLineDashType(com.sysalto.report.serialization.ReportProto.LineDashType_proto value) {
-        if (lineDashTypeBuilder_ == null) {
-          if (lineDashType_ != null) {
-            lineDashType_ =
-              com.sysalto.report.serialization.ReportProto.LineDashType_proto.newBuilder(lineDashType_).mergeFrom(value).buildPartial();
-          } else {
-            lineDashType_ = value;
-          }
-          onChanged();
-        } else {
-          lineDashTypeBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-       */
-      public Builder clearLineDashType() {
-        if (lineDashTypeBuilder_ == null) {
-          lineDashType_ = null;
-          onChanged();
-        } else {
-          lineDashType_ = null;
-          lineDashTypeBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-       */
-      public com.sysalto.report.serialization.ReportProto.LineDashType_proto.Builder getLineDashTypeBuilder() {
-        
-        onChanged();
-        return getLineDashTypeFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-       */
-      public com.sysalto.report.serialization.ReportProto.LineDashType_protoOrBuilder getLineDashTypeOrBuilder() {
-        if (lineDashTypeBuilder_ != null) {
-          return lineDashTypeBuilder_.getMessageOrBuilder();
-        } else {
-          return lineDashType_ == null ?
-              com.sysalto.report.serialization.ReportProto.LineDashType_proto.getDefaultInstance() : lineDashType_;
-        }
-      }
-      /**
-       * <code>.com.sysalto.report.serialization.LineDashType_proto lineDashType = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.sysalto.report.serialization.ReportProto.LineDashType_proto, com.sysalto.report.serialization.ReportProto.LineDashType_proto.Builder, com.sysalto.report.serialization.ReportProto.LineDashType_protoOrBuilder> 
-          getLineDashTypeFieldBuilder() {
-        if (lineDashTypeBuilder_ == null) {
-          lineDashTypeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.sysalto.report.serialization.ReportProto.LineDashType_proto, com.sysalto.report.serialization.ReportProto.LineDashType_proto.Builder, com.sysalto.report.serialization.ReportProto.LineDashType_protoOrBuilder>(
-                  getLineDashType(),
-                  getParentForChildren(),
-                  isClean());
-          lineDashType_ = null;
-        }
-        return lineDashTypeBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.sysalto.report.serialization.OptionLineDashType_proto)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.sysalto.report.serialization.OptionLineDashType_proto)
-    private static final com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto();
-    }
-
-    public static com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<OptionLineDashType_proto>
-        PARSER = new com.google.protobuf.AbstractParser<OptionLineDashType_proto>() {
-      public OptionLineDashType_proto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new OptionLineDashType_proto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<OptionLineDashType_proto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<OptionLineDashType_proto> getParserForType() {
-      return PARSER;
-    }
-
-    public com.sysalto.report.serialization.ReportProto.OptionLineDashType_proto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface LineDashType_protoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.sysalto.report.serialization.LineDashType_proto)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 unit = 1;</code>
-     */
-    int getUnit();
-
-    /**
-     * <code>int32 phase = 2;</code>
-     */
-    int getPhase();
-  }
-  /**
-   * Protobuf type {@code com.sysalto.report.serialization.LineDashType_proto}
-   */
-  public  static final class LineDashType_proto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.sysalto.report.serialization.LineDashType_proto)
-      LineDashType_protoOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use LineDashType_proto.newBuilder() to construct.
-    private LineDashType_proto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private LineDashType_proto() {
-      unit_ = 0;
-      phase_ = 0;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private LineDashType_proto(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              unit_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              phase_ = input.readInt32();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_LineDashType_proto_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_LineDashType_proto_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.sysalto.report.serialization.ReportProto.LineDashType_proto.class, com.sysalto.report.serialization.ReportProto.LineDashType_proto.Builder.class);
-    }
-
-    public static final int UNIT_FIELD_NUMBER = 1;
-    private int unit_;
-    /**
-     * <code>int32 unit = 1;</code>
-     */
-    public int getUnit() {
-      return unit_;
-    }
-
-    public static final int PHASE_FIELD_NUMBER = 2;
-    private int phase_;
-    /**
-     * <code>int32 phase = 2;</code>
-     */
-    public int getPhase() {
-      return phase_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (unit_ != 0) {
-        output.writeInt32(1, unit_);
-      }
-      if (phase_ != 0) {
-        output.writeInt32(2, phase_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (unit_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, unit_);
-      }
-      if (phase_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, phase_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.sysalto.report.serialization.ReportProto.LineDashType_proto)) {
-        return super.equals(obj);
-      }
-      com.sysalto.report.serialization.ReportProto.LineDashType_proto other = (com.sysalto.report.serialization.ReportProto.LineDashType_proto) obj;
-
-      boolean result = true;
-      result = result && (getUnit()
-          == other.getUnit());
-      result = result && (getPhase()
-          == other.getPhase());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + UNIT_FIELD_NUMBER;
-      hash = (53 * hash) + getUnit();
-      hash = (37 * hash) + PHASE_FIELD_NUMBER;
-      hash = (53 * hash) + getPhase();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.sysalto.report.serialization.ReportProto.LineDashType_proto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code com.sysalto.report.serialization.LineDashType_proto}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.sysalto.report.serialization.LineDashType_proto)
-        com.sysalto.report.serialization.ReportProto.LineDashType_protoOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_LineDashType_proto_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_LineDashType_proto_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.sysalto.report.serialization.ReportProto.LineDashType_proto.class, com.sysalto.report.serialization.ReportProto.LineDashType_proto.Builder.class);
-      }
-
-      // Construct using com.sysalto.report.serialization.ReportProto.LineDashType_proto.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        unit_ = 0;
-
-        phase_ = 0;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.sysalto.report.serialization.ReportProto.internal_static_com_sysalto_report_serialization_LineDashType_proto_descriptor;
-      }
-
-      public com.sysalto.report.serialization.ReportProto.LineDashType_proto getDefaultInstanceForType() {
-        return com.sysalto.report.serialization.ReportProto.LineDashType_proto.getDefaultInstance();
-      }
-
-      public com.sysalto.report.serialization.ReportProto.LineDashType_proto build() {
-        com.sysalto.report.serialization.ReportProto.LineDashType_proto result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public com.sysalto.report.serialization.ReportProto.LineDashType_proto buildPartial() {
-        com.sysalto.report.serialization.ReportProto.LineDashType_proto result = new com.sysalto.report.serialization.ReportProto.LineDashType_proto(this);
-        result.unit_ = unit_;
-        result.phase_ = phase_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.sysalto.report.serialization.ReportProto.LineDashType_proto) {
-          return mergeFrom((com.sysalto.report.serialization.ReportProto.LineDashType_proto)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.sysalto.report.serialization.ReportProto.LineDashType_proto other) {
-        if (other == com.sysalto.report.serialization.ReportProto.LineDashType_proto.getDefaultInstance()) return this;
-        if (other.getUnit() != 0) {
-          setUnit(other.getUnit());
-        }
-        if (other.getPhase() != 0) {
-          setPhase(other.getPhase());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.sysalto.report.serialization.ReportProto.LineDashType_proto parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.sysalto.report.serialization.ReportProto.LineDashType_proto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int unit_ ;
-      /**
-       * <code>int32 unit = 1;</code>
-       */
-      public int getUnit() {
-        return unit_;
-      }
-      /**
-       * <code>int32 unit = 1;</code>
-       */
-      public Builder setUnit(int value) {
-        
-        unit_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 unit = 1;</code>
-       */
-      public Builder clearUnit() {
-        
-        unit_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int phase_ ;
-      /**
-       * <code>int32 phase = 2;</code>
-       */
-      public int getPhase() {
-        return phase_;
-      }
-      /**
-       * <code>int32 phase = 2;</code>
-       */
-      public Builder setPhase(int value) {
-        
-        phase_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 phase = 2;</code>
-       */
-      public Builder clearPhase() {
-        
-        phase_ = 0;
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.sysalto.report.serialization.LineDashType_proto)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.sysalto.report.serialization.LineDashType_proto)
-    private static final com.sysalto.report.serialization.ReportProto.LineDashType_proto DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.sysalto.report.serialization.ReportProto.LineDashType_proto();
-    }
-
-    public static com.sysalto.report.serialization.ReportProto.LineDashType_proto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<LineDashType_proto>
-        PARSER = new com.google.protobuf.AbstractParser<LineDashType_proto>() {
-      public LineDashType_proto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new LineDashType_proto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<LineDashType_proto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<LineDashType_proto> getParserForType() {
-      return PARSER;
-    }
-
-    public com.sysalto.report.serialization.ReportProto.LineDashType_proto getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -21334,16 +20174,6 @@ public final class ReportProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_sysalto_report_serialization_ReportLine_proto_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_sysalto_report_serialization_LineDashType_proto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_sysalto_report_serialization_LineDashType_proto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_sysalto_report_serialization_ReportRectangle_proto_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -21461,37 +20291,33 @@ public final class ReportProto {
       "0\030\005 \001(\002\022\n\n\002y0\030\006 \001(\002\022\r\n\005width\030\007 \001(\002\022\016\n\006he" +
       "ight\030\010 \001(\002\"g\n\021ReportImage_proto\022\014\n\004file\030" +
       "\001 \001(\t\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\r\n\005width\030\004 \001" +
-      "(\002\022\016\n\006height\030\005 \001(\002\022\017\n\007opacity\030\006 \001(\002\"\355\001\n\020" +
+      "(\002\022\016\n\006height\030\005 \001(\002\022\017\n\007opacity\030\006 \001(\002\"\364\001\n\020" +
       "ReportLine_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002" +
       "\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\021\n\tlineWidth\030\005 " +
       "\001(\002\022D\n\005color\030\006 \001(\01325.com.sysalto.report." +
-      "serialization.common.RColor_proto\022P\n\014lin" +
-      "eDashType\030\007 \001(\0132:.com.sysalto.report.ser" +
-      "ialization.OptionLineDashType_proto\"t\n\030O" +
-      "ptionLineDashType_proto\022\014\n\004null\030\001 \001(\010\022J\n" +
-      "\014lineDashType\030\002 \001(\01324.com.sysalto.report" +
-      ".serialization.LineDashType_proto\"1\n\022Lin" +
-      "eDashType_proto\022\014\n\004unit\030\001 \001(\005\022\r\n\005phase\030\002" +
-      " \001(\005\"\345\001\n\025ReportRectangle_proto\022\n\n\002x1\030\001 \001" +
-      "(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\016" +
-      "\n\006radius\030\005 \001(\002\022C\n\005color\030\006 \001(\01324.com.sysa" +
-      "lto.report.serialization.OptionRColor_pr" +
-      "oto\022G\n\tfillColor\030\007 \001(\01324.com.sysalto.rep" +
-      "ort.serialization.OptionRColor_proto\"i\n\022" +
-      "OptionRColor_proto\022\014\n\004null\030\001 \001(\010\022E\n\006rCol" +
-      "or\030\002 \001(\01325.com.sysalto.report.serializat" +
-      "ion.common.RColor_proto\"\352\001\n\031ReportVertic" +
-      "alShade_proto\022E\n\trectangle\030\001 \001(\01322.com.s" +
-      "ysalto.report.serialization.DRectangle_p" +
-      "roto\022C\n\004from\030\002 \001(\01325.com.sysalto.report." +
-      "serialization.common.RColor_proto\022A\n\002to\030" +
-      "\003 \001(\01325.com.sysalto.report.serialization" +
-      ".common.RColor_proto\"R\n\020DRectangle_proto" +
-      "\022\n\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002" +
-      "y2\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002*b\n\017WrapAlign_pr" +
-      "oto\022\013\n\007NO_WRAP\020\000\022\r\n\tWRAP_LEFT\020\001\022\016\n\nWRAP_" +
-      "RIGHT\020\002\022\017\n\013WRAP_CENTER\020\003\022\022\n\016WRAP_JUSTIFI" +
-      "ED\020\004B\002H\001b\006proto3"
+      "serialization.common.RColor_proto\022W\n\014lin" +
+      "eDashType\030\007 \001(\0132A.com.sysalto.report.ser" +
+      "ialization.common.OptionLineDashType_pro" +
+      "to\"\345\001\n\025ReportRectangle_proto\022\n\n\002x1\030\001 \001(\002" +
+      "\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\022\016\n\006" +
+      "radius\030\005 \001(\002\022C\n\005color\030\006 \001(\01324.com.sysalt" +
+      "o.report.serialization.OptionRColor_prot" +
+      "o\022G\n\tfillColor\030\007 \001(\01324.com.sysalto.repor" +
+      "t.serialization.OptionRColor_proto\"i\n\022Op" +
+      "tionRColor_proto\022\014\n\004null\030\001 \001(\010\022E\n\006rColor" +
+      "\030\002 \001(\01325.com.sysalto.report.serializatio" +
+      "n.common.RColor_proto\"\352\001\n\031ReportVertical" +
+      "Shade_proto\022E\n\trectangle\030\001 \001(\01322.com.sys" +
+      "alto.report.serialization.DRectangle_pro" +
+      "to\022C\n\004from\030\002 \001(\01325.com.sysalto.report.se" +
+      "rialization.common.RColor_proto\022A\n\002to\030\003 " +
+      "\001(\01325.com.sysalto.report.serialization.c" +
+      "ommon.RColor_proto\"R\n\020DRectangle_proto\022\n" +
+      "\n\002x1\030\001 \001(\002\022\n\n\002y1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2" +
+      "\030\004 \001(\002\022\016\n\006radius\030\005 \001(\002*b\n\017WrapAlign_prot" +
+      "o\022\013\n\007NO_WRAP\020\000\022\r\n\tWRAP_LEFT\020\001\022\016\n\nWRAP_RI" +
+      "GHT\020\002\022\017\n\013WRAP_CENTER\020\003\022\022\n\016WRAP_JUSTIFIED" +
+      "\020\004B\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -21590,38 +20416,26 @@ public final class ReportProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportLine_proto_descriptor,
         new java.lang.String[] { "X1", "Y1", "X2", "Y2", "LineWidth", "Color", "LineDashType", });
-    internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_descriptor =
-      getDescriptor().getMessageTypes().get(14);
-    internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_sysalto_report_serialization_OptionLineDashType_proto_descriptor,
-        new java.lang.String[] { "Null", "LineDashType", });
-    internal_static_com_sysalto_report_serialization_LineDashType_proto_descriptor =
-      getDescriptor().getMessageTypes().get(15);
-    internal_static_com_sysalto_report_serialization_LineDashType_proto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_sysalto_report_serialization_LineDashType_proto_descriptor,
-        new java.lang.String[] { "Unit", "Phase", });
     internal_static_com_sysalto_report_serialization_ReportRectangle_proto_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_com_sysalto_report_serialization_ReportRectangle_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportRectangle_proto_descriptor,
         new java.lang.String[] { "X1", "Y1", "X2", "Y2", "Radius", "Color", "FillColor", });
     internal_static_com_sysalto_report_serialization_OptionRColor_proto_descriptor =
-      getDescriptor().getMessageTypes().get(17);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_com_sysalto_report_serialization_OptionRColor_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_OptionRColor_proto_descriptor,
         new java.lang.String[] { "Null", "RColor", });
     internal_static_com_sysalto_report_serialization_ReportVerticalShade_proto_descriptor =
-      getDescriptor().getMessageTypes().get(18);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_com_sysalto_report_serialization_ReportVerticalShade_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_ReportVerticalShade_proto_descriptor,
         new java.lang.String[] { "Rectangle", "From", "To", });
     internal_static_com_sysalto_report_serialization_DRectangle_proto_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_com_sysalto_report_serialization_DRectangle_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_DRectangle_proto_descriptor,

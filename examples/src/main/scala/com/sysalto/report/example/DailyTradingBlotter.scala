@@ -7,15 +7,17 @@ import com.sysalto.report.example.data.DailyTradingBlotterData.{Account, Trade}
 import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
+import scala.collection.mutable.ListBuffer
+
 object DailyTradingBlotter extends GroupUtilTrait {
 	val headerFontColor = ReportColor(255, 255, 255)
 	val headerColor = ReportColor(50, 50, 150)
-	val headerTradeColor = ReportColor(50, 150, 150)
+	val headerTradeColor = ReportColor(50, 150, 200)
 	val headerAccountColor = ReportColor(230, 230, 255)
 
 	// draw background image as gradient
 	private def drawbackgroundImage(report: Report): Unit = {
-		report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(230, 255, 200)) draw()
+		report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(230, 255, 255)) draw()
 	}
 
 	private def setupReport(report: Report): Unit = {
@@ -71,7 +73,7 @@ object DailyTradingBlotter extends GroupUtilTrait {
 			if (crtX > report.pageLayout.width * 0.6) {
 				crtX = 9
 				crtY += (deltaY + 10)
-				if (report.lineLeft < 5) {
+				if (report.lineLeft < 10) {
 					report.nextPage()
 					report.nextLine(2)
 					crtY = report.getY
@@ -89,7 +91,7 @@ object DailyTradingBlotter extends GroupUtilTrait {
 			report print "Occupation".toString at (crtX)
 			report print account.occupation at (crtX + 90)
 
-			report rectangle() from(crtX-2, crtY-report.lineHeight+5) radius (5) to(crtX +deltaX + 4,crtY+deltaY-report.lineHeight-2 ) fillColor headerAccountColor draw()
+			report rectangle() from(crtX - 2, crtY - report.lineHeight + 5) radius (5) to(crtX + deltaX + 4, crtY + deltaY - report.lineHeight - 2) fillColor headerAccountColor draw()
 
 			crtX += (deltaX + 10)
 
@@ -100,42 +102,62 @@ object DailyTradingBlotter extends GroupUtilTrait {
 		val y2 = report.calculate(hrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y2 + 2
-		report rectangle() from(report.pageLayout.width * 0.6f+100, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerTradeColor draw()
+		report rectangle() from(report.pageLayout.width * 0.6f + 100, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerTradeColor draw()
 		report.print(hrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine
 	}
 
 	private def printTrades(report: Report, accountList: Seq[Trade]): Unit = {
-		val row = ReportRow(report.pageLayout.width * 0.6f,report.pageLayout.width - 10,
+		val row = ReportRow(report.pageLayout.width * 0.6f, report.pageLayout.width - 10,
 			List(Column("lta", Flex(1)), Column("poa", Flex(1))))
 		val h_lta = ReportCell("Amount" bold() color headerFontColor) rightAlign() inside(row, "lta")
 		val h_poa = ReportCell("Fee" bold() color headerFontColor) rightAlign() inside(row, "poa")
 		val hrow = List(h_lta, h_poa)
-		report print (ReportCell("TRADES"  bold())  centerAlign() inside ReportMargin(report.pageLayout.width * 0.6f+100, report.pageLayout.width - 9))
+		report print (ReportCell("TRADES" bold()) centerAlign() inside ReportMargin(report.pageLayout.width * 0.6f + 100, report.pageLayout.width - 9))
 		report.nextLine(2)
-		printTradeHeader(report,hrow)
-		accountList.foreach(trade=>{
+		printTradeHeader(report, hrow)
+		accountList.foreach(trade => {
 			if (report.lineLeft < 5) {
 				report.nextPage()
 				report.nextLine
-				printTradeHeader(report,hrow)
+				printTradeHeader(report, hrow)
 			}
-			val v_lta = ReportCell(""+trade.amount) rightAlign() inside(row, "lta")
-			val v_poa = ReportCell(""+trade.fee) rightAlign() inside(row, "poa")
+			val v_lta = ReportCell("" + trade.amount) rightAlign() inside(row, "lta")
+			val v_poa = ReportCell("" + trade.fee) rightAlign() inside(row, "poa")
 			val vrow = List(v_lta, v_poa)
 			report.print(vrow)
 			report.nextLine
 		})
 	}
 
+	private def computeSummaryPages(report: Report, summaryList: ListBuffer[(String, Long)]): Long = {
+		var pageNbrs = 1L
+		report.setSimulation(true)
+		report print "SUMMARY " at 100
+		report.nextLine(2)
+		summaryList.foreach(item => {
+			if (report.lineLeft < 3) {
+				report.nextPage()
+				report.nextLine()
+				pageNbrs += 1
+			}
+			report print item._1 at 10
+			report print "" + item._2 at 200
+			report.nextLine()
+		})
+		report.setSimulation(false)
+		pageNbrs
+	}
+
 	private def report(report: Report): Unit = {
+		val summaryList = ListBuffer[(String, Long)]()
 		setupReport(report)
 		report.start()
 		reportHeader(report)
 		val agents = DailyTradingBlotterData.getData
 		val agentsGroup = agents.toGroup
-		val row = ReportRow(10, report.pageLayout.width - 10,List(Column("invCode", Flex(2)), Column("invDescription", Flex(4)),
+		val row = ReportRow(10, report.pageLayout.width - 10, List(Column("invCode", Flex(2)), Column("invDescription", Flex(4)),
 			Column("tradeType", Flex(2)), Column("grossAmount", Flex(2)), Column("netAmmount", Flex(2)),
 			Column("price", Flex(2)), Column("quantity", Flex(2)), Column("commision", Flex(2)), Column("orderStatus", Flex(2)),
 			Column("risk", Flex(2)))).setCellSpacing(10f)
@@ -167,9 +189,11 @@ object DailyTradingBlotter extends GroupUtilTrait {
 				report print ("Branch Number:" + crtRec.branch bold()) at 10
 				report.nextLine()
 				report print ("Agent:" + crtRec.name bold()) at 10
+				val summarylabel = "Region:" + crtRec.region + " Branch Number:" + crtRec.branch + " Agent:" + crtRec.name
+				summaryList += (summarylabel -> report.getCrtPageNbr())
 				report.nextLine(2)
-				crtRec.tranList.zipWithIndex.foreach{case (tran,index) => {
-					val v_invCode = ReportCell(""+tran.invCode) leftAlign() inside(row, "invCode")
+				crtRec.tranList.zipWithIndex.foreach { case (tran, index) => {
+					val v_invCode = ReportCell("" + tran.invCode) leftAlign() inside(row, "invCode")
 					val v_invDescription = ReportCell(tran.invDescription) leftAlign() inside(row, "invDescription")
 					val v_tradeType = ReportCell(tran.tradeType) leftAlign() inside(row, "tradeType")
 					val v_grossAmount = ReportCell("" + tran.grossAmount) rightAlign() inside(row, "grossAmount")
@@ -183,10 +207,10 @@ object DailyTradingBlotter extends GroupUtilTrait {
 						v_commision, v_orderStatus, v_risk)
 					var y2 = report.calculate(v_row)
 					report.print(v_row)
-					if (index==crtRec.tranList.length-1) {
-						y2+= 5
+					if (index == crtRec.tranList.length - 1) {
+						y2 += 5
 						report line() from(10, y2 + 2) to report.pageLayout.width - 10 width 1f color(50, 50, 50) draw()
-					}  else {
+					} else {
 						report line() from(10, y2 + 2) to report.pageLayout.width - 10 width 0.5f color(200, 200, 200) draw()
 					}
 					report.setYPosition(y2)
@@ -196,7 +220,8 @@ object DailyTradingBlotter extends GroupUtilTrait {
 						report.nextLine
 						printTranHeader(report, hrow)
 					}
-				}}
+				}
+				}
 				val position1 = report.getCurrentPosition
 				printAccounts(report, crtRec.accntList)
 				val position2 = report.getCurrentPosition
@@ -211,6 +236,27 @@ object DailyTradingBlotter extends GroupUtilTrait {
 				report.setCurrentPosition(position)
 			})
 
+		val summaryPages=computeSummaryPages(report,summaryList)
+		summaryList.zipWithIndex.foreach {case (key,index)=>{
+			summaryList.update(index,(key._1,key._2+summaryPages))
+		}}
+
+		report.insertPages(summaryPages,1)
+		report.nextLine()
+		report print (ReportCell("Daily Trades Summary" size 15 bold()) centerAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+		report.nextLine(2)
+		summaryList.foreach(item=>{
+			if (report.lineLeft<3) {
+				report.nextPage()
+				report.nextLine()
+			}
+			report print item._1 at 10
+			report line() from(300,report.getY-3) to report.pageLayout.width - 40 width 0.5f color(200, 200, 200) lineType LineDashType(2, 1) draw()
+//			val bound=report print ""+item._2 at 500
+			val bound=report print (ReportCell(""+item._2) rightAlign() inside ReportMargin(0, report.pageLayout.width - 20))
+			report.setLinkToPage(bound,item._2, 0, 0)
+			report.nextLine()
+		})
 
 		report.render()
 	}

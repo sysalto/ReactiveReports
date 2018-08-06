@@ -566,8 +566,9 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	/*
 	print a cell (means wrapping text).
 	 */
-	def print(cell: ReportCell): Unit = {
+	def print(cell: ReportCell): BoundaryRect = {
 		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.align)
+		new BoundaryRect(cell.margin.left,getYPosition-2,cell.margin.right+2,getYPosition+lineHeight-4)
 	}
 
 	/*

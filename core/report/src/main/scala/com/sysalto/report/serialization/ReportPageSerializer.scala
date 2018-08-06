@@ -106,34 +106,6 @@ private[serialization] object ReportImageSerializer {
 		new ReportImage(input.getFile, input.getX, input.getY, input.getWidth, input.getHeight, input.getOpacity)
 }
 
-private[serialization] object LineDashTypeSerializer {
-	def write(obj: LineDashType): LineDashType_proto = {
-		val builder = LineDashType_proto.newBuilder()
-		builder.setUnit(obj.unit)
-		builder.setPhase(obj.phase)
-		builder.build()
-	}
-
-	def read(input: LineDashType_proto): LineDashType =
-		LineDashType(input.getUnit, input.getPhase)
-}
-
-private[serialization] object OptionLineDashTypeSerializer {
-	def write(obj: Option[LineDashType]): OptionLineDashType_proto = {
-		val builder = OptionLineDashType_proto.newBuilder()
-		if (obj.isEmpty) {
-			builder.setNull(true)
-		} else {
-			builder.setNull(false)
-			builder.setLineDashType(LineDashTypeSerializer.write(obj.get))
-		}
-		builder.build()
-	}
-
-	def read(input: OptionLineDashType_proto): Option[LineDashType] =
-		if (input.getNull) None else Some(LineDashTypeSerializer.read(input.getLineDashType))
-
-}
 
 private[serialization] object ReportLineSerializer {
 	def write(obj: ReportLine): ReportLine_proto = {
