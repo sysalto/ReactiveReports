@@ -106,8 +106,8 @@ set fillColor color
 
 class TextDsl(report: Report, var rText: ReportTxt) {
 
-	def at(x: Float): BoundaryRect = {
-		report.text(this.rText, x)
+	def at(x: Float,y: Float = -1): BoundaryRect = {
+		report.text(this.rText, x,y)
 		val txt=rText
 		this.rText = null
 		new BoundaryRect(x-1,report.getYPosition-2,x+txt.txt.size*0.5f*report.lineHeight,report.getYPosition+report.lineHeight-4)

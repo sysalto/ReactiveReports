@@ -29,22 +29,22 @@ public class ReportGroup {
             report.nextLine();
             Food crtRec = GroupUtil.getRec(rec);
             if (GroupUtil.isFirstRecord(rec)) {
-                report.print(new ReportTxt("FIRST")).at(100);
+                report.print(new ReportTxt("FIRST")).at(100,-1);
                 report.nextLine();
             }
             if (reportGroupUtil.isHeader("categ",rec)) {
-                report.print(new ReportTxt("Header categ:"+crtRec.getCategory())).at(10);
+                report.print(new ReportTxt("Header categ:"+crtRec.getCategory())).at(10,-1);
                 report.nextLine();
             }
-            report.print(new ReportTxt(crtRec.getName())).at(50);
-            report.print(new ReportTxt(crtRec.getPrice().toString())).at(100);
+            report.print(new ReportTxt(crtRec.getName())).at(50,-1);
+            report.print(new ReportTxt(crtRec.getPrice().toString())).at(100,-1);
             report.nextLine();
             if (reportGroupUtil.isFooter("categ",rec)) {
-                report.print(new ReportTxt("Footer categ:"+crtRec.getCategory())).at(10);
+                report.print(new ReportTxt("Footer categ:"+crtRec.getCategory())).at(10,-1);
                 report.nextLine();
             }
             if (GroupUtil.isLastRecord(rec)) {
-                report.print(new ReportTxt("LAST")).at(100);
+                report.print(new ReportTxt("LAST")).at(100,-1);
                 report.nextLine();
             }
             if (report.lineLeft()<5) {

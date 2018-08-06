@@ -3,6 +3,7 @@ package com.sysalto.report.example
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits.{Column, _}
 import com.sysalto.report.example.data.DailyTradingBlotterData
+import com.sysalto.report.example.data.DailyTradingBlotterData.{Account, Trade}
 import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
@@ -39,7 +40,7 @@ object DailyTradingBlotter extends GroupUtilTrait {
 	}
 
 
-	private def printTranHeader(report:Report,hrow:List[com.sysalto.report.reportTypes.ReportCell]): Unit = {
+	private def printTranHeader(report: Report, hrow: List[com.sysalto.report.reportTypes.ReportCell]): Unit = {
 		val y2 = report.calculate(hrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y2 + 2
@@ -50,12 +51,65 @@ object DailyTradingBlotter extends GroupUtilTrait {
 	}
 
 
+	private def printAccounts(report: Report, accountList: Seq[Account]): Unit = {
+		val deltaX = 150
+		val deltaY = 50
+		var crtX = 9
+		var crtY = report.getY
+		accountList.foreach(account => {
+			if (crtX > report.pageLayout.width * 0.6) {
+				crtX = 9
+				crtY += (deltaY + 10)
+				if (report.lineLeft < 5) {
+					report.nextPage()
+					report.nextLine(2)
+					crtY = report.getY
+				}
+			}
+			report.setYPosition(crtY)
+			report print "Account Name".toString at(crtX, crtY)
+			report print account.name at(crtX + 100, crtY)
+
+			report.nextLine()
+			report print "Plan Type".toString at (crtX)
+			report print account.planType at (crtX + 100)
+
+			report.nextLine()
+			report print "Occupation".toString at (crtX)
+			report print account.occupation at (crtX + 100)
+
+			crtX += (deltaX + 10)
+
+		})
+	}
+
+
+	private def printTrades(report: Report, accountList: Seq[Trade]): Unit = {
+		val row = ReportRow(report.pageLayout.width * 0.6f, report.pageLayout.width - 10,
+			List(Column("lta", Flex(1)), Column("poa", Flex(1))))
+		val h_lta = ReportCell("LTA" bold()) leftAlign() inside(row, "lta")
+		val h_poa = ReportCell("POA" bold()) leftAlign() inside(row, "poa")
+		val hrow = List(h_lta, h_poa)
+		report.print(hrow)
+		report.nextLine
+		accountList.foreach(trade=>{
+			if (report.lineLeft < 5) {
+				report.nextPage()
+				report.nextLine
+			}
+			val v_lta = ReportCell(trade.lta) leftAlign() inside(row, "lta")
+			val v_poa = ReportCell(trade.poa) leftAlign() inside(row, "poa")
+			val vrow = List(v_lta, v_poa)
+			report.print(vrow)
+			report.nextLine
+		})
+	}
 
 	private def report(report: Report): Unit = {
 		setupReport(report)
 		report.start()
 		reportHeader(report)
-		val agents = DailyTradingBlotterData.getData()
+		val agents = DailyTradingBlotterData.getData
 		val agentsGroup = agents.toGroup
 		val row = ReportRow(10, report.pageLayout.width - 10, List(Column("invCode", Flex(2)), Column("invDescription", Flex(4)),
 			Column("tradeType", Flex(2)), Column("grossAmount", Flex(2)), Column("netAmmount", Flex(2)),
@@ -83,12 +137,12 @@ object DailyTradingBlotter extends GroupUtilTrait {
 					report.nextPage()
 				}
 				report.nextLine(2)
-				printTranHeader(report,hrow )
-				report print ("Region:"+crtRec.region bold()) at 10
+				printTranHeader(report, hrow)
+				report print ("Region:" + crtRec.region bold()) at 10
 				report.nextLine()
-				report print ("Branch:"+crtRec.branch bold()) at 10
+				report print ("Branch:" + crtRec.branch bold()) at 10
 				report.nextLine()
-				report print ("Agent:"+crtRec.name bold()) at 10
+				report print ("Agent:" + crtRec.name bold()) at 10
 				report.nextLine(2)
 				crtRec.tranList.foreach(tran => {
 					val v_invCode = ReportCell(tran.invCode) leftAlign() inside(row, "invCode")
@@ -108,12 +162,24 @@ object DailyTradingBlotter extends GroupUtilTrait {
 					report line() from(10, y2 + 2) to report.pageLayout.width - 10 width 0.5f color(200, 200, 200) draw() //lineType LineDashType(2, 1) draw()
 					report.setYPosition(y2)
 					report.nextLine()
-					if (report.lineLeft<10) {
+					if (report.lineLeft < 10) {
 						report.nextPage()
 						report.nextLine
-						printTranHeader(report,hrow )
+						printTranHeader(report, hrow)
 					}
 				})
+				val position1 = report.getCurrentPosition
+				printAccounts(report, crtRec.accntList)
+				val position2 = report.getCurrentPosition
+				report.setCurrentPosition(position1)
+				printTrades(report, crtRec.tradeList)
+				val position3 = report.getCurrentPosition
+				val position = if (position2 < position3) {
+					position3
+				} else {
+					position2
+				}
+				report.setCurrentPosition(position)
 			})
 
 
