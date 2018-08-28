@@ -75,8 +75,9 @@ Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3.
 
 **2 - Twitter4s** - https://github.com/DanielaSfregola/twitter4s
 
+## Contact
 
-
+For any questions, concerns, or simply to get in touch with us, please, email us at sysaltocorporation@gmail.com
 
 
 
