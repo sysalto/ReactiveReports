@@ -74,17 +74,17 @@ object Test1 {
 		//
 		//		report.roundRectangle(100, 100, 200, 200, 10)
 		val directDraw = DirectDrawReport(report)
-		directDraw.directDrawRectangle(10, 10, 100, 100)
-		directDraw.directDrawFill(ReportColor(100,200,100))
-		directDraw.directDrawStroke(ReportColor(10,10,100))
-		directDraw.directFillStroke(true, true)
+		directDraw.rectangle(10, 10, 100, 100)
+		directDraw.setFillColor(ReportColor(100,200,100))
+		directDraw.setStrokeColor(ReportColor(10,10,100))
+		directDraw.fillStroke(true, true)
 
-		directDraw.directDrawFill(ReportColor(200,200,50))
-		directDraw.roundRectangle(100,300,400,400,30)
+		directDraw.setFillColor(ReportColor(200,200,50))
+		directDraw.roundRectangle(350,10,700,200,10)
 //		directDraw.directFillStroke(true, false)
 
-		directDraw.directDrawCircle(200,150,100)
-		directDraw.directFillStroke(true, false)
+		directDraw.circle(200,300,100)
+		directDraw.fillStroke(true, false)
 
 
 		//				report.directDrawMovePoint(100, 100)

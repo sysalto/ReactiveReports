@@ -11,7 +11,7 @@ case class DirectDrawReport(val report: Report) {
 		* @param x
 		* @param y
 		*/
-	def directDrawMovePoint(x: Float, y: Float): Unit = {
+	def movePoint(x: Float, y: Float): Unit = {
 		assert(checkCoordinate(x, true))
 		assert(checkCoordinate(y, false))
 		val reportItem = new DirectDrawMovePoint(x, y)
@@ -25,7 +25,7 @@ case class DirectDrawReport(val report: Report) {
 		* @param x
 		* @param y
 		*/
-	def directDrawLine(x: Float, y: Float): Unit = {
+	def line(x: Float, y: Float): Unit = {
 		assert(checkCoordinate(x, true))
 		assert(checkCoordinate(y, false))
 		val reportItem = new DirectDrawLine(x, y)
@@ -38,7 +38,7 @@ case class DirectDrawReport(val report: Report) {
 		*
 		* @param code
 		*/
-	def directDraw(code: String): Unit = {
+	def code(code: String): Unit = {
 		val reportItem = new DirectDraw(code)
 		report.crtPage.items += reportItem
 	}
@@ -50,7 +50,7 @@ case class DirectDrawReport(val report: Report) {
 		* @param y
 		* @param radius
 		*/
-	def directDrawCircle(x: Float, y: Float, radius: Float): Unit = {
+	def circle(x: Float, y: Float, radius: Float): Unit = {
 		assert(checkCoordinate(x, true))
 		assert(checkCoordinate(y, false))
 		assert(checkCoordinate(x + radius, true))
@@ -69,7 +69,7 @@ case class DirectDrawReport(val report: Report) {
 		* @param startAngle
 		* @param endAngle
 		*/
-	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float): Unit = {
+	def arc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float): Unit = {
 		assert(checkCoordinate(x, true))
 		assert(checkCoordinate(y, false))
 		assert(checkCoordinate(x + radius, true))
@@ -84,7 +84,7 @@ case class DirectDrawReport(val report: Report) {
 		* @param fill
 		* @param stroke
 		*/
-	def directFillStroke(fill: Boolean, stroke: Boolean): Unit = {
+	def fillStroke(fill: Boolean, stroke: Boolean): Unit = {
 		val reportItem = new DirectFillStroke(fill, stroke)
 		report.crtPage.items += reportItem
 	}
@@ -95,7 +95,7 @@ case class DirectDrawReport(val report: Report) {
 		*
 		* @param reportColor
 		*/
-	def directDrawFill(reportColor: ReportColor): Unit = {
+	def setFillColor(reportColor: ReportColor): Unit = {
 		val reportItem = new DirectDrawFill(reportColor)
 		report.crtPage.items += reportItem
 	}
@@ -103,7 +103,7 @@ case class DirectDrawReport(val report: Report) {
 	/**
 		* custom close current path
 		*/
-	def directDrawClosePath(): Unit = {
+	def closePath(): Unit = {
 		val reportItem = new DirectDrawClosePath()
 		report.crtPage.items += reportItem
 	}
@@ -113,7 +113,7 @@ case class DirectDrawReport(val report: Report) {
 		*
 		* @param reportColor
 		*/
-	def directDrawStroke(reportColor: ReportColor): Unit = {
+	def setStrokeColor(reportColor: ReportColor): Unit = {
 		val reportItem = new DirectDrawStroke(reportColor)
 		report.crtPage.items += reportItem
 	}
@@ -126,7 +126,7 @@ case class DirectDrawReport(val report: Report) {
 		* @param width
 		* @param height
 		*/
-	def directDrawRectangle(x1: Float, y1: Float, x2: Float, y2: Float): Unit = {
+	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float): Unit = {
 		assert(checkCoordinate(x1, true))
 		assert(checkCoordinate(y1, false))
 		assert(checkCoordinate(x2, true))
@@ -157,15 +157,15 @@ case class DirectDrawReport(val report: Report) {
 		* @param radius
 		*/
 	def roundRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float) = {
-		directDrawMovePoint(x1 + radius, y1)
-		directDrawLine(x2 - radius, y1)
-		directDrawArc(x2 - radius, y1 + radius, radius, (Math.PI * 0.5).toFloat, 0f)
-		directDrawLine(x2, y2 - radius)
-		directDrawArc(x2 - radius, y2 - radius, radius, 2 * Math.PI.toFloat, (3.0 * Math.PI * 0.5).toFloat)
-		directDrawLine(x1 + radius, y2)
-		directDrawArc(x1 + radius, y2 - radius, radius, (3.0 * Math.PI * 0.5).toFloat, Math.PI.toFloat)
-		directDrawLine(x1, y1 + radius)
-		directDrawArc(x1 + radius, y1 + radius, radius, Math.PI.toFloat, (Math.PI * 0.5).toFloat)
+		movePoint(x1 + radius, y1)
+		line(x2 - radius, y1)
+		arc(x2 - radius, y1 + radius, radius, (Math.PI * 0.5).toFloat, 0f)
+		line(x2, y2 - radius)
+		arc(x2 - radius, y2 - radius, radius, 2 * Math.PI.toFloat, (3.0 * Math.PI * 0.5).toFloat)
+		line(x1 + radius, y2)
+		arc(x1 + radius, y2 - radius, radius, (3.0 * Math.PI * 0.5).toFloat, Math.PI.toFloat)
+		line(x1, y1 + radius)
+		arc(x1 + radius, y1 + radius, radius, Math.PI.toFloat, (Math.PI * 0.5).toFloat)
 
 	}
 

@@ -1,6 +1,7 @@
 ##1.0.2-SNAPSHOT
 ### Changes:
 * added ReportRow.setCellSpacing
+* added DirectDrawReport
 
 ### Bugs fixed:
 * lineDashType ignored
