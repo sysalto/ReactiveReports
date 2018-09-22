@@ -251,8 +251,11 @@ object DailyTradingBlotter extends GroupUtilTrait {
 				report.nextLine()
 			}
 			report print item._1 at 10
-			report line() from(300,report.getY-3) to report.pageLayout.width - 40 width 0.5f color(200, 200, 200) lineType LineDashType(2, 1) draw()
-//			val bound=report print ""+item._2 at 500
+
+			val xLeft=report.getTextWidth(item._1)+15
+			val xRight=report.pageLayout.width - 25 - report.getTextWidth(item._2.toString)
+
+			report line() from(xLeft,report.getY) to xRight width 0.5f color(200, 200, 200) lineType LineDashType(2, 1) draw()
 			val bound=report print (ReportCell(""+item._2) rightAlign() inside ReportMargin(0, report.pageLayout.width - 20))
 			report.setLinkToPage(bound,item._2, 0, 0)
 			report.nextLine()

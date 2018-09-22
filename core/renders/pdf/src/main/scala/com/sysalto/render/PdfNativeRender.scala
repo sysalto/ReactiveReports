@@ -136,7 +136,7 @@ class PdfNativeRender extends PdfUtil {
 
 	override def directFillStroke(fill: Boolean, stroke: Boolean): Unit = pdfNativeGenerator.directFillStroke(fill, stroke)
 
-	override def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = pdfNativeGenerator.directDrawRectangle(x, y, width, height)
+	override def directDrawRectangle(x1: Float, y1: Float, x2: Float, y2: Float): Unit = pdfNativeGenerator.directDrawRectangle(x1, convertY(y1), x2, convertY(y2))
 
 	override def directDrawFill(reportColor: ReportColor) = pdfNativeGenerator.directDrawFill(reportColor)
 

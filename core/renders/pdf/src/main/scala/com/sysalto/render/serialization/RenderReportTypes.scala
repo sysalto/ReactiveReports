@@ -624,11 +624,11 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 		}
 	}
 
-	class DirectRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
-		override def content: String = {
-			s"""${x} ${y} ${width} ${height} re \n"""
-		}
-	}
+//	class DirectRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
+//		override def content: String = {
+//			s"""${x} ${y} ${width} ${height} re \n"""
+//		}
+//	}
 
 	class DirectClosePath() extends PdfGraphicFragment {
 		override def content: String = {
@@ -643,9 +643,9 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 
-	class DirectDrawRectangle(val x: Float,val y: Float, val width: Float, val height: Float) extends PdfGraphicFragment {
+	class DirectDrawRectangle(val x1: Float,val y1: Float, val x2: Float, val y2: Float) extends PdfGraphicFragment {
 		override def content: String = {
-			s"""${x} ${y} ${width} ${height} re \n"""
+			s"""${x1} ${y1} ${x2-x1} ${y2-y1} re \n"""
 		}
 	}
 

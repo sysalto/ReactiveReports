@@ -26,14 +26,15 @@ import com.sysalto.report.Implicits._
 import com.sysalto.render.PdfDraw.DrawPoint
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.render.basic.PdfBasic
-import com.sysalto.report.reportTypes.{A5Format, RFontFamily, ReportPageOrientation}
+import com.sysalto.report.DirectDrawReport
+import com.sysalto.report.reportTypes.{A5Format, LetterFormat, RFontFamily, ReportPageOrientation}
 
 
 object Test1 {
 
 	def run(): Unit = {
 		implicit val pdfFactory = new PdfNativeFactory()
-		val report = Report("test1.pdf", ReportPageOrientation.LANDSCAPE, A5Format, null, false)
+		val report = Report("test1.pdf", ReportPageOrientation.LANDSCAPE, LetterFormat, null, false)
 		runReport(report)
 	}
 
@@ -71,14 +72,25 @@ object Test1 {
 		//		report.directDrawClosePath()
 		//		report.directFillStroke(true,true)
 		//
-		report.roundRectangle(100, 100, 200, 200, 10)
-		////		report.directDrawRectangle(50,50,250,350)
+		//		report.roundRectangle(100, 100, 200, 200, 10)
+		val directDraw = DirectDrawReport(report)
+		directDraw.directDrawRectangle(10, 10, 100, 100)
+		directDraw.directDrawFill(ReportColor(100,200,100))
+		directDraw.directDrawStroke(ReportColor(10,10,100))
+		directDraw.directFillStroke(true, true)
+
+		directDraw.directDrawFill(ReportColor(200,200,50))
+		directDraw.roundRectangle(100,300,400,400,30)
+//		directDraw.directFillStroke(true, false)
+
+		directDraw.directDrawCircle(200,150,100)
+		directDraw.directFillStroke(true, false)
 
 
-		//		report.directDrawMovePoint(100, 100)
-		//		report.directDrawLine(100, 200)
-		//		report.directDrawArc(110, 200, 10, Math.PI.toFloat, (Math.PI*3/2).toFloat)
-		//		report.directFillStroke(false, true)
+		//				report.directDrawMovePoint(100, 100)
+		//				report.directDrawLine(100, 200)
+		//				report.directDrawArc(110, 200, 10, Math.PI.toFloat, (Math.PI*3/2).toFloat)
+		//				report.directFillStroke(false, true)
 
 		//		report rectangle() from(100, 100) radius (10) to(200, 200)  color(ReportColor(0, 0, 0)) draw()
 

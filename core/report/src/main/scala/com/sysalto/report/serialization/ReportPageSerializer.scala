@@ -444,15 +444,15 @@ private[serialization] object DirectFillStrokeSerializer {
 private[serialization] object DirectDrawRectangleSerializer {
 	def write(obj: DirectDrawRectangle): DirectDrawRectangle_proto = {
 		val builder = DirectDrawRectangle_proto.newBuilder()
-		builder.setX(obj.x)
-		builder.setY(obj.y)
-		builder.setWidth(obj.width)
-		builder.setHeight(obj.height)
+		builder.setX1(obj.x1)
+		builder.setY1(obj.y1)
+		builder.setX2(obj.x2)
+		builder.setY2(obj.y2)
 		builder.build()
 	}
 
 	def read(input: DirectDrawRectangle_proto): DirectDrawRectangle =
-		new DirectDrawRectangle(input.getX, input.getY, input.getWidth, input.getHeight)
+		new DirectDrawRectangle(input.getX1, input.getY1, input.getX2, input.getY2)
 }
 
 

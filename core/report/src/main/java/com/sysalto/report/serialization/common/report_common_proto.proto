@@ -119,10 +119,10 @@ message DirectFillStroke_proto {
 
 
 message DirectDrawRectangle_proto {
-    float x = 1;
-    float y = 2;
-    float width = 3;
-    float height = 4;
+    float x1 = 1;
+    float y1 = 2;
+    float x2 = 3;
+    float y2 = 4;
 }
 
 message OptionLineDashType_proto {

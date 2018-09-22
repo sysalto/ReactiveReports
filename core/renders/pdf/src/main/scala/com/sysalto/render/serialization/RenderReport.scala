@@ -194,8 +194,8 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		graphicList += new renderReportTypes.DirectFillStroke(fill, stroke)
 	}
 
-	def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = {
-		graphicList += new renderReportTypes.DirectDrawRectangle(x, y, width, height)
+	def directDrawRectangle(x1: Float, y1: Float, x2: Float, y2: Float): Unit = {
+		graphicList += new renderReportTypes.DirectDrawRectangle(x1, y1, x2, y2)
 	}
 
 

@@ -241,9 +241,9 @@ object ReportTypes {
 	}
 
 
-	class DirectDrawRectangle(val x: Float, val y: Float, val width: Float, val height: Float) extends ReportItem() {
+	class DirectDrawRectangle(val x1: Float, val y1: Float, val x2: Float, val y2: Float) extends ReportItem() {
 		override def render(report: Report): Unit = {
-			report.pdfUtil.directDrawRectangle(x, y, width, height)
+			report.pdfUtil.directDrawRectangle(x1, y1, x2, y2)
 		}
 	}
 

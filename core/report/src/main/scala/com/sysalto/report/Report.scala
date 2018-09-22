@@ -45,7 +45,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
                   persistence: PersistenceFactory = null, pdfCompression: Boolean = true)(implicit pdfFactory: PdfFactory) {
 	private[this] var pageNbrs = 1L
 	private[this] var crtPageNbr = 1L
-	private[this] val crtPage = new ReportPage(new ListBuffer[ReportItem]())
+	private[report] val crtPage = new ReportPage(new ListBuffer[ReportItem]())
 	var font = RFont(10, "Helvetica")
 	private[this] var simulation = false
 	private[report] val pdfUtil = pdfFactory.getPdf
@@ -267,138 +267,16 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		crtPage.items += reportItem
 	}
 
-	/**
-		* draw a rounded rectange from (x1,y1) to (x2,y2) rounded with radius
-		*
-		* @param x1
-		* @param y1
-		* @param x2
-		* @param y2
-		* @param radius
-		*/
-	def roundRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float) = {
-		directDrawMovePoint(x1 + radius, y1)
-		directDrawLine(x2 - radius, y1)
-		directDrawArc(x2 - radius, y1 + radius, radius, (Math.PI * 0.5).toFloat, 0f)
-		directDrawLine(x2, y2 - radius)
-		directDrawArc(x2 - radius, y2 - radius, radius, 2 * Math.PI.toFloat, (3.0 * Math.PI * 0.5).toFloat)
-		directDrawLine(x1 + radius, y2)
-		directDrawArc(x1 + radius, y2 - radius, radius, (3.0 * Math.PI * 0.5).toFloat, Math.PI.toFloat)
-		directDrawLine(x1, y1 + radius)
-		directDrawArc(x1 + radius, y1 + radius, radius, Math.PI.toFloat, (Math.PI * 0.5).toFloat)
-		directFillStroke(false, true)
 
-	}
 
-	/**
-		* custom drawing - move current point to x,y
-		*
-		* @param x
-		* @param y
-		*/
-	def directDrawMovePoint(x: Float, y: Float): Unit = {
-		val reportItem = new DirectDrawMovePoint(x, y)
-		crtPage.items += reportItem
-	}
 
-	/**
-		* custom drawing draw line from the currnt point to (x,y) and move the new current point to (x,y)
-		*
-		* @param x
-		* @param y
-		*/
-	def directDrawLine(x: Float, y: Float): Unit = {
-		val reportItem = new DirectDrawLine(x, y)
-		crtPage.items += reportItem
-	}
 
-	/**
-		* use custom drawing with pdf codes
-		*
-		* @param code
-		*/
-	def directDraw(code: String): Unit = {
-		val reportItem = new DirectDraw(code)
-		crtPage.items += reportItem
-	}
 
-	/**
-		* custom draw circle with center (x,y) and radius
-		*
-		* @param x
-		* @param y
-		* @param radius
-		*/
-	def directDrawCircle(x: Float, y: Float, radius: Float): Unit = {
-		val reportItem = new DirectDrawCircle(x, y, radius)
-		crtPage.items += reportItem
-	}
 
-	/**
-		* custom draw arc with center (x,y) ,radius from startAngle to endAngle
-		*
-		* @param x
-		* @param y
-		* @param radius
-		* @param startAngle
-		* @param endAngle
-		*/
-	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float): Unit = {
-		val reportItem = new DirectDrawArc(x, y, radius, startAngle, endAngle)
-		crtPage.items += reportItem
-	}
 
-	/**
-		* custom fill/stroke
-		*
-		* @param fill
-		* @param stroke
-		*/
-	def directFillStroke(fill: Boolean, stroke: Boolean): Unit = {
-		val reportItem = new DirectFillStroke(fill, stroke)
-		crtPage.items += reportItem
-	}
 
-	/**
-		* custom fill with a color
-		*
-		* @param reportColor
-		*/
-	def directDrawFill(reportColor: ReportColor): Unit = {
-		val reportItem = new DirectDrawFill(reportColor)
-		crtPage.items += reportItem
-	}
 
-	/**
-		* custom close current path
-		*/
-	def directDrawClosePath(): Unit = {
-		val reportItem = new DirectDrawClosePath()
-		crtPage.items += reportItem
-	}
 
-	/**
-		* custom stroke with a color
-		*
-		* @param reportColor
-		*/
-	def directDrawStroke(reportColor: ReportColor): Unit = {
-		val reportItem = new DirectDrawStroke(reportColor)
-		crtPage.items += reportItem
-	}
-
-	/**
-		* custom draw rectangle from (x,y) having width and height
-		*
-		* @param x
-		* @param y
-		* @param width
-		* @param height
-		*/
-	def directDrawRectangle(x: Float, y: Float, width: Float, height: Float): Unit = {
-		val reportItem = new DirectDrawRectangle(x, y, width, height)
-		crtPage.items += reportItem
-	}
 
 	/*
 		Draws a line between (x1,y1) and (x2,y2) with thickness lineWidth and color
@@ -568,7 +446,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	 */
 	def print(cell: ReportCell): BoundaryRect = {
 		wrap(cell.txt, cell.margin.left, getY, cell.margin.right, Float.MaxValue, cell.align)
-		new BoundaryRect(cell.margin.left,getYPosition-2,cell.margin.right+2,getYPosition+lineHeight-4)
+		new BoundaryRect(cell.margin.left, getYPosition - 2, cell.margin.right + 2, getYPosition + lineHeight - 4)
 	}
 
 	/*

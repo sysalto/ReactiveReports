@@ -11275,24 +11275,24 @@ public final class ReportCommonProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>float x = 1;</code>
+     * <code>float x1 = 1;</code>
      */
-    float getX();
+    float getX1();
 
     /**
-     * <code>float y = 2;</code>
+     * <code>float y1 = 2;</code>
      */
-    float getY();
+    float getY1();
 
     /**
-     * <code>float width = 3;</code>
+     * <code>float x2 = 3;</code>
      */
-    float getWidth();
+    float getX2();
 
     /**
-     * <code>float height = 4;</code>
+     * <code>float y2 = 4;</code>
      */
-    float getHeight();
+    float getY2();
   }
   /**
    * Protobuf type {@code com.sysalto.report.serialization.common.DirectDrawRectangle_proto}
@@ -11307,10 +11307,10 @@ public final class ReportCommonProto {
       super(builder);
     }
     private DirectDrawRectangle_proto() {
-      x_ = 0F;
-      y_ = 0F;
-      width_ = 0F;
-      height_ = 0F;
+      x1_ = 0F;
+      y1_ = 0F;
+      x2_ = 0F;
+      y2_ = 0F;
     }
 
     @java.lang.Override
@@ -11346,22 +11346,22 @@ public final class ReportCommonProto {
             }
             case 13: {
 
-              x_ = input.readFloat();
+              x1_ = input.readFloat();
               break;
             }
             case 21: {
 
-              y_ = input.readFloat();
+              y1_ = input.readFloat();
               break;
             }
             case 29: {
 
-              width_ = input.readFloat();
+              x2_ = input.readFloat();
               break;
             }
             case 37: {
 
-              height_ = input.readFloat();
+              y2_ = input.readFloat();
               break;
             }
           }
@@ -11388,40 +11388,40 @@ public final class ReportCommonProto {
               com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawRectangle_proto.class, com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawRectangle_proto.Builder.class);
     }
 
-    public static final int X_FIELD_NUMBER = 1;
-    private float x_;
+    public static final int X1_FIELD_NUMBER = 1;
+    private float x1_;
     /**
-     * <code>float x = 1;</code>
+     * <code>float x1 = 1;</code>
      */
-    public float getX() {
-      return x_;
+    public float getX1() {
+      return x1_;
     }
 
-    public static final int Y_FIELD_NUMBER = 2;
-    private float y_;
+    public static final int Y1_FIELD_NUMBER = 2;
+    private float y1_;
     /**
-     * <code>float y = 2;</code>
+     * <code>float y1 = 2;</code>
      */
-    public float getY() {
-      return y_;
+    public float getY1() {
+      return y1_;
     }
 
-    public static final int WIDTH_FIELD_NUMBER = 3;
-    private float width_;
+    public static final int X2_FIELD_NUMBER = 3;
+    private float x2_;
     /**
-     * <code>float width = 3;</code>
+     * <code>float x2 = 3;</code>
      */
-    public float getWidth() {
-      return width_;
+    public float getX2() {
+      return x2_;
     }
 
-    public static final int HEIGHT_FIELD_NUMBER = 4;
-    private float height_;
+    public static final int Y2_FIELD_NUMBER = 4;
+    private float y2_;
     /**
-     * <code>float height = 4;</code>
+     * <code>float y2 = 4;</code>
      */
-    public float getHeight() {
-      return height_;
+    public float getY2() {
+      return y2_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -11436,17 +11436,17 @@ public final class ReportCommonProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (x_ != 0F) {
-        output.writeFloat(1, x_);
+      if (x1_ != 0F) {
+        output.writeFloat(1, x1_);
       }
-      if (y_ != 0F) {
-        output.writeFloat(2, y_);
+      if (y1_ != 0F) {
+        output.writeFloat(2, y1_);
       }
-      if (width_ != 0F) {
-        output.writeFloat(3, width_);
+      if (x2_ != 0F) {
+        output.writeFloat(3, x2_);
       }
-      if (height_ != 0F) {
-        output.writeFloat(4, height_);
+      if (y2_ != 0F) {
+        output.writeFloat(4, y2_);
       }
       unknownFields.writeTo(output);
     }
@@ -11456,21 +11456,21 @@ public final class ReportCommonProto {
       if (size != -1) return size;
 
       size = 0;
-      if (x_ != 0F) {
+      if (x1_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(1, x_);
+          .computeFloatSize(1, x1_);
       }
-      if (y_ != 0F) {
+      if (y1_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(2, y_);
+          .computeFloatSize(2, y1_);
       }
-      if (width_ != 0F) {
+      if (x2_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(3, width_);
+          .computeFloatSize(3, x2_);
       }
-      if (height_ != 0F) {
+      if (y2_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(4, height_);
+          .computeFloatSize(4, y2_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -11489,21 +11489,21 @@ public final class ReportCommonProto {
 
       boolean result = true;
       result = result && (
-          java.lang.Float.floatToIntBits(getX())
+          java.lang.Float.floatToIntBits(getX1())
           == java.lang.Float.floatToIntBits(
-              other.getX()));
+              other.getX1()));
       result = result && (
-          java.lang.Float.floatToIntBits(getY())
+          java.lang.Float.floatToIntBits(getY1())
           == java.lang.Float.floatToIntBits(
-              other.getY()));
+              other.getY1()));
       result = result && (
-          java.lang.Float.floatToIntBits(getWidth())
+          java.lang.Float.floatToIntBits(getX2())
           == java.lang.Float.floatToIntBits(
-              other.getWidth()));
+              other.getX2()));
       result = result && (
-          java.lang.Float.floatToIntBits(getHeight())
+          java.lang.Float.floatToIntBits(getY2())
           == java.lang.Float.floatToIntBits(
-              other.getHeight()));
+              other.getY2()));
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -11515,18 +11515,18 @@ public final class ReportCommonProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + X_FIELD_NUMBER;
+      hash = (37 * hash) + X1_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getX());
-      hash = (37 * hash) + Y_FIELD_NUMBER;
+          getX1());
+      hash = (37 * hash) + Y1_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getY());
-      hash = (37 * hash) + WIDTH_FIELD_NUMBER;
+          getY1());
+      hash = (37 * hash) + X2_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getWidth());
-      hash = (37 * hash) + HEIGHT_FIELD_NUMBER;
+          getX2());
+      hash = (37 * hash) + Y2_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getHeight());
+          getY2());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -11656,13 +11656,13 @@ public final class ReportCommonProto {
       }
       public Builder clear() {
         super.clear();
-        x_ = 0F;
+        x1_ = 0F;
 
-        y_ = 0F;
+        y1_ = 0F;
 
-        width_ = 0F;
+        x2_ = 0F;
 
-        height_ = 0F;
+        y2_ = 0F;
 
         return this;
       }
@@ -11686,10 +11686,10 @@ public final class ReportCommonProto {
 
       public com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawRectangle_proto buildPartial() {
         com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawRectangle_proto result = new com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawRectangle_proto(this);
-        result.x_ = x_;
-        result.y_ = y_;
-        result.width_ = width_;
-        result.height_ = height_;
+        result.x1_ = x1_;
+        result.y1_ = y1_;
+        result.x2_ = x2_;
+        result.y2_ = y2_;
         onBuilt();
         return result;
       }
@@ -11731,17 +11731,17 @@ public final class ReportCommonProto {
 
       public Builder mergeFrom(com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawRectangle_proto other) {
         if (other == com.sysalto.report.serialization.common.ReportCommonProto.DirectDrawRectangle_proto.getDefaultInstance()) return this;
-        if (other.getX() != 0F) {
-          setX(other.getX());
+        if (other.getX1() != 0F) {
+          setX1(other.getX1());
         }
-        if (other.getY() != 0F) {
-          setY(other.getY());
+        if (other.getY1() != 0F) {
+          setY1(other.getY1());
         }
-        if (other.getWidth() != 0F) {
-          setWidth(other.getWidth());
+        if (other.getX2() != 0F) {
+          setX2(other.getX2());
         }
-        if (other.getHeight() != 0F) {
-          setHeight(other.getHeight());
+        if (other.getY2() != 0F) {
+          setY2(other.getY2());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -11770,106 +11770,106 @@ public final class ReportCommonProto {
         return this;
       }
 
-      private float x_ ;
+      private float x1_ ;
       /**
-       * <code>float x = 1;</code>
+       * <code>float x1 = 1;</code>
        */
-      public float getX() {
-        return x_;
+      public float getX1() {
+        return x1_;
       }
       /**
-       * <code>float x = 1;</code>
+       * <code>float x1 = 1;</code>
        */
-      public Builder setX(float value) {
+      public Builder setX1(float value) {
         
-        x_ = value;
+        x1_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>float x = 1;</code>
+       * <code>float x1 = 1;</code>
        */
-      public Builder clearX() {
+      public Builder clearX1() {
         
-        x_ = 0F;
-        onChanged();
-        return this;
-      }
-
-      private float y_ ;
-      /**
-       * <code>float y = 2;</code>
-       */
-      public float getY() {
-        return y_;
-      }
-      /**
-       * <code>float y = 2;</code>
-       */
-      public Builder setY(float value) {
-        
-        y_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float y = 2;</code>
-       */
-      public Builder clearY() {
-        
-        y_ = 0F;
+        x1_ = 0F;
         onChanged();
         return this;
       }
 
-      private float width_ ;
+      private float y1_ ;
       /**
-       * <code>float width = 3;</code>
+       * <code>float y1 = 2;</code>
        */
-      public float getWidth() {
-        return width_;
+      public float getY1() {
+        return y1_;
       }
       /**
-       * <code>float width = 3;</code>
+       * <code>float y1 = 2;</code>
        */
-      public Builder setWidth(float value) {
+      public Builder setY1(float value) {
         
-        width_ = value;
+        y1_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>float width = 3;</code>
+       * <code>float y1 = 2;</code>
        */
-      public Builder clearWidth() {
+      public Builder clearY1() {
         
-        width_ = 0F;
+        y1_ = 0F;
         onChanged();
         return this;
       }
 
-      private float height_ ;
+      private float x2_ ;
       /**
-       * <code>float height = 4;</code>
+       * <code>float x2 = 3;</code>
        */
-      public float getHeight() {
-        return height_;
+      public float getX2() {
+        return x2_;
       }
       /**
-       * <code>float height = 4;</code>
+       * <code>float x2 = 3;</code>
        */
-      public Builder setHeight(float value) {
+      public Builder setX2(float value) {
         
-        height_ = value;
+        x2_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>float height = 4;</code>
+       * <code>float x2 = 3;</code>
        */
-      public Builder clearHeight() {
+      public Builder clearX2() {
         
-        height_ = 0F;
+        x2_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float y2_ ;
+      /**
+       * <code>float y2 = 4;</code>
+       */
+      public float getY2() {
+        return y2_;
+      }
+      /**
+       * <code>float y2 = 4;</code>
+       */
+      public Builder setY2(float value) {
+        
+        y2_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float y2 = 4;</code>
+       */
+      public Builder clearY2() {
+        
+        y2_ = 0F;
         onChanged();
         return this;
       }
@@ -13234,16 +13234,16 @@ public final class ReportCommonProto {
       "\026DirectDrawStroke_proto\022I\n\005color\030\001 \001(\0132:" +
       ".com.sysalto.report.serialization.common" +
       ".ReportColor_proto\"6\n\026DirectFillStroke_p" +
-      "roto\022\014\n\004fill\030\001 \001(\010\022\016\n\006stroke\030\002 \001(\010\"P\n\031Di" +
-      "rectDrawRectangle_proto\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030" +
-      "\002 \001(\002\022\r\n\005width\030\003 \001(\002\022\016\n\006height\030\004 \001(\002\"{\n\030" +
-      "OptionLineDashType_proto\022\014\n\004null\030\001 \001(\010\022Q" +
-      "\n\014lineDashType\030\002 \001(\0132;.com.sysalto.repor" +
-      "t.serialization.common.LineDashType_prot" +
-      "o\"1\n\022LineDashType_proto\022\014\n\004unit\030\001 \001(\005\022\r\n" +
-      "\005phase\030\002 \001(\005*I\n\024RFontAttribute_proto\022\n\n\006" +
-      "NORMAL\020\000\022\010\n\004BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD_I" +
-      "TALIC\020\003B\002H\001b\006proto3"
+      "roto\022\014\n\004fill\030\001 \001(\010\022\016\n\006stroke\030\002 \001(\010\"K\n\031Di" +
+      "rectDrawRectangle_proto\022\n\n\002x1\030\001 \001(\002\022\n\n\002y" +
+      "1\030\002 \001(\002\022\n\n\002x2\030\003 \001(\002\022\n\n\002y2\030\004 \001(\002\"{\n\030Optio" +
+      "nLineDashType_proto\022\014\n\004null\030\001 \001(\010\022Q\n\014lin" +
+      "eDashType\030\002 \001(\0132;.com.sysalto.report.ser" +
+      "ialization.common.LineDashType_proto\"1\n\022" +
+      "LineDashType_proto\022\014\n\004unit\030\001 \001(\005\022\r\n\005phas" +
+      "e\030\002 \001(\005*I\n\024RFontAttribute_proto\022\n\n\006NORMA" +
+      "L\020\000\022\010\n\004BOLD\020\001\022\n\n\006ITALIC\020\002\022\017\n\013BOLD_ITALIC" +
+      "\020\003B\002H\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -13364,7 +13364,7 @@ public final class ReportCommonProto {
     internal_static_com_sysalto_report_serialization_common_DirectDrawRectangle_proto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_sysalto_report_serialization_common_DirectDrawRectangle_proto_descriptor,
-        new java.lang.String[] { "X", "Y", "Width", "Height", });
+        new java.lang.String[] { "X1", "Y1", "X2", "Y2", });
     internal_static_com_sysalto_report_serialization_common_OptionLineDashType_proto_descriptor =
       getDescriptor().getMessageTypes().get(18);
     internal_static_com_sysalto_report_serialization_common_OptionLineDashType_proto_fieldAccessorTable = new

@@ -673,15 +673,15 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	private[serialization] object DirectDrawRectangleSerializer {
 		def write(obj:renderReportTypes.DirectDrawRectangle): DirectDrawRectangle_proto = {
 			val builder = DirectDrawRectangle_proto.newBuilder()
-			builder.setX(obj.x)
-			builder.setY(obj.y)
-			builder.setWidth(obj.width)
-			builder.setHeight(obj.height)
+			builder.setX1(obj.x1)
+			builder.setY1(obj.y1)
+			builder.setX2(obj.x2)
+			builder.setY2(obj.y2)
 			builder.build()
 		}
 
 		def read(input: DirectDrawRectangle_proto): renderReportTypes.DirectDrawRectangle =
-			new renderReportTypes.DirectDrawRectangle(input.getX, input.getY, input.getWidth, input.getHeight)
+			new renderReportTypes.DirectDrawRectangle(input.getX1, input.getY1, input.getX2, input.getY2)
 	}
 
 

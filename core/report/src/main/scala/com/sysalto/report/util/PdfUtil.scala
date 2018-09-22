@@ -91,6 +91,6 @@ abstract class PdfUtil() {
 
 	def directFillStroke(fill: Boolean, stroke: Boolean)
 
-	def directDrawRectangle(x: Float, y: Float, width: Float, height: Float)
+	def directDrawRectangle(x1: Float, y1: Float, x2: Float, y2: Float)
 }
 
