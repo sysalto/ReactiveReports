@@ -78,7 +78,7 @@ object DailyTradingBlotterData {
 	def getData: Seq[Agent] = {
 
 		val today = new Date()
-		for (i <- 1 to 10) yield {
+		for (i <- 1 to 80) yield {
 			val tranList = for (j <- 1 to rand.nextInt(20)+1) yield {
 				Transaction(rand.nextInt(9999), s"Investment ${j}", getTrade, s"th${j}", 20 * j, 7 * j, 9 * j, 3 * j, 2 * j, getStatus, today, today, today,
 					s"agent${j}", s"lta${j}", s"exchg${j}",getRisk)

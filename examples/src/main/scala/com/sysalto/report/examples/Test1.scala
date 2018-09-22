@@ -33,7 +33,7 @@ object Test1 {
 
 	def run(): Unit = {
 		implicit val pdfFactory = new PdfNativeFactory()
-		val report = Report("test2.pdf", ReportPageOrientation.LANDSCAPE, A5Format, null, false)
+		val report = Report("test1.pdf", ReportPageOrientation.LANDSCAPE, A5Format, null, false)
 		runReport(report)
 	}
 

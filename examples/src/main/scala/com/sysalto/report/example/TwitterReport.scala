@@ -1,19 +1,25 @@
-package com.sysalto.report.examples
+package com.sysalto.report.example
 
+
+import com.sysalto.render.PdfNativeFactory
+import com.sysalto.report.Implicits.{Column, _}
+import com.sysalto.report.example.data.DailyTradingBlotterData
+import com.sysalto.report.example.data.DailyTradingBlotterData.{Account, Trade}
+import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
+import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 import akka.stream.OverflowStrategy
 import akka.stream.scaladsl.Sink
+import com.danielasfregola.twitter4s.TwitterStreamingClient
 import com.danielasfregola.twitter4s.entities.enums.Language
 import com.danielasfregola.twitter4s.entities.streaming.StreamingMessage
 import com.danielasfregola.twitter4s.entities.{AccessToken, ConsumerToken, Tweet}
-import com.danielasfregola.twitter4s.TwitterStreamingClient
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
-import com.sysalto.report.util.PdfFactory
 
 
 object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
@@ -111,8 +117,59 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 		client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("canada"))(printTweetText)
 	}
 
+	private def report(report: Report): Unit = {
+		val source1 = Source.queue[String](1000, OverflowStrategy.backpressure).take(10)
+
+		val queue = source1.to(Sink foreach (
+			txt => {
+				if (report.lineLeft < 5) {
+					report.nextPage()
+					report.nextLine()
+				}
+				report.nextLine(2)
+				report print txt at 10
+
+			}
+			)).run()
+
+
+		val stream = client.sampleStatuses(languages = List(Language.English), stall_warnings = true,tracks = List("canada")) {
+			case tweet: Tweet => {
+				println(tweet)
+				queue offer tweet.text
+			}
+		}
+
+
+		val result = queue.watchCompletion()
+		Await.ready(result, Duration.Inf)
+		stream.map(st => st.close())
+		report.render()
+
+	}
+
+	def runReport(): Unit = {
+		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
+		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
+		val report1 = Report("Twitter.pdf", ReportPageOrientation.LANDSCAPE)
+		val path = "examples/src/main/scala/com/sysalto/report/example/fonts/roboto/"
+		val fontFamily = RFontFamily(name = "Roboto",
+			regular = path + "Roboto-Regular.ttf",
+			bold = Some(path + "Roboto-Bold.ttf"),
+			italic = Some(path + "Roboto-Italic.ttf"),
+			boldItalic = Some(path + "Roboto-BoldItalic.ttf"))
+		report1.setExternalFont(fontFamily)
+		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
+		report1.font = font
+		report(report1)
+	}
+
+
+
 	def main(args: Array[String]): Unit = {
-				test3()
+		runReport
+		system.terminate()
+		//		test3()
 //		test10
 	}
 }
