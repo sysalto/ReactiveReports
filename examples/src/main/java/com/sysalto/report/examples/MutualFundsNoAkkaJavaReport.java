@@ -2,6 +2,7 @@ package com.sysalto.report.examples;
 
 import com.sysalto.render.PdfNativeFactory;
 import com.sysalto.report.Report;
+import com.sysalto.report.ReportChart;
 import com.sysalto.report.ReportTypes;
 import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
@@ -239,7 +240,8 @@ public class MutualFundsNoAkkaJavaReport {
                 new ReportCell(new ReportTxt(total3.toString()).bold()).rightAlign().inside(m_change)};
         report.print(trow);
         float chartHeight = report.getY() - firstY.get() - 10;
-        report.drawPieChart1("", chartData.get(), m_graphic.left() + 5, firstY.get() - report.lineHeight() + 5, m_graphic.right() -
+        ReportChart reportChart=new ReportChart(report);
+        reportChart.pieChart(report.font(),"", chartData.get(), m_graphic.left() + 5, firstY.get() - report.lineHeight() + 5, m_graphic.right() -
                 m_graphic.left() - 10, chartHeight);
     }
 

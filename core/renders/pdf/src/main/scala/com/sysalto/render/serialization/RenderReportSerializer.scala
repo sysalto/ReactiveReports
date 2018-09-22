@@ -396,8 +396,6 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 					builder.setDrawStrokeProto(DrawStrokeSerializer.write(item))
 				case item: renderReportTypes.PdfDrawImage =>
 					builder.setPdfDrawImageProto(PdfDrawImageSerializer.write(item))
-				case item: renderReportTypes.DrawPieChart1 =>
-					builder.setDrawPieChartProto(DrawPieChartSerializer.write(item))
 				case item: renderReportTypes.DirectDrawMovePoint =>
 					builder.setDirectDrawMovePointProto(DirectDrawMovePointSerializer.write(item))
 				case item: renderReportTypes.DirectDrawLine =>
@@ -436,9 +434,6 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 				}
 				case PdfGraphicFragment_proto.FieldCase.PDFDRAWIMAGE_PROTO => {
 					PdfDrawImageSerializer.read(input.getPdfDrawImageProto)
-				}
-				case PdfGraphicFragment_proto.FieldCase.DRAWPIECHART_PROTO => {
-					DrawPieChartSerializer.read(input.getContent, input.getDrawPieChartProto)
 				}
 				case PdfGraphicFragment_proto.FieldCase.DIRECTDRAWMOVEPOINT_PROTO => {
 					DirectDrawMovePointSerializer.read(input.getDirectDrawMovePointProto)
@@ -533,27 +528,6 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 
-	object DrawPieChartSerializer {
-		def write(input: renderReportTypes.DrawPieChart1): DrawPieChart_proto = {
-			val builder = DrawPieChart_proto.newBuilder()
-			builder.setTitle(input.title)
-			input.data.foreach(item =>
-				builder.addData(StringDoubleSerializer.write(item)))
-			builder.setX(input.x)
-			builder.setY(input.y)
-			builder.setWidth(input.width)
-			builder.setHeight(input.height)
-			builder.setFont(RFontSerializer.write(input.font))
-			builder.build()
-		}
-
-		def read(content: String, input: DrawPieChart_proto): renderReportTypes.DrawPieChart1 = {
-			val dataList = input.getDataList.asScala.map(item => StringDoubleSerializer.read(item)).toList
-			val result = new renderReportTypes.DrawPieChart1(RFontSerializer.read(input.getFont), input.getTitle, dataList, input.getX, input.getY, input.getWidth, input.getHeight)
-			result.contentStr = content
-			result
-		}
-	}
 
 
 	private[serialization] object DirectDrawMovePointSerializer {

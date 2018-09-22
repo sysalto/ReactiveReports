@@ -135,15 +135,6 @@ object ReportTypes {
 		}
 	}
 
-	/*
-	pie chart class
-	 */
-	class ReportPieChart(val font: RFont, val title: String, val data: List[(String, Double)],
-	                     val x0: Float, val y0: Float, val width: Float, val height: Float) extends ReportItem() {
-		override def render(report: Report): Unit = {
-			report.pdfUtil.drawPieChart(font, title, data, x0, y0 - deltaY, width, height)
-		}
-	}
 
 	/*
 	bar chart class

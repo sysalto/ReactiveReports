@@ -1,6 +1,7 @@
 package com.sysalto.report
 
 import com.sysalto.report.reportTypes.{RFont, ReportColor, ReportTxt}
+import scala.collection.JavaConverters._
 
 class ReportChart(val report: Report) {
 
@@ -56,6 +57,14 @@ class ReportChart(val report: Report) {
 		}
 		directDraw.roundRectangle(x, y, x + width, y + height, 5)
 		directDraw.fillStroke(false, true)
+	}
+
+
+	/*
+	For Java
+	 */
+	def pieChart(font: RFont, title: String, data: _root_.java.util.List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
+		pieChart(font, title, data.asScala.toList, x, y, width, height)
 	}
 
 }

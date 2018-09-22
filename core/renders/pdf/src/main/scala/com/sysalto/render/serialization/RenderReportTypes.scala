@@ -516,23 +516,6 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 
-	private[serialization] class DrawPieChart1(val font: RFont, val title: String,
-	                                           val data: List[(String, Double)], val x: Float, val y: Float, val width: Float, val height: Float)
-		extends PdfGraphicFragment {
-
-		var contentStr = ""
-
-		override def updateContent(renderReport: RenderReport): Unit = {
-			import PdfChart._
-
-			contentStr = pieChart1(renderReport, font, title, data.toList, x, y, width, height)
-
-		}
-
-
-		override def content: String = contentStr
-	}
-
 
 	class DirectDrawMovePoint(val x: Float, val y: Float) extends PdfGraphicFragment {
 		override def content: String = {

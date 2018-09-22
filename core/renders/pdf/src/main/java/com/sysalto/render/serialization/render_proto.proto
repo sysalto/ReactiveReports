@@ -121,7 +121,6 @@ message PdfGraphicFragment_proto {
         PdfRectangle_proto pdfRectangle_proto = 3;
         DrawStroke_proto drawStroke_proto = 4;
         PdfDrawImage_proto pdfDrawImage_proto = 5;
-        DrawPieChart_proto drawPieChart_proto = 6;
         com.sysalto.report.serialization.common.DirectDrawMovePoint_proto directDrawMovePoint_proto = 7;
         com.sysalto.report.serialization.common.DirectDrawLine_proto directDrawLine_proto = 8;
         com.sysalto.report.serialization.common.DirectFillStroke_proto directFillStroke_proto = 9;
@@ -190,16 +189,6 @@ message RColor_proto {
     float opacity = 4;
 }
 
-
-message DrawPieChart_proto {
-    float x = 1;
-    float y = 2;
-    repeated StringDouble_proto data = 3;
-    float height = 4;
-    string title = 6;
-    float width = 7;
-    com.sysalto.report.serialization.common.RFont_proto font = 8;
-}
 
 
 message StringDouble_proto {

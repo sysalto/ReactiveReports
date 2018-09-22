@@ -158,9 +158,6 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 		val reportChart=new ReportChart(report)
 		reportChart.pieChart(report.font,"",chartData.toList, graphic.left + 5, firstY, graphic.right - graphic.left - 10, chartHeight)
-
-//		report.drawPieChart("", chartData.toList, graphic.left + 5, firstY, graphic.right - graphic.left - 10, chartHeight)
-
 	}
 
 	private def changeAccount(report: Report): Unit = {

@@ -51,8 +51,6 @@ abstract class PdfUtil() {
 
 	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[ReportColor], fillColor: Option[ReportColor])
 
-	def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float)
-
 	def drawBarChart(title: String, xLabel: String, yLabel: String,
 	                 data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float)
 

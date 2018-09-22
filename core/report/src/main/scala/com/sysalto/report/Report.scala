@@ -327,16 +327,6 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 		persistenceUtil.close()
 	}
 
-	/*
-	Draw a pie chart with title, data from (x0,y0) with width and height dimensions.
-	 */
-	def drawPieChart(title: String, data: List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += new ReportPieChart(font, title, data, x0, y0, width, height)
-	}
-
-	def drawPieChart1(title: String, data: _root_.java.util.List[(String, Double)], x0: Float, y0: Float, width: Float, height: Float): Unit = {
-		crtPage.items += new ReportPieChart(font, title, data.asScala.toList, x0, y0, width, height)
-	}
 
 	/*
 	Draw a bar chart with title,xLabel,yLabel and  data from (x0,y0) with width and height dimensions.

@@ -30,6 +30,7 @@ import java.util.GregorianCalendar
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
+import com.sysalto.report.ReportChart
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
@@ -157,7 +158,8 @@ object MutualFundsReportAkka extends ReportAppAkka with AkkaGroupUtil{
       ReportCell(total2.toString bold()) rightAlign() inside value2, ReportCell(total3.toString bold()) rightAlign() inside change)
     report.print(trow)
     val chartHeight = report.getY - firstY
-    report.drawPieChart("", chartData.toList, graphic.left + 5, firstY , graphic.right - graphic.left - 10, chartHeight)
+    val reportChart=new ReportChart(report)
+    reportChart.pieChart(report.font,"", chartData.toList, graphic.left + 5, firstY , graphic.right - graphic.left - 10, chartHeight)
 
   }
 

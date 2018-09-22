@@ -274,29 +274,6 @@ private[serialization] object DoubleStringStringSerializer {
 		(input.getValue1, input.getValue2, input.getValue3)
 }
 
-private[serialization] object ReportPieChartSerializer {
-	def write(obj: ReportPieChart): ReportPieChart_proto = {
-		val builder = ReportPieChart_proto.newBuilder()
-		builder.setFont(RFontSerializer.write(obj.font))
-		builder.setTitle(obj.title)
-
-		obj.data.foreach(item => {
-			val result = StringDoubleSerializer.write(item)
-			builder.addData(result)
-		})
-
-		builder.setX0(obj.x0)
-		builder.setY0(obj.y0)
-		builder.setWidth(obj.width)
-		builder.setHeight(obj.height)
-		builder.build()
-	}
-
-	def read(input: ReportPieChart_proto): ReportPieChart =
-		new ReportPieChart(RFontSerializer.read(input.getFont), input.getTitle, input.getDataList.asScala.map(item => {
-			StringDoubleSerializer.read(item)
-		}).toList, input.getX0, input.getY0, input.getWidth, input.getHeight)
-}
 
 
 private[serialization] object ReportBarChartSerializer {
@@ -500,10 +477,6 @@ object ReportPageSerializer {
 					val result = ReportTextWrapSerializer.write(obj)
 					builderItem.setReportTextWrap(result)
 				}
-				case obj: ReportPieChart => {
-					val result = ReportPieChartSerializer.write(obj)
-					builderItem.setReportPieChart(result)
-				}
 				case obj: ReportBarChart => {
 					val result = ReportBarChartSerializer.write(obj)
 					builderItem.setReportBarChart(result)
@@ -571,7 +544,6 @@ object ReportPageSerializer {
 				case FieldCase.REPORTRECTANGLE => ReportRectangleSerializer.read(item.getReportRectangle)
 				case FieldCase.REPORTVERTICALSHADE => ReportVerticalShadeSerializer.read(item.getReportVerticalShade)
 				case FieldCase.REPORTTEXTWRAP => ReportTextWrapSerializer.read(item.getReportTextWrap)
-				case FieldCase.REPORTPIECHART => ReportPieChartSerializer.read(item.getReportPieChart)
 				case FieldCase.REPORTBARCHART => ReportBarChartSerializer.read(item.getReportBarChart)
 				case FieldCase.DIRECTDRAWMOVEPOINT => DirectDrawMovePointSerializer.read(item.getDirectDrawMovePoint)
 				case FieldCase.DIRECTDRAWLINE => DirectDrawLineSerializer.read(item.getDirectDrawLine)

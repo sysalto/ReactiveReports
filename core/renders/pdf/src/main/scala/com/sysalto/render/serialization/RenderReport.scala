@@ -295,10 +295,6 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		currentPage.idImageList += pdfImage.id
 	}
 
-	def drawPieChart(font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
-		graphicList += new renderReportTypes.DrawPieChart1(font, title, data, x, y, width, height)
-	}
-
 
 	def text(x: Float, y: Float, txt: ReportTxt): Unit = {
 		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
