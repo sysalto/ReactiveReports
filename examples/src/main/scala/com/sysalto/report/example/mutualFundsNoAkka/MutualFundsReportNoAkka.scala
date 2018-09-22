@@ -20,7 +20,7 @@
  */
 
 
-package com.sysalto.report.example
+package com.sysalto.report.example.mutualFundsNoAkka
 
 import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
@@ -28,6 +28,7 @@ import java.util.GregorianCalendar
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ReportChart
+import com.sysalto.report.example.mutualFundsNoAkka
 import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportColor, ReportPageOrientation}
 import com.sysalto.report.util._
 
@@ -47,7 +48,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	}
 
 	private def reportHeader(report: Report): Unit = {
-		val rs = data.MutualFundsInitData.query("select * from clnt")
+		val rs = MutualFundsInitData.query("select * from clnt")
 		rs.next()
 
 		// toMap - helper function that transform sql.ResultSet to Map[String, AnyRef] where the key is the field name
@@ -109,7 +110,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 
 		//    report line() from(marginOffset, report.getY - report.lineHeight * 0.5f) to (report.pgSize.width - marginOffset) color(200, 200, 200) draw()
-		val rs = data.MutualFundsInitData.query("select * from sum_investment")
+		val rs = mutualFundsNoAkka.MutualFundsInitData.query("select * from sum_investment")
 		val rsGroup = rs.toGroup
 		var firstChar = 'A'.asInstanceOf[Int]
 		var total1 = 0f
@@ -183,7 +184,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.print(rrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine()
-		val rs = data.MutualFundsInitData.query("select * from tran_account")
+		val rs = mutualFundsNoAkka.MutualFundsInitData.query("select * from tran_account")
 		val rsGroup = rs.toGroup
 		var total1, total2, total3 = 0f
 		rsGroup.foreach(
@@ -229,7 +230,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 
 	private def accountPerformance(report: Report): Unit = {
-		val rs = data.MutualFundsInitData.query("select * from account_perf")
+		val rs = mutualFundsNoAkka.MutualFundsInitData.query("select * from account_perf")
 		rs.next()
 		val record = rs.toMap
 		rs.close()
@@ -379,7 +380,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
-		val report1 = Report("MutualFundsReportNoAkka.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
+		val report1 = Report("examples/src/main/scala/com/sysalto/report/example/mutualFundsNoAkka/MutualFundsReportNoAkka.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
 		val path="examples/src/main/scala/com/sysalto/report/example/fonts/roboto/"
 		val fontFamily = RFontFamily(name = "Roboto",
 			regular = path+"Roboto-Regular.ttf",
@@ -394,7 +395,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 	def main(args: Array[String]): Unit = {
 		// create tables and load data using hsqldb
-		data.MutualFundsInitData.initDb()
+		mutualFundsNoAkka.MutualFundsInitData.initDb()
 		runReport()
 	}
 }

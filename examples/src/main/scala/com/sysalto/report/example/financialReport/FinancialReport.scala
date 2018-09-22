@@ -1,15 +1,14 @@
-package com.sysalto.report.example
+package com.sysalto.report.example.financialReport
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits.{Column, _}
-import com.sysalto.report.example.data.DailyTradingBlotterData
-import com.sysalto.report.example.data.DailyTradingBlotterData.{Account, Trade}
+import com.sysalto.report.example.financialReport.FinancialReportData.{Account, Trade}
 import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
 import scala.collection.mutable.ListBuffer
 
-object DailyTradingBlotter extends GroupUtilTrait {
+object FinancialReport extends GroupUtilTrait {
 	val headerFontColor = ReportColor(255, 255, 255)
 	val headerColor = ReportColor(50, 50, 150)
 	val headerTradeColor = ReportColor(50, 150, 200)
@@ -134,6 +133,7 @@ object DailyTradingBlotter extends GroupUtilTrait {
 	private def computeSummaryPages(report: Report, summaryList: ListBuffer[(String, Long)]): Long = {
 		var pageNbrs = 1L
 		report.setSimulation(true)
+		report.nextLine(2)
 		report print "SUMMARY " at 100
 		report.nextLine(2)
 		summaryList.foreach(item => {
@@ -155,7 +155,7 @@ object DailyTradingBlotter extends GroupUtilTrait {
 		setupReport(report)
 		report.start()
 		reportHeader(report)
-		val agents = DailyTradingBlotterData.getData
+		val agents = FinancialReportData.getData
 		val agentsGroup = agents.toGroup
 		val row = ReportRow(10, report.pageLayout.width - 10, List(Column("invCode", Flex(2)), Column("invDescription", Flex(4)),
 			Column("tradeType", Flex(2)), Column("grossAmount", Flex(2)), Column("netAmmount", Flex(2)),
@@ -242,7 +242,7 @@ object DailyTradingBlotter extends GroupUtilTrait {
 		}}
 
 		report.insertPages(summaryPages,1)
-		report.nextLine()
+		report.nextLine(2)
 		report print (ReportCell("Daily Trades Summary" size 15 bold()) centerAlign() inside ReportMargin(0, report.pageLayout.width - 10))
 		report.nextLine(2)
 		summaryList.foreach(item=>{
@@ -268,7 +268,7 @@ object DailyTradingBlotter extends GroupUtilTrait {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
-		val report1 = Report("DailyTradingBlotter.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
+		val report1 = Report("examples/src/main/scala/com/sysalto/report/example/financialReport/FinancialReport.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
 		val path = "examples/src/main/scala/com/sysalto/report/example/fonts/roboto/"
 		val fontFamily = RFontFamily(name = "Roboto",
 			regular = path + "Roboto-Regular.ttf",

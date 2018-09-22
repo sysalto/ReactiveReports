@@ -3,8 +3,6 @@ package com.sysalto.report.example
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits.{Column, _}
-import com.sysalto.report.example.data.DailyTradingBlotterData
-import com.sysalto.report.example.data.DailyTradingBlotterData.{Account, Trade}
 import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 import akka.stream.OverflowStrategy
@@ -18,6 +16,7 @@ import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
+import com.sysalto.report.example.financialReport.FinancialReportData
 
 import scala.concurrent.ExecutionContext.Implicits.global
 

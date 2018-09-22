@@ -22,7 +22,7 @@
 
 
 
-package com.sysalto.report.example.data
+package com.sysalto.report.example.mutualFundsNoAkka
 
 import java.sql.{DriverManager, ResultSet}
 

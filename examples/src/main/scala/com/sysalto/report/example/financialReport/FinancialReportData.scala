@@ -1,9 +1,9 @@
-package com.sysalto.report.example.data
+package com.sysalto.report.example.financialReport
 
 import java.util.Date
 
 
-object DailyTradingBlotterData {
+object FinancialReportData {
 	val rand = scala.util.Random
 	val regionList = List("Alabama", "Arizona", "California", "Colorado", "Florida", "Montana")
 
