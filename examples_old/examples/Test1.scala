@@ -27,7 +27,7 @@ import com.sysalto.render.PdfDraw.DrawPoint
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.render.basic.PdfBasic
 import com.sysalto.report.{DirectDrawReport, ReportChart}
-import com.sysalto.report.reportTypes.{A5Format, LetterFormat, RFontFamily, ReportPageOrientation}
+import com.sysalto.report.reportTypes.{ReportCell => _, ReportMargin => _, _}
 
 import scala.collection.mutable.ListBuffer
 
@@ -47,10 +47,10 @@ object Test1 {
 			italic = Some("/home/marian/transfer/font/Roboto-Italic.ttf"),
 			boldItalic = Some("/home/marian/transfer/font/Roboto-BoldItalic.ttf"))
 
-		//		report.setExternalFont(fontFamily1)
-		//		val font = RFont(20, fontName = "Roboto", externalFont = Some(fontFamily1))
+				report.setExternalFont(fontFamily1)
+				val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily1))
 		//		val font1 = RFont(20, fontName = "Helvetica")
-		//		report.font = font
+//				report.font = font
 
 		//		report.nextLine(5)
 		//		val str="test"
@@ -76,7 +76,7 @@ object Test1 {
 		//
 		//		report.roundRectangle(100, 100, 200, 200, 10)
 
-		val directDraw = new DirectDrawReport(report)
+//		val directDraw = new DirectDrawReport(report)
 //		directDraw.rectangle(10, 10, 100, 100)
 //		directDraw.setFillColor(ReportColor(100,200,100))
 //		directDraw.setStrokeColor(ReportColor(10,10,100))
@@ -93,8 +93,6 @@ object Test1 {
 //		directDraw.arc(300, 300, 100, 0, 1.5f)
 //		directDraw.fillStroke(false, true)
 
-		def getPoint(center: DrawPoint, radius: Float, angle: Float): DrawPoint =
-			new DrawPoint((center.x + radius * Math.cos(angle)).toFloat, (center.y - radius * Math.sin(angle)).toFloat)
 
 //		val p1=getPoint(new DrawPoint(300,300),100,1.5f)
 //		val p2=getPoint(new DrawPoint(300,300),100,-0.7f)
@@ -105,8 +103,8 @@ object Test1 {
 //		directDraw.closePath
 //		directDraw.fillStroke(true, false)
 
-
-		testChart(report)
+		testWrap(report)
+//		testChart(report)
 
 
 		//				report.directDrawMovePoint(100, 100)
@@ -120,6 +118,13 @@ object Test1 {
 
 		report.render()
 
+	}
+
+	def testWrap(report:Report): Unit = {
+		report.nextLine(2)
+		val cell_P2 = ReportCell("The RRSP contribution deadline for the 2018 tax year is March 1, 2018. You will find your available contribution room on your most recent notice of assessment from canada Revenue Agency. " +
+			"Speak to your investment representative today about maximizing your RRSP contribution room.") inside ReportMargin(10, report.pageLayout.width -10)
+		report print cell_P2
 	}
 
 

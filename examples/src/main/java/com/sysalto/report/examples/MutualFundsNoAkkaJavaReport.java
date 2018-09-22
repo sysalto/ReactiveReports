@@ -4,7 +4,6 @@ import com.sysalto.render.PdfNativeFactory;
 import com.sysalto.report.Report;
 import com.sysalto.report.ReportChart;
 import com.sysalto.report.ReportTypes;
-import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
 import com.sysalto.report.util.*;
 import org.apache.derby.iapi.util.ByteArray;
@@ -71,7 +70,7 @@ public class MutualFundsNoAkkaJavaReport {
 
 
 //        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory);
-        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory,new LetterFormat(), persistenceMemoryFactory);
+        Report report = Report.create("MutualFundsJava.pdf", ReportPageOrientation.LANDSCAPE(), pdfFactory,new LetterFormat(),null); //, persistenceMemoryFactory);
 
         report.newPageFctCallback(pg -> {
             drawbackgroundImage(report);

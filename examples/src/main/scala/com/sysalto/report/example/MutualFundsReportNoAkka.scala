@@ -275,12 +275,49 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.setYPosition(y2)
 	}
 
+	private def disclaimer(report: Report): Unit = {
+		report.nextPage()
+		report.nextLine(3)
+		report print (ReportCell("Important Information" bold() size 20) at 20)
+		report.nextLine(3)
+
+		// "Information about your account" paragraph
+		report print (ReportCell("Information about your account " bold() size 16) at 20)
+		report.nextLine(2)
+		val cell_P1 = ReportCell("We are taking care to ensure your financial statement is accurate. It is your duty, however, to review it carefully and contact us " +
+			"if you find errors in this information. In case of errors, please, contact us within sixty(60) days after the issue date for this statement.") inside ReportMargin(marginOffset, report.pageLayout.width - marginOffset)
+		report print cell_P1
+		val box_P1 = cell_P1.calculate(report)
+		report.setYPosition(box_P1.currentY + report.lineHeight)
+		report.nextLine(2)
+
+		// "Registered retirement" paragraph
+		report print (ReportCell("Registered retirement " bold() size 16) at 20)
+		report.nextLine(2)
+		val cell_P2 = ReportCell("The RRSP contribution deadline for the 2018 tax year is March 1, 2018. You will find your available contribution room on your most recent notice of assessment from canada Revenue Agency. " +
+			"Speak to your investment representative today about maximizing your RRSP contribution room.") inside ReportMargin(marginOffset, report.pageLayout.width - marginOffset)
+		report print cell_P2
+		val box_P2 = cell_P2.calculate(report)
+		report.setYPosition(box_P2.currentY + report.lineHeight)
+		if (report.lineLeft < 10) {
+			report.nextPage()
+		}
+
+		// "If you live in Quebec" - paragraph
+		report.nextLine(2)
+		report print (ReportCell("If you live in Québec"  bold() size 16) at 20)
+		report.nextLine(2)
+		val cell_P3 = ReportCell("The \"Autorité des marchés financiers\" (AMF) administers the \"Fonds d'indemnisation des services financiers\" (Financial services compensation " +
+			"fund)") inside ReportMargin(marginOffset, report.pageLayout.width - marginOffset)
+		report print cell_P3
+	}
+
 
 	private def report(report: Report): Unit = {
 
 		// set page header size(height) at 50 and 0 (no page header) for the first page.
 		report.setHeaderSize = { pgNbr =>
-			if (pgNbr == 1) 0f else 50f
+			if (pgNbr == 1) 0f else 80f
 		}
 
 		// set footer size(hight) at 30 for all pages.
@@ -295,7 +332,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 		report.headerFct = {
 			case (_, _) =>
-				report.setYPosition(10)
+				report.setYPosition(30)
 				val row = ReportRow(marginOffset, report.pageLayout.width - marginOffset, List(Column("column1", Flex(1)), Column("column2", Flex(1)),
 					Column("column3", Flex(1))))
 				val column1 = row.getColumnBound("column1")
@@ -332,6 +369,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		summaryOfInvestment(report)
 		changeAccount(report)
 		accountPerformance(report)
+		disclaimer(report)
 		report.render()
 
 	}
@@ -350,7 +388,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			boldItalic = Some(path+"Roboto-BoldItalic.ttf"))
 		report1.setExternalFont(fontFamily)
 		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
-		report1.font = font
+//		report1.font = font
 		report(report1)
 	}
 

@@ -2,11 +2,11 @@ import sbt.Keys.{libraryDependencies, publishMavenStyle}
 
 val SCALA_VERSION = "2.12.6"
 
-val AKKA_VERSION = "latest.release" // "2.5.14"
+val AKKA_VERSION = "2.5.14" // "latest.release"
 
-val ROCKSDB_VERSION = "latest.release" // "5.14.2"
+val ROCKSDB_VERSION = "5.14.2" // "latest.release"
 
-val PROTOBUF_VERSION = "latest.release" // "3.6.0"
+val PROTOBUF_VERSION = "3.6.1" // "latest.release"
 
 //val projectVersion = "1.0.1"
 val projectVersion = "1.0.2-SNAPSHOT"

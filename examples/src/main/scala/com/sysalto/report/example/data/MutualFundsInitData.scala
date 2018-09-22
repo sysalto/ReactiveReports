@@ -96,7 +96,7 @@ object MutualFundsInitData {
       """insert into  sum_investment (
         |     fund_name,value1,value2
         |     ) values (
-        |         'Money Market Fund',1000.0,1200.0
+        |         'Money Market Fund',10000.0,12000.0
         |       )
         |  """.stripMargin)
 

@@ -51,9 +51,9 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 
 	}
 
-	 class CharF(val char: Char,val font: RFont)
+	class CharF(val char: Char, val font: RFont)
 
-	 class Word(val charList: List[CharF])
+	class Word(val charList: List[CharF])
 
 	@tailrec
 	private[this] def stringToWord(ll: List[CharF], accum: ListBuffer[Word]): Unit = {
@@ -103,7 +103,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 
 
 	def getTextHeight(text: ReportTxt): Float = {
-		val word = new Word(text.txt.map(char =>new  CharF(char, text.font)).toList)
+		val word = new Word(text.txt.map(char => new CharF(char, text.font)).toList)
 		word.charList.map(char => getCharWidth(char)).max
 	}
 
@@ -247,18 +247,54 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 		lines.map(line => lineToRTextPos(line)).toList
 	}
 
+	private[this] def wordWrapInternalSimple(input: List[ReportTxt], max: Float)(implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
+		val result1 = input.flatMap(item => item.txt.map(cc => new CharF(cc, item.font)))
+		val result = ListBuffer[Word]()
+		stringToWord(result1, result)
+
+
+		val wordList = result.flatMap(item => {
+			val result = ListBuffer[Word]()
+			splitWord(item, max, result)
+			result.toList
+		}).toList
+
+		val wrapResult = ListBuffer[List[RTextPos]]()
+		var wrapRow = ListBuffer[Word]()
+		val list = wordList.map(item => (item, getWordSizeIncludingSpace(item)))
+		var length = 0f
+		list.foreach {
+			case (word, size) => {
+				if ((length + size) <= max) {
+					wrapRow += word
+					length += size
+				} else {
+					wrapResult += lineToRTextPos(wrapRow.toList)
+					wrapRow.clear()
+					length=0
+				}
+			}
+		}
+		if (length>0) {
+			wrapResult += lineToRTextPos(wrapRow.toList)
+		}
+		wrapResult.toList
+	}
+
 	@tailrec
 	private[this] def wordWrapT(input: List[ReportTxt], max: Float, accum: ListBuffer[List[RTextPos]])(implicit wordSeparators: List[Char]): Unit = {
 		val i1 = input.indexWhere(item => item.txt.contains("\n"))
 		if (i1 == -1) {
-			accum ++= wordWrapInternal(input, max)
+			//			accum ++= wordWrapInternal(input, max)
+			accum ++= wordWrapInternalSimple(input, max)
 		} else {
 			val l1 = input.take(i1)
 			val elem = input(i1)
 			val i2 = elem.txt.indexOf('\n')
 			val list1 = input.take(i1) ++ List(ReportTxt(elem.txt.substring(0, i2), elem.font))
 			val list2 = List(ReportTxt(elem.txt.substring(i2 + 1), elem.font)) ++ input.drop(i1 + 1)
-			accum ++= wordWrapInternal(list1, max)
+			//			accum ++= wordWrapInternal(list1, max)
+			accum ++= wordWrapInternalSimple(list1, max)
 			wordWrapT(list2, max, accum)
 		}
 	}
@@ -275,4 +311,4 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 }
 
 
-class RTextPos(val x: Float, val textLength: Float,val rtext: ReportTxt)
+class RTextPos(val x: Float, val textLength: Float, val rtext: ReportTxt)

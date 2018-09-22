@@ -11,7 +11,6 @@ import com.sysalto.report.ReportTypes;
 import com.sysalto.report.Report;
 import com.sysalto.report.akka.util.GroupTransform;
 import com.sysalto.report.akka.util.ResultSetStream;
-import com.sysalto.report.examples.mutualFunds.MutualFundsInitData;
 import com.sysalto.report.reportTypes.*;
 import com.sysalto.report.util.GroupUtilDefs;
 import com.sysalto.report.util.PdfFactory;

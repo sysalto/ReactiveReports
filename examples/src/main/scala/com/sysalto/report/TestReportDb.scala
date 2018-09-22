@@ -4,7 +4,6 @@ import java.sql.{DriverManager, ResultSet}
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
-import com.sysalto.report.examples.mutualFunds.MutualFundsInitData
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
 import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
