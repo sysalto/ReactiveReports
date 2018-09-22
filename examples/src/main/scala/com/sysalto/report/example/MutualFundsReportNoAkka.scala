@@ -34,6 +34,7 @@ import com.sysalto.report.util._
 import scala.collection.mutable.ListBuffer
 
 object MutualFundsReportNoAkka extends GroupUtilTrait {
+	val marginOffset=20
 	val sd = new SimpleDateFormat("MMM dd yyyy")
 	private val date1 = new GregorianCalendar(2013, 0, 1).getTime
 	private val date2 = new GregorianCalendar(2013, 11, 31).getTime
@@ -52,31 +53,31 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		// toMap - helper function that transform sql.ResultSet to Map[String, AnyRef] where the key is the field name
 		val record = rs.toMap
 		rs.close()
-		report.nextLine()
-		report.drawImage("examples/src/main/resources/images/bank_banner.jpg", 5, 45, 100, 40)
+		report.nextLine(3)
+		report.drawImage("examples/src/main/resources/images/bank_banner.jpg", marginOffset, 60, 100, 40)
 
-		report print (ReportCell("Investment statement" size 15 bold()) centerAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+		report print (ReportCell("Investment statement" size 15 bold()) centerAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
 		report.nextLine()
 
 		val str = sd.format(date1) + " to " + sd.format(date2)
-		report print (ReportCell(str size 15 bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+		report print (ReportCell(str size 15 bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
 		report.nextLine(2)
-		report print ("Mutual Funds Inc." bold()) at 10
+		report print ("Mutual Funds Inc." bold()) at marginOffset
 		report.nextLine()
-		report print ("Group Registered Retirement Saving Plan" bold()) at 10
+		report print ("Group Registered Retirement Saving Plan" bold()) at marginOffset
 		report.nextLine(2)
 		val y = report.getY
-		report print ((record value "name").toString bold()) at 10
+		report print ((record value "name").toString bold()) at marginOffset
 		report.nextLine()
-		report print (record value "addr1").toString at 10
+		report print (record value "addr1").toString at marginOffset
 		report.nextLine()
-		report print (record value "addr2").toString at 10
+		report print (record value "addr2").toString at marginOffset
 		report.nextLine()
-		report print (record value "addr3").toString at 10
+		report print (record value "addr3").toString at marginOffset
 		report.setYPosition(y)
-		report print (ReportCell("Beneficiary information" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+		report print (ReportCell("Beneficiary information" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
 		report.nextLine()
-		report print (ReportCell((record value "benef_name").toString) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+		report print (ReportCell((record value "benef_name").toString) rightAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
 		report.nextLine(2)
 	}
 
@@ -85,7 +86,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 		report.nextLine(2)
 		//    report line() from(10, report.getY) to (report.pgSize.width - 10) draw()
-		val row = ReportRow(10, report.pageLayout.width - 10, List(Column("fund_name", 150), Column("value1", Flex(1)),
+		val row = ReportRow(marginOffset, report.pageLayout.width - marginOffset, List(Column("", 5),Column("fund_name", 150), Column("value1", Flex(1)),
 			Column("value2", Flex(1)), Column("change", Flex(1)), Column("graphic", Flex(2)), Column("", 5)))
 		val fundName = row.getColumnBound("fund_name")
 		val value1 = row.getColumnBound("value1")
@@ -101,13 +102,13 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val y2 = report.calculate(rrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y2 + 2
-		report rectangle() from(9, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerColor draw()
+		report rectangle() from(marginOffset, top) radius (3) to(report.pageLayout.width - marginOffset, bottom) fillColor headerColor draw()
 		report.print(rrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine()
 
 
-		//    report line() from(10, report.getY - report.lineHeight * 0.5f) to (report.pgSize.width - 10) color(200, 200, 200) draw()
+		//    report line() from(marginOffset, report.getY - report.lineHeight * 0.5f) to (report.pgSize.width - marginOffset) color(200, 200, 200) draw()
 		val rs = data.MutualFundsInitData.query("select * from sum_investment")
 		val rsGroup = rs.toGroup
 		var firstChar = 'A'.asInstanceOf[Int]
@@ -141,9 +142,9 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val y2 = report.calculate(rrow)
 				report.print(rrow)
 				if (GroupUtil.isLastRecord(rec)) {
-					report line() from(10, report.getY + 2) to change.right width 1f draw()
+					report line() from(marginOffset, report.getY + 2) to change.right width 1f draw()
 				} else {
-					report line() from(10, report.getY + 2) to change.right width 0.5f color(200, 200, 200) draw() //lineType LineDashType(2, 1) draw()
+					report line() from(marginOffset, report.getY + 2) to change.right width 0.5f color(200, 200, 200) draw() //lineType LineDashType(2, 1) draw()
 				}
 				firstChar += 1
 				report.nextLine()
@@ -159,12 +160,12 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val chartHeight = report.getY - firstY
 
 		val reportChart=new ReportChart(report)
-		reportChart.pieChart(report.font,"",chartData.toList, graphic.left + 5, firstY, graphic.right - graphic.left - 10, chartHeight)
+		reportChart.pieChart(report.font,"",chartData.toList, graphic.left + 15, firstY, graphic.right - graphic.left - marginOffset, chartHeight)
 	}
 
 	private def changeAccount(report: Report): Unit = {
 		report.nextLine(2)
-		val row = ReportRow(10, report.pageLayout.width - 10, List(Column("account", 250), Column("value1", Flex(1)),
+		val row = ReportRow(marginOffset, report.pageLayout.width - marginOffset, List(Column("", 5),Column("account", 250), Column("value1", Flex(1)),
 			Column("value2", Flex(1)), Column("value3", Flex(1)), Column("", 5)))
 		val account = row.getColumnBound("account")
 		val value1 = row.getColumnBound("value1")
@@ -178,7 +179,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val y2 = report.calculate(rrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y2 + 2
-		report rectangle() from(9, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerColor draw()
+		report rectangle() from(marginOffset, top) radius (3) to(report.pageLayout.width - marginOffset, bottom) fillColor headerColor draw()
 		report.print(rrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine()
@@ -204,7 +205,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val y2 = report.calculate(rrow)
 				report.print(rrow)
 				val lColor = if (GroupUtil.isLastRecord(rec)) ReportColor(0, 0, 0) else ReportColor(200, 200, 200)
-				report line() from(10, report.getY + 2) to value3.right width 0.5f color (lColor) lineType LineDashType(2, 1) draw()
+				report line() from(marginOffset, report.getY + 2) to value3.right width 0.5f color (lColor) lineType LineDashType(2, 1) draw()
 				report.nextLine()
 			} catch {
 				case e: Throwable =>
@@ -221,7 +222,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val y3 = report.calculate(frow)
 		report.print(frow)
 		report.setYPosition(y3)
-		report line() from(10, report.getY + report.lineHeight * 0.5f) to value3.right draw()
+		report line() from(marginOffset, report.getY + report.lineHeight * 0.5f) to value3.right draw()
 		report.nextLine()
 
 	}
@@ -232,7 +233,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		rs.next()
 		val record = rs.toMap
 		rs.close()
-		val row = ReportRow(10, report.pageLayout.width - 10, List(Column("account_perf", 150), Column("value3m", Flex(1)),
+		val row = ReportRow(marginOffset, report.pageLayout.width - marginOffset, List(Column("", 5),Column("account_perf", 150), Column("value3m", Flex(1)),
 			Column("value1y", Flex(1)), Column("value3y", Flex(1)), Column("value5y", Flex(1)),
 			Column("value10y", Flex(1)), Column("annualized", Flex(1)), Column("", 5)))
 		val accountPerf = row.getColumnBound("account_perf")
@@ -255,7 +256,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val y1 = report.calculate(hrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y1 + 2
-		report rectangle() from(9, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerColor draw()
+		report rectangle() from(marginOffset, top) radius (3) to(report.pageLayout.width - marginOffset, bottom) fillColor headerColor draw()
 		report.print(hrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y1)
 		report.nextLine()
@@ -295,7 +296,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.headerFct = {
 			case (_, _) =>
 				report.setYPosition(10)
-				val row = ReportRow(10, report.pageLayout.width - 10, List(Column("column1", Flex(1)), Column("column2", Flex(1)),
+				val row = ReportRow(marginOffset, report.pageLayout.width - marginOffset, List(Column("column1", Flex(1)), Column("column2", Flex(1)),
 					Column("column3", Flex(1))))
 				val column1 = row.getColumnBound("column1")
 				val column2 = row.getColumnBound("column2")
@@ -314,15 +315,15 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val rrow = List(r_column1, r_column2, r_column3)
 				report.print(rrow)
 				report.nextLine(2)
-				report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
+				report line() from(marginOffset, report.getY) to (report.pageLayout.width - marginOffset) draw()
 		}
 
 		report.footerFct = {
 			case (pgNbr, pgMax) =>
 				report.setYPosition(report.pageLayout.height - report.lineHeight * 3)
-				report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
+				report line() from(marginOffset, report.getY) to (report.pageLayout.width - marginOffset) draw()
 				report.nextLine()
-				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
 		}
 		val t1 = System.currentTimeMillis()
 		report.start()
