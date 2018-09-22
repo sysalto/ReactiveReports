@@ -10,20 +10,20 @@ class ReportChart(val report: Report) {
 	private[this] val directDraw = new DirectDrawReport(report)
 
 
-	private[this] def getColor(i: Int, total: Int): ReportColor = ReportColor((256.0 * i / total).toInt, (256.0 * (256.0 - i) / total).toInt, (256.0 * (256.0 - i) / total).toInt)
+//	private[this] def getColor(i: Int, total: Int): ReportColor = ReportColor((256.0 * i / total).toInt, (256.0 * (256.0 - i) / total).toInt, (256.0 * (256.0 - i) / total).toInt)
 
-	def pieChart(font: RFont, title: String, data: List[(String, Double)], x: Float, y: Float, width: Float, height: Float) = {
+	def pieChart(font: RFont, title: String, data: List[(String,ReportColor, Double)], x: Float, y: Float, width: Float, height: Float) = {
 		def getPoint(center: DrawPoint, radius: Float, angle: Float): DrawPoint =
 			new DrawPoint((center.x + radius * Math.cos(angle)).toFloat, (center.y - radius * Math.sin(angle)).toFloat)
 
-		val total = (data.map { case (key, value) => value }).sum
+		val total = (data.map { case (_,_, value) => value }).sum
 		val twoPI = 2.0 * Math.PI
 		var initialAngle = (Math.PI * 0.5).toFloat
 		var i = 0
 		val angleList = data.map {
-			case (key, value) => {
+			case (key,color, value) => {
 				val angleDif = (value / total * twoPI).toFloat
-				val result = (key -> (initialAngle, initialAngle - angleDif, getColor(i, data.length)))
+				val result = (key -> (initialAngle, initialAngle - angleDif, color))
 				i += 1
 				initialAngle -= angleDif
 				result
@@ -63,7 +63,7 @@ class ReportChart(val report: Report) {
 	/*
 	For Java
 	 */
-	def pieChart(font: RFont, title: String, data: _root_.java.util.List[(String, Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
+	def pieChart(font: RFont, title: String, data: _root_.java.util.List[(String, ReportColor,Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
 		pieChart(font, title, data.asScala.toList, x, y, width, height)
 	}
 

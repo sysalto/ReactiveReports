@@ -9,6 +9,7 @@ import com.sysalto.report.reportTypes.*;
 import com.sysalto.report.util.*;
 import org.apache.derby.iapi.util.ByteArray;
 import scala.collection.immutable.Map;
+import scala.util.Random;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -194,8 +195,9 @@ public class MutualFundsNoAkkaJavaReport {
         AtomicReference<Double> total2 = new AtomicReference<>();
         AtomicReference<Double> total3 = new AtomicReference<>();
         final AtomicReference<Integer> firstChar = new AtomicReference<>();
-        AtomicReference<List<scala.Tuple2<String, Object>>> chartData = new AtomicReference<>();
-        chartData.set(new java.util.ArrayList<scala.Tuple2<String, Object>>());
+        AtomicReference<java.util.List<scala.Tuple3<String,ReportColor, Object>>> chartData = new AtomicReference<>();
+        chartData.set(new java.util.ArrayList<scala.Tuple3<String,ReportColor, Object>>());
+        final Random rnd = new Random();
         total1.set(0.);
         total2.set(0.);
         total3.set(0.);
@@ -218,7 +220,8 @@ public class MutualFundsNoAkkaJavaReport {
             total2.set(total2.get() + value2.floatValue());
             total3.set(total3.get() + v_change.floatValue());
 
-            chartData.get().add(new scala.Tuple2("" + cc, total2.get()));
+            final ReportColor color = ReportColor.apply(rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255),1);
+            chartData.get().add(new scala.Tuple3("" + cc,color, total2.get()));
             ReportCell cr_change = new ReportCell(new ReportTxt(v_change.toString())).rightAlign().inside(m_change);
             ReportCell[] rrow1 = new ReportCell[]{cr_fundName, cr_value1, cr_value2, cr_change};
             Float y3 = report.calculate(rrow1);

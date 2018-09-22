@@ -124,9 +124,9 @@ object Test1 {
 
 
 	def testChart(report:Report): Unit = {
-		val chartData: List[(String, Double)] = List(("A",600),("B",300),("C",200),("D",500))
+		val chartData: List[(String, Double)] = List(("A",100),("B",300),("C",200),("D",500))
 		val reportChart=new ReportChart(report)
-		reportChart.pieChart(report.font,"Test",chartData,20,20,400,200)
+//		reportChart.pieChart(report.font,"Test",chartData,20,20,400,200)
 	}
 
 	def main(args: Array[String]): Unit = {
