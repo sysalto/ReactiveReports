@@ -3,7 +3,7 @@ package com.sysalto.report
 import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes.ReportColor
 
-case class DirectDrawReport(val report: Report) {
+class DirectDrawReport(val report: Report) {
 
 	/**
 		* custom drawing - move current point to x,y
@@ -25,7 +25,7 @@ case class DirectDrawReport(val report: Report) {
 		* @param x
 		* @param y
 		*/
-	def line(x: Float, y: Float): Unit = {
+	def lineTo(x: Float, y: Float): Unit = {
 		assert(checkCoordinate(x, true))
 		assert(checkCoordinate(y, false))
 		val reportItem = new DirectDrawLine(x, y)
@@ -158,13 +158,13 @@ case class DirectDrawReport(val report: Report) {
 		*/
 	def roundRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float) = {
 		movePoint(x1 + radius, y1)
-		line(x2 - radius, y1)
+		lineTo(x2 - radius, y1)
 		arc(x2 - radius, y1 + radius, radius, (Math.PI * 0.5).toFloat, 0f)
-		line(x2, y2 - radius)
+		lineTo(x2, y2 - radius)
 		arc(x2 - radius, y2 - radius, radius, 2 * Math.PI.toFloat, (3.0 * Math.PI * 0.5).toFloat)
-		line(x1 + radius, y2)
+		lineTo(x1 + radius, y2)
 		arc(x1 + radius, y2 - radius, radius, (3.0 * Math.PI * 0.5).toFloat, Math.PI.toFloat)
-		line(x1, y1 + radius)
+		lineTo(x1, y1 + radius)
 		arc(x1 + radius, y1 + radius, radius, Math.PI.toFloat, (Math.PI * 0.5).toFloat)
 
 	}

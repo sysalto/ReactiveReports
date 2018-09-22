@@ -26,8 +26,10 @@ import com.sysalto.report.Implicits._
 import com.sysalto.render.PdfDraw.DrawPoint
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.render.basic.PdfBasic
-import com.sysalto.report.DirectDrawReport
+import com.sysalto.report.{DirectDrawReport, ReportChart}
 import com.sysalto.report.reportTypes.{A5Format, LetterFormat, RFontFamily, ReportPageOrientation}
+
+import scala.collection.mutable.ListBuffer
 
 
 object Test1 {
@@ -73,18 +75,38 @@ object Test1 {
 		//		report.directFillStroke(true,true)
 		//
 		//		report.roundRectangle(100, 100, 200, 200, 10)
-		val directDraw = DirectDrawReport(report)
-		directDraw.rectangle(10, 10, 100, 100)
-		directDraw.setFillColor(ReportColor(100,200,100))
-		directDraw.setStrokeColor(ReportColor(10,10,100))
-		directDraw.fillStroke(true, true)
 
-		directDraw.setFillColor(ReportColor(200,200,50))
-		directDraw.roundRectangle(350,10,700,200,10)
-//		directDraw.directFillStroke(true, false)
+		val directDraw = new DirectDrawReport(report)
+//		directDraw.rectangle(10, 10, 100, 100)
+//		directDraw.setFillColor(ReportColor(100,200,100))
+//		directDraw.setStrokeColor(ReportColor(10,10,100))
+//		directDraw.fillStroke(true, true)
+//
+//		directDraw.setFillColor(ReportColor(200,200,50))
+//		directDraw.roundRectangle(350,10,700,200,10)
+//
+//		directDraw.circle(200,300,100)
+//		directDraw.fillStroke(true, false)
+//		directDraw.circle(200,300,100)
 
-		directDraw.circle(200,300,100)
-		directDraw.fillStroke(true, false)
+//		directDraw.movePoint(400, 300)
+//		directDraw.arc(300, 300, 100, 0, 1.5f)
+//		directDraw.fillStroke(false, true)
+
+		def getPoint(center: DrawPoint, radius: Float, angle: Float): DrawPoint =
+			new DrawPoint((center.x + radius * Math.cos(angle)).toFloat, (center.y - radius * Math.sin(angle)).toFloat)
+
+//		val p1=getPoint(new DrawPoint(300,300),100,1.5f)
+//		val p2=getPoint(new DrawPoint(300,300),100,-0.7f)
+//		directDraw.movePoint(300,300)
+//		directDraw.lineTo(p1.x,p1.y)
+//		directDraw.arc(300, 300, 100, 1.5f,-0.7f)
+////		directDraw.lineTo(p2.x, p2.y)
+//		directDraw.closePath
+//		directDraw.fillStroke(true, false)
+
+
+		testChart(report)
 
 
 		//				report.directDrawMovePoint(100, 100)
@@ -100,6 +122,12 @@ object Test1 {
 
 	}
 
+
+	def testChart(report:Report): Unit = {
+		val chartData: List[(String, Double)] = List(("A",600),("B",300),("C",200),("D",500))
+		val reportChart=new ReportChart(report)
+		reportChart.pieChart(report.font,"Test",chartData,20,20,400,200)
+	}
 
 	def main(args: Array[String]): Unit = {
 		run()
