@@ -34,27 +34,26 @@ class ReportChart(val report: Report) {
 		val str1 = angleList.foreach {
 			case (label, (startAngle, endAngle, color)) => {
 				val p1 = getPoint(center, radius, startAngle)
-//				val p2 = getPoint(center, radius, endAngle)
 				directDraw.movePoint(center.x, center.y)
 				directDraw.lineTo(p1.x, p1.y)
 				directDraw.arc(center.x, center.y, radius, startAngle, endAngle)
-//				directDraw.lineTo(p2.x, p2.y)
+				//				directDraw.lineTo(p2.x, p2.y)
 				directDraw.closePath
 				directDraw.setFillColor(color)
 				directDraw.fillStroke(true, false)
 			}
 		}
 
-//		var ycrt = offset + 10
-//		val str2 = angleList.foreach {
-//			case (label, (startAngle, endAngle, color)) => {
-//				directDraw.rectangle(x + 2.0f * (radius + offset), y + ycrt, 10, 10)
-//				directDraw.setFillColor(color)
-//				directDraw.fillStroke(true, false)
-//				//				report.text(x + 2.0f * (radius + offset) + 20, y - ycrt + 1, ReportTxt(label, font).size(10))
-//				ycrt += 12
-//			}
-//		}
+		var ycrt = offset + 10
+		val str2 = angleList.foreach {
+			case (label, (startAngle, endAngle, color)) => {
+				directDraw.rectangle(x + 2.0f * (radius + offset), y + ycrt, x + 10 + 2.0f * (radius + offset), y + ycrt + 10)
+				directDraw.setFillColor(color)
+				directDraw.fillStroke(true, false)
+				report.text(ReportTxt(label, font).size(10), x + 2.0f * (radius + offset) + 20, y + ycrt + 8)
+				ycrt += 12
+			}
+		}
 		directDraw.roundRectangle(x, y, x + width, y + height, 5)
 		directDraw.fillStroke(false, true)
 	}
