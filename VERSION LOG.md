@@ -1,4 +1,4 @@
-##1.0.2-SNAPSHOT
+## 1.0.2-SNAPSHOT
 ### Changes:
 * added ReportRow.setCellSpacing
 * added DirectDrawReport and ReportChart
