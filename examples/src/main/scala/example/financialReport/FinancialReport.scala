@@ -1,8 +1,8 @@
-package com.sysalto.report.example.financialReport
+package example.financialReport
 
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits.{Column, _}
-import com.sysalto.report.example.financialReport.FinancialReportData.{Account, Trade}
+import example.financialReport.FinancialReportData.{Account, Trade}
 import com.sysalto.report.reportTypes.{CellAlign, GroupUtil, RFont, RFontFamily, ReportPageOrientation}
 import com.sysalto.report.util.{GroupUtilTrait, PdfFactory}
 
@@ -268,8 +268,8 @@ object FinancialReport extends GroupUtilTrait {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
-		val report1 = Report("examples/src/main/scala/com/sysalto/report/example/financialReport/FinancialReport.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
-		val path = "examples/src/main/scala/com/sysalto/report/example/fonts/roboto/"
+		val report1 = Report("examples/src/main/scala/example/financialReport/FinancialReport.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
+		val path = "examples/src/main/scala/example/fonts/roboto/"
 		val fontFamily = RFontFamily(name = "Roboto",
 			regular = path + "Roboto-Regular.ttf",
 			bold = Some(path + "Roboto-Bold.ttf"),

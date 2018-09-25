@@ -1,4 +1,4 @@
-package com.sysalto.report.example.financialReport
+package example.financialReport
 
 import java.util.Date
 
