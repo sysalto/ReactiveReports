@@ -117,7 +117,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		var total2 = 0f
 		var total3 = 0f
 		var firstY = 0f
-		val chartData: ListBuffer[(String,ReportColor, Double)] = ListBuffer()
+		val chartData: ListBuffer[(String,ReportColor, Float)] = ListBuffer()
 		val rnd = new scala.util.Random
 		rsGroup.foreach(
 			rec => try {
@@ -136,7 +136,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				total2 += val2.toFloat
 				total3 += v_change
 				val color=ReportColor(rnd.nextInt(255),rnd.nextInt(255),rnd.nextInt(255))
-				val dataItem=(firstChar.asInstanceOf[Char].toString ,color, total2.toDouble)
+				val dataItem=(firstChar.asInstanceOf[Char].toString ,color, total2)
 				chartData += dataItem
 				val c_change = ReportCell(v_change.toString) rightAlign() inside change
 				val rrow = List(c_fundName, c_value1, c_value2, c_change)

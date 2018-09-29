@@ -1,6 +1,8 @@
 package com.sysalto.report
 
-import com.sysalto.report.reportTypes.{RFont, ReportColor, ReportTxt}
+import com.sysalto.report.Implicits._
+import com.sysalto.report.reportTypes.{RFont, ReportColor}
+
 import scala.collection.JavaConverters._
 
 class ReportChart(val report: Report) {
@@ -10,20 +12,49 @@ class ReportChart(val report: Report) {
 	private[this] val directDraw = new DirectDrawReport(report)
 
 
-//	private[this] def getColor(i: Int, total: Int): ReportColor = ReportColor((256.0 * i / total).toInt, (256.0 * (256.0 - i) / total).toInt, (256.0 * (256.0 - i) / total).toInt)
+	def barChart(title: String, xLabel: String, yLabel: String, data: List[(String, ReportColor, Float)], x0: Float,
+	             y0: Float, width: Float, height: Float, distance: Float): Unit = {
+		val directDraw = new DirectDrawReport(report)
+		assert(width > 0)
+		assert(height > 0)
+		assert(data.nonEmpty)
+		assert(distance >= 0)
+		val maxValue = data.map { case (x, _, value) => value }.max
+		assert(maxValue > 0)
+		assert(width - distance * data.length > 0)
+		val vertScale = height / maxValue
+		val itemWidth = (width - distance * data.length) / data.length
+		var crtX = x0
+		data.foreach {
+			case (label, color, value) => {
+				directDraw.rectangle(crtX, y0, crtX + itemWidth, (y0 - value * vertScale).toFloat)
+				directDraw.setFillColor(color)
+				directDraw.fill()
+				val cell = ReportCell(label) centerAlign() inside ReportMargin(crtX, crtX + itemWidth)
+				directDraw print(cell, y0 + 10)
+				crtX += itemWidth + distance
+			}
+		}
+		directDraw.movePoint(x0, y0)
+		directDraw.lineTo(x0 + width + 20, y0)
+		directDraw.movePoint(x0, y0)
+		directDraw.lineTo(x0, y0 - height - 20)
+		directDraw.stroke()
+	}
 
-	def pieChart(font: RFont, title: String, data: List[(String,ReportColor, Double)], x: Float, y: Float, width: Float, height: Float) = {
+
+	def pieChart(font: RFont, title: String, data: List[(String, ReportColor, Float)], x: Float, y: Float, width: Float, height: Float) = {
 		def getPoint(center: DrawPoint, radius: Float, angle: Float): DrawPoint =
 			new DrawPoint((center.x + radius * Math.cos(angle)).toFloat, (center.y - radius * Math.sin(angle)).toFloat)
 
-		val total = (data.map { case (_,_, value) => value }).sum
+		val total = data.map { case (_, _, value) => value }.sum
 		val twoPI = 2.0 * Math.PI
 		var initialAngle = (Math.PI * 0.5).toFloat
 		var i = 0
 		val angleList = data.map {
-			case (key,color, value) => {
+			case (key, color, value) => {
 				val angleDif = (value / total * twoPI).toFloat
-				val result = (key -> (initialAngle, initialAngle - angleDif, color))
+				val result = key -> (initialAngle, initialAngle - angleDif, color)
 				i += 1
 				initialAngle -= angleDif
 				result
@@ -63,7 +94,7 @@ class ReportChart(val report: Report) {
 	/*
 	For Java
 	 */
-	def pieChart(font: RFont, title: String, data: _root_.java.util.List[(String, ReportColor,Double)], x: Float, y: Float, width: Float, height: Float): Unit = {
+	def pieChart(font: RFont, title: String, data: _root_.java.util.List[(String, ReportColor, Float)], x: Float, y: Float, width: Float, height: Float): Unit = {
 		pieChart(font, title, data.asScala.toList, x, y, width, height)
 	}
 

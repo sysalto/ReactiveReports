@@ -178,6 +178,18 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 		})
 		//    val result= ListBuffer[RTextPos]()
 		//    mergeRTextPos(result1.toList,result)
+
+		val last=result1.last
+
+		val lastCharList=line.reverse.find(item=>item.charList.nonEmpty)
+
+		if (lastCharList.isDefined) {
+			val space = new CharF(' ', lastCharList.get.charList.head.font)
+			val length = result1.length
+			result1.remove(length - 1)
+			result1 += new RTextPos(last.x, last.textLength - getCharWidth(space), last.rtext)
+		}
+
 		val result = result1
 		if (!result.isEmpty && result.last.rtext.txt == " ") {
 			result.dropRight(1).toList

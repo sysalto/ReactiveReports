@@ -1,10 +1,14 @@
 ## 1.0.2-SNAPSHOT
 ### Changes:
+* compiled on scala 2.12.7
 * added ReportRow.setCellSpacing
 * added DirectDrawReport and ReportChart
 
 ### Bugs fixed:
 * lineDashType ignored
+* Fixed  java.util.NoSuchElementException in RenderReport.wrap.
+* assert wrap width > 0
+
 
 ## 1.0.1 (2018-07-23)
 ### Changes:

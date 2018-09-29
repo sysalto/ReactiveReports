@@ -1,7 +1,7 @@
 package com.sysalto.report
 
 import com.sysalto.report.ReportTypes._
-import com.sysalto.report.reportTypes.ReportColor
+import com.sysalto.report.reportTypes.{ReportCell, ReportColor, ReportTxt}
 
 class DirectDrawReport(val report: Report) {
 
@@ -90,6 +90,14 @@ class DirectDrawReport(val report: Report) {
 	}
 
 
+	def fill(): Unit = {
+		fillStroke(true, false)
+	}
+
+	def stroke(): Unit = {
+		fillStroke(false, true)
+	}
+
 	/**
 		* custom fill with a color
 		*
@@ -157,6 +165,11 @@ class DirectDrawReport(val report: Report) {
 		* @param radius
 		*/
 	def roundRectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float) = {
+		assert(checkCoordinate(x1, true))
+		assert(checkCoordinate(y1, false))
+		assert(checkCoordinate(x2, true))
+		assert(checkCoordinate(y2, false))
+		assert(radius > 0)
 		movePoint(x1 + radius, y1)
 		lineTo(x2 - radius, y1)
 		arc(x2 - radius, y1 + radius, radius, (Math.PI * 0.5).toFloat, 0f)
@@ -169,5 +182,8 @@ class DirectDrawReport(val report: Report) {
 
 	}
 
+	def print(cell: ReportCell, y: Float): Unit = {
+		report.wrap(cell.txt, cell.margin.left, y, cell.margin.right, Float.MaxValue, cell.align)
+	}
 
 }
