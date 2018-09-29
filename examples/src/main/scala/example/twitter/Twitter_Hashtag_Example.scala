@@ -11,13 +11,12 @@ import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
-import example.twitter.TwitterCredentials
 
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
 import com.sysalto.report.util.PdfFactory
-import example.twitter.TwitterReport.{accessToken, client, consumerToken, searchClient, system}
+
 
 import scala.concurrent.{Future, duration}
 

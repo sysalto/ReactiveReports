@@ -22,7 +22,6 @@
 
 package com.sysalto.report.reportTypes
 
-import com.sysalto.report.Implicits.ReportRow
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{Report, WrapAlign}
 
