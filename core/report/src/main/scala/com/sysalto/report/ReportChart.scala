@@ -30,8 +30,13 @@ class ReportChart(val report: Report) {
 				directDraw.rectangle(crtX, y0, crtX + itemWidth, (y0 - value * vertScale).toFloat)
 				directDraw.setFillColor(color)
 				directDraw.fill()
-				val cell = ReportCell(label) centerAlign() inside ReportMargin(crtX, crtX + itemWidth)
-				directDraw print(cell, y0 + 10)
+				val cell1 = ReportCell(label) centerAlign() inside ReportMargin(crtX, crtX + itemWidth)
+				directDraw print(cell1, y0 + 10)
+
+				val cell2 = ReportCell(value.toString) centerAlign() inside ReportMargin(crtX, crtX + itemWidth)
+				directDraw print(cell2, (y0 - value * vertScale-10).toFloat)
+
+
 				crtX += itemWidth + distance
 			}
 		}
