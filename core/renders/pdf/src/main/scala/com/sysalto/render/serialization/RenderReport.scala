@@ -245,7 +245,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		} else {
 			crtY -= lineHeight * (lines.size - 1)
 		}
-		val l1 = lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
+		val l1 = if (lines.isEmpty) List() else lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
 		val textHeight = if (l1.isEmpty) 0 else l1.max
 		Some(new WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size, textHeight))
 	}

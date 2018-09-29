@@ -1,19 +1,22 @@
-package com.sysalto.report.examples
+package example.twitter
 
 import akka.stream.OverflowStrategy
 import akka.stream.scaladsl.Sink
-import com.danielasfregola.twitter4s.entities.enums.Language
+import com.danielasfregola.twitter4s.entities.enums.{Language, ResultType}
 import com.danielasfregola.twitter4s.entities.streaming.StreamingMessage
 import com.danielasfregola.twitter4s.entities.{AccessToken, ConsumerToken, Tweet}
-import com.danielasfregola.twitter4s.TwitterStreamingClient
+import com.danielasfregola.twitter4s.{TwitterRestClient, TwitterStreamingClient, http}
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.report.Implicits._
 import com.sysalto.report.ImplicitsAkka._
 import com.sysalto.report.akka.template.ReportAppAkka
 import com.sysalto.report.akka.util.AkkaGroupUtil
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import com.sysalto.report.reportTypes.{GroupUtil, ReportPageOrientation}
 import com.sysalto.report.util.PdfFactory
+
+import scala.concurrent.Future
 
 
 object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
@@ -21,11 +24,12 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 	val accessToken = AccessToken(key = "790679832128544769-fOdevJTxdsufyMCCjxBYYnaJTzYtsoi", secret = "cl5gmg4Dm7MNpFLUHwKy50lye0QB7zsxO4gaVZ19k9NeB")
 
 	val client = TwitterStreamingClient(consumerToken, accessToken)
+	val searchClient = TwitterRestClient(consumerToken, accessToken)
 
 	def printTweetText: PartialFunction[StreamingMessage, Unit] = {
 		case tweet: Tweet => {
 			if (tweet.text.toLowerCase().contains("")) {
-				println("Name:"+tweet.user.get.name +" "+tweet.geo+ " text:" + tweet.text)
+				println("Name: " + tweet.user.get.name + " text:" + tweet.text)
 			}
 		}
 	}
@@ -53,27 +57,51 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 
 
 	def test(): Unit = {
-		client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("america"))(printTweetText)
-		client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("canada"))(printTweetText)
+		//client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("#cat"))(printTweetText)
+		//client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("canada"))(printTweetText)
+		implicit val pdfFactory = new PdfNativeFactory()
+		val report = Report("examples/src/main/scala/example/twitter/TwitterHashtag.pdf")
 
-		println("OK")
+		var resultTweets = List[Tweet]()
+		searchClient.searchTweet("#cats", count=10, result_type = ResultType.Recent, max_id = None).flatMap{
+			ratedData =>
+				val result = ratedData.data
+				val tweets = result.statuses
+				//resultTweets = tweets
 
+				println("Size ==== " + tweets.length)
+				tweets.foreach(tweet => {
+					//print(tweet.text + "\n")
+
+					//report.nextLine(2)
+					report print tweet.text
+				}
+
+				)
+				report.render()
+				System.exit(0)
+				Future(tweets.sortBy(_.created_at))
+		} recover {
+			case _ => Seq.empty
+		}
+
+		println("Size = " + resultTweets.length)
+		resultTweets.foreach(tweet => {
+			println(tweet)
+		})
+
+		//println(output)
+		//report.render()
+		//system.terminate()
+		println("Report was generated in TwitterHashtag")
+		//System.exit(0)
 	}
 
 
 	def test3(): Unit = {
-		//		import com.sysalto.render.PdfNativeFactory
-		//		import com.sysalto.report.Implicits._
-		//		val headerColor = RColor(240, 250, 255)
-		//		val config: Config = ConfigFactory.parseString(
-		//			"""akka.log-dead-letters=off
-		//       akka.jvm-exit-on-fatal-error = true
-		//      akka.log-dead-letters-during-shutdown=off """)
-		//		implicit val system = ActorSystem("Sys", config)
-		//		implicit val materializer = ActorMaterializer()
 
 		implicit val pdfFactory = new PdfNativeFactory()
-		val report = Report("Twitter.pdf")
+		val report = Report("examples/src/main/scala/example/twitter/TwitterHashtag.pdf")
 
 		val source1 = Source.queue[String](1000, OverflowStrategy.backpressure).take(100)
 
@@ -91,19 +119,48 @@ object TwitterReport extends ReportAppAkka with AkkaGroupUtil {
 
 
 		//		val stream = client.filterStatuses(languages = List(Language.English), stall_warnings = true, tracks = List("canada")) {
-		val stream = client.sampleStatuses(languages = List(Language.English), stall_warnings = true) {
+		val stream = client.sampleStatuses(languages = List(Language.English), stall_warnings = true,tracks = List("#fish")) {
 			case tweet: Tweet => {
+				println(tweet.user + " " + tweet.created_at + " " + tweet.text)
 				queue offer tweet.text
 			}
 		}
 
+		/*val tweetzz = searchClient.searchTweet("#cats", count=10, result_type = ResultType.Recent, max_id = None).flatMap {
+
+			ratedData =>
+				val result = ratedData.data
+				val tweets = result.statuses
+				//resultTweets = tweets
+
+				println("Size ==== " + tweets.length)
+				var i = 0
+
+				tweets.foreach(tweet => {
+					i = i + 1
+					//queue offer tweet.text
+					print(i + " " + tweet.text + "\n")
+
+					report.nextLine(2)
+					val text1 = "" + i + " " + tweet.text
+					report print text1
+				})
+        report.render()
+				Future(tweets.sortBy(_.created_at))
+		} recover {
+			case _ => Seq.empty
+			report.render()
+			system.terminate()
+
+		}*/
 
 		val result = queue.watchCompletion()
-		Await.ready(result, Duration.Inf)
+		//wait.ready(result, Duration.Inf)
 		stream.map(st => st.close())
 		report.render()
 		system.terminate()
-		println("Report was generated in Twitter.pdf")
+		println("Report was generated in TwitterHashtag")
+		System.exit(0)
 	}
 
 	def test10(): Unit = {

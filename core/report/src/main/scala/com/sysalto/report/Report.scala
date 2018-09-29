@@ -365,6 +365,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			}
 			ReportTxt(item.txt, font)
 		})
+		assert(x1-x0>0)
 		if (simulate) {
 			reportWrap(text1, x0, y0, x1, y1, wrapAlign, simulate)
 		} else {

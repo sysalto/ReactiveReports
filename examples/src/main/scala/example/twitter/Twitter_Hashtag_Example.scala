@@ -31,7 +31,7 @@ object Twitter_Hashtag_Example extends ReportAppAkka with AkkaGroupUtil {
 		implicit val pdfFactory = new PdfNativeFactory()
 		val report = Report("examples/src/main/scala/example/twitter/TwitterHashtag.pdf")
 		import scala.concurrent.duration._
-		val source1 = Source.queue[(String, String)](1000, OverflowStrategy.backpressure).takeWithin(120.second)
+		val source1 = Source.queue[(String, String)](1000, OverflowStrategy.backpressure).takeWithin(20.second)
 
 		val queue = source1.to(Sink foreach (
 			txt => {

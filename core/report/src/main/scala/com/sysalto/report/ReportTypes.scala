@@ -133,6 +133,8 @@ object ReportTypes {
 			report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY, wrapAlign, simulate = false)
 
 		}
+
+		assert(x1 - x0 > 0)
 	}
 
 
