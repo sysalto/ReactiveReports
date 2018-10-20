@@ -23,7 +23,8 @@ object Test {
 
 		report.nextLine(2)
 		val cell_P1 = ReportCell("aaa aaa aaa aaa aaa aaa\nssssv1 vddddd2 v3 bbb bbb bbb") inside ReportMargin(500, 600)
-		report print cell_P1
+		val cell_P2 = ReportCell("ZZZ aaa aaa aaa aaa aaa\nssssv1 vddddd2 v3 bbb bbb bbb") inside ReportMargin(600, 700)
+		report print List(cell_P1,cell_P2)
 
 //		report.nextLine(2)
 //		val cell_P2 = ReportCell("aaa aaa aaa aaa aaa aaa") inside ReportMargin(500, 600)
