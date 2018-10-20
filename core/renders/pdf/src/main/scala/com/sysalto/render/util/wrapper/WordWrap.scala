@@ -179,9 +179,9 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 		//    val result= ListBuffer[RTextPos]()
 		//    mergeRTextPos(result1.toList,result)
 
-		val last=result1.last
+		val last = result1.last
 
-		val lastCharList=line.reverse.find(item=>item.charList.nonEmpty)
+		val lastCharList = line.reverse.find(item => item.charList.nonEmpty)
 
 		if (lastCharList.isDefined) {
 			val space = new CharF(' ', lastCharList.get.charList.head.font)
@@ -283,11 +283,11 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 				} else {
 					wrapResult += lineToRTextPos(wrapRow.toList)
 					wrapRow.clear()
-					length=0
+					length = 0
 				}
 			}
 		}
-		if (length>0) {
+		if (length > 0) {
 			wrapResult += lineToRTextPos(wrapRow.toList)
 		}
 		wrapResult.toList
@@ -312,8 +312,62 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 	}
 
 
+	private def calculateWordWrap(input: List[ReportTxt], max: Float): List[List[RTextPos]] = {
+		import scalaz._
+		import Scalaz._
+
+		val calculate3: RTextPos => Float = Memo.immutableHashMapMemo {
+			s => {
+				println("calculate3:" + s)
+				getTextWidth(s.rtext)
+			}
+		}
+
+		val calculate2: RTextPos => Float = Memo.immutableHashMapMemo {
+			token => {
+				val result = calculate3(token)
+				println("calculate2:" + token + " result:" + result)
+				result
+			}
+		}
+
+		def wrapLine(line: ReportTxt): List[List[RTextPos]] = {
+
+//			@tailrec
+			def wrapWords(list:List[ReportTxt]):List[List[RTextPos]]={
+				val l2 = list.map(item => new RTextPos(0, 0, item)).initz
+				val idx1 = l2.indexWhere(list => list.map { case t => calculate2(t) }.sum > max)
+				val idx = if (idx1 == -1) l2.length else idx1
+				val line1 = l2(idx - 1)
+				val line2 = line1.map(word => {
+					val wordWidth = calculate3(word)
+					new RTextPos(0, wordWidth, word.rtext)
+
+				})
+				List(line2)++ (if (idx1== -1 ) List() else {
+					wrapWords(list.drop(line1.length))
+				})
+			}
+
+			val txt = line.txt
+			val lw = txt.split("\\s+").zipWithIndex.map { case (word, index) => (if (index == 0) "" else " ") + word }
+			val l1 = lw.map(word => new ReportTxt(word, line.font)).toList
+			val result=wrapWords(l1)
+			result
+		}
+
+		wrapLine(input.head)
+
+	}
+
+
 	def wordWrap(input: List[ReportTxt], max: Float)
 	            (implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
+
+		if (true) {
+			return calculateWordWrap(input, max)
+		}
+
 		val result = ListBuffer[List[RTextPos]]()
 		wordWrapT(input, max, result)
 		result.toList
