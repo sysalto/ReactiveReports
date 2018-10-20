@@ -5,7 +5,7 @@ import java.security.MessageDigest
 import com.sysalto.render.PdfDraw._
 import com.sysalto.render.util.PageTree
 import com.sysalto.render.util.fonts.parsers.{FontParser, RFontParserFamily}
-import com.sysalto.render.util.wrapper.WordWrap
+import com.sysalto.render.util.wrapper.{WordWrap, WordWrapN}
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
@@ -17,7 +17,7 @@ import scala.collection.mutable.ListBuffer
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persistenceFactory: PersistenceFactory, pdfCompression: Boolean) {
 	implicit val wordSeparators: List[Char] = List(',', '.')
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
-	private[this] val wordWrap = new WordWrap(fontFamilyMap)
+	private[this] val wordWrap = new WordWrapN(fontFamilyMap)
 	val renderReportTypes = new RenderReportTypes(persistenceFactory)
 	private[this] val pdfWriter = new renderReportTypes.PdfWriter(name)
 	private[this] var id: Long = 0
