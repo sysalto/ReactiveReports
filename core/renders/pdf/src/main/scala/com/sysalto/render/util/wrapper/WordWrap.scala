@@ -104,7 +104,11 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 
 	def getTextHeight(text: ReportTxt): Float = {
 		val word = new Word(text.txt.map(char => new CharF(char, text.font)).toList)
-		word.charList.map(char => getCharWidth(char)).max
+		if (word.charList.isEmpty) {
+			0
+		} else {
+			word.charList.map(char => getCharWidth(char)).max
+		}
 	}
 
 
