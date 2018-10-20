@@ -40,10 +40,12 @@ class ReportChart(val report: Report) {
 				crtX += itemWidth + distance
 			}
 		}
-		directDraw.movePoint(x0, y0)
-		directDraw.lineTo(x0 + width + 20, y0)
-		directDraw.movePoint(x0, y0)
-		directDraw.lineTo(x0, y0 - height - 20)
+//		directDraw.movePoint(x0, y0)
+//		directDraw.lineTo(x0 + width + 20, y0)
+//		directDraw.movePoint(x0, y0)
+//		directDraw.lineTo(x0, y0 - height - 20)
+//		directDraw.stroke()
+		directDraw.roundRectangle(x0-10, y0 - height-30, x0 + width+10, y0 +20, 5)
 		directDraw.stroke()
 	}
 
