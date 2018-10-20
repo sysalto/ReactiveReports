@@ -6,6 +6,8 @@ import com.sysalto.report.reportTypes.{RFont, ReportTxt}
 import scalaz._
 import Scalaz._
 
+import scala.annotation.tailrec
+
 
 class WordWrapN(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontParserFamily]) {
 
@@ -64,21 +66,33 @@ class WordWrapN(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPar
 	}
 
 
-	//			@tailrec
 	private[this] def wrapWords(list: List[ReportTxt], max: Float): List[List[RTextPos]] = {
-		val l2 = list.map(item => new RTextPos(0, 0, item)).initz
-		val idx1 = l2.indexWhere(list => list.map { case t => calculate2(t) }.sum > max)
-		val idx = if (idx1 == -1) l2.length else idx1
-		val line1 = l2(idx - 1)
-		val line2 = line1.map(word => {
-			val wordWidth = calculate3(word)
-			new RTextPos(0, wordWidth, word.rtext)
+		@tailrec
+		def helper(list: List[ReportTxt], max: Float, accum: List[List[RTextPos]]): List[List[RTextPos]] = {
+			val l1 = list.zipWithIndex.map { case (item, index) =>
+				if (index == 0) {
+					item.copy(txt = item.txt.trim)
+				} else item
+			}
+			val l2 = l1.map(item => new RTextPos(0, 0, item)).initz
+			val idx1 = l2.indexWhere(list => list.map { case t => calculate2(t) }.sum > max)
+			val idx = if (idx1 == -1) l2.length else idx1
+			val line1 = l2(idx - 1)
+			val line2 = line1.map(word => {
+				val wordWidth = calculate3(word)
+				new RTextPos(0, wordWidth, word.rtext)
 
-		})
-		List(line2) ++ (if (idx1 == -1) List() else {
-			wrapWords(list.drop(line1.length),max)
-		})
+			})
+			if (idx1 == -1) {
+				accum ::: List(line2)
+			} else {
+				helper(list.drop(line1.length), max, List(line2))
+			}
+		}
+
+		helper(list, max, nil)
 	}
+
 
 	private[this]
 	def wrapLine(line: ReportTxt, max: Float): List[List[RTextPos]] = {
@@ -86,7 +100,7 @@ class WordWrapN(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPar
 		val txt = line.txt
 		val lw = txt.split("\\s+").zipWithIndex.map { case (word, index) => (if (index == 0) "" else " ") + word }
 		val l1 = lw.map(word => new ReportTxt(word, line.font)).toList
-		val result = wrapWords(l1,max)
+		val result = wrapWords(l1, max)
 		result
 	}
 
