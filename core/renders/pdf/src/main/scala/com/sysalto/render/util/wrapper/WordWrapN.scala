@@ -11,6 +11,8 @@ import scala.annotation.tailrec
 
 class WordWrapN(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontParserFamily]) {
 
+	class RTextPos(val x: Float, val textLength: Float, val rtext: ReportTxt)
+
 	class CharFN(val char: Char, val font: RFont)
 
 	class WordN(val charList: List[CharFN])
@@ -50,20 +52,13 @@ class WordWrapN(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPar
 	}
 
 
-	val calculate3: RTextPos => Float = Memo.immutableHashMapMemo {
+	val calculateWordWidth: ReportTxt => Float = Memo.immutableHashMapMemo {
 		s => {
-			println("calculate3:" + s)
-			getTextWidth(s.rtext)
+			println("calculate:" + s)
+			getTextWidth(s)
 		}
 	}
 
-	val calculate2: RTextPos => Float = Memo.immutableHashMapMemo {
-		token => {
-			val result = calculate3(token)
-			println("calculate2:" + token + " result:" + result)
-			result
-		}
-	}
 
 
 	private[this] def wrapWords(list: List[ReportTxt], max: Float): List[List[RTextPos]] = {
@@ -75,11 +70,11 @@ class WordWrapN(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPar
 				} else item
 			}
 			val l2 = l1.map(item => new RTextPos(0, 0, item)).initz
-			val idx1 = l2.indexWhere(list => list.map { case t => calculate2(t) }.sum > max)
+			val idx1 = l2.indexWhere(list => list.map { case t => calculateWordWidth(t.rtext) }.sum > max)
 			val idx = if (idx1 == -1) l2.length else idx1
 			val line1 = l2(idx - 1)
 			val line2 = line1.map(word => {
-				val wordWidth = calculate3(word)
+				val wordWidth = calculateWordWidth(word.rtext)
 				new RTextPos(0, wordWidth, word.rtext)
 
 			})
@@ -106,14 +101,16 @@ class WordWrapN(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPar
 
 	private def calculateWordWrap(input: List[ReportTxt], max: Float): List[List[RTextPos]] = {
 
-		wrapLine(input.head, max)
+		input.flatMap(item=>wrapLine(item, max))
+
 
 	}
 
 	def wordWrap(input: List[ReportTxt], max: Float)
 	            (implicit wordSeparators: List[Char]): List[List[RTextPos]] = {
 
-		calculateWordWrap(input, max)
+		val l1=input.flatMap(line=>line.txt.split("\n").toList.map(item=>ReportTxt(item,line.font)))
+		calculateWordWrap(l1, max)
 	}
 
 }

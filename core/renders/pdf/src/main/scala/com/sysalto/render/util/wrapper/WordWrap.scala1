@@ -320,16 +320,16 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 		import scalaz._
 		import Scalaz._
 
-		val calculate3: RTextPos => Float = Memo.immutableHashMapMemo {
+		val calculate3: ReportTxt => Float = Memo.immutableHashMapMemo {
 			s => {
 				println("calculate3:" + s)
-				getTextWidth(s.rtext)
+				getTextWidth(s)
 			}
 		}
 
 		val calculate2: RTextPos => Float = Memo.immutableHashMapMemo {
 			token => {
-				val result = calculate3(token)
+				val result = calculate3(token.rtext)
 				println("calculate2:" + token + " result:" + result)
 				result
 			}
@@ -344,7 +344,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 				val idx = if (idx1 == -1) l2.length else idx1
 				val line1 = l2(idx - 1)
 				val line2 = line1.map(word => {
-					val wordWidth = calculate3(word)
+					val wordWidth = calculate3(word.rtext)
 					new RTextPos(0, wordWidth, word.rtext)
 
 				})

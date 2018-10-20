@@ -22,11 +22,15 @@ object Test {
 //		reportChart.barChart("Test", "X", "Y",chartData,300,400,200,100,5)
 
 		report.nextLine(2)
-		val cell_P1 = ReportCell("aaa bbbb ccccc dd eea sdfasdafda") inside ReportMargin(500, 600)
+		val cell_P1 = ReportCell("aaa aaa aaa aaa aaa aaa\nssssv1 vddddd2 v3 bbb bbb bbb") inside ReportMargin(500, 600)
 		report print cell_P1
 
+//		report.nextLine(2)
+//		val cell_P2 = ReportCell("aaa aaa aaa aaa aaa aaa") inside ReportMargin(500, 600)
+//		report print cell_P2
+
 		val directDraw = new DirectDrawReport(report)
-		directDraw.rectangle(500,report.getY+50,600,report.getY-50)
+		directDraw.rectangle(500,report.getY+100,600,report.getY-50)
 		directDraw.stroke()
 		report.render()
 	}

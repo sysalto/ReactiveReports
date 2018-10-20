@@ -5,7 +5,7 @@ import java.security.MessageDigest
 import com.sysalto.render.PdfDraw._
 import com.sysalto.render.util.PageTree
 import com.sysalto.render.util.fonts.parsers.{FontParser, RFontParserFamily}
-import com.sysalto.render.util.wrapper.{WordWrap, WordWrapN}
+import com.sysalto.render.util.wrapper.WordWrapN
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
