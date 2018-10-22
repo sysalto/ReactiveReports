@@ -19,7 +19,7 @@ object Test {
 			("C", ReportColor(200, 10, 200), 40.0f),("D", ReportColor(10, 200, 200), 90.0f))
 		reportChart.pieChart(report.font, "", chartData, 15, 10, 200, 150)
 
-		reportChart.barChart("Test", "X", "Y",chartData,300,400,200,100,5)
+		reportChart.barChart("Test",chartData,300,400,200,100,5)
 
 		report.render()
 	}

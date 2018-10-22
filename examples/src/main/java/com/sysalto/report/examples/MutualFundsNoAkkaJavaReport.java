@@ -190,16 +190,16 @@ public class MutualFundsNoAkkaJavaReport {
         ResultSet rs = MutualFundsInitData.query("select * from sum_investment");
         ResultSetGroup rsGroup = GroupUtilDefs.toGroup(rs);
         AtomicReference<Float> firstY = new AtomicReference<>();
-        AtomicReference<Double> total1 = new AtomicReference<>();
-        AtomicReference<Double> total2 = new AtomicReference<>();
-        AtomicReference<Double> total3 = new AtomicReference<>();
+        AtomicReference<Float> total1 = new AtomicReference<>();
+        AtomicReference<Float> total2 = new AtomicReference<>();
+        AtomicReference<Float> total3 = new AtomicReference<>();
         final AtomicReference<Integer> firstChar = new AtomicReference<>();
         AtomicReference<java.util.List<scala.Tuple3<String,ReportColor, Object>>> chartData = new AtomicReference<>();
         chartData.set(new java.util.ArrayList<scala.Tuple3<String,ReportColor, Object>>());
         final Random rnd = new Random();
-        total1.set(0.);
-        total2.set(0.);
-        total3.set(0.);
+        total1.set(0.f);
+        total2.set(0.f);
+        total3.set(0.f);
         firstChar.set((int) 'A');
         rsGroup.foreachJ(rec -> {
             if (GroupUtil.isFirstRecord(rec)) {

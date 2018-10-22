@@ -12,7 +12,7 @@ class ReportChart(val report: Report) {
 	private[this] val directDraw = new DirectDrawReport(report)
 
 
-	def barChart(title: String, xLabel: String, yLabel: String, data: List[(String, ReportColor, Float)], x0: Float,
+	def barChart(title: String, data: List[(String, ReportColor, Float)], x0: Float,
 	             y0: Float, width: Float, height: Float, distance: Float): Unit = {
 		val directDraw = new DirectDrawReport(report)
 		assert(width > 0)
@@ -34,18 +34,18 @@ class ReportChart(val report: Report) {
 				directDraw print(cell1, y0 + 10)
 
 				val cell2 = ReportCell(value.toString) centerAlign() inside ReportMargin(crtX, crtX + itemWidth)
-				directDraw print(cell2, (y0 - value * vertScale-10).toFloat)
+				directDraw print(cell2, (y0 - value * vertScale - 10).toFloat)
 
 
 				crtX += itemWidth + distance
 			}
 		}
-//		directDraw.movePoint(x0, y0)
-//		directDraw.lineTo(x0 + width + 20, y0)
-//		directDraw.movePoint(x0, y0)
-//		directDraw.lineTo(x0, y0 - height - 20)
-//		directDraw.stroke()
-		directDraw.roundRectangle(x0-10, y0 - height-30, x0 + width+10, y0 +20, 5)
+		//		directDraw.movePoint(x0, y0)
+		//		directDraw.lineTo(x0 + width + 20, y0)
+		//		directDraw.movePoint(x0, y0)
+		//		directDraw.lineTo(x0, y0 - height - 20)
+		//		directDraw.stroke()
+		directDraw.roundRectangle(x0 - 10, y0 - height - 30, x0 + width + 10, y0 + 20, 5)
 		directDraw.stroke()
 	}
 
@@ -105,4 +105,8 @@ class ReportChart(val report: Report) {
 		pieChart(font, title, data.asScala.toList, x, y, width, height)
 	}
 
+
+	def barChart(title: String, data: _root_.java.util.List[(String, ReportColor, Float)], x: Float, y: Float, width: Float, height: Float, distance: Float): Unit = {
+		barChart(title,data.asScala.toList, x, y, width, height, distance)
+	}
 }
