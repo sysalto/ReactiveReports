@@ -19,6 +19,7 @@ import com.sysalto.report.util.{PersistenceFactory, PersistenceUtil, RockDbUtil}
 import javax.imageio.ImageIO
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 
@@ -290,7 +291,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	class PdfPage(id: Long, var parentId: Long = 0, var pageWidth: Float, var pageHeight: Float,
 	              var idFontList: List[Long] = List(), var idPdfPatternList: List[Long] = List(),
 	              var idAnnotationList: List[Long] = List(),
-	              var idImageList: ListBuffer[Long] = ListBuffer(), var idContentPageOpt: Option[Long] = None)
+	              var idImageList: mutable.Set[Long] = mutable.HashSet(), var idContentPageOpt: Option[Long] = None)
 		extends PdfBaseItem(id) with PageNode {
 
 		override def addChild(child: PageNode): Unit = {}

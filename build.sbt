@@ -2,11 +2,13 @@ import sbt.Keys.{libraryDependencies, publishMavenStyle}
 
 val SCALA_VERSION = "2.12.7"
 
-val AKKA_VERSION = "2.5.17" // "latest.release" 
+val AKKA_VERSION = "2.5.17" // "latest.release"
 
-val ROCKSDB_VERSION = "5.15.10" // "latest.release" 
+val ROCKSDB_VERSION = "5.15.10" // "latest.release"
 
-val PROTOBUF_VERSION ="3.6.1" // "latest.release"  
+val PROTOBUF_VERSION = "3.6.1" // "latest.release"
+
+val SCALAZ_VERSION ="7.3.0-M25" // "latest.release"
 
 //val projectVersion = "1.0.1"
 val projectVersion = "1.0.2-SNAPSHOT"
@@ -68,6 +70,10 @@ lazy val coreSettings = Seq(
 	},
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
 	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION,
+	libraryDependencies += "org.scalaz" %% "scalaz-core" % SCALAZ_VERSION,
+	libraryDependencies += "org.scalaz" %% "scalaz-effect" % SCALAZ_VERSION,
+	libraryDependencies += "org.scalaz" %% "scalaz-concurrent" % SCALAZ_VERSION,
+	libraryDependencies += "org.scalaz" %% "scalaz-iteratee" % SCALAZ_VERSION,
 )
 
 lazy val renderPdfSettings = Seq(

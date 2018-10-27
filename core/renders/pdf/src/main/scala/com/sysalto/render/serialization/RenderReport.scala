@@ -5,7 +5,7 @@ import java.security.MessageDigest
 import com.sysalto.render.PdfDraw._
 import com.sysalto.render.util.PageTree
 import com.sysalto.render.util.fonts.parsers.{FontParser, RFontParserFamily}
-import com.sysalto.render.util.wrapper.WordWrap
+import com.sysalto.render.util.wrapper.WordWrapN
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
@@ -17,7 +17,7 @@ import scala.collection.mutable.ListBuffer
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persistenceFactory: PersistenceFactory, pdfCompression: Boolean) {
 	implicit val wordSeparators: List[Char] = List(',', '.')
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
-	private[this] val wordWrap = new WordWrap(fontFamilyMap)
+	private[this] val wordWrap = new WordWrapN(fontFamilyMap)
 	val renderReportTypes = new RenderReportTypes(persistenceFactory)
 	private[this] val pdfWriter = new renderReportTypes.PdfWriter(name)
 	private[this] var id: Long = 0
@@ -286,9 +286,16 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		this.stroke()
 	}
 
+	import scalaz._
+	private [this] val getPdfImage: String => RenderReport.this.renderReportTypes.PdfImage = Memo.immutableHashMapMemo {
+		s => {
+			new renderReportTypes.PdfImage(nextId(), s)
+		}
+	}
+
 
 	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
-		val pdfImage = new renderReportTypes.PdfImage(nextId(), file)
+		val pdfImage = getPdfImage(file)
 		renderReportTypes.setObject(pdfImage)
 		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
 		graphicList += new renderReportTypes.PdfDrawImage(pdfImage.id, x, y, scale)

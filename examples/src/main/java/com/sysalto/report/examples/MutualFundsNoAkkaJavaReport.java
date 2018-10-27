@@ -278,12 +278,12 @@ public class MutualFundsNoAkkaJavaReport {
         report.setYPosition(y2);
         report.nextLine();
         ResultSet rs = MutualFundsInitData.query("select * from tran_account");
-        AtomicReference<Double> total1 = new AtomicReference<>();
-        AtomicReference<Double> total2 = new AtomicReference<>();
-        AtomicReference<Double> total3 = new AtomicReference<>();
-        total1.set(0.);
-        total2.set(0.);
-        total3.set(0.);
+        AtomicReference<Float> total1 = new AtomicReference<>();
+        AtomicReference<Float> total2 = new AtomicReference<>();
+        AtomicReference<Float> total3 = new AtomicReference<>();
+        total1.set(0.f);
+        total2.set(0.f);
+        total3.set(0.f);
 
         ResultSetGroup rsGroup = GroupUtilDefs.toGroup(rs);
         rsGroup.foreachJ(rec -> {
@@ -296,9 +296,9 @@ public class MutualFundsNoAkkaJavaReport {
             ReportCell c_value1 = new ReportCell(new ReportTxt(r_value1.toString())).rightAlign().inside(value1);
             ReportCell c_value2 = new ReportCell(new ReportTxt(r_value2.toString())).rightAlign().inside(value2);
             ReportCell c_value3 = new ReportCell(new ReportTxt(r_value3.toString())).rightAlign().inside(value3);
-            total1.set(total1.get() + r_value1.doubleValue());
-            total2.set(total2.get() + r_value2.doubleValue());
-            total3.set(total3.get() + r_value3.doubleValue());
+            total1.set(total1.get() + r_value1.floatValue());
+            total2.set(total2.get() + r_value2.floatValue());
+            total3.set(total3.get() + r_value3.floatValue());
             ReportCell[] rrow1 = new ReportCell[]{c_account, c_value1, c_value2, c_value3};
             Float y21 = report.calculate(rrow1);
             report.print(rrow1);

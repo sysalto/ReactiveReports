@@ -3,6 +3,9 @@
 * compiled on scala 2.12.7
 * added ReportRow.setCellSpacing
 * added DirectDrawReport and ReportChart
+* optimized wrap using scalaz
+* optimized drawImage with memoizing
+* added scalaz dependencies
 
 ### Bugs fixed:
 * lineDashType ignored
