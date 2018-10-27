@@ -22,7 +22,7 @@ object Test {
 //		reportChart.barChart("Test", "X", "Y",chartData,300,400,200,100,5)
 
 		report.nextLine(2)
-		val c_fundName = ReportCell(ReportTxt("A" + " ").bold() + "f\nabcd asdsad \nNL werer 3242342") leftAlign() inside  ReportMargin(400, 500)
+		val c_fundName = ReportCell(ReportTxt("A" + " ").bold() + "f\nabcd sd ads sdf sdfdsf asad \nNL werer 3242342") leftAlign() inside  ReportMargin(400, 500)
 //		val cell_P1 = ReportCell("aaa aaa aaa aaa aaa aaa\nssssv1 vddddd2 v3 bbb bbb bbb") inside ReportMargin(500, 600)
 //		val cell_P2 = ReportCell("ZZZ aaa aaa aaa aaa aaa\nssssv1 vddddd2 v3 bbb bbb bbb") inside ReportMargin(600, 700)
 		report print List(c_fundName)// ,cell_P1,cell_P2)

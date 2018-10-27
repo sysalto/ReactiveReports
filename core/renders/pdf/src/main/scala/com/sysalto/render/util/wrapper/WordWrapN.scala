@@ -125,7 +125,7 @@ class WordWrapN(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPar
 			val txt = item.txt
 			if (txt.contains("\n")) {
 				val r1 = txt.split("\n")
-				r1.zipWithIndex.map { case (l, index) => new ReportTxtNl(ReportTxt(l, item.font), index > 0) }
+				r1.map {l => new ReportTxtNl(ReportTxt(l, item.font),l!=r1.head) }
 			} else {
 				List(new ReportTxtNl(item))
 			}
