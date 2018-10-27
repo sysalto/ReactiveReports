@@ -1,6 +1,6 @@
 package example.twitter
 
-import com.sysalto.report.Implicits._
+import com.sysalto.report.Implicits.{ReportTxt, _}
 import com.sysalto.render.PdfDraw.DrawPoint
 import com.sysalto.render.PdfNativeFactory
 import com.sysalto.render.basic.PdfBasic
@@ -22,19 +22,23 @@ object Test {
 //		reportChart.barChart("Test", "X", "Y",chartData,300,400,200,100,5)
 
 		report.nextLine(2)
-		val cell_P1 = ReportCell("aaa aaa aaa aaa aaa aaa\nssssv1 vddddd2 v3 bbb bbb bbb") inside ReportMargin(500, 600)
-		val cell_P2 = ReportCell("ZZZ aaa aaa aaa aaa aaa\nssssv1 vddddd2 v3 bbb bbb bbb") inside ReportMargin(600, 700)
-		report print List(cell_P1,cell_P2)
+		val c_fundName = ReportCell(ReportTxt("A" + " ").bold() + "f\nabcd asdsad \nNL werer 3242342") leftAlign() inside  ReportMargin(400, 500)
+//		val cell_P1 = ReportCell("aaa aaa aaa aaa aaa aaa\nssssv1 vddddd2 v3 bbb bbb bbb") inside ReportMargin(500, 600)
+//		val cell_P2 = ReportCell("ZZZ aaa aaa aaa aaa aaa\nssssv1 vddddd2 v3 bbb bbb bbb") inside ReportMargin(600, 700)
+		report print List(c_fundName)// ,cell_P1,cell_P2)
 
 //		report.nextLine(2)
 //		val cell_P2 = ReportCell("aaa aaa aaa aaa aaa aaa") inside ReportMargin(500, 600)
 //		report print cell_P2
 
 		val directDraw = new DirectDrawReport(report)
-		directDraw.rectangle(500,report.getY+100,600,report.getY-50)
+		directDraw.rectangle(400,report.getY+100,500,report.getY-50)
 		directDraw.stroke()
 		report.render()
 	}
+
+
+
 
 	def main(args: Array[String]): Unit = {
 		report()
