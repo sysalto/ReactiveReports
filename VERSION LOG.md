@@ -1,4 +1,4 @@
-## 1.0.2-SNAPSHOT
+## 1.0.2 (2018-10-27)
 ### Changes:
 * compiled on scala 2.12.7
 * added ReportRow.setCellSpacing
