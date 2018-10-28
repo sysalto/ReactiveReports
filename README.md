@@ -39,20 +39,20 @@ libraryDependencies += "com.github.sysalto" %% "reactivereports-pdf-render" % "1
 
 ### 2 - Using Maven - Recommeded for Java
 
-Use the latest Maven artifacts for Reactive Reports.
+Use the latest Maven artifacts for Reactive Reports. Example:
 
 ```
-   <dependency>
-      <groupId>com.github.sysalto</groupId>
-      <artifactId>reactivereports-core_2.12</artifactId>
-      <version>1.0.2</version> 
-    </dependency>
+<dependency>
+  <groupId>com.github.sysalto</groupId>
+  <artifactId>reactivereports-core_2.12</artifactId>
+  <version>1.0.2</version> 
+</dependency>
 
-    <dependency>
-      <groupId>com.github.sysalto</groupId>
-      <artifactId>reactivereports-pdf-render_2.12</artifactId>
-      <version>1.0.2</version>
-    </dependency>
+<dependency>
+  <groupId>com.github.sysalto</groupId>
+  <artifactId>reactivereports-pdf-render_2.12</artifactId>
+  <version>1.0.2</version>
+</dependency>
 ```
 
 ### Other Open Source products used within Reactive Reports
