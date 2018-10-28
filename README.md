@@ -30,32 +30,17 @@ The output of  MutualFundsReport is MutualFunds.pdf.
 ## Getting started
    
 ### 1 - Using SBT - Recommended for Scala
-Clone the git repo and run the examples
-For running the Scala examples, we recommend cloning the git repo and running the examples, like shown below.
+Include the following in your `build.sbt` file:
+
 ```
-1 - git clone https://github.com/sysalto/ReactiveReports
-2 - sbt update
-3 - sbt compile
-4 - sbt
-5 - projects
-6 - project examples
-7 - run
-8 - Select the number corresponding to the project you want to run
-9 - Check the PDF file newly generated, found in the examples folder
+libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % "1.0.2"
+libraryDependencies += "com.github.sysalto" %% "reactivereports-pdf-render" % "1.0.2"
 ```
 
 ### 2 - Using Maven - Recommeded for Java
-For running the Java examples, we recommend using Maven, not sbt. Although sbt can be used for Java, as well, adding Maven dependencies is a better practice. 
 
-Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3. 
+Use the latest Maven artifacts for Reactive Reports.
 
-**Step 1** - Download Intellij Idea Community Edition from here - https://www.jetbrains.com/idea/download/#section=mac
-
-**Step 2** - Open the Idea editor, and create a Maven artifact, by navigating to `File -> New -> Project -> Maven`
-
-**Step 3** - Use the latest Maven artifacts for Reactive Reports.
-
-**Step 4** - Go to `src/main/java`, and create a class. Paste the code from one of the Java examples in `javaExample/Example3`. This will generate a PDF report in your project, under the root directory. 
 
 
 
@@ -67,7 +52,9 @@ Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3.
 
 **2 - RocksDB** - http://rocksdb.org/
 
-**3 - Protobuf3** from Google - https://developers.google.com/protocol-buffers/docs/proto3
+**3 - Protobuf** - https://developers.google.com/protocol-buffers/docs/proto3
+
+**4 - Scalaz** - https://github.com/scalaz/scalaz
 
 **Open Source dependencies only used in examples, not in the framework**
 
@@ -77,8 +64,4 @@ Under `javaExamples`, we provide 3 examples: Example 1, Example 2 and Example 3.
 
 ## Contact
 
-For any questions, concerns, or simply to get in touch with us, please, email us at sysaltocorporation@gmail.com
-
-
-
-  
+For questions, concerns, or simply to get in touch with us, please, email us at `sysaltocorporation@gmail.com`
