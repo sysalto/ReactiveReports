@@ -55,7 +55,7 @@ Use the latest Maven artifacts for Reactive Reports. Example:
 </dependency>
 ```
 
-### Other Open Source products used within Reactive Reports
+### Built using
 
 **Open Source dependencies used by Reactive Reports framework**
 
