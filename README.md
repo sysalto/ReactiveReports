@@ -8,8 +8,7 @@
  Please see `com.sysalto.report.examples.rss.RssReport` as an example.
  - Its architecture is designed to conserve memory, and users will never get out of memory errors for large amounts of data
  - Reactive Reports has the full control and responsibility over the PDF generation capability
-
-
+<img width="1012" alt="diagram_rr" src="https://user-images.githubusercontent.com/25547970/47624281-27880800-daf1-11e8-98d0-f4b4fa7284c4.png">
 In Java, you would create the reports using Java code.
 In Scala, we have provided a DSL - domain specific language - to create the report. This DSL is very simple to use. We will update the documentation with more explanations on that. This DSL allows printing text of different sizes and colors and enables column wrapping.
 
