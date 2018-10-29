@@ -1,23 +1,40 @@
 # Reactive Reports
 
- - Reactive Reports is an Open Source, scalable framework developed in Scala, designed for generating reports from code.
- - It uses the Akka framework (https://akka.io) for handling data streams.
- - It can be automated from a shell script or tool, providing maximum flexibility, in terms of automation tools. 
- - Reports can be generated in Scala or Java. Both in Java and Scala, you can generate the reports with or without Akka.  For use with Akka, you have to include `reactivereports-core-akka`.
- - It provides the ability to generate one or mutiple reports at once, in parallel, from the same input, or from multiple inputs. In doing this, it selects the database records only once and creates different reports simultaneously.
- Please see `com.sysalto.report.examples.rss.RssReport` as an example.
- - Its architecture is designed to conserve memory, and users will never get out of memory errors for large amounts of data
- - Reactive Reports has the full control and responsibility over the PDF generation capability
-<img width="1012" alt="diagram_rr" src="https://user-images.githubusercontent.com/25547970/47624281-27880800-daf1-11e8-98d0-f4b4fa7284c4.png">
-In Java, you would create the reports using Java code.
-In Scala, we have provided a DSL - domain specific language - to create the report. This DSL is very simple to use. We will update the documentation with more explanations on that. This DSL allows printing text of different sizes and colors and enables column wrapping.
+### Unique features 
+ - Scalable framework developed in Scala, designed for generating reports from code.
+ - Support of Scala, Java, other JVM languages (i.e. Groovy) 
+ - Pluggable architecture
+ - Open Source - LGPL license - **free to use and modify, for both Open Source and commercial uses** 
+ 
+ <img width="1012" alt="diagram_rr" src="https://user-images.githubusercontent.com/25547970/47624281-27880800-daf1-11e8-98d0-f4b4fa7284c4.png">
+ 
+ ### Fit for Big data
+ - Strong product for processing big data – the hard disk size is the limit
+ - Designed to **conserve memory;** report memory data is stored on the disk, in RocksDB.
+ - Built in support for Akka streams input
+ 
+### Flexibility
+ - Can be integrated into CI/CD pipelines (i.e., Jenkins)
+ - Reactive Reports applications can run on any JVM runtime
+ - Reactive Reports applications can be Dockerized
+ - Applications can integrate with other libraries, such as AI/ML, NLP and others.
 
-The license is LGPL. Please see LICENSE.md. According to this license, **Reactive Reports is free to use and modify, for both Open Source and commercial uses.** 
+### Speed
+ - Uses scalaz memoizing for speeding calculations
+ - Generated a 20,000-page report with images in 4 minutes
+ 
+### Graphics
+ - Built in support for French and Spanish character set 
+ - Can build graphics using the PDF standard (tables, color gradients, pie charts, bar charts, etc.)
+ - Can include external images (ie: JPG, etc)
+ - Can create in document or external links, and table of contents at beginning or end of reports
+ - Reactive Reports has the full control and responsibility over the PDF generation capability
+
+### Language details
+ - In Java, you would create the reports using Java code.
+ - In Scala, we have provided a DSL - domain specific language - to create the report. This DSL is very simple to use. 
 
 ReactiveReports can be used in Scala 2.12 and in Java 7 and 8.
-
-As running examples, please see `com.sysalto.report.examples.mutualFunds.MutualFundsReport` and `com.sysalto.report.examples.rss.RssReport`.
-The output of  MutualFundsReport is MutualFunds.pdf.
 
   
 ## Getting started
@@ -52,13 +69,15 @@ Use the latest Maven artifacts for Reactive Reports. Example:
 
 **Open Source dependencies used by Reactive Reports framework**
 
-**1 - Akka** - https://akka.io/
+**1 - Scala**
 
-**2 - RocksDB** - http://rocksdb.org/
+**2 - Akka** - https://akka.io/
 
-**3 - Protobuf** - https://developers.google.com/protocol-buffers/docs/proto3
+**3 - RocksDB** - http://rocksdb.org/
 
-**4 - Scalaz** - https://github.com/scalaz/scalaz
+**4 - Protobuf** - https://developers.google.com/protocol-buffers/docs/proto3
+
+**5 - Scalaz** - https://github.com/scalaz/scalaz
 
 **Open Source dependencies only used in examples, not in the framework**
 
@@ -66,6 +85,6 @@ Use the latest Maven artifacts for Reactive Reports. Example:
 
 **2 - Twitter4s** - https://github.com/DanielaSfregola/twitter4s
 
-## Contact
+### Contact
 
 For questions, concerns, or simply to get in touch with us, please, email us at `sysaltocorporation@gmail.com`
