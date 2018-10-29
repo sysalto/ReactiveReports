@@ -9,12 +9,6 @@
  - Its architecture is designed to conserve memory, and users will never get out of memory errors for large amounts of data
  - Reactive Reports has the full control and responsibility over the PDF generation capability
 
-The input to the framework can be:
-  - one or more data streams - only for Akka
-  - database records - here, the client application connects to a database through a JDBC connection
-  - collection of Java or Scala objects
-  
-The output for the report is done in PDF.
 
 In Java, you would create the reports using Java code.
 In Scala, we have provided a DSL - domain specific language - to create the report. This DSL is very simple to use. We will update the documentation with more explanations on that. This DSL allows printing text of different sizes and colors and enables column wrapping.
