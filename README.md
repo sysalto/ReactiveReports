@@ -31,10 +31,9 @@
  - Reactive Reports has the full control and responsibility over the PDF generation capability
 
 ### Language details
- - In Java, you would create the reports using Java code.
- - In Scala, we have provided a DSL - domain specific language - to create the report. This DSL is very simple to use. 
-
-ReactiveReports can be used in Scala 2.12 and in Java 7 and 8.
+ - In Java, reports are created using Java code.
+ - In Scala, Reactive Reports provides a DSL - domain specific language - for report creation. This DSL is simple to use. 
+ - Reactive Reports can be used in Scala 2.12 and in Java 7 and 8.
 
   
 ## Getting started
