@@ -2,12 +2,12 @@ package com.sysalto.render.serialization
 
 
 import com.sysalto.render.PdfDraw.{DrawLine, DrawStroke, PdfGraphicFragment}
-import com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase
-import com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase
-import com.sysalto.render.serialization.RenderProto._
+import proto.com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto.FieldCase
+import proto.com.sysalto.render.serialization.RenderProto.PdfPageItem_proto.FieldItemCase
+import proto.com.sysalto.render.serialization.RenderProto._
 import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
 import com.sysalto.report.serialization.common.CommonReportSerializer._
-import com.sysalto.report.serialization.common.ReportCommonProto._
+import proto.com.sysalto.report.serialization.common.ReportCommonProto._
 
 import scala.collection.JavaConverters._
 

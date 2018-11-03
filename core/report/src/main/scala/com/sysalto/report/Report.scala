@@ -41,8 +41,8 @@ import scala.collection.JavaConverters._
 	* @param orientation - report's orientation:PORTRAIT or LANDSCAPE.
 	* @param pdfFactory  - the pdfFactory variable.This is needed for report to delegate all the report's call to this implementation.
 	*/
-case class Report(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, pageFormat: ReportPageFormat = LetterFormat,
-                  persistence: PersistenceFactory = null, pdfCompression: Boolean = true)(implicit pdfFactory: PdfFactory) {
+class Report(val name: String, val orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT, val pageFormat: ReportPageFormat = LetterFormat,
+             val persistence: PersistenceFactory = null, val pdfCompression: Boolean = true,tagged:Boolean=true)(implicit pdfFactory: PdfFactory) {
 	private[this] var pageNbrs = 1L
 	private[this] var crtPageNbr = 1L
 	private[report] val crtPage = new ReportPage(new ListBuffer[ReportItem]())
@@ -268,16 +268,6 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 	}
 
 
-
-
-
-
-
-
-
-
-
-
 	/*
 		Draws a line between (x1,y1) and (x2,y2) with thickness lineWidth and color
 		x are horizontal coordinates and y vertical starting with 0 from the top
@@ -365,7 +355,7 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 			}
 			ReportTxt(item.txt, font)
 		})
-		assert(x1-x0>0)
+		assert(x1 - x0 > 0)
 		if (simulate) {
 			reportWrap(text1, x0, y0, x1, y1, wrapAlign, simulate)
 		} else {
@@ -734,6 +724,12 @@ case class Report(name: String, orientation: ReportPageOrientation.Value = Repor
 }
 
 object Report {
+	def apply(name: String, orientation: ReportPageOrientation.Value = ReportPageOrientation.PORTRAIT,
+	          pageFormat: ReportPageFormat = LetterFormat, persistence: PersistenceFactory = null, pdfCompression: Boolean = true,tagged:Boolean=true)
+	         (implicit pdfFactory: PdfFactory): Report = {
+		new Report(name, orientation, pageFormat, persistence, pdfCompression)(pdfFactory)
+	}
+
 	/** Static method to create a new report from Java
 		*
 		* @param name        - name of the pdf file. It should include the pdf extension

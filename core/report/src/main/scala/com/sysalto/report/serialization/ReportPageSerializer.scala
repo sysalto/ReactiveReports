@@ -26,10 +26,10 @@ import com.sysalto.report.{RFontAttribute, WrapAlign}
 import scala.collection.JavaConverters._
 import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes._
-import com.sysalto.report.serialization.ReportProto.ReportItem_proto.FieldCase
-import com.sysalto.report.serialization.ReportProto._
+import proto.com.sysalto.report.serialization.ReportProto.ReportItem_proto.FieldCase
+import proto.com.sysalto.report.serialization.ReportProto._
 import com.sysalto.report.serialization.common.CommonReportSerializer._
-import com.sysalto.report.serialization.common.ReportCommonProto._
+import proto.com.sysalto.report.serialization.common.ReportCommonProto._
 
 import scala.collection.mutable.ListBuffer
 

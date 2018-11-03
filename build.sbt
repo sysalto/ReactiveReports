@@ -70,6 +70,7 @@ lazy val coreSettings = Seq(
 	},
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
 	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION,
+	libraryDependencies += "com.google.protobuf" % "protobuf-java-util" % "latest.release",
 	libraryDependencies += "org.scalaz" %% "scalaz-core" % SCALAZ_VERSION,
 	libraryDependencies += "org.scalaz" %% "scalaz-effect" % SCALAZ_VERSION,
 	libraryDependencies += "org.scalaz" %% "scalaz-concurrent" % SCALAZ_VERSION,
@@ -78,6 +79,10 @@ lazy val coreSettings = Seq(
 
 lazy val renderPdfSettings = Seq(
 	crossScalaVersions := Seq("2.11.12", SCALA_VERSION),
+	protobufIncludePaths in ProtobufConfig += (sourceDirectory in ProtobufConfig in coreReport).value,
+//	protobufGeneratedTargets in ProtobufConfig ++= {
+//		Seq(((sourceDirectory in Compile).value / "generated" / "scala", "*.scala"))
+//	},
 	javacOptions ++= {
 		if (scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	}
@@ -97,7 +102,7 @@ lazy val reactiveReports = (project in file(".")).settings(commonInclude: _*).
 
 lazy val coreReport = (project in file("core/report")).settings(commonInclude: _*).
 	settings(name := "ReactiveReports Core").settings(commonSettings: _*).
-	settings(coreSettings: _*).enablePlugins(JavaAppPackaging)
+	settings(coreSettings: _*).enablePlugins(ProtobufPlugin).enablePlugins(JavaAppPackaging)
 
 
 lazy val coreReportAkka = (project in file("core/reportAkka")).settings(commonInclude: _*).
@@ -107,7 +112,8 @@ lazy val coreReportAkka = (project in file("core/reportAkka")).settings(commonIn
 
 lazy val renderPdf = (project in file("core/renders/pdf")).settings(commonInclude: _*).
 	settings(name := "ReactiveReports Pdf Render").settings(commonSettings: _*).
-	settings(renderPdfSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
+	settings(renderPdfSettings: _*).enablePlugins(JavaAppPackaging).
+	enablePlugins(ProtobufPlugin) dependsOn coreReport
 
 
 lazy val exampleSettings = Seq(

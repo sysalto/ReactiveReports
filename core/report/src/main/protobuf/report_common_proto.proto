@@ -1,7 +1,7 @@
 syntax = "proto3";
 option optimize_for = SPEED;
 
-package com.sysalto.report.serialization.common;
+package proto.com.sysalto.report.serialization.common;
 
 
 message ReportColor_proto {

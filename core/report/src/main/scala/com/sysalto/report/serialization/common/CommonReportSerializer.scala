@@ -4,7 +4,7 @@ import com.sysalto.report.RFontAttribute
 import com.sysalto.report.ReportTypes._
 import com.sysalto.report.reportTypes._
 import com.sysalto.report.serialization._
-import com.sysalto.report.serialization.common.ReportCommonProto._
+import proto.com.sysalto.report.serialization.common.ReportCommonProto._
 
 object CommonReportSerializer {
 

@@ -1,9 +1,11 @@
 syntax = "proto3";
 option optimize_for = SPEED;
 
-package com.sysalto.report.serialization;
+package proto.com.sysalto.report.serialization;
 
-import "com/sysalto/report/serialization/common/report_common_proto.proto";
+//import "com/sysalto/report/serialization/common/report_common_proto.proto";
+//import "src/main/protobuf/report_common_proto.proto";
+import "report_common_proto.proto";
 
 message ReportPage_proto {
     repeated ReportItem_proto item = 1;

@@ -1,9 +1,9 @@
 syntax = "proto3";
 option optimize_for = SPEED;
 
-package com.sysalto.render.serialization;
+package proto.com.sysalto.render.serialization;
 
-import "com/sysalto/report/serialization/common/report_common_proto.proto";
+import "report_common_proto.proto";
 
 message PdfBaseItem_proto {
     int64 id = 1;

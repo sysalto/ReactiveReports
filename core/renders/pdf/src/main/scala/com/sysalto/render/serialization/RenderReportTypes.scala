@@ -10,7 +10,7 @@ import com.sysalto.render.{PdfChart, PdfDraw}
 import com.sysalto.render.PdfDraw.{DrawPoint, PdfGraphicFragment, roundRectangle}
 import com.sysalto.render.basic.PdfBasic
 import com.sysalto.render.basic.PdfBasic._
-import com.sysalto.render.serialization.RenderProto.{PdfBaseItem_proto, PdfCatalog_proto}
+import proto.com.sysalto.render.serialization.RenderProto.{PdfBaseItem_proto, PdfCatalog_proto}
 import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
 import com.sysalto.report.ReportTypes.BoundaryRect
