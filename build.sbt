@@ -70,7 +70,7 @@ lazy val coreSettings = Seq(
 	},
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
 	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION,
-	libraryDependencies += "com.google.protobuf" % "protobuf-java-util" % "latest.release",
+	libraryDependencies += "com.google.protobuf" % "protobuf-java-util" % PROTOBUF_VERSION,
 	libraryDependencies += "org.scalaz" %% "scalaz-core" % SCALAZ_VERSION,
 	libraryDependencies += "org.scalaz" %% "scalaz-effect" % SCALAZ_VERSION,
 	libraryDependencies += "org.scalaz" %% "scalaz-concurrent" % SCALAZ_VERSION,
