@@ -63,7 +63,6 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
 
 		val calculateWordWidth: ReportTxt => Float = Memo.immutableHashMapMemo {
 			s => {
-//				println(s"calculate ${s}")
 				getTextWidth(s)
 			}
 		}
