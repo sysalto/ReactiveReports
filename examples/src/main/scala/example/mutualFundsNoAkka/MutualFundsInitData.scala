@@ -45,7 +45,7 @@ object MutualFundsInitData {
 
 
 
-  def initDb1(): Unit = {
+  def initDbBenchmark(): Unit = {
     dbUpdate(
       """drop table test if exists""")
     dbUpdate(

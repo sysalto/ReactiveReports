@@ -150,7 +150,7 @@ object FinancialReport extends GroupUtilTrait {
 		pageNbrs
 	}
 
-	private def report(report: Report): Unit = {
+	private def runReport(report: Report): Unit = {
 		val summaryList = ListBuffer[(String, Long)]()
 		setupReport(report)
 		report.start()
@@ -264,7 +264,7 @@ object FinancialReport extends GroupUtilTrait {
 		report.render()
 	}
 
-	def runReport(): Unit = {
+	def initReport(): Unit = {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
@@ -278,10 +278,10 @@ object FinancialReport extends GroupUtilTrait {
 		report1.setExternalFont(fontFamily)
 		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
 		report1.font = font
-		report(report1)
+		runReport(report1)
 	}
 
 	def main(args: Array[String]): Unit = {
-		runReport()
+		initReport()
 	}
 }

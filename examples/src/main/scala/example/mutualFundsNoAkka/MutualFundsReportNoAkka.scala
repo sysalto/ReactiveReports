@@ -314,7 +314,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	}
 
 
-	private def report(report: Report): Unit = {
+	private def runReport(report: Report): Unit = {
 
 		// set page header size(height) at 50 and 0 (no page header) for the first page.
 		report.setHeaderSize = { pgNbr =>
@@ -376,7 +376,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	}
 
 
-	def runReport(): Unit = {
+	def initReport(): Unit = {
 		implicit val pdfFactory: PdfFactory = new PdfNativeFactory()
 
 		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
@@ -390,12 +390,12 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report1.setExternalFont(fontFamily)
 		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
 //		report1.font = font
-		report(report1)
+		runReport(report1)
 	}
 
 	def main(args: Array[String]): Unit = {
 		// create tables and load data using hsqldb
 		mutualFundsNoAkka.MutualFundsInitData.initDb()
-		runReport()
+		initReport()
 	}
 }

@@ -5,7 +5,7 @@
 * use latest akka 2.5.19 , rocksdb 5.17.2 and scalaz 7.3.0-M27
 
 ### Bugs fixed:
-* optimze memoizing for wordwrap.
+* optimize memoizing for wordwrap.
 
 ## 1.0.2 (2018-10-27)
 ### Changes:
