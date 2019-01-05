@@ -2,13 +2,13 @@ import sbt.Keys.{libraryDependencies, publishMavenStyle}
 
 val SCALA_VERSION = "2.12.8"
 
-val AKKA_VERSION = "latest.release" // "2.5.17"
+val AKKA_VERSION = "2.5.19" // "latest.release"
 
-val ROCKSDB_VERSION = "latest.release" // "5.15.10"
+val ROCKSDB_VERSION = "5.17.2" // "latest.release"
 
-val PROTOBUF_VERSION = "latest.release" // "3.6.1"
+val PROTOBUF_VERSION =  "3.6.1" // "latest.release"
 
-val SCALAZ_VERSION ="latest.release" // "7.3.0-M25"
+val SCALAZ_VERSION ="7.3.0-M27" // "latest.release"
 
 //val projectVersion = "1.0.2"
 val projectVersion = "1.0.3-SNAPSHOT"
@@ -80,9 +80,6 @@ lazy val coreSettings = Seq(
 lazy val renderPdfSettings = Seq(
 	crossScalaVersions := Seq("2.11.12", SCALA_VERSION),
 	protobufIncludePaths in ProtobufConfig += (sourceDirectory in ProtobufConfig in coreReport).value,
-//	protobufGeneratedTargets in ProtobufConfig ++= {
-//		Seq(((sourceDirectory in Compile).value / "generated" / "scala", "*.scala"))
-//	},
 	javacOptions ++= {
 		if (scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	}
@@ -123,7 +120,6 @@ lazy val exampleSettings = Seq(
 	cancelable in Global := true,
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
 	scalaVersion := SCALA_VERSION,
-	//  incOptions := incOptions.value.withNameHashing(true),
 	Keys.fork in run := true,
 	resolvers += Resolver.sonatypeRepo("public"),
 	resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
