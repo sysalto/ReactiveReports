@@ -8,50 +8,52 @@ import proto.com.sysalto.render.serialization.RenderProto._
 import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
 import com.sysalto.report.serialization.common.CommonReportSerializer._
 import proto.com.sysalto.report.serialization.common.ReportCommonProto._
+import RenderReportTypes._
+import com.sysalto.report.util.PersistenceUtil
 
 import scala.collection.JavaConverters._
 
-class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
+object RenderReportSerializer {
 
 	object PdfBaseItemSerializer {
-		def write(input: renderReportTypes.PdfBaseItem): PdfBaseItem_proto = {
+		def write(input: RenderReportTypes.PdfBaseItem): PdfBaseItem_proto = {
 			val builder = PdfBaseItem_proto.newBuilder()
 			builder.setId(input.id)
 			builder.setOffset(input.offset)
 			input match {
-				case item: renderReportTypes.PdfCatalog =>
+				case item: PdfCatalog =>
 					builder.setPdfCatalogProto(PdfCatalogSerializer.write(item))
-				case item: renderReportTypes.PdfPage =>
+				case item: PdfPage =>
 					builder.setPdfPageProto(PdfPageSerializer.write(item))
-				case item: renderReportTypes.PdfFont =>
+				case item: PdfFont =>
 					builder.setPdfFontProto(PdfFontSerializer.write(item))
-				case item: renderReportTypes.PdfPageContent =>
+				case item: PdfPageContent =>
 					builder.setPdfPageContentProto(PdfPageContentSerializer.write(item))
-				case item: renderReportTypes.PdfPageList =>
+				case item: PdfPageList =>
 					builder.setPdfPageListProto(PdfPageListSerializer.write(item))
-				case item: renderReportTypes.PdfImage =>
+				case item: PdfImage =>
 					builder.setPdfImageProto(PdfImageSerializer.write(item))
-				case item: renderReportTypes.PdfShaddingFctColor =>
+				case item: PdfShaddingFctColor =>
 					builder.setPdfShaddingFctColorProto(PdfShaddingFctColorSerializer.write(item))
-				case item: renderReportTypes.PdfColorShadding =>
+				case item: PdfColorShadding =>
 					builder.setPdfColorShaddingProto(PdfColorShaddingSerializer.write(item))
-				case item: renderReportTypes.PdfGPattern =>
+				case item: PdfGPattern =>
 					builder.setPdfGPatternProto(PdfGPatternSerializer.write(item))
-				case item: renderReportTypes.PdfFontStream =>
+				case item: PdfFontStream =>
 					builder.setPdfFontStreamProto(PdfFontStreamSerializer.write(item))
-				case item: renderReportTypes.PdfFontDescriptor =>
+				case item: PdfFontDescriptor =>
 					builder.setPdfFontDescriptorProto(PdfFontDescriptorSerializer.write(item))
-				case item: renderReportTypes.PdfGoToPage =>
+				case item: PdfGoToPage =>
 					builder.setPdfGoToPageProto(PdfGoToPageSerializer.write(item))
-				case item: renderReportTypes.PdfLink =>
+				case item: PdfLink =>
 					builder.setPdfLinkProto(PdfLinkSerializer.write(item))
-				case item: renderReportTypes.PdfGoToUrl =>
+				case item: PdfGoToUrl =>
 					builder.setPdfGoToUrlProto(PdfGoToUrlSerializer.write(item))
 			}
 			builder.build()
 		}
 
-		def read(input: PdfBaseItem_proto): renderReportTypes.PdfBaseItem = {
+		def read(input: PdfBaseItem_proto)(implicit persistenceUtil:PersistenceUtil): PdfBaseItem = {
 			input.getFieldCase match {
 				case FieldCase.PDFCATALOGPROTO => {
 					PdfCatalogSerializer.read(input.getId, input.getOffset, input.getPdfCatalogProto)
@@ -101,7 +103,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 	object PdfCatalogSerializer {
-		def write(input: renderReportTypes.PdfCatalog): PdfCatalog_proto = {
+		def write(input: PdfCatalog): PdfCatalog_proto = {
 			val builder = PdfCatalog_proto.newBuilder()
 			if (input.idPdfPageListOpt.isDefined) {
 				builder.addIdPdfPageListOpt(input.idPdfPageListOpt.get)
@@ -112,8 +114,8 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfCatalog_proto): renderReportTypes.PdfCatalog = {
-			val result = new renderReportTypes.PdfCatalog(id)
+		def read(id: Long, offset: Long, input: PdfCatalog_proto): PdfCatalog = {
+			val result = new PdfCatalog(id)
 			result.offset = offset
 			if (input.getIdPdfPageListOptCount() > 0) {
 				result.idPdfPageListOpt = Some(input.getIdPdfPageListOptList.asScala.head)
@@ -126,7 +128,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 	object PdfPageSerializer {
-		def write(input: renderReportTypes.PdfPage): PdfPage_proto = {
+		def write(input: PdfPage): PdfPage_proto = {
 			val builder = PdfPage_proto.newBuilder()
 			builder.setParentId(input.parentId)
 			builder.setPageWidth(input.pageWidth)
@@ -142,8 +144,8 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfPage_proto): renderReportTypes.PdfPage = {
-			val result = new renderReportTypes.PdfPage(id, input.getParentId, input.getPageWidth, input.getPageHeight)
+		def read(id: Long, offset: Long, input: PdfPage_proto)(implicit persistenceUtil:PersistenceUtil): PdfPage = {
+			val result = new PdfPage(id, input.getParentId, input.getPageWidth, input.getPageHeight)
 			result.offset = offset
 			result.idFontList = input.getIdFontListList.asScala.map(id => id.asInstanceOf[Long]).toList
 			result.idPdfPatternList = input.getIdPdfPatternListList.asScala.map(id => id.asInstanceOf[Long]).toList
@@ -158,20 +160,20 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 	object FontEmbeddedDefSerializer {
-		def write(input: renderReportTypes.FontEmbeddedDef): FontEmbeddedDef_proto = {
+		def write(input: FontEmbeddedDef): FontEmbeddedDef_proto = {
 			val builder = FontEmbeddedDef_proto.newBuilder()
 			builder.setIdPdfFontDescriptor(input.idPdfFontDescriptor)
 			builder.setIdPdfFontStream(input.idPdfFontStream)
 			builder.build()
 		}
 
-		def read(input: FontEmbeddedDef_proto): renderReportTypes.FontEmbeddedDef = {
-			new renderReportTypes.FontEmbeddedDef(input.getIdPdfFontDescriptor, input.getIdPdfFontStream)
+		def read(input: FontEmbeddedDef_proto): FontEmbeddedDef = {
+			new FontEmbeddedDef(input.getIdPdfFontDescriptor, input.getIdPdfFontStream)
 		}
 	}
 
 	object PdfFontSerializer {
-		def write(input: renderReportTypes.PdfFont): PdfFont_proto = {
+		def write(input: PdfFont): PdfFont_proto = {
 			val builder = PdfFont_proto.newBuilder()
 			builder.setRefName(input.refName)
 			builder.setFontKeyName(input.fontKeyName)
@@ -181,9 +183,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfFont_proto): renderReportTypes.PdfFont = {
+		def read(id: Long, offset: Long, input: PdfFont_proto) (implicit persistenceUtil:PersistenceUtil): PdfFont = {
 			val embeddedDefOpt = if (input.getFontEmbeddedDefCount == 0) None else Some(FontEmbeddedDefSerializer.read(input.getFontEmbeddedDef(0)))
-			val result = new renderReportTypes.PdfFont(id, input.getRefName, input.getFontKeyName, embeddedDefOpt)
+			val result = new PdfFont(id, input.getRefName, input.getFontKeyName, embeddedDefOpt)
 			result.offset = offset
 			result
 		}
@@ -191,13 +193,13 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 
 	object PdfPageItemSerializer {
-		def write(input: renderReportTypes.PdfPageItem): PdfPageItem_proto = {
+		def write(input: PdfPageItem): PdfPageItem_proto = {
 			val builder = PdfPageItem_proto.newBuilder()
 			input match {
-				case item: renderReportTypes.PdfText => {
+				case item: PdfText => {
 					builder.setPdfTextProto(PdfTextSerializer.write(item))
 				}
-				case item: renderReportTypes.PdfGraphic => {
+				case item: PdfGraphic => {
 					builder.setPdfGraphicProto(PdfGraphicSerializer.write(item))
 				}
 				case _ => println("ERROR PdfPageItemSerializer.write unknown " + input)
@@ -205,7 +207,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(input: PdfPageItem_proto): renderReportTypes.PdfPageItem = {
+		def read(input: PdfPageItem_proto)(implicit persistenceUtil:PersistenceUtil): PdfPageItem = {
 			input.getFieldItemCase match {
 				case FieldItemCase.PDFTEXT_PROTO => {
 					PdfTextSerializer.read(input.getPdfTextProto)
@@ -219,22 +221,22 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 	object PdfGraphicSerializer {
-		def write(input: renderReportTypes.PdfGraphic): PdfGraphic_proto = {
+		def write(input: PdfGraphic): PdfGraphic_proto = {
 			val builder = PdfGraphic_proto.newBuilder()
 			input.items.foreach(item =>
 				builder.addPdfGraphicFragmentProto(PdfGraphicFragmentSerializer.write(item)))
 			builder.build()
 		}
 
-		def read(input: PdfGraphic_proto): renderReportTypes.PdfGraphic = {
+		def read(input: PdfGraphic_proto)(implicit persistenceUtil:PersistenceUtil): PdfGraphic = {
 			val list = input.getPdfGraphicFragmentProtoList.asScala.map(item => PdfGraphicFragmentSerializer.read(item)).toList
-			new renderReportTypes.PdfGraphic(list)
+			new PdfGraphic(list)
 		}
 	}
 
 
 	object PdfTxtFragmentSerializer {
-		def write(input: renderReportTypes.PdfTxtFragment): PdfTxtFragment_proto = {
+		def write(input: PdfTxtFragment): PdfTxtFragment_proto = {
 			val builder = PdfTxtFragment_proto.newBuilder()
 			builder.setX(input.x)
 			builder.setY(input.y)
@@ -243,43 +245,43 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(input: PdfTxtFragment_proto): renderReportTypes.PdfTxtFragment = {
-			new renderReportTypes.PdfTxtFragment(input.getX, input.getY, ReportTxtSerializer.read(input.getRtextProto), input.getFonttRefName)
+		def read(input: PdfTxtFragment_proto): PdfTxtFragment = {
+			new PdfTxtFragment(input.getX, input.getY, ReportTxtSerializer.read(input.getRtextProto), input.getFonttRefName)
 		}
 	}
 
 
 	object PdfTextSerializer {
-		def write(input: renderReportTypes.PdfText): PdfText_proto = {
+		def write(input: PdfText): PdfText_proto = {
 			val builder = PdfText_proto.newBuilder()
 			input.txtList.foreach(item => builder.addTxtList(PdfTxtFragmentSerializer.write(item)))
 			builder.build()
 		}
 
-		def read(input: PdfText_proto): renderReportTypes.PdfText = {
-			new renderReportTypes.PdfText(input.getTxtListList.asScala.map(item => PdfTxtFragmentSerializer.read(item)).toList)
+		def read(input: PdfText_proto)(implicit persistenceUtil:PersistenceUtil): PdfText = {
+			new PdfText(input.getTxtListList.asScala.map(item => PdfTxtFragmentSerializer.read(item)).toList)
 		}
 	}
 
 
 	object PdfPageContentSerializer {
-		def write(input: renderReportTypes.PdfPageContent): PdfPageContent_proto = {
+		def write(input: PdfPageContent): PdfPageContent_proto = {
 			val builder = PdfPageContent_proto.newBuilder()
 			input.pageItemList.foreach(item => builder.addPdfPageItemProto(PdfPageItemSerializer.write(item)))
 			builder.setPdfCompression(input.pdfCompression)
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfPageContent_proto): renderReportTypes.PdfPageContent = {
+		def read(id: Long, offset: Long, input: PdfPageContent_proto)(implicit persistenceUtil:PersistenceUtil): PdfPageContent = {
 			val list = input.getPdfPageItemProtoList.asScala.map(item => PdfPageItemSerializer.read(item)).toList
-			val result = new renderReportTypes.PdfPageContent(id, list, input.getPdfCompression)
+			val result = new PdfPageContent(id, list, input.getPdfCompression)
 			result.offset = offset
 			result
 		}
 	}
 
 	object PdfPageListSerializer {
-		def write(input: renderReportTypes.PdfPageList): PdfPageList_proto = {
+		def write(input: PdfPageList): PdfPageList_proto = {
 			val builder = PdfPageList_proto.newBuilder()
 			input.parentId.foreach(item => builder.addParentId(item))
 			input.pageList.foreach(item => builder.addPageList(item))
@@ -287,8 +289,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfPageList_proto): renderReportTypes.PdfPageList = {
-			val result = new renderReportTypes.PdfPageList(id)
+		def read(id: Long, offset: Long, input: PdfPageList_proto)
+		        (implicit persistenceUtil:PersistenceUtil): PdfPageList = {
+			val result = new PdfPageList(id)
 			result.offset = offset
 			if (input.getParentIdCount > 0) {
 				result.parentId = Some(input.getParentId(0))
@@ -300,14 +303,14 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 	object PdfImageSerializer {
-		def write(input: renderReportTypes.PdfImage): PdfImage_proto = {
+		def write(input: PdfImage): PdfImage_proto = {
 			val builder = PdfImage_proto.newBuilder()
 			builder.setFileName(input.fileName)
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfImage_proto): renderReportTypes.PdfImage = {
-			val result = new renderReportTypes.PdfImage(id, input.getFileName)
+		def read(id: Long, offset: Long, input: PdfImage_proto): PdfImage = {
+			val result = new PdfImage(id, input.getFileName)
 			result.offset = offset
 			result
 		}
@@ -315,15 +318,15 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 
 	object PdfShaddingFctColorSerializer {
-		def write(input: renderReportTypes.PdfShaddingFctColor): PdfShaddingFctColor_proto = {
+		def write(input: PdfShaddingFctColor): PdfShaddingFctColor_proto = {
 			val builder = PdfShaddingFctColor_proto.newBuilder()
 			builder.setColor1(ReportColorSerializer.write(input.color1))
 			builder.setColor2(ReportColorSerializer.write(input.color2))
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfShaddingFctColor_proto): renderReportTypes.PdfShaddingFctColor = {
-			val result = new renderReportTypes.PdfShaddingFctColor(id, ReportColorSerializer.read(input.getColor1),
+		def read(id: Long, offset: Long, input: PdfShaddingFctColor_proto): PdfShaddingFctColor = {
+			val result = new PdfShaddingFctColor(id, ReportColorSerializer.read(input.getColor1),
 				ReportColorSerializer.read(input.getColor2))
 			result.offset = offset
 			result
@@ -331,7 +334,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 	object PdfColorShaddingSerializer {
-		def write(input: renderReportTypes.PdfColorShadding): PdfColorShadding_proto = {
+		def write(input: PdfColorShadding): PdfColorShadding_proto = {
 			val builder = PdfColorShadding_proto.newBuilder()
 			builder.setX0(input.x0)
 			builder.setY0(input.y0)
@@ -341,8 +344,9 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfColorShadding_proto): renderReportTypes.PdfColorShadding = {
-			val result = new renderReportTypes.PdfColorShadding(id, input.getX0, input.getY0, input.getX1,
+		def read(id: Long, offset: Long, input: PdfColorShadding_proto)
+		        (implicit persistenceUtil:PersistenceUtil): PdfColorShadding = {
+			val result = new PdfColorShadding(id, input.getX0, input.getY0, input.getX1,
 				input.getY1, input.getIdPdfShaddingFctColor)
 			result.offset = offset
 			result
@@ -350,14 +354,14 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 	object PdfGPatternSerializer {
-		def write(input: renderReportTypes.PdfGPattern): PdfGPattern_proto = {
+		def write(input: PdfGPattern): PdfGPattern_proto = {
 			val builder = PdfGPattern_proto.newBuilder()
 			builder.setIdPdfShadding(input.idPdfShadding)
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfGPattern_proto): renderReportTypes.PdfGPattern = {
-			val result = new renderReportTypes.PdfGPattern(id, input.getIdPdfShadding)
+		def read(id: Long, offset: Long, input: PdfGPattern_proto): PdfGPattern = {
+			val result = new PdfGPattern(id, input.getIdPdfShadding)
 			result.offset = offset
 			result
 		}
@@ -390,38 +394,38 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			input match {
 				case item: DrawLine =>
 					builder.setDrawLineProto(DrawLineSerializer.write(item))
-				case item: renderReportTypes.PdfRectangle =>
+				case item: PdfRectangle =>
 					builder.setPdfRectangleProto(PdfRectangleSerializer.write(item))
 				case item: DrawStroke =>
 					builder.setDrawStrokeProto(DrawStrokeSerializer.write(item))
-				case item: renderReportTypes.PdfDrawImage =>
+				case item: PdfDrawImage =>
 					builder.setPdfDrawImageProto(PdfDrawImageSerializer.write(item))
-				case item: renderReportTypes.DirectDrawMovePoint =>
+				case item: DirectDrawMovePoint =>
 					builder.setDirectDrawMovePointProto(DirectDrawMovePointSerializer.write(item))
-				case item: renderReportTypes.DirectDrawLine =>
+				case item: DirectDrawLine =>
 					builder.setDirectDrawLineProto(DirectDrawLineSerializer.write(item))
-				case item: renderReportTypes.DirectDraw =>
+				case item: DirectDraw =>
 					builder.setDirectDrawProto(DirectDrawSerializer.write(item))
-				case item: renderReportTypes.DirectFillStroke =>
+				case item: DirectFillStroke =>
 					builder.setDirectFillStrokeProto(DirectFillStrokeSerializer.write(item))
-				case item: renderReportTypes.DirectDrawCircle =>
+				case item: DirectDrawCircle =>
 					builder.setDirectDrawCircleProto(DirectDrawCircleSerializer.write(item))
-				case item: renderReportTypes.DirectDrawArc =>
+				case item: DirectDrawArc =>
 					builder.setDirectDrawArcProto(DirectDrawArcSerializer.write(item))
-				case item: renderReportTypes.DirectDrawFill =>
+				case item: DirectDrawFill =>
 					builder.setDirectDrawFillProto(DirectDrawFillSerializer.write(item))
-				case item: renderReportTypes.DirectDrawClosePath =>
+				case item: DirectDrawClosePath =>
 					builder.setDirectDrawClosePathProto(DirectDrawClosePathSerializer.write(item))
-				case item: renderReportTypes.DirectDrawStroke =>
+				case item: DirectDrawStroke =>
 					builder.setDirectDrawStrokeProto(DirectDrawStrokeSerializer.write(item))
-				case item: renderReportTypes.DirectDrawRectangle =>
+				case item: DirectDrawRectangle =>
 					builder.setDirectDrawRectangleProto(DirectDrawRectangleSerializer.write(item))
 				case _ => throw new Exception("Unimplemented "+input)
 			}
 			builder.build()
 		}
 
-		def read(input: PdfGraphicFragment_proto): PdfGraphicFragment = {
+		def read(input: PdfGraphicFragment_proto)(implicit persistenceUtil:PersistenceUtil): PdfGraphicFragment = {
 			input.getFieldCase match {
 				case PdfGraphicFragment_proto.FieldCase.DRAWLINE_PROTO => {
 					DrawLineSerializer.read(input.getDrawLineProto)
@@ -471,7 +475,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 	}
 
 	object PdfRectangleSerializer {
-		def write(input: renderReportTypes.PdfRectangle): PdfRectangle_proto = {
+		def write(input: PdfRectangle): PdfRectangle_proto = {
 			val builder = PdfRectangle_proto.newBuilder()
 			builder.setX1(input.x1)
 			builder.setY1(input.y1)
@@ -490,11 +494,11 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(input: PdfRectangle_proto): renderReportTypes.PdfRectangle = {
+		def read(input: PdfRectangle_proto)(implicit persistenceUtil:PersistenceUtil): PdfRectangle = {
 			val borderColor = if (input.getBorderColorCount == 0) None else Some(ReportColorSerializer.read(input.getBorderColor(0)))
 			val fillColor = if (input.getFillColorCount == 0) None else Some(ReportColorSerializer.read(input.getFillColor(0)))
 			val idPatternColor = if (input.getIdPatternColorCount == 0) None else Some(input.getIdPatternColor(0))
-			new renderReportTypes.PdfRectangle(input.getX1, input.getY1, input.getX2, input.getY2,
+			new PdfRectangle(input.getX1, input.getY1, input.getX2, input.getY2,
 				input.getRadius, borderColor, fillColor, idPatternColor)
 		}
 	}
@@ -513,7 +517,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 
 	object PdfDrawImageSerializer {
-		def write(input: renderReportTypes.PdfDrawImage): PdfDrawImage_proto = {
+		def write(input: PdfDrawImage): PdfDrawImage_proto = {
 			val builder = PdfDrawImage_proto.newBuilder()
 			builder.setIdPdfImage(input.idPdfImage)
 			builder.setX(input.x)
@@ -522,8 +526,8 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(input: PdfDrawImage_proto): renderReportTypes.PdfDrawImage = {
-			new renderReportTypes.PdfDrawImage(input.getIdPdfImage, input.getX, input.getY, input.getScale, None)
+		def read(input: PdfDrawImage_proto)(implicit persistenceUtil:PersistenceUtil): PdfDrawImage = {
+			new PdfDrawImage(input.getIdPdfImage, input.getX, input.getY, input.getScale, None)
 		}
 	}
 
@@ -531,36 +535,36 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 
 	private[serialization] object DirectDrawMovePointSerializer {
-		def write(obj: renderReportTypes.DirectDrawMovePoint): DirectDrawMovePoint_proto = {
+		def write(obj: DirectDrawMovePoint): DirectDrawMovePoint_proto = {
 			val builder = DirectDrawMovePoint_proto.newBuilder()
 			builder.setX(obj.x)
 			builder.setY(obj.y)
 			builder.build()
 		}
 
-		def read(input: DirectDrawMovePoint_proto): renderReportTypes.DirectDrawMovePoint = {
-			val result = new renderReportTypes.DirectDrawMovePoint(input.getX, input.getY)
+		def read(input: DirectDrawMovePoint_proto): DirectDrawMovePoint = {
+			val result = new DirectDrawMovePoint(input.getX, input.getY)
 			result
 		}
 	}
 
 	private[serialization] object DirectDrawLineSerializer {
-		def write(obj: renderReportTypes.DirectDrawLine): DirectDrawLine_proto = {
+		def write(obj: DirectDrawLine): DirectDrawLine_proto = {
 			val builder = DirectDrawLine_proto.newBuilder()
 			builder.setX(obj.x)
 			builder.setY(obj.y)
 			builder.build()
 		}
 
-		def read(input: DirectDrawLine_proto): renderReportTypes.DirectDrawLine = {
-			val result = new renderReportTypes.DirectDrawLine(input.getX, input.getY)
+		def read(input: DirectDrawLine_proto): DirectDrawLine = {
+			val result = new DirectDrawLine(input.getX, input.getY)
 			result
 		}
 	}
 
 
 	private[serialization] object DirectDrawCircleSerializer {
-		def write(obj: renderReportTypes.DirectDrawCircle): DirectDrawCircle_proto = {
+		def write(obj: DirectDrawCircle): DirectDrawCircle_proto = {
 			val builder = DirectDrawCircle_proto.newBuilder()
 			builder.setX(obj.x)
 			builder.setY(obj.y)
@@ -568,14 +572,14 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(input: DirectDrawCircle_proto): renderReportTypes.DirectDrawCircle = {
-			val result = new renderReportTypes.DirectDrawCircle(input.getX, input.getY,input.getRadius)
+		def read(input: DirectDrawCircle_proto): DirectDrawCircle = {
+			val result = new DirectDrawCircle(input.getX, input.getY,input.getRadius)
 			result
 		}
 	}
 
 	private[serialization] object DirectDrawArcSerializer {
-		def write(obj: renderReportTypes.DirectDrawArc): DirectDrawArc_proto = {
+		def write(obj: DirectDrawArc): DirectDrawArc_proto = {
 			val builder = DirectDrawArc_proto.newBuilder()
 			builder.setX(obj.x)
 			builder.setY(obj.y)
@@ -585,67 +589,67 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(input: DirectDrawArc_proto): renderReportTypes.DirectDrawArc = {
-			val result = new renderReportTypes.DirectDrawArc(input.getX, input.getY,input.getRadius,
+		def read(input: DirectDrawArc_proto): DirectDrawArc = {
+			val result = new DirectDrawArc(input.getX, input.getY,input.getRadius,
 				input.getStartAngle,input.getEndAngle)
 			result
 		}
 	}
 
 	private[serialization] object DirectDrawSerializer {
-		def write(obj: renderReportTypes.DirectDraw): DirectDraw_proto = {
+		def write(obj: DirectDraw): DirectDraw_proto = {
 			val builder = DirectDraw_proto.newBuilder()
 			builder.setCode(obj.code)
 			builder.build()
 		}
 
-		def read(input: DirectDraw_proto): renderReportTypes.DirectDraw = {
-			val result = new renderReportTypes.DirectDraw(input.getCode)
+		def read(input: DirectDraw_proto): DirectDraw = {
+			val result = new DirectDraw(input.getCode)
 			result
 		}
 	}
 
 
 	private[serialization] object DirectDrawFillSerializer {
-		def write(obj: renderReportTypes.DirectDrawFill): DirectDrawFill_proto = {
+		def write(obj: DirectDrawFill): DirectDrawFill_proto = {
 			val builder = DirectDrawFill_proto.newBuilder()
 			builder.setColor(ReportColorSerializer.write(obj.reportColor))
 			builder.build()
 		}
 
-		def read(input: DirectDrawFill_proto): renderReportTypes.DirectDrawFill = {
-			val result = new renderReportTypes.DirectDrawFill(ReportColorSerializer.read(input.getColor))
+		def read(input: DirectDrawFill_proto): DirectDrawFill = {
+			val result = new DirectDrawFill(ReportColorSerializer.read(input.getColor))
 			result
 		}
 	}
 
 	private[serialization] object DirectDrawClosePathSerializer {
-		def write(obj: renderReportTypes.DirectDrawClosePath): DirectDrawClosePath_proto = {
+		def write(obj: DirectDrawClosePath): DirectDrawClosePath_proto = {
 			val builder = DirectDrawClosePath_proto.newBuilder()
 			builder.build()
 		}
 
-		def read(input: DirectDrawClosePath_proto): renderReportTypes.DirectDrawClosePath = {
-			val result = new renderReportTypes.DirectDrawClosePath()
+		def read(input: DirectDrawClosePath_proto): DirectDrawClosePath = {
+			val result = new DirectDrawClosePath()
 			result
 		}
 	}
 
 	private[serialization] object DirectDrawStrokeSerializer {
-		def write(obj: renderReportTypes.DirectDrawStroke): DirectDrawStroke_proto = {
+		def write(obj: DirectDrawStroke): DirectDrawStroke_proto = {
 			val builder = DirectDrawStroke_proto.newBuilder()
 			builder.setColor(ReportColorSerializer.write(obj.reportColor))
 			builder.build()
 		}
 
-		def read(input: DirectDrawStroke_proto): renderReportTypes.DirectDrawStroke = {
-			val result = new renderReportTypes.DirectDrawStroke(ReportColorSerializer.read(input.getColor))
+		def read(input: DirectDrawStroke_proto): DirectDrawStroke = {
+			val result = new DirectDrawStroke(ReportColorSerializer.read(input.getColor))
 			result
 		}
 	}
 
 	private[serialization] object DirectDrawRectangleSerializer {
-		def write(obj:renderReportTypes.DirectDrawRectangle): DirectDrawRectangle_proto = {
+		def write(obj:DirectDrawRectangle): DirectDrawRectangle_proto = {
 			val builder = DirectDrawRectangle_proto.newBuilder()
 			builder.setX1(obj.x1)
 			builder.setY1(obj.y1)
@@ -654,22 +658,22 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(input: DirectDrawRectangle_proto): renderReportTypes.DirectDrawRectangle =
-			new renderReportTypes.DirectDrawRectangle(input.getX1, input.getY1, input.getX2, input.getY2)
+		def read(input: DirectDrawRectangle_proto): DirectDrawRectangle =
+			new DirectDrawRectangle(input.getX1, input.getY1, input.getX2, input.getY2)
 	}
 
 
 
 	private[serialization] object DirectFillStrokeSerializer {
-		def write(obj: renderReportTypes.DirectFillStroke): DirectFillStroke_proto = {
+		def write(obj: DirectFillStroke): DirectFillStroke_proto = {
 			val builder = DirectFillStroke_proto.newBuilder()
 			builder.setFill(obj.fill)
 			builder.setStroke(obj.stroke)
 			builder.build()
 		}
 
-		def read(input: DirectFillStroke_proto): renderReportTypes.DirectFillStroke =
-			new renderReportTypes.DirectFillStroke(input.getFill, input.getStroke)
+		def read(input: DirectFillStroke_proto): DirectFillStroke =
+			new DirectFillStroke(input.getFill, input.getStroke)
 	}
 
 
@@ -688,7 +692,7 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 
 	object PdfFontStreamSerializer {
-		def write(input: renderReportTypes.PdfFontStream): PdfFontStream_proto = {
+		def write(input: PdfFontStream): PdfFontStream_proto = {
 			val builder = PdfFontStream_proto.newBuilder()
 			builder.setFontName(input.fontName)
 			builder.setFontMetric(FontMetricSerializer.write(input.fontMetric))
@@ -696,8 +700,8 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfFontStream_proto): renderReportTypes.PdfFontStream = {
-			val result = new renderReportTypes.PdfFontStream(id, input.getFontName, FontMetricSerializer.read(input.getFontMetric), input.getPdfCompression)
+		def read(id: Long, offset: Long, input: PdfFontStream_proto): PdfFontStream = {
+			val result = new PdfFontStream(id, input.getFontName, FontMetricSerializer.read(input.getFontMetric), input.getPdfCompression)
 			result.offset = offset
 			result
 		}
@@ -792,22 +796,22 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 
 
 	object PdfFontDescriptorSerializer {
-		def write(input: renderReportTypes.PdfFontDescriptor): PdfFontDescriptor_proto = {
+		def write(input: PdfFontDescriptor): PdfFontDescriptor_proto = {
 			val builder = PdfFontDescriptor_proto.newBuilder()
 			builder.setIdPdfFontStream(input.idPdfFontStream)
 			builder.setFontKeyName(input.fontKeyName)
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfFontDescriptor_proto): renderReportTypes.PdfFontDescriptor = {
-			val result = new renderReportTypes.PdfFontDescriptor(id, input.getIdPdfFontStream, input.getFontKeyName)
+		def read(id: Long, offset: Long, input: PdfFontDescriptor_proto)(implicit persistenceUtil:PersistenceUtil): PdfFontDescriptor = {
+			val result = new PdfFontDescriptor(id, input.getIdPdfFontStream, input.getFontKeyName)
 			result.offset = offset
 			result
 		}
 	}
 
 	object PdfGoToPageSerializer {
-		def write(input: renderReportTypes.PdfGoToPage): PdfGoToPage_proto = {
+		def write(input: PdfGoToPage): PdfGoToPage_proto = {
 			val builder = PdfGoToPage_proto.newBuilder()
 			builder.setPageNbr(input.pageNbr)
 			builder.setLeft(input.left)
@@ -815,37 +819,37 @@ class RenderReportSerializer(val renderReportTypes: RenderReportTypes) {
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfGoToPage_proto): renderReportTypes.PdfGoToPage = {
-			val result = new renderReportTypes.PdfGoToPage(id, input.getPageNbr, input.getLeft, input.getTop)
+		def read(id: Long, offset: Long, input: PdfGoToPage_proto): PdfGoToPage = {
+			val result = new PdfGoToPage(id, input.getPageNbr, input.getLeft, input.getTop)
 			result.offset = offset
 			result
 		}
 	}
 
 	object PdfLinkSerializer {
-		def write(input: renderReportTypes.PdfLink): PdfLink_proto = {
+		def write(input: PdfLink): PdfLink_proto = {
 			val builder = PdfLink_proto.newBuilder()
 			builder.setBoundaryRectProto(BoundaryRectSerializer.write(input.boundaryRect))
 			builder.setIdAction(input.idAction)
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfLink_proto): renderReportTypes.PdfLink = {
-			val result = new renderReportTypes.PdfLink(id, BoundaryRectSerializer.read(input.getBoundaryRectProto), input.getIdAction)
+		def read(id: Long, offset: Long, input: PdfLink_proto): PdfLink = {
+			val result = new PdfLink(id, BoundaryRectSerializer.read(input.getBoundaryRectProto), input.getIdAction)
 			result.offset = offset
 			result
 		}
 	}
 
 	object PdfGoToUrlSerializer {
-		def write(input: renderReportTypes.PdfGoToUrl): PdfGoToUrl_proto = {
+		def write(input: PdfGoToUrl): PdfGoToUrl_proto = {
 			val builder = PdfGoToUrl_proto.newBuilder()
 			builder.setUrl(input.url)
 			builder.build()
 		}
 
-		def read(id: Long, offset: Long, input: PdfGoToUrl_proto): renderReportTypes.PdfGoToUrl = {
-			val result = new renderReportTypes.PdfGoToUrl(id, input.getUrl)
+		def read(id: Long, offset: Long, input: PdfGoToUrl_proto): PdfGoToUrl = {
+			val result = new PdfGoToUrl(id, input.getUrl)
 			result.offset = offset
 			result
 		}

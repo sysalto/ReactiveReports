@@ -13,50 +13,51 @@ import com.sysalto.report.util.{PersistenceFactory, PersistenceUtil}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+import RenderReportTypes._
 
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persistenceFactory: PersistenceFactory, pdfCompression: Boolean) {
 	implicit val wordSeparators: List[Char] = List(',', '.')
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
-	val renderReportTypes = new RenderReportTypes(persistenceFactory)
-	private[this] val pdfWriter = new renderReportTypes.PdfWriter(name)
+	implicit val persistenceUtil = persistenceFactory.open()
+	private[this] val pdfWriter = new PdfWriter(name)
 	private[this] var id: Long = 0
-	private[this] var catalog: renderReportTypes.PdfCatalog = null
-	private[this] var currentPage: renderReportTypes.PdfPage = null
-	private[this] var fontMap = scala.collection.mutable.HashMap.empty[String, renderReportTypes.PdfFont]
-	private[this] val txtList = ListBuffer[renderReportTypes.PdfTxtFragment]()
+	private[this] var catalog: PdfCatalog = null
+	private[this] var currentPage: PdfPage = null
+	private[this] var fontMap = scala.collection.mutable.HashMap.empty[String, PdfFont]
+	private[this] val txtList = ListBuffer[PdfTxtFragment]()
 	private[this] val graphicList = ListBuffer[PdfGraphicFragment]()
-	private[this] val pageList = ListBuffer[renderReportTypes.PdfPage]()
+	private[this] val pageList = ListBuffer[PdfPage]()
 	private[this] var fontId: Long = 0
 
 
-	private[this] implicit val allItems = mutable.HashMap[Long, renderReportTypes.PdfBaseItem]()
+	private[this] implicit val allItems = mutable.HashMap[Long, PdfBaseItem]()
 
 
 	def startPdf(): Unit = {
 		pdfWriter <<< "%PDF-1.7"
 		pdfWriter <<< s"%${128.toChar}${129.toChar}${130.toChar}${131.toChar}"
-		catalog = new renderReportTypes.PdfCatalog(nextId())
-		renderReportTypes.setObject(catalog)
-		currentPage = new renderReportTypes.PdfPage(nextId(), 0, PAGE_WIDTH, PAGE_HEIGHT)
+		catalog = new PdfCatalog(nextId())
+		setObject(catalog)
+		currentPage = new PdfPage(nextId(), 0, PAGE_WIDTH, PAGE_HEIGHT)
 	}
 
 	def newPage(): Unit = {
 		saveCurrentPage()
-		currentPage = new renderReportTypes.PdfPage(nextId(), 0, PAGE_WIDTH, PAGE_HEIGHT, fontMap.values.map(fontItem => fontItem.id).toList)
+		currentPage = new PdfPage(nextId(), 0, PAGE_WIDTH, PAGE_HEIGHT, fontMap.values.map(fontItem => fontItem.id).toList)
 	}
 
 	private[this] def saveCurrentPage(): Unit = {
 		graphicList.foreach(item => {
 			item.updateContent(this)
 		})
-		val text = new renderReportTypes.PdfText(txtList.toList)
-		val graphic = new renderReportTypes.PdfGraphic(graphicList.toList)
-		val pdfPageContent = new renderReportTypes.PdfPageContent(nextId(), List(graphic, text), pdfCompression)
-		renderReportTypes.setObject(pdfPageContent)
+		val text = new PdfText(txtList.toList)
+		val graphic = new PdfGraphic(graphicList.toList)
+		val pdfPageContent = new PdfPageContent(nextId(), List(graphic, text), pdfCompression)
+		setObject(pdfPageContent)
 		currentPage.idContentPageOpt = Some(pdfPageContent.id)
 		currentPage.idFontList = fontMap.values.toList.sortBy(font => font.refName).map(font => font.id)
-		renderReportTypes.setObject(currentPage)
+		setObject(currentPage)
 		pageList += currentPage
 		txtList.clear()
 		graphicList.clear()
@@ -69,14 +70,14 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 				 				 |  <<  /Producer (Reactive Reports - Copyright 2018 SysAlto Corporation)
 				 				 |  >>
 				 				 |endobj
-				 				 |""".stripMargin.getBytes(renderReportTypes.ENCODING)
+				 				 |""".stripMargin.getBytes(ENCODING)
 		val offset = pdfWriter.position
 		pdfWriter << s
 		(id, offset)
 	}
 
 	def md5(s: String) = {
-		val result = MessageDigest.getInstance("MD5").digest(s.getBytes(renderReportTypes.ENCODING))
+		val result = MessageDigest.getInstance("MD5").digest(s.getBytes(ENCODING))
 		javax.xml.bind.DatatypeConverter.printHexBinary(result)
 	}
 
@@ -86,16 +87,16 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 
 		val pageTreeList = PageTree.pageTree(pageList.toList) {
 			() => {
-				val pg = new renderReportTypes.PdfPageList(nextId())
-				renderReportTypes.setObject(pg)
+				val pg = new PdfPageList(nextId())
+				setObject(pg)
 				pg
 			}
-		}.asInstanceOf[renderReportTypes.PdfPageList]
+		}.asInstanceOf[PdfPageList]
 		catalog.idPdfPageListOpt = Some(pageTreeList.id)
-		renderReportTypes.setObject(catalog)
-		val allItems1 = renderReportTypes.getAllItems()
+		setObject(catalog)
+		val allItems1 = getAllItems
 		allItems1.foreach(itemId => {
-			val item = renderReportTypes.getObject[renderReportTypes.PdfBaseItem](itemId)
+			val item = getObject[PdfBaseItem](itemId)
 			item.write(pdfWriter)
 		})
 		val metaDataObj = metaData()
@@ -106,7 +107,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		pdfWriter <<< s"0 ${allItems1.length + 2}"
 		pdfWriter <<< "0000000000 65535 f "
 		allItems1.foreach(itemId => {
-			val item = renderReportTypes.getObject[renderReportTypes.PdfBaseItem](itemId)
+			val item = getObject[PdfBaseItem](itemId)
 			val offset = item.offset.toString
 			val offsetFrmt = "0" * (10 - offset.length) + offset
 			pdfWriter <<< s"${offsetFrmt} 00000 n "
@@ -152,7 +153,7 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 
 	def close(): Unit = {
 		pdfWriter.close()
-		renderReportTypes.close
+		RenderReportTypes.close
 	}
 
 
@@ -163,48 +164,48 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float,
 	              radius: Float, color: Option[ReportColor] = None,
 	              fillColor: Option[ReportColor] = None, idPaternColor: Option[Long] = None): Unit = {
-		graphicList += new renderReportTypes.PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, idPaternColor)
+		graphicList += new PdfRectangle(x1.toLong, y1.toLong, x2.toLong, y2.toLong, radius, color, fillColor, idPaternColor)
 	}
 
 	def directDrawMovePoint(x: Float, y: Float): Unit = {
-		graphicList += new renderReportTypes.DirectDrawMovePoint(x, y)
+		graphicList += new DirectDrawMovePoint(x, y)
 	}
 
 	def directDrawLine(x: Float, y: Float): Unit = {
-		graphicList += new renderReportTypes.DirectDrawLine(x, y)
+		graphicList += new DirectDrawLine(x, y)
 	}
 
 	def directDraw(code: String): Unit = {
-		graphicList += new renderReportTypes.DirectDraw(code)
+		graphicList += new DirectDraw(code)
 	}
 
 	def directDrawCircle(x: Float, y: Float, radius: Float): Unit = {
-		graphicList += new renderReportTypes.DirectDrawCircle(x, y, radius)
+		graphicList += new DirectDrawCircle(x, y, radius)
 	}
 
 	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float): Unit = {
-		graphicList += new renderReportTypes.DirectDrawArc(x, y, radius, startAngle, endAngle)
+		graphicList += new DirectDrawArc(x, y, radius, startAngle, endAngle)
 	}
 
 	def directDrawStroke(reportColor: ReportColor): Unit = {
-		graphicList += new renderReportTypes.DirectDrawStroke(reportColor)
+		graphicList += new DirectDrawStroke(reportColor)
 	}
 
 	def directFillStroke(fill: Boolean, stroke: Boolean): Unit = {
-		graphicList += new renderReportTypes.DirectFillStroke(fill, stroke)
+		graphicList += new DirectFillStroke(fill, stroke)
 	}
 
 	def directDrawRectangle(x1: Float, y1: Float, x2: Float, y2: Float): Unit = {
-		graphicList += new renderReportTypes.DirectDrawRectangle(x1, y1, x2, y2)
+		graphicList += new DirectDrawRectangle(x1, y1, x2, y2)
 	}
 
 
 	def directDrawFill(reportColor: ReportColor): Unit = {
-		graphicList += new renderReportTypes.DirectDrawFill(reportColor)
+		graphicList += new DirectDrawFill(reportColor)
 	}
 
 	def directDrawClosePath(): Unit = {
-		graphicList += new renderReportTypes.DirectDrawClosePath()
+		graphicList += new DirectDrawClosePath()
 	}
 
 
@@ -274,31 +275,31 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 
 	def axialShade(x1: Float, y1: Float, x2: Float, y2: Float, rectangle: ReportTypes.DRectangle, from: ReportColor, to: ReportColor): Unit = {
 
-		val colorFct = new renderReportTypes.PdfShaddingFctColor(nextId(), from, to)
-		renderReportTypes.setObject(colorFct)
-		val pdfShadding = new renderReportTypes.PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct.id)
-		renderReportTypes.setObject(pdfShadding)
-		val pattern = new renderReportTypes.PdfGPattern(nextId(), pdfShadding.id)
-		renderReportTypes.setObject(pattern)
+		val colorFct = new PdfShaddingFctColor(nextId(), from, to)
+		setObject(colorFct)
+		val pdfShadding = new PdfColorShadding(nextId(), x1, y1, x1, y2, colorFct.id)
+		setObject(pdfShadding)
+		val pattern = new PdfGPattern(nextId(), pdfShadding.id)
+		setObject(pattern)
 		currentPage.idPdfPatternList ++= List(pattern.id)
-		renderReportTypes.setObject(currentPage)
+		setObject(currentPage)
 		this.rectangle(rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2, 0, None, None, Some(pattern.id))
 		this.stroke()
 	}
 
 	import scalaz._
-	private [this] val getPdfImage: String => RenderReport.this.renderReportTypes.PdfImage = Memo.immutableHashMapMemo {
+	private [this] val getPdfImage: String => PdfImage = Memo.immutableHashMapMemo {
 		s => {
-			new renderReportTypes.PdfImage(nextId(), s)
+			new PdfImage(nextId(), s)
 		}
 	}
 
 
 	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
 		val pdfImage = getPdfImage(file)
-		renderReportTypes.setObject(pdfImage)
+		setObject(pdfImage)
 		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
-		graphicList += new renderReportTypes.PdfDrawImage(pdfImage.id, x, y, scale)
+		graphicList += new PdfDrawImage(pdfImage.id, x, y, scale)
 		currentPage.idImageList += pdfImage.id
 	}
 
@@ -307,40 +308,40 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		val font = if (!fontMap.contains(txt.font.fontKeyName)) {
 			if (txt.font.externalFont.isDefined) {
 				val fontParser = getFontParser(txt.font)
-				val fontStream = new renderReportTypes.PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
-				renderReportTypes.setObject(fontStream)
-				val fontDescr = new renderReportTypes.PdfFontDescriptor(nextId(), fontStream.id, txt.font.fontKeyName)
-				renderReportTypes.setObject(fontDescr)
-				val font1 = new renderReportTypes.PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
-					Some(new renderReportTypes.FontEmbeddedDef(fontDescr.id, fontStream.id)))
-				renderReportTypes.setObject(font1)
+				val fontStream = new PdfFontStream(nextId(), fontParser.fontName, fontParser.fontMetric, pdfCompression)
+				setObject(fontStream)
+				val fontDescr = new PdfFontDescriptor(nextId(), fontStream.id, txt.font.fontKeyName)
+				setObject(fontDescr)
+				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName,
+					Some(new FontEmbeddedDef(fontDescr.id, fontStream.id)))
+				setObject(font1)
 				fontMap += (txt.font.fontKeyName -> font1)
 				font1
 			} else {
-				val font1 = new renderReportTypes.PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
-				renderReportTypes.setObject(font1)
+				val font1 = new PdfFont(nextId(), nextFontId(), txt.font.fontKeyName)
+				setObject(font1)
 				fontMap += (txt.font.fontKeyName -> font1)
 				font1
 			}
 		}
 		else fontMap(txt.font.fontKeyName)
-		txtList += new renderReportTypes.PdfTxtFragment(x, y, txt, font.refName)
+		txtList += new PdfTxtFragment(x, y, txt, font.refName)
 	}
 
 
 	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int): Unit = {
-		val goto = new renderReportTypes.PdfGoToPage(nextId(), pageNbr, left, top)
-		renderReportTypes.setObject(goto)
-		val pdfLink = new renderReportTypes.PdfLink(nextId(), boundaryRect, goto.id)
-		renderReportTypes.setObject(pdfLink)
+		val goto = new PdfGoToPage(nextId(), pageNbr, left, top)
+		setObject(goto)
+		val pdfLink = new PdfLink(nextId(), boundaryRect, goto.id)
+		setObject(pdfLink)
 		currentPage.idAnnotationList = currentPage.idAnnotationList ::: List(pdfLink.id)
 	}
 
 	def linkToUrl(boundaryRect: BoundaryRect, url: String): Unit = {
-		val goto = new renderReportTypes.PdfGoToUrl(nextId(), url)
-		renderReportTypes.setObject(goto)
-		val pdfLink = new renderReportTypes.PdfLink(nextId(), boundaryRect, goto.id)
-		renderReportTypes.setObject(pdfLink)
+		val goto = new PdfGoToUrl(nextId(), url)
+		setObject(goto)
+		val pdfLink = new PdfLink(nextId(), boundaryRect, goto.id)
+		setObject(pdfLink)
 		currentPage.idAnnotationList = currentPage.idAnnotationList ::: List(pdfLink.id)
 	}
 

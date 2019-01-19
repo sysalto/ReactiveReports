@@ -6,7 +6,6 @@ import java.net.URL
 import java.nio.file.{Files, Paths}
 import java.util.zip.Deflater
 
-import com.sysalto.render.{PdfChart, PdfDraw}
 import com.sysalto.render.PdfDraw.{DrawPoint, PdfGraphicFragment, roundRectangle}
 import com.sysalto.render.basic.PdfBasic
 import com.sysalto.render.basic.PdfBasic._
@@ -15,7 +14,7 @@ import com.sysalto.render.util.PageTree.PageNode
 import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
 import com.sysalto.report.ReportTypes.BoundaryRect
 import com.sysalto.report.reportTypes.{RFont, ReportColor, ReportTxt}
-import com.sysalto.report.util.{PersistenceFactory, PersistenceUtil, RockDbUtil}
+import com.sysalto.report.util.PersistenceUtil
 import javax.imageio.ImageIO
 
 import scala.collection.JavaConverters._
@@ -23,18 +22,15 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 
-class RenderReportTypes(persistenceFactory: PersistenceFactory) {
+object RenderReportTypes {
 	private[render] val ENCODING = "ISO-8859-1"
-	//	private[this] val db = RockDbUtil()
-	val persistenceUtil = persistenceFactory.open()
-	private[this] val serializer = new RenderReportSerializer(this)
 
 	private[render] abstract class PdfBaseItem(val id: Long) {
 		var offset: Long = 0
 
 		def content: Array[Byte]
 
-		def write(pdfWriter: PdfWriter): Unit = {
+		def write(pdfWriter: PdfWriter)(implicit persistenceUtil: PersistenceUtil): Unit = {
 			offset = pdfWriter.position
 			setObject(this)
 			pdfWriter << content
@@ -59,7 +55,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 
 
 	private[render] class PdfDrawImage(val idPdfImage: Long, val x: Float, val y: Float, val scale: Float = 1, val opacity: Option[Float] = None)
-		extends PdfGraphicFragment {
+	                                  (implicit persistenceUtil: PersistenceUtil) extends PdfGraphicFragment {
 		private[this] val pdfImage = getObject[PdfImage](idPdfImage)
 		private[this] val image = pdfImage.imageMeta
 		private[this] val width = image.width * scale
@@ -103,7 +99,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 
 
 	class PdfFontDescriptor(id: Long, val idPdfFontStream: Long, val fontKeyName: String)
-		extends PdfBaseItem(id) {
+	                       (implicit persistenceUtil: PersistenceUtil) extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val pdfFontStream: PdfFontStream = getObject[PdfFontStream](idPdfFontStream)
 			s"""${id} 0 obj
@@ -127,7 +123,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 
 
 	class PdfFont(id: Long, val refName: String, val fontKeyName: String, val embeddedDefOpt: Option[FontEmbeddedDef] = None)
-		extends PdfBaseItem(id) {
+	             (implicit persistenceUtil: PersistenceUtil) extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			if (embeddedDefOpt.isEmpty) {
 				s"""${id} 0 obj
@@ -181,7 +177,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 	private[render] class PdfColorShadding(id: Long, val x0: Float, val y0: Float, val x1: Float, val y1: Float, val idPdfShaddingFctColor: Long)
-		extends PdfBaseItem(id) {
+	                                      (implicit persistenceUtil:PersistenceUtil) extends PdfBaseItem(id) {
 		override def content: Array[Byte] = {
 			val pdfShaddingFctColor = getObject[PdfShaddingFctColor](idPdfShaddingFctColor)
 			s"""${id} 0 obj
@@ -203,7 +199,8 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 	class PdfRectangle(val x1: Long, val y1: Long, val x2: Long, val y2: Long, val radius: Float, val borderColor: Option[ReportColor],
-	                   val fillColor: Option[ReportColor], val idPatternColor: Option[Long] = None) extends PdfGraphicFragment {
+	                   val fillColor: Option[ReportColor], val idPatternColor: Option[Long] = None)
+	                  (implicit persistenceUtil:PersistenceUtil) extends PdfGraphicFragment {
 		override def content: String = {
 			val patternColor = if (idPatternColor.isDefined) Some(getObject[PdfGPattern](idPatternColor.get)) else None
 			val paternStr = if (patternColor.isDefined) {
@@ -292,7 +289,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	              var idFontList: List[Long] = List(), var idPdfPatternList: List[Long] = List(),
 	              var idAnnotationList: List[Long] = List(),
 	              var idImageList: mutable.Set[Long] = mutable.HashSet(), var idContentPageOpt: Option[Long] = None)
-		extends PdfBaseItem(id) with PageNode {
+	             (implicit persistenceUtil:PersistenceUtil) extends PdfBaseItem(id) with PageNode {
 
 		override def addChild(child: PageNode): Unit = {}
 
@@ -339,7 +336,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 
 
 	private[render] class PdfPageList(id: Long, var parentId: Option[Long] = None, var pageList: ListBuffer[Long] = ListBuffer())
-		extends PdfBaseItem(id) with PageNode {
+	                                 (implicit persistenceUtil:PersistenceUtil) extends PdfBaseItem(id) with PageNode {
 
 		override def addChild(child: PageNode): Unit = {
 			child match {
@@ -390,7 +387,7 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	                                     val patternOpt: Option[PatternDraw] = None) extends Serializable
 
 	private[serialization] class PdfText(val txtList: List[PdfTxtFragment])
-		extends PdfPageItem {
+	                                    (implicit persistenceUtil:PersistenceUtil) extends PdfPageItem {
 
 		private[this] def escapeText(input: String): String = {
 			val s1 = input.replace("\\", "\\\\")
@@ -517,7 +514,6 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 
-
 	class DirectDrawMovePoint(val x: Float, val y: Float) extends PdfGraphicFragment {
 		override def content: String = {
 			s"""${x} ${y} m \n"""
@@ -608,11 +604,11 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 		}
 	}
 
-//	class DirectRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
-//		override def content: String = {
-//			s"""${x} ${y} ${width} ${height} re \n"""
-//		}
-//	}
+	//	class DirectRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
+	//		override def content: String = {
+	//			s"""${x} ${y} ${width} ${height} re \n"""
+	//		}
+	//	}
 
 	class DirectClosePath() extends PdfGraphicFragment {
 		override def content: String = {
@@ -627,9 +623,9 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 
-	class DirectDrawRectangle(val x1: Float,val y1: Float, val x2: Float, val y2: Float) extends PdfGraphicFragment {
+	class DirectDrawRectangle(val x1: Float, val y1: Float, val x2: Float, val y2: Float) extends PdfGraphicFragment {
 		override def content: String = {
-			s"""${x1} ${y1} ${x2-x1} ${y2-y1} re \n"""
+			s"""${x1} ${y1} ${x2 - x1} ${y2 - y1} re \n"""
 		}
 	}
 
@@ -694,77 +690,77 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 	}
 
 
-	def setObject(obj: PdfBaseItem): Unit = {
+	def setObject(obj: PdfBaseItem)(implicit persistenceUtil: PersistenceUtil): Unit = {
 		obj match {
 			case pdfCatalog: PdfCatalog => {
-				val cat1 = pdfCatalog.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfCatalog]
-				val builder = serializer.PdfBaseItemSerializer.write(cat1)
+				val cat1 = pdfCatalog.asInstanceOf[PdfCatalog]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(cat1)
 				persistenceUtil.writeObject(pdfCatalog.id, builder.toByteArray)
 			}
 			case pdfPage: PdfPage => {
-				val page = pdfPage.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPage]
-				val builder = serializer.PdfBaseItemSerializer.write(page)
+				val page = pdfPage.asInstanceOf[PdfPage]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(page)
 				persistenceUtil.writeObject(pdfPage.id, builder.toByteArray)
 			}
 			case pdfFont: PdfFont => {
-				val font = pdfFont.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfFont]
-				val builder = serializer.PdfBaseItemSerializer.write(font)
+				val font = pdfFont.asInstanceOf[PdfFont]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(font)
 				persistenceUtil.writeObject(pdfFont.id, builder.toByteArray)
 			}
 			case pdfPageContent: PdfPageContent => {
-				val pdfPageContent1 = pdfPageContent.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPageContent]
-				val builder = serializer.PdfBaseItemSerializer.write(pdfPageContent1)
+				val pdfPageContent1 = pdfPageContent.asInstanceOf[PdfPageContent]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(pdfPageContent1)
 				persistenceUtil.writeObject(pdfPageContent1.id, builder.toByteArray)
 			}
 			case pdfPageList: PdfPageList => {
-				val pdfPageList1 = pdfPageList.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfPageList]
-				val builder = serializer.PdfBaseItemSerializer.write(pdfPageList1)
+				val pdfPageList1 = pdfPageList.asInstanceOf[PdfPageList]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(pdfPageList1)
 				persistenceUtil.writeObject(pdfPageList1.id, builder.toByteArray)
 			}
 			case pdfImage: PdfImage => {
-				val pdfImage1 = pdfImage.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfImage]
-				val builder = serializer.PdfBaseItemSerializer.write(pdfImage1)
+				val pdfImage1 = pdfImage.asInstanceOf[PdfImage]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(pdfImage1)
 				persistenceUtil.writeObject(pdfImage.id, builder.toByteArray)
 			}
 			case item: PdfColorShadding => {
-				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfColorShadding]
-				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[PdfColorShadding]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(item1)
 				persistenceUtil.writeObject(item.id, builder.toByteArray)
 			}
 			case item: PdfShaddingFctColor => {
-				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfShaddingFctColor]
-				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[PdfShaddingFctColor]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(item1)
 				persistenceUtil.writeObject(item.id, builder.toByteArray)
 			}
 			case item: PdfGPattern => {
-				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfGPattern]
-				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[PdfGPattern]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(item1)
 				persistenceUtil.writeObject(item.id, builder.toByteArray)
 			}
 			case item: PdfFontStream => {
-				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfFontStream]
-				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[PdfFontStream]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(item1)
 				persistenceUtil.writeObject(item.id, builder.toByteArray)
 			}
 			case item: PdfFontDescriptor => {
-				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfFontDescriptor]
-				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[PdfFontDescriptor]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(item1)
 				persistenceUtil.writeObject(item.id, builder.toByteArray)
 			}
 			case item: PdfGoToPage => {
-				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfGoToPage]
-				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[PdfGoToPage]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(item1)
 				persistenceUtil.writeObject(item.id, builder.toByteArray)
 			}
 
 			case item: PdfLink => {
-				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfLink]
-				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[PdfLink]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(item1)
 				persistenceUtil.writeObject(item.id, builder.toByteArray)
 			}
 			case item: PdfGoToUrl => {
-				val item1 = item.asInstanceOf[RenderReportTypes.this.serializer.renderReportTypes.PdfGoToUrl]
-				val builder = serializer.PdfBaseItemSerializer.write(item1)
+				val item1 = item.asInstanceOf[PdfGoToUrl]
+				val builder = RenderReportSerializer.PdfBaseItemSerializer.write(item1)
 				persistenceUtil.writeObject(item.id, builder.toByteArray)
 			}
 
@@ -775,17 +771,17 @@ class RenderReportTypes(persistenceFactory: PersistenceFactory) {
 		}
 	}
 
-	def getObject[T <: PdfBaseItem](id: Long): T = {
+	def getObject[T <: PdfBaseItem](id: Long)(implicit persistenceUtil: PersistenceUtil): T = {
 		val bytes = persistenceUtil.readObject(id)
 		val proto = PdfBaseItem_proto.parseFrom(bytes)
-		val result = serializer.PdfBaseItemSerializer.read(proto)
+		val result = RenderReportSerializer.PdfBaseItemSerializer.read(proto)
 		result.asInstanceOf[T]
 	}
 
 
-	def getAllItems(): List[java.lang.Long] = persistenceUtil.getAllKeys.asScala.toList
+	def getAllItems(implicit persistenceUtil: PersistenceUtil): List[java.lang.Long] = persistenceUtil.getAllKeys.asScala.toList
 
-	def close(): Unit = {
+	def close(implicit persistenceUtil: PersistenceUtil): Unit = {
 		persistenceUtil.close()
 	}
 

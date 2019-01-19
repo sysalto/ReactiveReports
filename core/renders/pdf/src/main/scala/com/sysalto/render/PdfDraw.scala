@@ -29,7 +29,7 @@ import com.sysalto.render.serialization.RenderReport
 
 object PdfDraw {
 
-	abstract class PdfGraphicFragment {
+	abstract class PdfGraphicFragment  {
 		def updateContent(renderReport: RenderReport): Unit = {
 
 		}
