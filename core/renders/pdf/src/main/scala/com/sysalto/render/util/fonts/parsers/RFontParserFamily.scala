@@ -1,10 +1,11 @@
 package com.sysalto.render.util.fonts.parsers
 
+import com.sysalto.render.util.fonts.parsers.ttf.TtfFontParser
 import com.sysalto.report.reportTypes.RFontFamily
 
 class RFontParserFamily(val fontName: String,val fontFamily: RFontFamily,val embedded: Boolean) {
 
-	private[this] def getParser(name: String): FontParser = if (embedded) new AfmParser(name) else new TtfParser(name)
+	private[this] def getParser(name: String): FontParser = if (embedded) new AfmParser(name) else new TtfFontParser(name)
 
 	var regular: FontParser = null
 	var bold: Option[FontParser] = None

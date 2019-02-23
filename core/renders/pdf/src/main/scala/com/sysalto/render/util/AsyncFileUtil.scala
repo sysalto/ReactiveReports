@@ -9,7 +9,7 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
 
-class SyncFileUtil(fileName: String,offset:Long, options: StandardOpenOption*) {
+class SyncFileUtil(fileName: String, offset: Long, options: StandardOpenOption*) {
 	private[this] val fileChannel = FileChannel.open(Paths.get(fileName), options: _*)
 	private[this] var currentPos: Long = offset
 
@@ -23,13 +23,13 @@ class SyncFileUtil(fileName: String,offset:Long, options: StandardOpenOption*) {
 	}
 
 	def seek(pos: Long): Unit = {
-		currentPos = pos+offset
+		currentPos = pos + offset
 	}
 
 
 	def read(size: Int, offsetPos: Option[Long]): ByteBuffer = {
 		val buffer = ByteBuffer.allocate(size)
-		val pos=if (offsetPos.isEmpty) currentPos else offsetPos.get+offset
+		val pos = if (offsetPos.isEmpty) currentPos else offsetPos.get + offset
 		fileChannel.read(buffer, pos)
 		if (offsetPos.isEmpty) {
 			currentPos += size
@@ -39,8 +39,12 @@ class SyncFileUtil(fileName: String,offset:Long, options: StandardOpenOption*) {
 
 	def readShort(offset: Option[Long] = None): Short = read(2, offset).getShort(0)
 
+	def readByte(offset: Option[Long] = None): Short = read(1, offset).getShort(0)
+
 
 	def readInt(offset: Option[Long] = None): Int = read(4, offset).getInt(0)
+
+	def readLong(offset: Option[Long] = None): Long = read(8, offset).getInt(0)
 
 
 	def readString(size: Int, offset: Option[Long] = None): String = {
@@ -53,9 +57,11 @@ class SyncFileUtil(fileName: String,offset:Long, options: StandardOpenOption*) {
 	def readUnicodeString(size: Int, offset: Option[Long] = None): String = {
 		val bytes = read(size, offset)
 		bytes.rewind()
-		val l = for (i <- 1 to size/2) yield bytes.getChar
+		val l = for (i <- 1 to size / 2) yield bytes.getChar
 		l.mkString("")
 	}
+
+	def getCurrentPos=this.currentPos
 }
 
 

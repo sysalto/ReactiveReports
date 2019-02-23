@@ -389,7 +389,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			boldItalic = Some(path+"Roboto-BoldItalic.ttf"))
 		report1.setExternalFont(fontFamily)
 		val font = RFont(10, fontName = "Roboto", externalFont = Some(fontFamily))
-//		report1.font = font
+		report1.font = font
 		runReport(report1)
 	}
 
