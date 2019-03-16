@@ -14,12 +14,15 @@ import com.sysalto.report.util.{PersistenceFactory, PersistenceUtil}
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import RenderReportTypes._
+import com.sysalto.render.serialization.RenderReportSerializer.{PdfBaseItemSerializer, PdfImageSerializer}
+import proto.com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto
 
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persistenceFactory: PersistenceFactory, pdfCompression: Boolean) {
 	implicit val wordSeparators: List[Char] = List(',', '.')
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
 	implicit val persistenceUtil = persistenceFactory.open()
+	ImageStore(persistenceFactory)
 	private[this] val pdfWriter = new PdfWriter(name)
 	private[this] var id: Long = 0
 	private[this] var catalog: PdfCatalog = null
@@ -287,16 +290,9 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		this.stroke()
 	}
 
-	import scalaz._
-	private [this] val getPdfImage: String => PdfImage = Memo.immutableHashMapMemo {
-		s => {
-			new PdfImage(nextId(), s)
-		}
-	}
-
 
 	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float): Unit = {
-		val pdfImage = getPdfImage(file)
+		val pdfImage = ImageStore.getPdfImage(file,nextId())
 		setObject(pdfImage)
 		val scale = Math.min(width / pdfImage.imageMeta.width, height / pdfImage.imageMeta.height)
 		graphicList += new PdfDrawImage(pdfImage.id, x, y, scale)

@@ -427,6 +427,16 @@ class MemoryPersistenceUtil implements PersistenceUtil {
     }
 
     @Override
+    public void writeObject(String key, byte[] obj) {
+
+    }
+
+    @Override
+    public byte[] readObject(String key) {
+        return new byte[0];
+    }
+
+    @Override
     public byte[] readObject(long key) {
         return map.get(key);
     }
@@ -503,6 +513,16 @@ class DerbyPersistenceUtil implements PersistenceUtil {
             }
         }
         return false;
+    }
+
+    @Override
+    public void writeObject(String key, byte[] obj) {
+
+    }
+
+    @Override
+    public byte[] readObject(String key) {
+        return new byte[0];
     }
 
     @Override

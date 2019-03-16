@@ -39,7 +39,13 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) extends Pe
 		db.put(BigInt(key).toByteArray, obj)
 	}
 
+  override def writeObject(key: String, obj: Array[Byte]): Unit = {
+    db.put(key.getBytes, obj)
+  }
+
 	override def readObject(key: Long): Array[Byte] = db.get(BigInt(key).toByteArray)
+
+	override def readObject(key: String): Array[Byte] = db.get(key.getBytes)
 
 
 	override def getAllKeys: java.util.List[java.lang.Long] = {

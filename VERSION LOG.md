@@ -1,3 +1,7 @@
+## 1.0.4 (2019-03-16)
+### Bugs fixed:
+* optimize drawImage by caching into separate persistence store
+
 ## 1.0.3 (2019-01-05)
 ### Changes:
 * compiled with latest scala 2.12.8
