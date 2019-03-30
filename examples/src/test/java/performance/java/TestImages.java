@@ -20,7 +20,7 @@ public class TestImages {
         ReportMargin margin2 = row.getColumnBound("text2");
         for (int i = 1; i <= 20000; i++) {
             report.nextLine();
-            ReportCell cell1 = new ReportCell(new ReportTxt("Text1 "+i)).inside(margin1).leftAlign();
+            ReportCell cell1 = new ReportCell(new ReportTxt("TextWWWWWW1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"+i)).inside(margin1).leftAlign();
             ReportCell cell2 = new ReportCell(new ReportTxt("Text2 "+i)).inside(margin2).rightAlign();
             ReportCell[] contentRow = new ReportCell[]{cell1, cell2};
             Float y2 = report.calculate(contentRow);

@@ -9,7 +9,7 @@ import com.sysalto.render.util.wrapper.WordWrap
 import com.sysalto.report.ReportTypes.{BoundaryRect, WrapBox}
 import com.sysalto.report.{RFontAttribute, ReportTypes, WrapAlign}
 import com.sysalto.report.reportTypes._
-import com.sysalto.report.util.{PersistenceFactory, PersistenceUtil}
+import com.sysalto.report.util.PersistenceFactory
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -18,7 +18,7 @@ import com.sysalto.render.serialization.RenderReportSerializer.{PdfBaseItemSeria
 import proto.com.sysalto.render.serialization.RenderProto.PdfBaseItem_proto
 
 class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persistenceFactory: PersistenceFactory, pdfCompression: Boolean) {
-	implicit val wordSeparators: List[Char] = List(',', '.')
+	implicit val wordSeparators: List[Char] = List(',', '.',' ')
 	private[this] val fontFamilyMap = scala.collection.mutable.HashMap.empty[String, RFontParserFamily]
 	private[this] val wordWrap = new WordWrap(fontFamilyMap)
 	implicit val persistenceUtil = persistenceFactory.open()
@@ -249,8 +249,8 @@ class RenderReport(name: String, PAGE_WIDTH: Float, PAGE_HEIGHT: Float, persiste
 		} else {
 			crtY -= lineHeight * (lines.size - 1)
 		}
-		val l1 = if (lines.isEmpty) List() else lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
-		val textHeight = if (l1.isEmpty) 0 else l1.max
+		//val l1 = if (lines.isEmpty) List() else lines.head.map(textPos => wordWrap.getTextHeight(textPos.rtext))
+		val textHeight = 0 //if (l1.isEmpty) 0 else l1.max
 		Some(new WrapBox(PAGE_HEIGHT - y0, PAGE_HEIGHT - crtY, lines.size, textHeight))
 	}
 
