@@ -6,7 +6,7 @@ val AKKA_VERSION = "2.5.19"
 
 val ROCKSDB_VERSION =  "5.17.2"
 
-val PROTOBUF_VERSION =  "3.6.1"
+val PROTOBUF_VERSION =  "3.7.0"
 
 val SCALAZ_VERSION = "7.3.0-M27"
 
