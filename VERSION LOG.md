@@ -1,3 +1,8 @@
+## 1.0.5 (2019-04-19)
+### Bugs fixed:
+* optimize word wrap of very long string
+
+
 ## 1.0.4 (2019-03-16)
 ### Bugs fixed:
 * optimize drawImage by caching into separate persistence store

@@ -10,11 +10,11 @@ val PROTOBUF_VERSION =  "3.7.0"
 
 val SCALAZ_VERSION = "7.3.0-M27"
 
-val projectVersion = "1.0.5-SNAPSHOT"
+val projectVersion = "1.0.5"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",
-	isSnapshot := true,
+	isSnapshot := false,
 	version := projectVersion,
 	cancelable in Global := true,
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
