@@ -10,11 +10,11 @@ val PROTOBUF_VERSION =  "3.7.0"
 
 val SCALAZ_VERSION = "7.3.0-M27"
 
-val projectVersion = "1.0.5"
+val projectVersion = "1.0.6-SNAPSHOT"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",
-	isSnapshot := false,
+	isSnapshot := true,
 	version := projectVersion,
 	cancelable in Global := true,
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
@@ -68,7 +68,6 @@ lazy val coreSettings = Seq(
 	},
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
 	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION,
-	libraryDependencies += "com.google.protobuf" % "protobuf-java-util" % PROTOBUF_VERSION,
 	libraryDependencies += "org.scalaz" %% "scalaz-core" % SCALAZ_VERSION,
 	libraryDependencies += "org.scalaz" %% "scalaz-effect" % SCALAZ_VERSION,
 	libraryDependencies += "org.scalaz" %% "scalaz-concurrent" % SCALAZ_VERSION,
