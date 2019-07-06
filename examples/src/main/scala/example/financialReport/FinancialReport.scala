@@ -16,7 +16,7 @@ object FinancialReport extends GroupUtilTrait {
 
 	// draw background image as gradient
 	private def drawbackgroundImage(report: Report): Unit = {
-		report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(230, 255, 255)) draw()
+		report.rectangle().from(0, 0).to(report.pageLayout.width, report.pageLayout.height).verticalShade(ReportColor(255, 255, 255), ReportColor(230, 255, 255)).draw()
 	}
 
 	private def setupReport(report: Report): Unit = {
@@ -38,16 +38,16 @@ object FinancialReport extends GroupUtilTrait {
 		report.footerFct = {
 			case (pgNbr, pgMax) =>
 				report.setYPosition(report.pageLayout.height - report.lineHeight * 3)
-				report line() from(10, report.getY) to (report.pageLayout.width - 10) draw()
+				report.line().from(10, report.getY).to(report.pageLayout.width - 10).draw()
 				report.nextLine()
-				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+				report.print(ReportCell(s"Page $pgNbr of $pgMax".bold()).rightAlign().inside(ReportMargin(0, report.pageLayout.width - 10)))
 		}
 
 	}
 
 	private def reportHeader(report: Report): Unit = {
 		report.nextLine(2)
-		report print (ReportCell("Daily Trades" size 15 bold()) centerAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+		report.print(ReportCell("Daily Trades".size(15).bold()).centerAlign().inside(ReportMargin(0, report.pageLayout.width - 10)))
 		report.nextLine(2)
 	}
 
@@ -56,7 +56,7 @@ object FinancialReport extends GroupUtilTrait {
 		val y2 = report.calculate(hrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y2 + 2
-		report rectangle() from(9, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerColor draw()
+		report.rectangle().from(9, top).radius (3).to(report.pageLayout.width - 9, bottom).fillColor(headerColor).draw()
 		report.print(hrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine
@@ -90,7 +90,7 @@ object FinancialReport extends GroupUtilTrait {
 			report print "Occupation".toString at (crtX)
 			report print account.occupation at (crtX + 90)
 
-			report rectangle() from(crtX - 2, crtY - report.lineHeight + 5) radius (5) to(crtX + deltaX + 4, crtY + deltaY - report.lineHeight - 2) fillColor headerAccountColor draw()
+			report.rectangle().from(crtX - 2, crtY - report.lineHeight + 5).radius (5).to(crtX + deltaX + 4, crtY + deltaY - report.lineHeight - 2).fillColor(headerAccountColor).draw()
 
 			crtX += (deltaX + 10)
 
@@ -101,7 +101,7 @@ object FinancialReport extends GroupUtilTrait {
 		val y2 = report.calculate(hrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y2 + 2
-		report rectangle() from(report.pageLayout.width * 0.6f + 100, top) radius (3) to(report.pageLayout.width - 9, bottom) fillColor headerTradeColor draw()
+		report.rectangle().from(report.pageLayout.width * 0.6f + 100, top).radius (3).to(report.pageLayout.width - 9, bottom).fillColor(headerTradeColor).draw()
 		report.print(hrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine
@@ -110,10 +110,10 @@ object FinancialReport extends GroupUtilTrait {
 	private def printTrades(report: Report, accountList: Seq[Trade]): Unit = {
 		val row = ReportRow(report.pageLayout.width * 0.6f, report.pageLayout.width - 10,
 			List(Column("lta", Flex(1)), Column("poa", Flex(1))))
-		val h_lta = ReportCell("Amount" bold() color headerFontColor) rightAlign() inside(row, "lta")
-		val h_poa = ReportCell("Fee" bold() color headerFontColor) rightAlign() inside(row, "poa")
+		val h_lta = ReportCell("Amount".bold().color(headerFontColor)).rightAlign().inside(row, "lta")
+		val h_poa = ReportCell("Fee".bold().color(headerFontColor)).rightAlign().inside(row, "poa")
 		val hrow = List(h_lta, h_poa)
-		report print (ReportCell("TRADES" bold()) centerAlign() inside ReportMargin(report.pageLayout.width * 0.6f + 100, report.pageLayout.width - 9))
+		report.print (ReportCell("TRADES".bold()).centerAlign().inside (ReportMargin(report.pageLayout.width * 0.6f + 100, report.pageLayout.width - 9)))
 		report.nextLine(2)
 		printTradeHeader(report, hrow)
 		accountList.foreach(trade => {
@@ -122,8 +122,8 @@ object FinancialReport extends GroupUtilTrait {
 				report.nextLine
 				printTradeHeader(report, hrow)
 			}
-			val v_lta = ReportCell("" + trade.amount) rightAlign() inside(row, "lta")
-			val v_poa = ReportCell("" + trade.fee) rightAlign() inside(row, "poa")
+			val v_lta = ReportCell("" + trade.amount).rightAlign().inside(row, "lta")
+			val v_poa = ReportCell("" + trade.fee).rightAlign().inside(row, "poa")
 			val vrow = List(v_lta, v_poa)
 			report.print(vrow)
 			report.nextLine
@@ -162,16 +162,16 @@ object FinancialReport extends GroupUtilTrait {
 			Column("price", Flex(2)), Column("quantity", Flex(2)), Column("commision", Flex(2)), Column("orderStatus", Flex(2)),
 			Column("risk", Flex(2)))).setCellSpacing(10f)
 
-		val l_invCode = ReportCell("Code" bold() color headerFontColor) leftAlign() inside(row, "invCode")
-		val l_invDescription = ReportCell("Description" bold() color headerFontColor) leftAlign() inside(row, "invDescription")
-		val l_tradeType = ReportCell("Trade Type" bold() color headerFontColor) leftAlign() inside(row, "tradeType")
-		val l_grossAmount = ReportCell("Amount" bold() color headerFontColor) rightAlign() inside(row, "grossAmount")
-		val l_netAmmount = ReportCell("Net Amount" bold() color headerFontColor) rightAlign() inside(row, "netAmmount")
-		val l_price = ReportCell("Price" bold() color headerFontColor) rightAlign() inside(row, "price")
-		val l_quantity = ReportCell("Quantity" bold() color headerFontColor) rightAlign() inside(row, "quantity")
-		val l_commision = ReportCell("Commision" bold() color headerFontColor) rightAlign() inside(row, "commision")
-		val l_orderStatus = ReportCell("Order Status" bold() color headerFontColor) leftAlign() inside(row, "orderStatus")
-		val l_risk = ReportCell("Risk" bold() color headerFontColor) rightAlign() inside(row, "risk")
+		val l_invCode = ReportCell("Code".bold().color(headerFontColor)).leftAlign().inside(row, "invCode")
+		val l_invDescription = ReportCell("Description".bold().color(headerFontColor)).leftAlign().inside(row, "invDescription")
+		val l_tradeType = ReportCell("Trade Type".bold().color(headerFontColor)).leftAlign().inside(row, "tradeType")
+		val l_grossAmount = ReportCell("Amount".bold().color(headerFontColor)).rightAlign().inside(row, "grossAmount")
+		val l_netAmmount = ReportCell("Net Amount".bold().color(headerFontColor)).rightAlign().inside(row, "netAmmount")
+		val l_price = ReportCell("Price".bold().color(headerFontColor)).rightAlign().inside(row, "price")
+		val l_quantity = ReportCell("Quantity".bold().color(headerFontColor)).rightAlign().inside(row, "quantity")
+		val l_commision = ReportCell("Commision".bold().color(headerFontColor)).rightAlign().inside(row, "commision")
+		val l_orderStatus = ReportCell("Order Status".bold().color(headerFontColor)).leftAlign() inside(row, "orderStatus")
+		val l_risk = ReportCell("Risk".bold().color(headerFontColor)).rightAlign().inside(row, "risk")
 
 
 		val hrow = List(l_invCode, l_invDescription, l_tradeType, l_grossAmount, l_netAmmount, l_price, l_quantity,
@@ -184,34 +184,34 @@ object FinancialReport extends GroupUtilTrait {
 				}
 				report.nextLine(2)
 				printTranHeader(report, hrow)
-				report print ("Region:" + crtRec.region bold()) at 10
+				report.print (("Region:" + crtRec.region).bold()).at(10)
 				report.nextLine()
-				report print ("Branch Number:" + crtRec.branch bold()) at 10
+				report.print (("Branch Number:" + crtRec.branch).bold()).at(10)
 				report.nextLine()
-				report print ("Agent:" + crtRec.name bold()) at 10
+				report.print(("Agent:" + crtRec.name).bold()).at(10)
 				val summarylabel = "Region:" + crtRec.region + " Branch Number:" + crtRec.branch + " Agent:" + crtRec.name
 				summaryList += (summarylabel -> report.getCrtPageNbr())
 				report.nextLine(2)
 				crtRec.tranList.zipWithIndex.foreach { case (tran, index) => {
-					val v_invCode = ReportCell("" + tran.invCode) leftAlign() inside(row, "invCode")
-					val v_invDescription = ReportCell(tran.invDescription) leftAlign() inside(row, "invDescription")
-					val v_tradeType = ReportCell(tran.tradeType) leftAlign() inside(row, "tradeType")
-					val v_grossAmount = ReportCell("" + tran.grossAmount) rightAlign() inside(row, "grossAmount")
-					val v_netAmmount = ReportCell("" + tran.netAmmount) rightAlign() inside(row, "netAmmount")
-					val v_price = ReportCell("" + tran.price) rightAlign() inside(row, "price")
-					val v_quantity = ReportCell("" + tran.quantity) rightAlign() inside(row, "quantity")
-					val v_commision = ReportCell("" + tran.commision) rightAlign() inside(row, "commision")
-					val v_orderStatus = ReportCell(tran.orderStatus) leftAlign() inside(row, "orderStatus")
-					val v_risk = ReportCell(tran.risk) rightAlign() inside(row, "risk")
+					val v_invCode = ReportCell("" + tran.invCode).leftAlign().inside(row, "invCode")
+					val v_invDescription = ReportCell(tran.invDescription).leftAlign().inside(row, "invDescription")
+					val v_tradeType = ReportCell(tran.tradeType).leftAlign().inside(row, "tradeType")
+					val v_grossAmount = ReportCell("" + tran.grossAmount).rightAlign().inside(row, "grossAmount")
+					val v_netAmmount = ReportCell("" + tran.netAmmount).rightAlign().inside(row, "netAmmount")
+					val v_price = ReportCell("" + tran.price).rightAlign().inside(row, "price")
+					val v_quantity = ReportCell("" + tran.quantity).rightAlign().inside(row, "quantity")
+					val v_commision = ReportCell("" + tran.commision).rightAlign().inside(row, "commision")
+					val v_orderStatus = ReportCell(tran.orderStatus).leftAlign().inside(row, "orderStatus")
+					val v_risk = ReportCell(tran.risk).rightAlign().inside(row, "risk")
 					val v_row = List(v_invCode, v_invDescription, v_tradeType, v_grossAmount, v_netAmmount, v_price, v_quantity,
 						v_commision, v_orderStatus, v_risk)
 					var y2 = report.calculate(v_row)
 					report.print(v_row)
 					if (index == crtRec.tranList.length - 1) {
 						y2 += 5
-						report line() from(10, y2 + 2) to report.pageLayout.width - 10 width 1f color(50, 50, 50) draw()
+						report.line().from(10, y2 + 2).to(report.pageLayout.width - 10).width(1f).color(50, 50, 50).draw()
 					} else {
-						report line() from(10, y2 + 2) to report.pageLayout.width - 10 width 0.5f color(200, 200, 200) draw()
+						report.line().from(10, y2 + 2).to(report.pageLayout.width - 10).width(0.5f).color(200, 200, 200).draw()
 					}
 					report.setYPosition(y2)
 					report.nextLine()
@@ -243,7 +243,7 @@ object FinancialReport extends GroupUtilTrait {
 
 		report.insertPages(summaryPages,1)
 		report.nextLine(2)
-		report print (ReportCell("Daily Trades Summary" size 15 bold()) centerAlign() inside ReportMargin(0, report.pageLayout.width - 10))
+		report.print(ReportCell("Daily Trades Summary".size(15).bold()).centerAlign().inside(ReportMargin(0, report.pageLayout.width - 10)))
 		report.nextLine(2)
 		summaryList.foreach(item=>{
 			if (report.lineLeft<3) {
@@ -255,8 +255,8 @@ object FinancialReport extends GroupUtilTrait {
 			val xLeft=report.getTextWidth(item._1)+15
 			val xRight=report.pageLayout.width - 25 - report.getTextWidth(item._2.toString)
 
-			report line() from(xLeft,report.getY) to xRight width 0.5f color(200, 200, 200) lineType LineDashType(2, 1) draw()
-			val bound=report print (ReportCell(""+item._2) rightAlign() inside ReportMargin(0, report.pageLayout.width - 20))
+			report.line().from(xLeft,report.getY).to(xRight).width(0.5f).color(200, 200, 200).lineType(LineDashType(2, 1)).draw()
+			val bound=report.print(ReportCell(""+item._2).rightAlign().inside( ReportMargin(0, report.pageLayout.width - 20)))
 			report.setLinkToPage(bound,item._2, 0, 0)
 			report.nextLine()
 		})

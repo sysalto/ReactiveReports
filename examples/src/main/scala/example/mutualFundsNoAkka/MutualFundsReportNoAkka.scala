@@ -44,7 +44,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 	// draw background image as gradient
 	private def drawbackgroundImage(report: Report): Unit = {
-		report rectangle() from(0, 0) to(report.pageLayout.width, report.pageLayout.height) verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)) draw()
+		report.rectangle().from(0, 0).to(report.pageLayout.width, report.pageLayout.height).verticalShade(ReportColor(255, 255, 255), ReportColor(255, 255, 180)).draw()
 	}
 
 	private def reportHeader(report: Report): Unit = {
@@ -57,28 +57,28 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.nextLine(3)
 		report.drawImage("examples/src/main/resources/images/bank_banner.jpg", marginOffset, 60, 100, 40)
 
-		report print (ReportCell("Investment statement" size 15 bold()) centerAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
+		report.print(ReportCell("Investment statement".size(15).bold()).centerAlign().inside(ReportMargin(0, report.pageLayout.width - marginOffset)))
 		report.nextLine()
 
 		val str = sd.format(date1) + " to " + sd.format(date2)
-		report print (ReportCell(str size 15 bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
+		report.print(ReportCell(str.size(15).bold()).rightAlign().inside(ReportMargin(0, report.pageLayout.width - marginOffset)))
 		report.nextLine(2)
-		report print ("Mutual Funds Inc." bold()) at marginOffset
+		report.print("Mutual Funds Inc.".bold()).at(marginOffset)
 		report.nextLine()
-		report print ("Group Registered Retirement Saving Plan" bold()) at marginOffset
+		report.print("Group Registered Retirement Saving Plan".bold()).at(marginOffset)
 		report.nextLine(2)
 		val y = report.getY
-		report print ((record value "name").toString bold()) at marginOffset
+		report.print((record value "name").toString.bold()).at(marginOffset)
 		report.nextLine()
-		report print (record value "addr1").toString at marginOffset
+		report.print ((record value "addr1").toString).at(marginOffset)
 		report.nextLine()
-		report print (record value "addr2").toString at marginOffset
+		report.print((record value "addr2").toString).at(marginOffset)
 		report.nextLine()
-		report print (record value "addr3").toString at marginOffset
+		report.print((record value "addr3").toString).at(marginOffset)
 		report.setYPosition(y)
-		report print (ReportCell("Beneficiary information" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
+		report.print (ReportCell("Beneficiary information".bold()).rightAlign().inside(ReportMargin(0, report.pageLayout.width - marginOffset)))
 		report.nextLine()
-		report print (ReportCell((record value "benef_name").toString) rightAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
+		report.print(ReportCell((record value "benef_name").toString).rightAlign().inside(ReportMargin(0, report.pageLayout.width - marginOffset)))
 		report.nextLine(2)
 	}
 
@@ -94,16 +94,16 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val value2 = row.getColumnBound("value2")
 		val change = row.getColumnBound("change")
 		val graphic = row.getColumnBound("graphic")
-		val c_fundName = ReportCell("Summary of investments" bold() color headerFontColor) leftAlign() inside fundName
-		val c_value1 = ReportCell(s"Value on\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() inside value1
-		val c_value2 = ReportCell(s"Value on\n${sd.format(date2)}($$)" bold() color headerFontColor) rightAlign() inside value2
-		val c_change = ReportCell(s"Change($$)" bold() color headerFontColor) rightAlign() inside change
-		val c_graphic = ReportCell(s"Assets mix\n${sd.format(date2)}(%)" bold() color headerFontColor) rightAlign() inside graphic
+		val c_fundName = ReportCell("Summary of investments".bold().color(headerFontColor)).leftAlign().inside(fundName)
+		val c_value1 = ReportCell(s"Value on\n${sd.format(date1)}($$)".bold().color(headerFontColor)).rightAlign().inside(value1)
+		val c_value2 = ReportCell(s"Value on\n${sd.format(date2)}($$)".bold().color(headerFontColor)).rightAlign().inside(value2)
+		val c_change = ReportCell(s"Change($$)".bold().color(headerFontColor)).rightAlign().inside(change)
+		val c_graphic = ReportCell(s"Assets mix\n${sd.format(date2)}(%)".bold().color(headerFontColor)).rightAlign().inside(graphic)
 		val rrow = List(c_fundName, c_value1, c_value2, c_change, c_graphic)
 		val y2 = report.calculate(rrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y2 + 2
-		report rectangle() from(marginOffset, top) radius (3) to(report.pageLayout.width - marginOffset, bottom) fillColor headerColor draw()
+		report.rectangle().from(marginOffset, top).radius(3).to(report.pageLayout.width - marginOffset, bottom).fillColor(headerColor).draw()
 		report.print(rrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine()
@@ -125,10 +125,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 					firstY = report.getY
 				}
 				val crtRec = GroupUtil.getRec(rec)
-				val c_fundName = ReportCell(ReportTxt(firstChar.asInstanceOf[Char].toString + " ").bold() + (crtRec value "fund_name").toString) leftAlign() inside fundName
+				val c_fundName = ReportCell(ReportTxt(firstChar.asInstanceOf[Char].toString + " ").bold() + (crtRec value "fund_name").toString).leftAlign().inside(fundName)
 
-				val c_value1 = ReportCell((crtRec value "value1").toString) rightAlign() inside value1
-				val c_value2 = ReportCell((crtRec value "value2").toString) rightAlign() inside value2
+				val c_value1 = ReportCell((crtRec value "value1").toString).rightAlign().inside(value1)
+				val c_value2 = ReportCell((crtRec value "value2").toString).rightAlign().inside(value2)
 				val val1 = (crtRec value "value1").toString
 				val val2 = (crtRec value "value2").toString
 				val v_change = val2.toFloat - val1.toFloat
@@ -138,14 +138,14 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val color=ReportColor(rnd.nextInt(255),rnd.nextInt(255),rnd.nextInt(255))
 				val dataItem=(firstChar.asInstanceOf[Char].toString ,color, total2)
 				chartData += dataItem
-				val c_change = ReportCell(v_change.toString) rightAlign() inside change
+				val c_change = ReportCell(v_change.toString).rightAlign().inside(change)
 				val rrow = List(c_fundName, c_value1, c_value2, c_change)
 				val y2 = report.calculate(rrow)
 				report.print(rrow)
 				if (GroupUtil.isLastRecord(rec)) {
-					report line() from(marginOffset, report.getY + 2) to change.right width 1f draw()
+					report.line().from(marginOffset, report.getY + 2).to(change.right).width(1f).draw()
 				} else {
-					report line() from(marginOffset, report.getY + 2) to change.right width 0.5f color(200, 200, 200) draw() //lineType LineDashType(2, 1) draw()
+					report.line().from(marginOffset, report.getY + 2).to(change.right).width(0.5f).color(200, 200, 200).draw()
 				}
 				firstChar += 1
 				report.nextLine()
@@ -155,8 +155,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 			})
 		rs.close()
 
-		val trow = List(ReportCell("Total" bold()) inside fundName, ReportCell(total1.toString bold()) rightAlign() inside value1,
-			ReportCell(total2.toString bold()) rightAlign() inside value2, ReportCell(total3.toString bold()) rightAlign() inside change)
+		val trow = List(ReportCell("Total".bold()).inside(fundName),
+			ReportCell(total1.toString.bold()).rightAlign().inside(value1),
+			ReportCell(total2.toString.bold()).rightAlign().inside(value2),
+			ReportCell(total3.toString.bold()).rightAlign().inside(change))
 		report.print(trow)
 		val chartHeight = report.getY - firstY
 
@@ -172,15 +174,15 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val value1 = row.getColumnBound("value1")
 		val value2 = row.getColumnBound("value2")
 		val value3 = row.getColumnBound("value3")
-		val accountHdr = ReportCell("Change in the value of account" bold() color headerFontColor) leftAlign() inside account
-		val value1Hdr = ReportCell("This period($)" bold() color headerFontColor) rightAlign() inside value1
-		val value2Hdr = ReportCell("Year-to-date($)" bold() color headerFontColor) rightAlign() inside value2
-		val value3Hdr = ReportCell(s"Since\n${sd.format(date1)}($$)" bold() color headerFontColor) rightAlign() inside value3
+		val accountHdr = ReportCell("Change in the value of account".bold().color(headerFontColor)). leftAlign().inside(account)
+		val value1Hdr = ReportCell("This period($)".bold().color(headerFontColor)).rightAlign().inside(value1)
+		val value2Hdr = ReportCell("Year-to-date($)".bold().color(headerFontColor)).rightAlign().inside(value2)
+		val value3Hdr = ReportCell(s"Since\n${sd.format(date1)}($$)".bold().color(headerFontColor)).rightAlign().inside(value3)
 		val rrow = List(accountHdr, value1Hdr, value2Hdr, value3Hdr)
 		val y2 = report.calculate(rrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y2 + 2
-		report rectangle() from(marginOffset, top) radius (3) to(report.pageLayout.width - marginOffset, bottom) fillColor headerColor draw()
+		report.rectangle().from(marginOffset, top).radius (3).to(report.pageLayout.width - marginOffset, bottom).fillColor(headerColor).draw()
 		report.print(rrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y2)
 		report.nextLine()
@@ -194,10 +196,10 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val r_value1 = (crtRec value "value1").toString
 				val r_value2 = (crtRec value "value2").toString
 				val r_value3 = (crtRec value "value3").toString
-				val c_account = ReportCell(name) leftAlign() inside account
-				val c_value1 = ReportCell(r_value1) rightAlign() inside value1
-				val c_value2 = ReportCell(r_value2) rightAlign() inside value2
-				val c_value3 = ReportCell(r_value3) rightAlign() inside value3
+				val c_account = ReportCell(name).leftAlign().inside(account)
+				val c_value1 = ReportCell(r_value1).rightAlign().inside(value1)
+				val c_value2 = ReportCell(r_value2).rightAlign().inside(value2)
+				val c_value3 = ReportCell(r_value3).rightAlign().inside(value3)
 				total1 += r_value1.toFloat
 				total2 += r_value2.toFloat
 				total3 += r_value3.toFloat
@@ -206,7 +208,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val y2 = report.calculate(rrow)
 				report.print(rrow)
 				val lColor = if (GroupUtil.isLastRecord(rec)) ReportColor(0, 0, 0) else ReportColor(200, 200, 200)
-				report line() from(marginOffset, report.getY + 2) to value3.right width 0.5f color (lColor) lineType LineDashType(2, 1) draw()
+				report.line().from(marginOffset, report.getY + 2). to (value3.right). width(0.5f). color (lColor).lineType(LineDashType(2, 1)). draw()
 				report.nextLine()
 			} catch {
 				case e: Throwable =>
@@ -215,15 +217,15 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		)
 
 		rs.close()
-		val accountSum = ReportCell(s"Value of  account on ${sd.format(date2)}" bold()) leftAlign() inside account
-		val value1Sum = ReportCell(total1.toString bold()) rightAlign() inside value1
-		val value2Sum = ReportCell(total2.toString bold()) rightAlign() inside value2
-		val value3Sum = ReportCell(total3.toString bold()) rightAlign() inside value3
+		val accountSum = ReportCell(s"Value of  account on ${sd.format(date2)}".bold()).leftAlign().inside(account)
+		val value1Sum = ReportCell(total1.toString.bold()).rightAlign().inside(value1)
+		val value2Sum = ReportCell(total2.toString.bold()).rightAlign().inside(value2)
+		val value3Sum = ReportCell(total3.toString.bold()).rightAlign().inside(value3)
 		val frow = List(accountSum, value1Sum, value2Sum, value3Sum)
 		val y3 = report.calculate(frow)
 		report.print(frow)
 		report.setYPosition(y3)
-		report line() from(marginOffset, report.getY + report.lineHeight * 0.5f) to value3.right draw()
+		report.line().from(marginOffset, report.getY + report.lineHeight * 0.5f). to (value3.right).draw()
 		report.nextLine()
 
 	}
@@ -246,29 +248,29 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		val annualized = row.getColumnBound("annualized")
 		report.nextLine(3)
 
-		val h_accountPerf = ReportCell("Account performance" bold() color headerFontColor) leftAlign() inside accountPerf
-		val h_value3m = ReportCell("3 Months (%)" bold() color headerFontColor) rightAlign() inside value3m
-		val h_value1y = ReportCell("1 Year (%)" bold() color headerFontColor) rightAlign() inside value1y
-		val h_value3y = ReportCell("3 Years (%)" bold() color headerFontColor) rightAlign() inside value3y
-		val h_value5y = ReportCell("5 Years (%)" bold() color headerFontColor) rightAlign() inside value5y
-		val h_value10y = ReportCell("10 Years (%)" bold() color headerFontColor) rightAlign() inside value10y
-		val h_annualized = ReportCell(s"Annualized since ${sd.format(date1)} (%)" bold() color headerFontColor) rightAlign() inside annualized
+		val h_accountPerf = ReportCell("Account performance".bold().color(headerFontColor)).leftAlign().inside(accountPerf)
+		val h_value3m = ReportCell("3 Months (%)".bold().color(headerFontColor)).rightAlign().inside(value3m)
+		val h_value1y = ReportCell("1 Year (%)". bold() color headerFontColor). rightAlign() inside value1y
+		val h_value3y = ReportCell("3 Years (%)".bold() color headerFontColor). rightAlign() inside value3y
+		val h_value5y = ReportCell("5 Years (%)". bold() color headerFontColor) .rightAlign() inside value5y
+		val h_value10y = ReportCell("10 Years (%)" .bold() color headerFontColor). rightAlign() inside value10y
+		val h_annualized = ReportCell(s"Annualized since ${sd.format(date1)} (%)" .bold() color headerFontColor). rightAlign() inside annualized
 		val hrow = List(h_accountPerf, h_value3m, h_value1y, h_value3y, h_value5y, h_value10y, h_annualized)
 		val y1 = report.calculate(hrow)
 		val top = report.getY - report.lineHeight
 		val bottom = y1 + 2
-		report rectangle() from(marginOffset, top) radius (3) to(report.pageLayout.width - marginOffset, bottom) fillColor headerColor draw()
+		report.rectangle().from(marginOffset, top).radius (3) .to(report.pageLayout.width - marginOffset, bottom). fillColor(headerColor) .draw()
 		report.print(hrow, CellAlign.CENTER, top, bottom)
 		report.setYPosition(y1)
 		report.nextLine()
 
-		val r_accountPerf = ReportCell("Your personal rate of return") leftAlign() inside accountPerf
-		val r_value3m = ReportCell((record value "value3m").toString) rightAlign() inside value3m
-		val r_value1y = ReportCell((record value "value1y").toString) rightAlign() inside value1y
-		val r_value3y = ReportCell((record value "value3y").toString) rightAlign() inside value3y
-		val r_value5y = ReportCell((record value "value5y").toString) rightAlign() inside value5y
-		val r_value10y = ReportCell((record value "value10y").toString) rightAlign() inside value10y
-		val r_annualized = ReportCell((record value "annualized").toString) rightAlign() inside annualized
+		val r_accountPerf = ReportCell("Your personal rate of return"). leftAlign() inside accountPerf
+		val r_value3m = ReportCell((record value "value3m").toString). rightAlign() inside value3m
+		val r_value1y = ReportCell((record value "value1y").toString) .rightAlign() inside value1y
+		val r_value3y = ReportCell((record value "value3y").toString) .rightAlign() inside value3y
+		val r_value5y = ReportCell((record value "value5y").toString) .rightAlign() inside value5y
+		val r_value10y = ReportCell((record value "value10y").toString) .rightAlign() inside value10y
+		val r_annualized = ReportCell((record value "annualized").toString) .rightAlign() inside annualized
 
 		val rrow = List(r_accountPerf, r_value3m, r_value1y, r_value3y, r_value5y, r_value10y, r_annualized)
 		val y2 = report.calculate(rrow)
@@ -279,11 +281,11 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	private def disclaimer(report: Report): Unit = {
 		report.nextPage()
 		report.nextLine(3)
-		report print (ReportCell("Important Information" bold() size 20) at 20)
+		report print (ReportCell("Important Information" .bold() size 20) at 20)
 		report.nextLine(3)
 
 		// "Information about your account" paragraph
-		report print (ReportCell("Information about your account " bold() size 16) at 20)
+		report print (ReportCell("Information about your account " .bold() size 16) at 20)
 		report.nextLine(2)
 		val cell_P1 = ReportCell("We are taking care to ensure your financial statement is accurate. It is your duty, however, to review it carefully and contact us " +
 			"if you find errors in this information. In case of errors, please, contact us within sixty(60) days after the issue date for this statement.") inside ReportMargin(marginOffset, report.pageLayout.width - marginOffset)
@@ -293,7 +295,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 		report.nextLine(2)
 
 		// "Registered retirement" paragraph
-		report print (ReportCell("Registered retirement " bold() size 16) at 20)
+		report print (ReportCell("Registered retirement " .bold() size 16) at 20)
 		report.nextLine(2)
 		val cell_P2 = ReportCell("The RRSP contribution deadline for the 2018 tax year is March 1, 2018. You will find your available contribution room on your most recent notice of assessment from canada Revenue Agency. " +
 			"Speak to your investment representative today about maximizing your RRSP contribution room.") inside ReportMargin(marginOffset, report.pageLayout.width - marginOffset)
@@ -306,7 +308,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 		// "If you live in Quebec" - paragraph
 		report.nextLine(2)
-		report print (ReportCell("If you live in Québec"  bold() size 16) at 20)
+		report print (ReportCell("If you live in Québec"  .bold() size 16) at 20)
 		report.nextLine(2)
 		val cell_P3 = ReportCell("The \"Autorité des marchés financiers\" (AMF) administers the \"Fonds d'indemnisation des services financiers\" (Financial services compensation " +
 			"fund)") inside ReportMargin(marginOffset, report.pageLayout.width - marginOffset)
@@ -340,28 +342,28 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 				val column2 = row.getColumnBound("column2")
 				val column3 = row.getColumnBound("column3")
 
-				val h_column1 = ReportCell("Type of Account" bold()) leftAlign() inside column1
-				val h_column2 = ReportCell("Your account number" bold()) leftAlign() inside column2
-				val h_column3 = ReportCell("Your investment statement" bold()) rightAlign() inside column3
+				val h_column1 = ReportCell("Type of Account" .bold()). leftAlign() inside column1
+				val h_column2 = ReportCell("Your account number" .bold()). leftAlign() inside column2
+				val h_column3 = ReportCell("Your investment statement" .bold()) .rightAlign() inside column3
 				val hrow = List(h_column1, h_column2, h_column3)
 				report.print(hrow)
 				report.nextLine()
 				val str = sd.format(date1) + " to " + sd.format(date2)
-				val r_column1 = ReportCell("Group Registered Retirement Saving Plan") leftAlign() inside column1
-				val r_column2 = ReportCell("123456789") leftAlign() inside column2
-				val r_column3 = ReportCell(str) rightAlign() inside column3
+				val r_column1 = ReportCell("Group Registered Retirement Saving Plan"). leftAlign() inside column1
+				val r_column2 = ReportCell("123456789") .leftAlign() inside column2
+				val r_column3 = ReportCell(str) .rightAlign() inside column3
 				val rrow = List(r_column1, r_column2, r_column3)
 				report.print(rrow)
 				report.nextLine(2)
-				report line() from(marginOffset, report.getY) to (report.pageLayout.width - marginOffset) draw()
+				report .line(). from(marginOffset, report.getY). to (report.pageLayout.width - marginOffset). draw()
 		}
 
 		report.footerFct = {
 			case (pgNbr, pgMax) =>
 				report.setYPosition(report.pageLayout.height - report.lineHeight * 3)
-				report line() from(marginOffset, report.getY) to (report.pageLayout.width - marginOffset) draw()
+				report. line() .from(marginOffset, report.getY). to (report.pageLayout.width - marginOffset). draw()
 				report.nextLine()
-				report print (ReportCell(s"Page $pgNbr of $pgMax" bold()) rightAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
+				report print (ReportCell(s"Page $pgNbr of $pgMax". bold()). rightAlign() inside ReportMargin(0, report.pageLayout.width - marginOffset))
 		}
 		val t1 = System.currentTimeMillis()
 		report.start()

@@ -78,7 +78,7 @@ object ReportTypes {
 			this.deltaY = deltaY
 		}
 
-		private[report] def render(report: Report)
+		private[report] def render(report: Report):Unit
 	}
 
 	private[report] class ReportPage(val items: ListBuffer[ReportItem])

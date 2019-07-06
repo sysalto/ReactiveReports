@@ -3,8 +3,8 @@ package com.sysalto.render.util.wrapper
 import com.sysalto.render.util.fonts.parsers.{FontParser, RFontParserFamily}
 import com.sysalto.report.RFontAttribute
 import com.sysalto.report.reportTypes.{RFont, ReportTxt}
-import scalaz.{ Memo}
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 
@@ -44,15 +44,24 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
       }
     })
     r1 += crtLine.toList
-    r1
+    r1.toSeq
   }
 
+  private[this] def getCharWidth(char: CharFN): Float = {
+    val map=new mutable.HashMap[CharFN,Float]()
 
-  private[this] val getCharWidth: CharFN => Float = Memo.immutableHashMapMemo {
-    char => {
+    def calcWidth(char: CharFN) = {
       val font = char.font
       val fontParser: FontParser = getFontParser(font)
       fontParser.getCharWidth(char.char) * char.font.size
+    }
+    val result=map.get(char)
+    if (result.isDefined) {
+      result.get
+    } else {
+      val width= calcWidth(char)
+      map.put(char,width)
+      width
     }
   }
 
@@ -67,31 +76,31 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
       val list = workingInput.map(charFN => (charFN, getCharWidth(charFN)))
       val idx1 = list.zipWithIndex.indexWhere {
         case ((charFN, width), index) => {
-          list.take(index+1).map(item => item._2).sum > max
+          list.take(index + 1).map(item => item._2).sum > max
         }
       }
       if (idx1 == -1) {
         // all items fit
-        result += workingInput.clone()
+        result += workingInput.clone().toSeq
         workingInput.clear()
       } else {
-        val idx2 = workingInput.take(idx1-1).lastIndexWhere(charFN => wordSeparators.contains(charFN.char))
+        val idx2 = workingInput.take(idx1 - 1).lastIndexWhere(charFN => wordSeparators.contains(charFN.char))
         if (idx2 >= 0) {
           // found
-          resultCrtLine ++= workingInput.take(idx2+1)
-          result += resultCrtLine.clone()
+          resultCrtLine ++= workingInput.take(idx2 + 1)
+          result += resultCrtLine.clone().toSeq
           resultCrtLine.clear()
-          workingInput = workingInput.drop(idx2+1)
+          workingInput = workingInput.drop(idx2 + 1)
         } else {
           // cut the current word
-          resultCrtLine ++= workingInput.take(idx1-1)
-          result += resultCrtLine.clone
+          resultCrtLine ++= workingInput.take(idx1 - 1)
+          result += resultCrtLine.clone.toSeq
           resultCrtLine.clear()
-          workingInput = workingInput.drop(idx1-1)
+          workingInput = workingInput.drop(idx1 - 1)
         }
       }
     }
-    result
+    result.toSeq
   }
 
   private[this] def convertToTextPos(input: Seq[CharFN]): Seq[RTextPos] = {
@@ -118,7 +127,7 @@ class WordWrap(fontFamilyMap: scala.collection.mutable.HashMap[String, RFontPars
       }
     })
     result += new RTextPos(position, textLength, ReportTxt(currentText.toString(), currentFont))
-    result
+    result.toSeq
   }
 
   private[this] def wrapLine(line: Seq[ReportTxt], max: Float): Seq[Seq[RTextPos]] = {

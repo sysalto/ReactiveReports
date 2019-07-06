@@ -1,3 +1,9 @@
+## 1.0.6 (2019-07-06)
+### Changes:
+* removed dependencies of scalaz
+* upgrade to scala 2.13.0
+* remove twitter example (just rename the scala files) since twitter4s is not ready for scala 2.13
+
 ## 1.0.5 (2019-04-19)
 ### Bugs fixed:
 * optimize word wrap of very long string

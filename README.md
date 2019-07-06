@@ -33,7 +33,7 @@
 ### Language details
  - In Java, reports are created using Java code.
  - In Scala, Reactive Reports provides a DSL - domain specific language - for report creation. This DSL is simple to use. 
- - Reactive Reports can be used in Scala 2.12 and in Java 7 and 8.
+ - Reactive Reports can be used in Scala 2.13, 2.12 , 2.11 and in Java 7 and 8.
 
   
 ## Getting started

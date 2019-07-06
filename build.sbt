@@ -1,20 +1,18 @@
 import sbt.Keys.{libraryDependencies, publishMavenStyle}
 
-val SCALA_VERSION = "2.12.8"
+val SCALA_VERSION = "2.13.0"
 
-val AKKA_VERSION = "2.5.19"
+val AKKA_VERSION = "2.5.23"
 
-val ROCKSDB_VERSION =  "5.17.2"
+val ROCKSDB_VERSION = "6.0.1"
 
 val PROTOBUF_VERSION =  "3.7.0"
 
-val SCALAZ_VERSION = "7.3.0-M27"
-
-val projectVersion = "1.0.6-SNAPSHOT"
+val projectVersion = "1.0.6"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",
-	isSnapshot := true,
+	isSnapshot := false,
 	version := projectVersion,
 	cancelable in Global := true,
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
@@ -62,27 +60,24 @@ lazy val commonSettings = Seq(
 )
 
 lazy val coreSettings = Seq(
-	crossScalaVersions := Seq("2.11.12", SCALA_VERSION),
+	crossScalaVersions := Seq("2.11.12","2.12.8", SCALA_VERSION),
 	javacOptions ++= {
-		if (scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
+		if (scalaVersion.value == "2.12.8" || scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	},
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
 	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION,
-	libraryDependencies += "org.scalaz" %% "scalaz-core" % SCALAZ_VERSION,
-	libraryDependencies += "org.scalaz" %% "scalaz-effect" % SCALAZ_VERSION,
-	libraryDependencies += "org.scalaz" %% "scalaz-concurrent" % SCALAZ_VERSION,
-	libraryDependencies += "org.scalaz" %% "scalaz-iteratee" % SCALAZ_VERSION,
 )
 
 lazy val renderPdfSettings = Seq(
-	crossScalaVersions := Seq("2.11.12", SCALA_VERSION),
+	crossScalaVersions := Seq("2.11.12","2.12.8", SCALA_VERSION),
 	protobufIncludePaths in ProtobufConfig += (sourceDirectory in ProtobufConfig in coreReport).value,
 	javacOptions ++= {
-		if (scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
+		if (scalaVersion.value == "2.12.8" || scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	}
 )
 
 lazy val akkaSettings = Seq(
+	crossScalaVersions := Seq("2.12.8", SCALA_VERSION),
 	libraryDependencies += "com.typesafe.akka" %% "akka-actor" % AKKA_VERSION,
 	libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % AKKA_VERSION,
 	libraryDependencies += "com.typesafe.akka" %% "akka-stream" % AKKA_VERSION
@@ -134,7 +129,7 @@ lazy val examples = (project in file("examples")).
 		libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release",
 		libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
 		libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release"),
-		libraryDependencies += "com.danielasfregola" %% "twitter4s" % "latest.release",
+//		libraryDependencies += "com.danielasfregola" % "twitter4s_2.12" % "latest.release",
 		libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.7.25"
 	).enablePlugins(JavaAppPackaging) dependsOn(coreReport, coreReportAkka, renderPdf)
 

@@ -27,8 +27,8 @@ object TestImages {
       val imageName = imageFolder + s"icon${i % 10}.jpg"
       report.drawImage(imageName, 19, report.getY, 10f, 10f)
       //      val cell1 = ReportCell(s"Text1 ${i}")  inside margin1 leftAlign()
-      val cell1 = ReportCell(("W" * 100) + s"Text1 ${i}") inside margin1 leftAlign()
-      val cell2 = ReportCell(s"Text2 ${i}") inside margin2 rightAlign()
+      val cell1 = ReportCell(("W" * 100) + s"Text1 ${i}").inside(margin1). leftAlign()
+      val cell2 = ReportCell(s"Text2 ${i}") .inside(margin2) .rightAlign()
       val contentRow = List(cell1, cell2)
       val y2 = report.calculate(contentRow)
 
@@ -50,12 +50,12 @@ object TestImages {
     val report = Report("examples/src/test/scala/performance/scala/TestImages.pdf",pdfCompression = false)
     val margin1 = ReportMargin(100,180)
     report.nextLine()
-    val cell1 = ReportCell(ReportTxt("A").bold() +"123 4"+ReportTxt("BCW DEWW").size(20).italic()+" end") inside margin1 leftAlign()
+    val cell1 = ReportCell(ReportTxt("A").bold() +"123 4"+ReportTxt("BCW DEWW").size(20).italic()+" end"). inside(margin1).leftAlign()
 //    val cell1 = ReportCell(ReportTxt("ABCD")) inside margin1 leftAlign()
 
     val contentRow = List(cell1)
     val y2 = report.calculate(contentRow)
-    report rectangle() from(100, report.getY-report.lineHeight)  to(180, y2)  color ReportColor(0,0,0) draw()
+    report.rectangle().from(100, report.getY-report.lineHeight).  to(180, y2).color(ReportColor(0,0,0)).draw()
     report.print(contentRow)
     report.render()
   }
