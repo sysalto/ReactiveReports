@@ -1,8 +1,8 @@
 ## 1.0.6 (2019-07-06)
 ### Changes:
-* removed dependencies of scalaz
-* upgrade to scala 2.13.0
-* remove twitter example (just rename the scala files) since twitter4s is not ready for scala 2.13
+* Removed dependency to scalaz
+* Upgraded to scala 2.13.0
+* Removed twitter example (just rename the Scala files) since twitter4s is not ready for scala 2.13
 
 ## 1.0.5 (2019-04-19)
 ### Bugs fixed:
@@ -33,7 +33,7 @@
 
 ### Bugs fixed:
 * lineDashType ignored
-* Fixed  java.util.NoSuchElementException in RenderReport.wrap.
+* Fixed java.util.NoSuchElementException in RenderReport.wrap.
 * assert wrap width > 0
 
 
@@ -88,13 +88,9 @@
 * changed RText to ReportTxt
 * changed RColor with ReportColor
 
-
 ### Bugs fixed:
 * fixed line width
 * fixed text center allign
-
-
-
 
 
 ## 1.0.0-RC.4 (2018-02-3)
