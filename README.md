@@ -87,3 +87,7 @@ Use the latest Maven artifacts for Reactive Reports. Example:
 ### Contact
 
 For questions, concerns, or simply to get in touch with us, please, email us at `sysaltocorporation@gmail.com`
+
+### Documentation
+
+For documentation about Reactive Reports, please see the [Wiki](https://github.com/sysalto/ReactiveReports/wiki).
