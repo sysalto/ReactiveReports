@@ -1,3 +1,9 @@
+## 1.0.7-SNAPSHOT (2019-12-30)
+### Changes:
+* Removed dependency to protobuf
+* Added CJK fonts and otf font import
+
+
 ## 1.0.6 (2019-07-06)
 ### Changes:
 * Removed dependency to scalaz
