@@ -38,5 +38,4 @@ trait ReportAppAkka extends GroupUtilTrait with AkkaGroupUtil {
        akka.jvm-exit-on-fatal-error = true
       akka.log-dead-letters-during-shutdown=off """)
 	implicit val system = ActorSystem("Sys", config)
-	implicit val materializer = ActorMaterializer()
 }

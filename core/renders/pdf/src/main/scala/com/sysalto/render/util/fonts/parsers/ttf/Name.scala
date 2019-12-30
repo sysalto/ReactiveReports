@@ -19,7 +19,7 @@ class Name(f: SyncFileUtil, tables: Map[String, TableOffset]) extends TtfTable(f
     val nameID = new Uint16(f)
     val length = new Uint16(f)
     val offset = new Uint16(f)
-    val isUnicodeStr = platformID == 0 || platformID == 3 || platformID == 2 && encodingID == 1
+    val isUnicodeStr = platformID.value == 0 || platformID.value == 3 || platformID.value == 2 && encodingID.value == 1
     val soffset = Some(tableOffset.offset.value + stringOffset.value + offset.value)
     val str = if (isUnicodeStr) {
       f.readUnicodeString(length.value, soffset)

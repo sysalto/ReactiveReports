@@ -28,12 +28,10 @@ import com.sysalto.report.util.{PdfFactory, PersistenceFactory, PersistenceUtil,
 import scala.collection.mutable.ListBuffer
 import ReportTypes._
 import com.sysalto.report.reportTypes._
-
 import com.sysalto.report.function.{RConsumer1, RConsumer2, RFunction1}
-import com.sysalto.report.serialization.ReportPageSerializer
+import com.sysalto.report.util.serializers.ObjectSerialization
 
 import scala.annotation.varargs
-import scala.collection.JavaConverters._
 
 /** Report class- for Scala
   *
@@ -683,7 +681,7 @@ class Report(val name: String, val orientation: ReportPageOrientation.Value = Re
 
   def getTextWidth(cell: ReportCell): List[Float] = pdfUtil.getTextWidth(cell)
 
-  def getTextWidthJ(cell: ReportCell): java.util.List[java.lang.Float] = pdfUtil.getTextWidth(cell).map(item => item.asInstanceOf[java.lang.Float]).asJava
+  def getTextWidthJ(cell: ReportCell): java.util.List[java.lang.Float] = ReportCommon.asJava(pdfUtil.getTextWidth(cell).map(item => item.asInstanceOf[java.lang.Float]))
 
   def start(): Unit = {
     if (newPageFct != null) {
@@ -691,14 +689,14 @@ class Report(val name: String, val orientation: ReportPageOrientation.Value = Re
     }
   }
 
-  def writePage(pageNbr: Long, page: ReportPage): Unit = persistenceUtil.writeObject(pageNbr, ReportPageSerializer.write(page))
+  def writePage(pageNbr: Long, page: ReportPage): Unit = persistenceUtil.writeObject(pageNbr, ObjectSerialization.serialize(page))
 
   def readPage(pageNbr: Long): Option[ReportPage] = {
     val bytes = persistenceUtil.readObject(pageNbr)
     if (bytes == null) {
       None
     } else {
-      Some(ReportPageSerializer.read(bytes))
+      Some(ObjectSerialization.deserialize[ReportPage](bytes))
     }
   }
 

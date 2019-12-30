@@ -25,9 +25,8 @@ package com.sysalto.report.util
 import java.sql.ResultSet
 import java.util.function.Consumer
 
+import com.sysalto.report.ReportCommon
 import com.sysalto.report.function.RConsumer1
-
-import scala.collection.JavaConverters._
 import com.sysalto.report.util.GroupUtilDefs.ReportRecord
 
 trait GroupUtilTrait {
@@ -193,7 +192,7 @@ object GroupUtilDefs {
 	def toGroup[T](it: Iterator[T]): IteratorGroup[T] = IteratorGroup[T](it)
 
 	// for Java
-	def toGroup[T](it: java.util.Iterator[T]): IteratorGroup[T] = IteratorGroup[T](it.asScala)
+	def toGroup[T](it: java.util.Iterator[T]): IteratorGroup[T] = IteratorGroup[T](ReportCommon.asScala(it))
 
 }
 

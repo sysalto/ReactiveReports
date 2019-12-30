@@ -25,11 +25,16 @@ package com.sysalto.render
 import com.sysalto.report.reportTypes.{LineDashType, RFont, ReportColor}
 import com.sysalto.render.basic.PdfBasic._
 import PdfChart._
+import com.fasterxml.jackson.annotation.{JsonIgnoreProperties, JsonTypeInfo}
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id
 import com.sysalto.render.serialization.RenderReport
+import com.sysalto.report.util.PersistenceUtil
 
 object PdfDraw {
-
-	abstract class PdfGraphicFragment  {
+	@JsonTypeInfo(use = Id.CLASS, property = "className")
+	@JsonIgnoreProperties(Array("persistenceUtil"))
+	abstract class PdfGraphicFragment(protected val className:String)  {
+		var persistenceUtil: PersistenceUtil=null
 		def updateContent(renderReport: RenderReport): Unit = {
 
 		}
@@ -54,7 +59,7 @@ object PdfDraw {
 	}
 
 
-	class DrawArc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float) extends PdfGraphicFragment {
+	class DrawArc(center: DrawPoint, radius: Float, startAngle: Float, endAngle: Float) extends PdfGraphicFragment("DrawArc") {
 		override def content: String = {
 			val p0 = new DrawPoint((center.x + radius * Math.cos(startAngle)).toFloat, (center.y + radius * Math.sin(startAngle)).toFloat)
 			val moveStr = movePoint(p0)
@@ -65,24 +70,24 @@ object PdfDraw {
 		}
 	}
 
-	class DrawCircle(center: DrawPoint, radius: Float) extends PdfGraphicFragment {
+	class DrawCircle(center: DrawPoint, radius: Float) extends PdfGraphicFragment("DrawCircle") {
 		override def content: String = circle(center, radius)
 	}
 
 
-	class DrawStroke() extends PdfGraphicFragment {
+	class DrawStroke() extends PdfGraphicFragment("DrawStroke") {
 		override def content: String = {
 			"S"
 		}
 	}
 
-	class DrawFill() extends PdfGraphicFragment {
+	class DrawFill() extends PdfGraphicFragment("DrawFill") {
 		override def content: String = {
 			"f"
 		}
 	}
 
-	class DrawFillStroke() extends PdfGraphicFragment {
+	class DrawFillStroke() extends PdfGraphicFragment("DrawFillStroke") {
 		override def content: String = {
 			"B"
 		}
@@ -90,7 +95,8 @@ object PdfDraw {
 
 
 
-	class DrawLine(val x1: Float, val y1: Float, val x2: Float, val y2: Float, val vlineWidth: Float, val color: ReportColor,val lineDashType: Option[LineDashType]) extends PdfGraphicFragment {
+	class DrawLine(val x1: Float, val y1: Float, val x2: Float, val y2: Float, val vlineWidth: Float, val color: ReportColor,val lineDashType: Option[LineDashType])
+		extends PdfGraphicFragment("DrawLine") {
 		override def content: String = {
 			saveStatus + movePoint(x1, y1) + lineWidth(vlineWidth) +
 				(if (lineDashType.isDefined) lineDash(lineDashType.get) else "") +
@@ -98,20 +104,20 @@ object PdfDraw {
 		}
 	}
 
-	class DrawRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment {
+	class DrawRectangle(x: Float, y: Float, width: Float, height: Float) extends PdfGraphicFragment("DrawRectangle") {
 		override def content: String = {
 			s"""${x} ${y} ${width} ${height} re"""
 		}
 	}
 
-	class DrawBorderColor(borderColor: ReportColor) extends PdfGraphicFragment {
+	class DrawBorderColor(borderColor: ReportColor) extends PdfGraphicFragment("DrawBorderColor") {
 		override def content: String = {
 			val color = convertColor(borderColor)
 			s"${color._1} ${color._2} ${color._3} RG"
 		}
 	}
 
-	class DrawFillColor(borderColor: ReportColor) extends PdfGraphicFragment {
+	class DrawFillColor(borderColor: ReportColor) extends PdfGraphicFragment("DrawFillColor") {
 		override def content: String = {
 			val color = convertColor(borderColor)
 			s"${color._1} ${color._2} ${color._3} rg"

@@ -39,7 +39,7 @@ class SyncFileUtil(fileName: String, offset: Long, options: StandardOpenOption*)
 
 	def readShort(offset: Option[Long] = None): Short = read(2, offset).getShort(0)
 
-	def readByte(offset: Option[Long] = None): Short = read(1, offset).getShort(0)
+	def readByte(offset: Option[Long] = None): Short = read(1, offset).get(0).toShort
 
 
 	def readInt(offset: Option[Long] = None): Int = read(4, offset).getInt(0)
@@ -59,6 +59,12 @@ class SyncFileUtil(fileName: String, offset: Long, options: StandardOpenOption*)
 		bytes.rewind()
 		val l = for (i <- 1 to size / 2) yield bytes.getChar
 		l.mkString("")
+	}
+
+	def readBytes(size: Int, offset: Option[Long] = None): Seq[Byte] = {
+		val bytes = read(size, offset)
+		bytes.rewind()
+		for (i <- 1 to size) yield bytes.get
 	}
 
 	def getCurrentPos=this.currentPos

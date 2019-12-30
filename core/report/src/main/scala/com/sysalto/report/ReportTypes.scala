@@ -22,6 +22,8 @@
 
 package com.sysalto.report
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id
 import com.sysalto.report.reportTypes._
 
 import scala.collection.mutable.ListBuffer
@@ -71,7 +73,8 @@ object ReportTypes {
 		}
 	}
 
-	sealed abstract class ReportItem() {
+	@JsonTypeInfo(use = Id.CLASS, property = "className")
+	sealed abstract class ReportItem(protected val className:String) {
 		var deltaY = 0f
 
 		private[report] def update(deltaY: Float): Unit = {
@@ -86,7 +89,7 @@ object ReportTypes {
 	/*
 		link to page
  */
-	class ReportLinkToPage(val boundaryRect: BoundaryRect, val pageNbr: Long, val left: Int, val top: Int) extends ReportItem() {
+	class ReportLinkToPage(val boundaryRect: BoundaryRect, val pageNbr: Long, val left: Int, val top: Int) extends ReportItem("ReportLinkToPage") {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.linkToPage(boundaryRect, pageNbr, left, top)
@@ -96,7 +99,7 @@ object ReportTypes {
 	/*
 	link to url
 */
-	class ReportLinkToUrl(val boundaryRect: BoundaryRect, val url: String) extends ReportItem() {
+	class ReportLinkToUrl(val boundaryRect: BoundaryRect, val url: String) extends ReportItem("ReportLinkToUrl") {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.linkToUrl(boundaryRect, url)
@@ -106,7 +109,7 @@ object ReportTypes {
 	/*
 	draws a text at (x,y)
 	 */
-	class ReportText(val txt: ReportTxt, val x: Float, val y: Float) extends ReportItem() {
+	class ReportText(val txt: ReportTxt, val x: Float, val y: Float) extends ReportItem("ReportText") {
 
 		override def render(report: Report): Unit = {
 			report.pdfUtil.text(txt, x, y - deltaY)
@@ -116,7 +119,7 @@ object ReportTypes {
 	/*
 	draws a text align at index at the point(x,y)
 	 */
-	class ReportTextAligned(val rText: ReportTxt, val x: Float, val y: Float, val index: Int) extends ReportItem() {
+	class ReportTextAligned(val rText: ReportTxt, val x: Float, val y: Float, val index: Int) extends ReportItem("ReportTextAligned") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.textAlignedAtPosition(rText, x, y - deltaY, index)
 
@@ -128,7 +131,7 @@ object ReportTypes {
 	 */
 	class ReportTextWrap(val text: List[ReportTxt],
 	                     val x0: Float, val y0: Float, val x1: Float, val y1: Float,
-	                     val wrapAlign: WrapAlign.Value) extends ReportItem() {
+	                     val wrapAlign: WrapAlign.Value) extends ReportItem("ReportTextWrap") {
 		override def render(report: Report): Unit = {
 			report.reportWrap(text, x0, y0 - deltaY, x1, y1 - deltaY, wrapAlign, simulate = false)
 
@@ -142,7 +145,7 @@ object ReportTypes {
 	bar chart class
 	 */
 	class ReportBarChart(val title: String, val xLabel: String, val yLabel: String, val data: List[(Double, String, String)],
-	                     val x0: Float, val y0: Float, val width: Float, val height: Float) extends ReportItem() {
+	                     val x0: Float, val y0: Float, val width: Float, val height: Float) extends ReportItem("ReportBarChart") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawBarChart(title, xLabel, yLabel, data, x0, y0 - deltaY, width, height)
 		}
@@ -151,7 +154,7 @@ object ReportTypes {
 	/*
 	image class
 	 */
-	class ReportImage(val file: String, val x: Float, val y: Float, val width: Float, val height: Float, val opacity: Float) extends ReportItem() {
+	class ReportImage(val file: String, val x: Float, val y: Float, val width: Float, val height: Float, val opacity: Float) extends ReportItem("ReportImage") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.drawImage(file, x, y - deltaY, width, height, opacity)
 		}
@@ -160,7 +163,7 @@ object ReportTypes {
 	/*
 	line class
 	 */
-	class ReportLine(val x1: Float = 0, val y1: Float = -1, val x2: Float = -1, val y2: Float = -1, val lineWidth: Float, val color: ReportColor, val lineDashType: Option[LineDashType]) extends ReportItem() {
+	class ReportLine(val x1: Float = 0, val y1: Float = -1, val x2: Float = -1, val y2: Float = -1, val lineWidth: Float, val color: ReportColor, val lineDashType: Option[LineDashType]) extends ReportItem("ReportLine") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.line(x1, y1 - deltaY, x2, y2 - deltaY, lineWidth, color, lineDashType)
 		}
@@ -170,71 +173,71 @@ object ReportTypes {
 	rectangle class
 	 */
 	class ReportRectangle(val x1: Float, val y1: Float, val x2: Float, val y2: Float,
-	                      val radius: Float = 0, val color: Option[ReportColor], val fillColor: Option[ReportColor]) extends ReportItem() {
+	                      val radius: Float = 0, val color: Option[ReportColor], val fillColor: Option[ReportColor]) extends ReportItem("ReportRectangle") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.rectangle(x1, y1 - deltaY, x2, y2 - deltaY, radius, color, fillColor)
 		}
 	}
 
-	class DirectDrawMovePoint(val x: Float, val y: Float) extends ReportItem() {
+	class DirectDrawMovePoint(val x: Float, val y: Float) extends ReportItem("DirectDrawMovePoint") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawMovePoint(x, y - deltaY)
 		}
 	}
 
 
-	class DirectDrawLine(val x: Float, val y: Float) extends ReportItem() {
+	class DirectDrawLine(val x: Float, val y: Float) extends ReportItem("DirectDrawLine") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawLine(x, y - deltaY)
 		}
 	}
 
-	class DirectDraw(val code: String) extends ReportItem() {
+	class DirectDraw(val code: String) extends ReportItem("DirectDraw") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDraw(code)
 		}
 	}
 
-	class DirectDrawFill(val reportColor: ReportColor) extends ReportItem() {
+	class DirectDrawFill(val reportColor: ReportColor) extends ReportItem("DirectDrawFill") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawFill(reportColor)
 		}
 	}
 
 
-	class DirectDrawClosePath() extends ReportItem() {
+	class DirectDrawClosePath() extends ReportItem("DirectDrawClosePath") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawClosePath()
 		}
 	}
 
-	class DirectDrawStroke(val reportColor: ReportColor) extends ReportItem() {
+	class DirectDrawStroke(val reportColor: ReportColor) extends ReportItem("DirectDrawStroke") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawStroke(reportColor)
 		}
 	}
 
-	class DirectDrawCircle(val x: Float, val y: Float, val radius: Float) extends ReportItem() {
+	class DirectDrawCircle(val x: Float, val y: Float, val radius: Float) extends ReportItem("DirectDrawCircle") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawCircle(x, y - deltaY, radius)
 		}
 	}
 
-	class DirectDrawArc(val x: Float, val y: Float, val radius: Float, val startAngle: Float, val endAngle: Float) extends ReportItem() {
+	class DirectDrawArc(val x: Float, val y: Float, val radius: Float, val startAngle: Float, val endAngle: Float) extends ReportItem("DirectDrawArc") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawArc(x, y - deltaY, radius, startAngle, endAngle)
 		}
 	}
 
 
-	class DirectFillStroke(val fill: Boolean, val stroke: Boolean) extends ReportItem() {
+	class DirectFillStroke(val fill: Boolean, val stroke: Boolean) extends ReportItem("DirectFillStroke") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directFillStroke(fill, stroke)
 		}
 	}
 
 
-	class DirectDrawRectangle(val x1: Float, val y1: Float, val x2: Float, val y2: Float) extends ReportItem() {
+	class DirectDrawRectangle(val x1: Float, val y1: Float, val x2: Float, val y2: Float) extends ReportItem("DirectDrawRectangle") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.directDrawRectangle(x1, y1, x2, y2)
 		}
@@ -243,7 +246,7 @@ object ReportTypes {
 	/*
 	vertical shade rectangle
 	 */
-	class ReportVerticalShade(val rectangle: DRectangle, val from: ReportColor, val to: ReportColor) extends ReportItem() {
+	class ReportVerticalShade(val rectangle: DRectangle, val from: ReportColor, val to: ReportColor) extends ReportItem("ReportVerticalShade") {
 		override def render(report: Report): Unit = {
 			report.pdfUtil.verticalShade(rectangle, from, to)
 		}

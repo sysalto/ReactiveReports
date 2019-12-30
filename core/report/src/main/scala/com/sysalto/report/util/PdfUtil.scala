@@ -36,60 +36,60 @@ abstract class PdfUtil() {
 					 persistenceFactory: PersistenceFactory, pdfCompression: Boolean):Unit
 
 
-	def setPagesNumber(pgNbr: Long)
+	def setPagesNumber(pgNbr: Long):Unit
 
-	def newPage()
+	def newPage():Unit
 
-	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int)
+	def linkToPage(boundaryRect: BoundaryRect, pageNbr: Long, left: Int, top: Int):Unit
 
-	def linkToUrl(boundaryRect: BoundaryRect, url: String)
+	def linkToUrl(boundaryRect: BoundaryRect, url: String):Unit
 
 	def text(txt: ReportTxt, x1: Float, y1: Float, x2: Float = Float.MaxValue, y2: Float = Float.MaxValue): Unit
 
 	def textAlignedAtPosition(txt: ReportTxt, x: Float, y: Float, index: Int): Unit
 
-	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType])
+	def line(x1: Float, y1: Float, x2: Float, y2: Float, lineWidth: Float, color: ReportColor, lineDashType: Option[LineDashType]):Unit
 
-	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[ReportColor], fillColor: Option[ReportColor])
+	def rectangle(x1: Float, y1: Float, x2: Float, y2: Float, radius: Float = 0, color: Option[ReportColor], fillColor: Option[ReportColor]):Unit
 
 	def drawBarChart(title: String, xLabel: String, yLabel: String,
-	                 data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float)
+	                 data: List[(Double, String, String)], x0: Float, y0: Float, width: Float, height: Float):Unit
 
-	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float)
+	def drawImage(file: String, x: Float, y: Float, width: Float, height: Float, opacity: Float):Unit
 
 	def pgSize: Rectangle
 
-	def close()
+	def close():Unit
 
 	def wrap(text: List[ReportTxt], x0: Float, y0: Float, x1: Float, y1: Float,
 	         wrapAlign: WrapAlign.Value, simulate: Boolean = false, lineHeight: Float = 0): Option[WrapBox]
 
-	def verticalShade(rectangle: DRectangle, from: ReportColor, to: ReportColor)
+	def verticalShade(rectangle: DRectangle, from: ReportColor, to: ReportColor):Unit
 
-	def setExternalFont(externalFont: RFontFamily)
+	def setExternalFont(externalFont: RFontFamily):Unit
 
 	def getTextWidth(txt: ReportTxt): Float
 
 	def getTextWidth(cell: ReportCell): List[Float]
 
-	def directDrawMovePoint(x: Float, y: Float)
+	def directDrawMovePoint(x: Float, y: Float):Unit
 
-	def directDrawLine(x: Float, y: Float)
+	def directDrawLine(x: Float, y: Float):Unit
 
-	def directDraw(code: String)
+	def directDraw(code: String):Unit
 
-	def directDrawFill(reportColor: ReportColor)
+	def directDrawFill(reportColor: ReportColor):Unit
 
-	def directDrawClosePath()
+	def directDrawClosePath():Unit
 
-	def directDrawCircle(x: Float, y: Float, radius: Float)
+	def directDrawCircle(x: Float, y: Float, radius: Float):Unit
 
-	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float)
+	def directDrawArc(x: Float, y: Float, radius: Float, startAngle: Float, endAngle: Float):Unit
 
-	def directDrawStroke(reportColor: ReportColor)
+	def directDrawStroke(reportColor: ReportColor):Unit
 
-	def directFillStroke(fill: Boolean, stroke: Boolean)
+	def directFillStroke(fill: Boolean, stroke: Boolean):Unit
 
-	def directDrawRectangle(x1: Float, y1: Float, x2: Float, y2: Float)
+	def directDrawRectangle(x1: Float, y1: Float, x2: Float, y2: Float):Unit
 }
 

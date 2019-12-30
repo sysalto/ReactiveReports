@@ -3,8 +3,6 @@ package com.sysalto.report
 import com.sysalto.report.Implicits._
 import com.sysalto.report.reportTypes.{RFont, ReportColor}
 
-import scala.collection.JavaConverters._
-
 class ReportChart(val report: Report) {
 
 	private[this] class DrawPoint(val x: Float, val y: Float)
@@ -19,7 +17,7 @@ class ReportChart(val report: Report) {
 		assert(height > 0)
 		assert(data.nonEmpty)
 		assert(distance >= 0)
-		val maxValue = data.map { case (x, _, value) => value }.max
+		val maxValue = ReportCommon.max(data.map { case (x, _, value) => value })
 		assert(maxValue > 0)
 		assert(width - distance * data.length > 0)
 		val vertScale = height / maxValue
@@ -102,11 +100,11 @@ class ReportChart(val report: Report) {
 	For Java
 	 */
 	def pieChart(font: RFont, title: String, data: _root_.java.util.List[(String, ReportColor, Float)], x: Float, y: Float, width: Float, height: Float): Unit = {
-		pieChart(font, title, data.asScala.toList, x, y, width, height)
+		pieChart(font, title, ReportCommon.asScala(data), x, y, width, height)
 	}
 
 
 	def barChart(title: String, data: _root_.java.util.List[(String, ReportColor, Float)], x: Float, y: Float, width: Float, height: Float, distance: Float): Unit = {
-		barChart(title,data.asScala.toList, x, y, width, height, distance)
+		barChart(title,ReportCommon.asScala(data), x, y, width, height, distance)
 	}
 }

@@ -27,8 +27,8 @@ import com.sysalto.render.util.fonts.parsers.FontParser.FontMetric
 import scala.collection.mutable
 
 
-class AfmParser(fontFile: String) extends FontParser(fontFile) {
-
+class AfmParser(fontFile: String) extends FontParser(fontFile)("AfmParser") {
+	var fontMetric: FontMetric = null
 
 	private[this] def getValue(list: List[String], key: String): (Int, Int) = {
 		val index: Int = list.indexWhere(line => line.startsWith(key))
@@ -42,25 +42,28 @@ class AfmParser(fontFile: String) extends FontParser(fontFile) {
 	}
 
 
-	override protected[this] def parseFont(): FontMetric = {
-		val textList = AfmParser.readFile(s"fonts/${fontFile}.afm")
-		val upperHeight = getValue(textList, "CapHeight")._2
-		val lowerHeight = getValue(textList, "XHeight")._2
-		val metrics = getValue(textList, "StartCharMetrics")
-		val lineNbr = metrics._1
-		val itemNbr = metrics._2
-		val list1 = textList.slice(lineNbr.toInt + 1, lineNbr.toInt + 1 + itemNbr)
-		val charList = list1.map(line => {
-			val regExpr1 ="""C\s+-?\d+\s+;\s+WX\s+(\d+)\s+;\s+N\s+(\S+).*""".r
-			val regExpr1(width, name) = line.trim
-			name -> (width.toFloat * 0.001).toFloat
-		})
-		val charList1 = charList.map { case (glyph, code) => AfmParser.glyphDef.glypMap(glyph) -> code }.toMap
-		new FontMetric(fontFile, charList1,((lowerHeight*0.001).toFloat,(upperHeight*0.001).toFloat), None)
+	def getFontMetric(): FontMetric = {
+		if (fontMetric == null) {
+			val textList = AfmParser.readFile(s"fonts/${fontFile}.afm")
+			val upperHeight = getValue(textList, "CapHeight")._2
+			val lowerHeight = getValue(textList, "XHeight")._2
+			val metrics = getValue(textList, "StartCharMetrics")
+			val lineNbr = metrics._1
+			val itemNbr = metrics._2
+			val list1 = textList.slice(lineNbr.toInt + 1, lineNbr.toInt + 1 + itemNbr)
+			val charList = list1.map(line => {
+				val regExpr1 = """C\s+-?\d+\s+;\s+WX\s+(\d+)\s+;\s+N\s+(\S+).*""".r
+				val regExpr1(width, name) = line.trim
+				name -> (width.toFloat * 0.001).toFloat
+			})
+			val charList1 = charList.map { case (glyph, code) => AfmParser.glyphDef.glypMap(glyph) -> code }.toMap
+			fontMetric = new FontMetric(fontFile, charList1, Map(), ((lowerHeight * 0.001).toFloat, (upperHeight * 0.001).toFloat), None)
+		}
+		fontMetric
 	}
 
 	def getStringWidth(str: String, fontMetric: FontMetric): Float = {
-		str.toCharArray.map(char => fontMetric.fontMap(char.toInt)).sum
+		str.toCharArray.map(char => fontMetric.fontWidth(char.toInt)).sum
 	}
 
 }

@@ -22,11 +22,10 @@
 
 package com.sysalto.report.reportTypes
 
+import com.sysalto.report.ReportCommon
 import com.sysalto.report.util.ColumnWidthType
 
 import scala.annotation.varargs
-import scala.collection.JavaConverters._
-
 
 case class ReportRow(left: Float, right: Float, columns: List[Column]) {
 	var cellSpacing = 0f
@@ -53,7 +52,7 @@ case class ReportRow(left: Float, right: Float, columns: List[Column]) {
 			).toMap
 		} else {
 			val maxWidth = rangeColumnList.foldLeft(0.0f)((sum, b) => sum + b.floatWidth.get.maxWidth)
-			val list1 = rangeColumnList.sortBy(
+			val list1 = ReportCommon.sortBy(rangeColumnList)(
 				column => {
 					val floatWidth = column.floatWidth.get
 					floatWidth.maxWidth / floatWidth.minWidth
@@ -117,7 +116,7 @@ object ReportRow {
 	def instance: ReportRow.type = this
 
 	def apply(left: Float, right: Float, columns: java.util.List[Column]) =
-		new ReportRow(left, right, columns.asScala.toList)
+		new ReportRow(left, right, ReportCommon.asScala(columns))
 
 	@varargs def apply(left: Float, right: Float, columns: Column*): ReportRow =
 		new ReportRow(left, right, columns.toList)

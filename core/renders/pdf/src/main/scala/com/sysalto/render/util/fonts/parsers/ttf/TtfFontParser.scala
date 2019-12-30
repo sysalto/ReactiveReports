@@ -7,32 +7,30 @@ import com.sysalto.render.util.fonts.parsers.FontParser
 import com.sysalto.render.util.fonts.parsers.FontParser.{EmbeddedFontDescriptor, FontBBox, FontMetric, GlyphWidth}
 import com.sysalto.render.util.fonts.parsers.ttf.Common.{Offset, TableOffset}
 
-class TtfFontParser(fontFile: String) extends FontParser(fontFile) {
+class TtfFontParser(fontFile: String) extends FontParser(fontFile)("TtfFontParser") {
+  val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
+  val offset = new Offset(f)
+  val tables =
+    (for (i <- 1 to offset.numTables.value) yield new TableOffset(f)).map(item => item.tag.value -> item).toMap
+  val head = new Head(f, tables)
+  val hhea = new Hhea(f, tables)
+  val hmtx = new Hmtx(f, tables, hhea.numOfLongHorMetrics.value)
+  val cMap = new Cmap(f, tables)
+  val name = new Name(f, tables)
+  val os2 = new Os2(f, tables)
+  val post = new Post(f, tables)
+
+  def convertToPdfUnits(number: Int): Short = {
+    (number * 1000 / head.unitsPerEm.value).toShort
+  }
 
 
-  override protected def parseFont(): FontParser.FontMetric = {
-    val f = new SyncFileUtil(fontFile, 0, StandardOpenOption.READ)
-    val offset = new Offset(f)
-    val tables =
-      (for (i <- 1 to offset.numTables.value) yield new TableOffset(f)).map(item => item.tag.value -> item).toMap
-    val head = new Head(f, tables)
-    val hhea = new Hhea(f, tables)
-    val hmtx = new Hmtx(f, tables, hhea.numOfLongHorMetrics.value)
-    val cMap = new Cmap(f, tables)
-    val name = new Name(f, tables)
-    val os2 = new Os2(f, tables)
-    val post = new Post(f, tables)
+  val fontBBox = new FontBBox(convertToPdfUnits(head.xMin.value), convertToPdfUnits(head.yMin.value),
+    convertToPdfUnits(head.xMax.value), convertToPdfUnits(head.yMax.value))
+  var fontMetric: FontMetric = null
 
-    def convertToPdfUnits(number: Int): Short = {
-      (number * 1000 / head.unitsPerEm.value).toShort
-    }
-
-
-    val fontBBox = new FontBBox(convertToPdfUnits(head.xMin.value), convertToPdfUnits(head.yMin.value),
-      convertToPdfUnits(head.xMax.value), convertToPdfUnits(head.yMax.value))
-
-
-    def getFontMetric(): FontMetric = {
+  def getFontMetric(): FontParser.FontMetric = {
+    if (fontMetric == null) {
       val fontName = name.nameRecordList.filter(item => item.nameID.value == 4).head.str
       val l1 = cMap.charGlypList.map { case (char, index) => char -> hmtx.hMetrics(index).advanceWidth.value / 1f / head.unitsPerEm.value }
 
@@ -44,14 +42,12 @@ class TtfFontParser(fontFile: String) extends FontParser(fontFile) {
 
       val fontDescriptor = new EmbeddedFontDescriptor(convertToPdfUnits(os2.sTypoAscender.value),
         convertToPdfUnits(os2.sCapHeight.value),
-        convertToPdfUnits(os2.sTypoDescender.value), fontBBox, post.italicAngle.value.toShort, 1 << 5, glyphWidth)
+        convertToPdfUnits(os2.sTypoDescender.value), fontBBox, post.italicAngle.value.toShort, 1 << 5,
+        glyphWidth, false, "")
 
-      val result = new FontMetric(fontName, l1, (0, 0), Some(fontDescriptor))
-      result
+      fontMetric = new FontMetric(fontName, l1, Map(), (0, 0), Some(fontDescriptor))
     }
-
-    getFontMetric()
-
+    fontMetric
   }
 }
 

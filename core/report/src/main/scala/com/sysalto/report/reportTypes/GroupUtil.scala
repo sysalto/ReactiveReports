@@ -26,9 +26,6 @@ package com.sysalto.report.reportTypes
 import com.sysalto.report.util.GroupUtilDefs.ReportRecord
 
 import scala.annotation.varargs
-import scala.collection.JavaConverters._
-
-
 
 class GroupUtil[T,R](groupList: List[Group[T,R]]) {
 	@annotation.tailrec

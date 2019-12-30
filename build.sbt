@@ -1,25 +1,24 @@
 import sbt.Keys.{libraryDependencies, publishMavenStyle}
 
-val SCALA_VERSION = "2.13.0"
+val SCALA_VERSION = "2.13.1"
 
-val AKKA_VERSION = "2.5.23"
+val AKKA_VERSION = "2.6.1" //latest.release"
 
-val ROCKSDB_VERSION = "6.0.1"
+val ROCKSDB_VERSION = "6.4.6" //latest.release"
 
-val PROTOBUF_VERSION =  "3.7.0"
+val FASTERXML = "2.10.1" //latest.release"
 
-val projectVersion = "1.0.6"
+val projectVersion = "1.0.7-SNAPSHOT"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",
-	isSnapshot := false,
+	isSnapshot := true,
 	version := projectVersion,
 	cancelable in Global := true,
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
 	Keys.fork in run := true,
 	resolvers += Resolver.sonatypeRepo("snapshots"),
-	resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
-
+//	resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
 
 	publishTo := {
 		val nexus = "https://oss.sonatype.org/"
@@ -65,12 +64,12 @@ lazy val coreSettings = Seq(
 		if (scalaVersion.value == "2.12.8" || scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	},
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
-	libraryDependencies += "com.google.protobuf" % "protobuf-java" % PROTOBUF_VERSION,
+	libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % FASTERXML,
+	libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % FASTERXML
 )
 
 lazy val renderPdfSettings = Seq(
 	crossScalaVersions := Seq("2.11.12","2.12.8", SCALA_VERSION),
-	protobufIncludePaths in ProtobufConfig += (sourceDirectory in ProtobufConfig in coreReport).value,
 	javacOptions ++= {
 		if (scalaVersion.value == "2.12.8" || scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	}
@@ -90,8 +89,9 @@ lazy val reactiveReports = (project in file(".")).settings(commonInclude: _*).
 	coreReport, coreReportAkka, renderPdf, examples)
 
 lazy val coreReport = (project in file("core/report")).settings(commonInclude: _*).
-	settings(name := "ReactiveReports Core").settings(commonSettings: _*).
-	settings(coreSettings: _*).enablePlugins(ProtobufPlugin).enablePlugins(JavaAppPackaging)
+	settings(name := "ReactiveReports Core").settings(commonSettings: _*)
+	.settings(coreSettings: _*)
+	.enablePlugins(JavaAppPackaging)
 
 
 lazy val coreReportAkka = (project in file("core/reportAkka")).settings(commonInclude: _*).
@@ -101,8 +101,8 @@ lazy val coreReportAkka = (project in file("core/reportAkka")).settings(commonIn
 
 lazy val renderPdf = (project in file("core/renders/pdf")).settings(commonInclude: _*).
 	settings(name := "ReactiveReports Pdf Render").settings(commonSettings: _*).
-	settings(renderPdfSettings: _*).enablePlugins(JavaAppPackaging).
-	enablePlugins(ProtobufPlugin) dependsOn coreReport
+	settings(renderPdfSettings: _*).enablePlugins(JavaAppPackaging) dependsOn coreReport
+
 
 
 lazy val exampleSettings = Seq(
@@ -114,7 +114,7 @@ lazy val exampleSettings = Seq(
 	scalaVersion := SCALA_VERSION,
 	Keys.fork in run := true,
 	resolvers += Resolver.sonatypeRepo("public"),
-	resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
+//	resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
 	resolvers += Resolver.mavenLocal,
 	libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
 	libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release"),
@@ -129,7 +129,6 @@ lazy val examples = (project in file("examples")).
 		libraryDependencies += "com.typesafe.akka" %% "akka-http" % "latest.release",
 		libraryDependencies += ("org.scala-lang.modules" %% "scala-xml" % "latest.release"),
 		libraryDependencies += ("org.hsqldb" % "hsqldb" % "latest.release"),
-//		libraryDependencies += "com.danielasfregola" % "twitter4s_2.12" % "latest.release",
 		libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.7.25"
 	).enablePlugins(JavaAppPackaging) dependsOn(coreReport, coreReportAkka, renderPdf)
 

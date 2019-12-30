@@ -1,0 +1,48 @@
+package com.sysalto.render.util.fonts.parsers.otf
+
+import com.sysalto.render.util.SyncFileUtil
+import com.sysalto.render.util.fonts.parsers.ttf.Common.{FWord, Fixed, Int16, Tag, UfWord, Uint16, Uint32, Uint8}
+
+class OS2 (f: SyncFileUtil,tables:Map[String,Long]) {
+  f.seek(tables.get(("OS/2")).get)
+  val version = new Uint16(f)
+  val xAvgCharWidth = new Int16(f)
+  val usWeightClass = new Uint16(f)
+  val usWidthClass =new Uint16(f)
+  val fsType =new Uint16(f)
+  val ySubscriptXSize =new Int16(f)
+  val ySubscriptYSize =new Int16(f)
+  val ySubscriptXOffset =new Int16(f)
+  val ySubscriptYOffset =new Int16(f)
+  val ySuperscriptXSize =new Int16(f)
+  val ySuperscriptYSize =new Int16(f)
+  val ySuperscriptXOffset =new Int16(f)
+  val ySuperscriptYOffset =new Int16(f)
+  val yStrikeoutSize =new Int16(f)
+  val yStrikeoutPosition =new Int16(f)
+  val sFamilyClass =for (i<-1 to 2) yield  new Uint8(f)
+  val panose=for (i<-1 to 10) yield  new Uint8(f)
+  val ulUnicodeRange1=new Uint32(f)
+  val ulUnicodeRange2=new Uint32(f)
+  val ulUnicodeRange3=new Uint32(f)
+  val ulUnicodeRange4=new Uint32(f)
+  val achVendID=new Tag(f)
+  val fsSelection=new Uint16(f)
+  val usFirstCharIndex=new Uint16(f)
+  val usLastCharIndex=new Uint16(f)
+  val sTypoAscender=new Int16(f)
+  val sTypoDescender=new Int16(f)
+  val sTypoLineGap=new Int16(f)
+  val usWinAscent=new Uint16(f)
+  val usWinDescent=new Uint16(f)
+  val ulCodePageRange1=new Uint32(f)
+  val ulCodePageRange2=new Uint32(f)
+  val sxHeight=new Int16(f)
+  val sCapHeight=new Int16(f)
+  val usDefaultChar=new Uint16(f)
+  val usBreakChar=new Uint16(f)
+  val usMaxContext=new Uint16(f)
+  val usLowerOpticalPointSize=new Uint16(f)
+  val usUpperOpticalPointSize=new Uint16(f)
+
+}

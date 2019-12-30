@@ -398,6 +398,9 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 	def main(args: Array[String]): Unit = {
 		// create tables and load data using hsqldb
 		mutualFundsNoAkka.MutualFundsInitData.initDb()
+		val t1=System.currentTimeMillis()
 		initReport()
+		val t2=System.currentTimeMillis()
+		println("Time:"+(t2-t1)*0.001)
 	}
 }

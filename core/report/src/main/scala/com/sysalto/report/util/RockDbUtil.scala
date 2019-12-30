@@ -24,8 +24,8 @@ package com.sysalto.report.util
 
 import java.io._
 
+import com.sysalto.report.ReportCommon
 import org.rocksdb.{Options, ReadOptions, RocksDB}
-import scala.collection.JavaConverters._
 
 import scala.collection.mutable.ListBuffer
 
@@ -56,7 +56,7 @@ class RockDbUtil(prefix: String, extension: String, dbFolder: String) extends Pe
 			result += BigInt(it.key()).toLong
 			it.next()
 		}
-		result.toList.sortBy(item => item).map(item=>item.asInstanceOf[java.lang.Long]).asJava
+		ReportCommon.asJava(result.toList.sortBy(item => item).map(item=>item.asInstanceOf[java.lang.Long]))
 	}
 
 
