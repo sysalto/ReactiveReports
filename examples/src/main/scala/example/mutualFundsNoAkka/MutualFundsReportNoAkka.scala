@@ -383,7 +383,7 @@ object MutualFundsReportNoAkka extends GroupUtilTrait {
 
 		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
 		val report1 = Report("examples/src/main/scala/example/mutualFundsNoAkka/MutualFundsReportNoAkka.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
-		val path="examples/src/main/scala/example/fonts/roboto/"
+		val path="examples/src/main/resources/fonts/roboto/"
 		val fontFamily = RFontFamily(name = "Roboto",
 			regular = path+"Roboto-Regular.ttf",
 			bold = Some(path+"Roboto-Bold.ttf"),
