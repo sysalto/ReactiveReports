@@ -42,8 +42,8 @@
 Include the following in your `build.sbt` file:
 
 ```
-libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % "1.0.2"
-libraryDependencies += "com.github.sysalto" %% "reactivereports-pdf-render" % "1.0.2"
+libraryDependencies += "com.github.sysalto" %% "reactivereports-core" % "1.0.7-SNAPSHOT"
+libraryDependencies += "com.github.sysalto" %% "reactivereports-pdf-render" % "1.0.7-SNAPSHOT"
 ```
 
 ### 2 - Using Maven - Recommeded for Java
@@ -54,13 +54,13 @@ Use the latest Maven artifacts for Reactive Reports. Example:
 <dependency>
   <groupId>com.github.sysalto</groupId>
   <artifactId>reactivereports-core_2.12</artifactId>
-  <version>1.0.2</version> 
+  <version>1.0.7-SNAPSHOT</version> 
 </dependency>
 
 <dependency>
   <groupId>com.github.sysalto</groupId>
   <artifactId>reactivereports-pdf-render_2.12</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.7-SNAPSHOT</version>
 </dependency>
 ```
 
