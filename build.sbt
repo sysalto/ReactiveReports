@@ -61,7 +61,7 @@ lazy val commonSettings = Seq(
 lazy val coreSettings = Seq(
 	crossScalaVersions := Seq("2.11.12","2.12.8", SCALA_VERSION),
 	javacOptions ++= {
-		if (scalaVersion.value == "2.12.8" || scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
+		if (scalaVersion.value != "2.11.12" ) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	},
 	libraryDependencies += "org.rocksdb" % "rocksdbjni" % ROCKSDB_VERSION,
 	libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % FASTERXML,
@@ -71,12 +71,15 @@ lazy val coreSettings = Seq(
 lazy val renderPdfSettings = Seq(
 	crossScalaVersions := Seq("2.11.12","2.12.8", SCALA_VERSION),
 	javacOptions ++= {
-		if (scalaVersion.value == "2.12.8" || scalaVersion.value == SCALA_VERSION) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
+		if (scalaVersion.value != "2.11.12" ) Seq("-source", "1.8", "-target", "1.8") else Seq("-source", "1.6", "-target", "1.6")
 	}
 )
 
 lazy val akkaSettings = Seq(
 	crossScalaVersions := Seq("2.12.8", SCALA_VERSION),
+	javacOptions ++= {
+		Seq("-source", "1.8", "-target", "1.8")
+	},
 	libraryDependencies += "com.typesafe.akka" %% "akka-actor" % AKKA_VERSION,
 	libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % AKKA_VERSION,
 	libraryDependencies += "com.typesafe.akka" %% "akka-stream" % AKKA_VERSION
