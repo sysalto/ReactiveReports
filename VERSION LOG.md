@@ -1,4 +1,4 @@
-## 1.0.7-SNAPSHOT (2019-12-30)
+## 1.0.7 (2020-02-08)
 ### Changes:
 * Removed dependency to protobuf
 * Added CJK fonts and otf font import

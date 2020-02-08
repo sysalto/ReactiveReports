@@ -1,6 +1,6 @@
 package com.sysalto.render.util
 
-import java.nio.ByteBuffer
+import java.nio.{Buffer, ByteBuffer}
 import java.nio.channels.{AsynchronousFileChannel, FileChannel}
 import java.nio.file.{Paths, StandardOpenOption}
 
@@ -48,23 +48,23 @@ class SyncFileUtil(fileName: String, offset: Long, options: StandardOpenOption*)
 
 
 	def readString(size: Int, offset: Option[Long] = None): String = {
-		val bytes = read(size, offset)
+		val bytes = read(size, offset).asInstanceOf[Buffer]
 		bytes.rewind()
-		val l = for (i <- 1 to size) yield bytes.get.toChar
+		val l = for (i <- 1 to size) yield bytes.asInstanceOf[ByteBuffer].get.toChar
 		l.mkString("")
 	}
 
 	def readUnicodeString(size: Int, offset: Option[Long] = None): String = {
-		val bytes = read(size, offset)
+		val bytes = read(size, offset).asInstanceOf[Buffer]
 		bytes.rewind()
-		val l = for (i <- 1 to size / 2) yield bytes.getChar
+		val l = for (i <- 1 to size / 2) yield bytes.asInstanceOf[ByteBuffer].getChar
 		l.mkString("")
 	}
 
 	def readBytes(size: Int, offset: Option[Long] = None): Seq[Byte] = {
-		val bytes = read(size, offset)
+		val bytes = read(size, offset).asInstanceOf[Buffer]
 		bytes.rewind()
-		for (i <- 1 to size) yield bytes.get
+		for (i <- 1 to size) yield bytes.asInstanceOf[ByteBuffer].get
 	}
 
 	def getCurrentPos=this.currentPos
