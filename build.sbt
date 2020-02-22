@@ -8,11 +8,11 @@ val ROCKSDB_VERSION = "6.4.6" //latest.release"
 
 val FASTERXML = "2.10.1" //latest.release"
 
-val projectVersion = "1.0.7"
+val projectVersion = "1.0.8-SNAPSHOT"
 
 lazy val commonInclude = Seq(
 	organization := "com.github.sysalto",
-	isSnapshot := false,
+	isSnapshot := true,
 	version := projectVersion,
 	cancelable in Global := true,
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
