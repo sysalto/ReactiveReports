@@ -36,4 +36,8 @@ case class RFont(var size: Int, var fontName: String = "",
     case RFontAttribute.BOLD_ITALIC=>"-BoldOblique"
   })
 
+  override def equals(obj: Any): Boolean = {
+    val other=obj.asInstanceOf[RFont]
+    this.size == other.size && this.fontName == other.fontName && this.attribute.id == other.attribute.id
+  }
 }

@@ -1,12 +1,12 @@
 import sbt.Keys.{libraryDependencies, publishMavenStyle}
 
-val SCALA_VERSION = "2.13.1"
+val SCALA_VERSION = "2.13.2"
 
-val AKKA_VERSION = "2.6.1" //latest.release"
+val AKKA_VERSION = "2.6.4" //latest.release"
 
-val ROCKSDB_VERSION = "6.4.6" //latest.release"
+val ROCKSDB_VERSION = "6.7.3" //latest.release"
 
-val FASTERXML = "2.10.1" //latest.release"
+val FASTERXML = "2.10.3" //latest.release"
 
 val projectVersion = "1.0.8-SNAPSHOT"
 

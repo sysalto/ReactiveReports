@@ -10,7 +10,5 @@ class Hmtx(f: SyncFileUtil,tables:Map[String,Long],numOfLongHorMetrics:Int) {
     val leftSideBearing = new Uint16(f)
   }
   f.seek(tables.get(("hmtx")).get)
-  val hMetrics = (for (i <- 1 to numOfLongHorMetrics) yield new LongHorMetric(f)).toList
-  //		val leftSideBearing = new FWord(f)
-//  check
+  val hMetrics = (for (i <- 1 to numOfLongHorMetrics) yield new LongHorMetric(f))
 }

@@ -269,7 +269,7 @@ object FinancialReportCh extends GroupUtilTrait {
 
 		// create report with RocksDb persistence.Otherwise can use custom persistence for example derbyPersistanceFactory
 		val report1 = Report("examples/src/main/scala/example/financialReport/FinancialReport.pdf", ReportPageOrientation.LANDSCAPE) //, derbyPersistanceFactory)
-		val path = "examples/src/main/scala/example/fonts/NotoSans/"
+		val path="examples/src/main/resources/fonts/NotoSans/"
 		val fontFamily = RFontFamily(name = "NotoSans",
 			regular = path + "NotoSansSC-Regular.otf",
 			bold = Some(path + "NotoSansSC-Bold.otf"))
