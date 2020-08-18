@@ -1,7 +1,7 @@
 # Reactive Reports
 
 ### Unique features 
- - Scalable framework developed in Scala, designed for generating reports from code.
+ - Scalable framework developed in Scala, designed for generating reports programmatically.
  - Support of Scala, Java, other JVM languages (i.e. Groovy) 
  - Pluggable architecture
  - Open Source - LGPL license - **free to use and modify, for both Open Source and commercial uses** 
