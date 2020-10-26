@@ -5,6 +5,7 @@
  - Support of Scala, Java, other JVM languages (i.e. Groovy) 
  - Pluggable architecture
  - Open Source - LGPL license - **free to use and modify, for both Open Source and commercial uses** 
+ - Displays CKJ (Chinese, Korean, Japanese) characters in PDF reports
  
  <img width="1012" alt="diagram_rr" src="https://user-images.githubusercontent.com/25547970/47624281-27880800-daf1-11e8-98d0-f4b4fa7284c4.png">
  
